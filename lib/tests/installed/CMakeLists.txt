@@ -3,7 +3,7 @@ PROJECT (cometa-consumer LANGUAGES CXX)
 
 FIND_PACKAGE (Cometa CONFIG REQUIRED)
 
-ADD_EXECUTABLE (consumer ../ValueTypes.cpp)
+ADD_EXECUTABLE (consumer PackageTest.cpp)
 TARGET_LINK_LIBRARIES (consumer PRIVATE Cometa::cometa)
 
 ENABLE_TESTING ()

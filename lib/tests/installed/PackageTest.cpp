@@ -1,7 +1,7 @@
 /**
- * @file ValueTypes.cpp
+ * @file PackageTest.cpp
  *
- * @brief Example of value copies and independent mutation.
+ * @brief Verifies the installed package headers and static libraries.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -25,18 +25,12 @@
 
 #include <Cometa/Cometa.h>
 
-#include <iostream>
-
 /* IMPLEMENTATION ************************************************************/
 
 int
 main()
 {
-  using namespace Cometa;
-  const auto keyHash = Blake2bHash::fromHex("00000000000000000000000000000000000000000000000000000000");
-  Credential original(CredentialType::KeyHash, keyHash);
-  auto       copy = original;
-  copy.setType(CredentialType::ScriptHash);
-  std::cout << "Original remains a key credential: " << (original.type() == CredentialType::KeyHash) << '\n';
-  std::cout << "Asset: " << AssetName::fromString("Cometa").toHex() << '\n';
+  const Cometa::AssetName name = Cometa::AssetName::fromCbor("46436f6d657461");
+
+  return name.toString() == "Cometa" ? 0 : 1;
 }

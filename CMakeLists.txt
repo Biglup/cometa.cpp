@@ -9,7 +9,6 @@ INCLUDE (CMakePackageConfigHelpers)
 
 # Build options and native dependency.
 OPTION (COMETA_BUILD_TESTS "Build unit tests" ON)
-OPTION (COMETA_BUILD_EXAMPLES "Build examples" ON)
 OPTION (COMETA_BUILD_DOCS "Build documentation" OFF)
 SET (COMETA_CARDANO_SOURCE_DIR "" CACHE PATH "Local cardano-c checkout with deep-clone APIs")
 
@@ -78,12 +77,7 @@ IF (COMETA_BUILD_TESTS)
   ADD_TEST (NAME cometa-tests COMMAND cometa-tests)
 ENDIF ()
 
-# Examples and documentation.
-IF (COMETA_BUILD_EXAMPLES)
-  ADD_EXECUTABLE (cometa-value-types examples/ValueTypes.cpp)
-  TARGET_LINK_LIBRARIES (cometa-value-types PRIVATE Cometa::cometa)
-ENDIF ()
-
+# Documentation.
 IF (COMETA_BUILD_DOCS)
   ADD_SUBDIRECTORY (doc)
 ENDIF ()

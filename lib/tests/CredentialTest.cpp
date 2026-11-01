@@ -26,9 +26,12 @@
 #include <Cometa/Credential.h>
 #include <Cometa/Error.h>
 
+#include <cardano/common/credential_type.h>
+
 #include <gtest/gtest.h>
 
 #include <cstdint>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -56,7 +59,7 @@ TEST(Credential, CopyMutationDoesNotChangeOriginal)
 {
   // Arrange
   const Credential original(CredentialType::KeyHash, keyHash());
-  auto             copy = original;
+  Credential       copy = original;
 
   // Act
   copy.setType(CredentialType::ScriptHash);
@@ -75,7 +78,7 @@ TEST(Credential, SerializesToCbor)
   const Credential value(CredentialType::KeyHash, keyHash());
 
   // Act
-  const auto cbor = value.toCbor();
+  const std::vector<std::uint8_t> cbor = value.toCbor();
 
   // Assert
   ASSERT_EQ(cbor.size(), 32);
@@ -88,8 +91,8 @@ TEST(Credential, SerializesToCbor)
 TEST(Credential, RejectsInvalidValuesWithoutChangingDestination)
 {
   // Arrange
-  Credential value(CredentialType::KeyHash, keyHash());
-  const auto before = value;
+  Credential       value(CredentialType::KeyHash, keyHash());
+  const Credential before = value;
 
   // Act & Assert
   EXPECT_THROW(value.setHash(Blake2bHash::compute({ 1 })), std::invalid_argument);
@@ -108,16 +111,18 @@ TEST(Credential, RejectsMalformedCbor)
 
 TEST(Credential, CopiesSurviveSourceDestruction)
 {
+  // Arrange
+  std::optional<Credential> copy;
+
   // Act
-  const auto copy = []
   {
     const Credential source(CredentialType::KeyHash, keyHash());
-    return Credential(source);
-  }();
+    copy.emplace(source);
+  }
 
   // Assert
-  EXPECT_EQ(copy.type(), CredentialType::KeyHash);
-  EXPECT_EQ(copy.hash().toHex(), HASH_HEX);
+  EXPECT_EQ(copy->type(), CredentialType::KeyHash);
+  EXPECT_EQ(copy->hash().toHex(), HASH_HEX);
 }
 
 TEST(Credential, CopyAssignmentIsIndependent)
@@ -137,10 +142,10 @@ TEST(Credential, CopyAssignmentIsIndependent)
 TEST(Credential, SerializesToJson)
 {
   // Arrange
-  const auto value = Credential(CredentialType::KeyHash, keyHash());
+  const Credential value = Credential(CredentialType::KeyHash, keyHash());
 
   // Act
-  const auto json = value.toJson();
+  const std::string json = value.toJson();
 
   // Assert
   EXPECT_EQ(json, "{\"tag\":\"pubkey_hash\",\"value\":\"" + HASH_HEX + "\"}");
@@ -150,10 +155,10 @@ TEST(Credential, ParsesHexCbor)
 {
   // Arrange
   const std::string hex      = "8200581c00000000000000000000000000000000000000000000000000000000";
-  const auto        expected = Credential(CredentialType::KeyHash, keyHash());
+  const Credential  expected = Credential(CredentialType::KeyHash, keyHash());
 
   // Act
-  const auto decoded = Credential::fromCbor(hex);
+  const Credential decoded = Credential::fromCbor(hex);
 
   // Assert
   EXPECT_EQ(decoded, expected);
@@ -177,8 +182,8 @@ TEST(Credential, RejectsInvalidHexCbor)
 TEST(Credential, RejectsInvalidConstructorArguments)
 {
   // Arrange
-  const auto hash      = keyHash();
-  const auto wrongSize = Blake2bHash::compute({ 1 });
+  const Blake2bHash hash      = keyHash();
+  const Blake2bHash wrongSize = Blake2bHash::compute({ 1 });
 
   // Act & Assert
   EXPECT_THROW(Credential(static_cast<CredentialType>(42), hash), std::invalid_argument);
@@ -188,8 +193,8 @@ TEST(Credential, RejectsInvalidConstructorArguments)
 TEST(Credential, HashResultSurvivesReplacement)
 {
   // Arrange
-  Credential value(CredentialType::KeyHash, keyHash());
-  const auto hash = value.hash();
+  Credential        value(CredentialType::KeyHash, keyHash());
+  const Blake2bHash hash = value.hash();
 
   // Act
   value.setHash(Blake2bHash::fromHex(std::string(56, '1')));
@@ -211,4 +216,11 @@ TEST(Credential, ComparesValues)
   EXPECT_NE(first, second);
   EXPECT_LT(first, second);
   EXPECT_FALSE(second < first);
+}
+
+TEST(CredentialType, MatchesCardanoDiscriminators)
+{
+  // Act & Assert
+  EXPECT_EQ(static_cast<int>(CredentialType::KeyHash), CARDANO_CREDENTIAL_TYPE_KEY_HASH);
+  EXPECT_EQ(static_cast<int>(CredentialType::ScriptHash), CARDANO_CREDENTIAL_TYPE_SCRIPT_HASH);
 }

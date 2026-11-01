@@ -33,9 +33,9 @@ for API review. Transaction builders and providers are not implemented yet.
 #include <Cometa/Cometa.h>
 
 using namespace Cometa;
-auto hash = Blake2bHash::fromHex(std::string(56, '0'));
+Blake2bHash hash = Blake2bHash::fromHex(std::string(56, '0'));
 Credential key(CredentialType::KeyHash, hash);
-auto script = key;
+Credential script = key;
 script.setType(CredentialType::ScriptHash);
 ```
 

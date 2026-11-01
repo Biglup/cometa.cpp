@@ -22,7 +22,7 @@ runs:
         ctest --test-dir build -C Release --output-on-failure
         cmake --install build --config Release --prefix "$GITHUB_WORKSPACE/install-original"
         cmake -E rename install-original install-relocated
-        cmake -S examples/installed -B build-consumer -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/install-relocated"
+        cmake -S lib/tests/installed -B build-consumer -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/install-relocated"
         cmake --build build-consumer --config Release --parallel 2
         ctest --test-dir build-consumer -C Release --output-on-failure
     - name: Package

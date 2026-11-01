@@ -118,11 +118,11 @@ TEST(Credential, FailedCopyAssignmentPreservesDestination)
   // Arrange
   const Credential source(CredentialType::KeyHash, keyHash());
   Credential       destination(CredentialType::ScriptHash, Blake2bHash::fromHex(std::string(56, '1')));
-  const auto       before          = destination;
+  const Credential before          = destination;
   std::size_t      allocationCount = 0;
   {
     AllocationFailure count(std::numeric_limits<std::size_t>::max());
-    const auto        copy = source;
+    const Credential  copy = source;
     allocationCount        = allocationIndex;
   }
   ASSERT_GT(allocationCount, 0);
@@ -142,11 +142,11 @@ TEST(Credential, FailedCopyAssignmentPreservesDestination)
 TYPED_TEST(ValueContract, SupportsCopyAndMove)
 {
   // Arrange
-  auto source = sampleValue<TypeParam>();
+  TypeParam source = sampleValue<TypeParam>();
 
   // Act
-  const auto copied = source;
-  const auto moved  = std::move(source);
+  const TypeParam copied = source;
+  const TypeParam moved  = std::move(source);
 
   // Assert
   EXPECT_EQ(copied, moved);
@@ -158,9 +158,9 @@ TYPED_TEST(ValueContract, SupportsCopyAndMove)
 TYPED_TEST(ValueContract, SupportsCopySelfAssignment)
 {
   // Arrange
-  auto       source = sampleValue<TypeParam>();
-  const auto before = source;
-  auto*      alias  = &source;
+  TypeParam       source = sampleValue<TypeParam>();
+  const TypeParam before = source;
+  TypeParam*      alias  = &source;
 
   // Act
   source = *alias;
@@ -172,9 +172,9 @@ TYPED_TEST(ValueContract, SupportsCopySelfAssignment)
 TYPED_TEST(ValueContract, SupportsMoveSelfAssignment)
 {
   // Arrange
-  auto       source = sampleValue<TypeParam>();
-  const auto before = source;
-  auto*      alias  = &source;
+  TypeParam       source = sampleValue<TypeParam>();
+  const TypeParam before = source;
+  TypeParam*      alias  = &source;
 
   // Act
   source = std::move(*alias);
@@ -186,8 +186,8 @@ TYPED_TEST(ValueContract, SupportsMoveSelfAssignment)
 TYPED_TEST(ValueContract, SupportsAssignmentToMovedFromValues)
 {
   // Arrange
-  auto source = sampleValue<TypeParam>();
-  auto moved  = std::move(source);
+  TypeParam source = sampleValue<TypeParam>();
+  TypeParam moved  = std::move(source);
 
   // Act
   source = moved;
@@ -201,8 +201,8 @@ TYPED_TEST(ValueContract, SupportsAssignmentToMovedFromValues)
 TYPED_TEST(ValueContract, SupportsSwapWithMovedFromValues)
 {
   // Arrange
-  auto source = sampleValue<TypeParam>();
-  auto moved  = std::move(source);
+  TypeParam source = sampleValue<TypeParam>();
+  TypeParam moved  = std::move(source);
 
   // Act
   swap(source, moved);
@@ -215,8 +215,8 @@ TYPED_TEST(ValueContract, SupportsSwapWithMovedFromValues)
 TYPED_TEST(ValueContract, ReleasesPartialCopiesOnEveryAllocationFailure)
 {
   // Arrange
-  const auto  source = sampleValue<TypeParam>();
-  std::size_t count  = 0;
+  const TypeParam source = sampleValue<TypeParam>();
+  std::size_t     count  = 0;
   {
     AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
     const TypeParam   copy(source);
@@ -236,11 +236,11 @@ TYPED_TEST(ValueContract, ReleasesPartialCopiesOnEveryAllocationFailure)
 TYPED_TEST(ValueContract, ReleasesParserStateOnAllocationFailure)
 {
   // Arrange
-  const auto  cbor  = sampleValue<TypeParam>().toCbor();
-  std::size_t count = 0;
+  const std::vector<std::uint8_t> cbor  = sampleValue<TypeParam>().toCbor();
+  std::size_t                     count = 0;
   {
     AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
-    const auto        parsed = TypeParam::fromCbor(cbor);
+    const TypeParam   parsed = TypeParam::fromCbor(cbor);
     count                    = allocationIndex;
   }
 
@@ -250,7 +250,7 @@ TYPED_TEST(ValueContract, ReleasesParserStateOnAllocationFailure)
     AllocationFailure fail(i);
     try
     {
-      const auto parsed = TypeParam::fromCbor(cbor);
+      const TypeParam parsed = TypeParam::fromCbor(cbor);
       // Optional native caches can fail without invalidating the parsed value.
       EXPECT_EQ(parsed.toCbor(), cbor);
     }

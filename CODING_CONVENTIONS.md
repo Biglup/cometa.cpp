@@ -1,15 +1,17 @@
 # C++ coding conventions
 
-These conventions apply to Cometa.cpp source, public headers, tests, examples,
+These conventions apply to Cometa.cpp source, public headers, tests,
 CMake files, and API documentation. Use the checked-in `.clang-format` with
 **clang-format 15**. The language baseline is **C++17**; retain modern C++17
 features rather than introducing older-language workarounds.
 
 ## Names and files
 
-- Public namespace: `Cometa`. Internal shared helpers: `Cometa::Detail`.
+- Public namespace: `Cometa`. Implementation helpers remain in private headers and are not installed.
 - Give each public type and enum its own header.
 - Types and enums: PascalCase, such as `Blake2bHash` and `CredentialType`.
+- Use explicit types instead of `auto`, and direct calls instead of lambdas.
+- Separate validation, resource setup, operations, and results with blank lines.
 - Functions, methods, and local variables: camelCase.
 - Nonstatic data members: `m_` prefix, such as `m_value`.
 - Constants: uppercase with underscores, such as `HASH_HEX`.
@@ -26,8 +28,7 @@ Use two spaces, Allman braces, and the checked-in formatter's spacing and
 alignment rules. Keep braces around control-flow bodies. Put function definition
 return types on their own line. Preserve intentional line breaks in long calls:
 `ColumnLimit: 0` does not mean that an entire expression should be one line.
-For nested factory calls and lambdas, put arguments and lambda bodies on separate
-lines so indentation reflects the expression structure.
+Keep control flow visible and avoid callback adapters around ordinary function calls.
 
 Group includes with blank lines: the corresponding public header first, other
 project/internal headers, native or third-party headers, then standard-library
@@ -108,6 +109,8 @@ void setHash(const Blake2bHash& hash);
 - Use `@throws` for operation-specific failure conditions. Class-level text may
   explain shared exception behavior without repeating it
   verbatim on every member.
+- Document only the declaration belonging to each comment; describe move behavior
+  on move operations, not in the class summary.
 - Keep public documentation about observable behavior. Do not describe C handles,
   reference counts, native storage, or cloning mechanisms in interface documentation.
 - Use `@remark` only for useful behavior guarantees and important limits.

@@ -33,8 +33,6 @@
 
 namespace Cometa
 {
-static_assert(static_cast<int>(CredentialType::KeyHash) == CARDANO_CREDENTIAL_TYPE_KEY_HASH);
-static_assert(static_cast<int>(CredentialType::ScriptHash) == CARDANO_CREDENTIAL_TYPE_SCRIPT_HASH);
 
 namespace
 {
@@ -55,6 +53,7 @@ nativeType(CredentialType type)
     case CredentialType::ScriptHash:
       return CARDANO_CREDENTIAL_TYPE_SCRIPT_HASH;
   }
+
   throw std::invalid_argument("Unknown credential type");
 }
 
@@ -68,11 +67,12 @@ nativeType(CredentialType type)
 std::vector<std::uint8_t>
 credentialHash(const Blake2bHash& hash)
 {
-  auto bytes = hash.toBytes();
+  std::vector<std::uint8_t> bytes = hash.toBytes();
   if (bytes.size() != 28)
   {
     throw std::invalid_argument("Credential hash must be 28 bytes");
   }
+
   return bytes;
 }
 } // namespace
@@ -80,20 +80,31 @@ credentialHash(const Blake2bHash& hash)
 /* CLASS IMPLEMENTATION ******************************************************/
 
 Credential::Credential(CredentialType type, const Blake2bHash& hash)
-: m_value(
-    Detail::create<cardano_credential_t, cardano_credential_unref>(
-      [&](cardano_credential_t** out)
-      {
-        const auto bytes = credentialHash(hash);
-        return cardano_credential_from_hash_bytes(bytes.data(), bytes.size(), nativeType(type), out);
-      },
-      "Credential"))
+: m_value(nullptr)
 {
+  const std::vector<std::uint8_t> bytes = credentialHash(hash);
+
+  cardano_credential_t* value  = nullptr;
+  const cardano_error_t result = cardano_credential_from_hash_bytes(bytes.data(), bytes.size(), nativeType(type), &value);
+
+  CardanoObject<cardano_credential_t, cardano_credential_unref> owner(value);
+
+  checkCardanoError(result, "Credential");
+
+  m_value = owner.release();
 }
 
 Credential::Credential(const Credential& other)
-: m_value(Detail::clone<cardano_credential_t, cardano_credential_unref>(other.checked(), cardano_credential_deep_clone))
+: m_value(nullptr)
 {
+  cardano_credential_t* value  = nullptr;
+  const cardano_error_t result = cardano_credential_deep_clone(other.checked(), &value);
+
+  CardanoObject<cardano_credential_t, cardano_credential_unref> owner(value);
+
+  checkCardanoError(result, "Credential copy");
+
+  m_value = owner.release();
 }
 
 Credential::Credential(Credential&& other) noexcept
@@ -109,62 +120,64 @@ Credential::~Credential()
 Credential
 Credential::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
-  return Credential(Detail::decode<cardano_credential_t, cardano_credential_unref>(cbor, cardano_credential_from_cbor));
+  return Credential(decodeCbor<cardano_credential_t, cardano_credential_unref>(cbor, cardano_credential_from_cbor));
 }
 
 Credential
-Credential::fromCbor(std::string_view cborHex)
+Credential::fromCbor(const std::string_view cborHex)
 {
-  return fromCbor(Detail::decodeHex(cborHex));
+  return fromCbor(decodeHex(cborHex));
 }
 
 Blake2bHash
 Credential::hash() const
 {
-  const auto* value = checked();
-  const auto* bytes = cardano_credential_get_hash_bytes(value);
+  const cardano_credential_t* value = checked();
+  const std::uint8_t*         bytes = cardano_credential_get_hash_bytes(value);
+
   return Blake2bHash(std::vector<std::uint8_t>(bytes, bytes + cardano_credential_get_hash_bytes_size(value)));
 }
 
 void
 Credential::setHash(const Blake2bHash& hash)
 {
-  const auto bytes = credentialHash(hash);
+  const std::vector<std::uint8_t> bytes = credentialHash(hash);
 
-  Detail::Owned<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> native(
-    Detail::create<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>(
-      [&](cardano_blake2b_hash_t** out)
-      {
-        return cardano_blake2b_hash_from_bytes(bytes.data(), bytes.size(), out);
-      },
-      "Credential setHash"));
-  Detail::check(cardano_credential_set_hash(checked(), native.get()), "Credential setHash");
+  cardano_blake2b_hash_t* value  = nullptr;
+  const cardano_error_t   result = cardano_blake2b_hash_from_bytes(bytes.data(), bytes.size(), &value);
+
+  CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
+
+  checkCardanoError(result, "Credential setHash");
+  checkCardanoError(cardano_credential_set_hash(checked(), owner.get()), "Credential setHash");
 }
 
 CredentialType
 Credential::type() const
 {
   cardano_credential_type_t type;
-  Detail::check(cardano_credential_get_type(checked(), &type), "Credential type");
+
+  checkCardanoError(cardano_credential_get_type(checked(), &type), "Credential type");
+
   return static_cast<CredentialType>(type);
 }
 
 void
 Credential::setType(CredentialType type)
 {
-  Detail::check(cardano_credential_set_type(checked(), nativeType(type)), "Credential setType");
+  checkCardanoError(cardano_credential_set_type(checked(), nativeType(type)), "Credential setType");
 }
 
 std::vector<std::uint8_t>
 Credential::toCbor() const
 {
-  return Detail::encode(checked(), cardano_credential_to_cbor);
+  return encodeCbor(checked(), cardano_credential_to_cbor);
 }
 
 std::string
 Credential::toJson() const
 {
-  return Detail::json(checked(), cardano_credential_to_cip116_json);
+  return encodeJson(checked(), cardano_credential_to_cip116_json);
 }
 
 void
@@ -179,8 +192,10 @@ Credential::operator=(const Credential& other)
   if (this != &other)
   {
     Credential copy(other);
+
     swap(copy);
   }
+
   return *this;
 }
 
@@ -192,6 +207,7 @@ Credential::operator=(Credential&& other) noexcept
     cardano_credential_unref(&m_value);
     m_value = std::exchange(other.m_value, nullptr);
   }
+
   return *this;
 }
 
@@ -227,6 +243,7 @@ Credential::checked() const
   {
     throw std::logic_error("Cannot observe a moved-from Credential");
   }
+
   return m_value;
 }
 

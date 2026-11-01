@@ -41,11 +41,6 @@ namespace Cometa
 {
 /**
  * @brief Represents a BLAKE2b hash.
- *
- * @remark Modifying a copy does not change the original.
- *
- * Moved-from objects can be destroyed, assigned, or swapped. Observing their value
- * throws std::logic_error.
  */
 class Blake2bHash
 {
@@ -72,7 +67,9 @@ class Blake2bHash
     /**
      * @brief Moves another value into this instance.
      *
-     * @param other The source, which becomes moved-from.
+     * @param other The value to move.
+     *
+     * @remark After the move, other can be destroyed, assigned, or swapped; observing it throws std::logic_error.
      */
     Blake2bHash(Blake2bHash&& other) noexcept;
 
@@ -223,29 +220,14 @@ class Blake2bHash
 
   private:
 
-    /**
-     * @brief Adopts one owned native reference.
-     *
-     * @param value A non-null owned reference returned by a successful native operation.
-     */
     explicit Blake2bHash(cardano_blake2b_hash_t* value) noexcept;
 
   private:
 
-    /**
-     * @brief Gets the native value after checking its lifetime.
-     *
-     * @return The borrowed native pointer.
-     *
-     * @throws std::logic_error This object has been moved from.
-     */
     cardano_blake2b_hash_t* checked() const;
 
   private:
 
-    /**
-     * @brief Owns one native reference; null only after ownership has been moved.
-     */
     cardano_blake2b_hash_t* m_value;
 };
 } // namespace Cometa

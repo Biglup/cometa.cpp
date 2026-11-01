@@ -44,7 +44,7 @@
 
 /* INTERNAL IMPLEMENTATION ***************************************************/
 
-namespace Cometa::Detail
+namespace Cometa
 {
 /**
  * @brief Translates a native failure into a C++ exception.
@@ -53,12 +53,13 @@ namespace Cometa::Detail
  * @param operation The operation name included in the exception.
  */
 inline void
-check(cardano_error_t error, const char* operation)
+checkCardanoError(cardano_error_t error, const char* operation)
 {
   if (error == CARDANO_ERROR_MEMORY_ALLOCATION_FAILED)
   {
     throw std::bad_alloc();
   }
+
   if (error != CARDANO_SUCCESS)
   {
     throw Error(static_cast<ErrorCode>(error), operation);
@@ -69,7 +70,7 @@ check(cardano_error_t error, const char* operation)
  * @brief Releases one owned native reference using its typed unref function.
  */
 template<class T, void (*Release)(T**)>
-struct Deleter
+struct CardanoDeleter
 {
     void
     operator()(T* value) const noexcept
@@ -77,54 +78,12 @@ struct Deleter
       Release(&value);
     }
 };
+
 /**
  * @brief Guards an operation-scoped native reference.
  */
 template<class T, void (*Release)(T**)>
-using Owned = std::unique_ptr<T, Deleter<T, Release>>;
-
-/**
- * @brief Acquires a native object and releases partial outputs on status errors.
- *
- * @param function The native constructor adapter; it must not throw after publishing an owned output.
- * @param operation The operation name included in a failure.
- *
- * @return One owned native reference, transferred to the caller.
- */
-template<class T, void (*Release)(T**), class Function>
-T*
-create(Function function, const char* operation)
-{
-  T*                value  = nullptr;
-  const auto        result = function(&value);
-  Owned<T, Release> owner(value);
-  check(result, operation);
-  if (!owner)
-  {
-    throw std::bad_alloc();
-  }
-  return owner.release();
-}
-
-/**
- * @brief Creates an independent owned native copy.
- *
- * @param source The borrowed source value.
- * @param copy The native deep-clone operation.
- *
- * @return One owned reference to the copy.
- */
-template<class T, void (*Release)(T**)>
-T*
-clone(const T* source, cardano_error_t (*copy)(const T*, T**))
-{
-  return create<T, Release>(
-    [&](T** out)
-    {
-      return copy(source, out);
-    },
-    "copy");
-}
+using CardanoObject = std::unique_ptr<T, CardanoDeleter<T, Release>>;
 
 /**
  * @brief Gets a non-null borrowed byte pointer, including for empty input.
@@ -134,10 +93,35 @@ clone(const T* source, cardano_error_t (*copy)(const T*, T**))
  * @return The byte storage, or a sentinel for a zero-length input.
  */
 inline const std::uint8_t*
-data(const std::vector<std::uint8_t>& bytes)
+byteData(const std::vector<std::uint8_t>& bytes)
 {
   static const std::uint8_t EMPTY_BYTE = 0;
+
   return bytes.empty() ? &EMPTY_BYTE : bytes.data();
+}
+
+/** @brief Tests whether a character is a hexadecimal digit. */
+inline bool
+isHexDigit(char digit)
+{
+  return (digit >= '0' && digit <= '9') || (digit >= 'a' && digit <= 'f') || (digit >= 'A' && digit <= 'F');
+}
+
+/** @brief Converts one validated hexadecimal digit to its numeric value. */
+inline std::uint8_t
+hexDigitValue(char digit)
+{
+  if (digit >= '0' && digit <= '9')
+  {
+    return static_cast<std::uint8_t>(digit - '0');
+  }
+
+  if (digit >= 'a' && digit <= 'f')
+  {
+    return static_cast<std::uint8_t>(digit - 'a' + 10);
+  }
+
+  return static_cast<std::uint8_t>(digit - 'A' + 10);
 }
 
 /**
@@ -152,11 +136,8 @@ validateHex(std::string_view hex)
   {
     throw std::invalid_argument("Hex must contain pairs of digits");
   }
-  const auto invalid = [](char digit)
-  {
-    return !((digit >= '0' && digit <= '9') || (digit >= 'a' && digit <= 'f') || (digit >= 'A' && digit <= 'F'));
-  };
-  if (std::any_of(hex.begin(), hex.end(), invalid))
+
+  if (!std::all_of(hex.begin(), hex.end(), isHexDigit))
   {
     throw std::invalid_argument("Invalid hexadecimal digit");
   }
@@ -175,23 +156,14 @@ inline std::vector<std::uint8_t>
 decodeHex(std::string_view hex)
 {
   validateHex(hex);
-  const auto nibble = [](char digit) -> std::uint8_t
-  {
-    if (digit >= '0' && digit <= '9')
-    {
-      return static_cast<std::uint8_t>(digit - '0');
-    }
-    if (digit >= 'a' && digit <= 'f')
-    {
-      return static_cast<std::uint8_t>(digit - 'a' + 10);
-    }
-    return static_cast<std::uint8_t>(digit - 'A' + 10);
-  };
+
   std::vector<std::uint8_t> bytes(hex.size() / 2);
+
   for (std::size_t i = 0; i < bytes.size(); ++i)
   {
-    bytes[i] = static_cast<std::uint8_t>((nibble(hex[i * 2]) << 4) | nibble(hex[i * 2 + 1]));
+    bytes[i] = static_cast<std::uint8_t>((hexDigitValue(hex[i * 2]) << 4) | hexDigitValue(hex[i * 2 + 1]));
   }
+
   return bytes;
 }
 
@@ -205,29 +177,34 @@ decodeHex(std::string_view hex)
  */
 template<class T, void (*Release)(T**), class Decoder>
 T*
-decode(const std::vector<std::uint8_t>& bytes, Decoder decoder)
+decodeCbor(const std::vector<std::uint8_t>& bytes, Decoder decoder)
 {
   if (bytes.empty())
   {
     throw std::invalid_argument("CBOR must not be empty");
   }
-  Owned<cardano_cbor_reader_t, cardano_cbor_reader_unref> reader(cardano_cbor_reader_new(data(bytes), bytes.size()));
+
+  CardanoObject<cardano_cbor_reader_t, cardano_cbor_reader_unref> reader(cardano_cbor_reader_new(byteData(bytes), bytes.size()));
   if (!reader)
   {
     throw std::bad_alloc();
   }
-  Owned<T, Release> result(create<T, Release>(
-    [&](T** out)
-    {
-      return decoder(reader.get(), out);
-    },
-    "fromCbor"));
-  std::size_t       remaining = 0;
-  check(cardano_cbor_reader_get_bytes_remaining(reader.get(), &remaining), "fromCbor");
+
+  T*                        value  = nullptr;
+  const cardano_error_t     status = decoder(reader.get(), &value);
+  CardanoObject<T, Release> result(value);
+
+  checkCardanoError(status, "fromCbor");
+
+  std::size_t remaining = 0;
+
+  checkCardanoError(cardano_cbor_reader_get_bytes_remaining(reader.get(), &remaining), "fromCbor");
+
   if (remaining != 0)
   {
     throw std::invalid_argument("Trailing CBOR bytes");
   }
+
   return result.release();
 }
 
@@ -241,16 +218,19 @@ decode(const std::vector<std::uint8_t>& bytes, Decoder decoder)
  */
 template<class T, class Encoder>
 std::vector<std::uint8_t>
-encode(const T* value, Encoder encoder)
+encodeCbor(const T* value, Encoder encoder)
 {
-  Owned<cardano_cbor_writer_t, cardano_cbor_writer_unref> writer(cardano_cbor_writer_new());
+  CardanoObject<cardano_cbor_writer_t, cardano_cbor_writer_unref> writer(cardano_cbor_writer_new());
   if (!writer)
   {
     throw std::bad_alloc();
   }
-  check(encoder(value, writer.get()), "toCbor");
+
+  checkCardanoError(encoder(value, writer.get()), "toCbor");
+
   std::vector<std::uint8_t> bytes(cardano_cbor_writer_get_encode_size(writer.get()));
-  check(cardano_cbor_writer_encode(writer.get(), bytes.data(), bytes.size()), "toCbor");
+  checkCardanoError(cardano_cbor_writer_encode(writer.get(), bytes.data(), bytes.size()), "toCbor");
+
   return bytes;
 }
 
@@ -264,17 +244,20 @@ encode(const T* value, Encoder encoder)
  */
 template<class T, class Encoder>
 std::string
-json(const T* value, Encoder encoder)
+encodeJson(const T* value, Encoder encoder)
 {
-  Owned<cardano_json_writer_t, cardano_json_writer_unref> writer(cardano_json_writer_new(CARDANO_JSON_FORMAT_COMPACT));
+  CardanoObject<cardano_json_writer_t, cardano_json_writer_unref> writer(cardano_json_writer_new(CARDANO_JSON_FORMAT_COMPACT));
   if (!writer)
   {
     throw std::bad_alloc();
   }
-  check(encoder(value, writer.get()), "toJson");
+
+  checkCardanoError(encoder(value, writer.get()), "toJson");
+
   std::string text(cardano_json_writer_get_encoded_size(writer.get()), '\0');
-  check(cardano_json_writer_encode(writer.get(), text.data(), text.size()), "toJson");
+  checkCardanoError(cardano_json_writer_encode(writer.get(), text.data(), text.size()), "toJson");
   text.pop_back();
+
   return text;
 }
-} // namespace Cometa::Detail
+} // namespace Cometa

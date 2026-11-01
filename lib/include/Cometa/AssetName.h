@@ -41,11 +41,6 @@ namespace Cometa
 {
 /**
  * @brief Represents an asset name of up to 32 bytes.
- *
- * @remark Modifying a copy does not change the original.
- *
- * Moved-from objects can be destroyed, assigned, or swapped. Observing their value
- * throws std::logic_error.
  */
 class AssetName
 {
@@ -72,7 +67,9 @@ class AssetName
     /**
      * @brief Moves another value into this instance.
      *
-     * @param other The source, which becomes moved-from.
+     * @param other The value to move.
+     *
+     * @remark After the move, other can be destroyed, assigned, or swapped; observing it throws std::logic_error.
      */
     AssetName(AssetName&& other) noexcept;
 
@@ -231,29 +228,14 @@ class AssetName
 
   private:
 
-    /**
-     * @brief Adopts one owned native reference.
-     *
-     * @param value A non-null owned reference returned by a successful native operation.
-     */
     explicit AssetName(cardano_asset_name_t* value) noexcept;
 
   private:
 
-    /**
-     * @brief Gets the native value after checking its lifetime.
-     *
-     * @return The borrowed native pointer.
-     *
-     * @throws std::logic_error This object has been moved from.
-     */
     cardano_asset_name_t* checked() const;
 
   private:
 
-    /**
-     * @brief Owns one native reference; null only after ownership has been moved.
-     */
     cardano_asset_name_t* m_value;
 };
 } // namespace Cometa

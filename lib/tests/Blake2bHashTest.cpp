@@ -58,7 +58,7 @@ TEST(Blake2bHash, MatchesKnownDigest)
   const std::vector<std::uint8_t> bytes { 'a', 'b', 'c' };
 
   // Act
-  const auto hash = Blake2bHash::compute(bytes);
+  const Blake2bHash hash = Blake2bHash::compute(bytes);
 
   // Assert
   EXPECT_EQ(hash.toHex(), "bddd813c634239723171ef3fee98579b94964e3bb1cb3e427262c8c068d52319");
@@ -67,11 +67,11 @@ TEST(Blake2bHash, MatchesKnownDigest)
 TEST(Blake2bHash, SerializesToCbor)
 {
   // Arrange
-  const auto hash = keyHash();
+  const Blake2bHash hash = keyHash();
 
   // Act
-  const auto cbor    = hash.toCbor();
-  const auto decoded = Blake2bHash::fromCbor(cbor);
+  const std::vector<std::uint8_t> cbor    = hash.toCbor();
+  const Blake2bHash               decoded = Blake2bHash::fromCbor(cbor);
 
   // Assert
   EXPECT_EQ(decoded, hash);
@@ -102,10 +102,10 @@ TEST(Blake2bHash, RejectsMalformedCbor)
 TEST(Blake2bHash, SerializesToJson)
 {
   // Arrange
-  const auto value = keyHash();
+  const Blake2bHash value = keyHash();
 
   // Act
-  const auto json = value.toJson();
+  const std::string json = value.toJson();
 
   // Assert
   EXPECT_EQ(json, "\"" + HASH_HEX + "\"");
@@ -115,10 +115,10 @@ TEST(Blake2bHash, ParsesHexCbor)
 {
   // Arrange
   const std::string hex      = "581c00000000000000000000000000000000000000000000000000000000";
-  const auto        expected = keyHash();
+  const Blake2bHash expected = keyHash();
 
   // Act
-  const auto decoded = Blake2bHash::fromCbor(hex);
+  const Blake2bHash decoded = Blake2bHash::fromCbor(hex);
 
   // Assert
   EXPECT_EQ(decoded, expected);
@@ -146,9 +146,9 @@ TEST(Blake2bHash, ByteConstructorCopiesInput)
 
   // Act
   const Blake2bHash value(bytes);
-  bytes[0]    = 1;
-  auto result = value.toBytes();
-  result[0]   = 2;
+  bytes[0]                         = 1;
+  std::vector<std::uint8_t> result = value.toBytes();
+  result[0]                        = 2;
 
   // Assert
   EXPECT_EQ(value.toHex(), HASH_HEX);
@@ -161,7 +161,7 @@ TEST(Blake2bHash, ComputesRequestedDigestSize)
   const std::vector<std::uint8_t> input { 'a', 'b', 'c' };
 
   // Act
-  const auto digest = Blake2bHash::compute(input, 64);
+  const Blake2bHash digest = Blake2bHash::compute(input, 64);
 
   // Assert
   EXPECT_EQ(digest.toHex(), "ba80a53f981c4d0d6a2797b69f12f6e94c212f14685ac4b74b12bb6fdbffa2d17d87c5392aab792dc252d5de4533cc9518d38aa8dbf1925ab92386edd4009923");
@@ -170,9 +170,9 @@ TEST(Blake2bHash, ComputesRequestedDigestSize)
 TEST(Blake2bHash, ComparesValues)
 {
   // Arrange
-  const auto        first = keyHash();
+  const Blake2bHash first = keyHash();
   const Blake2bHash same(std::vector<std::uint8_t>(28, 0));
-  const auto        second = Blake2bHash::fromHex(std::string(56, '1'));
+  const Blake2bHash second = Blake2bHash::fromHex(std::string(56, '1'));
 
   // Act & Assert
   EXPECT_EQ(first, same);

@@ -34,27 +34,13 @@ and callback adapters are not implemented yet.
    * - ``*_deep_clone``
      - Copy construction and assignment; independent ownership
 
-Ownership and error mappings
-----------------------------
+Error mapping
+-------------
 
-``*_ref``, ``*_unref``, reference counts, raw pointer getters, and buffer-size
-queries are internal implementation details. Native constructors and decoders
-return one owned reference. The internal unique-pointer guard releases it on
-failure; successful construction transfers it to the C++ object's private owner.
-Destructors unref exactly once. Moves clear the source handle explicitly.
+Operation failures throw ``Error`` with a documented ``ErrorCode``. Allocation
+failures reported as such throw ``std::bad_alloc``. Unit tests verify credential
+and error code values against cardano-c.
 
-Hash getters and setters on ``Credential`` copy bytes into fresh native values;
-no mutable child is shared with the caller. Bytes and strings returned to callers
-own their storage. CBOR readers, writers, and JSON writers are scoped internally
-and released before returning or throwing.
-
-Native declarations come from the pinned C headers rather than a handwritten ABI.
-Credential and error enum values are checked at compile time. Errors map to
-``Error`` with a documented ``ErrorCode`` in the Cometa category, and
-native allocation-error codes to ``std::bad_alloc``. Raw diagnostic setters are
-not public operations; exceptions name the failed operation and retain its status.
-
-The value tests cover native encodings, a known hash digest, mutation isolation,
-copy/move/self-assignment, source destruction, allocation failure, parser cleanup,
-and owned return values. Broader shared transaction fixtures will apply when those
-types are implemented; this slice does not claim full corpus conformance.
+Tests cover encodings, known hash digests, independent copies, moves, allocation
+failures, and cleanup. Transaction conformance fixtures will apply when transaction
+types are implemented.

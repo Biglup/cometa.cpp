@@ -34,19 +34,29 @@
 namespace Cometa
 {
 Blake2bHash::Blake2bHash(const std::vector<std::uint8_t>& bytes)
-: m_value(
-    Detail::create<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>(
-      [&](cardano_blake2b_hash_t** out)
-      {
-        return cardano_blake2b_hash_from_bytes(Detail::data(bytes), bytes.size(), out);
-      },
-      "Blake2bHash from bytes"))
+: m_value(nullptr)
 {
+  cardano_blake2b_hash_t* value  = nullptr;
+  const cardano_error_t   result = cardano_blake2b_hash_from_bytes(byteData(bytes), bytes.size(), &value);
+
+  CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
+
+  checkCardanoError(result, "Blake2bHash");
+
+  m_value = owner.release();
 }
 
 Blake2bHash::Blake2bHash(const Blake2bHash& other)
-: m_value(Detail::clone<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>(other.checked(), cardano_blake2b_hash_deep_clone))
+: m_value(nullptr)
 {
+  cardano_blake2b_hash_t* value  = nullptr;
+  const cardano_error_t   result = cardano_blake2b_hash_deep_clone(other.checked(), &value);
+
+  CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
+
+  checkCardanoError(result, "Blake2bHash copy");
+
+  m_value = owner.release();
 }
 
 Blake2bHash::Blake2bHash(Blake2bHash&& other) noexcept
@@ -62,14 +72,16 @@ Blake2bHash::~Blake2bHash()
 Blake2bHash
 Blake2bHash::fromHex(std::string_view hex)
 {
-  Detail::validateHex(hex);
-  return Blake2bHash(
-    Detail::create<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>(
-      [&](cardano_blake2b_hash_t** out)
-      {
-        return cardano_blake2b_hash_from_hex(hex.empty() ? "" : hex.data(), hex.size(), out);
-      },
-      "Blake2bHash fromHex"));
+  validateHex(hex);
+
+  cardano_blake2b_hash_t* value  = nullptr;
+  const cardano_error_t   result = cardano_blake2b_hash_from_hex(hex.empty() ? "" : hex.data(), hex.size(), &value);
+
+  CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
+
+  checkCardanoError(result, "Blake2bHash fromHex");
+
+  return Blake2bHash(owner.release());
 }
 
 Blake2bHash
@@ -77,61 +89,66 @@ Blake2bHash::compute(const std::vector<std::uint8_t>& data, std::size_t digestSi
 {
   if (data.empty())
   {
-    throw std::invalid_argument("The native hash API requires nonempty input");
+    throw std::invalid_argument("Hash input must not be empty");
   }
+
   if (digestSize == 0 || digestSize > 64)
   {
     throw std::invalid_argument("Digest size must be between 1 and 64");
   }
-  return Blake2bHash(
-    Detail::create<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>(
-      [&](cardano_blake2b_hash_t** out)
-      {
-        return cardano_blake2b_compute_hash(Detail::data(data), data.size(), digestSize, out);
-      },
-      "Blake2bHash compute"));
+
+  cardano_blake2b_hash_t* value  = nullptr;
+  const cardano_error_t   result = cardano_blake2b_compute_hash(byteData(data), data.size(), digestSize, &value);
+
+  CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
+
+  checkCardanoError(result, "Blake2bHash compute");
+
+  return Blake2bHash(owner.release());
 }
 
 Blake2bHash
 Blake2bHash::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
-  return Blake2bHash(Detail::decode<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>(cbor, cardano_blake2b_hash_from_cbor));
+  return Blake2bHash(decodeCbor<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>(cbor, cardano_blake2b_hash_from_cbor));
 }
 
 Blake2bHash
-Blake2bHash::fromCbor(std::string_view cborHex)
+Blake2bHash::fromCbor(const std::string_view cborHex)
 {
-  return fromCbor(Detail::decodeHex(cborHex));
+  return fromCbor(decodeHex(cborHex));
 }
 
 std::vector<std::uint8_t>
 Blake2bHash::toBytes() const
 {
-  const auto* value = checked();
-  const auto* bytes = cardano_blake2b_hash_get_data(value);
+  const cardano_blake2b_hash_t* value = checked();
+  const std::uint8_t*           bytes = cardano_blake2b_hash_get_data(value);
+
   return { bytes, bytes + cardano_blake2b_hash_get_bytes_size(value) };
 }
 
 std::string
 Blake2bHash::toHex() const
 {
-  const auto* value = checked();
-  std::string hex(cardano_blake2b_hash_get_hex_size(value), '\0');
-  Detail::check(cardano_blake2b_hash_to_hex(value, hex.data(), hex.size()), "Blake2bHash toHex");
+  const cardano_blake2b_hash_t* value = checked();
+  std::string                   hex(cardano_blake2b_hash_get_hex_size(value), '\0');
+  checkCardanoError(cardano_blake2b_hash_to_hex(value, hex.data(), hex.size()), "Blake2bHash toHex");
   hex.pop_back();
+
   return hex;
 }
 
 std::vector<std::uint8_t>
 Blake2bHash::toCbor() const
 {
-  return Detail::encode(checked(), cardano_blake2b_hash_to_cbor);
+  return encodeCbor(checked(), cardano_blake2b_hash_to_cbor);
 }
 
 std::string
 Blake2bHash::toJson() const
 {
-  return Detail::json(checked(), cardano_blake2b_hash_to_cip116_json);
+  return encodeJson(checked(), cardano_blake2b_hash_to_cip116_json);
 }
 
 void
@@ -146,8 +163,10 @@ Blake2bHash::operator=(const Blake2bHash& other)
   if (this != &other)
   {
     Blake2bHash copy(other);
+
     swap(copy);
   }
+
   return *this;
 }
 
@@ -159,6 +178,7 @@ Blake2bHash::operator=(Blake2bHash&& other) noexcept
     cardano_blake2b_hash_unref(&m_value);
     m_value = std::exchange(other.m_value, nullptr);
   }
+
   return *this;
 }
 
@@ -194,6 +214,7 @@ Blake2bHash::checked() const
   {
     throw std::logic_error("Cannot observe a moved-from Blake2bHash");
   }
+
   return m_value;
 }
 

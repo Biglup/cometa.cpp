@@ -34,19 +34,29 @@
 namespace Cometa
 {
 AssetName::AssetName(const std::vector<std::uint8_t>& bytes)
-: m_value(
-    Detail::create<cardano_asset_name_t, cardano_asset_name_unref>(
-      [&](cardano_asset_name_t** out)
-      {
-        return cardano_asset_name_from_bytes(Detail::data(bytes), bytes.size(), out);
-      },
-      "AssetName from bytes"))
+: m_value(nullptr)
 {
+  cardano_asset_name_t* value  = nullptr;
+  const cardano_error_t result = cardano_asset_name_from_bytes(byteData(bytes), bytes.size(), &value);
+
+  CardanoObject<cardano_asset_name_t, cardano_asset_name_unref> owner(value);
+
+  checkCardanoError(result, "AssetName");
+
+  m_value = owner.release();
 }
 
 AssetName::AssetName(const AssetName& other)
-: m_value(Detail::clone<cardano_asset_name_t, cardano_asset_name_unref>(other.checked(), cardano_asset_name_deep_clone))
+: m_value(nullptr)
 {
+  cardano_asset_name_t* value  = nullptr;
+  const cardano_error_t result = cardano_asset_name_deep_clone(other.checked(), &value);
+
+  CardanoObject<cardano_asset_name_t, cardano_asset_name_unref> owner(value);
+
+  checkCardanoError(result, "AssetName copy");
+
+  m_value = owner.release();
 }
 
 AssetName::AssetName(AssetName&& other) noexcept
@@ -62,45 +72,49 @@ AssetName::~AssetName()
 AssetName
 AssetName::fromHex(std::string_view hex)
 {
-  Detail::validateHex(hex);
-  return AssetName(
-    Detail::create<cardano_asset_name_t, cardano_asset_name_unref>(
-      [&](cardano_asset_name_t** out)
-      {
-        return cardano_asset_name_from_hex(hex.empty() ? "" : hex.data(), hex.size(), out);
-      },
-      "AssetName fromHex"));
+  validateHex(hex);
+
+  cardano_asset_name_t* value  = nullptr;
+  const cardano_error_t result = cardano_asset_name_from_hex(hex.empty() ? "" : hex.data(), hex.size(), &value);
+
+  CardanoObject<cardano_asset_name_t, cardano_asset_name_unref> owner(value);
+
+  checkCardanoError(result, "AssetName fromHex");
+
+  return AssetName(owner.release());
 }
 
 AssetName
 AssetName::fromString(std::string_view text)
 {
-  return AssetName(
-    Detail::create<cardano_asset_name_t, cardano_asset_name_unref>(
-      [&](cardano_asset_name_t** out)
-      {
-        return cardano_asset_name_from_string(text.empty() ? "" : text.data(), text.size(), out);
-      },
-      "AssetName fromString"));
+  cardano_asset_name_t* value  = nullptr;
+  const cardano_error_t result = cardano_asset_name_from_string(text.empty() ? "" : text.data(), text.size(), &value);
+
+  CardanoObject<cardano_asset_name_t, cardano_asset_name_unref> owner(value);
+
+  checkCardanoError(result, "AssetName fromString");
+
+  return AssetName(owner.release());
 }
 
 AssetName
 AssetName::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
-  return AssetName(Detail::decode<cardano_asset_name_t, cardano_asset_name_unref>(cbor, cardano_asset_name_from_cbor));
+  return AssetName(decodeCbor<cardano_asset_name_t, cardano_asset_name_unref>(cbor, cardano_asset_name_from_cbor));
 }
 
 AssetName
-AssetName::fromCbor(std::string_view cborHex)
+AssetName::fromCbor(const std::string_view cborHex)
 {
-  return fromCbor(Detail::decodeHex(cborHex));
+  return fromCbor(decodeHex(cborHex));
 }
 
 std::vector<std::uint8_t>
 AssetName::toBytes() const
 {
-  const auto* value = checked();
-  const auto* bytes = cardano_asset_name_get_bytes(value);
+  const cardano_asset_name_t* value = checked();
+  const std::uint8_t*         bytes = cardano_asset_name_get_bytes(value);
+
   return { bytes, bytes + cardano_asset_name_get_bytes_size(value) };
 }
 
@@ -113,20 +127,21 @@ AssetName::toHex() const
 std::string
 AssetName::toString() const
 {
-  const auto bytes = toBytes();
+  const std::vector<std::uint8_t> bytes = toBytes();
+
   return { bytes.begin(), bytes.end() };
 }
 
 std::vector<std::uint8_t>
 AssetName::toCbor() const
 {
-  return Detail::encode(checked(), cardano_asset_name_to_cbor);
+  return encodeCbor(checked(), cardano_asset_name_to_cbor);
 }
 
 std::string
 AssetName::toJson() const
 {
-  return Detail::json(checked(), cardano_asset_name_to_cip116_json);
+  return encodeJson(checked(), cardano_asset_name_to_cip116_json);
 }
 
 void
@@ -141,8 +156,10 @@ AssetName::operator=(const AssetName& other)
   if (this != &other)
   {
     AssetName copy(other);
+
     swap(copy);
   }
+
   return *this;
 }
 
@@ -154,6 +171,7 @@ AssetName::operator=(AssetName&& other) noexcept
     cardano_asset_name_unref(&m_value);
     m_value = std::exchange(other.m_value, nullptr);
   }
+
   return *this;
 }
 
@@ -189,6 +207,7 @@ AssetName::checked() const
   {
     throw std::logic_error("Cannot observe a moved-from AssetName");
   }
+
   return m_value;
 }
 

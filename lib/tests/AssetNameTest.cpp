@@ -42,12 +42,12 @@ using namespace Cometa;
 TEST(AssetName, PreservesBinaryNames)
 {
   // Arrange
-  const auto binary = AssetName::fromHex("610062ff");
+  const AssetName binary = AssetName::fromHex("610062ff");
 
   // Act
-  const auto bytes   = binary.toBytes();
-  const auto text    = binary.toString();
-  const auto decoded = AssetName::fromCbor(binary.toCbor());
+  const std::vector<std::uint8_t> bytes   = binary.toBytes();
+  const std::string               text    = binary.toString();
+  const AssetName                 decoded = AssetName::fromCbor(binary.toCbor());
 
   // Assert
   EXPECT_EQ(bytes, (std::vector<std::uint8_t> { 0x61, 0, 0x62, 0xff }));
@@ -58,9 +58,9 @@ TEST(AssetName, PreservesBinaryNames)
 TEST(AssetName, EncodesTextAndEmptyNames)
 {
   // Act
-  const auto text      = AssetName::fromString("Cometa");
-  const auto emptyHex  = AssetName::fromHex("");
-  const auto emptyText = AssetName::fromString("");
+  const AssetName text      = AssetName::fromString("Cometa");
+  const AssetName emptyHex  = AssetName::fromHex("");
+  const AssetName emptyText = AssetName::fromString("");
 
   // Assert
   EXPECT_EQ(text.toHex(), "436f6d657461");
@@ -91,8 +91,8 @@ TEST(AssetName, RejectsMalformedCbor)
 TEST(AssetName, ReturnedBytesAreIndependent)
 {
   // Arrange
-  const auto value = AssetName::fromString("test");
-  auto       bytes = value.toBytes();
+  const AssetName           value = AssetName::fromString("test");
+  std::vector<std::uint8_t> bytes = value.toBytes();
 
   // Act
   bytes[0] = 0;
@@ -105,10 +105,10 @@ TEST(AssetName, ReturnedBytesAreIndependent)
 TEST(AssetName, SerializesToJson)
 {
   // Arrange
-  const auto value = AssetName::fromString("Cometa");
+  const AssetName value = AssetName::fromString("Cometa");
 
   // Act
-  const auto json = value.toJson();
+  const std::string json = value.toJson();
 
   // Assert
   EXPECT_EQ(json, "\"436f6d657461\"");
@@ -118,10 +118,10 @@ TEST(AssetName, ParsesHexCbor)
 {
   // Arrange
   const std::string hex      = "46436f6d657461";
-  const auto        expected = AssetName::fromString("Cometa");
+  const AssetName   expected = AssetName::fromString("Cometa");
 
   // Act
-  const auto decoded = AssetName::fromCbor(hex);
+  const AssetName decoded = AssetName::fromCbor(hex);
 
   // Assert
   EXPECT_EQ(decoded, expected);
@@ -149,7 +149,7 @@ TEST(AssetName, ParsesMixedCaseHexCbor)
   const std::string_view hex(wrapped.data() + 2, 6);
 
   // Act
-  const auto value = AssetName::fromCbor(hex);
+  const AssetName value = AssetName::fromCbor(hex);
 
   // Assert
   EXPECT_EQ(value.toHex(), "aabb");
@@ -171,9 +171,9 @@ TEST(AssetName, ByteConstructorCopiesInput)
 TEST(AssetName, ComparesValues)
 {
   // Arrange
-  const auto first  = AssetName::fromString("a");
-  const auto same   = AssetName::fromHex("61");
-  const auto second = AssetName::fromString("b");
+  const AssetName first  = AssetName::fromString("a");
+  const AssetName same   = AssetName::fromHex("61");
+  const AssetName second = AssetName::fromString("b");
 
   // Act & Assert
   EXPECT_EQ(first, same);
@@ -195,7 +195,7 @@ TEST(AssetName, StringFactoryPreservesEmbeddedNulls)
   const std::string text("a\0b", 3);
 
   // Act
-  const auto value = AssetName::fromString(text);
+  const AssetName value = AssetName::fromString(text);
 
   // Assert
   EXPECT_EQ(value.toString(), text);

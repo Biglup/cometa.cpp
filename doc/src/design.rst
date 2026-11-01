@@ -5,8 +5,7 @@ Value semantics
 ---------------
 
 Classes mirror native domain concepts using C++ names and standard-library types.
-Copy construction calls the native deep-clone API. Mutable children are never
-shared between copies. Move construction transfers ownership without allocation.
+Copies are independent values; changing one does not change another.
 No public native pointers, reference counts, disposal methods, or handle wrappers
 are needed. Builders and provider sessions will have separate noncopyable lifetimes
 where copying does not have meaningful semantics.

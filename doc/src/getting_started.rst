@@ -15,7 +15,7 @@ To use a local checkout, set ``COMETA_CARDANO_SOURCE_DIR`` instead.
    ctest --test-dir build --output-on-failure
    cmake --install build --prefix /path/to/cometa
 
-Pass ``-DCOMETA_BUILD_TESTS=OFF`` if GoogleTest is not installed. Tests and examples
+Pass ``-DCOMETA_BUILD_TESTS=OFF`` if GoogleTest is not installed. Tests
 are excluded from the installed package.
 
 Consuming an installed package
@@ -43,18 +43,22 @@ Using values
 
    using namespace Cometa;
 
-   auto hash = Blake2bHash::fromHex(std::string(56, '0'));
+   Blake2bHash hash = Blake2bHash::fromHex(std::string(56, '0'));
    Credential original(CredentialType::KeyHash, hash);
-   auto scriptCredential = original;
+
+   Credential scriptCredential = original;
+
    scriptCredential.setType(CredentialType::ScriptHash);
 
    // original is still a key credential.
-   auto encoded = scriptCredential.toCbor();
-   auto decoded = Credential::fromCbor(encoded);
-   auto asset = AssetName::fromString("Cometa");
+   std::vector<std::uint8_t> encoded = scriptCredential.toCbor();
+   Credential decoded = Credential::fromCbor(encoded);
+
+   AssetName asset = AssetName::fromString("Cometa");
 
 CBOR accepts byte vectors or hexadecimal strings through ``fromCbor``.
-For example, ``AssetName::fromCbor("46436f6d657461")`` decodes the name Cometa. Hexadecimal strings contain bytes, without a ``0x``
+For example, ``AssetName::fromCbor("46436f6d657461")`` decodes the name Cometa.
+Hexadecimal strings contain bytes, without a ``0x``
 prefix. Asset names can contain arbitrary bytes, including embedded NULs; use
 ``toBytes`` for binary data and ``fromString`` for UTF-8 input.
 
@@ -68,7 +72,7 @@ Use ``ErrorCode`` to identify the failure:
 
    try
    {
-     auto asset = AssetName::fromCbor(bytes);
+     AssetName asset = AssetName::fromCbor(bytes);
    }
    catch (const Error& error)
    {
@@ -83,8 +87,7 @@ as such throw ``std::bad_alloc``. CBOR parsing rejects trailing bytes, and
 ``Blake2bHash::compute`` requires nonempty input.
 
 Copy assignment leaves the destination unchanged when copying fails. Destruction,
-moves, and swaps do not throw. Moved-from objects can be destroyed or assigned;
-observing their value throws ``std::logic_error``.
+moves, and swaps do not throw.
 
 Testing and documentation
 -------------------------
