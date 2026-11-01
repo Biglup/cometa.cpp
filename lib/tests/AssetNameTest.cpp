@@ -146,7 +146,7 @@ TEST(AssetName, ParsesMixedCaseHexCbor)
 {
   // Arrange
   const std::string      wrapped = "xx42aAbByy";
-  const std::string_view hex(wrapped.data() + 2, 6);
+  const std::string_view hex     = std::string_view(wrapped).substr(2, 6);
 
   // Act
   const AssetName value = AssetName::fromCbor(hex);

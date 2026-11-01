@@ -158,9 +158,9 @@ TYPED_TEST(ValueContract, SupportsCopyAndMove)
 TYPED_TEST(ValueContract, SupportsCopySelfAssignment)
 {
   // Arrange
-  TypeParam       source = sampleValue<TypeParam>();
-  const TypeParam before = source;
-  TypeParam*      alias  = &source;
+  TypeParam        source = sampleValue<TypeParam>();
+  const TypeParam  before = source;
+  const TypeParam* alias  = &source;
 
   // Act
   source = *alias;
