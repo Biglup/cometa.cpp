@@ -23,9 +23,9 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <cometa/Credential.h>
+#include <Cometa/Credential.h>
 
-#include "Native.h"
+#include "CardanoInterop.h"
 
 #include <cardano/common/credential.h>
 
@@ -110,6 +110,12 @@ Credential
 Credential::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   return Credential(Detail::decode<cardano_credential_t, cardano_credential_unref>(cbor, cardano_credential_from_cbor));
+}
+
+Credential
+Credential::fromCbor(std::string_view cborHex)
+{
+  return fromCbor(Detail::decodeHex(cborHex));
 }
 
 Blake2bHash

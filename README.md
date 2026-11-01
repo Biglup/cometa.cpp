@@ -30,7 +30,7 @@ This initial implementation provides `Blake2bHash`, `Credential`, and `AssetName
 for API review. Transaction builders and providers are not implemented yet.
 
 ```cpp
-#include <cometa/Cometa.h>
+#include <Cometa/Cometa.h>
 
 using namespace Cometa;
 auto hash = Blake2bHash::fromHex(std::string(56, '0'));

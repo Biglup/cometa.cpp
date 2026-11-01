@@ -1,6 +1,6 @@
 PROJECT_NAME = Cometa.cpp
 OUTPUT_DIRECTORY = "@CMAKE_CURRENT_BINARY_DIR@/doxygen"
-INPUT = "@COMETA_ROOT@/lib/include/cometa"
+INPUT = "@COMETA_ROOT@/lib/include/Cometa"
 RECURSIVE = YES
 FILE_PATTERNS = *.h
 GENERATE_HTML = NO

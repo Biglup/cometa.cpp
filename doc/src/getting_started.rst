@@ -39,7 +39,7 @@ Using values
 
 .. code-block:: cpp
 
-   #include <cometa/Cometa.h>
+   #include <Cometa/Cometa.h>
 
    using namespace Cometa;
 
@@ -53,20 +53,34 @@ Using values
    auto decoded = Credential::fromCbor(encoded);
    auto asset = AssetName::fromString("Cometa");
 
-CBOR uses owned byte vectors. Hexadecimal strings contain bytes, without a ``0x``
+CBOR accepts byte vectors or hexadecimal strings through ``fromCbor``.
+For example, ``AssetName::fromCbor("46436f6d657461")`` decodes the name Cometa. Hexadecimal strings contain bytes, without a ``0x``
 prefix. Asset names can contain arbitrary bytes, including embedded NULs; use
 ``toBytes`` for binary data and ``fromString`` for UTF-8 input.
 
 Errors
 ------
 
-Native operation failures throw ``Cometa::Error``, a ``std::system_error``
-whose error category is ``cardano-c``. Its code preserves the native error number.
-Native memory-allocation error codes map to ``std::bad_alloc``. Some native parser
-paths report allocation failures as CBOR errors; those retain their native error code. Invalid C++ arguments, such as a
-credential hash of the wrong size or malformed hex, throw ``std::invalid_argument``.
-CBOR parsing rejects trailing bytes. The current native hash computation API
-requires nonempty input; ``Blake2bHash::compute`` rejects empty input explicitly.
+Operation failures throw ``Cometa::Error``, derived from ``std::system_error``.
+Use ``ErrorCode`` to identify the failure:
+
+.. code-block:: cpp
+
+   try
+   {
+     auto asset = AssetName::fromCbor(bytes);
+   }
+   catch (const Error& error)
+   {
+     if (error.code() == makeErrorCode(ErrorCode::Decoding))
+     {
+       // Handle invalid CBOR.
+     }
+   }
+
+Invalid arguments throw ``std::invalid_argument``. Allocation failures reported
+as such throw ``std::bad_alloc``. CBOR parsing rejects trailing bytes, and
+``Blake2bHash::compute`` requires nonempty input.
 
 Copy assignment leaves the destination unchanged when copying fails. Destruction,
 moves, and swaps do not throw. Moved-from objects can be destroyed or assigned;

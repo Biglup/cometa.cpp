@@ -23,9 +23,9 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <cometa/AssetName.h>
+#include <Cometa/AssetName.h>
 
-#include "Native.h"
+#include "CardanoInterop.h"
 
 #include <cardano/assets/asset_name.h>
 
@@ -88,6 +88,12 @@ AssetName
 AssetName::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   return AssetName(Detail::decode<cardano_asset_name_t, cardano_asset_name_unref>(cbor, cardano_asset_name_from_cbor));
+}
+
+AssetName
+AssetName::fromCbor(std::string_view cborHex)
+{
+  return fromCbor(Detail::decodeHex(cborHex));
 }
 
 std::vector<std::uint8_t>

@@ -1,7 +1,7 @@
 /**
- * @file Cometa.h
+ * @file CredentialType.h
  *
- * @brief Public Cometa value-type includes.
+ * @brief Credential authorization types.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -23,9 +23,18 @@
 
 #pragma once
 
-/* INCLUDES ******************************************************************/
+/* DEFINITIONS ***************************************************************/
 
-#include <cometa/AssetName.h>
-#include <cometa/Blake2bHash.h>
-#include <cometa/Credential.h>
-#include <cometa/Error.h>
+namespace Cometa
+{
+/**
+ * @brief Identifies the authorization represented by a credential.
+ */
+enum class CredentialType
+{
+  /** @brief Hash of a verification key. */
+  KeyHash = 0,
+  /** @brief Hash of a script. */
+  ScriptHash = 1
+};
+} // namespace Cometa

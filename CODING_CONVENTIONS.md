@@ -8,16 +8,17 @@ features rather than introducing older-language workarounds.
 ## Names and files
 
 - Public namespace: `Cometa`. Internal shared helpers: `Cometa::Detail`.
+- Give each public type and enum its own header.
 - Types and enums: PascalCase, such as `Blake2bHash` and `CredentialType`.
 - Functions, methods, and local variables: camelCase.
 - Nonstatic data members: `m_` prefix, such as `m_value`.
 - Constants: uppercase with underscores, such as `HASH_HEX`.
 - Headers: `.h`; implementations: `.cpp`. Use PascalCase basenames matching
   the primary type, such as `Credential.h` and `Credential.cpp`.
-- Test filenames end in `Test.cpp`. Keep public headers in `lib/include/cometa`,
+- Test filenames end in `Test.cpp`. Keep public headers in `lib/include/Cometa`,
   implementations and internal headers in `lib/src`, and tests in `lib/tests`.
-- Public includes use `<cometa/Credential.h>`; the umbrella header is
-  `<cometa/Cometa.h>`.
+- Public includes use `<Cometa/Credential.h>`; the umbrella header is
+  `<Cometa/Cometa.h>`.
 
 ## Formatting
 
@@ -57,7 +58,9 @@ Use the existing full-width section comments, omitting sections that are empty:
 Headers contain includes, optional forward declarations or enum definitions,
 class declarations, then free-function prototypes. Source files place anonymous
 namespace helpers before class implementations and nonmember functions after
-class implementations. Test files use `USINGS`, `INTERNAL IMPLEMENTATION`, and
+class implementations. Tests separate setup, the operation, and expectations with `// Arrange`, `// Act`,
+and `// Assert`; use `// Act & Assert` for exception assertions.
+Test files use `USINGS`, `INTERNAL IMPLEMENTATION`, and
 `IMPLEMENTATION` sections; place test support before test cases.
 
 ## Class organization
@@ -103,9 +106,11 @@ void setHash(const Blake2bHash& hash);
 - Start with a direct `@brief`. Describe the operation rather than restating its name.
 - Document every parameter with `@param`; use `@return` for non-void results.
 - Use `@throws` for operation-specific failure conditions. Class-level text may
-  explain shared native-error and allocation-error behavior without repeating it
+  explain shared exception behavior without repeating it
   verbatim on every member.
-- Use `@remark` for copy/move guarantees, ownership, lifetime, and important limits.
+- Keep public documentation about observable behavior. Do not describe C handles,
+  reference counts, native storage, or cloning mechanisms in interface documentation.
+- Use `@remark` only for useful behavior guarantees and important limits.
 - Distinguish owned return values from borrowed internal references. Describe
   mutation and moved-from behavior accurately.
 - Explain units, size limits, encodings, empty-input behavior, and whether input is

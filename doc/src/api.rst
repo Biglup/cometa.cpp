@@ -14,3 +14,7 @@ API reference
 
 .. doxygenclass:: Cometa::Error
    :members:
+
+.. doxygenenum:: Cometa::ErrorCode
+
+.. doxygenfunction:: Cometa::makeErrorCode

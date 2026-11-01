@@ -40,13 +40,12 @@ struct cardano_asset_name_t;
 namespace Cometa
 {
 /**
- * @brief Represents an owning AssetName value.
+ * @brief Represents an asset name of up to 32 bytes.
  *
- * @remark Copies own independent native storage. Moves transfer ownership without allocation.
+ * @remark Modifying a copy does not change the original.
  *
  * Moved-from objects can be destroyed, assigned, or swapped. Observing their value
- * throws std::logic_error. Native operation errors throw Error; native allocation
- * error codes and C++ allocation failures throw std::bad_alloc.
+ * throws std::logic_error.
  */
 class AssetName
 {
@@ -57,7 +56,7 @@ class AssetName
      *
      * @param bytes The bytes to copy. The length must be between 0 and 32 bytes.
      *
-     * @throws Error The native constructor rejects the supplied bytes.
+     * @throws Error The supplied byte length is invalid.
      */
     explicit AssetName(const std::vector<std::uint8_t>& bytes);
 
@@ -71,14 +70,14 @@ class AssetName
     AssetName(const AssetName& other);
 
     /**
-     * @brief Transfers ownership from another value.
+     * @brief Moves another value into this instance.
      *
      * @param other The source, which becomes moved-from.
      */
     AssetName(AssetName&& other) noexcept;
 
     /**
-     * @brief Releases the owned native storage.
+     * @brief Destroys this value.
      */
     ~AssetName();
 
@@ -92,7 +91,7 @@ class AssetName
      * @return The decoded value.
      *
      * @throws std::invalid_argument The input contains invalid digits or an odd number of digits.
-     * @throws Error The decoded bytes are rejected by the native constructor.
+     * @throws Error The decoded byte length is invalid.
      */
     static AssetName fromHex(std::string_view hex);
 
@@ -114,17 +113,29 @@ class AssetName
      *
      * @return The decoded value.
      *
-     * @throws std::invalid_argument Bytes remain after the decoded item.
-     * @throws Error The native decoder rejects the CBOR input.
+     * @throws std::invalid_argument The input is empty or bytes remain after the decoded item.
+     * @throws Error The CBOR input is invalid.
      */
     static AssetName fromCbor(const std::vector<std::uint8_t>& cbor);
+
+    /**
+     * @brief Creates a value from hexadecimal CBOR.
+     *
+     * @param cborHex The CBOR bytes as pairs of hexadecimal digits, without a 0x prefix.
+     *
+     * @return The decoded value.
+     *
+     * @throws std::invalid_argument The hex is empty, invalid, or contains bytes after the decoded item.
+     * @throws Error The CBOR input is invalid.
+     */
+    static AssetName fromCbor(std::string_view cborHex);
 
   public:
 
     /**
      * @brief Gets a copy of the raw bytes.
      *
-     * @return An owned byte sequence.
+     * @return The bytes.
      */
     std::vector<std::uint8_t> toBytes() const;
 
@@ -138,7 +149,7 @@ class AssetName
     /**
      * @brief Gets the asset bytes as a string.
      *
-     * @return An owned string preserving embedded NUL bytes.
+     * @return A string preserving embedded NUL bytes.
      *
      * @remark The returned bytes are not validated as UTF-8.
      */
@@ -147,14 +158,14 @@ class AssetName
     /**
      * @brief Serializes the value as CBOR.
      *
-     * @return An owned CBOR byte sequence.
+     * @return The CBOR bytes.
      */
     std::vector<std::uint8_t> toCbor() const;
 
     /**
      * @brief Serializes the value as CIP-116 JSON.
      *
-     * @return An owned, compact JSON string.
+     * @return The compact JSON string.
      */
     std::string toJson() const;
 
@@ -181,7 +192,7 @@ class AssetName
     AssetName& operator=(const AssetName& other);
 
     /**
-     * @brief Transfers ownership and releases the previous value.
+     * @brief Replaces this value by moving another value.
      *
      * @param other The source, which becomes moved-from unless this is self-assignment.
      *

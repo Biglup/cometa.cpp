@@ -1,7 +1,7 @@
 /**
- * @file Blake2bHash.h
+ * @file Credential.h
  *
- * @brief Declaration of the Blake2bHash value type.
+ * @brief Declaration of the Credential value type.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -25,6 +25,9 @@
 
 /* INCLUDES ******************************************************************/
 
+#include <Cometa/Blake2bHash.h>
+#include <Cometa/CredentialType.h>
+
 #include <cstddef>
 #include <cstdint>
 #include <string>
@@ -33,33 +36,33 @@
 
 /* FORWARD DECLARATIONS ******************************************************/
 
-struct cardano_blake2b_hash_t;
+struct cardano_credential_t;
 
 /* CLASS DECLARATION *********************************************************/
 
 namespace Cometa
 {
 /**
- * @brief Represents an owning Blake2bHash value.
+ * @brief Identifies a key or script authorized to perform an action.
  *
- * @remark Copies own independent native storage. Moves transfer ownership without allocation.
+ * @remark Modifying a copy does not change the original.
  *
  * Moved-from objects can be destroyed, assigned, or swapped. Observing their value
- * throws std::logic_error. Native operation errors throw Error; native allocation
- * error codes and C++ allocation failures throw std::bad_alloc.
+ * throws std::logic_error.
  */
-class Blake2bHash
+class Credential
 {
   public:
 
     /**
-     * @brief Initializes a Blake2bHash from raw bytes.
+     * @brief Initializes a credential from its type and hash.
      *
-     * @param bytes The bytes to copy. The sequence must not be empty.
+     * @param type The key-hash or script-hash discriminator.
+     * @param hash The 28-byte credential hash; its bytes are copied.
      *
-     * @throws Error The native constructor rejects the supplied bytes.
+     * @throws std::invalid_argument The type is unknown or the hash is not 28 bytes.
      */
-    explicit Blake2bHash(const std::vector<std::uint8_t>& bytes);
+    Credential(CredentialType type, const Blake2bHash& hash);
 
     /**
      * @brief Initializes an independent copy.
@@ -68,45 +71,21 @@ class Blake2bHash
      *
      * @throws std::logic_error The source has been moved from.
      */
-    Blake2bHash(const Blake2bHash& other);
+    Credential(const Credential& other);
 
     /**
-     * @brief Transfers ownership from another value.
+     * @brief Moves another value into this instance.
      *
      * @param other The source, which becomes moved-from.
      */
-    Blake2bHash(Blake2bHash&& other) noexcept;
+    Credential(Credential&& other) noexcept;
 
     /**
-     * @brief Releases the owned native storage.
+     * @brief Destroys this value.
      */
-    ~Blake2bHash();
+    ~Credential();
 
   public:
-
-    /**
-     * @brief Creates a value from hexadecimal bytes.
-     *
-     * @param hex Pairs of hexadecimal digits without a 0x prefix.
-     *
-     * @return The decoded value.
-     *
-     * @throws std::invalid_argument The input contains invalid digits or an odd number of digits.
-     * @throws Error The decoded bytes are rejected by the native constructor.
-     */
-    static Blake2bHash fromHex(std::string_view hex);
-
-    /**
-     * @brief Computes a BLAKE2b digest.
-     *
-     * @param data The nonempty input byte sequence.
-     * @param digestSize The digest length in bytes, from 1 through 64.
-     *
-     * @return The computed digest.
-     *
-     * @throws std::invalid_argument The input is empty or the digest length is outside the supported range.
-     */
-    static Blake2bHash compute(const std::vector<std::uint8_t>& data, std::size_t digestSize = 32);
 
     /**
      * @brief Creates a value from exactly one CBOR item.
@@ -115,38 +94,68 @@ class Blake2bHash
      *
      * @return The decoded value.
      *
-     * @throws std::invalid_argument Bytes remain after the decoded item.
-     * @throws Error The native decoder rejects the CBOR input.
+     * @throws std::invalid_argument The input is empty or bytes remain after the decoded item.
+     * @throws Error The CBOR input is invalid.
      */
-    static Blake2bHash fromCbor(const std::vector<std::uint8_t>& cbor);
+    static Credential fromCbor(const std::vector<std::uint8_t>& cbor);
+
+    /**
+     * @brief Creates a value from hexadecimal CBOR.
+     *
+     * @param cborHex The CBOR bytes as pairs of hexadecimal digits, without a 0x prefix.
+     *
+     * @return The decoded value.
+     *
+     * @throws std::invalid_argument The hex is empty, invalid, or contains bytes after the decoded item.
+     * @throws Error The CBOR input is invalid.
+     */
+    static Credential fromCbor(std::string_view cborHex);
 
   public:
 
     /**
-     * @brief Gets a copy of the raw bytes.
+     * @brief Gets an independent copy of the credential hash.
      *
-     * @return An owned byte sequence.
+     * @return The 28-byte hash.
      */
-    std::vector<std::uint8_t> toBytes() const;
+    Blake2bHash hash() const;
 
     /**
-     * @brief Gets the hexadecimal representation.
+     * @brief Replaces the credential hash.
      *
-     * @return Lowercase hexadecimal digits without a prefix.
+     * @param hash The 28-byte hash to copy.
+     *
+     * @throws std::invalid_argument The hash length is not 28 bytes.
      */
-    std::string toHex() const;
+    void setHash(const Blake2bHash& hash);
+
+    /**
+     * @brief Gets the credential discriminator.
+     *
+     * @return The key-hash or script-hash discriminator.
+     */
+    CredentialType type() const;
+
+    /**
+     * @brief Changes the discriminator without changing the hash.
+     *
+     * @param type The new discriminator.
+     *
+     * @throws std::invalid_argument The type is unknown.
+     */
+    void setType(CredentialType type);
 
     /**
      * @brief Serializes the value as CBOR.
      *
-     * @return An owned CBOR byte sequence.
+     * @return The CBOR bytes.
      */
     std::vector<std::uint8_t> toCbor() const;
 
     /**
      * @brief Serializes the value as CIP-116 JSON.
      *
-     * @return An owned, compact JSON string.
+     * @return The compact JSON string.
      */
     std::string toJson() const;
 
@@ -157,7 +166,7 @@ class Blake2bHash
      *
      * @remark Moved-from values may be swapped.
      */
-    void swap(Blake2bHash& other) noexcept;
+    void swap(Credential& other) noexcept;
 
   public:
 
@@ -170,10 +179,10 @@ class Blake2bHash
      *
      * @remark Self-assignment is safe. If copying fails, this instance is unchanged.
      */
-    Blake2bHash& operator=(const Blake2bHash& other);
+    Credential& operator=(const Credential& other);
 
     /**
-     * @brief Transfers ownership and releases the previous value.
+     * @brief Replaces this value by moving another value.
      *
      * @param other The source, which becomes moved-from unless this is self-assignment.
      *
@@ -181,7 +190,7 @@ class Blake2bHash
      *
      * @remark Self-move assignment is safe.
      */
-    Blake2bHash& operator=(Blake2bHash&& other) noexcept;
+    Credential& operator=(Credential&& other) noexcept;
 
     /**
      * @brief Compares values for equality.
@@ -190,7 +199,7 @@ class Blake2bHash
      *
      * @return True if the values are equal.
      */
-    bool operator==(const Blake2bHash& other) const;
+    bool operator==(const Credential& other) const;
 
     /**
      * @brief Compares values for inequality.
@@ -199,7 +208,7 @@ class Blake2bHash
      *
      * @return True if the values differ.
      */
-    bool operator!=(const Blake2bHash& other) const;
+    bool operator!=(const Credential& other) const;
 
     /**
      * @brief Orders values for standard containers.
@@ -208,7 +217,7 @@ class Blake2bHash
      *
      * @return True if this value precedes the other value.
      */
-    bool operator<(const Blake2bHash& other) const;
+    bool operator<(const Credential& other) const;
 
   private:
 
@@ -217,7 +226,7 @@ class Blake2bHash
      *
      * @param value A non-null owned reference returned by a successful native operation.
      */
-    explicit Blake2bHash(cardano_blake2b_hash_t* value) noexcept;
+    explicit Credential(cardano_credential_t* value) noexcept;
 
   private:
 
@@ -228,14 +237,14 @@ class Blake2bHash
      *
      * @throws std::logic_error This object has been moved from.
      */
-    cardano_blake2b_hash_t* checked() const;
+    cardano_credential_t* checked() const;
 
   private:
 
     /**
      * @brief Owns one native reference; null only after ownership has been moved.
      */
-    cardano_blake2b_hash_t* m_value;
+    cardano_credential_t* m_value;
 };
 } // namespace Cometa
 
@@ -249,5 +258,5 @@ namespace Cometa
  * @param lhs The first value.
  * @param rhs The second value.
  */
-void swap(Blake2bHash& lhs, Blake2bHash& rhs) noexcept;
+void swap(Credential& lhs, Credential& rhs) noexcept;
 } // namespace Cometa

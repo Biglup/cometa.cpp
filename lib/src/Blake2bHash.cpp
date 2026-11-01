@@ -23,9 +23,9 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <cometa/Blake2bHash.h>
+#include <Cometa/Blake2bHash.h>
 
-#include "Native.h"
+#include "CardanoInterop.h"
 
 #include <cardano/crypto/blake2b_hash.h>
 
@@ -96,6 +96,12 @@ Blake2bHash
 Blake2bHash::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   return Blake2bHash(Detail::decode<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>(cbor, cardano_blake2b_hash_from_cbor));
+}
+
+Blake2bHash
+Blake2bHash::fromCbor(std::string_view cborHex)
+{
+  return fromCbor(Detail::decodeHex(cborHex));
 }
 
 std::vector<std::uint8_t>

@@ -1,5 +1,5 @@
 /**
- * @file Native.h
+ * @file CardanoInterop.h
  *
  * @brief Internal native ownership and serialization helpers.
  *
@@ -25,7 +25,7 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <cometa/Error.h>
+#include <Cometa/Error.h>
 
 #include <cardano/cbor/cbor_reader.h>
 #include <cardano/cbor/cbor_writer.h>
@@ -61,7 +61,7 @@ check(cardano_error_t error, const char* operation)
   }
   if (error != CARDANO_SUCCESS)
   {
-    throw Error(static_cast<int>(error), operation);
+    throw Error(static_cast<ErrorCode>(error), operation);
   }
 }
 
@@ -163,6 +163,39 @@ validateHex(std::string_view hex)
 }
 
 /**
+ * @brief Converts validated hexadecimal pairs to bytes.
+ *
+ * @param hex Hexadecimal bytes without a prefix.
+ *
+ * @return The decoded bytes.
+ *
+ * @throws std::invalid_argument The input contains an incomplete pair or invalid digit.
+ */
+inline std::vector<std::uint8_t>
+decodeHex(std::string_view hex)
+{
+  validateHex(hex);
+  const auto nibble = [](char digit) -> std::uint8_t
+  {
+    if (digit >= '0' && digit <= '9')
+    {
+      return static_cast<std::uint8_t>(digit - '0');
+    }
+    if (digit >= 'a' && digit <= 'f')
+    {
+      return static_cast<std::uint8_t>(digit - 'a' + 10);
+    }
+    return static_cast<std::uint8_t>(digit - 'A' + 10);
+  };
+  std::vector<std::uint8_t> bytes(hex.size() / 2);
+  for (std::size_t i = 0; i < bytes.size(); ++i)
+  {
+    bytes[i] = static_cast<std::uint8_t>((nibble(hex[i * 2]) << 4) | nibble(hex[i * 2 + 1]));
+  }
+  return bytes;
+}
+
+/**
  * @brief Decodes one CBOR value with scoped reader and result ownership.
  *
  * @param bytes The encoded input; trailing data is rejected.
@@ -174,6 +207,10 @@ template<class T, void (*Release)(T**), class Decoder>
 T*
 decode(const std::vector<std::uint8_t>& bytes, Decoder decoder)
 {
+  if (bytes.empty())
+  {
+    throw std::invalid_argument("CBOR must not be empty");
+  }
   Owned<cardano_cbor_reader_t, cardano_cbor_reader_unref> reader(cardano_cbor_reader_new(data(bytes), bytes.size()));
   if (!reader)
   {

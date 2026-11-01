@@ -49,7 +49,8 @@ own their storage. CBOR readers, writers, and JSON writers are scoped internally
 and released before returning or throwing.
 
 Native declarations come from the pinned C headers rather than a handwritten ABI.
-Credential enum values are checked at compile time. Errors map to ``Error`` and
+Credential and error enum values are checked at compile time. Errors map to
+``Error`` with a documented ``ErrorCode`` in the Cometa category, and
 native allocation-error codes to ``std::bad_alloc``. Raw diagnostic setters are
 not public operations; exceptions name the failed operation and retain its status.
 

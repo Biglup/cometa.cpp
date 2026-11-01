@@ -17,6 +17,7 @@ INCLUDE (cmake/Cardano.cmake)
 
 # Library sources.
 ADD_LIBRARY (cometa STATIC
+  lib/src/ErrorCode.cpp
   lib/src/Error.cpp
   lib/src/Blake2bHash.cpp
   lib/src/AssetName.cpp
@@ -58,7 +59,13 @@ IF (COMETA_BUILD_TESTS)
   ENABLE_TESTING ()
   FIND_PACKAGE (GTest CONFIG REQUIRED)
 
-  ADD_EXECUTABLE (cometa-tests lib/tests/ValueTypesTest.cpp)
+  ADD_EXECUTABLE (cometa-tests
+    lib/tests/ErrorTest.cpp
+    lib/tests/AssetNameTest.cpp
+    lib/tests/Blake2bHashTest.cpp
+    lib/tests/CredentialTest.cpp
+    lib/tests/ValueContractTest.cpp
+  )
 
   TARGET_INCLUDE_DIRECTORIES (cometa-tests
     PRIVATE
@@ -68,7 +75,7 @@ IF (COMETA_BUILD_TESTS)
 
   TARGET_LINK_LIBRARIES (cometa-tests PRIVATE Cometa::cometa GTest::gtest_main)
 
-  ADD_TEST (NAME value-types COMMAND cometa-tests)
+  ADD_TEST (NAME cometa-tests COMMAND cometa-tests)
 ENDIF ()
 
 # Examples and documentation.

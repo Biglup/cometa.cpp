@@ -23,43 +23,14 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <cometa/Error.h>
-
-#include <cardano/error.h>
-
-/* INTERNAL IMPLEMENTATION ***************************************************/
-
-namespace Cometa
-{
-namespace
-{
-/**
- * @brief Provides messages for the native cardano-c error category.
- */
-class NativeCategory final : public std::error_category
-{
-  public:
-
-    const char*
-    name() const noexcept override
-    {
-      return "cardano-c";
-    }
-
-    std::string
-    message(int value) const override
-    {
-      return cardano_error_to_string(static_cast<cardano_error_t>(value));
-    }
-};
-
-const NativeCategory NATIVE_CATEGORY;
-} // namespace
+#include <Cometa/Error.h>
 
 /* CLASS IMPLEMENTATION ******************************************************/
 
-Error::Error(int code, const char* operation)
-: std::system_error(code, NATIVE_CATEGORY, operation)
+namespace Cometa
+{
+Error::Error(ErrorCode code, const char* operation)
+: std::system_error(makeErrorCode(code), operation)
 {
 }
 } // namespace Cometa

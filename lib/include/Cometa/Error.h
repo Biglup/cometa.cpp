@@ -1,7 +1,7 @@
 /**
  * @file Error.h
  *
- * @brief Declaration of the native operation exception.
+ * @brief Declaration of the operation exception.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -25,7 +25,8 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <stdexcept>
+#include <Cometa/ErrorCode.h>
+
 #include <system_error>
 
 /* CLASS DECLARATION *********************************************************/
@@ -33,22 +34,20 @@
 namespace Cometa
 {
 /**
- * @brief Reports a failed native operation through std::system_error.
+ * @brief Reports an operation failure.
  *
- * The inherited code() retains the native status and the cardano-c category.
- * Native allocation-error codes are translated to std::bad_alloc instead.
- * Invalid C++ arguments throw std::invalid_argument.
+ * Compare code() with makeErrorCode(ErrorCode) to identify the failure.
  */
 class Error : public std::system_error
 {
   public:
 
     /**
-     * @brief Initializes an exception with the native status and operation name.
+     * @brief Initializes an exception with the error code and operation name.
      *
-     * @param code      The native error code.
+     * @param code      The operation error code.
      * @param operation The operation name included in what(); must not be null.
      */
-    Error(int code, const char* operation);
+    Error(ErrorCode code, const char* operation);
 };
 } // namespace Cometa

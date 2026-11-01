@@ -23,7 +23,7 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <cometa/Cometa.h>
+#include <Cometa/Cometa.h>
 
 #include <iostream>
 
