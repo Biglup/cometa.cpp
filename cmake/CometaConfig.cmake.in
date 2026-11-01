@@ -1,0 +1,10 @@
+@PACKAGE_INIT@
+if(NOT TARGET Cometa::cardano)
+  add_library(Cometa::cardano STATIC IMPORTED)
+  set_target_properties(Cometa::cardano PROPERTIES IMPORTED_LOCATION "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@/cometa/@CMAKE_STATIC_LIBRARY_PREFIX@cardano-c@CMAKE_STATIC_LIBRARY_SUFFIX@")
+  if(UNIX)
+    set_property(TARGET Cometa::cardano PROPERTY INTERFACE_LINK_LIBRARIES m)
+  endif()
+endif()
+include("${CMAKE_CURRENT_LIST_DIR}/CometaTargets.cmake")
+check_required_components(Cometa)

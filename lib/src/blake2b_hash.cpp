@@ -1,0 +1,178 @@
+/**
+ * \file blake2b_hash.cpp
+ *
+ * \author angel.castillo
+ * \date   Nov 01, 2026
+ *
+ * Copyright 2026 Biglup Labs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include "native.hpp"
+#include <cardano/crypto/blake2b_hash.h>
+#include <cometa/blake2b_hash.hpp>
+
+namespace Biglup::Cometa
+{
+Blake2bHash::Blake2bHash(cardano_blake2b_hash_t* value) noexcept
+: value_(value)
+{
+}
+
+Blake2bHash::~Blake2bHash()
+{
+  cardano_blake2b_hash_unref(&value_);
+}
+
+cardano_blake2b_hash_t*
+Blake2bHash::checked() const
+{
+  if (!value_)
+  {
+    throw std::logic_error("Cannot observe a moved-from Blake2bHash");
+  }
+  return value_;
+}
+
+Blake2bHash::Blake2bHash(const Blake2bHash& other)
+: value_(Detail::clone<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>(other.checked(), cardano_blake2b_hash_deep_clone))
+{
+}
+
+Blake2bHash::Blake2bHash(Blake2bHash&& other) noexcept
+: value_(std::exchange(other.value_, nullptr))
+{
+}
+
+Blake2bHash&
+Blake2bHash::operator=(const Blake2bHash& other)
+{
+  if (this != &other)
+  {
+    Blake2bHash copy(other);
+    swap(copy);
+  }
+  return *this;
+}
+
+Blake2bHash&
+Blake2bHash::operator=(Blake2bHash&& other) noexcept
+{
+  if (this != &other)
+  {
+    cardano_blake2b_hash_unref(&value_);
+    value_ = std::exchange(other.value_, nullptr);
+  }
+  return *this;
+}
+
+void
+Blake2bHash::swap(Blake2bHash& other) noexcept
+{
+  std::swap(value_, other.value_);
+}
+
+void
+swap(Blake2bHash& lhs, Blake2bHash& rhs) noexcept
+{
+  lhs.swap(rhs);
+}
+
+Blake2bHash
+Blake2bHash::fromCbor(const std::vector<std::uint8_t>& cbor)
+{
+  return Blake2bHash(Detail::decode<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>(cbor, cardano_blake2b_hash_from_cbor));
+}
+
+std::vector<std::uint8_t>
+Blake2bHash::toCbor() const
+{
+  return Detail::encode(checked(), cardano_blake2b_hash_to_cbor);
+}
+
+bool
+Blake2bHash::operator!=(const Blake2bHash& other) const
+{
+  return !(*this == other);
+}
+
+Blake2bHash::Blake2bHash(const std::vector<std::uint8_t>& bytes)
+: value_(Detail::create<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>([&](cardano_blake2b_hash_t** out)
+                                                                            { return cardano_blake2b_hash_from_bytes(Detail::data(bytes), bytes.size(), out); },
+                                                                            "Blake2bHash from bytes"))
+{
+}
+
+Blake2bHash
+Blake2bHash::fromHex(std::string_view hex)
+{
+  Detail::validateHex(hex);
+  return Blake2bHash(Detail::create<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>([&](cardano_blake2b_hash_t** out)
+                                                                                        { return cardano_blake2b_hash_from_hex(hex.empty() ? "" : hex.data(), hex.size(), out); },
+                                                                                        "Blake2bHash fromHex"));
+}
+
+Blake2bHash
+Blake2bHash::compute(const std::vector<std::uint8_t>& data, std::size_t digestSize)
+{
+  if (data.empty())
+  {
+    throw std::invalid_argument("The native hash API requires nonempty input");
+  }
+  if (digestSize == 0 || digestSize > 64)
+  {
+    throw std::invalid_argument("Digest size must be between 1 and 64");
+  }
+  return Blake2bHash(Detail::create<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>([&](cardano_blake2b_hash_t** out)
+                                                                                        { return cardano_blake2b_compute_hash(Detail::data(data), data.size(), digestSize, out); },
+                                                                                        "Blake2bHash compute"));
+}
+
+std::vector<std::uint8_t>
+Blake2bHash::toBytes() const
+{
+  const auto* value = checked();
+  const auto* bytes = cardano_blake2b_hash_get_data(value);
+  return { bytes, bytes + cardano_blake2b_hash_get_bytes_size(value) };
+}
+
+std::string
+Blake2bHash::toHex() const
+{
+  const auto* value = checked();
+  std::string hex(cardano_blake2b_hash_get_hex_size(value), '\0');
+  Detail::check(cardano_blake2b_hash_to_hex(value, hex.data(), hex.size()), "Blake2bHash toHex");
+  hex.pop_back();
+  return hex;
+}
+
+bool
+Blake2bHash::operator==(const Blake2bHash& other) const
+{
+  return cardano_blake2b_hash_equals(checked(), other.checked());
+}
+
+std::string
+Blake2bHash::toJson() const
+{
+  return Detail::json(checked(), cardano_blake2b_hash_to_cip116_json);
+}
+
+bool
+Blake2bHash::operator<(const Blake2bHash& other) const
+{
+  return cardano_blake2b_hash_compare(checked(), other.checked()) < 0;
+}
+
+} // namespace Biglup::Cometa

@@ -1,0 +1,30 @@
+name: Build and test Cometa
+description: Build static libraries, test values, and verify a relocated installation
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: google/googletest
+        ref: v1.15.2
+        path: .deps/googletest
+    - name: Build GoogleTest
+      shell: bash
+      run: |
+        cmake -S .deps/googletest -B .deps/gtest-build -DCMAKE_BUILD_TYPE=Release -Dgtest_force_shared_crt=ON -DCMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/.deps/install"
+        cmake --build .deps/gtest-build --config Release --parallel 2
+        cmake --install .deps/gtest-build --config Release
+    - name: Build and test
+      shell: bash
+      run: |
+        cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/.deps/install"
+        cmake --build build --config Release --parallel 2
+        ctest --test-dir build -C Release --output-on-failure
+        cmake --install build --config Release --prefix "$GITHUB_WORKSPACE/install-original"
+        cmake -E rename install-original install-relocated
+        cmake -S examples/installed -B build-consumer -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/install-relocated"
+        cmake --build build-consumer --config Release --parallel 2
+        ctest --test-dir build-consumer -C Release --output-on-failure
+    - name: Package
+      shell: bash
+      run: cpack --config build/CPackConfig.cmake -C Release -B packages

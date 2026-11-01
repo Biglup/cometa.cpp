@@ -1,8 +1,5 @@
 Next
 ---------------------
-- First release of cardano-c
-- Address Parsing & Generation
-- Ed25519 Cryptography
-- Transaction Serialization & Deserialization
-- Powerful Transaction Builder
-- Full Conway era support, including registering DReps, voting on proposals, and submitting proposals.
+- Add C++17 hash, credential, and asset-name value types with native deep copies and automatic memory management.
+- Add static cardano-c builds, relocatable CMake packages, platform ZIP packaging, unit tests, and Valgrind CI.
+- Add Doxygen/Breathe/Sphinx documentation and Read the Docs configuration.

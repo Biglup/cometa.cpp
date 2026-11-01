@@ -68,3 +68,8 @@ Testing/
 .cache/
 
 .idea
+
+.deps/
+install-original/
+install-relocated/
+packages/

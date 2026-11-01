@@ -4,7 +4,7 @@ What changes and why
 
 ## Checklist
 
-- [ ] I have read followed [CONTRIBUTING.md](https://github.com/Biglup/cardano-c/blob/master/CONTRIBUTING.md)
+- [ ] I have read and followed [CONTRIBUTING.md](https://github.com/Biglup/cometa.cpp/blob/main/CONTRIBUTING.md)
     - [ ] I have added tests
     - [ ] I have updated the documentation
     - [ ] I have updated the CHANGELOG

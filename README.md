@@ -10,7 +10,7 @@
 
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
 ![Post-Integration](https://github.com/Biglup/cometa.cpp/actions/workflows/ci.yml/badge.svg)
-[![Documentation Status](https://app.readthedocs.org/projects/cometacpp/badge/?version=latest)](https://cometapy.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://app.readthedocs.org/projects/cometacpp/badge/?version=latest)](https://cometacpp.readthedocs.io/en/latest/?badge=latest)
 [![Twitter Follow](https://img.shields.io/twitter/follow/BiglupLabs?style=social)](https://x.com/BiglupLabs)
 
 </div>
@@ -23,117 +23,63 @@
 
 <hr>
 
-Cometa.cpp is a lightweight, high-performance C++ library binding for the [libcardano-c](https://github.com/Biglup/cardano-c) library, designed to simplify blockchain development on Cardano.
+Cometa.cpp is a C++17 library backed by statically linked cardano-c. Its value types
+use ordinary copy/move semantics and manage native memory automatically.
 
-Cometa.cpp packages [libcardano-c](https://github.com/Biglup/cardano-c) using CFFI bindings, providing a fully documented, developer-friendly C++ API.
-
-Example:
+This initial implementation provides `Blake2bHash`, `Credential`, and `AssetName`
+for API review. Transaction builders and providers are not implemented yet.
 
 ```cpp
+#include <cometa/cometa.hpp>
+
+using namespace Biglup::Cometa;
+auto hash = Blake2bHash::fromHex(std::string(56, '0'));
+Credential key(CredentialType::KeyHash, hash);
+auto script = key;
+script.setType(CredentialType::ScriptHash);
 ```
 
-<hr>
+## Building
 
-## **Conway Era Support**
+```sh
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --parallel 2
+ctest --test-dir build --output-on-failure
+```
 
+Tests require GoogleTest. Use `-DCOMETA_BUILD_TESTS=OFF` to build without it.
+The build fetches a pinned cardano-c commit with the deep-clone APIs; a local
+checkout can be selected with `-DCOMETA_CARDANO_SOURCE_DIR=/path/to/cardano-c`.
 
-<hr>
+## Installation
 
-## **Installation**
+```sh
+cmake --install build --prefix /path/to/cometa
+```
 
+Set `CMAKE_PREFIX_PATH` to that prefix and link the exported CMake target:
 
-<hr>
+```cmake
+find_package(Cometa CONFIG REQUIRED)
+target_link_libraries(my_application PRIVATE Cometa::cometa)
+```
 
-## **Getting Started**
+Release workflows produce platform-specific ZIP packages with headers, static
+libraries, licenses, and CMake configuration. No C++ binary releases exist yet.
 
-<hr>
+## Documentation
 
-## **Transaction Builder Examples**
+The Doxygen/Breathe/Sphinx build follows cardano-c's documentation recipe:
 
+```sh
+python3 -m pip install -r doc/requirements.txt
+cmake -S doc -B build/docs
+cmake --build build/docs --target doc
+```
 
-### Sending Multiple Outputs
+Open `build/docs/html/index.html`. Read the Docs configuration is included for
+publishing the same documentation at [cometacpp.readthedocs.io](https://cometacpp.readthedocs.io/).
 
+## License
 
-### Minting Tokens with Native Scripts
-
-
-### Burning Tokens
-
-
-### Attaching Metadata (CIP-25 NFTs)
-
-
-### Staking Operations
-
-
-### Treasury Donation
-
-<hr>
-
-## **Plutus Smart Contracts**
-
-
-### Loading Plutus Scripts
-
-
-### Creating Script Addresses
-
-
-### Spending from a Plutus Script
-
-### Working with Plutus Data
-
-
-### Working with Scripts
-
-#### Applying Parameters to Scripts
-
-#### Example: Minting with Parameterized Script
-
-<hr>
-
-## **Conway Governance**
-
-### Registering as a DRep
-
-### Delegating Voting Power
-
-### Voting on Proposals
-
-### Proposing Governance Actions
-
-### Deregistering a DRep
-
-### Withdrawing Staking Rewards
-
-<hr>
-
-## **Working with CBOR**
-
-### Writing CBOR Data
-
-### Reading CBOR Data
-
-<hr>
-
-## **Cryptography**
-
-### Working with Mnemonics (BIP39)
-
-### Deriving Keys from Mnemonics (CIP-1852)
-
-### Signing and Verifying Messages
-
-<hr>
-
-## **Extending the Transaction Builder**
-
-### Implementing a Custom CoinSelector
-
-### Transaction Evaluators
-
-## **Building and Testing**
-
-## **License**
-
-Cometa.py is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for more information.
+Apache 2.0. See [LICENSE](LICENSE).
