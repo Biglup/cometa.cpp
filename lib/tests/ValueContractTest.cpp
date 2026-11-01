@@ -107,7 +107,21 @@ class ValueContract : public testing::Test
 {
 };
 
-using ValueTypes = testing::Types<Blake2bHash, AssetName, Credential>;
+template<>
+ExUnits
+sampleValue<ExUnits>()
+{
+  return ExUnits(100, 200);
+}
+
+template<>
+ProtocolVersion
+sampleValue<ProtocolVersion>()
+{
+  return ProtocolVersion(12, 0);
+}
+
+using ValueTypes = testing::Types<Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -263,4 +277,13 @@ TYPED_TEST(ValueContract, ReleasesParserStateOnAllocationFailure)
       EXPECT_NE(error.code(), makeErrorCode(ErrorCode::Success));
     }
   }
+}
+
+TYPED_TEST(ValueContract, ReleasesStateWhenConstructionFails)
+{
+  // Arrange
+  AllocationFailure fail(0);
+
+  // Act & Assert
+  EXPECT_THROW(sampleValue<TypeParam>(), std::bad_alloc);
 }

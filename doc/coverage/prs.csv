@@ -1,0 +1,29 @@
+pr,scope,depends_on,acceptance
+P01a.1,Dependency pin and coverage ledger; enums; ExUnits; ProtocolVersion; checked slot/time conversion,merged foundation,Domain tests; exact integer boundaries; native comparisons; Valgrind and docs
+P01a.2,BigInt; UnitInterval; Anchor; GovernanceActionId,P01a.1,Arithmetic validation; serialization; copy independence; native failure audit
+P01a.3,Base58 and Bech32; native encoding boundary fixes where needed,P01a.1,Known vectors; short inputs; empty data; invalid checksums and size calculations
+P01b,CBOR and JSON readers/writers and enums,P01a.2 P01a.3,Malformed input and buffer boundaries; independent byte/hex handling
+P02,Cryptographic keys/signatures; BIP32; BIP39; PBKDF2; EMIP3; CRC32; hash size utilities,P01a.2 P01a.3,Known signing/verification and derivation vectors; secret lifetime policy
+P03,Shelley and Byron addresses; attributes; stake pointers; address enums,P01a.2 P01a.3 P02,Round trips; all address variants; network and checksum validation
+P04,Asset IDs; multi-assets; Value; hash/credential/asset collections,P01a.2 P01a.3 P02,Unsigned boundary values; arithmetic; independent container elements
+P05,Plutus data; constructors/lists/maps; Datum,P01a.2 P01a.3 P01b,Arbitrary precision integers; canonical and preserved CBOR; invalid variants
+P06,Native scripts and guards; Plutus V1-V4; Script; parameter application,P02 P04 P05,Script hashes; parameter application vectors; all script variants
+P07,Transaction inputs/outputs; UTxOs; withdrawals; address/output collections,P03 P04 P05 P06,Inline datum and reference scripts; output forms; amount boundaries
+P08,Metadata and auxiliary data; Plutus script lists,P05 P06,Metadata limits; auxiliary hashes; complete version coverage
+P09,Pool parameters; relays; IPv4/IPv6; metadata; BLS key representation,P02 P03 P04,Pool encodings; relay validation; ownership tests
+P10,Stake/pool/legacy certificates and certificate containers,P03 P04 P09,Port native certificate vectors; retain historical decoding support
+P11,DRep and committee certificates; vote delegation combinations; remaining certificate variants,P01a.2 P01a.3 P10,All certificate variants and accessors; unknown-type policy
+P12,Protocol parameters/updates; cost models; prices and voting thresholds,P01a.2 P01a.3 P04,Full Conway/Dijkstra fields; signed/unsigned and optional-value fidelity
+P13,Governance proposals/actions; committee and constitution,P03 P04 P11 P12,All action variants; nested copy isolation; CBOR/JSON vectors
+P14,Voters; votes; voting procedures and collections,P01a.2 P01a.3 P11,Credential distinctions; key order; CBOR/JSON vectors
+P15,Witness sets; vkey/bootstrap witnesses; redeemers; script/data sets,P02 P05 P06,Witness hashing/serialization; all redeemer tags; execution budgets
+P16,Subtransaction body; account balance intervals; deposits; required guards,P07 P11 P13 P14 P15,Signed account amounts; guard credentials; optional bounds; no missing inspection fields
+P17,Transaction body; transaction; subtransaction; subtransaction set,P08 P16,Nested signatures and cached CBOR; independent mutation; IDs and complete inspection
+P18,Derivation paths; software key handler; extensible signing interface; CIP-8,P02 P03 P17,Transaction/subtransaction/CIP-8 signature vectors; exception and lifetime tests
+P19,Provider C++ interface and private C adapter; deterministic test provider,P07 P12 P17,Every provider operation; output transfer; context lifetime and exception propagation
+P20,CoinSelector interface; requests/results; large-first and random-improve strategies,P07 P12 P19,Explicit selection/remaining/change; min-ADA; injected strategy and cleanup tests
+P21,TransactionEvaluator interface; native and provider-backed evaluators,P12 P15 P17 P19,Native evaluator default; injected strategy; redeemer budgets; error and lifetime tests
+P22,TransactionBuilder; balancing; fees; script-data hashes; implicit coin,P18 P20 P21,Payment/mint/stake/governance builds; exact fees and collateral; injected selector/evaluator
+P23,SubTransactionBuilder; batch/deferred-redeemer workflows; Dijkstra builder completion,P22,All 229 shared corpus cases; batch/guard/account flows; repeated callback and failure tests
+P24,Optional static libcurl transport target and platform packaging,P19,TLS verification; timeouts; limits; error mapping; Windows/Linux/macOS package consumers
+P25,BlockfrostProvider implementation and end-to-end validation,P23 P24,Offline complete provider tests; opt-in live fetch/build/sign/submit/confirm; release documentation and packages

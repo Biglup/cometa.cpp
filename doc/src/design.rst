@@ -26,8 +26,8 @@ The initial CI and release matrix covers Linux x64/ARM64, macOS x64/ARM64, and
 Windows x64 with MSVC. Additional compiler and 32-bit ARM packages can be added
 after the initial API review; they are not advertised as tested in this slice.
 
-The dependency revision is pinned in ``cmake/Cardano.cmake``. Replace that pin with
-the corresponding release commit once the native deep-clone API is released.
+The dependency revision is pinned in ``cmake/Cardano.cmake``. Update the
+coverage ledger and rerun conformance checks when changing the pin.
 Local source overrides are intended for development and do not change the pin.
 
 Blockfrost transport

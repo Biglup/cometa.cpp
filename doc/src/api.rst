@@ -18,3 +18,22 @@ API reference
 .. doxygenenum:: Cometa::ErrorCode
 
 .. doxygenfunction:: Cometa::makeErrorCode
+
+.. doxygenclass:: Cometa::ExUnits
+   :members:
+
+.. doxygenclass:: Cometa::ProtocolVersion
+   :members:
+
+.. doxygenstruct:: Cometa::SlotConfig
+   :members:
+
+.. doxygenenum:: Cometa::ByteOrder
+
+.. doxygenenum:: Cometa::NetworkId
+
+.. doxygenenum:: Cometa::NetworkMagic
+
+.. doxygenenum:: Cometa::GovernanceKeyType
+
+.. doxygenfunction:: Cometa::toString

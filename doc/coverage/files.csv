@@ -1,0 +1,650 @@
+path,kind,planned_pr,status,notes
+lib/include/cardano/address/address.h,public header,P03,planned,idiomatic C++ API
+lib/include/cardano/address/address_type.h,public header,P03,planned,idiomatic C++ API
+lib/include/cardano/address/base_address.h,public header,P03,planned,idiomatic C++ API
+lib/include/cardano/address/byron_address.h,public header,P03,planned,idiomatic C++ API
+lib/include/cardano/address/byron_address_attributes.h,public header,P03,planned,idiomatic C++ API
+lib/include/cardano/address/byron_address_type.h,public header,P03,planned,idiomatic C++ API
+lib/include/cardano/address/enterprise_address.h,public header,P03,planned,idiomatic C++ API
+lib/include/cardano/address/pointer_address.h,public header,P03,planned,idiomatic C++ API
+lib/include/cardano/address/reward_address.h,public header,P03,planned,idiomatic C++ API
+lib/include/cardano/address/stake_pointer.h,public header,P03,planned,idiomatic C++ API
+lib/include/cardano/assets/asset_id.h,public header,P04,planned,idiomatic C++ API
+lib/include/cardano/assets/asset_id_list.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/assets/asset_id_map.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/assets/asset_name.h,public header,P04,implemented,idiomatic C++ API
+lib/include/cardano/assets/asset_name_list.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/assets/asset_name_map.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/assets/multi_asset.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/assets/policy_id_list.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/auxiliary_data/auxiliary_data.h,public header,P08,planned,idiomatic C++ API
+lib/include/cardano/auxiliary_data/metadatum.h,public header,P08,planned,idiomatic C++ API
+lib/include/cardano/auxiliary_data/metadatum_kind.h,public header,P08,planned,idiomatic C++ API
+lib/include/cardano/auxiliary_data/metadatum_label_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/auxiliary_data/metadatum_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/auxiliary_data/metadatum_map.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/auxiliary_data/plutus_v1_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/auxiliary_data/plutus_v2_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/auxiliary_data/plutus_v3_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/auxiliary_data/plutus_v4_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/auxiliary_data/transaction_metadata.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/bip39.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/buffer.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
+lib/include/cardano/cardano.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
+lib/include/cardano/cbor/cbor_major_type.h,public header,P01b,planned,idiomatic C++ API
+lib/include/cardano/cbor/cbor_reader.h,public header,P01b,planned,idiomatic C++ API
+lib/include/cardano/cbor/cbor_reader_state.h,public header,P01b,planned,idiomatic C++ API
+lib/include/cardano/cbor/cbor_simple_value.h,public header,P01b,planned,idiomatic C++ API
+lib/include/cardano/cbor/cbor_tag.h,public header,P01b,planned,idiomatic C++ API
+lib/include/cardano/cbor/cbor_writer.h,public header,P01b,planned,idiomatic C++ API
+lib/include/cardano/certs/auth_committee_hot_cert.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/certs/cert_type.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/certificate.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/certificate_set.h,public header,P10,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/certs/genesis_key_delegation_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/mir_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/mir_cert_pot_type.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/mir_cert_type.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/mir_to_pot_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/mir_to_stake_creds_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/pool_registration_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/pool_retirement_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/register_drep_cert.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/certs/registration_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/resign_committee_cold_cert.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/certs/stake_delegation_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/stake_deregistration_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/stake_registration_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/stake_registration_delegation_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/stake_vote_delegation_cert.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/certs/stake_vote_registration_delegation_cert.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/certs/unregister_drep_cert.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/certs/unregistration_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/update_drep_cert.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/certs/vote_delegation_cert.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/certs/vote_registration_delegation_cert.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/common/anchor.h,public header,P01a.2,planned,idiomatic C++ API
+lib/include/cardano/common/bigint.h,public header,P01a.2,planned,idiomatic C++ API
+lib/include/cardano/common/byte_order.h,public header,P01a.1,implemented,idiomatic C++ API
+lib/include/cardano/common/credential.h,public header,P01a.1,implemented,idiomatic C++ API
+lib/include/cardano/common/credential_type.h,public header,P01a.1,implemented,idiomatic C++ API
+lib/include/cardano/common/datum.h,public header,P05,planned,idiomatic C++ API
+lib/include/cardano/common/datum_type.h,public header,P05,planned,idiomatic C++ API
+lib/include/cardano/common/drep.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/common/drep_type.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/common/ex_units.h,public header,P01a.1,implemented,idiomatic C++ API
+lib/include/cardano/common/governance_action_id.h,public header,P01a.2,planned,idiomatic C++ API
+lib/include/cardano/common/governance_key_type.h,public header,P01a.1,implemented,idiomatic C++ API
+lib/include/cardano/common/guard_set.h,public header,P16,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/common/network_id.h,public header,P01a.1,implemented,idiomatic C++ API
+lib/include/cardano/common/network_magic.h,public header,P01a.1,implemented,idiomatic C++ API
+lib/include/cardano/common/protocol_version.h,public header,P01a.1,implemented,idiomatic C++ API
+lib/include/cardano/common/reward_address_list.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/common/unit_interval.h,public header,P01a.2,planned,idiomatic C++ API
+lib/include/cardano/common/utxo.h,public header,P07,planned,idiomatic C++ API
+lib/include/cardano/common/utxo_list.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/common/withdrawal_map.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/crypto/bip32_private_key.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/crypto/bip32_public_key.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/crypto/blake2b_hash.h,public header,P02,implemented,idiomatic C++ API
+lib/include/cardano/crypto/blake2b_hash_set.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/crypto/blake2b_hash_size.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/crypto/crc32.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/crypto/ed25519_private_key.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/crypto/ed25519_public_key.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/crypto/ed25519_signature.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/crypto/emip3.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/crypto/pbkdf2.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/encoding/base58.h,public header,P01a.3,planned,idiomatic C++ API
+lib/include/cardano/encoding/bech32.h,public header,P01a.3,planned,idiomatic C++ API
+lib/include/cardano/error.h,public header,P01a.1,implemented,idiomatic C++ API
+lib/include/cardano/export.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
+lib/include/cardano/json/json_context.h,public header,P01b,planned,idiomatic C++ API
+lib/include/cardano/json/json_format.h,public header,P01b,planned,idiomatic C++ API
+lib/include/cardano/json/json_object.h,public header,P01b,planned,idiomatic C++ API
+lib/include/cardano/json/json_object_type.h,public header,P01b,planned,idiomatic C++ API
+lib/include/cardano/json/json_writer.h,public header,P01b,planned,idiomatic C++ API
+lib/include/cardano/key_handlers/account_derivation_path.h,public header,P18,planned,idiomatic C++ API
+lib/include/cardano/key_handlers/cip_1852_constants.h,public header,P18,planned,idiomatic C++ API
+lib/include/cardano/key_handlers/derivation_path.h,public header,P18,planned,idiomatic C++ API
+lib/include/cardano/key_handlers/secure_key_handler.h,public header,P18,planned,idiomatic C++ API
+lib/include/cardano/key_handlers/secure_key_handler_impl.h,public header,P18,planned,internal ABI/ownership support; no raw C wrapper API
+lib/include/cardano/key_handlers/secure_key_handler_type.h,public header,P18,planned,idiomatic C++ API
+lib/include/cardano/key_handlers/software_secure_key_handler.h,public header,P18,planned,idiomatic C++ API
+lib/include/cardano/message_signing/cip8.h,public header,P18,planned,idiomatic C++ API
+lib/include/cardano/object.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
+lib/include/cardano/plutus_data/constr_plutus_data.h,public header,P05,planned,idiomatic C++ API
+lib/include/cardano/plutus_data/plutus_data.h,public header,P05,planned,idiomatic C++ API
+lib/include/cardano/plutus_data/plutus_data_kind.h,public header,P05,planned,idiomatic C++ API
+lib/include/cardano/plutus_data/plutus_list.h,public header,P05,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/plutus_data/plutus_map.h,public header,P05,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/pool_params/bls_key.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/ipv4.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/ipv6.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/multi_host_name_relay.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/pool_metadata.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/pool_owners.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/pool_params.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/relay.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/relay_type.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/relays.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/single_host_addr_relay.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/single_host_name_relay.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/committee.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/committee_members_map.h,public header,P13,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/proposal_procedures/constitution.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/credential_set.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/proposal_procedures/governance_action_type.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/hard_fork_initiation_action.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/info_action.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/new_constitution_action.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/no_confidence_action.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/parameter_change_action.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/proposal_procedure.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/proposal_procedure_set.h,public header,P13,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/proposal_procedures/treasury_withdrawals_action.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/update_committee_action.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/protocol_params/cost_model.h,public header,P12,planned,idiomatic C++ API
+lib/include/cardano/protocol_params/costmdls.h,public header,P12,planned,idiomatic C++ API
+lib/include/cardano/protocol_params/drep_voting_thresholds.h,public header,P12,planned,idiomatic C++ API
+lib/include/cardano/protocol_params/ex_unit_prices.h,public header,P12,planned,idiomatic C++ API
+lib/include/cardano/protocol_params/pool_voting_thresholds.h,public header,P12,planned,idiomatic C++ API
+lib/include/cardano/protocol_params/proposed_param_updates.h,public header,P12,planned,idiomatic C++ API
+lib/include/cardano/protocol_params/protocol_param_update.h,public header,P12,planned,idiomatic C++ API
+lib/include/cardano/protocol_params/protocol_parameters.h,public header,P12,planned,idiomatic C++ API
+lib/include/cardano/protocol_params/update.h,public header,P12,planned,idiomatic C++ API
+lib/include/cardano/providers/provider.h,public header,P19,planned,idiomatic C++ API
+lib/include/cardano/providers/provider_impl.h,public header,P19,planned,internal ABI/ownership support; no raw C wrapper API
+lib/include/cardano/scripts/native_scripts/native_script.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/native_scripts/native_script_list.h,public header,P06,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/scripts/native_scripts/native_script_type.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/native_scripts/script_all.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/native_scripts/script_any.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/native_scripts/script_invalid_after.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/native_scripts/script_invalid_before.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/native_scripts/script_n_of_k.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/native_scripts/script_pubkey.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/native_scripts/script_require_guard.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/plutus_scripts/plutus_language_version.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/script.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/script_language.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/slot_config.h,public header,P01a.1,implemented,idiomatic C++ API
+lib/include/cardano/time.h,public header,P01a.1,implemented,idiomatic C++ API
+lib/include/cardano/transaction/sub_transaction.h,public header,P17,planned,idiomatic C++ API
+lib/include/cardano/transaction/transaction.h,public header,P17,planned,idiomatic C++ API
+lib/include/cardano/transaction_body/account_balance_interval.h,public header,P16,planned,idiomatic C++ API
+lib/include/cardano/transaction_body/account_balance_intervals_map.h,public header,P16,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/transaction_body/direct_deposit_map.h,public header,P16,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/transaction_body/required_guards_map.h,public header,P16,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/transaction_body/sub_transaction_body.h,public header,P16,planned,idiomatic C++ API
+lib/include/cardano/transaction_body/sub_transaction_set.h,public header,P17,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/transaction_body/transaction_body.h,public header,P17,planned,idiomatic C++ API
+lib/include/cardano/transaction_body/transaction_input.h,public header,P07,planned,idiomatic C++ API
+lib/include/cardano/transaction_body/transaction_input_set.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/transaction_body/transaction_output.h,public header,P07,planned,idiomatic C++ API
+lib/include/cardano/transaction_body/transaction_output_list.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/transaction_body/value.h,public header,P04,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,public header,P23,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/transaction_builder/balancing/implicit_coin.h,public header,P22,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/balancing/input_to_redeemer_map.h,public header,P22,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/transaction_builder/balancing/transaction_balancing.h,public header,P22,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/coin_selection/coin_selection_request.h,public header,P20,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/coin_selection/coin_selection_strategy.h,public header,P20,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,public header,P20,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,public header,P20,planned,internal ABI/ownership support; no raw C wrapper API
+lib/include/cardano/transaction_builder/coin_selection/large_first_coin_selector.h,public header,P20,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/coin_selection/random_improve_coin_selector.h,public header,P20,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/evaluation/native_tx_evaluator.h,public header,P21,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/evaluation/provider_tx_evaluator.h,public header,P21,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,public header,P21,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/evaluation/tx_evaluator_impl.h,public header,P21,planned,internal ABI/ownership support; no raw C wrapper API
+lib/include/cardano/transaction_builder/fee.h,public header,P22,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/script_data_hash.h,public header,P22,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/sub_transaction_builder.h,public header,P23,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/transaction_builder.h,public header,P22,planned,idiomatic C++ API
+lib/include/cardano/typedefs.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
+lib/include/cardano/uplc/uplc_apply_params.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/voting_procedures/governance_action_id_list.h,public header,P14,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/voting_procedures/vote.h,public header,P14,planned,idiomatic C++ API
+lib/include/cardano/voting_procedures/voter.h,public header,P14,planned,idiomatic C++ API
+lib/include/cardano/voting_procedures/voter_list.h,public header,P14,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/voting_procedures/voter_type.h,public header,P14,planned,idiomatic C++ API
+lib/include/cardano/voting_procedures/voting_procedure.h,public header,P14,planned,idiomatic C++ API
+lib/include/cardano/voting_procedures/voting_procedure_list.h,public header,P14,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/voting_procedures/voting_procedures.h,public header,P14,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/witness_set/bootstrap_witness.h,public header,P15,planned,idiomatic C++ API
+lib/include/cardano/witness_set/bootstrap_witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/witness_set/native_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/witness_set/plutus_data_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/witness_set/plutus_v1_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/witness_set/plutus_v2_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/witness_set/plutus_v3_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/witness_set/plutus_v4_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/witness_set/redeemer.h,public header,P15,planned,idiomatic C++ API
+lib/include/cardano/witness_set/redeemer_list.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/witness_set/redeemer_tag.h,public header,P15,planned,idiomatic C++ API
+lib/include/cardano/witness_set/vkey_witness.h,public header,P15,planned,idiomatic C++ API
+lib/include/cardano/witness_set/vkey_witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/witness_set/witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/src/address/address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/base_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/byron_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/enterprise_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/internals/addr_common.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/internals/addr_common.h,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/internals/base_addr_pack.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/internals/base_addr_pack.h,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/internals/byron_addr_pack.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/internals/byron_addr_pack.h,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/internals/byron_address_content.h,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/internals/enterprise_addr_pack.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/internals/enterprise_addr_pack.h,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/internals/pointer_addr_pack.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/internals/pointer_addr_pack.h,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/internals/reward_addr_pack.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/internals/reward_addr_pack.h,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/pointer_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/reward_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/allocators.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/allocators.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/asset_id.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/asset_id_list.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/asset_id_map.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/asset_name.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/asset_name_list.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/asset_name_map.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/multi_asset.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/policy_id_list.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/auxiliary_data/auxiliary_data.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/auxiliary_data/metadatum.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/auxiliary_data/metadatum_label_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/auxiliary_data/metadatum_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/auxiliary_data/metadatum_map.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/auxiliary_data/plutus_v1_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/auxiliary_data/plutus_v2_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/auxiliary_data/plutus_v3_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/auxiliary_data/plutus_v4_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/auxiliary_data/transaction_metadata.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/bip39/bip39.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/bip39/bip39_wordlist_en.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/buffer/buffer.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cardano.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_additional_info.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_initial_byte.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_initial_byte.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_major_type.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_reader/cbor_reader.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_reader/cbor_reader_collections.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_reader/cbor_reader_collections.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_reader/cbor_reader_core.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_reader/cbor_reader_core.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_reader/cbor_reader_numeric.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_reader/cbor_reader_numeric.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_reader/cbor_reader_simple_values.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_reader/cbor_reader_simple_values.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_reader/cbor_reader_tags.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_reader/cbor_reader_tags.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_reader_state.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_simple_value.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_tag.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_validation.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_validation.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_writer.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/auth_committee_hot_cert.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/cert_type.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/certificate.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/certificate_set.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/genesis_key_delegation_cert.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/mir_cert.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/mir_to_pot_cert.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/mir_to_stake_creds_cert.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/pool_registration_cert.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/pool_retirement_cert.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/register_drep_cert.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/registration_cert.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/resign_committee_cold_cert.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/stake_delegation_cert.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/stake_deregistration_cert.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/stake_registration_cert.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/stake_registration_delegation_cert.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/stake_vote_delegation_cert.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/stake_vote_registration_delegation_cert.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/unregister_drep_cert.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/unregistration_cert.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/update_drep_cert.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/vote_delegation_cert.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/certs/vote_registration_delegation_cert.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/collections/array.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/collections/array.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/collections/set.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/collections/set.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/anchor.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/bigint.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/credential.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/datum.c,implementation file,P05,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/drep.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/ex_units.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/governance_action_id.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/guard_set.c,implementation file,P16,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/ledger_order.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/ledger_order.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/network_magic.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/protocol_version.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/reward_address_list.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/unit_interval.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/utxo.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/utxo_list.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/withdrawal_map.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/config.h.in,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/arithmetic.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/arithmetic.h,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/bip32_key_derivation.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/bip32_key_derivation.h,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/bip32_private_key.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/bip32_public_key.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/blake2b_hash.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/blake2b_hash_internal.h,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/blake2b_hash_set.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/crc32.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/ed25519_private_key.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/ed25519_public_key.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/ed25519_signature.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/emip3.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/pbkdf2.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/encoding/base58.c,implementation file,P01a.3,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/encoding/bech32.c,implementation file,P01a.3,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/endian.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/endian.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/error.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/json/internals/json_object_common.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/json/internals/json_object_common.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/json/internals/json_object_serialization.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/json/internals/json_object_serialization.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/json/internals/json_parser.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/json/internals/json_parser.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/json/internals/json_writer_common.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/json/internals/json_writer_common.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/json/internals/utf8.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/json/internals/utf8.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/json/json_object.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/json/json_writer.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/key_handlers/secure_key_handler.c,implementation file,P18,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/key_handlers/software_secure_key_handler.c,implementation file,P18,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/message_signing/cip8.c,implementation file,P18,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/object.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/plutus_data/constr_plutus_data.c,implementation file,P05,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/plutus_data/plutus_data.c,implementation file,P05,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/plutus_data/plutus_list.c,implementation file,P05,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/plutus_data/plutus_map.c,implementation file,P05,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/bls_key.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/ipv4.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/ipv6.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/multi_host_name_relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/pool_metadata.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/pool_owners.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/pool_params.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/relay_type.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/relays.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/single_host_addr_relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/single_host_name_relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/committee.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/committee_members_map.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/constitution.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/credential_set.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/governance_action_type.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/hard_fork_initiation_action.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/info_action.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/new_constitution_action.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/no_confidence_action.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/parameter_change_action.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/proposal_procedure.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/proposal_procedure_set.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/treasury_withdrawals_action.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/update_committee_action.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/protocol_params/cost_model.c,implementation file,P12,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/protocol_params/costmdls.c,implementation file,P12,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/protocol_params/drep_voting_thresholds.c,implementation file,P12,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/protocol_params/ex_unit_prices.c,implementation file,P12,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/protocol_params/pool_voting_thresholds.c,implementation file,P12,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/protocol_params/proposed_param_updates.c,implementation file,P12,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/protocol_params/protocol_param_update.c,implementation file,P12,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/protocol_params/protocol_parameters.c,implementation file,P12,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/protocol_params/update.c,implementation file,P12,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/providers/emscripten/emscripten_provider.c,implementation file,P19,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/providers/provider.c,implementation file,P19,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/native_scripts/native_script.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/native_scripts/native_script_list.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/native_scripts/native_script_type.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/native_scripts/script_all.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/native_scripts/script_any.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/native_scripts/script_invalid_after.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/native_scripts/script_invalid_before.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/native_scripts/script_n_of_k.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/native_scripts/script_pubkey.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/native_scripts/script_require_guard.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/plutus_scripts/plutus_v1_script.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/plutus_scripts/plutus_v2_script.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/plutus_scripts/plutus_v3_script.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/plutus_scripts/plutus_v4_script.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/script.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/string_safe.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/string_safe.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/time.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction/sub_transaction.c,implementation file,P17,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction/transaction.c,implementation file,P17,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/account_balance_interval.c,implementation file,P16,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/account_balance_intervals_map.c,implementation file,P16,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/direct_deposit_map.c,implementation file,P16,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/internals/body_fields.c,implementation file,P16,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/internals/body_fields.h,implementation file,P16,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/required_guards_map.c,implementation file,P16,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/sub_transaction_body.c,implementation file,P16,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/sub_transaction_set.c,implementation file,P17,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/transaction_body.c,implementation file,P17,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/transaction_input.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/transaction_input_set.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/transaction_output.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/transaction_output_list.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/value.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/balancing/deferred_redeemer_list.c,implementation file,P23,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/balancing/implicit_coin.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/balancing/input_to_redeemer_map.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/balancing/internals/collateral.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/balancing/internals/collateral.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/balancing/internals/scripts_needed.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/balancing/internals/scripts_needed.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/balancing/internals/unique_signers.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/balancing/internals/unique_signers.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/balancing/transaction_balancing.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/coin_selector.c,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/change_builder.c,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/change_builder.h,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/emscripten_coin_selector.c,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/large_first_coin_selector.c,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/large_first_helpers.c,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/large_first_helpers.h,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/random_improve_change_state.c,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/random_improve_change_state.h,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/random_improve_coin_selector.c,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/random_improve_helpers.c,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/random_improve_helpers.h,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/random_improve_selection_index.c,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/random_improve_selection_index.h,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/random_improve_utxo_utils.c,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/random_improve_utxo_utils.h,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/value_splitting.c,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/coin_selection/internals/value_splitting.h,implementation file,P20,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/evaluation/emscripten_tx_evaluator.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/evaluation/native_tx_evaluator.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/evaluation/provider_tx_evaluator.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/evaluation/tx_evaluator.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/fee.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/blake2b_hash_to_redeemer_map.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/blake2b_hash_to_redeemer_map.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_build.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_build.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_certs.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_certs.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_config.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_config.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_entities.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_entities.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_inputs.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_inputs.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_mint.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_mint.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_outputs.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_outputs.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_proposals.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_proposals.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_redeemers.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_redeemers.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_state.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_state.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_sub_build.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_sub_build.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_sub_transactions.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_sub_transactions.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_votes.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_votes.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_withdrawals.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_withdrawals.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_witnesses.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/internals/builder_witnesses.h,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/script_data_hash.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/sub_transaction_builder.c,implementation file,P23,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_builder/transaction_builder.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/arena/uplc_arena.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/arena/uplc_arena.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_constant.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_constant.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_int.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_int.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_int_math.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_int_math.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_lang_version.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_lang_version.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_program.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_program.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_scope_check_mode.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_term.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_term.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_term_kind.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_type.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_type.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/ast/uplc_type_kind.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/builtins/bls.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/builtins/bls.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/builtins/builtins.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/builtins/builtins.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/builtins/uplc_builtin.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/builtins/uplc_builtin.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/builtins/uplc_builtin_outcome.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/builtins/uplc_builtin_semantics.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/builtins/uplc_builtin_semantics.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/builtins/uplc_byte_view.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_builtin_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_builtin_cost_arity.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_builtin_costs.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_builtin_costs.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_const_or_linear_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_const_or_two_arg_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_cost_model.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_cost_model.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_cost_model_version.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_cost_sat.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_cost_sat.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_diag_model_kind.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_ex_mem.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_ex_mem.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_exp_mod_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_four_arg_cost.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_four_arg_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_four_arg_kind.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_linear_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_machine_costs.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_machine_costs.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_one_arg_cost.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_one_arg_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_one_arg_kind.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_quadratic_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_selected_cost_model.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_selected_cost_model.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_six_arg_cost.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_six_arg_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_six_arg_kind.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_step_accumulator.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_step_accumulator.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_step_kind.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_subtracted_sizes_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_three_arg_cost.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_three_arg_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_three_arg_kind.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_two_arg_cost.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_two_arg_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_two_arg_kind.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_two_var_linear_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_two_var_quadratic_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/cost/uplc_with_interaction_cost.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/data/uplc_data.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/data/uplc_data.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/data/uplc_data_kind.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/data/uplc_data_pair.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/flat/flat_decode.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/flat/flat_decode.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/flat/flat_encode.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/flat/flat_encode.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/flat/flat_reader.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/flat/flat_reader.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/flat/flat_writer.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/flat/flat_writer.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_budget.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_env.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_env.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_eval_result.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_eval_status.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_frame.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_frame.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_frame_kind.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_machine.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_machine.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_machine_version.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_state_kind.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_value.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_value.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/machine/uplc_value_kind.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/syntax/pretty.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/syntax/pretty.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/syntax/text_parser.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/syntax/text_parser.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/tx/script_context.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/tx/script_context.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/tx/uplc_apply_params.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/voting_procedures/governance_action_id_list.c,implementation file,P14,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/voting_procedures/vote.c,implementation file,P14,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/voting_procedures/voter.c,implementation file,P14,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/voting_procedures/voter_list.c,implementation file,P14,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/voting_procedures/voter_type.c,implementation file,P14,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/voting_procedures/voting_procedure.c,implementation file,P14,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/voting_procedures/voting_procedure_list.c,implementation file,P14,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/voting_procedures/voting_procedure_map.c,implementation file,P14,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/voting_procedures/voting_procedure_map.h,implementation file,P14,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/voting_procedures/voting_procedures.c,implementation file,P14,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/witness_set/bootstrap_witness.c,implementation file,P15,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/witness_set/bootstrap_witness_set.c,implementation file,P15,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/witness_set/native_script_set.c,implementation file,P15,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/witness_set/plutus_data_set.c,implementation file,P15,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/witness_set/plutus_v1_script_set.c,implementation file,P15,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/witness_set/plutus_v2_script_set.c,implementation file,P15,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/witness_set/plutus_v3_script_set.c,implementation file,P15,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/witness_set/plutus_v4_script_set.c,implementation file,P15,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/witness_set/redeemer.c,implementation file,P15,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/witness_set/redeemer_list.c,implementation file,P15,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/witness_set/vkey_witness.c,implementation file,P15,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/witness_set/vkey_witness_set.c,implementation file,P15,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/witness_set/witness_set.c,implementation file,P15,internal,Native implementation reference; coverage is tracked against its public API.
