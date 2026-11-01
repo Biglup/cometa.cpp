@@ -1,10 +1,21 @@
-cmake_minimum_required(VERSION 3.22)
-project(cometa-docs LANGUAGES NONE)
-find_package(Doxygen REQUIRED)
-find_program(SPHINX_BUILD sphinx-build REQUIRED)
-get_filename_component(COMETA_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
-configure_file(Doxyfile.in Doxyfile @ONLY)
-configure_file(conf.py.in conf.py @ONLY)
-file(COPY src/ DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
-add_custom_target(doc_doxygen COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile")
-add_custom_target(doc COMMAND ${SPHINX_BUILD} -W --keep-going -b html "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/html" DEPENDS doc_doxygen)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.22)
+PROJECT (cometa-docs LANGUAGES NONE)
+
+# Documentation toolchain.
+FIND_PACKAGE (Doxygen REQUIRED)
+FIND_PROGRAM (SPHINX_BUILD sphinx-build REQUIRED)
+GET_FILENAME_COMPONENT (COMETA_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
+
+# Generate build-local configuration and copy the documentation sources.
+CONFIGURE_FILE (Doxyfile.in Doxyfile @ONLY)
+CONFIGURE_FILE (conf.py.in conf.py @ONLY)
+FILE (COPY src/ DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+
+ADD_CUSTOM_TARGET (doc_doxygen
+  COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
+)
+
+ADD_CUSTOM_TARGET (doc
+  COMMAND ${SPHINX_BUILD} -W --keep-going -b html "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/html"
+  DEPENDS doc_doxygen
+)

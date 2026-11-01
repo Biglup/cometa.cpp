@@ -2,6 +2,9 @@
 
 Community contributions are welcome as long as they follow the guidelines described below.
 
+Read [CODING_CONVENTIONS.md](CODING_CONVENTIONS.md) for C++17, code organization,
+formatting, and API documentation rules.
+
 ## Principles
 
 **Bug reports and questions:** Bug reports and specific technical questions are always welcome. Feel free to open an [issue](https://github.com/Biglup/cometa.cpp/issues).

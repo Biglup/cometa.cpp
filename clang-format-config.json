@@ -6,7 +6,7 @@
             "recursive": true
         },
         {
-            "path": "lib/include/**/*.hpp",
+            "path": "lib/include/**/*.h",
             "recursive": true
         },
         {

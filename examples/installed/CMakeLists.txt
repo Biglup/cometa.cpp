@@ -1,7 +1,10 @@
-cmake_minimum_required(VERSION 3.22)
-project(cometa-consumer LANGUAGES CXX)
-find_package(Cometa CONFIG REQUIRED)
-add_executable(consumer ../value_types.cpp)
-target_link_libraries(consumer PRIVATE Cometa::cometa)
-enable_testing()
-add_test(NAME installed-consumer COMMAND consumer)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.22)
+PROJECT (cometa-consumer LANGUAGES CXX)
+
+FIND_PACKAGE (Cometa CONFIG REQUIRED)
+
+ADD_EXECUTABLE (consumer ../ValueTypes.cpp)
+TARGET_LINK_LIBRARIES (consumer PRIVATE Cometa::cometa)
+
+ENABLE_TESTING ()
+ADD_TEST (NAME installed-consumer COMMAND consumer)

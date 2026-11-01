@@ -1,8 +1,10 @@
 /**
- * \file value_types.cpp
+ * @file ValueTypesTest.cpp
  *
- * \author angel.castillo
- * \date   Nov 01, 2026
+ * @brief Unit tests for value semantics, serialization, and allocation failures.
+ *
+ * @author angel.castillo
+ * @date   Nov 01, 2026
  *
  * Copyright 2026 Biglup Labs
  *
@@ -19,26 +21,97 @@
  * limitations under the License.
  */
 
-#include <cometa/cometa.hpp>
-#include <cstdlib>
-#include <gtest/gtest.h>
-#include <limits>
+/* INCLUDES ******************************************************************/
+
+#include <cometa/Cometa.h>
+
 #include <src/allocators.h>
+
+#include <gtest/gtest.h>
+
+#include <cstdlib>
+#include <limits>
 #include <type_traits>
 #include <utility>
 
-using namespace Biglup::Cometa;
+/* USINGS ********************************************************************/
+
+using namespace Cometa;
+
+/* INTERNAL IMPLEMENTATION ***************************************************/
 
 namespace
 {
-const std::string hashHex(56, '0');
+const std::string HASH_HEX(56, '0');
 
 Blake2bHash
 keyHash()
 {
-  return Blake2bHash::fromHex(hashHex);
+  return Blake2bHash::fromHex(HASH_HEX);
 }
+
+std::size_t failureIndex    = 0;
+std::size_t allocationIndex = 0;
+
+void*
+failingMalloc(std::size_t size)
+{
+  return allocationIndex++ == failureIndex ? nullptr : std::malloc(size);
+}
+
+class AllocationFailure
+{
+  public:
+
+    explicit AllocationFailure(std::size_t index)
+    {
+      allocationIndex = 0;
+      failureIndex    = index;
+      cardano_set_allocators(failingMalloc, std::realloc, std::free);
+    }
+
+    ~AllocationFailure()
+    {
+      cardano_set_allocators(std::malloc, std::realloc, std::free);
+    }
+
+    AllocationFailure(const AllocationFailure&)            = delete;
+    AllocationFailure& operator=(const AllocationFailure&) = delete;
+};
+template<class T>
+T sampleValue();
+
+template<>
+Blake2bHash
+sampleValue<Blake2bHash>()
+{
+  return keyHash();
+}
+
+template<>
+AssetName
+sampleValue<AssetName>()
+{
+  return AssetName::fromString("Cometa");
+}
+
+template<>
+Credential
+sampleValue<Credential>()
+{
+  return Credential(CredentialType::KeyHash, keyHash());
+}
+
+template<class T>
+class ValueContract : public testing::Test
+{
+};
+
+using ValueTypes = testing::Types<Blake2bHash, AssetName, Credential>;
+TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
+
+/* IMPLEMENTATION ************************************************************/
 
 TEST(Blake2bHash, MatchesKnownDigest)
 {
@@ -51,7 +124,7 @@ TEST(Blake2bHash, CopiesMovesAndSerializes)
   auto copy  = hash;
   auto moved = std::move(hash);
   EXPECT_EQ(copy, moved);
-  EXPECT_EQ(moved.toHex(), hashHex);
+  EXPECT_EQ(moved.toHex(), HASH_HEX);
   EXPECT_THROW(hash.toHex(), std::logic_error);
   hash = copy;
   EXPECT_EQ(hash, copy);
@@ -85,7 +158,7 @@ TEST(Credential, CopyMutationDoesNotChangeOriginal)
   copy.setType(CredentialType::ScriptHash);
   copy.setHash(Blake2bHash::fromHex(std::string(56, '1')));
   EXPECT_EQ(original.type(), CredentialType::KeyHash);
-  EXPECT_EQ(original.hash().toHex(), hashHex);
+  EXPECT_EQ(original.hash().toHex(), HASH_HEX);
   EXPECT_NE(copy, original);
   EXPECT_EQ(Credential::fromCbor(copy.toCbor()), copy);
   const auto cbor = original.toCbor();
@@ -117,7 +190,7 @@ TEST(ValueTypes, CopiesSurviveSourceDestruction)
 {
   auto copy = []
   { Credential source(CredentialType::KeyHash, keyHash()); return Credential(source); }();
-  EXPECT_EQ(copy.hash().toHex(), hashHex);
+  EXPECT_EQ(copy.hash().toHex(), HASH_HEX);
   Credential assigned(CredentialType::ScriptHash, keyHash());
   assigned = copy;
   copy.setType(CredentialType::ScriptHash);
@@ -143,38 +216,6 @@ TEST(ValueTypes, ReturnedBytesAreIndependent)
   EXPECT_EQ(value.toString(), "test");
 }
 
-namespace
-{
-std::size_t failureIndex    = 0;
-std::size_t allocationIndex = 0;
-
-void*
-failingMalloc(std::size_t size)
-{
-  return allocationIndex++ == failureIndex ? nullptr : std::malloc(size);
-}
-
-class AllocationFailure
-{
-  public:
-
-    explicit AllocationFailure(std::size_t index)
-    {
-      allocationIndex = 0;
-      failureIndex    = index;
-      cardano_set_allocators(failingMalloc, std::realloc, std::free);
-    }
-
-    ~AllocationFailure()
-    {
-      cardano_set_allocators(std::malloc, std::realloc, std::free);
-    }
-
-    AllocationFailure(const AllocationFailure&)            = delete;
-    AllocationFailure& operator=(const AllocationFailure&) = delete;
-};
-} // namespace
-
 TEST(Credential, FailedCopyAssignmentPreservesDestination)
 {
   const Credential source(CredentialType::KeyHash, keyHash());
@@ -198,41 +239,6 @@ TEST(Credential, FailedCopyAssignmentPreservesDestination)
     EXPECT_EQ(source.type(), CredentialType::KeyHash);
   }
 }
-
-namespace
-{
-template<class T>
-T sampleValue();
-
-template<>
-Blake2bHash
-sampleValue<Blake2bHash>()
-{
-  return keyHash();
-}
-
-template<>
-AssetName
-sampleValue<AssetName>()
-{
-  return AssetName::fromString("Cometa");
-}
-
-template<>
-Credential
-sampleValue<Credential>()
-{
-  return Credential(CredentialType::KeyHash, keyHash());
-}
-
-template<class T>
-class ValueContract : public testing::Test
-{
-};
-
-using ValueTypes = testing::Types<Blake2bHash, AssetName, Credential>;
-TYPED_TEST_SUITE(ValueContract, ValueTypes);
-} // namespace
 
 TYPED_TEST(ValueContract, SupportsCopyMoveSelfAssignmentAndSwap)
 {
@@ -306,9 +312,9 @@ TYPED_TEST(ValueContract, ReleasesParserStateOnAllocationFailure)
 TEST(ValueTypes, MatchesNativeJsonAndOrdering)
 {
   const auto hash = keyHash();
-  EXPECT_EQ(hash.toJson(), "\"" + hashHex + "\"");
+  EXPECT_EQ(hash.toJson(), "\"" + HASH_HEX + "\"");
   const Credential credential(CredentialType::KeyHash, hash);
-  EXPECT_EQ(credential.toJson(), "{\"tag\":\"pubkey_hash\",\"value\":\"" + hashHex + "\"}");
+  EXPECT_EQ(credential.toJson(), "{\"tag\":\"pubkey_hash\",\"value\":\"" + HASH_HEX + "\"}");
   EXPECT_EQ(AssetName::fromString("Cometa").toJson(), "\"436f6d657461\"");
   EXPECT_LT(AssetName::fromString("a"), AssetName::fromString("b"));
   EXPECT_LT(hash, Blake2bHash::fromHex(std::string(56, '1')));

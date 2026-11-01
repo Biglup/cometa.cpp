@@ -1,8 +1,10 @@
 /**
- * \file error.cpp
+ * @file Error.cpp
  *
- * \author angel.castillo
- * \date   Nov 01, 2026
+ * @brief Implementation of the Error value type.
+ *
+ * @author angel.castillo
+ * @date   Nov 01, 2026
  *
  * Copyright 2026 Biglup Labs
  *
@@ -19,13 +21,21 @@
  * limitations under the License.
  */
 
-#include <cardano/error.h>
-#include <cometa/error.hpp>
+/* INCLUDES ******************************************************************/
 
-namespace Biglup::Cometa
+#include <cometa/Error.h>
+
+#include <cardano/error.h>
+
+/* INTERNAL IMPLEMENTATION ***************************************************/
+
+namespace Cometa
 {
 namespace
 {
+/**
+ * @brief Provides messages for the native cardano-c error category.
+ */
 class NativeCategory final : public std::error_category
 {
   public:
@@ -43,11 +53,13 @@ class NativeCategory final : public std::error_category
     }
 };
 
-const NativeCategory category;
+const NativeCategory NATIVE_CATEGORY;
 } // namespace
 
+/* CLASS IMPLEMENTATION ******************************************************/
+
 Error::Error(int code, const char* operation)
-: std::system_error(code, category, operation)
+: std::system_error(code, NATIVE_CATEGORY, operation)
 {
 }
-} // namespace Biglup::Cometa
+} // namespace Cometa

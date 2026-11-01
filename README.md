@@ -30,9 +30,9 @@ This initial implementation provides `Blake2bHash`, `Credential`, and `AssetName
 for API review. Transaction builders and providers are not implemented yet.
 
 ```cpp
-#include <cometa/cometa.hpp>
+#include <cometa/Cometa.h>
 
-using namespace Biglup::Cometa;
+using namespace Cometa;
 auto hash = Blake2bHash::fromHex(std::string(56, '0'));
 Credential key(CredentialType::KeyHash, hash);
 auto script = key;
@@ -60,8 +60,8 @@ cmake --install build --prefix /path/to/cometa
 Set `CMAKE_PREFIX_PATH` to that prefix and link the exported CMake target:
 
 ```cmake
-find_package(Cometa CONFIG REQUIRED)
-target_link_libraries(my_application PRIVATE Cometa::cometa)
+FIND_PACKAGE (Cometa CONFIG REQUIRED)
+TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::cometa)
 ```
 
 Release workflows produce platform-specific ZIP packages with headers, static

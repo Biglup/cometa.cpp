@@ -1,8 +1,10 @@
 /**
- * \file value_types.cpp
+ * @file ValueTypes.cpp
  *
- * \author angel.castillo
- * \date   Nov 01, 2026
+ * @brief Example of value copies and independent mutation.
+ *
+ * @author angel.castillo
+ * @date   Nov 01, 2026
  *
  * Copyright 2026 Biglup Labs
  *
@@ -19,13 +21,18 @@
  * limitations under the License.
  */
 
-#include <cometa/cometa.hpp>
+/* INCLUDES ******************************************************************/
+
+#include <cometa/Cometa.h>
+
 #include <iostream>
+
+/* IMPLEMENTATION ************************************************************/
 
 int
 main()
 {
-  using namespace Biglup::Cometa;
+  using namespace Cometa;
   const auto keyHash = Blake2bHash::fromHex("00000000000000000000000000000000000000000000000000000000");
   Credential original(CredentialType::KeyHash, keyHash);
   auto       copy = original;

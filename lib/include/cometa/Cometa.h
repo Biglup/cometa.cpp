@@ -1,8 +1,10 @@
 /**
- * \file cometa.hpp
+ * @file Cometa.h
  *
- * \author angel.castillo
- * \date   Nov 01, 2026
+ * @brief Public Cometa value-type includes.
+ *
+ * @author angel.castillo
+ * @date   Nov 01, 2026
  *
  * Copyright 2026 Biglup Labs
  *
@@ -20,7 +22,10 @@
  */
 
 #pragma once
-#include <cometa/asset_name.hpp>
-#include <cometa/blake2b_hash.hpp>
-#include <cometa/credential.hpp>
-#include <cometa/error.hpp>
+
+/* INCLUDES ******************************************************************/
+
+#include <cometa/AssetName.h>
+#include <cometa/Blake2bHash.h>
+#include <cometa/Credential.h>
+#include <cometa/Error.h>

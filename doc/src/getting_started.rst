@@ -27,8 +27,8 @@ The package does not require a cardano-c shared library at runtime.
 
 .. code-block:: cmake
 
-   find_package(Cometa CONFIG REQUIRED)
-   target_link_libraries(my_application PRIVATE Cometa::cometa)
+   FIND_PACKAGE (Cometa CONFIG REQUIRED)
+   TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::cometa)
 
 Use an archive built for your compiler, standard library, architecture, and runtime.
 MSVC packages use the default dynamic C/C++ runtime; native cardano-c code is static.
@@ -39,9 +39,9 @@ Using values
 
 .. code-block:: cpp
 
-   #include <cometa/cometa.hpp>
+   #include <cometa/Cometa.h>
 
-   using namespace Biglup::Cometa;
+   using namespace Cometa;
 
    auto hash = Blake2bHash::fromHex(std::string(56, '0'));
    Credential original(CredentialType::KeyHash, hash);
@@ -60,7 +60,7 @@ prefix. Asset names can contain arbitrary bytes, including embedded NULs; use
 Errors
 ------
 
-Native operation failures throw ``Biglup::Cometa::Error``, a ``std::system_error``
+Native operation failures throw ``Cometa::Error``, a ``std::system_error``
 whose error category is ``cardano-c``. Its code preserves the native error number.
 Native memory-allocation error codes map to ``std::bad_alloc``. Some native parser
 paths report allocation failures as CBOR errors; those retain their native error code. Invalid C++ arguments, such as a

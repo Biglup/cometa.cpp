@@ -1,7 +1,13 @@
+---
 Language: Cpp
+Standard: c++17
 BasedOnStyle: Microsoft
+
+# Split line rules
 AlwaysBreakAfterReturnType: AllDefinitions
 AlwaysBreakTemplateDeclarations: Yes
+
+# Based on Allman (Workaround for clang-format bug releated to IndentExternBlock)
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterCaseLabel:        true
@@ -13,62 +19,82 @@ BraceWrapping:
   AfterObjCDeclaration:  true
   AfterStruct:           true
   AfterUnion:            true
-  AfterExternBlock:      false
+  AfterExternBlock:      true
   BeforeCatch:           true
   BeforeElse:            true
   BeforeLambdaBody:      true
-  BeforeWhile:           true
+  BeforeWhile:           true  # Forced - Different between clang format versions
   IndentBraces:          false
   SplitEmptyFunction:    true
   SplitEmptyRecord:      true
   SplitEmptyNamespace:   true
+
 BreakStringLiterals: false
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma
 BreakBeforeBinaryOperators: None
+
 AllowAllParametersOfDeclarationOnNextLine: false
 BinPackArguments: false
 BinPackParameters: false
+
 PackConstructorInitializers: Never
+
 PenaltyReturnTypeOnItsOwnLine: 0
 PenaltyBreakBeforeFirstCallParameter: 1000
 PenaltyBreakAssignment: 1000
 PenaltyBreakComment: 1000
 PenaltyBreakFirstLessLess: 1000
 PenaltyIndentedWhitespace: 1000
+
+# Respect the input’s line breaking decisions
 ColumnLimit: 0
+
+# Indentation
 TabWidth: 2
 IndentWidth: 2
 ContinuationIndentWidth: 2
 IndentCaseLabels: true
-IndentExternBlock: AfterExternBlock
+IndentExternBlock: false
 IndentPPDirectives: None
 IndentAccessModifiers: true
 AccessModifierOffset: 0
 ConstructorInitializerIndentWidth: 0
+
+# Spacing
 EmptyLineAfterAccessModifier: Always
 KeepEmptyLinesAtTheStartOfBlocks: false
 SeparateDefinitionBlocks: Always
 SpaceAfterTemplateKeyword: false
 SpaceBeforeCpp11BracedList: true
 SpaceBeforeRangeBasedForLoopColon: false
+
+# Alignment
 AlignEscapedNewlines: Left
 AlignAfterOpenBracket: AlwaysBreak
+
 AlignConsecutiveAssignments:
   Enabled: true
   AlignCompound: true
+
 AlignConsecutiveBitFields:
   Enabled: true
+
 AlignConsecutiveDeclarations:
   Enabled: true
+
 AlignConsecutiveMacros:
   Enabled: true
+
 PointerAlignment: Left
 ReferenceAlignment: Left
-QualifierAlignment: Left
-AlignOperands: DontAlign
-ShortNamespaceLines: 0
-Cpp11BracedListStyle: false
-SortIncludes: CaseInsensitive
+QualifierAlignment: Leave
 
-InsertBraces: true
+AlignOperands: DontAlign
+
+ShortNamespaceLines: 0
+
+Cpp11BracedListStyle: false
+
+# Order
+SortIncludes: CaseInsensitive

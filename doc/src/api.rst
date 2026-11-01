@@ -1,16 +1,16 @@
 API reference
 =============
 
-.. doxygenclass:: Biglup::Cometa::Blake2bHash
+.. doxygenclass:: Cometa::Blake2bHash
    :members:
 
-.. doxygenclass:: Biglup::Cometa::AssetName
+.. doxygenclass:: Cometa::AssetName
    :members:
 
-.. doxygenenum:: Biglup::Cometa::CredentialType
+.. doxygenenum:: Cometa::CredentialType
 
-.. doxygenclass:: Biglup::Cometa::Credential
+.. doxygenclass:: Cometa::Credential
    :members:
 
-.. doxygenclass:: Biglup::Cometa::Error
+.. doxygenclass:: Cometa::Error
    :members:

@@ -1,8 +1,10 @@
 /**
- * \file native.hpp
+ * @file Native.h
  *
- * \author angel.castillo
- * \date   Nov 01, 2026
+ * @brief Internal native ownership and serialization helpers.
+ *
+ * @author angel.castillo
+ * @date   Nov 01, 2026
  *
  * Copyright 2026 Biglup Labs
  *
@@ -20,11 +22,16 @@
  */
 
 #pragma once
-#include <algorithm>
+
+/* INCLUDES ******************************************************************/
+
+#include <cometa/Error.h>
+
 #include <cardano/cbor/cbor_reader.h>
 #include <cardano/cbor/cbor_writer.h>
 #include <cardano/json/json_writer.h>
-#include <cometa/error.hpp>
+
+#include <algorithm>
 #include <cstddef>
 #include <cstdint>
 #include <memory>
@@ -35,8 +42,16 @@
 #include <utility>
 #include <vector>
 
-namespace Biglup::Cometa::Detail
+/* INTERNAL IMPLEMENTATION ***************************************************/
+
+namespace Cometa::Detail
 {
+/**
+ * @brief Translates a native failure into a C++ exception.
+ *
+ * @param error The native status; success returns normally.
+ * @param operation The operation name included in the exception.
+ */
 inline void
 check(cardano_error_t error, const char* operation)
 {
@@ -50,6 +65,9 @@ check(cardano_error_t error, const char* operation)
   }
 }
 
+/**
+ * @brief Releases one owned native reference using its typed unref function.
+ */
 template<class T, void (*Release)(T**)>
 struct Deleter
 {
@@ -59,9 +77,20 @@ struct Deleter
       Release(&value);
     }
 };
+/**
+ * @brief Guards an operation-scoped native reference.
+ */
 template<class T, void (*Release)(T**)>
 using Owned = std::unique_ptr<T, Deleter<T, Release>>;
 
+/**
+ * @brief Acquires a native object and releases partial outputs on status errors.
+ *
+ * @param function The native constructor adapter; it must not throw after publishing an owned output.
+ * @param operation The operation name included in a failure.
+ *
+ * @return One owned native reference, transferred to the caller.
+ */
 template<class T, void (*Release)(T**), class Function>
 T*
 create(Function function, const char* operation)
@@ -77,22 +106,45 @@ create(Function function, const char* operation)
   return owner.release();
 }
 
+/**
+ * @brief Creates an independent owned native copy.
+ *
+ * @param source The borrowed source value.
+ * @param copy The native deep-clone operation.
+ *
+ * @return One owned reference to the copy.
+ */
 template<class T, void (*Release)(T**)>
 T*
 clone(const T* source, cardano_error_t (*copy)(const T*, T**))
 {
-  return create<T, Release>([&](T** out)
-                            { return copy(source, out); },
-                            "copy");
+  return create<T, Release>(
+    [&](T** out)
+    {
+      return copy(source, out);
+    },
+    "copy");
 }
 
+/**
+ * @brief Gets a non-null borrowed byte pointer, including for empty input.
+ *
+ * @param bytes The input bytes; their owner must remain alive during use.
+ *
+ * @return The byte storage, or a sentinel for a zero-length input.
+ */
 inline const std::uint8_t*
 data(const std::vector<std::uint8_t>& bytes)
 {
-  static const std::uint8_t empty = 0;
-  return bytes.empty() ? &empty : bytes.data();
+  static const std::uint8_t EMPTY_BYTE = 0;
+  return bytes.empty() ? &EMPTY_BYTE : bytes.data();
 }
 
+/**
+ * @brief Rejects odd-length or non-hexadecimal input.
+ *
+ * @param hex The hexadecimal bytes to validate.
+ */
 inline void
 validateHex(std::string_view hex)
 {
@@ -110,6 +162,14 @@ validateHex(std::string_view hex)
   }
 }
 
+/**
+ * @brief Decodes one CBOR value with scoped reader and result ownership.
+ *
+ * @param bytes The encoded input; trailing data is rejected.
+ * @param decoder The native decoder.
+ *
+ * @return One owned native reference to the decoded value.
+ */
 template<class T, void (*Release)(T**), class Decoder>
 T*
 decode(const std::vector<std::uint8_t>& bytes, Decoder decoder)
@@ -119,9 +179,12 @@ decode(const std::vector<std::uint8_t>& bytes, Decoder decoder)
   {
     throw std::bad_alloc();
   }
-  Owned<T, Release> result(create<T, Release>([&](T** out)
-                                              { return decoder(reader.get(), out); },
-                                              "fromCbor"));
+  Owned<T, Release> result(create<T, Release>(
+    [&](T** out)
+    {
+      return decoder(reader.get(), out);
+    },
+    "fromCbor"));
   std::size_t       remaining = 0;
   check(cardano_cbor_reader_get_bytes_remaining(reader.get(), &remaining), "fromCbor");
   if (remaining != 0)
@@ -131,6 +194,14 @@ decode(const std::vector<std::uint8_t>& bytes, Decoder decoder)
   return result.release();
 }
 
+/**
+ * @brief Serializes a value with a scoped native CBOR writer.
+ *
+ * @param value The borrowed source value.
+ * @param encoder The native CBOR encoder.
+ *
+ * @return An owned byte sequence.
+ */
 template<class T, class Encoder>
 std::vector<std::uint8_t>
 encode(const T* value, Encoder encoder)
@@ -146,6 +217,14 @@ encode(const T* value, Encoder encoder)
   return bytes;
 }
 
+/**
+ * @brief Serializes a value with a scoped native JSON writer.
+ *
+ * @param value The borrowed source value.
+ * @param encoder The native CIP-116 encoder.
+ *
+ * @return An owned compact JSON string without its terminating NUL.
+ */
 template<class T, class Encoder>
 std::string
 json(const T* value, Encoder encoder)
@@ -161,4 +240,4 @@ json(const T* value, Encoder encoder)
   text.pop_back();
   return text;
 }
-} // namespace Biglup::Cometa::Detail
+} // namespace Cometa::Detail
