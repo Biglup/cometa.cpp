@@ -25,9 +25,9 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <Cometa/AssetName.h>
-#include <Cometa/Blake2bHash.h>
-#include <Cometa/Credential.h>
-#include <Cometa/CredentialType.h>
+#include <Cometa/Assets/AssetName.h>
+#include <Cometa/Common/Credential.h>
+#include <Cometa/Common/CredentialType.h>
+#include <Cometa/Crypto/Blake2bHash.h>
 #include <Cometa/Error.h>
 #include <Cometa/ErrorCode.h>

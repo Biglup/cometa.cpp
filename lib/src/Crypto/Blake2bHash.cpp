@@ -23,9 +23,9 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <Cometa/Blake2bHash.h>
+#include <Cometa/Crypto/Blake2bHash.h>
 
-#include "CardanoInterop.h"
+#include "../CardanoInterop.h"
 
 #include <cardano/crypto/blake2b_hash.h>
 

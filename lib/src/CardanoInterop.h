@@ -72,6 +72,11 @@ checkCardanoError(cardano_error_t error, const char* operation)
 template<class T, void (*Release)(T**)>
 struct CardanoDeleter
 {
+    /**
+     * @brief Releases the reference held by a scoped owner.
+     *
+     * @param value The reference to release; may be null.
+     */
     void
     operator()(T* value) const noexcept
     {
@@ -100,14 +105,26 @@ byteData(const std::vector<std::uint8_t>& bytes)
   return bytes.empty() ? &EMPTY_BYTE : bytes.data();
 }
 
-/** @brief Tests whether a character is a hexadecimal digit. */
+/**
+ * @brief Tests whether a character is a hexadecimal digit.
+ *
+ * @param digit The character to test.
+ *
+ * @return True for digits 0–9, a–f, or A–F.
+ */
 inline bool
 isHexDigit(char digit)
 {
   return (digit >= '0' && digit <= '9') || (digit >= 'a' && digit <= 'f') || (digit >= 'A' && digit <= 'F');
 }
 
-/** @brief Converts one validated hexadecimal digit to its numeric value. */
+/**
+ * @brief Converts one validated hexadecimal digit to its numeric value.
+ *
+ * @param digit A character already accepted by isHexDigit.
+ *
+ * @return The digit value between 0 and 15.
+ */
 inline std::uint8_t
 hexDigitValue(char digit)
 {

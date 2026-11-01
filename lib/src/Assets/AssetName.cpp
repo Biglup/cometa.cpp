@@ -23,9 +23,9 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <Cometa/AssetName.h>
+#include <Cometa/Assets/AssetName.h>
 
-#include "CardanoInterop.h"
+#include "../CardanoInterop.h"
 
 #include <cardano/assets/asset_name.h>
 

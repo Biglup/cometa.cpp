@@ -23,9 +23,9 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <Cometa/Credential.h>
+#include <Cometa/Common/Credential.h>
 
-#include "CardanoInterop.h"
+#include "../CardanoInterop.h"
 
 #include <cardano/common/credential.h>
 

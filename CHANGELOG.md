@@ -8,3 +8,5 @@ Next
 - Accept hexadecimal CBOR through string-view overloads and add per-type unit test suites.
 - Report empty CBOR as an invalid argument instead of an allocation failure.
 - Simplify C interoperability with direct calls, remove the example, and enforce formatting and static analysis in CI.
+- Organize domain headers, sources, and tests into Assets, Common, and Crypto folders.
+- Check private and internal documentation in CI and retain Valgrind reports.

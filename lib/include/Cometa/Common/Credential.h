@@ -25,8 +25,8 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <Cometa/Blake2bHash.h>
-#include <Cometa/CredentialType.h>
+#include <Cometa/Common/CredentialType.h>
+#include <Cometa/Crypto/Blake2bHash.h>
 
 #include <cstddef>
 #include <cstdint>
@@ -218,14 +218,27 @@ class Credential
 
   private:
 
+    /**
+     * @brief Takes ownership of an existing value.
+     *
+     * @param value A non-null reference whose ownership is transferred to this instance.
+     */
     explicit Credential(cardano_credential_t* value) noexcept;
 
   private:
 
+    /**
+     * @brief Gets the value after verifying that it is available.
+     *
+     * @return The stored reference, without transferring ownership.
+     *
+     * @throws std::logic_error This instance has been moved from.
+     */
     cardano_credential_t* checked() const;
 
   private:
 
+    /** @brief The owned reference, or null after a move. */
     cardano_credential_t* m_value;
 };
 } // namespace Cometa

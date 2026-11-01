@@ -23,7 +23,7 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <Cometa/Blake2bHash.h>
+#include <Cometa/Crypto/Blake2bHash.h>
 #include <Cometa/Error.h>
 
 #include <gtest/gtest.h>

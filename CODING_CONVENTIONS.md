@@ -17,9 +17,12 @@ features rather than introducing older-language workarounds.
 - Constants: uppercase with underscores, such as `HASH_HEX`.
 - Headers: `.h`; implementations: `.cpp`. Use PascalCase basenames matching
   the primary type, such as `Credential.h` and `Credential.cpp`.
+- Group domain headers under `Cometa/Assets`, `Cometa/Common`, `Cometa/Crypto`,
+  and corresponding domain folders as the library grows. Mirror those folders in
+  `lib/src` and `lib/tests`; keep shared error types at the root.
 - Test filenames end in `Test.cpp`. Keep public headers in `lib/include/Cometa`,
   implementations and internal headers in `lib/src`, and tests in `lib/tests`.
-- Public includes use `<Cometa/Credential.h>`; the umbrella header is
+- Public includes use `<Cometa/Common/Credential.h>`; the umbrella header is
   `<Cometa/Cometa.h>`.
 
 ## Formatting
@@ -103,7 +106,8 @@ void setHash(const Blake2bHash& hash);
 ```
 
 - File comments include `@file`, `@brief`, author/date, and the project license.
-- Document each public type, enum variant, constructor, method, and free function.
+- Document every type, enum variant, constructor, method, function, and member,
+  including private declarations and implementation helpers.
 - Start with a direct `@brief`. Describe the operation rather than restating its name.
 - Document every parameter with `@param`; use `@return` for non-void results.
 - Use `@throws` for operation-specific failure conditions. Class-level text may
@@ -118,7 +122,8 @@ void setHash(const Blake2bHash& hash);
   mutation and moved-from behavior accurately.
 - Explain units, size limits, encodings, empty-input behavior, and whether input is
   copied. Do not claim validation or exception guarantees that the code does not provide.
-- Document nontrivial internal helpers, especially ownership transfers and cleanup.
+- Keep implementation contracts in private/internal comments. These are checked
+  by `check_docs` but excluded from the published API reference.
 - Keep documentation concise and specific. The [Microsoft writing style guide](https://learn.microsoft.com/en-us/style-guide/)
   is a useful reference for clear engineering documentation.
 
@@ -145,5 +150,6 @@ A formatting change must not alter build options or dependency behavior.
 Run `clang-format-15 -i` on changed `.h` and `.cpp` files, then check the diff.
 Build and run the existing tests after declaration reordering, renames, or namespace
 changes. Build docs with warnings treated as errors after API documentation edits.
+The `doc` target also runs `check_docs`, covering public and private library code.
 For public header/path changes, also compile a separate installed-package consumer.
 Keep formatting and organization changes separate from behavioral fixes in commits.

@@ -23,7 +23,7 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <Cometa/Credential.h>
+#include <Cometa/Common/Credential.h>
 #include <Cometa/Error.h>
 
 #include <cardano/common/credential_type.h>

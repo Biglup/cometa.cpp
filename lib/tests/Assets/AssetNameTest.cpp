@@ -23,7 +23,7 @@
 
 /* INCLUDES ******************************************************************/
 
-#include <Cometa/AssetName.h>
+#include <Cometa/Assets/AssetName.h>
 #include <Cometa/Error.h>
 
 #include <gtest/gtest.h>

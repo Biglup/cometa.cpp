@@ -1,7 +1,7 @@
 /**
- * @file Blake2bHash.h
+ * @file AssetName.h
  *
- * @brief Declaration of the Blake2bHash value type.
+ * @brief Declaration of the AssetName value type.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -33,27 +33,27 @@
 
 /* FORWARD DECLARATIONS ******************************************************/
 
-struct cardano_blake2b_hash_t;
+struct cardano_asset_name_t;
 
 /* CLASS DECLARATION *********************************************************/
 
 namespace Cometa
 {
 /**
- * @brief Represents a BLAKE2b hash.
+ * @brief Represents an asset name of up to 32 bytes.
  */
-class Blake2bHash
+class AssetName
 {
   public:
 
     /**
-     * @brief Initializes a Blake2bHash from raw bytes.
+     * @brief Initializes an AssetName from raw bytes.
      *
-     * @param bytes The bytes to copy. The sequence must not be empty.
+     * @param bytes The bytes to copy. The length must be between 0 and 32 bytes.
      *
      * @throws Error The supplied byte length is invalid.
      */
-    explicit Blake2bHash(const std::vector<std::uint8_t>& bytes);
+    explicit AssetName(const std::vector<std::uint8_t>& bytes);
 
     /**
      * @brief Initializes an independent copy.
@@ -62,7 +62,7 @@ class Blake2bHash
      *
      * @throws std::logic_error The source has been moved from.
      */
-    Blake2bHash(const Blake2bHash& other);
+    AssetName(const AssetName& other);
 
     /**
      * @brief Moves another value into this instance.
@@ -71,12 +71,12 @@ class Blake2bHash
      *
      * @remark After the move, other can be destroyed, assigned, or swapped; observing it throws std::logic_error.
      */
-    Blake2bHash(Blake2bHash&& other) noexcept;
+    AssetName(AssetName&& other) noexcept;
 
     /**
      * @brief Destroys this value.
      */
-    ~Blake2bHash();
+    ~AssetName();
 
   public:
 
@@ -90,19 +90,18 @@ class Blake2bHash
      * @throws std::invalid_argument The input contains invalid digits or an odd number of digits.
      * @throws Error The decoded byte length is invalid.
      */
-    static Blake2bHash fromHex(std::string_view hex);
+    static AssetName fromHex(std::string_view hex);
 
     /**
-     * @brief Computes a BLAKE2b digest.
+     * @brief Creates an asset name from string bytes.
      *
-     * @param data The nonempty input byte sequence.
-     * @param digestSize The digest length in bytes, from 1 through 64.
+     * @param text The bytes to copy, up to 32 bytes; embedded NUL bytes are retained.
      *
-     * @return The computed digest.
+     * @return The asset name.
      *
-     * @throws std::invalid_argument The input is empty or the digest length is outside the supported range.
+     * @throws Error The input exceeds 32 bytes.
      */
-    static Blake2bHash compute(const std::vector<std::uint8_t>& data, std::size_t digestSize = 32);
+    static AssetName fromString(std::string_view text);
 
     /**
      * @brief Creates a value from exactly one CBOR item.
@@ -114,7 +113,7 @@ class Blake2bHash
      * @throws std::invalid_argument The input is empty or bytes remain after the decoded item.
      * @throws Error The CBOR input is invalid.
      */
-    static Blake2bHash fromCbor(const std::vector<std::uint8_t>& cbor);
+    static AssetName fromCbor(const std::vector<std::uint8_t>& cbor);
 
     /**
      * @brief Creates a value from hexadecimal CBOR.
@@ -126,7 +125,7 @@ class Blake2bHash
      * @throws std::invalid_argument The hex is empty, invalid, or contains bytes after the decoded item.
      * @throws Error The CBOR input is invalid.
      */
-    static Blake2bHash fromCbor(std::string_view cborHex);
+    static AssetName fromCbor(std::string_view cborHex);
 
   public:
 
@@ -143,6 +142,15 @@ class Blake2bHash
      * @return Lowercase hexadecimal digits without a prefix.
      */
     std::string toHex() const;
+
+    /**
+     * @brief Gets the asset bytes as a string.
+     *
+     * @return A string preserving embedded NUL bytes.
+     *
+     * @remark The returned bytes are not validated as UTF-8.
+     */
+    std::string toString() const;
 
     /**
      * @brief Serializes the value as CBOR.
@@ -165,7 +173,7 @@ class Blake2bHash
      *
      * @remark Moved-from values may be swapped.
      */
-    void swap(Blake2bHash& other) noexcept;
+    void swap(AssetName& other) noexcept;
 
   public:
 
@@ -178,7 +186,7 @@ class Blake2bHash
      *
      * @remark Self-assignment is safe. If copying fails, this instance is unchanged.
      */
-    Blake2bHash& operator=(const Blake2bHash& other);
+    AssetName& operator=(const AssetName& other);
 
     /**
      * @brief Replaces this value by moving another value.
@@ -189,7 +197,7 @@ class Blake2bHash
      *
      * @remark Self-move assignment is safe.
      */
-    Blake2bHash& operator=(Blake2bHash&& other) noexcept;
+    AssetName& operator=(AssetName&& other) noexcept;
 
     /**
      * @brief Compares values for equality.
@@ -198,7 +206,7 @@ class Blake2bHash
      *
      * @return True if the values are equal.
      */
-    bool operator==(const Blake2bHash& other) const;
+    bool operator==(const AssetName& other) const;
 
     /**
      * @brief Compares values for inequality.
@@ -207,7 +215,7 @@ class Blake2bHash
      *
      * @return True if the values differ.
      */
-    bool operator!=(const Blake2bHash& other) const;
+    bool operator!=(const AssetName& other) const;
 
     /**
      * @brief Orders values for standard containers.
@@ -216,19 +224,32 @@ class Blake2bHash
      *
      * @return True if this value precedes the other value.
      */
-    bool operator<(const Blake2bHash& other) const;
+    bool operator<(const AssetName& other) const;
 
   private:
 
-    explicit Blake2bHash(cardano_blake2b_hash_t* value) noexcept;
+    /**
+     * @brief Takes ownership of an existing value.
+     *
+     * @param value A non-null reference whose ownership is transferred to this instance.
+     */
+    explicit AssetName(cardano_asset_name_t* value) noexcept;
 
   private:
 
-    cardano_blake2b_hash_t* checked() const;
+    /**
+     * @brief Gets the value after verifying that it is available.
+     *
+     * @return The stored reference, without transferring ownership.
+     *
+     * @throws std::logic_error This instance has been moved from.
+     */
+    cardano_asset_name_t* checked() const;
 
   private:
 
-    cardano_blake2b_hash_t* m_value;
+    /** @brief The owned reference, or null after a move. */
+    cardano_asset_name_t* m_value;
 };
 } // namespace Cometa
 
@@ -242,5 +263,5 @@ namespace Cometa
  * @param lhs The first value.
  * @param rhs The second value.
  */
-void swap(Blake2bHash& lhs, Blake2bHash& rhs) noexcept;
+void swap(AssetName& lhs, AssetName& rhs) noexcept;
 } // namespace Cometa

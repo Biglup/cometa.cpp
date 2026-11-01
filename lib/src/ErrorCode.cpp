@@ -33,16 +33,29 @@ namespace Cometa
 {
 namespace
 {
+/** @brief Supplies the category name and messages for Cometa errors. */
 class CometaCategory final : public std::error_category
 {
   public:
 
+    /**
+     * @brief Gets the error category name.
+     *
+     * @return The string Cometa.
+     */
     const char*
     name() const noexcept override
     {
       return "Cometa";
     }
 
+    /**
+     * @brief Gets the description of an error code.
+     *
+     * @param value The numeric error code.
+     *
+     * @return The error description.
+     */
     std::string
     message(int value) const override
     {

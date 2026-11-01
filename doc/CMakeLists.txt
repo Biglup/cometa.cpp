@@ -8,8 +8,13 @@ GET_FILENAME_COMPONENT (COMETA_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
 
 # Generate build-local configuration and copy the documentation sources.
 CONFIGURE_FILE (Doxyfile.in Doxyfile @ONLY)
+CONFIGURE_FILE (Doxyfile.check.in Doxyfile.check @ONLY)
 CONFIGURE_FILE (conf.py.in conf.py @ONLY)
 FILE (COPY src/ DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+
+ADD_CUSTOM_TARGET (check_docs
+  COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.check"
+)
 
 ADD_CUSTOM_TARGET (doc_doxygen
   COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
@@ -17,5 +22,5 @@ ADD_CUSTOM_TARGET (doc_doxygen
 
 ADD_CUSTOM_TARGET (doc
   COMMAND ${SPHINX_BUILD} -W --keep-going -b html "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/html"
-  DEPENDS doc_doxygen
+  DEPENDS check_docs doc_doxygen
 )
