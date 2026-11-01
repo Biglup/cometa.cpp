@@ -1,0 +1,71 @@
+name: Build and tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install analysis tools
+        run: sudo apt-get update && sudo apt-get install -y clang-format-15 cppcheck libgtest-dev
+      - name: Check formatting
+        run: find lib -type f \( -name '*.h' -o -name '*.cpp' \) -print0 | xargs -0 clang-format-15 --dry-run --Werror
+      - name: Configure dependencies
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+      - name: Run cppcheck
+        run: >-
+          cppcheck --enable=warning,style,performance,portability --std=c++17 --error-exitcode=1
+          -Ilib/include -Ibuild/_deps/cardano_source-src/lib/include -Ibuild/_deps/cardano_source-src/lib
+          lib/src lib/tests
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, ubuntu-24.04-arm, macos-15, macos-15-intel, windows-2022]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/compile
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cometa-${{ matrix.os }}
+          path: packages/*.zip
+  valgrind:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y libgtest-dev valgrind
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+      - run: cmake --build build --parallel 2
+      - name: Check all tests for memory errors and leaks
+        run: >-
+          valgrind --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all
+          --track-origins=yes --error-exitcode=1 --log-file=build/valgrind.log build/cometa-tests
+      - name: Upload memory-check report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: valgrind-report
+          path: build/valgrind.log
+  documentation:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: sudo apt-get update && sudo apt-get install -y doxygen
+      - run: python -m pip install -r doc/requirements.txt
+      - name: Configure documentation
+        run: cmake -S doc -B build/docs
+      - name: Check documentation and build the public reference
+        run: cmake --build build/docs --target doc
+      - uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: build/docs/html

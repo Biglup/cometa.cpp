@@ -1,0 +1,14 @@
+project = "Cometa.cpp"
+author = "Biglup Labs"
+copyright = "2026, Biglup Labs"
+extensions = ["breathe", "sphinx_immaterial"]
+html_theme = "sphinx_immaterial"
+highlight_language = "cpp"
+exclude_patterns = ["html", "doxygen", "CMakeFiles"]
+breathe_projects = {"Cometa": "@CMAKE_CURRENT_BINARY_DIR@/doxygen/xml"}
+breathe_default_project = "Cometa"
+html_theme_options = {
+    "repo_url": "https://github.com/Biglup/cometa.cpp",
+    "repo_name": "cometa.cpp",
+    "features": ["navigation.sections", "navigation.top", "search.share"],
+}

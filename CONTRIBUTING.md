@@ -1,14 +1,17 @@
-# Contributing to cardano-c
+# Contributing to cometa.cpp
 
-Community contributions are welcome as long as they follow the guidelines described belows.
+Community contributions are welcome as long as they follow the guidelines described below.
+
+Read [CODING_CONVENTIONS.md](CODING_CONVENTIONS.md) for C++17, code organization,
+formatting, and API documentation rules.
 
 ## Principles
 
-**Bug reports and questions:** Bug reports and specific technical questions are always welcome. Feel free to open an [issue](https://github.com/Biglup/cardano-c/issues).
+**Bug reports and questions:** Bug reports and specific technical questions are always welcome. Feel free to open an [issue](https://github.com/Biglup/cometa.cpp/issues).
 
-**Incremental improvements:** Bug fixes (including build scripts, examples, test, typos, CI/CD config, etc.) and documentation improvements (fixes of typos, inaccuracies, out of date content, etc.) are always welcome. Feel free to open a [PR](https://github.com/Biglup/cardano-c/pulls).
+**Incremental improvements:** Bug fixes (including build scripts, examples, test, typos, CI/CD config, etc.) and documentation improvements (fixes of typos, inaccuracies, out of date content, etc.) are always welcome. Feel free to open a [PR](https://github.com/Biglup/cometa.cpp/pulls).
 
-**Major changes:** Please open an issue with your proposal to discuss if the improvement fits into cardano-c before opening a PR.
+**Major changes:** Please open an issue with your proposal to discuss if the improvement fits into cometa.cpp before opening a PR.
 
 ## Pull Request Process
 
@@ -17,10 +20,10 @@ Community contributions are welcome as long as they follow the guidelines descri
     - Include a descriptive summary of the change. If the PR addresses an open issue, please link it.
     - Code changes: Add tests
     - If necessary: Update documentation, including any links
-3. Code changes: Update [the changelog](https://github.com/Biglup/cardano-c/blob/master/CHANGELOG.md). Do *not* change the version number.
+3. Code changes: Update [the changelog](https://github.com/Biglup/cometa.cpp/blob/main/CHANGELOG.md). Do *not* change the version number.
 
 ## Interactions
 
-I work on cardano-c on the best effort basis. The typical response time is a few days.
+I work on cometa.cpp on a best-effort basis. The typical response time is a few days.
 
 If you do not receive a response in a few weeks, feel free to ping the PR or issue.
