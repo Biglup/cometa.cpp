@@ -5,13 +5,32 @@ CMake files, and API documentation. Use the checked-in `.clang-format` with
 **clang-format 15**. The language baseline is **C++17**; retain modern C++17
 features rather than introducing older-language workarounds.
 
+## Before editing
+
+Read this guide, then inspect neighboring files before adding or changing code.
+Open a comparable header, its implementation, and its tests in the same domain.
+Match their naming, include groups, section banners, access groups, spacing, and
+Doxygen comments. For CMake or CI changes, inspect the adjacent build definitions
+and existing workflows too. Do not introduce a new pattern just because it is
+common in another C++ project.
+
+Useful starting points are
+[Credential.h](lib/include/Cometa/Common/Credential.h),
+[Credential.cpp](lib/src/Common/Credential.cpp), and
+[CredentialTest.cpp](lib/tests/Common/CredentialTest.cpp).
+For shared cleanup code, read [CardanoInterop.h](lib/src/CardanoInterop.h).
+These examples complement this guide; the written rules and the user's current
+instructions take precedence if an older file differs.
+
+Keep changes focused. Do not add unrequested examples, standalone smoke programs,
+helper scripts, or embedded workflow code when an existing test or build target
+can cover the change. Update this guide when an agreed convention changes.
+
 ## Names and files
 
 - Public namespace: `Cometa`. Implementation helpers remain in private headers and are not installed.
 - Give each public type and enum its own header.
 - Types and enums: PascalCase, such as `Blake2bHash` and `CredentialType`.
-- Use explicit types instead of `auto`, and direct calls instead of lambdas.
-- Separate validation, resource setup, operations, and results with blank lines.
 - Functions, methods, and local variables: camelCase.
 - Nonstatic data members: `m_` prefix, such as `m_value`.
 - Constants: uppercase with underscores, such as `HASH_HEX`.
@@ -24,6 +43,19 @@ features rather than introducing older-language workarounds.
   implementations and internal headers in `lib/src`, and tests in `lib/tests`.
 - Public includes use `<Cometa/Common/Credential.h>`; the umbrella header is
   `<Cometa/Cometa.h>`.
+
+## Expressions and control flow
+
+Use explicit types instead of `auto` in implementations, tests, and documentation
+snippets. Use named functions and direct calls instead of lambdas. Do not add a
+`Detail` namespace or factory adapters that obscure a straightforward C call.
+Avoid generic machinery when a few explicit statements make the operation clearer.
+
+Keep each logical step distinct: validate inputs, obtain resources, check results,
+perform the operation, and return or transfer the result. Separate those groups
+with blank lines. Keep related declarations together, but split groups when the
+formatter would otherwise create large, distracting alignment gaps. Formatting
+is not a substitute for choosing readable groups of statements.
 
 ## Formatting
 
@@ -71,7 +103,7 @@ Test files use `USINGS`, `INTERNAL IMPLEMENTATION`, and
 
 Use separate access-label groups in this order, omitting groups that do not apply:
 
-1. Public nested types and constants.
+1. Public type aliases and constants.
 2. Public constructors, copy/move constructors, and destructor.
 3. Public static factories.
 4. Public observers, modifiers, serialization, and swap.
@@ -85,10 +117,27 @@ access labels and between documented declarations. Keep implementation order clo
 to declaration order, with private helpers and nonmember functions in their own
 sections. Do not invent empty access groups or placeholder members.
 
+## Value semantics and C interoperability
+
+Expose idiomatic C++ types and operations. Values may be mutable; do not impose
+immutability merely because they wrap C objects. Builders and other resources
+without meaningful copy semantics may be noncopyable.
+
 Ordinary values use RAII and independent copy semantics; moves and swaps transfer
 ownership without allocating. Native C references may be owned privately by these
 RAII value classes. Temporary native allocations belong in scoped ownership guards.
 Do not expose reference counting, disposal, or raw owning pointers in the public API.
+
+Call C constructors directly and put any returned reference into a scoped owner
+before checking an error that can throw. Release ownership only when transferring
+the successful result into its destination. Preserve cleanup on partial failures
+and leave the destination unchanged when copy assignment fails. Shared helpers
+should have narrow, descriptive names; keep them in private implementation files.
+
+Use documented `ErrorCode` values and `Error` for operation failures instead of
+requiring callers to interpret integers or include C headers. Keep each enum in
+its own header. Verify C/C++ enum mappings in unit tests, rather than scattering
+mapping `static_assert` declarations through library implementation files.
 
 ## Documentation
 
@@ -110,9 +159,8 @@ void setHash(const Blake2bHash& hash);
   including private declarations and implementation helpers.
 - Start with a direct `@brief`. Describe the operation rather than restating its name.
 - Document every parameter with `@param`; use `@return` for non-void results.
-- Use `@throws` for operation-specific failure conditions. Class-level text may
-  explain shared exception behavior without repeating it
-  verbatim on every member.
+- Use `@throws` for operation-specific failure conditions. Keep the class summary
+  about the domain concept; do not fill it with generic lifetime explanations.
 - Document only the declaration belonging to each comment; describe move behavior
   on move operations, not in the class summary.
 - Keep public documentation about observable behavior. Do not describe C handles,
@@ -128,7 +176,9 @@ void setHash(const Blake2bHash& hash);
   is a useful reference for clear engineering documentation.
 
 Keep user guides in `doc/src`. Public API comments feed Doxygen, Breathe, and
-Sphinx; update examples and native API mappings when the interface changes.
+Sphinx; update documentation snippets and API mappings when the interface changes.
+Public documentation describes how to use the library. Private comments document
+implementation contracts without exposing them in the published reference.
 
 ## CMake
 
@@ -145,6 +195,23 @@ case-insensitive, but those arguments are not.
 Use target-scoped settings, retain `cxx_std_17`, and disable compiler extensions.
 A formatting change must not alter build options or dependency behavior.
 
+## Unit tests
+
+Give each domain type its own `TypeNameTest.cpp` in the matching domain folder.
+Keep reusable copy/move and allocation-failure scenarios in the shared value-contract
+suite. Do not collect unrelated domain behavior into a large catch-all test file.
+
+Use the cardano-c Arrange/Act/Assert style, with blank lines between phases:
+`// Arrange`, `// Act`, and `// Assert`. Use `// Act & Assert` when an exception
+assertion necessarily performs the operation. Omit phases with no work to do.
+Split tests that mix unrelated behaviors into focused cases.
+
+Cover the supported constructors, conversions, comparisons, mutation, and invalid
+inputs. Check known encodings and values, not only round trips. For overloads such
+as byte-vector and hexadecimal CBOR parsing, test valid inputs and their distinct
+invalid-input cases. Test copy independence, failure cleanup, and ownership
+transfers where applicable. Run allocation-failure tests under Valgrind.
+
 ## Verification
 
 Run `clang-format-15 -i` on changed `.h` and `.cpp` files, then check the diff.
@@ -152,4 +219,18 @@ Build and run the existing tests after declaration reordering, renames, or names
 changes. Build docs with warnings treated as errors after API documentation edits.
 The `doc` target also runs `check_docs`, covering public and private library code.
 For public header/path changes, also compile a separate installed-package consumer.
+CI must retain clang-format and cppcheck checks, public and internal documentation
+checks, platform builds, and full-suite Valgrind checks. Missing private comments
+must fail `check_docs`; do not disable extraction or warnings to hide omissions.
+Valgrind must fail on memory errors and leaks and retain its report as an artifact.
+Do not weaken checks or add broad suppressions to make a change pass.
+
+Use the commands in the current CI workflows as the reference for validation.
+For documentation-only changes to this guide, check accuracy, links, and the diff;
+there is no need to rerun unrelated behavioral tests.
+
 Keep formatting and organization changes separate from behavioral fixes in commits.
+Use lowercase Conventional Commit messages, such as `docs(style): clarify code
+organization`. Use the configured maintainer identity and signing key for commits;
+verify the signature before pushing. Do not silently substitute an agent identity
+or create unsigned commits when signing is required.
