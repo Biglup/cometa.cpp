@@ -25,8 +25,12 @@
 #include <cardano/cbor/cbor_writer.h>
 #include <cardano/json/json_writer.h>
 #include <cometa/error.hpp>
+#include <cstddef>
+#include <cstdint>
 #include <memory>
 #include <new>
+#include <stdexcept>
+#include <string>
 #include <string_view>
 #include <utility>
 #include <vector>
