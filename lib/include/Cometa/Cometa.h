@@ -167,6 +167,7 @@
 #include <Cometa/Certificates/PoolRetirementCert.h>
 #include <Cometa/Certificates/RegisterDRepCert.h>
 #include <Cometa/Certificates/RegistrationCert.h>
+#include <Cometa/Certificates/ResignCommitteeColdCert.h>
 #include <Cometa/Certificates/StakeDelegationCert.h>
 #include <Cometa/Certificates/StakeDeregistrationCert.h>
 #include <Cometa/Certificates/StakeRegistrationCert.h>

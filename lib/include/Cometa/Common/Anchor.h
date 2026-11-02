@@ -223,6 +223,9 @@ class Anchor
     /** @brief Allows DRep update certificates to copy anchors. */
     friend class UpdateDRepCert;
 
+    /** @brief Allows committee resignation certificates to copy anchors. */
+    friend class ResignCommitteeColdCert;
+
   private:
 
     /**

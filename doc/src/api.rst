@@ -450,3 +450,6 @@ Historical MIR pot transfers
 
 .. doxygenclass:: Cometa::AuthCommitteeHotCert
    :members:
+
+.. doxygenclass:: Cometa::ResignCommitteeColdCert
+   :members:

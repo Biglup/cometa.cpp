@@ -266,6 +266,9 @@ class Credential
     /** @brief Allows committee authorization certificates to copy credentials. */
     friend class AuthCommitteeHotCert;
 
+    /** @brief Allows committee resignation certificates to copy credentials. */
+    friend class ResignCommitteeColdCert;
+
     /** @brief Allows ScriptRequireGuard to copy script components. */
     friend class ScriptRequireGuard;
 

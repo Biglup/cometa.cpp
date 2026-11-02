@@ -827,3 +827,6 @@ metadata anchor. The anchor can be replaced or removed.
 
 ``AuthCommitteeHotCert`` authorizes a committee hot credential with a cold
 credential.
+
+``ResignCommitteeColdCert`` records a committee cold credential's resignation
+and optional anchor.

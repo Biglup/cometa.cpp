@@ -164,7 +164,7 @@ cardano_relay_t,opaque object,lib/include/cardano/pool_params/relay.h,P09,implem
 cardano_relay_type_t,enum,lib/include/cardano/pool_params/relay_type.h,P09,implemented,Cometa::RelayType,lib/tests/PoolParams/RelayTypeTest.cpp
 cardano_relays_t,opaque object,lib/include/cardano/pool_params/relays.h,P09,implemented,Cometa::Relays,lib/tests/PoolParams/RelaysTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_required_guards_map_t,opaque object,lib/include/cardano/transaction_body/required_guards_map.h,P16,planned,,
-cardano_resign_committee_cold_cert_t,opaque object,lib/include/cardano/certs/resign_committee_cold_cert.h,P11,planned,,
+cardano_resign_committee_cold_cert_t,opaque object,lib/include/cardano/certs/resign_committee_cold_cert.h,P11,implemented,Cometa::ResignCommitteeColdCert,lib/tests/Certificates/ResignCommitteeColdCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_resolve_datum_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_resolve_unspent_outputs_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_reward_address_list_t,opaque object,lib/include/cardano/common/reward_address_list.h,P07,implemented,Cometa::RewardAddressList,lib/tests/Common/RewardAddressListTest.cpp; lib/tests/ValueContractTest.cpp
