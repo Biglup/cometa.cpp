@@ -555,3 +555,111 @@ TEST(Bech32, ReleasesStateOnEveryDecodingAllocationFailure)
     EXPECT_TRUE(failed);
   }
 }
+
+TEST(CborReader, FailedCopiesReleasePartialStateAndPreserveDestination)
+{
+  // Arrange
+  CborReader source("82810102");
+  ASSERT_EQ(source.readStartArray(), 2U);
+  ASSERT_EQ(source.readStartArray(), 1U);
+  std::size_t allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const CborReader  copy(source);
+
+    EXPECT_GT(copy.bytesRemaining(), 0U);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    CborReader destination("03");
+
+    {
+      AllocationFailure fail(index);
+
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination.readUInt(), 3U);
+  }
+}
+
+TEST(CborWriter, FailedCopiesReleasePartialStateAndPreserveDestination)
+{
+  // Arrange
+  CborWriter source;
+  source.writeStartArray(2);
+  source.writeUInt(1);
+  std::size_t allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const CborWriter  copy(source);
+
+    EXPECT_GT(copy.toBytes().size(), 0U);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    CborWriter destination;
+    destination.writeUInt(3);
+
+    {
+      AllocationFailure fail(index);
+
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination.toHex(), "03");
+  }
+}
+
+TEST(CborReader, ConstructorReleasesEveryPartialAllocation)
+{
+  // Arrange
+  const std::vector<std::uint8_t> bytes { 0x81, 0x01 };
+  std::size_t                     allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const CborReader  reader(bytes);
+
+    EXPECT_EQ(reader.bytesRemaining(), bytes.size());
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index);
+
+    EXPECT_THROW(CborReader reader(bytes), std::bad_alloc);
+  }
+}
+
+TEST(CborWriter, FailedResetPreservesEncodedBytes)
+{
+  // Arrange
+  CborWriter writer;
+  writer.writeUInt(42);
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+
+    EXPECT_THROW(writer.reset(), std::bad_alloc);
+  }
+
+  EXPECT_EQ(writer.toHex(), "182a");
+}

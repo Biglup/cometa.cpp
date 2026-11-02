@@ -16,6 +16,12 @@ INCLUDE (cmake/Cardano.cmake)
 
 # Library sources.
 ADD_LIBRARY (cometa STATIC
+  lib/src/Cbor/CborTag.cpp
+  lib/src/Cbor/CborMajorType.cpp
+  lib/src/Cbor/CborSimpleValue.cpp
+  lib/src/Cbor/CborReaderState.cpp
+  lib/src/Cbor/CborReader.cpp
+  lib/src/Cbor/CborWriter.cpp
   lib/src/ErrorCode.cpp
   lib/src/Error.cpp
   lib/src/SlotConfig.cpp
@@ -69,6 +75,12 @@ IF (COMETA_BUILD_TESTS)
   FIND_PACKAGE (GTest CONFIG REQUIRED)
 
   ADD_EXECUTABLE (cometa-tests
+    lib/tests/Cbor/CborTagTest.cpp
+    lib/tests/Cbor/CborMajorTypeTest.cpp
+    lib/tests/Cbor/CborSimpleValueTest.cpp
+    lib/tests/Cbor/CborReaderStateTest.cpp
+    lib/tests/Cbor/CborReaderTest.cpp
+    lib/tests/Cbor/CborWriterTest.cpp
     lib/tests/ErrorTest.cpp
     lib/tests/SlotConfigTest.cpp
     lib/tests/Encoding/Base58Test.cpp

@@ -473,68 +473,68 @@ cardano_buffer_get_last_error,lib/include/cardano/buffer.h,P01a.1,internal,C++ c
 cardano_buffer_deep_clone,lib/include/cardano/buffer.h,P01a.1,internal,C++ containers/streams or private runtime support,,No public C buffer or reference-counting wrapper; buffer I/O support remains subject to the codec/secret-storage slices.
 cardano_get_lib_version,lib/include/cardano/cardano.h,P01a.1,internal,C++ containers/streams or private runtime support,,No public C buffer or reference-counting wrapper; buffer I/O support remains subject to the codec/secret-storage slices.
 cardano_memzero,lib/include/cardano/cardano.h,P01a.1,internal,C++ containers/streams or private runtime support,,No public C buffer or reference-counting wrapper; buffer I/O support remains subject to the codec/secret-storage slices.
-cardano_cbor_major_type_to_string,lib/include/cardano/cbor/cbor_major_type.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_new,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_from_hex,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_unref,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_ref,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_refcount,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_peek_state,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_get_bytes_remaining,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_get_remainder_bytes,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_clone,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_skip_value,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_encoded_value,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_start_array,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_end_array,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_int,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_uint,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_negative_int,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_bigint,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_double,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_simple_value,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_start_map,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_end_map,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_bool,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_null,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_bytestring,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_textstring,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_read_tag,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_peek_tag,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_set_last_error,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_get_last_error,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_deep_clone,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_reader_state_to_string,lib/include/cardano/cbor/cbor_reader_state.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_simple_value_to_string,lib/include/cardano/cbor/cbor_simple_value.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_tag_to_string,lib/include/cardano/cbor/cbor_tag.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_new,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_unref,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_ref,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_refcount,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_bigint,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_bool,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_bytestring,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_textstring,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_encoded,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_start_array,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_end_array,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_start_map,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_end_map,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_uint,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_negative_int,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_signed_int,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_null,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_undefined,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_write_tag,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_get_encode_size,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_encode,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_encode_in_buffer,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_get_hex_size,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_encode_hex,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_reset,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_set_last_error,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_get_last_error,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_cbor_writer_deep_clone,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,,API and ownership mapping pending.
+cardano_cbor_major_type_to_string,lib/include/cardano/cbor/cbor_major_type.h,P01b,implemented,Cometa::CborMajorType::toString,lib/tests/Cbor/CborMajorTypeTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_new,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::constructor,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_from_hex,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::hex constructor,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_unref,lib/include/cardano/cbor/cbor_reader.h,P01b,internal,"RAII, owned result containers, and exceptions",lib/tests/Cbor/CborReaderTest.cpp,"Manual ownership, output sizing, and diagnostic storage are private."
+cardano_cbor_reader_ref,lib/include/cardano/cbor/cbor_reader.h,P01b,internal,"RAII, owned result containers, and exceptions",lib/tests/Cbor/CborReaderTest.cpp,"Manual ownership, output sizing, and diagnostic storage are private."
+cardano_cbor_reader_refcount,lib/include/cardano/cbor/cbor_reader.h,P01b,internal,"RAII, owned result containers, and exceptions",lib/tests/Cbor/CborReaderTest.cpp,"Manual ownership, output sizing, and diagnostic storage are private."
+cardano_cbor_reader_peek_state,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::peekState,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_get_bytes_remaining,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::bytesRemaining,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_get_remainder_bytes,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::remainderBytes,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_clone,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::copy constructor and assignment,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_skip_value,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::skipValue,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_encoded_value,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readEncodedValue,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_start_array,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readStartArray,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_end_array,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readEndArray,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_int,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readInt,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_uint,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readUInt,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_negative_int,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readNegativeInt,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_bigint,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readBigInt,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_double,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readDouble,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_simple_value,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readSimpleValue,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_start_map,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readStartMap,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_end_map,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readEndMap,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_bool,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readBool,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_null,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readNull,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_bytestring,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readBytes,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_textstring,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readText,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_read_tag,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::readTag,lib/tests/Cbor/CborReaderTest.cpp,Tags are checked against INT32_MAX before enum conversion; definite containers need no writer end marker.
+cardano_cbor_reader_peek_tag,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::peekTag,lib/tests/Cbor/CborReaderTest.cpp,Tags are checked against INT32_MAX before enum conversion; definite containers need no writer end marker.
+cardano_cbor_reader_set_last_error,lib/include/cardano/cbor/cbor_reader.h,P01b,internal,"RAII, owned result containers, and exceptions",lib/tests/Cbor/CborReaderTest.cpp,"Manual ownership, output sizing, and diagnostic storage are private."
+cardano_cbor_reader_get_last_error,lib/include/cardano/cbor/cbor_reader.h,P01b,internal,"RAII, owned result containers, and exceptions",lib/tests/Cbor/CborReaderTest.cpp,"Manual ownership, output sizing, and diagnostic storage are private."
+cardano_cbor_reader_deep_clone,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader::copy constructor and assignment,lib/tests/Cbor/CborReaderTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_reader_state_to_string,lib/include/cardano/cbor/cbor_reader_state.h,P01b,implemented,Cometa::CborReaderState::toString,lib/tests/Cbor/CborReaderStateTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_simple_value_to_string,lib/include/cardano/cbor/cbor_simple_value.h,P01b,implemented,Cometa::CborSimpleValue::toString,lib/tests/Cbor/CborSimpleValueTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_tag_to_string,lib/include/cardano/cbor/cbor_tag.h,P01b,implemented,Cometa::CborTag::toString,lib/tests/Cbor/CborTagTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_new,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::constructor,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_unref,lib/include/cardano/cbor/cbor_writer.h,P01b,internal,"RAII, owned result containers, and exceptions",lib/tests/Cbor/CborWriterTest.cpp,"Manual ownership, output sizing, and diagnostic storage are private."
+cardano_cbor_writer_ref,lib/include/cardano/cbor/cbor_writer.h,P01b,internal,"RAII, owned result containers, and exceptions",lib/tests/Cbor/CborWriterTest.cpp,"Manual ownership, output sizing, and diagnostic storage are private."
+cardano_cbor_writer_refcount,lib/include/cardano/cbor/cbor_writer.h,P01b,internal,"RAII, owned result containers, and exceptions",lib/tests/Cbor/CborWriterTest.cpp,"Manual ownership, output sizing, and diagnostic storage are private."
+cardano_cbor_writer_write_bigint,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeBigInt,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_bool,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeBool,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_bytestring,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeBytes,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_textstring,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeText,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_encoded,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeEncoded,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_start_array,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeStartArray,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_end_array,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeEndArray,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_start_map,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeStartMap,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_end_map,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeEndMap,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_uint,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeUInt,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_negative_int,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeNegativeInt,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_signed_int,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeInt,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_null,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeNull,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_undefined,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeUndefined,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_write_tag,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::writeTag,lib/tests/Cbor/CborWriterTest.cpp,Tags are checked against INT32_MAX before enum conversion; definite containers need no writer end marker.
+cardano_cbor_writer_get_encode_size,lib/include/cardano/cbor/cbor_writer.h,P01b,internal,"RAII, owned result containers, and exceptions",lib/tests/Cbor/CborWriterTest.cpp,"Manual ownership, output sizing, and diagnostic storage are private."
+cardano_cbor_writer_encode,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::toBytes,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_encode_in_buffer,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::toBytes,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_get_hex_size,lib/include/cardano/cbor/cbor_writer.h,P01b,internal,"RAII, owned result containers, and exceptions",lib/tests/Cbor/CborWriterTest.cpp,"Manual ownership, output sizing, and diagnostic storage are private."
+cardano_cbor_writer_encode_hex,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::toHex,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_reset,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::reset,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
+cardano_cbor_writer_set_last_error,lib/include/cardano/cbor/cbor_writer.h,P01b,internal,"RAII, owned result containers, and exceptions",lib/tests/Cbor/CborWriterTest.cpp,"Manual ownership, output sizing, and diagnostic storage are private."
+cardano_cbor_writer_get_last_error,lib/include/cardano/cbor/cbor_writer.h,P01b,internal,"RAII, owned result containers, and exceptions",lib/tests/Cbor/CborWriterTest.cpp,"Manual ownership, output sizing, and diagnostic storage are private."
+cardano_cbor_writer_deep_clone,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter::copy constructor and assignment,lib/tests/Cbor/CborWriterTest.cpp,Independent C++ values and exceptions.
 cardano_auth_committee_hot_cert_new,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_auth_committee_hot_cert_from_cbor,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_auth_committee_hot_cert_to_cbor,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,planned,,,API and ownership mapping pending.

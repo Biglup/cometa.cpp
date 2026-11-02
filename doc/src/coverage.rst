@@ -56,6 +56,9 @@ and callback adapters are tracked in :doc:`implementation_plan`.
    * - Base58 and Bech32 encoding
      - ``encodeBase58``, ``decodeBase58``, ``encodeBech32``, and ``decodeBech32``; strings, byte vectors, and ``Bech32Data``
 
+   * - CBOR readers, writers, and enums
+     - ``CborReader``, ``CborWriter``, ``CborTag``, ``CborMajorType``, ``CborSimpleValue``, and ``CborReaderState``; independent cursor/buffer copies
+
 Coverage ledger
 ---------------
 

@@ -36,7 +36,7 @@ API reference
 
 .. doxygenenum:: Cometa::GovernanceKeyType
 
-.. doxygenfunction:: Cometa::toString
+.. doxygenfunction:: Cometa::toString(NetworkMagic)
 
 .. doxygenclass:: Cometa::UnitInterval
    :members:
@@ -60,3 +60,25 @@ API reference
 
 .. doxygenstruct:: Cometa::Bech32Data
    :members:
+
+.. doxygenenum:: Cometa::CborTag
+
+.. doxygenenum:: Cometa::CborMajorType
+
+.. doxygenenum:: Cometa::CborSimpleValue
+
+.. doxygenenum:: Cometa::CborReaderState
+
+.. doxygenclass:: Cometa::CborReader
+   :members:
+
+.. doxygenclass:: Cometa::CborWriter
+   :members:
+
+.. doxygenfunction:: Cometa::toString(CborTag)
+
+.. doxygenfunction:: Cometa::toString(CborMajorType)
+
+.. doxygenfunction:: Cometa::toString(CborSimpleValue)
+
+.. doxygenfunction:: Cometa::toString(CborReaderState)
