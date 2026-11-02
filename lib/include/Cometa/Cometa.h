@@ -155,6 +155,7 @@
 
 #include <Cometa/Certificates/CertificateType.h>
 #include <Cometa/Certificates/RegistrationCert.h>
+#include <Cometa/Certificates/StakeDelegationCert.h>
 #include <Cometa/Certificates/StakeDeregistrationCert.h>
 #include <Cometa/Certificates/StakeRegistrationCert.h>
 #include <Cometa/Certificates/UnregistrationCert.h>

@@ -234,6 +234,9 @@ class Blake2bHash
 
   private:
 
+    /** @brief Allows StakeDelegationCert to copy its pool key hash. */
+    friend class StakeDelegationCert;
+
     /** @brief Allows PoolParams to copy pool components. */
     friend class PoolParams;
 

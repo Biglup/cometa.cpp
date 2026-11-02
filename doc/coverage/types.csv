@@ -186,7 +186,7 @@ cardano_serialize_secure_key_handler_func_t,callback,lib/include/cardano/key_han
 cardano_single_host_addr_relay_t,opaque object,lib/include/cardano/pool_params/single_host_addr_relay.h,P09,implemented,Cometa::SingleHostAddrRelay,lib/tests/PoolParams/SingleHostAddrRelayTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_single_host_name_relay_t,opaque object,lib/include/cardano/pool_params/single_host_name_relay.h,P09,implemented,Cometa::SingleHostNameRelay,lib/tests/PoolParams/SingleHostNameRelayTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_slot_config_t,struct,lib/include/cardano/slot_config.h,P01a.1,implemented,SlotConfig,lib/tests/SlotConfigTest.cpp
-cardano_stake_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_delegation_cert.h,P10,planned,,
+cardano_stake_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_delegation_cert.h,P10,implemented,Cometa::StakeDelegationCert,lib/tests/Certificates/StakeDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_stake_deregistration_cert_t,opaque object,lib/include/cardano/certs/stake_deregistration_cert.h,P10,implemented,Cometa::StakeDeregistrationCert,lib/tests/Certificates/StakeDeregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_stake_pointer_t,struct,lib/include/cardano/address/stake_pointer.h,P03,implemented,Cometa::StakePointer,lib/tests/Address/PointerAddressTest.cpp
 cardano_stake_registration_cert_t,opaque object,lib/include/cardano/certs/stake_registration_cert.h,P10,implemented,Cometa::StakeRegistrationCert,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp

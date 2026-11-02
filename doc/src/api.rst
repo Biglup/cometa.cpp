@@ -375,3 +375,9 @@ Registration certificates
 
 .. doxygenclass:: Cometa::UnregistrationCert
    :members:
+
+Stake delegation
+----------------
+
+.. doxygenclass:: Cometa::StakeDelegationCert
+   :members:

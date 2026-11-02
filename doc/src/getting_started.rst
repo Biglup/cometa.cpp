@@ -728,3 +728,15 @@ values. The two forms encode with distinct CBOR certificate tags.
 
    Cometa::RegistrationCert registration(stakeCredential, 2'000'000);
    Cometa::UnregistrationCert unregistration(stakeCredential, 2'000'000);
+
+Stake delegation
+----------------
+
+``StakeDelegationCert`` associates a stake credential with a 28-byte pool key
+hash. It copies both components and provides CBOR and inspection JSON.
+
+.. code-block:: cpp
+
+   Cometa::StakeDelegationCert delegation(stakeCredential, poolKeyHash);
+   const Cometa::StakeDelegationCert restored =
+     Cometa::StakeDelegationCert::fromCbor(delegation.toCbor());
