@@ -120,6 +120,9 @@ TEST(AssetId, CopiesComponentsAndReturnedValues)
   std::optional<AssetName>   returnedName   = id.assetName();
   std::vector<std::uint8_t>  bytes          = id.toBytes();
 
+  ASSERT_EQ(returnedPolicy, policy);
+  ASSERT_EQ(returnedName, name);
+
   // Act
   policy         = Blake2bHash(std::vector<std::uint8_t>(28, 2));
   name           = AssetName::fromString("second");
