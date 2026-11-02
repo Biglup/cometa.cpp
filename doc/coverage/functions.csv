@@ -1355,20 +1355,20 @@ cardano_json_writer_refcount,lib/include/cardano/json/json_writer.h,P01b,interna
 cardano_json_writer_set_last_error,lib/include/cardano/json/json_writer.h,P01b,internal,"RAII, owned containers, and exceptions",lib/tests/Json/JsonWriterTest.cpp,"Native ownership, sizing, and diagnostics stay private."
 cardano_json_writer_get_last_error,lib/include/cardano/json/json_writer.h,P01b,internal,"RAII, owned containers, and exceptions",lib/tests/Json/JsonWriterTest.cpp,"Native ownership, sizing, and diagnostics stay private."
 cardano_json_writer_deep_clone,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::copy constructor and assignment,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
-cardano_secure_key_handler_new,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_secure_key_handler_get_name,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_secure_key_handler_bip32_sign_transaction,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_secure_key_handler_bip32_sign_sub_transaction,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_secure_key_handler_bip32_get_extended_account_public_key,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_secure_key_handler_ed25519_sign_transaction,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_secure_key_handler_ed25519_sign_sub_transaction,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_secure_key_handler_ed25519_get_public_key,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_secure_key_handler_unref,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_secure_key_handler_ref,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_secure_key_handler_serialize,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_secure_key_handler_refcount,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_secure_key_handler_set_last_error,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_secure_key_handler_get_last_error,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
+cardano_secure_key_handler_new,lib/include/cardano/key_handlers/secure_key_handler.h,P18,implemented,Cometa::SecureKeyHandler,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp,API and ownership mapping pending.
+cardano_secure_key_handler_get_name,lib/include/cardano/key_handlers/secure_key_handler.h,P18,implemented,Cometa::SecureKeyHandler,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp,API and ownership mapping pending.
+cardano_secure_key_handler_bip32_sign_transaction,lib/include/cardano/key_handlers/secure_key_handler.h,P18,implemented,Cometa::SecureKeyHandler,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp,API and ownership mapping pending.
+cardano_secure_key_handler_bip32_sign_sub_transaction,lib/include/cardano/key_handlers/secure_key_handler.h,P18,implemented,Cometa::SecureKeyHandler,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp,API and ownership mapping pending.
+cardano_secure_key_handler_bip32_get_extended_account_public_key,lib/include/cardano/key_handlers/secure_key_handler.h,P18,implemented,Cometa::SecureKeyHandler,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp,API and ownership mapping pending.
+cardano_secure_key_handler_ed25519_sign_transaction,lib/include/cardano/key_handlers/secure_key_handler.h,P18,implemented,Cometa::SecureKeyHandler,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp,API and ownership mapping pending.
+cardano_secure_key_handler_ed25519_sign_sub_transaction,lib/include/cardano/key_handlers/secure_key_handler.h,P18,implemented,Cometa::SecureKeyHandler,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp,API and ownership mapping pending.
+cardano_secure_key_handler_ed25519_get_public_key,lib/include/cardano/key_handlers/secure_key_handler.h,P18,implemented,Cometa::SecureKeyHandler,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp,API and ownership mapping pending.
+cardano_secure_key_handler_unref,lib/include/cardano/key_handlers/secure_key_handler.h,P18,implemented,Cometa::SecureKeyHandler,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp,API and ownership mapping pending.
+cardano_secure_key_handler_ref,lib/include/cardano/key_handlers/secure_key_handler.h,P18,internal,,,Native ownership or diagnostics; handled internally.
+cardano_secure_key_handler_serialize,lib/include/cardano/key_handlers/secure_key_handler.h,P18,implemented,Cometa::SecureKeyHandler,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp,API and ownership mapping pending.
+cardano_secure_key_handler_refcount,lib/include/cardano/key_handlers/secure_key_handler.h,P18,internal,,,Native ownership or diagnostics; handled internally.
+cardano_secure_key_handler_set_last_error,lib/include/cardano/key_handlers/secure_key_handler.h,P18,internal,,,Native ownership or diagnostics; handled internally.
+cardano_secure_key_handler_get_last_error,lib/include/cardano/key_handlers/secure_key_handler.h,P18,implemented,Cometa::SecureKeyHandler,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp,API and ownership mapping pending.
 cardano_software_secure_key_handler_new,lib/include/cardano/key_handlers/software_secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
 cardano_software_secure_key_handler_ed25519_new,lib/include/cardano/key_handlers/software_secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
 cardano_software_secure_key_handler_deserialize,lib/include/cardano/key_handlers/software_secure_key_handler.h,P18,planned,,,API and ownership mapping pending.

@@ -190,6 +190,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Transaction/Transaction.cpp
   lib/src/KeyHandlers/AccountDerivationPath.cpp
   lib/src/KeyHandlers/DerivationPath.cpp
+  lib/src/KeyHandlers/SecureKeyHandler.cpp
   lib/src/Transaction/SubTransactionSet.cpp
   lib/src/Common/CredentialSet.cpp
   lib/src/Common/Credential.cpp
@@ -435,6 +436,8 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/KeyHandlers/DerivationRoleTest.cpp
     lib/tests/KeyHandlers/AccountDerivationPathTest.cpp
     lib/tests/KeyHandlers/DerivationPathTest.cpp
+    lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
+    lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp
     lib/tests/Transaction/SubTransactionSetTest.cpp
     lib/tests/ValueContractTest.cpp
   )

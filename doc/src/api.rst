@@ -218,6 +218,17 @@ API reference
 .. doxygennamespace:: Cometa::Cip1852
    :members:
 
+.. doxygenstruct:: Cometa::Bip32KeyCallbacks
+   :members:
+
+.. doxygenstruct:: Cometa::Ed25519KeyCallbacks
+   :members:
+
+.. doxygenenum:: Cometa::SecureKeyHandlerType
+
+.. doxygenclass:: Cometa::SecureKeyHandler
+   :members:
+
 .. doxygenclass:: Cometa::SubTransactionSet
    :members:
 

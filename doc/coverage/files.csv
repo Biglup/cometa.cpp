@@ -107,9 +107,9 @@ lib/include/cardano/json/json_writer.h,public header,P01b,implemented,"JsonValue
 lib/include/cardano/key_handlers/account_derivation_path.h,public header,P18,implemented,Cometa::AccountDerivationPath
 lib/include/cardano/key_handlers/cip_1852_constants.h,public header,P18,implemented,Cometa::Cip1852 and Cometa::DerivationRole
 lib/include/cardano/key_handlers/derivation_path.h,public header,P18,implemented,Cometa::DerivationPath
-lib/include/cardano/key_handlers/secure_key_handler.h,public header,P18,planned,idiomatic C++ API
-lib/include/cardano/key_handlers/secure_key_handler_impl.h,public header,P18,planned,internal ABI/ownership support; no raw C wrapper API
-lib/include/cardano/key_handlers/secure_key_handler_type.h,public header,P18,planned,idiomatic C++ API
+lib/include/cardano/key_handlers/secure_key_handler.h,public header,P18,implemented,Cometa::SecureKeyHandler
+lib/include/cardano/key_handlers/secure_key_handler_impl.h,public header,P18,internal,Native callback ABI used by Cometa::SecureKeyHandler.
+lib/include/cardano/key_handlers/secure_key_handler_type.h,public header,P18,implemented,Cometa::SecureKeyHandlerType
 lib/include/cardano/key_handlers/software_secure_key_handler.h,public header,P18,planned,idiomatic C++ API
 lib/include/cardano/message_signing/cip8.h,public header,P18,planned,idiomatic C++ API
 lib/include/cardano/object.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."

@@ -195,6 +195,36 @@ Private-key objects erase their owned key material when destroyed. Exported
 their buffers automatically. Avoid exporting or logging secret material unless
 it is needed.
 
+Custom signing handlers
+-----------------------
+
+``SecureKeyHandler`` accepts C++ signing operations, including signers backed by
+hardware wallets or remote services. Supply transaction and sub-transaction
+signing functions and the matching public-key lookup. The handler keeps these
+operations available for its lifetime and releases its native resources when
+destroyed.
+
+.. code-block:: cpp
+
+   Cometa::Bip32KeyCallbacks callbacks;
+   callbacks.signTransaction = signTransaction;
+   callbacks.signSubTransaction = signSubTransaction;
+   callbacks.accountPublicKey = accountPublicKey;
+
+   const Cometa::SecureKeyHandler signer =
+     Cometa::SecureKeyHandler::bip32("hardware-wallet", callbacks);
+   const Cometa::DerivationPath paymentPath {
+     1852, 1815, 0, Cometa::DerivationRole::External, 0 };
+   const Cometa::VkeyWitnessSet witnesses =
+     signer.signTransaction(transaction, { paymentPath });
+
+The assigned functions return ``VkeyWitnessSet`` and receive ``Transaction`` or
+``SubTransaction`` values. A BIP32 public-key function receives
+``AccountDerivationPath`` and returns ``Bip32PublicKey``. Use
+``Ed25519KeyCallbacks`` and ``SecureKeyHandler::ed25519`` for a single-key signer.
+Exceptions thrown by a callback become ``Cometa::Error`` at the signing call;
+``lastError()`` provides the callback's message.
+
 Mnemonic and password utilities
 -------------------------------
 
