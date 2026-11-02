@@ -511,3 +511,6 @@ Protocol parameters
 
 .. doxygenclass:: Cometa::NewConstitutionAction
    :members:
+
+.. doxygenclass:: Cometa::TreasuryWithdrawalsAction
+   :members:

@@ -231,6 +231,9 @@ class WithdrawalMap
 
   private:
 
+    /** @brief Allows treasury actions to copy withdrawals. */
+    friend class TreasuryWithdrawalsAction;
+
     /**
      * @brief Takes ownership of an existing reference.
      *

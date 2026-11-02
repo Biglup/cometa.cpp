@@ -240,6 +240,9 @@ class Blake2bHash
     /** @brief Allows constitutions to copy script hashes. */
     friend class Constitution;
 
+    /** @brief Allows treasury actions to copy policy hashes. */
+    friend class TreasuryWithdrawalsAction;
+
     /** @brief Allows GenesisKeyDelegationCert to copy its hashes. */
     friend class GenesisKeyDelegationCert;
 

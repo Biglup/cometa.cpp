@@ -950,3 +950,7 @@ action identifier and policy hash are optional::
 previous constitutional action::
 
    const Cometa::NewConstitutionAction newConstitution(constitution);
+
+``TreasuryWithdrawalsAction`` holds a withdrawal map and optional policy hash::
+
+   const Cometa::TreasuryWithdrawalsAction treasury(withdrawals);

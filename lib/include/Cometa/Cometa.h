@@ -190,6 +190,7 @@
 #include <Cometa/ProposalProcedures/NewConstitutionAction.h>
 #include <Cometa/ProposalProcedures/NoConfidenceAction.h>
 #include <Cometa/ProposalProcedures/ParameterChangeAction.h>
+#include <Cometa/ProposalProcedures/TreasuryWithdrawalsAction.h>
 #include <Cometa/ProtocolParams/CostModel.h>
 #include <Cometa/ProtocolParams/CostModels.h>
 #include <Cometa/ProtocolParams/DRepVotingThresholds.h>

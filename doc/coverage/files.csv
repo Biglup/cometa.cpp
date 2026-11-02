@@ -142,7 +142,7 @@ lib/include/cardano/proposal_procedures/no_confidence_action.h,public header,P13
 lib/include/cardano/proposal_procedures/parameter_change_action.h,public header,P13,implemented,Cometa::ParameterChangeAction
 lib/include/cardano/proposal_procedures/proposal_procedure.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/proposal_procedure_set.h,public header,P13,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/proposal_procedures/treasury_withdrawals_action.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/treasury_withdrawals_action.h,public header,P13,implemented,Cometa::TreasuryWithdrawalsAction
 lib/include/cardano/proposal_procedures/update_committee_action.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/protocol_params/cost_model.h,public header,P12,implemented,Indexed costs with unknown language ID preservation and native CBOR fixtures.
 lib/include/cardano/protocol_params/costmdls.h,public header,P12,implemented,Cost model map including unknown language IDs and language views.
