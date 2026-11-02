@@ -10,3 +10,5 @@ Next
 - Simplify C interoperability with direct calls, remove the example, and enforce formatting and static analysis in CI.
 - Organize domain headers, sources, and tests into Assets, Common, and Crypto folders.
 - Check private and internal documentation in CI and retain Valgrind reports.
+- Add execution budgets, protocol versions, network and governance enums, and checked slot/time conversion.
+- Pin the merged native implementation and track the remaining API and implementation PRs in the coverage ledger.

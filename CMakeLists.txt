@@ -18,6 +18,10 @@ INCLUDE (cmake/Cardano.cmake)
 ADD_LIBRARY (cometa STATIC
   lib/src/ErrorCode.cpp
   lib/src/Error.cpp
+  lib/src/SlotConfig.cpp
+  lib/src/Common/ExUnits.cpp
+  lib/src/Common/ProtocolVersion.cpp
+  lib/src/Common/NetworkMagic.cpp
   lib/src/Crypto/Blake2bHash.cpp
   lib/src/Assets/AssetName.cpp
   lib/src/Common/Credential.cpp
@@ -60,6 +64,13 @@ IF (COMETA_BUILD_TESTS)
 
   ADD_EXECUTABLE (cometa-tests
     lib/tests/ErrorTest.cpp
+    lib/tests/SlotConfigTest.cpp
+    lib/tests/Common/ExUnitsTest.cpp
+    lib/tests/Common/ProtocolVersionTest.cpp
+    lib/tests/Common/ByteOrderTest.cpp
+    lib/tests/Common/NetworkIdTest.cpp
+    lib/tests/Common/NetworkMagicTest.cpp
+    lib/tests/Common/GovernanceKeyTypeTest.cpp
     lib/tests/Assets/AssetNameTest.cpp
     lib/tests/Crypto/Blake2bHashTest.cpp
     lib/tests/Common/CredentialTest.cpp

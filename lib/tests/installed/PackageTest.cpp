@@ -32,5 +32,12 @@ main()
 {
   const Cometa::AssetName name = Cometa::AssetName::fromCbor("46436f6d657461");
 
-  return name.toString() == "Cometa" ? 0 : 1;
+  const Cometa::ExUnits         budget = Cometa::ExUnits::fromCbor("820102");
+  const Cometa::ProtocolVersion version(12, 0);
+  const Cometa::SlotConfig      slots = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preview);
+
+  return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
+      slots.unixTimeFromSlot(0) == 1666656000ULL
+    ? 0
+    : 1;
 }

@@ -1,5 +1,5 @@
-# Pin the reviewed deep-clone implementation until it is available in a release.
-SET (COMETA_CARDANO_REVISION 44fcd57607f55d523764ee5fe09ad691feec774f)
+# Pin the native API used by the binding coverage inventory.
+SET (COMETA_CARDANO_REVISION 4630a4fcbddbea27aebf88fda7247b315e6d68a8)
 
 INCLUDE (FetchContent)
 INCLUDE (ExternalProject)
