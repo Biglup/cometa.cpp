@@ -107,3 +107,9 @@
 #include <Cometa/Scripts/NativeScripts/ScriptAll.h>
 #include <Cometa/Scripts/NativeScripts/ScriptAny.h>
 #include <Cometa/Scripts/NativeScripts/ScriptNOfK.h>
+
+#include <Cometa/Scripts/PlutusScripts/PlutusLanguageVersion.h>
+#include <Cometa/Scripts/PlutusScripts/PlutusV1Script.h>
+#include <Cometa/Scripts/PlutusScripts/PlutusV2Script.h>
+#include <Cometa/Scripts/PlutusScripts/PlutusV3Script.h>
+#include <Cometa/Scripts/PlutusScripts/PlutusV4Script.h>

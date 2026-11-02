@@ -230,3 +230,17 @@ API reference
 .. doxygenenum:: Cometa::NativeScriptType
 
 .. doxygenfunction:: Cometa::toString(NativeScriptType)
+
+.. doxygenclass:: Cometa::PlutusV1Script
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV2Script
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV3Script
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV4Script
+   :members:
+
+.. doxygenenum:: Cometa::PlutusLanguageVersion

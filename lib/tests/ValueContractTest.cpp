@@ -253,7 +253,35 @@ sampleValue<ScriptNOfK>()
   return ScriptNOfK(1, NativeScriptList { NativeScript(ScriptInvalidBefore(5)), NativeScript(ScriptInvalidAfter(7)) });
 }
 
-using ValueTypes = testing::Types<NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
+template<>
+PlutusV1Script
+sampleValue<PlutusV1Script>()
+{
+  return PlutusV1Script::fromHex("450100002499");
+}
+
+template<>
+PlutusV2Script
+sampleValue<PlutusV2Script>()
+{
+  return PlutusV2Script::fromHex("450100002499");
+}
+
+template<>
+PlutusV3Script
+sampleValue<PlutusV3Script>()
+{
+  return PlutusV3Script::fromHex("450100002499");
+}
+
+template<>
+PlutusV4Script
+sampleValue<PlutusV4Script>()
+{
+  return PlutusV4Script::fromHex("450100002499");
+}
+
+using ValueTypes = testing::Types<PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -4193,4 +4221,272 @@ TEST(ScriptNOfK, FailedCopyReleasesEveryAllocation)
     AllocationFailure fail(index, true);
     EXPECT_THROW((void)ScriptNOfK(source), std::exception);
   }
+}
+
+TEST(PlutusV1Script, ReleasesEveryAllocationDuringParameterApplication)
+{
+  // Arrange
+  const PlutusV1Script script     = PlutusV1Script::fromHex("450100002499");
+  const PlutusList     parameters = PlutusList::fromCbor("820041ff");
+  std::size_t          count      = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.applyParameters(parameters);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.applyParameters(parameters), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.toHex(), "450100002499");
+}
+
+TEST(PlutusV1Script, ReleasesEveryAllocationDuringInspection)
+{
+  // Arrange
+  const PlutusV1Script script = PlutusV1Script::fromHex("450100002499");
+  std::size_t          count  = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.toJson();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.toJson(), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.toHex(), "450100002499");
+}
+
+TEST(PlutusV1Script, ReleasesEveryAllocationDuringHashing)
+{
+  // Arrange
+  const PlutusV1Script script = PlutusV1Script::fromHex("450100002499");
+  std::size_t          count  = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.hash();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.hash(), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.toHex(), "450100002499");
+}
+
+TEST(PlutusV2Script, ReleasesEveryAllocationDuringParameterApplication)
+{
+  // Arrange
+  const PlutusV2Script script     = PlutusV2Script::fromHex("450100002499");
+  const PlutusList     parameters = PlutusList::fromCbor("820041ff");
+  std::size_t          count      = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.applyParameters(parameters);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.applyParameters(parameters), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.toHex(), "450100002499");
+}
+
+TEST(PlutusV2Script, ReleasesEveryAllocationDuringInspection)
+{
+  // Arrange
+  const PlutusV2Script script = PlutusV2Script::fromHex("450100002499");
+  std::size_t          count  = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.toJson();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.toJson(), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.toHex(), "450100002499");
+}
+
+TEST(PlutusV2Script, ReleasesEveryAllocationDuringHashing)
+{
+  // Arrange
+  const PlutusV2Script script = PlutusV2Script::fromHex("450100002499");
+  std::size_t          count  = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.hash();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.hash(), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.toHex(), "450100002499");
+}
+
+TEST(PlutusV3Script, ReleasesEveryAllocationDuringParameterApplication)
+{
+  // Arrange
+  const PlutusV3Script script     = PlutusV3Script::fromHex("450100002499");
+  const PlutusList     parameters = PlutusList::fromCbor("820041ff");
+  std::size_t          count      = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.applyParameters(parameters);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.applyParameters(parameters), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.toHex(), "450100002499");
+}
+
+TEST(PlutusV3Script, ReleasesEveryAllocationDuringInspection)
+{
+  // Arrange
+  const PlutusV3Script script = PlutusV3Script::fromHex("450100002499");
+  std::size_t          count  = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.toJson();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.toJson(), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.toHex(), "450100002499");
+}
+
+TEST(PlutusV3Script, ReleasesEveryAllocationDuringHashing)
+{
+  // Arrange
+  const PlutusV3Script script = PlutusV3Script::fromHex("450100002499");
+  std::size_t          count  = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.hash();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.hash(), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.toHex(), "450100002499");
+}
+
+TEST(PlutusV4Script, ReleasesEveryAllocationDuringParameterApplication)
+{
+  // Arrange
+  const PlutusV4Script script     = PlutusV4Script::fromHex("450100002499");
+  const PlutusList     parameters = PlutusList::fromCbor("820041ff");
+  std::size_t          count      = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.applyParameters(parameters);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.applyParameters(parameters), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.toHex(), "450100002499");
+}
+
+TEST(PlutusV4Script, ReleasesEveryAllocationDuringInspection)
+{
+  // Arrange
+  const PlutusV4Script script = PlutusV4Script::fromHex("450100002499");
+  std::size_t          count  = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.toJson();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.toJson(), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.toHex(), "450100002499");
+}
+
+TEST(PlutusV4Script, ReleasesEveryAllocationDuringHashing)
+{
+  // Arrange
+  const PlutusV4Script script = PlutusV4Script::fromHex("450100002499");
+  std::size_t          count  = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.hash();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.hash(), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.toHex(), "450100002499");
 }
