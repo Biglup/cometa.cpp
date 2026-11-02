@@ -923,57 +923,57 @@ cardano_anchor_refcount,lib/include/cardano/common/anchor.h,P01a.2,internal,Priv
 cardano_anchor_set_last_error,lib/include/cardano/common/anchor.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
 cardano_anchor_get_last_error,lib/include/cardano/common/anchor.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
 cardano_anchor_deep_clone,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor::copy constructor and assignment,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
-cardano_bigint_clone,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_from_string,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_get_string_size,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_from_int,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_from_unsigned_int,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_from_bytes,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_to_string,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_to_int,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_to_unsigned_int,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_get_bytes_size,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_to_bytes,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_add,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_subtract,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_multiply,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_divide,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_divide_and_reminder,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_reminder,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_abs,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_gcd,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_negate,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_signum,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_mod,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_mod_pow,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_mod_inverse,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_and,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_or,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_xor,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_not,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_test_bit,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_set_bit,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_clear_bit,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_flip_bit,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_bit_count,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_bit_length,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_min,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_max,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_shift_left,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_shift_right,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_equals,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_compare,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_is_zero,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_increment,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_decrement,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_pow,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_assign,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_unref,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_ref,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_refcount,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_set_last_error,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_get_last_error,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_bigint_deep_clone,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
+cardano_bigint_clone,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::copy constructor,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_from_string,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::fromString,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_get_string_size,lib/include/cardano/common/bigint.h,P01a.2,internal,Private ownership and standard containers,,"Buffer sizing, reference counting and native error storage remain private."
+cardano_bigint_from_int,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::BigInt(std::int64_t),lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Construct through unsigned magnitude to avoid negating INT64_MIN.
+cardano_bigint_from_unsigned_int,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::fromUnsigned,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_from_bytes,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::fromBytes,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_to_string,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::toString,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_to_int,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::toInt64,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked narrowing rejects overflow instead of returning low magnitude bits.
+cardano_bigint_to_unsigned_int,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::toUInt64,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked narrowing rejects overflow instead of returning low magnitude bits.
+cardano_bigint_get_bytes_size,lib/include/cardano/common/bigint.h,P01a.2,internal,Private ownership and standard containers,,"Buffer sizing, reference counting and native error storage remain private."
+cardano_bigint_to_bytes,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::toBytes,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_add,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator+,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_subtract,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator-,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_multiply,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator*,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_divide,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator/,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_divide_and_reminder,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::divRem,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_reminder,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator%,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_abs,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::abs,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_gcd,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::gcd,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_negate,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::unary operator-,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_signum,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::sign,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_mod,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator%,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_mod_pow,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::modPow,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_mod_inverse,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::modInverse,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_and,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator&,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_or,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator|,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_xor,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator^,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_not,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator~,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_test_bit,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::testBit,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_set_bit,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::setBit,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_clear_bit,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::clearBit,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_flip_bit,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::flipBit,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_bit_count,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::bitCount,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_bit_length,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::bitLength,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_min,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::std::min using operator<,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_max,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::std::max using operator<,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_shift_left,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator<<,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_shift_right,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator>>,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_equals,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator==,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_compare,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::comparison operators,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_is_zero,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::isZero,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_increment,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator++,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_decrement,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator--,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_pow,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::pow,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Exponentiation by squaring preserves the full 64-bit exponent on Windows.
+cardano_bigint_assign,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::operator=,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
+cardano_bigint_unref,lib/include/cardano/common/bigint.h,P01a.2,internal,Private ownership and standard containers,,"Buffer sizing, reference counting and native error storage remain private."
+cardano_bigint_ref,lib/include/cardano/common/bigint.h,P01a.2,internal,Private ownership and standard containers,,"Buffer sizing, reference counting and native error storage remain private."
+cardano_bigint_refcount,lib/include/cardano/common/bigint.h,P01a.2,internal,Private ownership and standard containers,,"Buffer sizing, reference counting and native error storage remain private."
+cardano_bigint_set_last_error,lib/include/cardano/common/bigint.h,P01a.2,internal,Private ownership and standard containers,,"Buffer sizing, reference counting and native error storage remain private."
+cardano_bigint_get_last_error,lib/include/cardano/common/bigint.h,P01a.2,internal,Private ownership and standard containers,,"Buffer sizing, reference counting and native error storage remain private."
+cardano_bigint_deep_clone,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt::copy constructor,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp,Checked idiomatic integer API.
 cardano_credential_new,lib/include/cardano/common/credential.h,P01a.1,implemented,Credential::Credential,lib/tests/Common/CredentialTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
 cardano_credential_from_hash_hex,lib/include/cardano/common/credential.h,P01a.1,implemented,Credential::Credential with Blake2bHash::fromHex,lib/tests/Common/CredentialTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
 cardano_credential_from_hash_bytes,lib/include/cardano/common/credential.h,P01a.1,implemented,Credential::Credential with Blake2bHash,lib/tests/Common/CredentialTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.

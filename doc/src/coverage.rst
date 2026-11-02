@@ -50,6 +50,9 @@ and callback adapters are tracked in :doc:`implementation_plan`.
    * - ``cardano_governance_action_id_t``
      - ``GovernanceActionId`` hash/index access, mutation, CBOR, JSON, and checked CIP-129 encoding
 
+   * - ``cardano_bigint_t``
+     - ``BigInt`` arithmetic, comparisons, checked narrowing, byte/string encoding, and bitwise/modular operations
+
 Coverage ledger
 ---------------
 

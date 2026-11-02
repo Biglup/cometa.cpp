@@ -15,7 +15,7 @@ cardano_asset_name_t,opaque object,lib/include/cardano/assets/asset_name.h,P04,i
 cardano_auth_committee_hot_cert_t,opaque object,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,planned,,
 cardano_auxiliary_data_t,opaque object,lib/include/cardano/auxiliary_data/auxiliary_data.h,P08,planned,,
 cardano_base_address_t,opaque object,lib/include/cardano/address/base_address.h,P03,planned,,
-cardano_bigint_t,opaque object,lib/include/cardano/common/bigint.h,P01a.2,planned,,
+cardano_bigint_t,opaque object,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_bip32_get_extended_account_public_key_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
 cardano_bip32_private_key_t,opaque object,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,
 cardano_bip32_public_key_t,opaque object,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,

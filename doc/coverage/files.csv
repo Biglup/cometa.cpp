@@ -64,7 +64,7 @@ lib/include/cardano/certs/update_drep_cert.h,public header,P11,planned,idiomatic
 lib/include/cardano/certs/vote_delegation_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/vote_registration_delegation_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/common/anchor.h,public header,P01a.2,implemented,Cometa::Anchor; domain and value-contract tests
-lib/include/cardano/common/bigint.h,public header,P01a.2,planned,idiomatic C++ API
+lib/include/cardano/common/bigint.h,public header,P01a.2,implemented,"Cometa::BigInt; arithmetic, conversion and value-contract tests"
 lib/include/cardano/common/byte_order.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/credential.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/credential_type.h,public header,P01a.1,implemented,idiomatic C++ API
@@ -323,7 +323,7 @@ lib/src/collections/array.h,implementation file,P01a.2,internal,Native implement
 lib/src/collections/set.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/collections/set.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/anchor.c,implementation file,P01a.2,implemented,Cometa::Anchor; domain and value-contract tests
-lib/src/common/bigint.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/bigint.c,implementation file,P01a.2,implemented,"Cometa::BigInt; arithmetic, conversion and value-contract tests"
 lib/src/common/credential.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/datum.c,implementation file,P05,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/drep.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
