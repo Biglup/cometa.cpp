@@ -161,6 +161,9 @@ class VotingProcedure
 
   private:
 
+    /** @brief Allows voting maps to transfer independent values. */
+    friend class VotingProcedures;
+
     /**
      * @brief Adopts an owned voting procedure.
      * @param value The owned voting procedure.

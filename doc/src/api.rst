@@ -544,5 +544,13 @@ Voting procedures
 .. doxygenclass:: Cometa::Voter
    :members:
 
+Voting collections
+~~~~~~~~~~~~~~~~~~
+
+``GovernanceActionIdList``, ``VoterList``, and ``VotingProcedureList`` are ordered standard C++ vectors of independent values.
+
 .. doxygenclass:: Cometa::VotingProcedure
+   :members:
+
+.. doxygenclass:: Cometa::VotingProcedures
    :members:

@@ -217,6 +217,9 @@ class GovernanceActionId
 
   private:
 
+    /** @brief Allows voting maps to transfer independent values. */
+    friend class VotingProcedures;
+
     /** @brief Allows governance actions to copy identifiers. */
     friend class NoConfidenceAction;
 

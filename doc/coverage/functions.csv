@@ -3035,16 +3035,16 @@ cardano_tx_builder_refcount,lib/include/cardano/transaction_builder/transaction_
 cardano_tx_builder_set_last_error,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
 cardano_tx_builder_get_last_error,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
 cardano_uplc_apply_params_to_script,lib/include/cardano/uplc/uplc_apply_params.h,P06.3,implemented,Cometa::PlutusV1Script::applyParameters (also V2-V4),lib/tests/Scripts/PlutusScripts/PlutusV1ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Compiled script bytes and outer CBOR are distinct; parameter application returns a new script.
-cardano_governance_action_id_list_new,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_list_get_length,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_list_get,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_list_add,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_list_unref,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_list_ref,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_list_refcount,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_list_set_last_error,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_list_get_last_error,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_list_deep_clone,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,,API and ownership mapping pending.
+cardano_governance_action_id_list_new,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,implemented,Cometa::GovernanceActionIdList / constructor,lib/tests/VotingProcedures/GovernanceActionIdListTest.cpp,Standard C++ sequence semantics.
+cardano_governance_action_id_list_get_length,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,implemented,Cometa::GovernanceActionIdList / size,lib/tests/VotingProcedures/GovernanceActionIdListTest.cpp,Standard C++ sequence semantics.
+cardano_governance_action_id_list_get,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,implemented,Cometa::GovernanceActionIdList / at,lib/tests/VotingProcedures/GovernanceActionIdListTest.cpp,Standard C++ sequence semantics.
+cardano_governance_action_id_list_add,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,implemented,Cometa::GovernanceActionIdList / push_back,lib/tests/VotingProcedures/GovernanceActionIdListTest.cpp,Standard C++ sequence semantics.
+cardano_governance_action_id_list_unref,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/GovernanceActionIdListTest.cpp,Standard C++ sequence semantics.
+cardano_governance_action_id_list_ref,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/GovernanceActionIdListTest.cpp,Standard C++ sequence semantics.
+cardano_governance_action_id_list_refcount,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/GovernanceActionIdListTest.cpp,Standard C++ sequence semantics.
+cardano_governance_action_id_list_set_last_error,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/GovernanceActionIdListTest.cpp,Standard C++ sequence semantics.
+cardano_governance_action_id_list_get_last_error,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/GovernanceActionIdListTest.cpp,Standard C++ sequence semantics.
+cardano_governance_action_id_list_deep_clone,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,implemented,Cometa::GovernanceActionIdList / copy constructor,lib/tests/VotingProcedures/GovernanceActionIdListTest.cpp,Standard C++ sequence semantics.
 cardano_vote_to_string,lib/include/cardano/voting_procedures/vote.h,P14,implemented,Cometa::toString(Vote),lib/tests/VotingProcedures/VoteTest.cpp,Typed voting enum and native names.
 cardano_voter_new,lib/include/cardano/voting_procedures/voter.h,P14,implemented,Cometa::Voter::constructor,lib/tests/VotingProcedures/VoterTest.cpp; lib/tests/ValueContractTest.cpp,Typed voter credentials and ordering.
 cardano_voter_from_cbor,lib/include/cardano/voting_procedures/voter.h,P14,implemented,Cometa::Voter::fromCbor,lib/tests/VotingProcedures/VoterTest.cpp; lib/tests/ValueContractTest.cpp,Typed voter credentials and ordering.
@@ -3062,16 +3062,16 @@ cardano_voter_refcount,lib/include/cardano/voting_procedures/voter.h,P14,interna
 cardano_voter_set_last_error,lib/include/cardano/voting_procedures/voter.h,P14,internal,RAII and exception handling,lib/tests/VotingProcedures/VoterTest.cpp; lib/tests/ValueContractTest.cpp,Native ownership remains private.
 cardano_voter_get_last_error,lib/include/cardano/voting_procedures/voter.h,P14,internal,RAII and exception handling,lib/tests/VotingProcedures/VoterTest.cpp; lib/tests/ValueContractTest.cpp,Native ownership remains private.
 cardano_voter_deep_clone,lib/include/cardano/voting_procedures/voter.h,P14,implemented,Cometa::Voter::copy constructor / assignment,lib/tests/VotingProcedures/VoterTest.cpp; lib/tests/ValueContractTest.cpp,Typed voter credentials and ordering.
-cardano_voter_list_new,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voter_list_get_length,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voter_list_get,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voter_list_add,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voter_list_unref,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voter_list_ref,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voter_list_refcount,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voter_list_set_last_error,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voter_list_get_last_error,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voter_list_deep_clone,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,,API and ownership mapping pending.
+cardano_voter_list_new,lib/include/cardano/voting_procedures/voter_list.h,P14,implemented,Cometa::VoterList / constructor,lib/tests/VotingProcedures/VoterListTest.cpp,Standard C++ sequence semantics.
+cardano_voter_list_get_length,lib/include/cardano/voting_procedures/voter_list.h,P14,implemented,Cometa::VoterList / size,lib/tests/VotingProcedures/VoterListTest.cpp,Standard C++ sequence semantics.
+cardano_voter_list_get,lib/include/cardano/voting_procedures/voter_list.h,P14,implemented,Cometa::VoterList / at,lib/tests/VotingProcedures/VoterListTest.cpp,Standard C++ sequence semantics.
+cardano_voter_list_add,lib/include/cardano/voting_procedures/voter_list.h,P14,implemented,Cometa::VoterList / push_back,lib/tests/VotingProcedures/VoterListTest.cpp,Standard C++ sequence semantics.
+cardano_voter_list_unref,lib/include/cardano/voting_procedures/voter_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/VoterListTest.cpp,Standard C++ sequence semantics.
+cardano_voter_list_ref,lib/include/cardano/voting_procedures/voter_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/VoterListTest.cpp,Standard C++ sequence semantics.
+cardano_voter_list_refcount,lib/include/cardano/voting_procedures/voter_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/VoterListTest.cpp,Standard C++ sequence semantics.
+cardano_voter_list_set_last_error,lib/include/cardano/voting_procedures/voter_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/VoterListTest.cpp,Standard C++ sequence semantics.
+cardano_voter_list_get_last_error,lib/include/cardano/voting_procedures/voter_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/VoterListTest.cpp,Standard C++ sequence semantics.
+cardano_voter_list_deep_clone,lib/include/cardano/voting_procedures/voter_list.h,P14,implemented,Cometa::VoterList / copy constructor,lib/tests/VotingProcedures/VoterListTest.cpp,Standard C++ sequence semantics.
 cardano_voter_type_to_string,lib/include/cardano/voting_procedures/voter_type.h,P14,implemented,Cometa::toString(VoterType),lib/tests/VotingProcedures/VoterTypeTest.cpp,Typed voting enum and native names.
 cardano_voting_procedure_new,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure::constructor,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Governance vote and optional anchor.
 cardano_voting_procedure_from_cbor,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure::fromCbor,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Governance vote and optional anchor.
@@ -3087,30 +3087,30 @@ cardano_voting_procedure_refcount,lib/include/cardano/voting_procedures/voting_p
 cardano_voting_procedure_set_last_error,lib/include/cardano/voting_procedures/voting_procedure.h,P14,internal,RAII and exception handling,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Native ownership remains private.
 cardano_voting_procedure_get_last_error,lib/include/cardano/voting_procedures/voting_procedure.h,P14,internal,RAII and exception handling,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Native ownership remains private.
 cardano_voting_procedure_deep_clone,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure::copy constructor / assignment,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Governance vote and optional anchor.
-cardano_voting_procedure_list_new,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_list_get_length,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_list_get,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_list_add,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_list_unref,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_list_ref,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_list_refcount,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_list_set_last_error,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_list_get_last_error,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_list_deep_clone,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_new,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_from_cbor,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_to_cbor,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_to_cip116_json,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_insert,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_get,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_get_governance_ids_by_voter,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_get_voters,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_unref,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_ref,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_refcount,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_set_last_error,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_get_last_error,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedures_deep_clone,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,,API and ownership mapping pending.
+cardano_voting_procedure_list_new,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,implemented,Cometa::VotingProcedureList / constructor,lib/tests/VotingProcedures/VotingProcedureListTest.cpp,Standard C++ sequence semantics.
+cardano_voting_procedure_list_get_length,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,implemented,Cometa::VotingProcedureList / size,lib/tests/VotingProcedures/VotingProcedureListTest.cpp,Standard C++ sequence semantics.
+cardano_voting_procedure_list_get,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,implemented,Cometa::VotingProcedureList / at,lib/tests/VotingProcedures/VotingProcedureListTest.cpp,Standard C++ sequence semantics.
+cardano_voting_procedure_list_add,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,implemented,Cometa::VotingProcedureList / push_back,lib/tests/VotingProcedures/VotingProcedureListTest.cpp,Standard C++ sequence semantics.
+cardano_voting_procedure_list_unref,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/VotingProcedureListTest.cpp,Standard C++ sequence semantics.
+cardano_voting_procedure_list_ref,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/VotingProcedureListTest.cpp,Standard C++ sequence semantics.
+cardano_voting_procedure_list_refcount,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/VotingProcedureListTest.cpp,Standard C++ sequence semantics.
+cardano_voting_procedure_list_set_last_error,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/VotingProcedureListTest.cpp,Standard C++ sequence semantics.
+cardano_voting_procedure_list_get_last_error,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,internal,standard C++ value lifetime,lib/tests/VotingProcedures/VotingProcedureListTest.cpp,Standard C++ sequence semantics.
+cardano_voting_procedure_list_deep_clone,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,implemented,Cometa::VotingProcedureList / copy constructor,lib/tests/VotingProcedures/VotingProcedureListTest.cpp,Standard C++ sequence semantics.
+cardano_voting_procedures_new,lib/include/cardano/voting_procedures/voting_procedures.h,P14,implemented,Cometa::VotingProcedures / constructor,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
+cardano_voting_procedures_from_cbor,lib/include/cardano/voting_procedures/voting_procedures.h,P14,implemented,Cometa::VotingProcedures / fromCbor,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
+cardano_voting_procedures_to_cbor,lib/include/cardano/voting_procedures/voting_procedures.h,P14,implemented,Cometa::VotingProcedures / toCbor,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
+cardano_voting_procedures_to_cip116_json,lib/include/cardano/voting_procedures/voting_procedures.h,P14,implemented,Cometa::VotingProcedures / toJson,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
+cardano_voting_procedures_insert,lib/include/cardano/voting_procedures/voting_procedures.h,P14,implemented,Cometa::VotingProcedures / insert,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
+cardano_voting_procedures_get,lib/include/cardano/voting_procedures/voting_procedures.h,P14,implemented,Cometa::VotingProcedures / get,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
+cardano_voting_procedures_get_governance_ids_by_voter,lib/include/cardano/voting_procedures/voting_procedures.h,P14,implemented,Cometa::VotingProcedures / actionIds,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
+cardano_voting_procedures_get_voters,lib/include/cardano/voting_procedures/voting_procedures.h,P14,implemented,Cometa::VotingProcedures / voters,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
+cardano_voting_procedures_unref,lib/include/cardano/voting_procedures/voting_procedures.h,P14,internal,RAII and exceptions,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
+cardano_voting_procedures_ref,lib/include/cardano/voting_procedures/voting_procedures.h,P14,internal,RAII and exceptions,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
+cardano_voting_procedures_refcount,lib/include/cardano/voting_procedures/voting_procedures.h,P14,internal,RAII and exceptions,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
+cardano_voting_procedures_set_last_error,lib/include/cardano/voting_procedures/voting_procedures.h,P14,internal,RAII and exceptions,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
+cardano_voting_procedures_get_last_error,lib/include/cardano/voting_procedures/voting_procedures.h,P14,internal,RAII and exceptions,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
+cardano_voting_procedures_deep_clone,lib/include/cardano/voting_procedures/voting_procedures.h,P14,implemented,Cometa::VotingProcedures / copy constructor,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp,Independent C++ values and standard sequences.
 cardano_bootstrap_witness_new,lib/include/cardano/witness_set/bootstrap_witness.h,P15,planned,,,API and ownership mapping pending.
 cardano_bootstrap_witness_from_cbor,lib/include/cardano/witness_set/bootstrap_witness.h,P15,planned,,,API and ownership mapping pending.
 cardano_bootstrap_witness_to_cbor,lib/include/cardano/witness_set/bootstrap_witness.h,P15,planned,,,API and ownership mapping pending.

@@ -583,6 +583,13 @@ main()
     return 1;
   }
 
+  Cometa::VotingProcedures votes;
+  votes.insert(voter, Cometa::GovernanceActionId(Cometa::Blake2bHash::fromHex(std::string(64, '0')), 0), vote);
+  if (Cometa::VotingProcedures::fromCbor(votes.toCbor()) != votes || votes.voters().size() != 1U)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

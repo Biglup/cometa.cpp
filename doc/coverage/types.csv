@@ -82,7 +82,7 @@ cardano_get_rewards_balance_func_t,callback,lib/include/cardano/providers/provid
 cardano_get_unspent_output_by_nft_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_get_unspent_outputs_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_get_unspent_outputs_with_asset_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
-cardano_governance_action_id_list_t,opaque object,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,
+cardano_governance_action_id_list_t,opaque object,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,implemented,Cometa::GovernanceActionIdList,lib/tests/VotingProcedures/GovernanceActionIdListTest.cpp
 cardano_governance_action_id_t,opaque object,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_governance_action_type_t,enum,lib/include/cardano/proposal_procedures/governance_action_type.h,P13,implemented,Cometa::GovernanceActionType,lib/tests/ProposalProcedures/GovernanceActionTypeTest.cpp
 cardano_governance_key_type_t,enum,lib/include/cardano/common/governance_key_type.h,P01a.1,implemented,GovernanceKeyType,lib/tests/Common/GovernanceKeyTypeTest.cpp
@@ -226,11 +226,11 @@ cardano_vkey_witness_t,opaque object,lib/include/cardano/witness_set/vkey_witnes
 cardano_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_vote_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_registration_delegation_cert.h,P11,implemented,Cometa::VoteRegistrationDelegationCert,lib/tests/Certificates/VoteRegistrationDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_vote_t,enum,lib/include/cardano/voting_procedures/vote.h,P14,implemented,Cometa::Vote,lib/tests/VotingProcedures/VoteTest.cpp
-cardano_voter_list_t,opaque object,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,
+cardano_voter_list_t,opaque object,lib/include/cardano/voting_procedures/voter_list.h,P14,implemented,Cometa::VoterList,lib/tests/VotingProcedures/VoterListTest.cpp
 cardano_voter_t,opaque object,lib/include/cardano/voting_procedures/voter.h,P14,implemented,Cometa::Voter,lib/tests/VotingProcedures/VoterTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_voter_type_t,enum,lib/include/cardano/voting_procedures/voter_type.h,P14,implemented,Cometa::VoterType,lib/tests/VotingProcedures/VoterTypeTest.cpp
-cardano_voting_procedure_list_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,
+cardano_voting_procedure_list_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,implemented,Cometa::VotingProcedureList,lib/tests/VotingProcedures/VotingProcedureListTest.cpp
 cardano_voting_procedure_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_voting_procedures_t,opaque object,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,
+cardano_voting_procedures_t,opaque object,lib/include/cardano/voting_procedures/voting_procedures.h,P14,implemented,Cometa::VotingProcedures,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_withdrawal_map_t,opaque object,lib/include/cardano/common/withdrawal_map.h,P07,implemented,Cometa::WithdrawalMap,lib/tests/Common/WithdrawalMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_witness_set_t,opaque object,lib/include/cardano/witness_set/witness_set.h,P15,planned,,
