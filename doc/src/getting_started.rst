@@ -935,3 +935,9 @@ optional previous action identifier::
 
    const Cometa::HardForkInitiationAction hardFork(
      Cometa::ProtocolVersion(12, 0));
+
+``ParameterChangeAction`` proposes protocol parameter changes. The previous
+action identifier and policy hash are optional::
+
+   const Cometa::ParameterChangeAction change(update);
+   const std::vector<std::uint8_t> cbor = change.toCbor();

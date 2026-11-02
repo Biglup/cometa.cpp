@@ -120,7 +120,7 @@ cardano_new_constitution_action_t,opaque object,lib/include/cardano/proposal_pro
 cardano_no_confidence_action_t,opaque object,lib/include/cardano/proposal_procedures/no_confidence_action.h,P13,implemented,Cometa::NoConfidenceAction,lib/tests/ProposalProcedures/NoConfidenceActionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_object_deallocator_t,callback,lib/include/cardano/object.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
 cardano_object_t,struct,lib/include/cardano/object.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
-cardano_parameter_change_action_t,opaque object,lib/include/cardano/proposal_procedures/parameter_change_action.h,P13,planned,,
+cardano_parameter_change_action_t,opaque object,lib/include/cardano/proposal_procedures/parameter_change_action.h,P13,implemented,Cometa::ParameterChangeAction,lib/tests/ProposalProcedures/ParameterChangeActionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_data_kind_t,enum,lib/include/cardano/plutus_data/plutus_data_kind.h,P05,implemented,Cometa::PlutusDataKind,lib/tests/PlutusData/PlutusDataKindTest.cpp
 cardano_plutus_data_set_t,opaque object,lib/include/cardano/witness_set/plutus_data_set.h,P15,planned,,
 cardano_plutus_data_t,opaque object,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData,lib/tests/PlutusData/PlutusDataTest.cpp

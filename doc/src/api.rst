@@ -502,3 +502,6 @@ Protocol parameters
 
 .. doxygenclass:: Cometa::HardForkInitiationAction
    :members:
+
+.. doxygenclass:: Cometa::ParameterChangeAction
+   :members:

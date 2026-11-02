@@ -139,7 +139,7 @@ lib/include/cardano/proposal_procedures/hard_fork_initiation_action.h,public hea
 lib/include/cardano/proposal_procedures/info_action.h,public header,P13,implemented,Cometa::InfoAction
 lib/include/cardano/proposal_procedures/new_constitution_action.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/no_confidence_action.h,public header,P13,implemented,Cometa::NoConfidenceAction
-lib/include/cardano/proposal_procedures/parameter_change_action.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/parameter_change_action.h,public header,P13,implemented,Cometa::ParameterChangeAction
 lib/include/cardano/proposal_procedures/proposal_procedure.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/proposal_procedure_set.h,public header,P13,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/proposal_procedures/treasury_withdrawals_action.h,public header,P13,planned,idiomatic C++ API

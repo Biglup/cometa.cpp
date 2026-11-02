@@ -860,6 +860,9 @@ class ProtocolParamUpdate
     /** @brief Allows the proposed-update map to access native values. */
     friend class ProposedParamUpdates;
 
+    /** @brief Allows parameter change actions to copy parameter updates. */
+    friend class ParameterChangeAction;
+
   private:
 
     /**

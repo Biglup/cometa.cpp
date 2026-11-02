@@ -234,6 +234,9 @@ class Blake2bHash
 
   private:
 
+    /** @brief Allows parameter change actions to copy policy hashes. */
+    friend class ParameterChangeAction;
+
     /** @brief Allows GenesisKeyDelegationCert to copy its hashes. */
     friend class GenesisKeyDelegationCert;
 
