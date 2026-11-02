@@ -214,6 +214,9 @@ class PlutusV1Script
     /** @brief Allows the auxiliary script list to copy script values. */
     friend class PlutusV1ScriptList;
 
+    /** @brief Allows witness sets to copy Plutus scripts. */
+    friend class PlutusV1ScriptSet;
+
     /**
      * @brief Takes ownership of an existing reference.
      *

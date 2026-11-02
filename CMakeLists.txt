@@ -83,6 +83,10 @@ ADD_LIBRARY (cometa STATIC
   lib/src/WitnessSet/BootstrapWitnessSet.cpp
   lib/src/WitnessSet/NativeScriptSet.cpp
   lib/src/WitnessSet/PlutusDataSet.cpp
+  lib/src/WitnessSet/PlutusV1ScriptSet.cpp
+  lib/src/WitnessSet/PlutusV2ScriptSet.cpp
+  lib/src/WitnessSet/PlutusV3ScriptSet.cpp
+  lib/src/WitnessSet/PlutusV4ScriptSet.cpp
   lib/src/Certificates/RegistrationCert.cpp
   lib/src/Certificates/UnregistrationCert.cpp
   lib/src/Common/DRep.cpp
@@ -287,6 +291,10 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/WitnessSet/BootstrapWitnessSetTest.cpp
     lib/tests/WitnessSet/NativeScriptSetTest.cpp
     lib/tests/WitnessSet/PlutusDataSetTest.cpp
+    lib/tests/WitnessSet/PlutusV1ScriptSetTest.cpp
+    lib/tests/WitnessSet/PlutusV2ScriptSetTest.cpp
+    lib/tests/WitnessSet/PlutusV3ScriptSetTest.cpp
+    lib/tests/WitnessSet/PlutusV4ScriptSetTest.cpp
     lib/tests/Certificates/RegistrationCertTest.cpp
     lib/tests/Certificates/UnregistrationCertTest.cpp
     lib/tests/Common/DRepTypeTest.cpp

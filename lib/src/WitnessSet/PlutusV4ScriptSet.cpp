@@ -1,0 +1,207 @@
+/**
+ * @file PlutusV4ScriptSet.cpp
+ *
+ * @brief Ledger Plutus V4 script collections.
+ *
+ * @author angel.castillo
+ * @date   Nov 02, 2026
+ *
+ * Copyright 2026 Biglup Labs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* INCLUDES ******************************************************************/
+
+#include <Cometa/WitnessSet/PlutusV4ScriptSet.h>
+
+#include "../CardanoInterop.h"
+
+#include <cardano/scripts/plutus_scripts/plutus_v4_script.h>
+#include <cardano/witness_set/plutus_v4_script_set.h>
+
+/* CLASS IMPLEMENTATION ******************************************************/
+
+namespace Cometa
+{
+PlutusV4ScriptSet::PlutusV4ScriptSet()
+: m_value(nullptr)
+{
+  cardano_plutus_v4_script_set_t*                                                   value  = nullptr;
+  const cardano_error_t                                                             status = cardano_plutus_v4_script_set_new(&value);
+  CardanoObject<cardano_plutus_v4_script_set_t, cardano_plutus_v4_script_set_unref> owner(value);
+
+  checkCardanoError(status, "PlutusV4ScriptSet");
+  m_value = owner.release();
+}
+
+PlutusV4ScriptSet::PlutusV4ScriptSet(const PlutusV4ScriptSet& other)
+: m_value(nullptr)
+{
+  cardano_plutus_v4_script_set_t*                                                   value  = nullptr;
+  const cardano_error_t                                                             status = cardano_plutus_v4_script_set_deep_clone(other.checked(), &value);
+  CardanoObject<cardano_plutus_v4_script_set_t, cardano_plutus_v4_script_set_unref> owner(value);
+
+  checkCardanoError(status, "PlutusV4ScriptSet copy");
+  m_value = owner.release();
+}
+
+PlutusV4ScriptSet::PlutusV4ScriptSet(PlutusV4ScriptSet&& other) noexcept
+: m_value(std::exchange(other.m_value, nullptr))
+{
+}
+
+PlutusV4ScriptSet::~PlutusV4ScriptSet()
+{
+  cardano_plutus_v4_script_set_unref(&m_value);
+}
+
+PlutusV4ScriptSet
+PlutusV4ScriptSet::fromCbor(const std::vector<std::uint8_t>& cbor)
+{
+  return PlutusV4ScriptSet(decodeCbor<cardano_plutus_v4_script_set_t, cardano_plutus_v4_script_set_unref>(cbor, cardano_plutus_v4_script_set_from_cbor));
+}
+
+PlutusV4ScriptSet
+PlutusV4ScriptSet::fromCbor(std::string_view cborHex)
+{
+  return fromCbor(decodeHex(cborHex));
+}
+
+std::size_t
+PlutusV4ScriptSet::size() const
+{
+  return cardano_plutus_v4_script_set_get_length(checked());
+}
+
+void
+PlutusV4ScriptSet::add(const PlutusV4Script& value)
+{
+  for (std::size_t index = 0; index < size(); ++index)
+  {
+    if (at(index).hash() == value.hash())
+    {
+      return;
+    }
+  }
+
+  const PlutusV4Script copy(value);
+  checkCardanoError(cardano_plutus_v4_script_set_add(checked(), copy.checked()), "PlutusV4ScriptSet add");
+}
+
+PlutusV4Script
+PlutusV4ScriptSet::at(std::size_t index) const
+{
+  if (index >= size())
+  {
+    throw std::out_of_range("PlutusV4Script index is out of range");
+  }
+
+  cardano_plutus_v4_script_t*                                               value  = nullptr;
+  const cardano_error_t                                                     status = cardano_plutus_v4_script_set_get(checked(), index, &value);
+  CardanoObject<cardano_plutus_v4_script_t, cardano_plutus_v4_script_unref> owner(value);
+
+  checkCardanoError(status, "PlutusV4ScriptSet at");
+  const PlutusV4Script copied(*owner.release());
+  return PlutusV4Script(copied);
+}
+
+bool
+PlutusV4ScriptSet::useTag() const
+{
+  return cardano_plutus_v4_script_set_get_use_tag(checked());
+}
+
+void
+PlutusV4ScriptSet::setUseTag(bool value)
+{
+  checkCardanoError(cardano_plutus_v4_script_set_set_use_tag(checked(), value), "PlutusV4ScriptSet setUseTag");
+}
+
+std::vector<std::uint8_t>
+PlutusV4ScriptSet::toCbor() const
+{
+  return encodeCbor(checked(), cardano_plutus_v4_script_set_to_cbor);
+}
+
+std::string
+PlutusV4ScriptSet::toJson() const
+{
+  return encodeJson(checked(), cardano_plutus_v4_script_set_to_cip116_json);
+}
+
+void
+PlutusV4ScriptSet::swap(PlutusV4ScriptSet& other) noexcept
+{
+  std::swap(m_value, other.m_value);
+}
+
+PlutusV4ScriptSet&
+PlutusV4ScriptSet::operator=(const PlutusV4ScriptSet& other)
+{
+  if (this != &other)
+  {
+    PlutusV4ScriptSet copy(other);
+    swap(copy);
+  }
+  return *this;
+}
+
+PlutusV4ScriptSet&
+PlutusV4ScriptSet::operator=(PlutusV4ScriptSet&& other) noexcept
+{
+  if (this != &other)
+  {
+    cardano_plutus_v4_script_set_unref(&m_value);
+    m_value = std::exchange(other.m_value, nullptr);
+  }
+  return *this;
+}
+
+bool
+PlutusV4ScriptSet::operator==(const PlutusV4ScriptSet& other) const
+{
+  return toCbor() == other.toCbor();
+}
+
+bool
+PlutusV4ScriptSet::operator!=(const PlutusV4ScriptSet& other) const
+{
+  return !(*this == other);
+}
+
+/* PRIVATE FUNCTIONS *********************************************************/
+
+PlutusV4ScriptSet::PlutusV4ScriptSet(cardano_plutus_v4_script_set_t* value) noexcept
+: m_value(value)
+{
+}
+
+cardano_plutus_v4_script_set_t*
+PlutusV4ScriptSet::checked() const
+{
+  if (!m_value)
+  {
+    throw std::logic_error("Cannot observe a moved-from PlutusV4ScriptSet");
+  }
+  return m_value;
+}
+
+/* FUNCTIONS IMPLEMENTATION **************************************************/
+
+void
+swap(PlutusV4ScriptSet& lhs, PlutusV4ScriptSet& rhs) noexcept
+{
+  lhs.swap(rhs);
+}
+} // namespace Cometa

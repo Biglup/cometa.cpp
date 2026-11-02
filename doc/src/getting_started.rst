@@ -1030,3 +1030,5 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 ``NativeScriptSet`` stores distinct native scripts by script hash and controls the CBOR set tag.
 
 ``PlutusDataSet`` stores distinct datum values. Adding to a decoded set updates its CBOR, and ``setUseTag`` controls the set tag.
+
+``PlutusV1ScriptSet`` through ``PlutusV4ScriptSet`` hold distinct compiled scripts for each Plutus version and support tagged or untagged CBOR.

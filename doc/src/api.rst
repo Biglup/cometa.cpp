@@ -585,3 +585,15 @@ Witnesses and redeemers
 
 .. doxygenclass:: Cometa::PlutusDataSet
    :members:
+
+.. doxygenclass:: Cometa::PlutusV1ScriptSet
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV2ScriptSet
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV3ScriptSet
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV4ScriptSet
+   :members:

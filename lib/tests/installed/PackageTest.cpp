@@ -643,6 +643,34 @@ main()
     return 1;
   }
 
+  Cometa::PlutusV1ScriptSet plutusV1Scripts;
+  plutusV1Scripts.add(Cometa::PlutusV1Script(std::vector<std::uint8_t> { 0x01, 0x02 }));
+  if (Cometa::PlutusV1ScriptSet::fromCbor(plutusV1Scripts.toCbor()) != plutusV1Scripts)
+  {
+    return 1;
+  }
+
+  Cometa::PlutusV2ScriptSet plutusV2Scripts;
+  plutusV2Scripts.add(Cometa::PlutusV2Script(std::vector<std::uint8_t> { 0x01, 0x02 }));
+  if (Cometa::PlutusV2ScriptSet::fromCbor(plutusV2Scripts.toCbor()) != plutusV2Scripts)
+  {
+    return 1;
+  }
+
+  Cometa::PlutusV3ScriptSet plutusV3Scripts;
+  plutusV3Scripts.add(Cometa::PlutusV3Script(std::vector<std::uint8_t> { 0x01, 0x02 }));
+  if (Cometa::PlutusV3ScriptSet::fromCbor(plutusV3Scripts.toCbor()) != plutusV3Scripts)
+  {
+    return 1;
+  }
+
+  Cometa::PlutusV4ScriptSet plutusV4Scripts;
+  plutusV4Scripts.add(Cometa::PlutusV4Script(std::vector<std::uint8_t> { 0x01, 0x02 }));
+  if (Cometa::PlutusV4ScriptSet::fromCbor(plutusV4Scripts.toCbor()) != plutusV4Scripts)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

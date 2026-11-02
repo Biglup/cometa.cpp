@@ -220,10 +220,10 @@ lib/include/cardano/witness_set/bootstrap_witness.h,public header,P15,implemente
 lib/include/cardano/witness_set/bootstrap_witness_set.h,public header,P15,implemented,Cometa::BootstrapWitnessSet
 lib/include/cardano/witness_set/native_script_set.h,public header,P15,implemented,Cometa::NativeScriptSet
 lib/include/cardano/witness_set/plutus_data_set.h,public header,P15,implemented,Cometa::PlutusDataSet
-lib/include/cardano/witness_set/plutus_v1_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/witness_set/plutus_v2_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/witness_set/plutus_v3_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/witness_set/plutus_v4_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/witness_set/plutus_v1_script_set.h,public header,P15,implemented,Cometa::PlutusV1ScriptSet
+lib/include/cardano/witness_set/plutus_v2_script_set.h,public header,P15,implemented,Cometa::PlutusV2ScriptSet
+lib/include/cardano/witness_set/plutus_v3_script_set.h,public header,P15,implemented,Cometa::PlutusV3ScriptSet
+lib/include/cardano/witness_set/plutus_v4_script_set.h,public header,P15,implemented,Cometa::PlutusV4ScriptSet
 lib/include/cardano/witness_set/redeemer.h,public header,P15,implemented,Cometa::Redeemer
 lib/include/cardano/witness_set/redeemer_list.h,public header,P15,implemented,Cometa::RedeemerList
 lib/include/cardano/witness_set/redeemer_tag.h,public header,P15,implemented,Cometa::RedeemerTag

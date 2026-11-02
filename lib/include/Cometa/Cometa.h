@@ -217,6 +217,10 @@
 #include <Cometa/WitnessSet/BootstrapWitnessSet.h>
 #include <Cometa/WitnessSet/NativeScriptSet.h>
 #include <Cometa/WitnessSet/PlutusDataSet.h>
+#include <Cometa/WitnessSet/PlutusV1ScriptSet.h>
+#include <Cometa/WitnessSet/PlutusV2ScriptSet.h>
+#include <Cometa/WitnessSet/PlutusV3ScriptSet.h>
+#include <Cometa/WitnessSet/PlutusV4ScriptSet.h>
 #include <Cometa/WitnessSet/Redeemer.h>
 #include <Cometa/WitnessSet/RedeemerList.h>
 #include <Cometa/WitnessSet/RedeemerTag.h>
