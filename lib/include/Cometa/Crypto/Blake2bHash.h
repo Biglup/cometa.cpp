@@ -234,6 +234,9 @@ class Blake2bHash
 
   private:
 
+    /** @brief Allows PoolParams to copy pool components. */
+    friend class PoolParams;
+
     /** @brief Allows TransactionInput to copy components. */
     friend class TransactionInput;
 

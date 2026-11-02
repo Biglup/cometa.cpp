@@ -253,6 +253,15 @@ main()
     return 1;
   }
 
+  const Cometa::Blake2bHash   poolOperator = Cometa::Blake2bHash::fromHex(std::string(56, '1'));
+  const Cometa::RewardAddress poolReward(Cometa::NetworkId::Testnet, Cometa::Credential(Cometa::CredentialType::KeyHash, poolOperator));
+  const Cometa::PoolParams    poolParams(poolOperator, hash, 10'000'000, 340'000, Cometa::UnitInterval(1, 20), poolReward, poolOwners, poolRelays);
+
+  if (Cometa::PoolParams::fromCbor(poolParams.toCbor()) != poolParams)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

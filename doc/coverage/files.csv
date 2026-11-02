@@ -124,7 +124,7 @@ lib/include/cardano/pool_params/ipv6.h,public header,P09,implemented,Pool primit
 lib/include/cardano/pool_params/multi_host_name_relay.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
 lib/include/cardano/pool_params/pool_metadata.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/include/cardano/pool_params/pool_owners.h,public header,P09,implemented,Sorted unique 28-byte key hashes; independent values and owned results.
-lib/include/cardano/pool_params/pool_params.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/pool_params.h,public header,P09,implemented,Independent stake pool parameter values with optional BLS key and metadata.
 lib/include/cardano/pool_params/relay.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
 lib/include/cardano/pool_params/relay_type.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
 lib/include/cardano/pool_params/relays.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.

@@ -343,3 +343,9 @@ Pool owners
 
 .. doxygenclass:: Cometa::PoolOwners
    :members:
+
+Pool parameters
+---------------
+
+.. doxygenclass:: Cometa::PoolParams
+   :members:

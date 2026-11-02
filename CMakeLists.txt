@@ -24,6 +24,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/PoolParams/Relays.cpp
   lib/src/PoolParams/RelayType.cpp
   lib/src/PoolParams/PoolOwners.cpp
+  lib/src/PoolParams/PoolParams.cpp
   lib/src/PoolParams/Ipv4.cpp
   lib/src/PoolParams/Ipv6.cpp
   lib/src/PoolParams/BlsKey.cpp
@@ -161,6 +162,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/PoolParams/RelaysTest.cpp
     lib/tests/PoolParams/RelayTypeTest.cpp
     lib/tests/PoolParams/PoolOwnersTest.cpp
+    lib/tests/PoolParams/PoolParamsTest.cpp
     lib/tests/PoolParams/Ipv4Test.cpp
     lib/tests/PoolParams/Ipv6Test.cpp
     lib/tests/PoolParams/BlsKeyTest.cpp

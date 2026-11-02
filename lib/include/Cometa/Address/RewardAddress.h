@@ -200,6 +200,9 @@ class RewardAddress
 
   private:
 
+    /** @brief Allows PoolParams to copy pool components. */
+    friend class PoolParams;
+
     /** @brief Allows WithdrawalMap to copy reward addresses. */
     friend class WithdrawalMap;
 

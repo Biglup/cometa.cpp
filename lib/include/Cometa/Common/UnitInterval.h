@@ -216,6 +216,9 @@ class UnitInterval
      */
     bool operator!=(const UnitInterval& other) const;
 
+    /** @brief Allows PoolParams to copy pool components. */
+    friend class PoolParams;
+
   private:
 
     /**

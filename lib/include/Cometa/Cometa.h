@@ -154,3 +154,4 @@
 #include <Cometa/PoolParams/SingleHostNameRelay.h>
 
 #include <Cometa/PoolParams/PoolOwners.h>
+#include <Cometa/PoolParams/PoolParams.h>

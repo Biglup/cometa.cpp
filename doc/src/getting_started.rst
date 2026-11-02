@@ -668,3 +668,23 @@ values and returns independent values from ``at`` and ``values``.
 
 The CBOR encoder applies set tag 258. The decoder also accepts an untagged
 array, rejects duplicate hashes, and rejects malformed lengths.
+
+Pool parameters
+---------------
+
+``PoolParams`` holds the operator and VRF hashes, pledge, cost, margin, reward
+address, owner hashes, relay list, and optional metadata or BLS key. It copies
+all supplied values, and each component getter returns an independent value.
+
+.. code-block:: cpp
+
+   Cometa::PoolParams params(operatorHash, vrfHash, 10'000'000, 340'000,
+                              Cometa::UnitInterval(1, 20), rewardAddress,
+                              owners, relays);
+   params.setMetadata(Cometa::PoolMetadata(
+     "https://example.com/pool.json", metadataHash));
+   const std::vector<std::uint8_t> cbor = params.toCbor();
+   const Cometa::PoolParams restored = Cometa::PoolParams::fromCbor(cbor);
+
+CBOR contains the pool parameter fields as a sequence, with no outer array.
+``setBlsKey(std::nullopt)`` and ``setMetadata(std::nullopt)`` remove optional fields.
