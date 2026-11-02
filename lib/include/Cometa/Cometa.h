@@ -111,6 +111,8 @@
 #include <Cometa/Crypto/Emip3.h>
 #include <Cometa/Crypto/Pbkdf2.h>
 
+#include <Cometa/MessageSigning/Cip8.h>
+
 #include <Cometa/Common/Datum.h>
 #include <Cometa/PlutusData/ConstrPlutusData.h>
 #include <Cometa/PlutusData/PlutusData.h>

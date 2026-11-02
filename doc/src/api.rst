@@ -219,15 +219,20 @@ API reference
    :members:
 
 .. doxygenstruct:: Cometa::Bip32KeyCallbacks
-   :members:
 
 .. doxygenstruct:: Cometa::Ed25519KeyCallbacks
-   :members:
 
 .. doxygenenum:: Cometa::SecureKeyHandlerType
 
 .. doxygenclass:: Cometa::SecureKeyHandler
    :members:
+
+.. doxygenstruct:: Cometa::Cip8Signature
+   :members:
+
+.. doxygenfunction:: Cometa::signCip8(const std::vector<std::uint8_t>&, const Address&, const Ed25519PrivateKey&)
+
+.. doxygenfunction:: Cometa::signCip8(const std::vector<std::uint8_t>&, const Blake2bHash&, const Ed25519PrivateKey&)
 
 .. doxygenclass:: Cometa::SubTransactionSet
    :members:

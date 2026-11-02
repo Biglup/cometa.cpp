@@ -1372,8 +1372,8 @@ cardano_secure_key_handler_get_last_error,lib/include/cardano/key_handlers/secur
 cardano_software_secure_key_handler_new,lib/include/cardano/key_handlers/software_secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
 cardano_software_secure_key_handler_ed25519_new,lib/include/cardano/key_handlers/software_secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
 cardano_software_secure_key_handler_deserialize,lib/include/cardano/key_handlers/software_secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
-cardano_cip8_sign,lib/include/cardano/message_signing/cip8.h,P18,planned,,,API and ownership mapping pending.
-cardano_cip8_sign_ex,lib/include/cardano/message_signing/cip8.h,P18,planned,,,API and ownership mapping pending.
+cardano_cip8_sign,lib/include/cardano/message_signing/cip8.h,P18,implemented,Cometa::signCip8,lib/tests/MessageSigning/Cip8Test.cpp,Address or key-hash bound COSE signing.
+cardano_cip8_sign_ex,lib/include/cardano/message_signing/cip8.h,P18,implemented,Cometa::signCip8,lib/tests/MessageSigning/Cip8Test.cpp,Address or key-hash bound COSE signing.
 cardano_object_unref,lib/include/cardano/object.h,P01a.1,planned,,,API and ownership mapping pending.
 cardano_object_ref,lib/include/cardano/object.h,P01a.1,planned,,,API and ownership mapping pending.
 cardano_object_refcount,lib/include/cardano/object.h,P01a.1,planned,,,API and ownership mapping pending.
