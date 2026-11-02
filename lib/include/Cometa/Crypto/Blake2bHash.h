@@ -234,6 +234,9 @@ class Blake2bHash
 
   private:
 
+    /** @brief Allows GenesisKeyDelegationCert to copy its hashes. */
+    friend class GenesisKeyDelegationCert;
+
     /** @brief Allows PoolRetirementCert to copy its pool key hash. */
     friend class PoolRetirementCert;
 

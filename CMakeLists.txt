@@ -32,6 +32,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Certificates/StakeRegistrationDelegationCert.cpp
   lib/src/Certificates/PoolRegistrationCert.cpp
   lib/src/Certificates/PoolRetirementCert.cpp
+  lib/src/Certificates/GenesisKeyDelegationCert.cpp
   lib/src/Certificates/RegistrationCert.cpp
   lib/src/Certificates/UnregistrationCert.cpp
   lib/src/PoolParams/Ipv4.cpp
@@ -179,6 +180,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Certificates/StakeRegistrationDelegationCertTest.cpp
     lib/tests/Certificates/PoolRegistrationCertTest.cpp
     lib/tests/Certificates/PoolRetirementCertTest.cpp
+    lib/tests/Certificates/GenesisKeyDelegationCertTest.cpp
     lib/tests/Certificates/RegistrationCertTest.cpp
     lib/tests/Certificates/UnregistrationCertTest.cpp
     lib/tests/PoolParams/Ipv4Test.cpp
@@ -292,6 +294,10 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/TransactionBody/ValueTest.cpp
     lib/tests/ValueContractTest.cpp
   )
+
+  IF (MSVC)
+    TARGET_COMPILE_OPTIONS (cometa-tests PRIVATE /bigobj)
+  ENDIF ()
 
   TARGET_INCLUDE_DIRECTORIES (cometa-tests
     PRIVATE

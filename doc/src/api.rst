@@ -399,3 +399,9 @@ Stake registration and delegation
 
 .. doxygenclass:: Cometa::StakeRegistrationDelegationCert
    :members:
+
+Genesis key delegation certificate
+----------------------------------
+
+.. doxygenclass:: Cometa::GenesisKeyDelegationCert
+   :members:

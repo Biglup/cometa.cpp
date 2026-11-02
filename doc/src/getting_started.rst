@@ -775,3 +775,10 @@ independent credential and pool hash values.
 
    Cometa::StakeRegistrationDelegationCert cert(
      stakeCredential, poolKeyHash, 2'000'000);
+
+Genesis key delegation
+----------------------
+
+``GenesisKeyDelegationCert`` represents the historical delegation of a
+genesis key to a delegate key and VRF key. It requires 28-byte genesis and
+delegate hashes and a 32-byte VRF hash.

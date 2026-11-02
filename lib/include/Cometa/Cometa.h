@@ -154,6 +154,7 @@
 #include <Cometa/PoolParams/SingleHostNameRelay.h>
 
 #include <Cometa/Certificates/CertificateType.h>
+#include <Cometa/Certificates/GenesisKeyDelegationCert.h>
 #include <Cometa/Certificates/PoolRegistrationCert.h>
 #include <Cometa/Certificates/PoolRetirementCert.h>
 #include <Cometa/Certificates/RegistrationCert.h>
