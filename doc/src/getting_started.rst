@@ -225,6 +225,22 @@ The assigned functions return ``VkeyWitnessSet`` and receive ``Transaction`` or
 Exceptions thrown by a callback become ``Cometa::Error`` at the signing call;
 ``lastError()`` provides the callback's message.
 
+For a local encrypted signer, create a software handler with entropy or an
+Ed25519 key and a passphrase provider. The provider returns passphrase bytes
+when the signer needs to decrypt the key. The returned handler supports the
+same signing operations and can be serialized for encrypted storage.
+
+.. code-block:: cpp
+
+   const Cometa::SecureKeyHandler signer =
+     Cometa::SecureKeyHandler::softwareBip32(entropy, passphrase, getPassphrase);
+   const Cometa::SecureKeyHandler restored =
+     Cometa::SecureKeyHandler::deserializeSoftware(signer.serialize(), getPassphrase);
+
+The passphrase provider must return a nonempty value of at most 128 bytes.
+The handler clears its temporary passphrase copy after each operation; callers
+remain responsible for their original passphrase storage.
+
 Signing data with CIP-8
 -----------------------
 

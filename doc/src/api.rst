@@ -222,6 +222,8 @@ API reference
 
 .. doxygenstruct:: Cometa::Ed25519KeyCallbacks
 
+.. doxygentypedef:: Cometa::PassphraseProvider
+
 .. doxygenenum:: Cometa::SecureKeyHandlerType
 
 .. doxygenclass:: Cometa::SecureKeyHandler

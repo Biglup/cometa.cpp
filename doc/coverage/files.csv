@@ -110,7 +110,7 @@ lib/include/cardano/key_handlers/derivation_path.h,public header,P18,implemented
 lib/include/cardano/key_handlers/secure_key_handler.h,public header,P18,implemented,Cometa::SecureKeyHandler
 lib/include/cardano/key_handlers/secure_key_handler_impl.h,public header,P18,internal,Native callback ABI used by Cometa::SecureKeyHandler.
 lib/include/cardano/key_handlers/secure_key_handler_type.h,public header,P18,implemented,Cometa::SecureKeyHandlerType
-lib/include/cardano/key_handlers/software_secure_key_handler.h,public header,P18,planned,idiomatic C++ API
+lib/include/cardano/key_handlers/software_secure_key_handler.h,public header,P18,implemented,Cometa::SecureKeyHandler software factories
 lib/include/cardano/message_signing/cip8.h,public header,P18,implemented,Cometa::signCip8
 lib/include/cardano/object.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
 lib/include/cardano/plutus_data/constr_plutus_data.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."

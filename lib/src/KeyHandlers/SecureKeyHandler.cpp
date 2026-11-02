@@ -28,12 +28,15 @@
 #include "../CardanoInterop.h"
 
 #include <cardano/buffer.h>
+#include <cardano/cardano.h>
 #include <cardano/crypto/bip32_public_key.h>
+#include <cardano/crypto/ed25519_private_key.h>
 #include <cardano/crypto/ed25519_public_key.h>
 #include <cardano/key_handlers/account_derivation_path.h>
 #include <cardano/key_handlers/derivation_path.h>
 #include <cardano/key_handlers/secure_key_handler.h>
 #include <cardano/key_handlers/secure_key_handler_impl.h>
+#include <cardano/key_handlers/software_secure_key_handler.h>
 #include <cardano/object.h>
 #include <cardano/transaction/sub_transaction.h>
 #include <cardano/transaction/transaction.h>
@@ -52,6 +55,76 @@ namespace Cometa
 {
 namespace
 {
+/** @brief The passphrase provider selected for the current signing call. */
+thread_local const PassphraseProvider* activePassphrase = nullptr;
+
+/** @brief Makes a software signer's passphrase available for one native call. */
+class PassphraseScope
+{
+  public:
+
+    /** @brief Activates the passphrase callback. @param provider The provider to activate. */
+    explicit PassphraseScope(const std::shared_ptr<PassphraseProvider>& provider) noexcept
+    : m_previous(activePassphrase)
+    {
+      if (provider)
+      {
+        activePassphrase = provider.get();
+      }
+    }
+
+    /** @brief Restores the previous callback. */
+    ~PassphraseScope()
+    {
+      activePassphrase = m_previous;
+    }
+
+    /** @brief Prevents copying a call scope. */
+    PassphraseScope(const PassphraseScope&) = delete;
+
+    /** @brief Prevents assigning a call scope. */
+    PassphraseScope& operator=(const PassphraseScope&) = delete;
+
+  private:
+
+    /** @brief The callback active before this scope. */
+    const PassphraseProvider* m_previous;
+};
+
+/**
+ * @brief Copies a supplied passphrase into the native call buffer.
+ * @param buffer Receives the passphrase.
+ * @param capacity The buffer size.
+ * @return The passphrase length, or -1 on failure.
+ */
+std::int32_t
+providePassphrase(std::uint8_t* buffer, std::size_t capacity) noexcept
+{
+  if (!activePassphrase || !*activePassphrase)
+  {
+    return -1;
+  }
+
+  try
+  {
+    std::vector<std::uint8_t> value = (*activePassphrase)();
+    if (value.empty() || value.size() > capacity || value.size() > static_cast<std::size_t>(std::numeric_limits<std::int32_t>::max()))
+    {
+      cardano_memzero(value.data(), value.size());
+      return -1;
+    }
+
+    std::memcpy(buffer, value.data(), value.size());
+    const std::int32_t length = static_cast<std::int32_t>(value.size());
+    cardano_memzero(value.data(), value.size());
+    return length;
+  }
+  catch (...)
+  {
+    return -1;
+  }
+}
+
 /** @brief Keeps C++ signing operations alive while the native handler exists. */
 struct CallbackContext : cardano_object_t
 {
@@ -470,9 +543,81 @@ SecureKeyHandler::ed25519(std::string_view name, Ed25519KeyCallbacks callbacks)
   return SecureKeyHandler(createHandler(name, state, SecureKeyHandlerType::Ed25519), SecureKeyHandlerType::Ed25519);
 }
 
+SecureKeyHandler
+SecureKeyHandler::softwareBip32(const std::vector<std::uint8_t>& entropy, const std::vector<std::uint8_t>& passphrase, PassphraseProvider provider)
+{
+  if (!provider)
+  {
+    throw std::invalid_argument("A passphrase provider is required");
+  }
+
+  std::shared_ptr<PassphraseProvider>                                           saved  = std::make_shared<PassphraseProvider>(std::move(provider));
+  cardano_secure_key_handler_t*                                                 value  = nullptr;
+  const cardano_error_t                                                         status = cardano_software_secure_key_handler_new(data(entropy), entropy.size(), data(passphrase), passphrase.size(), &providePassphrase, &value);
+  CardanoObject<cardano_secure_key_handler_t, cardano_secure_key_handler_unref> owner(value);
+  checkCardanoError(status, "SecureKeyHandler softwareBip32");
+  return SecureKeyHandler(owner.release(), SecureKeyHandlerType::Bip32, std::move(saved));
+}
+
+SecureKeyHandler
+SecureKeyHandler::softwareEd25519(const Ed25519PrivateKey& key, const std::vector<std::uint8_t>& passphrase, PassphraseProvider provider)
+{
+  if (!provider)
+  {
+    throw std::invalid_argument("A passphrase provider is required");
+  }
+
+  std::vector<std::uint8_t>      keyBytes  = key.toBytes();
+  cardano_ed25519_private_key_t* nativeKey = nullptr;
+  cardano_error_t                keyStatus = CARDANO_ERROR_INVALID_ARGUMENT;
+
+  if (keyBytes.size() == 32)
+  {
+    keyStatus = cardano_ed25519_private_key_from_normal_bytes(keyBytes.data(), keyBytes.size(), &nativeKey);
+  }
+  else if (keyBytes.size() == 64)
+  {
+    keyStatus = cardano_ed25519_private_key_from_extended_bytes(keyBytes.data(), keyBytes.size(), &nativeKey);
+  }
+
+  cardano_memzero(keyBytes.data(), keyBytes.size());
+  CardanoObject<cardano_ed25519_private_key_t, cardano_ed25519_private_key_unref> keyOwner(nativeKey);
+  checkCardanoError(keyStatus, "SecureKeyHandler softwareEd25519 key");
+
+  std::shared_ptr<PassphraseProvider>                                           saved  = std::make_shared<PassphraseProvider>(std::move(provider));
+  cardano_secure_key_handler_t*                                                 value  = nullptr;
+  const cardano_error_t                                                         status = cardano_software_secure_key_handler_ed25519_new(keyOwner.get(), data(passphrase), passphrase.size(), &providePassphrase, &value);
+  CardanoObject<cardano_secure_key_handler_t, cardano_secure_key_handler_unref> owner(value);
+  checkCardanoError(status, "SecureKeyHandler softwareEd25519");
+  return SecureKeyHandler(owner.release(), SecureKeyHandlerType::Ed25519, std::move(saved));
+}
+
+SecureKeyHandler
+SecureKeyHandler::deserializeSoftware(const std::vector<std::uint8_t>& bytes, PassphraseProvider provider)
+{
+  if (!provider)
+  {
+    throw std::invalid_argument("A passphrase provider is required");
+  }
+
+  std::shared_ptr<PassphraseProvider>                                           saved  = std::make_shared<PassphraseProvider>(std::move(provider));
+  cardano_secure_key_handler_t*                                                 value  = nullptr;
+  const cardano_error_t                                                         status = cardano_software_secure_key_handler_deserialize(data(bytes), bytes.size(), &providePassphrase, &value);
+  CardanoObject<cardano_secure_key_handler_t, cardano_secure_key_handler_unref> owner(value);
+  checkCardanoError(status, "SecureKeyHandler deserializeSoftware");
+
+  if (bytes.size() < 6 || bytes[5] > 1)
+  {
+    throw std::invalid_argument("The serialized software signer has an invalid key type");
+  }
+
+  return SecureKeyHandler(owner.release(), static_cast<SecureKeyHandlerType>(bytes[5]), std::move(saved));
+}
+
 SecureKeyHandler::SecureKeyHandler(const SecureKeyHandler& other)
 : m_value(other.checked())
 , m_type(other.m_type)
+, m_passphrase(other.m_passphrase)
 {
   cardano_secure_key_handler_ref(m_value);
 }
@@ -480,6 +625,7 @@ SecureKeyHandler::SecureKeyHandler(const SecureKeyHandler& other)
 SecureKeyHandler::SecureKeyHandler(SecureKeyHandler&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
 , m_type(other.m_type)
+, m_passphrase(std::move(other.m_passphrase))
 {
 }
 
@@ -525,7 +671,8 @@ SecureKeyHandler::signTransaction(const Transaction& transaction, const std::vec
     decodeCbor<cardano_transaction_t, cardano_transaction_unref>(bytes, cardano_transaction_from_cbor));
   const std::vector<cardano_derivation_path_t>                              nativePath = nativePaths(paths);
   cardano_vkey_witness_set_t*                                               output     = nullptr;
-  const cardano_error_t                                                     status     = cardano_secure_key_handler_bip32_sign_transaction(checked(), native.get(), nativePath.data(), nativePath.size(), &output);
+  const PassphraseScope                                                     passphrase(m_passphrase);
+  const cardano_error_t                                                     status = cardano_secure_key_handler_bip32_sign_transaction(checked(), native.get(), nativePath.data(), nativePath.size(), &output);
   CardanoObject<cardano_vkey_witness_set_t, cardano_vkey_witness_set_unref> owner(output);
   checkCardanoError(status, "SecureKeyHandler signTransaction");
   return copyWitnesses(owner.release());
@@ -549,7 +696,8 @@ SecureKeyHandler::signSubTransaction(const SubTransaction& transaction, const st
     decodeCbor<cardano_sub_transaction_t, cardano_sub_transaction_unref>(bytes, cardano_sub_transaction_from_cbor));
   const std::vector<cardano_derivation_path_t>                              nativePath = nativePaths(paths);
   cardano_vkey_witness_set_t*                                               output     = nullptr;
-  const cardano_error_t                                                     status     = cardano_secure_key_handler_bip32_sign_sub_transaction(checked(), native.get(), nativePath.data(), nativePath.size(), &output);
+  const PassphraseScope                                                     passphrase(m_passphrase);
+  const cardano_error_t                                                     status = cardano_secure_key_handler_bip32_sign_sub_transaction(checked(), native.get(), nativePath.data(), nativePath.size(), &output);
   CardanoObject<cardano_vkey_witness_set_t, cardano_vkey_witness_set_unref> owner(output);
   checkCardanoError(status, "SecureKeyHandler signSubTransaction");
   return copyWitnesses(owner.release());
@@ -567,6 +715,7 @@ SecureKeyHandler::signTransaction(const Transaction& transaction) const
   CardanoObject<cardano_transaction_t, cardano_transaction_unref> native(
     decodeCbor<cardano_transaction_t, cardano_transaction_unref>(bytes, cardano_transaction_from_cbor));
   cardano_vkey_witness_set_t*                                               output = nullptr;
+  const PassphraseScope                                                     passphrase(m_passphrase);
   const cardano_error_t                                                     status = cardano_secure_key_handler_ed25519_sign_transaction(checked(), native.get(), &output);
   CardanoObject<cardano_vkey_witness_set_t, cardano_vkey_witness_set_unref> owner(output);
   checkCardanoError(status, "SecureKeyHandler signTransaction");
@@ -585,6 +734,7 @@ SecureKeyHandler::signSubTransaction(const SubTransaction& transaction) const
   CardanoObject<cardano_sub_transaction_t, cardano_sub_transaction_unref> native(
     decodeCbor<cardano_sub_transaction_t, cardano_sub_transaction_unref>(bytes, cardano_sub_transaction_from_cbor));
   cardano_vkey_witness_set_t*                                               output = nullptr;
+  const PassphraseScope                                                     passphrase(m_passphrase);
   const cardano_error_t                                                     status = cardano_secure_key_handler_ed25519_sign_sub_transaction(checked(), native.get(), &output);
   CardanoObject<cardano_vkey_witness_set_t, cardano_vkey_witness_set_unref> owner(output);
   checkCardanoError(status, "SecureKeyHandler signSubTransaction");
@@ -600,7 +750,8 @@ SecureKeyHandler::accountPublicKey(const AccountDerivationPath& path) const
   }
 
   const cardano_account_derivation_path_t                                   nativePath { path.purpose, path.coinType, path.account };
-  cardano_bip32_public_key_t*                                               value  = nullptr;
+  cardano_bip32_public_key_t*                                               value = nullptr;
+  const PassphraseScope                                                     passphrase(m_passphrase);
   const cardano_error_t                                                     status = cardano_secure_key_handler_bip32_get_extended_account_public_key(checked(), nativePath, &value);
   CardanoObject<cardano_bip32_public_key_t, cardano_bip32_public_key_unref> owner(value);
   checkCardanoError(status, "SecureKeyHandler accountPublicKey");
@@ -618,7 +769,8 @@ SecureKeyHandler::publicKey() const
     throw std::logic_error("Ed25519 public key requires an Ed25519 handler");
   }
 
-  cardano_ed25519_public_key_t*                                                 value  = nullptr;
+  cardano_ed25519_public_key_t*                                                 value = nullptr;
+  const PassphraseScope                                                         passphrase(m_passphrase);
   const cardano_error_t                                                         status = cardano_secure_key_handler_ed25519_get_public_key(checked(), &value);
   CardanoObject<cardano_ed25519_public_key_t, cardano_ed25519_public_key_unref> owner(value);
   checkCardanoError(status, "SecureKeyHandler publicKey");
@@ -631,7 +783,8 @@ SecureKeyHandler::publicKey() const
 std::vector<std::uint8_t>
 SecureKeyHandler::serialize() const
 {
-  cardano_buffer_t*                                     value  = nullptr;
+  cardano_buffer_t*                                     value = nullptr;
+  const PassphraseScope                                 passphrase(m_passphrase);
   const cardano_error_t                                 status = cardano_secure_key_handler_serialize(checked(), &value);
   CardanoObject<cardano_buffer_t, cardano_buffer_unref> owner(value);
   checkCardanoError(status, "SecureKeyHandler serialize");
@@ -650,6 +803,7 @@ SecureKeyHandler::swap(SecureKeyHandler& other) noexcept
 {
   std::swap(m_value, other.m_value);
   std::swap(m_type, other.m_type);
+  std::swap(m_passphrase, other.m_passphrase);
 }
 
 SecureKeyHandler&
@@ -670,8 +824,9 @@ SecureKeyHandler::operator=(SecureKeyHandler&& other) noexcept
   if (this != &other)
   {
     cardano_secure_key_handler_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
-    m_type  = other.m_type;
+    m_value      = std::exchange(other.m_value, nullptr);
+    m_type       = other.m_type;
+    m_passphrase = std::move(other.m_passphrase);
   }
 
   return *this;
@@ -679,9 +834,10 @@ SecureKeyHandler::operator=(SecureKeyHandler&& other) noexcept
 
 /* PRIVATE FUNCTIONS *********************************************************/
 
-SecureKeyHandler::SecureKeyHandler(cardano_secure_key_handler_t* value, SecureKeyHandlerType type) noexcept
+SecureKeyHandler::SecureKeyHandler(cardano_secure_key_handler_t* value, SecureKeyHandlerType type, std::shared_ptr<PassphraseProvider> provider) noexcept
 : m_value(value)
 , m_type(type)
+, m_passphrase(std::move(provider))
 {
 }
 

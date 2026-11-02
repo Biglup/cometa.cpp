@@ -87,6 +87,7 @@
 #include <Cometa/KeyHandlers/DerivationPath.h>
 #include <Cometa/KeyHandlers/DerivationRole.h>
 #include <Cometa/KeyHandlers/Ed25519KeyCallbacks.h>
+#include <Cometa/KeyHandlers/PassphraseProvider.h>
 #include <Cometa/KeyHandlers/SecureKeyHandler.h>
 #include <Cometa/KeyHandlers/SecureKeyHandlerType.h>
 

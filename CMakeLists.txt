@@ -440,6 +440,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/KeyHandlers/DerivationPathTest.cpp
     lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
     lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp
+    lib/tests/KeyHandlers/SoftwareSecureKeyHandlerTest.cpp
     lib/tests/Transaction/SubTransactionSetTest.cpp
     lib/tests/ValueContractTest.cpp
   )

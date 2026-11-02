@@ -25,11 +25,14 @@
 
 /* INCLUDES ******************************************************************/
 
+#include <Cometa/Crypto/Ed25519PrivateKey.h>
 #include <Cometa/KeyHandlers/Bip32KeyCallbacks.h>
 #include <Cometa/KeyHandlers/Ed25519KeyCallbacks.h>
+#include <Cometa/KeyHandlers/PassphraseProvider.h>
 #include <Cometa/KeyHandlers/SecureKeyHandlerType.h>
 
 #include <cstdint>
+#include <memory>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -62,6 +65,32 @@ class SecureKeyHandler
      * @return The handler.
      */
     static SecureKeyHandler ed25519(std::string_view name, Ed25519KeyCallbacks callbacks);
+
+    /**
+     * @brief Creates an encrypted BIP32 signer from wallet entropy.
+     * @param entropy The BIP39 entropy to encrypt.
+     * @param passphrase The encryption passphrase.
+     * @param provider Supplies the passphrase for later signing operations.
+     * @return The encrypted signer.
+     */
+    static SecureKeyHandler softwareBip32(const std::vector<std::uint8_t>& entropy, const std::vector<std::uint8_t>& passphrase, PassphraseProvider provider);
+
+    /**
+     * @brief Creates an encrypted Ed25519 signer.
+     * @param key The signing key to encrypt.
+     * @param passphrase The encryption passphrase.
+     * @param provider Supplies the passphrase for later signing operations.
+     * @return The encrypted signer.
+     */
+    static SecureKeyHandler softwareEd25519(const Ed25519PrivateKey& key, const std::vector<std::uint8_t>& passphrase, PassphraseProvider provider);
+
+    /**
+     * @brief Restores a serialized encrypted software signer.
+     * @param bytes The serialized signer.
+     * @param provider Supplies the passphrase for signing operations.
+     * @return The restored signer.
+     */
+    static SecureKeyHandler deserializeSoftware(const std::vector<std::uint8_t>& bytes, PassphraseProvider provider);
 
     /**
      * @brief Copies a handler.
@@ -175,8 +204,9 @@ class SecureKeyHandler
      * @brief Adopts a handler.
      * @param value The owned handler.
      * @param type The key scheme.
+     * @param provider The passphrase operation, when this is a software signer.
      */
-    SecureKeyHandler(cardano_secure_key_handler_t* value, SecureKeyHandlerType type) noexcept;
+    SecureKeyHandler(cardano_secure_key_handler_t* value, SecureKeyHandlerType type, std::shared_ptr<PassphraseProvider> provider = nullptr) noexcept;
 
     /**
      * @brief Gets the stored handler.
@@ -191,6 +221,9 @@ class SecureKeyHandler
 
     /** @brief Its key scheme. */
     SecureKeyHandlerType m_type;
+
+    /** @brief The passphrase operation for an encrypted software signer. */
+    std::shared_ptr<PassphraseProvider> m_passphrase;
 };
 
 /* PROTOTYPES ****************************************************************/
