@@ -230,7 +230,7 @@ cardano_voter_list_t,opaque object,lib/include/cardano/voting_procedures/voter_l
 cardano_voter_t,opaque object,lib/include/cardano/voting_procedures/voter.h,P14,implemented,Cometa::Voter,lib/tests/VotingProcedures/VoterTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_voter_type_t,enum,lib/include/cardano/voting_procedures/voter_type.h,P14,implemented,Cometa::VoterType,lib/tests/VotingProcedures/VoterTypeTest.cpp
 cardano_voting_procedure_list_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,
-cardano_voting_procedure_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,
+cardano_voting_procedure_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_voting_procedures_t,opaque object,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,
 cardano_withdrawal_map_t,opaque object,lib/include/cardano/common/withdrawal_map.h,P07,implemented,Cometa::WithdrawalMap,lib/tests/Common/WithdrawalMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_witness_set_t,opaque object,lib/include/cardano/witness_set/witness_set.h,P15,planned,,

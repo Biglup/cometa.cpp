@@ -213,7 +213,7 @@ lib/include/cardano/voting_procedures/vote.h,public header,P14,implemented,Comet
 lib/include/cardano/voting_procedures/voter.h,public header,P14,implemented,Cometa::Voter
 lib/include/cardano/voting_procedures/voter_list.h,public header,P14,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/voting_procedures/voter_type.h,public header,P14,implemented,Cometa::VoterType
-lib/include/cardano/voting_procedures/voting_procedure.h,public header,P14,planned,idiomatic C++ API
+lib/include/cardano/voting_procedures/voting_procedure.h,public header,P14,implemented,Cometa::VotingProcedure
 lib/include/cardano/voting_procedures/voting_procedure_list.h,public header,P14,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/voting_procedures/voting_procedures.h,public header,P14,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/witness_set/bootstrap_witness.h,public header,P15,planned,idiomatic C++ API

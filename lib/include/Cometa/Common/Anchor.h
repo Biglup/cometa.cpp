@@ -202,6 +202,9 @@ class Anchor
     /** @brief Allows proposal procedures to copy this value. */
     friend class ProposalProcedure;
 
+    /** @brief Allows voting procedures to copy metadata anchors. */
+    friend class VotingProcedure;
+
     /**
      * @brief Takes ownership of an existing value.
      *

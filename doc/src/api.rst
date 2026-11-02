@@ -543,3 +543,6 @@ Voting procedures
 
 .. doxygenclass:: Cometa::Voter
    :members:
+
+.. doxygenclass:: Cometa::VotingProcedure
+   :members:

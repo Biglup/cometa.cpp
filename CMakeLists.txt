@@ -72,6 +72,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/VotingProcedures/Vote.cpp
   lib/src/VotingProcedures/VoterType.cpp
   lib/src/VotingProcedures/Voter.cpp
+  lib/src/VotingProcedures/VotingProcedure.cpp
   lib/src/Certificates/RegistrationCert.cpp
   lib/src/Certificates/UnregistrationCert.cpp
   lib/src/Common/DRep.cpp
@@ -262,6 +263,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/VotingProcedures/VoteTest.cpp
     lib/tests/VotingProcedures/VoterTypeTest.cpp
     lib/tests/VotingProcedures/VoterTest.cpp
+    lib/tests/VotingProcedures/VotingProcedureTest.cpp
     lib/tests/Certificates/RegistrationCertTest.cpp
     lib/tests/Certificates/UnregistrationCertTest.cpp
     lib/tests/Common/DRepTypeTest.cpp

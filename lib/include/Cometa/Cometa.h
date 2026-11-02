@@ -208,3 +208,4 @@
 #include <Cometa/VotingProcedures/Vote.h>
 #include <Cometa/VotingProcedures/Voter.h>
 #include <Cometa/VotingProcedures/VoterType.h>
+#include <Cometa/VotingProcedures/VotingProcedure.h>

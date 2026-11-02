@@ -3073,20 +3073,20 @@ cardano_voter_list_set_last_error,lib/include/cardano/voting_procedures/voter_li
 cardano_voter_list_get_last_error,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,,API and ownership mapping pending.
 cardano_voter_list_deep_clone,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,,API and ownership mapping pending.
 cardano_voter_type_to_string,lib/include/cardano/voting_procedures/voter_type.h,P14,implemented,Cometa::toString(VoterType),lib/tests/VotingProcedures/VoterTypeTest.cpp,Typed voting enum and native names.
-cardano_voting_procedure_new,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_from_cbor,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_to_cbor,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_to_cip116_json,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_get_vote,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_set_vote,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_get_anchor,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_set_anchor,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_unref,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_ref,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_refcount,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_set_last_error,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_get_last_error,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
-cardano_voting_procedure_deep_clone,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,,API and ownership mapping pending.
+cardano_voting_procedure_new,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure::constructor,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Governance vote and optional anchor.
+cardano_voting_procedure_from_cbor,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure::fromCbor,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Governance vote and optional anchor.
+cardano_voting_procedure_to_cbor,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure::toCbor,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Governance vote and optional anchor.
+cardano_voting_procedure_to_cip116_json,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure::toJson,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Governance vote and optional anchor.
+cardano_voting_procedure_get_vote,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure::vote,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Governance vote and optional anchor.
+cardano_voting_procedure_set_vote,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure::setVote,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Governance vote and optional anchor.
+cardano_voting_procedure_get_anchor,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure::anchor,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Governance vote and optional anchor.
+cardano_voting_procedure_set_anchor,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure::setAnchor,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Governance vote and optional anchor.
+cardano_voting_procedure_unref,lib/include/cardano/voting_procedures/voting_procedure.h,P14,internal,RAII and exception handling,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Native ownership remains private.
+cardano_voting_procedure_ref,lib/include/cardano/voting_procedures/voting_procedure.h,P14,internal,RAII and exception handling,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Native ownership remains private.
+cardano_voting_procedure_refcount,lib/include/cardano/voting_procedures/voting_procedure.h,P14,internal,RAII and exception handling,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Native ownership remains private.
+cardano_voting_procedure_set_last_error,lib/include/cardano/voting_procedures/voting_procedure.h,P14,internal,RAII and exception handling,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Native ownership remains private.
+cardano_voting_procedure_get_last_error,lib/include/cardano/voting_procedures/voting_procedure.h,P14,internal,RAII and exception handling,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Native ownership remains private.
+cardano_voting_procedure_deep_clone,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure::copy constructor / assignment,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp,Governance vote and optional anchor.
 cardano_voting_procedure_list_new,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,,API and ownership mapping pending.
 cardano_voting_procedure_list_get_length,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,,API and ownership mapping pending.
 cardano_voting_procedure_list_get,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,,API and ownership mapping pending.

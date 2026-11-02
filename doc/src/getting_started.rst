@@ -1000,3 +1000,7 @@ address, and metadata anchor::
 ``Voter`` combines a voter kind with its credential::
 
    const Cometa::Voter drepVoter(Cometa::VoterType::DRepKeyHash, coldCredential);
+
+``VotingProcedure`` records a choice and an optional metadata anchor::
+
+   const Cometa::VotingProcedure castVote(Cometa::Vote::Yes);

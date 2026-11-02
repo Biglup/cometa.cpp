@@ -577,6 +577,12 @@ main()
     return 1;
   }
 
+  const Cometa::VotingProcedure vote(Cometa::Vote::Yes);
+  if (Cometa::VotingProcedure::fromCbor(vote.toCbor()) != vote)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0
