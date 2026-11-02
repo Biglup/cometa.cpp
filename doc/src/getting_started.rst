@@ -890,3 +890,13 @@ Max pledge leverage and the Peras bootstrap round also have an explicit
 ledger-null value, separate from absence. Use
 ``setMaxPledgeLeverageUnbounded()`` or ``setPerasBootstrapRoundNull()`` to
 propose that value; use the matching ``clear`` method to omit the field.
+
+``ProposedParamUpdates`` associates proposed changes with genesis delegate key
+hashes. Entries are sorted by hash, and accessors return independent values::
+
+   Cometa::ProposedParamUpdates proposals;
+   const Cometa::Blake2bHash delegate =
+     Cometa::Blake2bHash::fromHex(delegateHashHex);
+   proposals.add(delegate, update);
+   const std::optional<Cometa::ProtocolParamUpdate> found =
+     proposals.get(delegate);

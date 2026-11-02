@@ -264,6 +264,9 @@ class Blake2bHash
     /** @brief Allows Blake2bHashSet to copy set elements. */
     friend class Blake2bHashSet;
 
+    /** @brief Allows proposed parameter updates to copy hash keys. */
+    friend class ProposedParamUpdates;
+
     /** @brief Allows MultiAsset to copy policy components. */
     friend class MultiAsset;
 

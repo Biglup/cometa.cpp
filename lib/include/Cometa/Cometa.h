@@ -188,4 +188,5 @@
 #include <Cometa/ProtocolParams/DRepVotingThresholds.h>
 #include <Cometa/ProtocolParams/ExUnitPrices.h>
 #include <Cometa/ProtocolParams/PoolVotingThresholds.h>
+#include <Cometa/ProtocolParams/ProposedParamUpdates.h>
 #include <Cometa/ProtocolParams/ProtocolParamUpdate.h>

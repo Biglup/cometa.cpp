@@ -149,7 +149,7 @@ lib/include/cardano/protocol_params/costmdls.h,public header,P12,implemented,Cos
 lib/include/cardano/protocol_params/drep_voting_thresholds.h,public header,P12,implemented,Named governance threshold accessors with native CBOR fixtures.
 lib/include/cardano/protocol_params/ex_unit_prices.h,public header,P12,implemented,Rational execution prices with native CBOR fixture and independent copy contract.
 lib/include/cardano/protocol_params/pool_voting_thresholds.h,public header,P12,implemented,Named governance threshold accessors with native CBOR fixtures.
-lib/include/cardano/protocol_params/proposed_param_updates.h,public header,P12,planned,idiomatic C++ API
+lib/include/cardano/protocol_params/proposed_param_updates.h,public header,P12,implemented,Sorted genesis delegate proposals with independent value access.
 lib/include/cardano/protocol_params/protocol_param_update.h,public header,P12,implemented,Optional parameter proposals with distinct ledger-null states and native CBOR fixtures.
 lib/include/cardano/protocol_params/protocol_parameters.h,public header,P12,planned,idiomatic C++ API
 lib/include/cardano/protocol_params/update.h,public header,P12,planned,idiomatic C++ API

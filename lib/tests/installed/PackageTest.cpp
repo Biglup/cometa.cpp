@@ -475,6 +475,14 @@ main()
     return 1;
   }
 
+  Cometa::ProposedParamUpdates proposals;
+  proposals.add(Cometa::Blake2bHash::fromHex(std::string(56, '0')), parameterUpdate);
+
+  if (Cometa::ProposedParamUpdates::fromCbor(proposals.toCbor()) != proposals)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0
