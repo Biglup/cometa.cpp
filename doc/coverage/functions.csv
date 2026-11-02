@@ -1184,36 +1184,36 @@ cardano_withdrawal_map_refcount,lib/include/cardano/common/withdrawal_map.h,P07,
 cardano_withdrawal_map_set_last_error,lib/include/cardano/common/withdrawal_map.h,P07,planned,,,API and ownership mapping pending.
 cardano_withdrawal_map_get_last_error,lib/include/cardano/common/withdrawal_map.h,P07,planned,,,API and ownership mapping pending.
 cardano_withdrawal_map_deep_clone,lib/include/cardano/common/withdrawal_map.h,P07,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_from_bytes,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_from_bip39_entropy,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_from_hex,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_unref,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_ref,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_refcount,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_derive,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_to_ed25519_key,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_get_public_key,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_get_bytes_size,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_get_data,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_to_bytes,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_get_hex_size,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_to_hex,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_harden,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_private_key_deep_clone,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_from_bytes,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_from_hex,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_unref,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_ref,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_refcount,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_derive,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_to_ed25519_key,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_get_bytes_size,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_get_data,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_to_bytes,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_get_hex_size,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_to_hex,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_to_hash,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip32_public_key_deep_clone,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,,API and ownership mapping pending.
+cardano_bip32_private_key_from_bytes,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::Bip32PrivateKey::constructor,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_private_key_from_bip39_entropy,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::Bip32PrivateKey::fromBip39Entropy,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_private_key_from_hex,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::Bip32PrivateKey::fromHex,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_private_key_unref,lib/include/cardano/crypto/bip32_private_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_bip32_private_key_ref,lib/include/cardano/crypto/bip32_private_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_bip32_private_key_refcount,lib/include/cardano/crypto/bip32_private_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_bip32_private_key_derive,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::Bip32PrivateKey::derive,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_private_key_to_ed25519_key,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::Bip32PrivateKey::toEd25519,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_private_key_get_public_key,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::Bip32PrivateKey::publicKey,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_private_key_get_bytes_size,lib/include/cardano/crypto/bip32_private_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_bip32_private_key_get_data,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::Bip32PrivateKey::toBytes,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_private_key_to_bytes,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::Bip32PrivateKey::toBytes,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_private_key_get_hex_size,lib/include/cardano/crypto/bip32_private_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_bip32_private_key_to_hex,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::Bip32PrivateKey::toHex,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_harden,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::hardenIndex,lib/tests/Crypto/Bip32Test.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_private_key_deep_clone,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::Bip32PrivateKey::copy constructor and assignment,lib/tests/Crypto/Bip32PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_public_key_from_bytes,lib/include/cardano/crypto/bip32_public_key.h,P02,implemented,Cometa::Bip32PublicKey::constructor,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_public_key_from_hex,lib/include/cardano/crypto/bip32_public_key.h,P02,implemented,Cometa::Bip32PublicKey::fromHex,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_public_key_unref,lib/include/cardano/crypto/bip32_public_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_bip32_public_key_ref,lib/include/cardano/crypto/bip32_public_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_bip32_public_key_refcount,lib/include/cardano/crypto/bip32_public_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_bip32_public_key_derive,lib/include/cardano/crypto/bip32_public_key.h,P02,implemented,Cometa::Bip32PublicKey::derive,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_public_key_to_ed25519_key,lib/include/cardano/crypto/bip32_public_key.h,P02,implemented,Cometa::Bip32PublicKey::toEd25519,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_public_key_get_bytes_size,lib/include/cardano/crypto/bip32_public_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_bip32_public_key_get_data,lib/include/cardano/crypto/bip32_public_key.h,P02,implemented,Cometa::Bip32PublicKey::toBytes,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_public_key_to_bytes,lib/include/cardano/crypto/bip32_public_key.h,P02,implemented,Cometa::Bip32PublicKey::toBytes,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_public_key_get_hex_size,lib/include/cardano/crypto/bip32_public_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_bip32_public_key_to_hex,lib/include/cardano/crypto/bip32_public_key.h,P02,implemented,Cometa::Bip32PublicKey::toHex,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_public_key_to_hash,lib/include/cardano/crypto/bip32_public_key.h,P02,implemented,Cometa::Bip32PublicKey::hash,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_bip32_public_key_deep_clone,lib/include/cardano/crypto/bip32_public_key.h,P02,implemented,Cometa::Bip32PublicKey::copy constructor and assignment,lib/tests/Crypto/Bip32PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
 cardano_blake2b_compute_hash,lib/include/cardano/crypto/blake2b_hash.h,P02,implemented,Blake2bHash::compute,lib/tests/Crypto/Blake2bHashTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
 cardano_blake2b_hash_from_bytes,lib/include/cardano/crypto/blake2b_hash.h,P02,implemented,Blake2bHash::Blake2bHash,lib/tests/Crypto/Blake2bHashTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
 cardano_blake2b_hash_from_hex,lib/include/cardano/crypto/blake2b_hash.h,P02,implemented,Blake2bHash::fromHex,lib/tests/Crypto/Blake2bHashTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
@@ -1245,45 +1245,45 @@ cardano_blake2b_hash_set_set_last_error,lib/include/cardano/crypto/blake2b_hash_
 cardano_blake2b_hash_set_get_last_error,lib/include/cardano/crypto/blake2b_hash_set.h,P04,planned,,,API and ownership mapping pending.
 cardano_blake2b_hash_set_deep_clone,lib/include/cardano/crypto/blake2b_hash_set.h,P04,planned,,,API and ownership mapping pending.
 cardano_checksum_crc32,lib/include/cardano/crypto/crc32.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_from_normal_bytes,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_from_extended_bytes,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_from_normal_hex,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_from_extended_hex,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_unref,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_ref,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_refcount,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_sign,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_get_public_key,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_get_bytes_size,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_get_data,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_to_bytes,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_get_hex_size,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_to_hex,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_private_key_deep_clone,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_public_key_from_bytes,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_public_key_from_hex,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_public_key_unref,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_public_key_ref,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_public_key_refcount,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_public_verify,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_public_key_get_data,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_public_key_get_bytes_size,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_public_key_to_bytes,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_public_key_get_hex_size,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_public_key_to_hex,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_public_key_to_hash,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_public_key_deep_clone,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_signature_from_bytes,lib/include/cardano/crypto/ed25519_signature.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_signature_from_hex,lib/include/cardano/crypto/ed25519_signature.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_signature_unref,lib/include/cardano/crypto/ed25519_signature.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_signature_ref,lib/include/cardano/crypto/ed25519_signature.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_signature_refcount,lib/include/cardano/crypto/ed25519_signature.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_signature_get_data,lib/include/cardano/crypto/ed25519_signature.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_signature_get_bytes_size,lib/include/cardano/crypto/ed25519_signature.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_signature_to_bytes,lib/include/cardano/crypto/ed25519_signature.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_signature_get_hex_size,lib/include/cardano/crypto/ed25519_signature.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_signature_to_hex,lib/include/cardano/crypto/ed25519_signature.h,P02,planned,,,API and ownership mapping pending.
-cardano_ed25519_signature_deep_clone,lib/include/cardano/crypto/ed25519_signature.h,P02,planned,,,API and ownership mapping pending.
+cardano_ed25519_private_key_from_normal_bytes,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey::fromNormalBytes,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_private_key_from_extended_bytes,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey::fromExtendedBytes,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_private_key_from_normal_hex,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey::fromNormalHex,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_private_key_from_extended_hex,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey::fromExtendedHex,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_private_key_unref,lib/include/cardano/crypto/ed25519_private_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_private_key_ref,lib/include/cardano/crypto/ed25519_private_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_private_key_refcount,lib/include/cardano/crypto/ed25519_private_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_private_key_sign,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey::sign,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_private_key_get_public_key,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey::publicKey,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_private_key_get_bytes_size,lib/include/cardano/crypto/ed25519_private_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_private_key_get_data,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey::toBytes,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_private_key_to_bytes,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey::toBytes,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_private_key_get_hex_size,lib/include/cardano/crypto/ed25519_private_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_private_key_to_hex,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey::toHex,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_private_key_deep_clone,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey::copy constructor and assignment,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_public_key_from_bytes,lib/include/cardano/crypto/ed25519_public_key.h,P02,implemented,Cometa::Ed25519PublicKey::constructor,lib/tests/Crypto/Ed25519PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_public_key_from_hex,lib/include/cardano/crypto/ed25519_public_key.h,P02,implemented,Cometa::Ed25519PublicKey::fromHex,lib/tests/Crypto/Ed25519PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_public_key_unref,lib/include/cardano/crypto/ed25519_public_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519PublicKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_public_key_ref,lib/include/cardano/crypto/ed25519_public_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519PublicKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_public_key_refcount,lib/include/cardano/crypto/ed25519_public_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519PublicKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_public_verify,lib/include/cardano/crypto/ed25519_public_key.h,P02,implemented,Cometa::Ed25519PublicKey::verify,lib/tests/Crypto/Ed25519PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_public_key_get_data,lib/include/cardano/crypto/ed25519_public_key.h,P02,implemented,Cometa::Ed25519PublicKey::toBytes,lib/tests/Crypto/Ed25519PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_public_key_get_bytes_size,lib/include/cardano/crypto/ed25519_public_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519PublicKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_public_key_to_bytes,lib/include/cardano/crypto/ed25519_public_key.h,P02,implemented,Cometa::Ed25519PublicKey::toBytes,lib/tests/Crypto/Ed25519PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_public_key_get_hex_size,lib/include/cardano/crypto/ed25519_public_key.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519PublicKeyTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_public_key_to_hex,lib/include/cardano/crypto/ed25519_public_key.h,P02,implemented,Cometa::Ed25519PublicKey::toHex,lib/tests/Crypto/Ed25519PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_public_key_to_hash,lib/include/cardano/crypto/ed25519_public_key.h,P02,implemented,Cometa::Ed25519PublicKey::hash,lib/tests/Crypto/Ed25519PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_public_key_deep_clone,lib/include/cardano/crypto/ed25519_public_key.h,P02,implemented,Cometa::Ed25519PublicKey::copy constructor and assignment,lib/tests/Crypto/Ed25519PublicKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_signature_from_bytes,lib/include/cardano/crypto/ed25519_signature.h,P02,implemented,Cometa::Ed25519Signature::constructor,lib/tests/Crypto/Ed25519SignatureTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_signature_from_hex,lib/include/cardano/crypto/ed25519_signature.h,P02,implemented,Cometa::Ed25519Signature::fromHex,lib/tests/Crypto/Ed25519SignatureTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_signature_unref,lib/include/cardano/crypto/ed25519_signature.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519SignatureTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_signature_ref,lib/include/cardano/crypto/ed25519_signature.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519SignatureTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_signature_refcount,lib/include/cardano/crypto/ed25519_signature.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519SignatureTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_signature_get_data,lib/include/cardano/crypto/ed25519_signature.h,P02,implemented,Cometa::Ed25519Signature::toBytes,lib/tests/Crypto/Ed25519SignatureTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_signature_get_bytes_size,lib/include/cardano/crypto/ed25519_signature.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519SignatureTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_signature_to_bytes,lib/include/cardano/crypto/ed25519_signature.h,P02,implemented,Cometa::Ed25519Signature::toBytes,lib/tests/Crypto/Ed25519SignatureTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_signature_get_hex_size,lib/include/cardano/crypto/ed25519_signature.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519SignatureTest.cpp,Native ownership and buffer sizing remain private.
+cardano_ed25519_signature_to_hex,lib/include/cardano/crypto/ed25519_signature.h,P02,implemented,Cometa::Ed25519Signature::toHex,lib/tests/Crypto/Ed25519SignatureTest.cpp,Known vectors and allocation-failure cleanup tests.
+cardano_ed25519_signature_deep_clone,lib/include/cardano/crypto/ed25519_signature.h,P02,implemented,Cometa::Ed25519Signature::copy constructor and assignment,lib/tests/Crypto/Ed25519SignatureTest.cpp,Known vectors and allocation-failure cleanup tests.
 cardano_crypto_emip3_encrypt,lib/include/cardano/crypto/emip3.h,P02,planned,,,API and ownership mapping pending.
 cardano_crypto_emip3_decrypt,lib/include/cardano/crypto/emip3.h,P02,planned,,,API and ownership mapping pending.
 cardano_crypto_pbkdf2_hmac_sha512,lib/include/cardano/crypto/pbkdf2.h,P02,planned,,,API and ownership mapping pending.

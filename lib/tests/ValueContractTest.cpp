@@ -812,3 +812,259 @@ TEST(JsonWriter, ReportsBigIntegerFormattingAllocationFailure)
   writer.writeBigIntAsString(value);
   EXPECT_EQ(writer.toString(), "\"42\"");
 }
+
+TEST(Ed25519Signature, FailedCopyPreservesBothKeys)
+{
+  // Arrange
+  const Ed25519Signature source         = Ed25519Signature(std::vector<std::uint8_t>(64, 1));
+  Ed25519Signature       destination    = Ed25519Signature(std::vector<std::uint8_t>(64, 2));
+  const std::string      sourceHex      = source.toHex();
+  const std::string      destinationHex = destination.toHex();
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+
+    EXPECT_THROW(destination = source, std::bad_alloc);
+  }
+
+  EXPECT_EQ(source.toHex(), sourceHex);
+  EXPECT_EQ(destination.toHex(), destinationHex);
+}
+
+TEST(Ed25519Signature, ConstructorReportsAllocationFailure)
+{
+  // Arrange
+  const std::vector<std::uint8_t> bytes(64, 1);
+  AllocationFailure               fail(0);
+
+  // Act & Assert
+  EXPECT_THROW((void)Ed25519Signature(bytes), std::bad_alloc);
+}
+
+TEST(Ed25519PublicKey, FailedCopyPreservesBothKeys)
+{
+  // Arrange
+  const Ed25519PublicKey source         = Ed25519PublicKey(std::vector<std::uint8_t>(32, 1));
+  Ed25519PublicKey       destination    = Ed25519PublicKey(std::vector<std::uint8_t>(32, 2));
+  const std::string      sourceHex      = source.toHex();
+  const std::string      destinationHex = destination.toHex();
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+
+    EXPECT_THROW(destination = source, std::bad_alloc);
+  }
+
+  EXPECT_EQ(source.toHex(), sourceHex);
+  EXPECT_EQ(destination.toHex(), destinationHex);
+}
+
+TEST(Ed25519PublicKey, ConstructorReportsAllocationFailure)
+{
+  // Arrange
+  const std::vector<std::uint8_t> bytes(32, 1);
+  AllocationFailure               fail(0);
+
+  // Act & Assert
+  EXPECT_THROW((void)Ed25519PublicKey(bytes), std::bad_alloc);
+}
+
+TEST(Ed25519PrivateKey, FailedCopyPreservesBothKeys)
+{
+  // Arrange
+  const Ed25519PrivateKey source         = Ed25519PrivateKey::fromNormalBytes(std::vector<std::uint8_t>(32, 1));
+  Ed25519PrivateKey       destination    = Ed25519PrivateKey::fromNormalBytes(std::vector<std::uint8_t>(32, 2));
+  const std::string       sourceHex      = source.toHex();
+  const std::string       destinationHex = destination.toHex();
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+
+    EXPECT_THROW(destination = source, std::bad_alloc);
+  }
+
+  EXPECT_EQ(source.toHex(), sourceHex);
+  EXPECT_EQ(destination.toHex(), destinationHex);
+}
+
+TEST(Ed25519PrivateKey, ConstructorReportsAllocationFailure)
+{
+  // Arrange
+  const std::vector<std::uint8_t> bytes(32, 1);
+  AllocationFailure               fail(0);
+
+  // Act & Assert
+  EXPECT_THROW((void)Ed25519PrivateKey::fromNormalBytes(bytes), std::bad_alloc);
+}
+
+TEST(Bip32PublicKey, FailedCopyPreservesBothKeys)
+{
+  // Arrange
+  const Bip32PublicKey source         = Bip32PublicKey(std::vector<std::uint8_t>(64, 1));
+  Bip32PublicKey       destination    = Bip32PublicKey(std::vector<std::uint8_t>(64, 2));
+  const std::string    sourceHex      = source.toHex();
+  const std::string    destinationHex = destination.toHex();
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+
+    EXPECT_THROW(destination = source, std::bad_alloc);
+  }
+
+  EXPECT_EQ(source.toHex(), sourceHex);
+  EXPECT_EQ(destination.toHex(), destinationHex);
+}
+
+TEST(Bip32PublicKey, ConstructorReportsAllocationFailure)
+{
+  // Arrange
+  const std::vector<std::uint8_t> bytes(64, 1);
+  AllocationFailure               fail(0);
+
+  // Act & Assert
+  EXPECT_THROW((void)Bip32PublicKey(bytes), std::bad_alloc);
+}
+
+TEST(Bip32PrivateKey, FailedCopyPreservesBothKeys)
+{
+  // Arrange
+  const Bip32PrivateKey source         = Bip32PrivateKey(std::vector<std::uint8_t>(96, 1));
+  Bip32PrivateKey       destination    = Bip32PrivateKey(std::vector<std::uint8_t>(96, 2));
+  const std::string     sourceHex      = source.toHex();
+  const std::string     destinationHex = destination.toHex();
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+
+    EXPECT_THROW(destination = source, std::bad_alloc);
+  }
+
+  EXPECT_EQ(source.toHex(), sourceHex);
+  EXPECT_EQ(destination.toHex(), destinationHex);
+}
+
+TEST(Bip32PrivateKey, ConstructorReportsAllocationFailure)
+{
+  // Arrange
+  const std::vector<std::uint8_t> bytes(96, 1);
+  AllocationFailure               fail(0);
+
+  // Act & Assert
+  EXPECT_THROW((void)Bip32PrivateKey(bytes), std::bad_alloc);
+}
+
+TEST(Bip32PrivateKey, FailedDerivationReleasesWorkingKeys)
+{
+  // Arrange
+  const Bip32PrivateKey            source = Bip32PrivateKey::fromBip39Entropy(std::vector<std::uint8_t>(16, 0));
+  const std::vector<std::uint32_t> path { hardenIndex(1852), hardenIndex(1815), hardenIndex(0), 0, 0 };
+  const std::string                before      = source.toHex();
+  std::size_t                      allocations = 0;
+
+  {
+    AllocationFailure     tracker(std::numeric_limits<std::size_t>::max());
+    const Bip32PrivateKey result = source.derive(path);
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    {
+      AllocationFailure fail(index);
+
+      EXPECT_THROW(source.derive(path), std::bad_alloc);
+    }
+
+    EXPECT_EQ(source.toHex(), before);
+  }
+}
+
+TEST(Ed25519PrivateKey, FailedSigningAndPublicKeyCreationPreserveKey)
+{
+  // Arrange
+  const Ed25519PrivateKey key    = Ed25519PrivateKey::fromNormalBytes(std::vector<std::uint8_t>(32, 1));
+  const std::string       before = key.toHex();
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+
+    EXPECT_THROW(key.sign({ 1, 2, 3 }), std::bad_alloc);
+  }
+  {
+    AllocationFailure fail(0);
+
+    EXPECT_THROW(key.publicKey(), std::bad_alloc);
+  }
+
+  EXPECT_EQ(key.toHex(), before);
+}
+
+TEST(Bip32PublicKey, FailedDerivationReleasesWorkingKeys)
+{
+  // Arrange
+  const Bip32PublicKey             source = Bip32PrivateKey::fromBip39Entropy(std::vector<std::uint8_t>(16, 0)).publicKey();
+  const std::vector<std::uint32_t> path { 0, 1, 2 };
+  const std::string                before      = source.toHex();
+  std::size_t                      allocations = 0;
+
+  {
+    AllocationFailure    tracker(std::numeric_limits<std::size_t>::max());
+    const Bip32PublicKey result = source.derive(path);
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    {
+      AllocationFailure fail(index);
+
+      EXPECT_THROW(source.derive(path), std::bad_alloc);
+    }
+
+    EXPECT_EQ(source.toHex(), before);
+  }
+}
+
+TEST(Ed25519PrivateKey, ExtendedSigningReleasesEveryPartialAllocation)
+{
+  // Arrange
+  const Ed25519PrivateKey         key = Bip32PrivateKey::fromBip39Entropy(std::vector<std::uint8_t>(16, 0)).toEd25519();
+  const std::vector<std::uint8_t> message { 1, 2, 3 };
+  const std::string               before      = key.toHex();
+  std::size_t                     allocations = 0;
+
+  {
+    AllocationFailure      tracker(std::numeric_limits<std::size_t>::max());
+    const Ed25519Signature signature = key.sign(message);
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    {
+      AllocationFailure fail(index);
+
+      EXPECT_THROW(key.sign(message), std::bad_alloc);
+    }
+
+    EXPECT_EQ(key.toHex(), before);
+  }
+}

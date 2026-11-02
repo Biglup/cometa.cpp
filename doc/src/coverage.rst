@@ -62,11 +62,14 @@ and callback adapters are tracked in :doc:`implementation_plan`.
    * - JSON values, writers, and enums
      - ``JsonValue``, ``JsonWriter``, ``JsonType``, ``JsonFormat``, and ``JsonContext``; owned children, exact number tokens, checked writes
 
+   * - Ed25519 and BIP32 keys and signatures
+     - ``Ed25519Signature``, ``Ed25519PublicKey``, ``Ed25519PrivateKey``, ``Bip32PublicKey``, ``Bip32PrivateKey``, and ``hardenIndex``
+
 Coverage ledger
 ---------------
 
 The inventory targets cardano-c commit
-``9ebc1577832e871dca3e8f3e932f91872f2dd67d``, matching the dependency pin.
+``6fe1ded7f81e259631bb06f2f0a33601f33f9df7``, matching the dependency pin.
 It contains 231 public headers, 418 implementation files, 235 distinct public
 typedefs, and 3,335 exported function declarations. Tests and vendored dependencies
 are outside the file inventory.

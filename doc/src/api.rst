@@ -94,3 +94,20 @@ API reference
 
 .. doxygenclass:: Cometa::JsonWriter
    :members:
+
+.. doxygenclass:: Cometa::Ed25519Signature
+   :members:
+
+.. doxygenclass:: Cometa::Ed25519PublicKey
+   :members:
+
+.. doxygenclass:: Cometa::Ed25519PrivateKey
+   :members:
+
+.. doxygenclass:: Cometa::Bip32PublicKey
+   :members:
+
+.. doxygenclass:: Cometa::Bip32PrivateKey
+   :members:
+
+.. doxygenfunction:: Cometa::hardenIndex

@@ -17,8 +17,8 @@ cardano_auxiliary_data_t,opaque object,lib/include/cardano/auxiliary_data/auxili
 cardano_base_address_t,opaque object,lib/include/cardano/address/base_address.h,P03,planned,,
 cardano_bigint_t,opaque object,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_bip32_get_extended_account_public_key_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
-cardano_bip32_private_key_t,opaque object,lib/include/cardano/crypto/bip32_private_key.h,P02,planned,,
-cardano_bip32_public_key_t,opaque object,lib/include/cardano/crypto/bip32_public_key.h,P02,planned,,
+cardano_bip32_private_key_t,opaque object,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::Bip32PrivateKey,lib/tests/Crypto/Bip32PrivateKeyTest.cpp
+cardano_bip32_public_key_t,opaque object,lib/include/cardano/crypto/bip32_public_key.h,P02,implemented,Cometa::Bip32PublicKey,lib/tests/Crypto/Bip32PublicKeyTest.cpp
 cardano_bip32_sign_sub_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
 cardano_bip32_sign_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
 cardano_blake2b_hash_set_t,opaque object,lib/include/cardano/crypto/blake2b_hash_set.h,P04,planned,,
@@ -65,11 +65,11 @@ cardano_drep_t,opaque object,lib/include/cardano/common/drep.h,P11,planned,,
 cardano_drep_type_t,enum,lib/include/cardano/common/drep_type.h,P11,planned,,
 cardano_drep_voting_thresholds_t,opaque object,lib/include/cardano/protocol_params/drep_voting_thresholds.h,P12,planned,,
 cardano_ed25519_get_public_key_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
-cardano_ed25519_private_key_t,opaque object,lib/include/cardano/crypto/ed25519_private_key.h,P02,planned,,
-cardano_ed25519_public_key_t,opaque object,lib/include/cardano/crypto/ed25519_public_key.h,P02,planned,,
+cardano_ed25519_private_key_t,opaque object,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp
+cardano_ed25519_public_key_t,opaque object,lib/include/cardano/crypto/ed25519_public_key.h,P02,implemented,Cometa::Ed25519PublicKey,lib/tests/Crypto/Ed25519PublicKeyTest.cpp
 cardano_ed25519_sign_sub_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
 cardano_ed25519_sign_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
-cardano_ed25519_signature_t,opaque object,lib/include/cardano/crypto/ed25519_signature.h,P02,planned,,
+cardano_ed25519_signature_t,opaque object,lib/include/cardano/crypto/ed25519_signature.h,P02,implemented,Cometa::Ed25519Signature,lib/tests/Crypto/Ed25519SignatureTest.cpp
 cardano_enterprise_address_t,opaque object,lib/include/cardano/address/enterprise_address.h,P03,planned,,
 cardano_error_t,enum,lib/include/cardano/error.h,P01a.1,implemented,ErrorCode,lib/tests/ErrorTest.cpp
 cardano_evaluate_transaction_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
