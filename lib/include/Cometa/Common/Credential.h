@@ -242,6 +242,9 @@ class Credential
     /** @brief Allows DRep values to copy their credentials. */
     friend class DRep;
 
+    /** @brief Allows vote delegation certificates to copy credentials. */
+    friend class VoteDelegationCert;
+
     /** @brief Allows ScriptRequireGuard to copy script components. */
     friend class ScriptRequireGuard;
 

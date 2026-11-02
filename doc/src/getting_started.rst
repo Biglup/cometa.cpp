@@ -803,3 +803,6 @@ Delegated representatives
 
 ``DRep`` represents a key or script credential, abstention, or no confidence.
 Key and script representatives also support bech32 identifiers.
+
+``VoteDelegationCert`` assigns a stake credential's voting rights to a DRep,
+including the predefined abstain and no-confidence choices.

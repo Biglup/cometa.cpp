@@ -872,20 +872,20 @@ cardano_update_drep_cert_refcount,lib/include/cardano/certs/update_drep_cert.h,P
 cardano_update_drep_cert_set_last_error,lib/include/cardano/certs/update_drep_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_update_drep_cert_get_last_error,lib/include/cardano/certs/update_drep_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_update_drep_cert_deep_clone,lib/include/cardano/certs/update_drep_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_new,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_from_cbor,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_to_cbor,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_to_cip116_json,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_get_credential,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_set_credential,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_get_drep,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_set_drep,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_unref,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_ref,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_refcount,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_set_last_error,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_get_last_error,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_vote_delegation_cert_deep_clone,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
+cardano_vote_delegation_cert_new,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert::constructor,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
+cardano_vote_delegation_cert_from_cbor,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert::fromCbor,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
+cardano_vote_delegation_cert_to_cbor,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert::toCbor,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
+cardano_vote_delegation_cert_to_cip116_json,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert::toJson,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
+cardano_vote_delegation_cert_get_credential,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert::credential,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
+cardano_vote_delegation_cert_set_credential,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert::setCredential,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
+cardano_vote_delegation_cert_get_drep,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert::drep,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
+cardano_vote_delegation_cert_set_drep,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert::setDRep,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
+cardano_vote_delegation_cert_unref,lib/include/cardano/certs/vote_delegation_cert.h,P11,internal,RAII and exception handling,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
+cardano_vote_delegation_cert_ref,lib/include/cardano/certs/vote_delegation_cert.h,P11,internal,RAII and exception handling,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
+cardano_vote_delegation_cert_refcount,lib/include/cardano/certs/vote_delegation_cert.h,P11,internal,RAII and exception handling,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
+cardano_vote_delegation_cert_set_last_error,lib/include/cardano/certs/vote_delegation_cert.h,P11,internal,RAII and exception handling,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
+cardano_vote_delegation_cert_get_last_error,lib/include/cardano/certs/vote_delegation_cert.h,P11,internal,RAII and exception handling,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
+cardano_vote_delegation_cert_deep_clone,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert::copy constructor / assignment,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Vote delegation to DRep with native CBOR fixture.
 cardano_vote_registration_delegation_cert_new,lib/include/cardano/certs/vote_registration_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_vote_registration_delegation_cert_from_cbor,lib/include/cardano/certs/vote_registration_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_vote_registration_delegation_cert_to_cbor,lib/include/cardano/certs/vote_registration_delegation_cert.h,P11,planned,,,API and ownership mapping pending.

@@ -61,7 +61,7 @@ lib/include/cardano/certs/stake_vote_registration_delegation_cert.h,public heade
 lib/include/cardano/certs/unregister_drep_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/unregistration_cert.h,public header,P10,implemented,Deposit-bearing stake certificate with independent credential values.
 lib/include/cardano/certs/update_drep_cert.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/certs/vote_delegation_cert.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/certs/vote_delegation_cert.h,public header,P11,implemented,Cometa::VoteDelegationCert
 lib/include/cardano/certs/vote_registration_delegation_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/common/anchor.h,public header,P01a.2,implemented,Cometa::Anchor; domain and value-contract tests
 lib/include/cardano/common/bigint.h,public header,P01a.2,implemented,"Cometa::BigInt; arithmetic, conversion and value-contract tests"

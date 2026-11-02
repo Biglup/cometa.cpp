@@ -223,7 +223,7 @@ cardano_utxo_t,opaque object,lib/include/cardano/common/utxo.h,P07,implemented,C
 cardano_value_t,opaque object,lib/include/cardano/transaction_body/value.h,P04.2,implemented,Cometa::Value,lib/tests/TransactionBody/ValueTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_vkey_witness_set_t,opaque object,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,
 cardano_vkey_witness_t,opaque object,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,
-cardano_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,
+cardano_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_vote_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_registration_delegation_cert.h,P11,planned,,
 cardano_vote_t,enum,lib/include/cardano/voting_procedures/vote.h,P14,planned,,
 cardano_voter_list_t,opaque object,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,
