@@ -173,11 +173,11 @@ cardano_script_all_t,opaque object,lib/include/cardano/scripts/native_scripts/sc
 cardano_script_any_t,opaque object,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,implemented,Cometa::ScriptAny,lib/tests/Scripts/NativeScripts/ScriptAnyTest.cpp
 cardano_script_invalid_after_t,opaque object,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,implemented,Cometa::ScriptInvalidAfter,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp
 cardano_script_invalid_before_t,opaque object,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,implemented,Cometa::ScriptInvalidBefore,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp
-cardano_script_language_t,enum,lib/include/cardano/scripts/script_language.h,P06.4,planned,,
+cardano_script_language_t,enum,lib/include/cardano/scripts/script_language.h,P06.4,implemented,Cometa::ScriptLanguage,lib/tests/Scripts/ScriptLanguageTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_script_n_of_k_t,opaque object,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,implemented,Cometa::ScriptNOfK,lib/tests/Scripts/NativeScripts/ScriptNOfKTest.cpp
 cardano_script_pubkey_t,opaque object,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,implemented,Cometa::ScriptPubkey,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp
 cardano_script_require_guard_t,opaque object,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,implemented,Cometa::ScriptRequireGuard,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp
-cardano_script_t,opaque object,lib/include/cardano/scripts/script.h,P06.4,planned,,
+cardano_script_t,opaque object,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_secure_key_handler_impl_t,struct,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
 cardano_secure_key_handler_t,opaque object,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,
 cardano_secure_key_handler_type_t,enum,lib/include/cardano/key_handlers/secure_key_handler_type.h,P18,planned,,

@@ -170,8 +170,8 @@ lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,public header,P06.
 lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,public header,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
 lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,public header,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
 lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,public header,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
-lib/include/cardano/scripts/script.h,public header,P06.4,planned,idiomatic C++ API
-lib/include/cardano/scripts/script_language.h,public header,P06.4,planned,idiomatic C++ API
+lib/include/cardano/scripts/script.h,public header,P06.4,implemented,"Typed native and Plutus variants; owned accessors; shared serialization, inspection, and hash fixtures."
+lib/include/cardano/scripts/script_language.h,public header,P06.4,implemented,"Typed native and Plutus variants; owned accessors; shared serialization, inspection, and hash fixtures."
 lib/include/cardano/slot_config.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/time.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/transaction/sub_transaction.h,public header,P17,planned,idiomatic C++ API
@@ -431,7 +431,7 @@ lib/src/scripts/plutus_scripts/plutus_v1_script.c,implementation file,P06.3,impl
 lib/src/scripts/plutus_scripts/plutus_v2_script.c,implementation file,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
 lib/src/scripts/plutus_scripts/plutus_v3_script.c,implementation file,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
 lib/src/scripts/plutus_scripts/plutus_v4_script.c,implementation file,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
-lib/src/scripts/script.c,implementation file,P06.4,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/script.c,implementation file,P06.4,implemented,"Typed native and Plutus variants; owned accessors; shared serialization, inspection, and hash fixtures."
 lib/src/string_safe.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/string_safe.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/time.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.

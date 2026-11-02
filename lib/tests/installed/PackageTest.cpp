@@ -176,6 +176,13 @@ main()
     return 1;
   }
 
+  const Cometa::Script script(applied);
+
+  if (script.language() != Cometa::ScriptLanguage::PlutusV4 || script.asPlutusV4() != applied || script.hash() != applied.hash())
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

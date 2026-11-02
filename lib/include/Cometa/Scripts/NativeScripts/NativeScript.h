@@ -302,6 +302,9 @@ class NativeScript
 
   private:
 
+    /** @brief Allows Script to copy and validate native script payloads. */
+    friend class Script;
+
     /** @brief Allows NativeScriptList to copy script elements. */
     friend class NativeScriptList;
 

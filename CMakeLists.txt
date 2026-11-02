@@ -16,6 +16,7 @@ INCLUDE (cmake/Cardano.cmake)
 
 # Library sources.
 ADD_LIBRARY (cometa STATIC
+  lib/src/Scripts/Script.cpp
   lib/src/Scripts/PlutusScripts/PlutusV1Script.cpp
   lib/src/Scripts/PlutusScripts/PlutusV2Script.cpp
   lib/src/Scripts/PlutusScripts/PlutusV3Script.cpp
@@ -123,6 +124,8 @@ IF (COMETA_BUILD_TESTS)
   FIND_PACKAGE (GTest CONFIG REQUIRED)
 
   ADD_EXECUTABLE (cometa-tests
+    lib/tests/Scripts/ScriptTest.cpp
+    lib/tests/Scripts/ScriptLanguageTest.cpp
     lib/tests/Scripts/PlutusScripts/PlutusV1ScriptTest.cpp
     lib/tests/Scripts/PlutusScripts/PlutusV2ScriptTest.cpp
     lib/tests/Scripts/PlutusScripts/PlutusV3ScriptTest.cpp
