@@ -79,11 +79,11 @@ lib/include/cardano/common/guard_set.h,public header,P16,planned,domain containe
 lib/include/cardano/common/network_id.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/network_magic.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/protocol_version.h,public header,P01a.1,implemented,idiomatic C++ API
-lib/include/cardano/common/reward_address_list.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/common/reward_address_list.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/include/cardano/common/unit_interval.h,public header,P01a.2,implemented,Cometa::UnitInterval; domain and value-contract tests
-lib/include/cardano/common/utxo.h,public header,P07,planned,idiomatic C++ API
-lib/include/cardano/common/utxo_list.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/common/withdrawal_map.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/common/utxo.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/include/cardano/common/utxo_list.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/include/cardano/common/withdrawal_map.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/include/cardano/crypto/bip32_private_key.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/include/cardano/crypto/bip32_public_key.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/include/cardano/crypto/blake2b_hash.h,public header,P02,implemented,idiomatic C++ API
@@ -183,10 +183,10 @@ lib/include/cardano/transaction_body/required_guards_map.h,public header,P16,pla
 lib/include/cardano/transaction_body/sub_transaction_body.h,public header,P16,planned,idiomatic C++ API
 lib/include/cardano/transaction_body/sub_transaction_set.h,public header,P17,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/transaction_body/transaction_body.h,public header,P17,planned,idiomatic C++ API
-lib/include/cardano/transaction_body/transaction_input.h,public header,P07,planned,idiomatic C++ API
-lib/include/cardano/transaction_body/transaction_input_set.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/transaction_body/transaction_output.h,public header,P07,planned,idiomatic C++ API
-lib/include/cardano/transaction_body/transaction_output_list.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/transaction_body/transaction_input.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/include/cardano/transaction_body/transaction_input_set.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/include/cardano/transaction_body/transaction_output.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/include/cardano/transaction_body/transaction_output_list.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/include/cardano/transaction_body/value.h,public header,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,public header,P23,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/transaction_builder/balancing/implicit_coin.h,public header,P22,planned,idiomatic C++ API
@@ -334,11 +334,11 @@ lib/src/common/ledger_order.c,implementation file,P01a.2,internal,Native impleme
 lib/src/common/ledger_order.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/network_magic.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/protocol_version.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/common/reward_address_list.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/reward_address_list.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/src/common/unit_interval.c,implementation file,P01a.2,implemented,Cometa::UnitInterval; domain and value-contract tests
-lib/src/common/utxo.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/common/utxo_list.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/common/withdrawal_map.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/utxo.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/src/common/utxo_list.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/src/common/withdrawal_map.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/src/config.h.in,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/crypto/arithmetic.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/crypto/arithmetic.h,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
@@ -446,10 +446,10 @@ lib/src/transaction_body/required_guards_map.c,implementation file,P16,internal,
 lib/src/transaction_body/sub_transaction_body.c,implementation file,P16,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/transaction_body/sub_transaction_set.c,implementation file,P17,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/transaction_body/transaction_body.c,implementation file,P17,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/transaction_body/transaction_input.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/transaction_body/transaction_input_set.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/transaction_body/transaction_output.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/transaction_body/transaction_output_list.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/transaction_input.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/src/transaction_body/transaction_input_set.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/src/transaction_body/transaction_output.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/src/transaction_body/transaction_output_list.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/src/transaction_body/value.c,implementation file,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/src/transaction_builder/balancing/deferred_redeemer_list.c,implementation file,P23,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/transaction_builder/balancing/implicit_coin.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.

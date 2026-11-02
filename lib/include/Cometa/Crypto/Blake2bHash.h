@@ -234,6 +234,9 @@ class Blake2bHash
 
   private:
 
+    /** @brief Allows TransactionInput to copy components. */
+    friend class TransactionInput;
+
     /** @brief Allows ScriptPubkey to copy script components. */
     friend class ScriptPubkey;
 

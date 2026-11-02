@@ -116,3 +116,13 @@
 
 #include <Cometa/Scripts/Script.h>
 #include <Cometa/Scripts/ScriptLanguage.h>
+
+#include <Cometa/Common/Utxo.h>
+#include <Cometa/TransactionBody/TransactionInput.h>
+#include <Cometa/TransactionBody/TransactionOutput.h>
+
+#include <Cometa/Common/RewardAddressList.h>
+#include <Cometa/Common/UtxoList.h>
+#include <Cometa/Common/WithdrawalMap.h>
+#include <Cometa/TransactionBody/TransactionInputSet.h>
+#include <Cometa/TransactionBody/TransactionOutputList.h>

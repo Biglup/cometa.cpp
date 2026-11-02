@@ -249,3 +249,25 @@ API reference
    :members:
 
 .. doxygenenum:: Cometa::ScriptLanguage
+
+.. doxygenclass:: Cometa::TransactionInput
+   :members:
+
+.. doxygenclass:: Cometa::TransactionOutput
+   :members:
+
+.. doxygenclass:: Cometa::TransactionInputSet
+   :members:
+
+.. doxygenclass:: Cometa::TransactionOutputList
+   :members:
+
+.. doxygenclass:: Cometa::Utxo
+   :members:
+
+.. doxygenclass:: Cometa::WithdrawalMap
+   :members:
+
+.. doxygentypedef:: Cometa::UtxoList
+
+.. doxygentypedef:: Cometa::RewardAddressList

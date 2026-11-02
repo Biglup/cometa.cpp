@@ -236,6 +236,9 @@ class Address
 
   private:
 
+    /** @brief Allows TransactionOutput to copy components. */
+    friend class TransactionOutput;
+
     /**
      * @brief Allows BaseAddress conversions to inspect this address.
      */

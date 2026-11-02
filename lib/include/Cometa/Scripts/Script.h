@@ -248,6 +248,9 @@ class Script
 
   private:
 
+    /** @brief Allows TransactionOutput to copy components. */
+    friend class TransactionOutput;
+
     /**
      * @brief Takes ownership of an existing reference.
      *
@@ -265,6 +268,11 @@ class Script
      * @throws std::logic_error This instance has been moved from.
      */
     cardano_script_t* checked() const;
+
+    /**
+     * @brief Checks script payload invariants.
+     */
+    void validate() const;
 
   private:
 

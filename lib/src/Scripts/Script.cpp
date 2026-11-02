@@ -141,10 +141,7 @@ Script::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   Script value(*decodeCbor<cardano_script_t, cardano_script_unref>(cbor, cardano_script_from_cbor));
 
-  if (value.language() == ScriptLanguage::Native)
-  {
-    value.asNative().validate();
-  }
+  value.validate();
 
   return value;
 }
@@ -330,6 +327,15 @@ Script::checked() const
   }
 
   return m_value;
+}
+
+void
+Script::validate() const
+{
+  if (language() == ScriptLanguage::Native)
+  {
+    asNative().validate();
+  }
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/
