@@ -2617,3 +2617,357 @@ TEST(Value, FailedAssetCollectionSubtractionPreservesOriginalValue)
     EXPECT_EQ(destination, source);
   }
 }
+
+TEST(Blake2bHashSet, FailedCopiesPreserveDestinationAndReleasePartialState)
+{
+  // Arrange
+  const Blake2bHash    first = Blake2bHash::fromHex("01");
+  const Blake2bHashSet source { first };
+  std::size_t          allocations = 0;
+
+  {
+    AllocationFailure    tracker(std::numeric_limits<std::size_t>::max(), true);
+    const Blake2bHashSet copy(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    Blake2bHashSet destination;
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_TRUE(destination.empty());
+    EXPECT_EQ(source.size(), 1U);
+  }
+}
+
+TEST(Blake2bHashSet, FailedInsertionPreservesElements)
+{
+  // Arrange
+  const Blake2bHash    first = Blake2bHash::fromHex("01");
+  const Blake2bHashSet source { first };
+  const Blake2bHash    second      = Blake2bHash::fromHex("02");
+  std::size_t          allocations = 0;
+
+  {
+    Blake2bHashSet    destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    EXPECT_TRUE(destination.insert(second));
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    Blake2bHashSet destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination.insert(second), std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(Blake2bHashSet, FailedElementRetrievalReleasesPartialResults)
+{
+  // Arrange
+  const Blake2bHash    first = Blake2bHash::fromHex("01");
+  const Blake2bHashSet source { first };
+  std::size_t          allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.at(0);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.at(0), std::exception);
+  }
+}
+
+TEST(Blake2bHashSet, FailedSnapshotRetrievalReleasesPartialResults)
+{
+  // Arrange
+  const Blake2bHash    first = Blake2bHash::fromHex("01");
+  const Blake2bHashSet source { first };
+  std::size_t          allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.values();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.values(), std::exception);
+  }
+}
+
+TEST(Blake2bHashSet, FailedCborEncodingReleasesPartialResults)
+{
+  // Arrange
+  const Blake2bHash    first = Blake2bHash::fromHex("01");
+  const Blake2bHashSet source { first };
+  std::size_t          allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.toCbor(), std::exception);
+  }
+}
+
+TEST(Blake2bHashSet, FailedJsonEncodingReleasesPartialResults)
+{
+  // Arrange
+  const Blake2bHash    first = Blake2bHash::fromHex("01");
+  const Blake2bHashSet source { first };
+  std::size_t          allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.toJson(), std::exception);
+  }
+}
+
+TEST(Blake2bHashSet, FailedCborParsingReleasesPartialResults)
+{
+  // Arrange
+  const Blake2bHash               first = Blake2bHash::fromHex("01");
+  const Blake2bHashSet            source { first };
+  const std::vector<std::uint8_t> cbor        = source.toCbor();
+  std::size_t                     allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)Blake2bHashSet::fromCbor(cbor);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(Blake2bHashSet::fromCbor(cbor), std::exception);
+  }
+}
+
+TEST(CredentialSet, FailedCopiesPreserveDestinationAndReleasePartialState)
+{
+  // Arrange
+  const Credential    first = Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1')));
+  const CredentialSet source { first };
+  std::size_t         allocations = 0;
+
+  {
+    AllocationFailure   tracker(std::numeric_limits<std::size_t>::max(), true);
+    const CredentialSet copy(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    CredentialSet destination;
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_TRUE(destination.empty());
+    EXPECT_EQ(source.size(), 1U);
+  }
+}
+
+TEST(CredentialSet, FailedInsertionPreservesElements)
+{
+  // Arrange
+  const Credential    first = Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1')));
+  const CredentialSet source { first };
+  const Credential    second      = Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '2')));
+  std::size_t         allocations = 0;
+
+  {
+    CredentialSet     destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    EXPECT_TRUE(destination.insert(second));
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    CredentialSet destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination.insert(second), std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(CredentialSet, FailedElementRetrievalReleasesPartialResults)
+{
+  // Arrange
+  const Credential    first = Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1')));
+  const CredentialSet source { first };
+  std::size_t         allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.at(0);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.at(0), std::exception);
+  }
+}
+
+TEST(CredentialSet, FailedSnapshotRetrievalReleasesPartialResults)
+{
+  // Arrange
+  const Credential    first = Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1')));
+  const CredentialSet source { first };
+  std::size_t         allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.values();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.values(), std::exception);
+  }
+}
+
+TEST(CredentialSet, FailedCborEncodingReleasesPartialResults)
+{
+  // Arrange
+  const Credential    first = Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1')));
+  const CredentialSet source { first };
+  std::size_t         allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.toCbor(), std::exception);
+  }
+}
+
+TEST(CredentialSet, FailedJsonEncodingReleasesPartialResults)
+{
+  // Arrange
+  const Credential    first = Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1')));
+  const CredentialSet source { first };
+  std::size_t         allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.toJson(), std::exception);
+  }
+}
+
+TEST(CredentialSet, FailedCborParsingReleasesPartialResults)
+{
+  // Arrange
+  const Credential                first = Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1')));
+  const CredentialSet             source { first };
+  const std::vector<std::uint8_t> cbor        = source.toCbor();
+  std::size_t                     allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)CredentialSet::fromCbor(cbor);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(CredentialSet::fromCbor(cbor), std::exception);
+  }
+}

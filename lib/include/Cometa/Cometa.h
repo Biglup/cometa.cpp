@@ -37,6 +37,7 @@
 #include <Cometa/Common/BigInt.h>
 #include <Cometa/Common/ByteOrder.h>
 #include <Cometa/Common/Credential.h>
+#include <Cometa/Common/CredentialSet.h>
 #include <Cometa/Common/CredentialType.h>
 #include <Cometa/Common/ExUnits.h>
 #include <Cometa/Common/GovernanceActionId.h>
@@ -46,6 +47,7 @@
 #include <Cometa/Common/ProtocolVersion.h>
 #include <Cometa/Common/UnitInterval.h>
 #include <Cometa/Crypto/Blake2bHash.h>
+#include <Cometa/Crypto/Blake2bHashSet.h>
 #include <Cometa/Crypto/Blake2bHashSize.h>
 #include <Cometa/Encoding/Base58.h>
 #include <Cometa/Encoding/Bech32.h>

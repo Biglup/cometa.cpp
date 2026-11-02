@@ -218,6 +218,9 @@ class Credential
 
   private:
 
+    /** @brief Allows CredentialSet to copy set elements. */
+    friend class CredentialSet;
+
     /** @brief Allows BaseAddress to copy credential components. */
     friend class BaseAddress;
 

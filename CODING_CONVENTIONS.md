@@ -127,6 +127,9 @@ Ordinary values use RAII and independent copy semantics; moves and swaps transfe
 ownership without allocating. Native C references may be owned privately by these
 RAII value classes. Temporary native allocations belong in scoped ownership guards.
 Do not expose reference counting, disposal, or raw owning pointers in the public API.
+When a C getter returns a shared reference, clone it before exposing a mutable
+value. Returning a named local by value may elide its copy; do not rely on that
+return statement to make the result independent.
 
 Call C constructors directly and put any returned reference into a scoped owner
 before checking an error that can throw. Release ownership only when transferring

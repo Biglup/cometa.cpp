@@ -305,3 +305,23 @@ policy maps also offer ``toJsonEntries`` when an array representation is needed.
 ``intersection`` includes shared token identifiers regardless of amount, and
 lovelace only when positive in both values. ``isZero`` requires zero lovelace and
 no stored policy entries; a retained zero token entry is not an empty value.
+
+Hash and credential sets
+------------------------
+
+``Blake2bHashSet`` and ``CredentialSet`` keep elements sorted and unique.
+``insert`` returns false for a duplicate; ``at`` and ``values`` return independent
+copies, so changing a returned credential does not alter membership.
+
+.. code-block:: cpp
+
+   Cometa::CredentialSet credentials { paymentCredential };
+   const bool inserted = credentials.insert(stakeCredential);
+   const std::vector<Cometa::Credential> snapshot = credentials.values();
+   const std::vector<std::uint8_t> cbor = credentials.toCbor();
+
+Parsing accepts tagged or untagged arrays and rejects duplicate elements.
+Encoding always writes a sorted definite-length array with CBOR set tag 258.
+An untagged, unsorted, or indefinite-length input therefore need not round-trip
+byte for byte. Other tags, including oversized values that could narrow to 258,
+are rejected. ``toJson`` writes the elements as a sorted JSON array.
