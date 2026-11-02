@@ -257,6 +257,9 @@ class Credential
     /** @brief Allows DRep unregistration certificates to copy credentials. */
     friend class UnregisterDRepCert;
 
+    /** @brief Allows DRep registration certificates to copy credentials. */
+    friend class RegisterDRepCert;
+
     /** @brief Allows ScriptRequireGuard to copy script components. */
     friend class ScriptRequireGuard;
 

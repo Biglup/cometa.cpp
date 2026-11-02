@@ -819,3 +819,6 @@ delegation, and DRep delegation with one registration deposit.
 
 ``UnregisterDRepCert`` unregisters a DRep credential and records the returned
 deposit in lovelace.
+
+``RegisterDRepCert`` registers a DRep credential with a deposit and an optional
+metadata anchor. The anchor can be replaced or removed.

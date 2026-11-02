@@ -41,6 +41,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Certificates/VoteRegistrationDelegationCert.cpp
   lib/src/Certificates/StakeVoteRegistrationDelegationCert.cpp
   lib/src/Certificates/UnregisterDRepCert.cpp
+  lib/src/Certificates/RegisterDRepCert.cpp
   lib/src/Certificates/RegistrationCert.cpp
   lib/src/Certificates/UnregistrationCert.cpp
   lib/src/Common/DRep.cpp
@@ -200,6 +201,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Certificates/VoteRegistrationDelegationCertTest.cpp
     lib/tests/Certificates/StakeVoteRegistrationDelegationCertTest.cpp
     lib/tests/Certificates/UnregisterDRepCertTest.cpp
+    lib/tests/Certificates/RegisterDRepCertTest.cpp
     lib/tests/Certificates/RegistrationCertTest.cpp
     lib/tests/Certificates/UnregistrationCertTest.cpp
     lib/tests/Common/DRepTypeTest.cpp

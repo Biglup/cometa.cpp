@@ -217,6 +217,9 @@ class Anchor
      */
     cardano_anchor_t* checked() const;
 
+    /** @brief Allows DRep registration certificates to copy anchors. */
+    friend class RegisterDRepCert;
+
   private:
 
     /**
