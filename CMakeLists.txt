@@ -17,6 +17,10 @@ INCLUDE (cmake/Cardano.cmake)
 # Library sources.
 ADD_LIBRARY (cometa STATIC
   lib/src/AuxiliaryData/TransactionMetadata.cpp
+  lib/src/PoolParams/Ipv4.cpp
+  lib/src/PoolParams/Ipv6.cpp
+  lib/src/PoolParams/BlsKey.cpp
+  lib/src/PoolParams/PoolMetadata.cpp
   lib/src/AuxiliaryData/AuxiliaryData.cpp
   lib/src/AuxiliaryData/Metadatum.cpp
   lib/src/AuxiliaryData/MetadatumList.cpp
@@ -143,6 +147,10 @@ IF (COMETA_BUILD_TESTS)
   ADD_EXECUTABLE (cometa-tests
     lib/tests/AuxiliaryData/TransactionMetadataTest.cpp
     lib/tests/AuxiliaryData/MetadatumLabelListTest.cpp
+    lib/tests/PoolParams/Ipv4Test.cpp
+    lib/tests/PoolParams/Ipv6Test.cpp
+    lib/tests/PoolParams/BlsKeyTest.cpp
+    lib/tests/PoolParams/PoolMetadataTest.cpp
     lib/tests/AuxiliaryData/AuxiliaryDataTest.cpp
 
     lib/tests/AuxiliaryData/MetadatumTest.cpp

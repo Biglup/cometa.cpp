@@ -222,6 +222,17 @@ main()
     return 1;
   }
 
+  const Cometa::Ipv4   poolAddress   = Cometa::Ipv4::fromString("192.0.2.1");
+  const Cometa::Ipv6   poolAddressV6 = Cometa::Ipv6::fromString("0000:0000:0000:0000:0000:0000:0000:0001");
+  const Cometa::BlsKey poolKey(std::vector<std::uint8_t>(96, 1), std::vector<std::uint8_t>(48, 2));
+  Cometa::PoolMetadata poolMetadata("https://example.com/pool.json", Cometa::Blake2bHash::fromHex(std::string(64, '1')));
+  poolMetadata.setUrl("abc");
+
+  if (Cometa::Ipv4::fromCbor(poolAddress.toCbor()) != poolAddress || Cometa::Ipv6::fromCbor(poolAddressV6.toCbor()) != poolAddressV6 || Cometa::BlsKey::fromCbor(poolKey.toCbor()) != poolKey || Cometa::PoolMetadata::fromCbor(poolMetadata.toCbor()).url() != "abc")
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

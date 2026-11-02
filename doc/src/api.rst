@@ -302,3 +302,18 @@ API reference
 
 .. doxygenclass:: Cometa::AuxiliaryData
    :members:
+
+Pool primitives
+---------------
+
+.. doxygenclass:: Cometa::Ipv4
+   :members:
+
+.. doxygenclass:: Cometa::Ipv6
+   :members:
+
+.. doxygenclass:: Cometa::BlsKey
+   :members:
+
+.. doxygenclass:: Cometa::PoolMetadata
+   :members:

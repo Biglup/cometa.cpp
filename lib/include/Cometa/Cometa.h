@@ -140,3 +140,8 @@
 #include <Cometa/AuxiliaryData/AuxiliaryData.h>
 #include <Cometa/AuxiliaryData/MetadatumLabelList.h>
 #include <Cometa/AuxiliaryData/TransactionMetadata.h>
+
+#include <Cometa/PoolParams/BlsKey.h>
+#include <Cometa/PoolParams/Ipv4.h>
+#include <Cometa/PoolParams/Ipv6.h>
+#include <Cometa/PoolParams/PoolMetadata.h>
