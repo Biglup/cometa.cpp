@@ -47,9 +47,15 @@ work continues while reviews are pending.
    * - P03
      - Shelley and Byron addresses; attributes; stake pointers; address enums
      - P01a.2 P01a.3 P02
-   * - P04
-     - Asset IDs; multi-assets; Value; hash/credential/asset collections
-     - P01a.2 P01a.3 P02
+   * - P04.1
+     - Asset IDs and standard vector aliases for asset IDs, names, and policies
+     - P01a.2 P02
+   * - P04.2
+     - Asset maps; multi-assets; Value; checked arithmetic and serialization
+     - P04.1
+   * - P04.3
+     - Serialized hash and credential sets
+     - P02 P04.1
    * - P05
      - Plutus data; constructors/lists/maps; Datum
      - P01a.2 P01a.3 P01b

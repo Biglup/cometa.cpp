@@ -9,14 +9,14 @@ lib/include/cardano/address/enterprise_address.h,public header,P03,implemented,"
 lib/include/cardano/address/pointer_address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
 lib/include/cardano/address/reward_address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
 lib/include/cardano/address/stake_pointer.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
-lib/include/cardano/assets/asset_id.h,public header,P04,planned,idiomatic C++ API
-lib/include/cardano/assets/asset_id_list.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/assets/asset_id.h,public header,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
+lib/include/cardano/assets/asset_id_list.h,public header,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
 lib/include/cardano/assets/asset_id_map.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/assets/asset_name.h,public header,P04,implemented,idiomatic C++ API
-lib/include/cardano/assets/asset_name_list.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/assets/asset_name_list.h,public header,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
 lib/include/cardano/assets/asset_name_map.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/assets/multi_asset.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/assets/policy_id_list.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/assets/policy_id_list.h,public header,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
 lib/include/cardano/auxiliary_data/auxiliary_data.h,public header,P08,planned,idiomatic C++ API
 lib/include/cardano/auxiliary_data/metadatum.h,public header,P08,planned,idiomatic C++ API
 lib/include/cardano/auxiliary_data/metadatum_kind.h,public header,P08,planned,idiomatic C++ API
@@ -251,14 +251,14 @@ lib/src/address/pointer_address.c,implementation file,P03,implemented,"Address v
 lib/src/address/reward_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
 lib/src/allocators.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/allocators.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/assets/asset_id.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/assets/asset_id_list.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/asset_id.c,implementation file,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
+lib/src/assets/asset_id_list.c,implementation file,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
 lib/src/assets/asset_id_map.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/assets/asset_name.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/assets/asset_name_list.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/asset_name_list.c,implementation file,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
 lib/src/assets/asset_name_map.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/assets/multi_asset.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/assets/policy_id_list.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/policy_id_list.c,implementation file,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
 lib/src/auxiliary_data/auxiliary_data.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/auxiliary_data/metadatum.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/auxiliary_data/metadatum_label_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.

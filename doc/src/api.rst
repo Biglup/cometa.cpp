@@ -153,3 +153,12 @@ API reference
 
 .. doxygenstruct:: Cometa::ByronAddressAttributes
    :members:
+
+.. doxygenclass:: Cometa::AssetId
+   :members:
+
+.. doxygentypedef:: Cometa::AssetIdList
+
+.. doxygentypedef:: Cometa::AssetNameList
+
+.. doxygentypedef:: Cometa::PolicyIdList

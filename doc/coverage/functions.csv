@@ -123,33 +123,33 @@ cardano_reward_address_refcount,lib/include/cardano/address/reward_address.h,P03
 cardano_reward_address_set_last_error,lib/include/cardano/address/reward_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/RewardAddressTest.cpp,Native ownership and buffer sizing stay private.
 cardano_reward_address_get_last_error,lib/include/cardano/address/reward_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/RewardAddressTest.cpp,Native ownership and buffer sizing stay private.
 cardano_reward_address_deep_clone,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress::copy constructor and assignment,lib/tests/Address/RewardAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
-cardano_asset_id_new,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_new_lovelace,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_from_bytes,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_from_hex,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_get_bytes,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_get_bytes_size,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_get_hex,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_get_hex_size,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_is_lovelace,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_get_policy_id,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_get_asset_name,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_unref,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_ref,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_refcount,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_set_last_error,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_get_last_error,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_deep_clone,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_list_new,lib/include/cardano/assets/asset_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_list_get_length,lib/include/cardano/assets/asset_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_list_get,lib/include/cardano/assets/asset_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_list_add,lib/include/cardano/assets/asset_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_list_unref,lib/include/cardano/assets/asset_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_list_ref,lib/include/cardano/assets/asset_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_list_refcount,lib/include/cardano/assets/asset_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_list_set_last_error,lib/include/cardano/assets/asset_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_list_get_last_error,lib/include/cardano/assets/asset_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_id_list_deep_clone,lib/include/cardano/assets/asset_id_list.h,P04,planned,,,API and ownership mapping pending.
+cardano_asset_id_new,lib/include/cardano/assets/asset_id.h,P04.1,implemented,Cometa::AssetId::constructor,lib/tests/Assets/AssetIdTest.cpp,Independent value; empty byte and hex input denote lovelace.
+cardano_asset_id_new_lovelace,lib/include/cardano/assets/asset_id.h,P04.1,implemented,Cometa::AssetId::lovelace,lib/tests/Assets/AssetIdTest.cpp,Independent value; empty byte and hex input denote lovelace.
+cardano_asset_id_from_bytes,lib/include/cardano/assets/asset_id.h,P04.1,implemented,Cometa::AssetId::constructor,lib/tests/Assets/AssetIdTest.cpp,Independent value; empty byte and hex input denote lovelace.
+cardano_asset_id_from_hex,lib/include/cardano/assets/asset_id.h,P04.1,implemented,Cometa::AssetId::fromHex,lib/tests/Assets/AssetIdTest.cpp,Independent value; empty byte and hex input denote lovelace.
+cardano_asset_id_get_bytes,lib/include/cardano/assets/asset_id.h,P04.1,implemented,Cometa::AssetId::toBytes,lib/tests/Assets/AssetIdTest.cpp,Independent value; empty byte and hex input denote lovelace.
+cardano_asset_id_get_bytes_size,lib/include/cardano/assets/asset_id.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetIdTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_id_get_hex,lib/include/cardano/assets/asset_id.h,P04.1,implemented,Cometa::AssetId::toHex,lib/tests/Assets/AssetIdTest.cpp,Independent value; empty byte and hex input denote lovelace.
+cardano_asset_id_get_hex_size,lib/include/cardano/assets/asset_id.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetIdTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_id_is_lovelace,lib/include/cardano/assets/asset_id.h,P04.1,implemented,Cometa::AssetId::isLovelace,lib/tests/Assets/AssetIdTest.cpp,Independent value; empty byte and hex input denote lovelace.
+cardano_asset_id_get_policy_id,lib/include/cardano/assets/asset_id.h,P04.1,implemented,Cometa::AssetId::policyId,lib/tests/Assets/AssetIdTest.cpp,Independent value; empty byte and hex input denote lovelace.
+cardano_asset_id_get_asset_name,lib/include/cardano/assets/asset_id.h,P04.1,implemented,Cometa::AssetId::assetName,lib/tests/Assets/AssetIdTest.cpp,Independent value; empty byte and hex input denote lovelace.
+cardano_asset_id_unref,lib/include/cardano/assets/asset_id.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetIdTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_id_ref,lib/include/cardano/assets/asset_id.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetIdTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_id_refcount,lib/include/cardano/assets/asset_id.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetIdTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_id_set_last_error,lib/include/cardano/assets/asset_id.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetIdTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_id_get_last_error,lib/include/cardano/assets/asset_id.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetIdTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_id_deep_clone,lib/include/cardano/assets/asset_id.h,P04.1,implemented,Cometa::AssetId::copy constructor and assignment,lib/tests/Assets/AssetIdTest.cpp,Independent value; empty byte and hex input denote lovelace.
+cardano_asset_id_list_new,lib/include/cardano/assets/asset_id_list.h,P04.1,implemented,Cometa::AssetIdList::constructor,lib/tests/Assets/AssetIdListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
+cardano_asset_id_list_get_length,lib/include/cardano/assets/asset_id_list.h,P04.1,implemented,Cometa::AssetIdList::size,lib/tests/Assets/AssetIdListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
+cardano_asset_id_list_get,lib/include/cardano/assets/asset_id_list.h,P04.1,implemented,Cometa::AssetIdList::at,lib/tests/Assets/AssetIdListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
+cardano_asset_id_list_add,lib/include/cardano/assets/asset_id_list.h,P04.1,implemented,Cometa::AssetIdList::push_back,lib/tests/Assets/AssetIdListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
+cardano_asset_id_list_unref,lib/include/cardano/assets/asset_id_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetIdListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_id_list_ref,lib/include/cardano/assets/asset_id_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetIdListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_id_list_refcount,lib/include/cardano/assets/asset_id_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetIdListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_id_list_set_last_error,lib/include/cardano/assets/asset_id_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetIdListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_id_list_get_last_error,lib/include/cardano/assets/asset_id_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetIdListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_id_list_deep_clone,lib/include/cardano/assets/asset_id_list.h,P04.1,implemented,Cometa::AssetIdList::copy constructor and assignment,lib/tests/Assets/AssetIdListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
 cardano_asset_id_map_new,lib/include/cardano/assets/asset_id_map.h,P04,planned,,,API and ownership mapping pending.
 cardano_asset_id_map_get_length,lib/include/cardano/assets/asset_id_map.h,P04,planned,,,API and ownership mapping pending.
 cardano_asset_id_map_get,lib/include/cardano/assets/asset_id_map.h,P04,planned,,,API and ownership mapping pending.
@@ -185,16 +185,16 @@ cardano_asset_name_refcount,lib/include/cardano/assets/asset_name.h,P04,internal
 cardano_asset_name_set_last_error,lib/include/cardano/assets/asset_name.h,P04,internal,Error,lib/tests/Assets/AssetNameTest.cpp,Failure reporting uses exceptions.
 cardano_asset_name_get_last_error,lib/include/cardano/assets/asset_name.h,P04,internal,Error,lib/tests/Assets/AssetNameTest.cpp,Failure reporting uses exceptions.
 cardano_asset_name_deep_clone,lib/include/cardano/assets/asset_name.h,P04,implemented,AssetName copy constructor/operator=,lib/tests/ValueContractTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
-cardano_asset_name_list_new,lib/include/cardano/assets/asset_name_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_name_list_get_length,lib/include/cardano/assets/asset_name_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_name_list_get,lib/include/cardano/assets/asset_name_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_name_list_add,lib/include/cardano/assets/asset_name_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_name_list_unref,lib/include/cardano/assets/asset_name_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_name_list_ref,lib/include/cardano/assets/asset_name_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_name_list_refcount,lib/include/cardano/assets/asset_name_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_name_list_set_last_error,lib/include/cardano/assets/asset_name_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_name_list_get_last_error,lib/include/cardano/assets/asset_name_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_asset_name_list_deep_clone,lib/include/cardano/assets/asset_name_list.h,P04,planned,,,API and ownership mapping pending.
+cardano_asset_name_list_new,lib/include/cardano/assets/asset_name_list.h,P04.1,implemented,Cometa::AssetNameList::constructor,lib/tests/Assets/AssetNameListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
+cardano_asset_name_list_get_length,lib/include/cardano/assets/asset_name_list.h,P04.1,implemented,Cometa::AssetNameList::size,lib/tests/Assets/AssetNameListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
+cardano_asset_name_list_get,lib/include/cardano/assets/asset_name_list.h,P04.1,implemented,Cometa::AssetNameList::at,lib/tests/Assets/AssetNameListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
+cardano_asset_name_list_add,lib/include/cardano/assets/asset_name_list.h,P04.1,implemented,Cometa::AssetNameList::push_back,lib/tests/Assets/AssetNameListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
+cardano_asset_name_list_unref,lib/include/cardano/assets/asset_name_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetNameListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_name_list_ref,lib/include/cardano/assets/asset_name_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetNameListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_name_list_refcount,lib/include/cardano/assets/asset_name_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetNameListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_name_list_set_last_error,lib/include/cardano/assets/asset_name_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetNameListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_name_list_get_last_error,lib/include/cardano/assets/asset_name_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/AssetNameListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_asset_name_list_deep_clone,lib/include/cardano/assets/asset_name_list.h,P04.1,implemented,Cometa::AssetNameList::copy constructor and assignment,lib/tests/Assets/AssetNameListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
 cardano_asset_name_map_new,lib/include/cardano/assets/asset_name_map.h,P04,planned,,,API and ownership mapping pending.
 cardano_asset_name_map_from_cbor,lib/include/cardano/assets/asset_name_map.h,P04,planned,,,API and ownership mapping pending.
 cardano_asset_name_map_to_cbor,lib/include/cardano/assets/asset_name_map.h,P04,planned,,,API and ownership mapping pending.
@@ -238,16 +238,16 @@ cardano_multi_asset_refcount,lib/include/cardano/assets/multi_asset.h,P04,planne
 cardano_multi_asset_set_last_error,lib/include/cardano/assets/multi_asset.h,P04,planned,,,API and ownership mapping pending.
 cardano_multi_asset_get_last_error,lib/include/cardano/assets/multi_asset.h,P04,planned,,,API and ownership mapping pending.
 cardano_multi_asset_deep_clone,lib/include/cardano/assets/multi_asset.h,P04,planned,,,API and ownership mapping pending.
-cardano_policy_id_list_new,lib/include/cardano/assets/policy_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_policy_id_list_get_length,lib/include/cardano/assets/policy_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_policy_id_list_get,lib/include/cardano/assets/policy_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_policy_id_list_add,lib/include/cardano/assets/policy_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_policy_id_list_unref,lib/include/cardano/assets/policy_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_policy_id_list_ref,lib/include/cardano/assets/policy_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_policy_id_list_refcount,lib/include/cardano/assets/policy_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_policy_id_list_set_last_error,lib/include/cardano/assets/policy_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_policy_id_list_get_last_error,lib/include/cardano/assets/policy_id_list.h,P04,planned,,,API and ownership mapping pending.
-cardano_policy_id_list_deep_clone,lib/include/cardano/assets/policy_id_list.h,P04,planned,,,API and ownership mapping pending.
+cardano_policy_id_list_new,lib/include/cardano/assets/policy_id_list.h,P04.1,implemented,Cometa::PolicyIdList::constructor,lib/tests/Assets/PolicyIdListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
+cardano_policy_id_list_get_length,lib/include/cardano/assets/policy_id_list.h,P04.1,implemented,Cometa::PolicyIdList::size,lib/tests/Assets/PolicyIdListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
+cardano_policy_id_list_get,lib/include/cardano/assets/policy_id_list.h,P04.1,implemented,Cometa::PolicyIdList::at,lib/tests/Assets/PolicyIdListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
+cardano_policy_id_list_add,lib/include/cardano/assets/policy_id_list.h,P04.1,implemented,Cometa::PolicyIdList::push_back,lib/tests/Assets/PolicyIdListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
+cardano_policy_id_list_unref,lib/include/cardano/assets/policy_id_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/PolicyIdListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_policy_id_list_ref,lib/include/cardano/assets/policy_id_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/PolicyIdListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_policy_id_list_refcount,lib/include/cardano/assets/policy_id_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/PolicyIdListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_policy_id_list_set_last_error,lib/include/cardano/assets/policy_id_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/PolicyIdListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_policy_id_list_get_last_error,lib/include/cardano/assets/policy_id_list.h,P04.1,internal,"RAII, owned results, and exceptions",lib/tests/Assets/PolicyIdListTest.cpp,Native ownership and buffer sizing stay private.
+cardano_policy_id_list_deep_clone,lib/include/cardano/assets/policy_id_list.h,P04.1,implemented,Cometa::PolicyIdList::copy constructor and assignment,lib/tests/Assets/PolicyIdListTest.cpp,List operations use std::vector; native adapters are added with consuming APIs.
 cardano_auxiliary_data_new,lib/include/cardano/auxiliary_data/auxiliary_data.h,P08,planned,,,API and ownership mapping pending.
 cardano_auxiliary_data_from_cbor,lib/include/cardano/auxiliary_data/auxiliary_data.h,P08,planned,,,API and ownership mapping pending.
 cardano_auxiliary_data_to_cbor,lib/include/cardano/auxiliary_data/auxiliary_data.h,P08,planned,,,API and ownership mapping pending.

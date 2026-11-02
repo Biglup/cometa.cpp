@@ -71,6 +71,9 @@ and callback adapters are tracked in :doc:`implementation_plan`.
    * - Shelley and Byron addresses
      - ``Address`` and specialized address values, enums, ``StakePointer``, and ``ByronAddressAttributes``; independent credential getters and checked conversions
 
+   * - Asset identifiers and lists
+     - ``AssetId`` and standard vector aliases ``AssetIdList``, ``AssetNameList``, and ``PolicyIdList``
+
 Coverage ledger
 ---------------
 
