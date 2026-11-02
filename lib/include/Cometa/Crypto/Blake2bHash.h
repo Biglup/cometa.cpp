@@ -25,6 +25,8 @@
 
 /* INCLUDES ******************************************************************/
 
+#include <Cometa/Crypto/Blake2bHashSize.h>
+
 #include <cstddef>
 #include <cstdint>
 #include <string>
@@ -103,6 +105,18 @@ class Blake2bHash
      * @throws std::invalid_argument The input is empty or the digest length is outside the supported range.
      */
     static Blake2bHash compute(const std::vector<std::uint8_t>& data, std::size_t digestSize = 32);
+
+    /**
+     * @brief Computes a BLAKE2b digest with a named output length.
+     *
+     * @param data The nonempty input bytes.
+     * @param digestSize A supported digest length.
+     *
+     * @return The computed digest.
+     *
+     * @throws std::invalid_argument The input is empty or the enum value is unknown.
+     */
+    static Blake2bHash compute(const std::vector<std::uint8_t>& data, Blake2bHashSize digestSize);
 
     /**
      * @brief Creates a value from exactly one CBOR item.

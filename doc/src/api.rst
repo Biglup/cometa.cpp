@@ -111,3 +111,17 @@ API reference
    :members:
 
 .. doxygenfunction:: Cometa::hardenIndex
+
+.. doxygenfunction:: Cometa::entropyToMnemonic
+
+.. doxygenfunction:: Cometa::mnemonicToEntropy
+
+.. doxygenfunction:: Cometa::pbkdf2HmacSha512
+
+.. doxygenfunction:: Cometa::encryptEmip3
+
+.. doxygenfunction:: Cometa::decryptEmip3
+
+.. doxygenfunction:: Cometa::crc32
+
+.. doxygenenum:: Cometa::Blake2bHashSize

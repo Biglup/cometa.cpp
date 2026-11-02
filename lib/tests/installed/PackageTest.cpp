@@ -92,6 +92,15 @@ main()
     return 1;
   }
 
+  const std::vector<std::uint8_t> entropy(16, 0);
+  const std::vector<std::string>  words     = Cometa::entropyToMnemonic(entropy);
+  const std::vector<std::uint8_t> encrypted = Cometa::encryptEmip3(entropy, "password");
+
+  if (Cometa::mnemonicToEntropy(words) != entropy || Cometa::decryptEmip3(encrypted, "password") != entropy || Cometa::crc32({}) != 0)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

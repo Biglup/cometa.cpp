@@ -39,6 +39,7 @@
 #include <Cometa/Common/ProtocolVersion.h>
 #include <Cometa/Common/UnitInterval.h>
 #include <Cometa/Crypto/Blake2bHash.h>
+#include <Cometa/Crypto/Blake2bHashSize.h>
 #include <Cometa/Encoding/Base58.h>
 #include <Cometa/Encoding/Bech32.h>
 #include <Cometa/Error.h>
@@ -61,6 +62,10 @@
 #include <Cometa/Crypto/Bip32.h>
 #include <Cometa/Crypto/Bip32PrivateKey.h>
 #include <Cometa/Crypto/Bip32PublicKey.h>
+#include <Cometa/Crypto/Bip39.h>
+#include <Cometa/Crypto/Crc32.h>
 #include <Cometa/Crypto/Ed25519PrivateKey.h>
 #include <Cometa/Crypto/Ed25519PublicKey.h>
 #include <Cometa/Crypto/Ed25519Signature.h>
+#include <Cometa/Crypto/Emip3.h>
+#include <Cometa/Crypto/Pbkdf2.h>
