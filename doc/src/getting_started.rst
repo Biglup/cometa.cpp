@@ -716,3 +716,15 @@ Legacy stake deregistration
 
 ``StakeDeregistrationCert`` represents the historical stake deregistration
 form. It copies its credential and provides CBOR and CIP-116 JSON conversion.
+
+Deposit-bearing registration certificates
+-----------------------------------------
+
+``RegistrationCert`` and ``UnregistrationCert`` hold a stake credential and
+a deposit amount in lovelace. They copy credentials and return independent
+values. The two forms encode with distinct CBOR certificate tags.
+
+.. code-block:: cpp
+
+   Cometa::RegistrationCert registration(stakeCredential, 2'000'000);
+   Cometa::UnregistrationCert unregistration(stakeCredential, 2'000'000);

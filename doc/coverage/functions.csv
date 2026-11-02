@@ -714,20 +714,20 @@ cardano_register_drep_cert_refcount,lib/include/cardano/certs/register_drep_cert
 cardano_register_drep_cert_set_last_error,lib/include/cardano/certs/register_drep_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_register_drep_cert_get_last_error,lib/include/cardano/certs/register_drep_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_register_drep_cert_deep_clone,lib/include/cardano/certs/register_drep_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_registration_cert_new,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_registration_cert_from_cbor,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_registration_cert_to_cbor,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_registration_cert_to_cip116_json,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_registration_cert_get_stake_credential,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_registration_cert_set_stake_credential,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_registration_cert_get_deposit,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_registration_cert_set_deposit,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_registration_cert_unref,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_registration_cert_ref,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_registration_cert_refcount,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_registration_cert_set_last_error,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_registration_cert_get_last_error,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_registration_cert_deep_clone,lib/include/cardano/certs/registration_cert.h,P10,planned,,,API and ownership mapping pending.
+cardano_registration_cert_new,lib/include/cardano/certs/registration_cert.h,P10,implemented,Cometa::RegistrationCert::constructor,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_registration_cert_from_cbor,lib/include/cardano/certs/registration_cert.h,P10,implemented,Cometa::RegistrationCert::fromCbor,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_registration_cert_to_cbor,lib/include/cardano/certs/registration_cert.h,P10,implemented,Cometa::RegistrationCert::toCbor,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_registration_cert_to_cip116_json,lib/include/cardano/certs/registration_cert.h,P10,implemented,Cometa::RegistrationCert::toJson,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_registration_cert_get_stake_credential,lib/include/cardano/certs/registration_cert.h,P10,implemented,Cometa::RegistrationCert::credential,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_registration_cert_set_stake_credential,lib/include/cardano/certs/registration_cert.h,P10,implemented,Cometa::RegistrationCert::setCredential,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_registration_cert_get_deposit,lib/include/cardano/certs/registration_cert.h,P10,implemented,Cometa::RegistrationCert::deposit,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_registration_cert_set_deposit,lib/include/cardano/certs/registration_cert.h,P10,implemented,Cometa::RegistrationCert::setDeposit,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_registration_cert_unref,lib/include/cardano/certs/registration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_registration_cert_ref,lib/include/cardano/certs/registration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_registration_cert_refcount,lib/include/cardano/certs/registration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_registration_cert_set_last_error,lib/include/cardano/certs/registration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_registration_cert_get_last_error,lib/include/cardano/certs/registration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_registration_cert_deep_clone,lib/include/cardano/certs/registration_cert.h,P10,implemented,Cometa::RegistrationCert::copy constructor / assignment,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
 cardano_resign_committee_cold_cert_new,lib/include/cardano/certs/resign_committee_cold_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_resign_committee_cold_cert_from_cbor,lib/include/cardano/certs/resign_committee_cold_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_resign_committee_cold_cert_to_cbor,lib/include/cardano/certs/resign_committee_cold_cert.h,P11,planned,,,API and ownership mapping pending.
@@ -844,20 +844,20 @@ cardano_unregister_drep_cert_refcount,lib/include/cardano/certs/unregister_drep_
 cardano_unregister_drep_cert_set_last_error,lib/include/cardano/certs/unregister_drep_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_unregister_drep_cert_get_last_error,lib/include/cardano/certs/unregister_drep_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_unregister_drep_cert_deep_clone,lib/include/cardano/certs/unregister_drep_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_new,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_from_cbor,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_to_cbor,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_to_cip116_json,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_get_credential,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_set_credential,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_get_deposit,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_set_deposit,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_unref,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_ref,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_refcount,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_set_last_error,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_get_last_error,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_unregistration_cert_deep_clone,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,,API and ownership mapping pending.
+cardano_unregistration_cert_new,lib/include/cardano/certs/unregistration_cert.h,P10,implemented,Cometa::UnregistrationCert::constructor,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_unregistration_cert_from_cbor,lib/include/cardano/certs/unregistration_cert.h,P10,implemented,Cometa::UnregistrationCert::fromCbor,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_unregistration_cert_to_cbor,lib/include/cardano/certs/unregistration_cert.h,P10,implemented,Cometa::UnregistrationCert::toCbor,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_unregistration_cert_to_cip116_json,lib/include/cardano/certs/unregistration_cert.h,P10,implemented,Cometa::UnregistrationCert::toJson,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_unregistration_cert_get_credential,lib/include/cardano/certs/unregistration_cert.h,P10,implemented,Cometa::UnregistrationCert::credential,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_unregistration_cert_set_credential,lib/include/cardano/certs/unregistration_cert.h,P10,implemented,Cometa::UnregistrationCert::setCredential,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_unregistration_cert_get_deposit,lib/include/cardano/certs/unregistration_cert.h,P10,implemented,Cometa::UnregistrationCert::deposit,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_unregistration_cert_set_deposit,lib/include/cardano/certs/unregistration_cert.h,P10,implemented,Cometa::UnregistrationCert::setDeposit,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_unregistration_cert_unref,lib/include/cardano/certs/unregistration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_unregistration_cert_ref,lib/include/cardano/certs/unregistration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_unregistration_cert_refcount,lib/include/cardano/certs/unregistration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_unregistration_cert_set_last_error,lib/include/cardano/certs/unregistration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_unregistration_cert_get_last_error,lib/include/cardano/certs/unregistration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
+cardano_unregistration_cert_deep_clone,lib/include/cardano/certs/unregistration_cert.h,P10,implemented,Cometa::UnregistrationCert::copy constructor / assignment,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Deposit and independent credential values; native CBOR compatibility.
 cardano_update_drep_cert_new,lib/include/cardano/certs/update_drep_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_update_drep_cert_from_cbor,lib/include/cardano/certs/update_drep_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_update_drep_cert_to_cbor,lib/include/cardano/certs/update_drep_cert.h,P11,planned,,,API and ownership mapping pending.

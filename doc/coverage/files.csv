@@ -50,7 +50,7 @@ lib/include/cardano/certs/mir_to_stake_creds_cert.h,public header,P10,planned,id
 lib/include/cardano/certs/pool_registration_cert.h,public header,P10,planned,idiomatic C++ API
 lib/include/cardano/certs/pool_retirement_cert.h,public header,P10,planned,idiomatic C++ API
 lib/include/cardano/certs/register_drep_cert.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/certs/registration_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/registration_cert.h,public header,P10,implemented,Deposit-bearing stake certificate with independent credential values.
 lib/include/cardano/certs/resign_committee_cold_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/stake_delegation_cert.h,public header,P10,planned,idiomatic C++ API
 lib/include/cardano/certs/stake_deregistration_cert.h,public header,P10,implemented,Legacy stake deregistration with owned credential values.
@@ -59,7 +59,7 @@ lib/include/cardano/certs/stake_registration_delegation_cert.h,public header,P10
 lib/include/cardano/certs/stake_vote_delegation_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/stake_vote_registration_delegation_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/unregister_drep_cert.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/certs/unregistration_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/unregistration_cert.h,public header,P10,implemented,Deposit-bearing stake certificate with independent credential values.
 lib/include/cardano/certs/update_drep_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/vote_delegation_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/vote_registration_delegation_cert.h,public header,P11,planned,idiomatic C++ API

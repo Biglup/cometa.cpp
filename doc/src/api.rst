@@ -366,3 +366,12 @@ Stake deregistration
 
 .. doxygenclass:: Cometa::StakeDeregistrationCert
    :members:
+
+Registration certificates
+-------------------------
+
+.. doxygenclass:: Cometa::RegistrationCert
+   :members:
+
+.. doxygenclass:: Cometa::UnregistrationCert
+   :members:

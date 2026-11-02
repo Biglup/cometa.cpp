@@ -159,7 +159,7 @@ cardano_redeemer_list_t,opaque object,lib/include/cardano/witness_set/redeemer_l
 cardano_redeemer_t,opaque object,lib/include/cardano/witness_set/redeemer.h,P15,planned,,
 cardano_redeemer_tag_t,enum,lib/include/cardano/witness_set/redeemer_tag.h,P15,planned,,
 cardano_register_drep_cert_t,opaque object,lib/include/cardano/certs/register_drep_cert.h,P11,planned,,
-cardano_registration_cert_t,opaque object,lib/include/cardano/certs/registration_cert.h,P10,planned,,
+cardano_registration_cert_t,opaque object,lib/include/cardano/certs/registration_cert.h,P10,implemented,Cometa::RegistrationCert,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_relay_t,opaque object,lib/include/cardano/pool_params/relay.h,P09,implemented,Cometa::Relay,lib/tests/PoolParams/RelayTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_relay_type_t,enum,lib/include/cardano/pool_params/relay_type.h,P09,implemented,Cometa::RelayType,lib/tests/PoolParams/RelayTypeTest.cpp
 cardano_relays_t,opaque object,lib/include/cardano/pool_params/relays.h,P09,implemented,Cometa::Relays,lib/tests/PoolParams/RelaysTest.cpp; lib/tests/ValueContractTest.cpp
@@ -212,7 +212,7 @@ cardano_tx_evaluator_impl_t,struct,lib/include/cardano/transaction_builder/evalu
 cardano_tx_evaluator_t,opaque object,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,planned,,
 cardano_unit_interval_t,opaque object,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_unregister_drep_cert_t,opaque object,lib/include/cardano/certs/unregister_drep_cert.h,P11,planned,,
-cardano_unregistration_cert_t,opaque object,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,
+cardano_unregistration_cert_t,opaque object,lib/include/cardano/certs/unregistration_cert.h,P10,implemented,Cometa::UnregistrationCert,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_update_committee_action_t,opaque object,lib/include/cardano/proposal_procedures/update_committee_action.h,P13,planned,,
 cardano_update_drep_cert_t,opaque object,lib/include/cardano/certs/update_drep_cert.h,P11,planned,,
 cardano_update_t,opaque object,lib/include/cardano/protocol_params/update.h,P12,planned,,
