@@ -186,6 +186,9 @@ API reference
 .. doxygenclass:: Cometa::AccountBalanceIntervalsMap
    :members:
 
+.. doxygenclass:: Cometa::DirectDepositMap
+   :members:
+
 .. doxygenclass:: Cometa::Blake2bHashSet
    :members:
 

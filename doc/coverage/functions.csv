@@ -2537,24 +2537,24 @@ cardano_account_balance_intervals_map_refcount,lib/include/cardano/transaction_b
 cardano_account_balance_intervals_map_set_last_error,lib/include/cardano/transaction_body/account_balance_intervals_map.h,P16,internal,,,
 cardano_account_balance_intervals_map_get_last_error,lib/include/cardano/transaction_body/account_balance_intervals_map.h,P16,internal,,,
 cardano_account_balance_intervals_map_deep_clone,lib/include/cardano/transaction_body/account_balance_intervals_map.h,P16,implemented,Cometa::AccountBalanceIntervalsMap,lib/tests/TransactionBody/AccountBalanceIntervalsMapTest.cpp,
-cardano_direct_deposit_map_to_cip116_json,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_new,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_from_cbor,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_to_cbor,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_get_length,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_get,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_insert,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_insert_ex,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_get_keys,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_get_key_at,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_get_value_at,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_get_key_value_at,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_unref,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_ref,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_refcount,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_set_last_error,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_get_last_error,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
-cardano_direct_deposit_map_deep_clone,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,,API and ownership mapping pending.
+cardano_direct_deposit_map_to_cip116_json,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp,
+cardano_direct_deposit_map_new,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp,
+cardano_direct_deposit_map_from_cbor,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp,
+cardano_direct_deposit_map_to_cbor,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp,
+cardano_direct_deposit_map_get_length,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp,
+cardano_direct_deposit_map_get,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp,
+cardano_direct_deposit_map_insert,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp,
+cardano_direct_deposit_map_insert_ex,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp,Equivalent typed operation
+cardano_direct_deposit_map_get_keys,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp,Equivalent typed operation
+cardano_direct_deposit_map_get_key_at,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp,Equivalent typed operation
+cardano_direct_deposit_map_get_value_at,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp,Equivalent typed operation
+cardano_direct_deposit_map_get_key_value_at,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp,
+cardano_direct_deposit_map_unref,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,internal,,,
+cardano_direct_deposit_map_ref,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,internal,,,
+cardano_direct_deposit_map_refcount,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,internal,,,
+cardano_direct_deposit_map_set_last_error,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,internal,,,
+cardano_direct_deposit_map_get_last_error,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,internal,,,
+cardano_direct_deposit_map_deep_clone,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp,
 cardano_required_guards_map_to_cip116_json,lib/include/cardano/transaction_body/required_guards_map.h,P16,planned,,,API and ownership mapping pending.
 cardano_required_guards_map_new,lib/include/cardano/transaction_body/required_guards_map.h,P16,planned,,,API and ownership mapping pending.
 cardano_required_guards_map_from_cbor,lib/include/cardano/transaction_body/required_guards_map.h,P16,planned,,,API and ownership mapping pending.

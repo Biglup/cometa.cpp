@@ -212,6 +212,9 @@ class RewardAddress
     /** @brief Allows account balance maps to copy addresses. */
     friend class AccountBalanceIntervalsMap;
 
+    /** @brief Allows direct deposit maps to copy addresses. */
+    friend class DirectDepositMap;
+
     /**
      * @brief Adopts an owned native address.
      *

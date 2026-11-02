@@ -664,6 +664,13 @@ main()
     return 1;
   }
 
+  Cometa::DirectDepositMap directDeposits;
+  directDeposits.insert(Cometa::RewardAddress::fromBech32("stake_test1uqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxtxu2s"), 1000);
+  if (Cometa::DirectDepositMap::fromCbor(directDeposits.toCbor()) != directDeposits)
+  {
+    return 1;
+  }
+
   Cometa::AccountBalanceIntervalsMap accountBalances;
   const Cometa::RewardAddress        mapAddress = Cometa::RewardAddress::fromBech32("stake_test1uqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxtxu2s");
   accountBalances.insert(mapAddress, Cometa::AccountBalanceInterval::exact(1000));

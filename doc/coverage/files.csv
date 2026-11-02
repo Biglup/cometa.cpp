@@ -178,7 +178,7 @@ lib/include/cardano/transaction/sub_transaction.h,public header,P17,planned,idio
 lib/include/cardano/transaction/transaction.h,public header,P17,planned,idiomatic C++ API
 lib/include/cardano/transaction_body/account_balance_interval.h,public header,P16,implemented,Cometa::AccountBalanceInterval
 lib/include/cardano/transaction_body/account_balance_intervals_map.h,public header,P16,implemented,Cometa::AccountBalanceIntervalsMap
-lib/include/cardano/transaction_body/direct_deposit_map.h,public header,P16,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/transaction_body/direct_deposit_map.h,public header,P16,implemented,Cometa::DirectDepositMap
 lib/include/cardano/transaction_body/required_guards_map.h,public header,P16,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/transaction_body/sub_transaction_body.h,public header,P16,planned,idiomatic C++ API
 lib/include/cardano/transaction_body/sub_transaction_set.h,public header,P17,planned,domain container with standard C++ iteration/value semantics; audit specialized operations

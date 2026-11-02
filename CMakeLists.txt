@@ -181,6 +181,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/TransactionBody/Value.cpp
   lib/src/TransactionBody/AccountBalanceInterval.cpp
   lib/src/TransactionBody/AccountBalanceIntervalsMap.cpp
+  lib/src/TransactionBody/DirectDepositMap.cpp
   lib/src/Common/CredentialSet.cpp
   lib/src/Common/Credential.cpp
 )
@@ -414,6 +415,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/TransactionBody/ValueTest.cpp
     lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp
     lib/tests/TransactionBody/AccountBalanceIntervalsMapTest.cpp
+    lib/tests/TransactionBody/DirectDepositMapTest.cpp
     lib/tests/ValueContractTest.cpp
   )
 

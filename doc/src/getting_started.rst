@@ -1036,3 +1036,5 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 ``AccountBalanceInterval::exact`` requires one lovelace balance. The range constructor accepts an inclusive lower bound, an exclusive upper bound, or both.
 
 ``AccountBalanceIntervalsMap`` associates reward addresses with balance requirements. Entries are returned in canonical CBOR order, and duplicate addresses are rejected.
+
+``DirectDepositMap`` associates reward accounts with unsigned lovelace deposits. It preserves zero deposits, orders entries canonically, and rejects duplicate addresses.
