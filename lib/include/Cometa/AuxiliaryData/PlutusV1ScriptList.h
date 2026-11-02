@@ -202,6 +202,9 @@ class PlutusV1ScriptList
 
   private:
 
+    /** @brief Allows AuxiliaryData to copy attached values. */
+    friend class AuxiliaryData;
+
     /**
      * @brief Takes ownership of an existing reference.
      *

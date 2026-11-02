@@ -220,6 +220,9 @@ class NativeScriptList
 
   private:
 
+    /** @brief Allows AuxiliaryData to copy attached values. */
+    friend class AuxiliaryData;
+
     /** @brief Allows NativeScript to copy this script variant. */
     friend class NativeScript;
 

@@ -13,7 +13,7 @@ cardano_asset_name_list_t,opaque object,lib/include/cardano/assets/asset_name_li
 cardano_asset_name_map_t,opaque object,lib/include/cardano/assets/asset_name_map.h,P04.2,implemented,Cometa::AssetNameMap,lib/tests/Assets/AssetNameMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_asset_name_t,opaque object,lib/include/cardano/assets/asset_name.h,P04,implemented,AssetName,lib/tests/Assets/AssetNameTest.cpp
 cardano_auth_committee_hot_cert_t,opaque object,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,planned,,
-cardano_auxiliary_data_t,opaque object,lib/include/cardano/auxiliary_data/auxiliary_data.h,P08,planned,,
+cardano_auxiliary_data_t,opaque object,lib/include/cardano/auxiliary_data/auxiliary_data.h,P08,implemented,Cometa::AuxiliaryData,lib/tests/AuxiliaryData/AuxiliaryDataTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_base_address_t,opaque object,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress,lib/tests/Address/BaseAddressTest.cpp
 cardano_bigint_t,opaque object,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_bip32_get_extended_account_public_key_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
@@ -99,7 +99,7 @@ cardano_json_object_t,opaque object,lib/include/cardano/json/json_object.h,P01b,
 cardano_json_object_type_t,enum,lib/include/cardano/json/json_object_type.h,P01b,implemented,Cometa::JsonType,lib/tests/Json/JsonTypeTest.cpp
 cardano_json_writer_t,opaque object,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter,lib/tests/Json/JsonWriterTest.cpp
 cardano_metadatum_kind_t,enum,lib/include/cardano/auxiliary_data/metadatum_kind.h,P08,implemented,Cometa::MetadatumKind,lib/tests/AuxiliaryData/MetadatumKindTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_metadatum_label_list_t,opaque object,lib/include/cardano/auxiliary_data/metadatum_label_list.h,P08,planned,,
+cardano_metadatum_label_list_t,opaque object,lib/include/cardano/auxiliary_data/metadatum_label_list.h,P08,implemented,Cometa::MetadatumLabelList,lib/tests/AuxiliaryData/MetadatumLabelListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_metadatum_list_t,opaque object,lib/include/cardano/auxiliary_data/metadatum_list.h,P08,implemented,Cometa::MetadatumList,lib/tests/AuxiliaryData/MetadatumListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_metadatum_map_t,opaque object,lib/include/cardano/auxiliary_data/metadatum_map.h,P08,implemented,Cometa::MetadatumMap,lib/tests/AuxiliaryData/MetadatumMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_metadatum_t,opaque object,lib/include/cardano/auxiliary_data/metadatum.h,P08,implemented,Cometa::Metadatum,lib/tests/AuxiliaryData/MetadatumTest.cpp; lib/tests/ValueContractTest.cpp
@@ -201,7 +201,7 @@ cardano_submit_transaction_func_t,callback,lib/include/cardano/providers/provide
 cardano_transaction_body_t,opaque object,lib/include/cardano/transaction_body/transaction_body.h,P17,planned,,
 cardano_transaction_input_set_t,opaque object,lib/include/cardano/transaction_body/transaction_input_set.h,P07,implemented,Cometa::TransactionInputSet,lib/tests/TransactionBody/TransactionInputSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_transaction_input_t,opaque object,lib/include/cardano/transaction_body/transaction_input.h,P07,implemented,Cometa::TransactionInput,lib/tests/TransactionBody/TransactionInputTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_transaction_metadata_t,opaque object,lib/include/cardano/auxiliary_data/transaction_metadata.h,P08,planned,,
+cardano_transaction_metadata_t,opaque object,lib/include/cardano/auxiliary_data/transaction_metadata.h,P08,implemented,Cometa::TransactionMetadata,lib/tests/AuxiliaryData/TransactionMetadataTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_transaction_output_list_t,opaque object,lib/include/cardano/transaction_body/transaction_output_list.h,P07,implemented,Cometa::TransactionOutputList,lib/tests/TransactionBody/TransactionOutputListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_transaction_output_t,opaque object,lib/include/cardano/transaction_body/transaction_output.h,P07,implemented,Cometa::TransactionOutput,lib/tests/TransactionBody/TransactionOutputTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_transaction_t,opaque object,lib/include/cardano/transaction/transaction.h,P17,planned,,
