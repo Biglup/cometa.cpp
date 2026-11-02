@@ -53,6 +53,9 @@ class BigInt
 {
   private:
 
+    /** @brief Allows Plutus data to copy integer components. */
+    friend class PlutusData;
+
     /** @brief Allows CBOR decoding to adopt a decoded integer. */
     friend class CborReader;
 

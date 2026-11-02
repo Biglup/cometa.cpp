@@ -155,7 +155,42 @@ sampleValue<BigInt>()
   return BigInt::fromString("340282366920938463463374607431768211456");
 }
 
-using ValueTypes = testing::Types<Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
+template<>
+PlutusData
+sampleValue<PlutusData>()
+{
+  return PlutusData::fromCbor("d87982a1010243aabbcc");
+}
+
+template<>
+PlutusList
+sampleValue<PlutusList>()
+{
+  return PlutusList::fromCbor("82a1010243aabbcc");
+}
+
+template<>
+PlutusMap
+sampleValue<PlutusMap>()
+{
+  return PlutusMap::fromCbor("a2010243aabbcc8103");
+}
+
+template<>
+ConstrPlutusData
+sampleValue<ConstrPlutusData>()
+{
+  return ConstrPlutusData::fromCbor("d87982a1010243aabbcc");
+}
+
+template<>
+Datum
+sampleValue<Datum>()
+{
+  return Datum(PlutusData::fromCbor("d87982a1010243aabbcc"));
+}
+
+using ValueTypes = testing::Types<PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -2969,5 +3004,426 @@ TEST(CredentialSet, FailedCborParsingReleasesPartialResults)
   {
     AllocationFailure fail(index, true);
     EXPECT_THROW(CredentialSet::fromCbor(cbor), std::exception);
+  }
+}
+
+TEST(PlutusData, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const PlutusData source      = sampleValue<PlutusData>();
+  std::size_t      allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(PlutusData, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const PlutusData source      = sampleValue<PlutusData>();
+  std::size_t      allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(PlutusData, FailedCopyReleasesEveryAllocation)
+{
+  // Arrange
+  const PlutusData source      = sampleValue<PlutusData>();
+  std::size_t      allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)PlutusData(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)PlutusData(source), std::exception);
+  }
+}
+
+TEST(PlutusList, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const PlutusList source      = sampleValue<PlutusList>();
+  std::size_t      allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(PlutusList, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const PlutusList source      = sampleValue<PlutusList>();
+  std::size_t      allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(PlutusList, FailedCopyReleasesEveryAllocation)
+{
+  // Arrange
+  const PlutusList source      = sampleValue<PlutusList>();
+  std::size_t      allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)PlutusList(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)PlutusList(source), std::exception);
+  }
+}
+
+TEST(PlutusMap, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const PlutusMap source      = sampleValue<PlutusMap>();
+  std::size_t     allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(PlutusMap, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const PlutusMap source      = sampleValue<PlutusMap>();
+  std::size_t     allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(PlutusMap, FailedCopyReleasesEveryAllocation)
+{
+  // Arrange
+  const PlutusMap source      = sampleValue<PlutusMap>();
+  std::size_t     allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)PlutusMap(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)PlutusMap(source), std::exception);
+  }
+}
+
+TEST(ConstrPlutusData, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ConstrPlutusData source      = sampleValue<ConstrPlutusData>();
+  std::size_t            allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(ConstrPlutusData, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ConstrPlutusData source      = sampleValue<ConstrPlutusData>();
+  std::size_t            allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(ConstrPlutusData, FailedCopyReleasesEveryAllocation)
+{
+  // Arrange
+  const ConstrPlutusData source      = sampleValue<ConstrPlutusData>();
+  std::size_t            allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)ConstrPlutusData(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)ConstrPlutusData(source), std::exception);
+  }
+}
+
+TEST(Datum, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const Datum source      = sampleValue<Datum>();
+  std::size_t allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(Datum, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const Datum source      = sampleValue<Datum>();
+  std::size_t allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(Datum, FailedCopyReleasesEveryAllocation)
+{
+  // Arrange
+  const Datum source      = sampleValue<Datum>();
+  std::size_t allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)Datum(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)Datum(source), std::exception);
+  }
+}
+
+TEST(PlutusList, FailedMutationPreservesValue)
+{
+  // Arrange
+  const PlutusList source = sampleValue<PlutusList>();
+  const PlutusData value(9);
+  std::size_t      allocations = 0U;
+
+  {
+    PlutusList        destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination.pushBack(value);
+    allocations = allocationIndex;
+    EXPECT_NE(destination, source);
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    PlutusList destination(source);
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination.pushBack(value), std::exception);
+    }
+    EXPECT_EQ(destination, source);
+    EXPECT_EQ(destination.toCbor(), source.toCbor());
+  }
+}
+
+TEST(PlutusMap, FailedMutationPreservesValue)
+{
+  // Arrange
+  const PlutusMap  source = sampleValue<PlutusMap>();
+  const PlutusData key(9);
+  const PlutusData value(10);
+  std::size_t      allocations = 0U;
+
+  {
+    PlutusMap         destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination.insert(key, value);
+    allocations = allocationIndex;
+    EXPECT_NE(destination, source);
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    PlutusMap destination(source);
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination.insert(key, value), std::exception);
+    }
+    EXPECT_EQ(destination, source);
+    EXPECT_EQ(destination.toCbor(), source.toCbor());
+  }
+}
+
+TEST(ConstrPlutusData, FailedMutationPreservesValue)
+{
+  // Arrange
+  const ConstrPlutusData source      = sampleValue<ConstrPlutusData>();
+  const PlutusList       fields      = PlutusList::fromCbor("8109");
+  std::size_t            allocations = 0U;
+
+  {
+    ConstrPlutusData  destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination.setFields(fields);
+    allocations = allocationIndex;
+    EXPECT_NE(destination, source);
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    ConstrPlutusData destination(source);
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination.setFields(fields), std::exception);
+    }
+    EXPECT_EQ(destination, source);
+    EXPECT_EQ(destination.toCbor(), source.toCbor());
   }
 }

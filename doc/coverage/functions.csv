@@ -996,28 +996,28 @@ cardano_credential_refcount,lib/include/cardano/common/credential.h,P01a.1,inter
 cardano_credential_set_last_error,lib/include/cardano/common/credential.h,P01a.1,internal,Error,lib/tests/Common/CredentialTest.cpp,Failure reporting uses exceptions.
 cardano_credential_get_last_error,lib/include/cardano/common/credential.h,P01a.1,internal,Error,lib/tests/Common/CredentialTest.cpp,Failure reporting uses exceptions.
 cardano_credential_deep_clone,lib/include/cardano/common/credential.h,P01a.1,implemented,Credential copy constructor/operator=,lib/tests/ValueContractTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
-cardano_datum_new_data_hash,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_new_data_hash_hex,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_new_data_hash_bytes,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_new_inline_data,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_from_cbor,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_to_cbor,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_to_cip116_json,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_get_inline_data,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_get_data_hash,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_get_data_hash_bytes_size,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_get_data_hash_bytes,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_get_data_hash_hex_size,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_get_data_hash_hex,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_get_type,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_set_data_hash,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_equals,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_unref,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_ref,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_refcount,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_set_last_error,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_get_last_error,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
-cardano_datum_deep_clone,lib/include/cardano/common/datum.h,P05,planned,,,API and ownership mapping pending.
+cardano_datum_new_data_hash,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::constructor,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_new_data_hash_hex,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::Blake2bHash::fromHex + constructor,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_new_data_hash_bytes,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::Blake2bHash + constructor,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_new_inline_data,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::constructor,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_from_cbor,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::fromCbor,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_to_cbor,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::toCbor,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_to_cip116_json,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::toJson,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_get_inline_data,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::inlineData,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_get_data_hash,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::hash,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_get_data_hash_bytes_size,lib/include/cardano/common/datum.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_get_data_hash_bytes,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::hash().toBytes,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_get_data_hash_hex_size,lib/include/cardano/common/datum.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_get_data_hash_hex,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::hash().toHex,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_get_type,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::type,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_set_data_hash,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::setHash,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_equals,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::operator==,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_unref,lib/include/cardano/common/datum.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_ref,lib/include/cardano/common/datum.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_refcount,lib/include/cardano/common/datum.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_set_last_error,lib/include/cardano/common/datum.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_get_last_error,lib/include/cardano/common/datum.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_datum_deep_clone,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::copy constructor / copy assignment,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
 cardano_drep_new,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
 cardano_drep_from_string,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
 cardano_drep_from_cbor,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
@@ -1379,80 +1379,80 @@ cardano_object_ref,lib/include/cardano/object.h,P01a.1,planned,,,API and ownersh
 cardano_object_refcount,lib/include/cardano/object.h,P01a.1,planned,,,API and ownership mapping pending.
 cardano_object_set_last_error,lib/include/cardano/object.h,P01a.1,planned,,,API and ownership mapping pending.
 cardano_object_get_last_error,lib/include/cardano/object.h,P01a.1,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_new,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_from_cbor,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_to_cip116_json,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_to_cbor,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_get_data,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_set_data,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_get_alternative,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_set_alternative,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_equals,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_clear_cbor_cache,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_unref,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_ref,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_refcount,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_set_last_error,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_get_last_error,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_constr_plutus_data_deep_clone,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_new_constr,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_new_map,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_new_list,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_new_integer,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_new_integer_from_int,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_new_integer_from_uint,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_new_integer_from_string,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_new_bytes,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_new_bytes_from_hex,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_from_cbor,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_to_cbor,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_to_cip116_json,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_get_kind,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_to_constr,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_to_map,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_to_list,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_to_integer,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_to_bounded_bytes,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_equals,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_clear_cbor_cache,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_unref,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_ref,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_refcount,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_set_last_error,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_get_last_error,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_data_deep_clone,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_new,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_from_cbor,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_to_cbor,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_to_cip116_json,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_get_length,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_get,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_add,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_equals,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_clear_cbor_cache,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_unref,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_ref,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_refcount,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_set_last_error,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_get_last_error,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_list_deep_clone,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_new,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_from_cbor,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_to_cbor,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_to_cip116_json,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_get_length,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_get,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_insert,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_get_keys,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_get_values,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_equals,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_clear_cbor_cache,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_unref,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_ref,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_refcount,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_set_last_error,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_get_last_error,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
-cardano_plutus_map_deep_clone,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,,API and ownership mapping pending.
+cardano_constr_plutus_data_new,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData::constructor,lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_from_cbor,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData::fromCbor,lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_to_cip116_json,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData::toJson,lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_to_cbor,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData::toCbor,lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_get_data,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData::fields,lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_set_data,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData::setFields,lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_get_alternative,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData::alternative,lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_set_alternative,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData::setAlternative,lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_equals,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData::operator==,lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_clear_cbor_cache,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData::normalizeEncoding,lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_unref,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_ref,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_refcount,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_set_last_error,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_get_last_error,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_constr_plutus_data_deep_clone,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData::copy constructor / copy assignment,lib/tests/PlutusData/ConstrPlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_new_constr,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::constructor,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_new_map,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::constructor,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_new_list,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::constructor,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_new_integer,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::constructor,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_new_integer_from_int,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::constructor,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_new_integer_from_uint,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::fromUnsigned,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_new_integer_from_string,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::BigInt::fromString + constructor,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_new_bytes,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::constructor,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_new_bytes_from_hex,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::fromHex,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_from_cbor,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::fromCbor,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_to_cbor,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::toCbor,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_to_cip116_json,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::toJson,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_get_kind,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::kind,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_to_constr,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::asConstructor,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_to_map,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::asMap,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_to_list,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::asList,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_to_integer,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::asInteger,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_to_bounded_bytes,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::asBytes,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_equals,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::operator==,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_clear_cbor_cache,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::normalizeEncoding,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_unref,lib/include/cardano/plutus_data/plutus_data.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_ref,lib/include/cardano/plutus_data/plutus_data.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_refcount,lib/include/cardano/plutus_data/plutus_data.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_set_last_error,lib/include/cardano/plutus_data/plutus_data.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_get_last_error,lib/include/cardano/plutus_data/plutus_data.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_data_deep_clone,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData::copy constructor / copy assignment,lib/tests/PlutusData/PlutusDataTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_new,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList::constructor,lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_from_cbor,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList::fromCbor,lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_to_cbor,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList::toCbor,lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_to_cip116_json,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList::toJson,lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_get_length,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList::size,lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_get,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList::at,lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_add,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList::pushBack,lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_equals,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList::operator==,lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_clear_cbor_cache,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList::normalizeEncoding,lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_unref,lib/include/cardano/plutus_data/plutus_list.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_ref,lib/include/cardano/plutus_data/plutus_list.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_refcount,lib/include/cardano/plutus_data/plutus_list.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_set_last_error,lib/include/cardano/plutus_data/plutus_list.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_get_last_error,lib/include/cardano/plutus_data/plutus_list.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_list_deep_clone,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList::copy constructor / copy assignment,lib/tests/PlutusData/PlutusListTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_new,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap::constructor,lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_from_cbor,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap::fromCbor,lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_to_cbor,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap::toCbor,lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_to_cip116_json,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap::toJson,lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_get_length,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap::size,lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_get,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap::get,lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_insert,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap::insert,lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_get_keys,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap::keys,lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_get_values,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap::values,lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_equals,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap::operator==,lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_clear_cbor_cache,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap::normalizeEncoding,lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_unref,lib/include/cardano/plutus_data/plutus_map.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_ref,lib/include/cardano/plutus_data/plutus_map.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_refcount,lib/include/cardano/plutus_data/plutus_map.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_set_last_error,lib/include/cardano/plutus_data/plutus_map.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_get_last_error,lib/include/cardano/plutus_data/plutus_map.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
+cardano_plutus_map_deep_clone,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap::copy constructor / copy assignment,lib/tests/PlutusData/PlutusMapTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
 cardano_bls_key_new,lib/include/cardano/pool_params/bls_key.h,P09,planned,,,API and ownership mapping pending.
 cardano_bls_key_new_from_hex,lib/include/cardano/pool_params/bls_key.h,P09,planned,,,API and ownership mapping pending.
 cardano_bls_key_from_cbor,lib/include/cardano/pool_params/bls_key.h,P09,planned,,,API and ownership mapping pending.

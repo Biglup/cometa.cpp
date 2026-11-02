@@ -9,7 +9,7 @@ P03,Shelley and Byron addresses; attributes; stake pointers; address enums,P01a.
 P04.1,Asset IDs and standard vector aliases for identifiers names and policies,P01a.2 P02,Known encodings; lovelace distinction; independent copies; allocation failures
 P04.2,Asset maps; multi-assets; Value; checked arithmetic and serialization,P04.1,Signed boundaries; shared native CBOR and inspection; independent components; malloc/realloc failure checks
 P04.3,Serialized hash and credential sets,P02 P04.1,Tagged sorted encoding; uniqueness; independent copies; malformed CBOR
-P05,Plutus data; constructors/lists/maps; Datum,P01a.2 P01a.3 P01b,Arbitrary precision integers; canonical and preserved CBOR; invalid variants
+P05,Plutus data; constructors/lists/maps; Datum,P01a.2 P01a.3 P01b,Arbitrary precision integers; preserved CBOR and explicit normalization; invalid variants
 P06,Native scripts and guards; Plutus V1-V4; Script; parameter application,P02 P04 P05,Script hashes; parameter application vectors; all script variants
 P07,Transaction inputs/outputs; UTxOs; withdrawals; address/output collections,P03 P04 P05 P06,Inline datum and reference scripts; output forms; amount boundaries
 P08,Metadata and auxiliary data; Plutus script lists,P05 P06,Metadata limits; auxiliary hashes; complete version coverage

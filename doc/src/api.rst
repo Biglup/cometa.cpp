@@ -180,3 +180,22 @@ API reference
 
 .. doxygenclass:: Cometa::CredentialSet
    :members:
+
+.. doxygenclass:: Cometa::PlutusData
+   :members:
+
+.. doxygenclass:: Cometa::PlutusList
+   :members:
+
+.. doxygenclass:: Cometa::PlutusMap
+   :members:
+
+.. doxygenclass:: Cometa::ConstrPlutusData
+   :members:
+
+.. doxygenclass:: Cometa::Datum
+   :members:
+
+.. doxygenenum:: Cometa::PlutusDataKind
+
+.. doxygenenum:: Cometa::DatumType

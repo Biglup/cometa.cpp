@@ -16,6 +16,12 @@ INCLUDE (cmake/Cardano.cmake)
 
 # Library sources.
 ADD_LIBRARY (cometa STATIC
+  lib/src/PlutusData/PlutusData.cpp
+  lib/src/PlutusData/PlutusList.cpp
+  lib/src/PlutusData/PlutusMap.cpp
+  lib/src/PlutusData/ConstrPlutusData.cpp
+  lib/src/Common/Datum.cpp
+
   lib/src/Cbor/CborTag.cpp
   lib/src/Cbor/CborMajorType.cpp
   lib/src/Cbor/CborSimpleValue.cpp
@@ -101,6 +107,14 @@ IF (COMETA_BUILD_TESTS)
   FIND_PACKAGE (GTest CONFIG REQUIRED)
 
   ADD_EXECUTABLE (cometa-tests
+    lib/tests/PlutusData/PlutusDataTest.cpp
+    lib/tests/PlutusData/PlutusListTest.cpp
+    lib/tests/PlutusData/PlutusMapTest.cpp
+    lib/tests/PlutusData/ConstrPlutusDataTest.cpp
+    lib/tests/Common/DatumTest.cpp
+    lib/tests/Common/DatumTypeTest.cpp
+    lib/tests/PlutusData/PlutusDataKindTest.cpp
+
     lib/tests/Cbor/CborTagTest.cpp
     lib/tests/Cbor/CborMajorTypeTest.cpp
     lib/tests/Cbor/CborSimpleValueTest.cpp
