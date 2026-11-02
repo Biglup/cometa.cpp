@@ -59,6 +59,9 @@ class BigInt
     /** @brief Allows CBOR encoding to read the integer. */
     friend class CborWriter;
 
+    /** @brief Allows JSON encoding to read the integer. */
+    friend class JsonWriter;
+
   public:
 
     /**

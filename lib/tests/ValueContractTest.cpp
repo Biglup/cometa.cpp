@@ -663,3 +663,152 @@ TEST(CborWriter, FailedResetPreservesEncodedBytes)
 
   EXPECT_EQ(writer.toHex(), "182a");
 }
+
+TEST(JsonValue, FailedCopiesReleaseStateAndPreserveDestination)
+{
+  // Arrange
+  const JsonValue source      = JsonValue::parse("{\"a\":[1,2,3],\"b\":{\"x\":1.2300}}");
+  std::size_t     allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const JsonValue   copy(source);
+
+    EXPECT_GT(copy.size(), 0);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    JsonValue destination = JsonValue::parse("42");
+
+    {
+      AllocationFailure fail(index);
+
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination.asInt(), 42);
+  }
+}
+
+TEST(JsonWriter, FailedCopiesReleaseStateAndPreserveDestination)
+{
+  // Arrange
+  JsonWriter source;
+  source.writeStartObject();
+  source.writePropertyName("a");
+  source.writeStartArray();
+  std::size_t allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const JsonWriter  copy(source);
+
+    EXPECT_GT(static_cast<int>(copy.context()), 0);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    JsonWriter destination;
+    destination.writeUInt(42);
+
+    {
+      AllocationFailure fail(index);
+
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination.toString(), "42");
+  }
+}
+
+TEST(JsonValue, ParsingReportsEveryAllocationFailure)
+{
+  // Arrange
+  const std::string json        = "{\"a\":[1,2,\"text\",true,null,{}]}";
+  std::size_t       allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const JsonValue   value = JsonValue::parse(json);
+
+    EXPECT_EQ(value.size(), 1U);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index);
+
+    EXPECT_THROW(JsonValue::parse(json), std::bad_alloc);
+  }
+}
+
+TEST(JsonValue, FailedChildCopiesLeaveParentReadable)
+{
+  // Arrange
+  const JsonValue object = JsonValue::parse("{\"a\":[1,2]}");
+  const JsonValue array  = object.at("a");
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(object.at("a"), std::bad_alloc);
+  }
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(object.valueAt(0), std::bad_alloc);
+  }
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(array.at(0), std::bad_alloc);
+  }
+  EXPECT_EQ(object.toJson(), "{\"a\":[1,2]}");
+}
+
+TEST(JsonWriter, FailedResetPreservesDocumentAndFormatting)
+{
+  // Arrange
+  JsonWriter writer(JsonFormat::Pretty);
+  writer.writeStartArray();
+  writer.writeUInt(42);
+  writer.writeEndArray();
+  const std::string before = writer.toString();
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+
+    EXPECT_THROW(writer.reset(), std::bad_alloc);
+  }
+  EXPECT_EQ(writer.toString(), before);
+}
+
+TEST(JsonWriter, ReportsBigIntegerFormattingAllocationFailure)
+{
+  // Arrange
+  JsonWriter   writer;
+  const BigInt value(42);
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+
+    EXPECT_THROW(writer.writeBigIntAsString(value), std::bad_alloc);
+  }
+  EXPECT_THROW(writer.toString(), std::bad_alloc);
+  writer.reset();
+  writer.writeBigIntAsString(value);
+  EXPECT_EQ(writer.toString(), "\"42\"");
+}

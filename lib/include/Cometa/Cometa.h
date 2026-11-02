@@ -51,3 +51,9 @@
 #include <Cometa/Cbor/CborSimpleValue.h>
 #include <Cometa/Cbor/CborTag.h>
 #include <Cometa/Cbor/CborWriter.h>
+
+#include <Cometa/Json/JsonContext.h>
+#include <Cometa/Json/JsonFormat.h>
+#include <Cometa/Json/JsonType.h>
+#include <Cometa/Json/JsonValue.h>
+#include <Cometa/Json/JsonWriter.h>

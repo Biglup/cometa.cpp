@@ -14,6 +14,7 @@ The foundation is merged. The first common-types slice is divided into three
 PRs to keep numeric and encoding boundary work independently reviewable.
 P01a.1 and P01a.2 are merged; P01a.3 supplies encoding utilities.
 P01b is split into CBOR and JSON slices to keep parsing changes reviewable.
+The CBOR slice is merged; this slice completes JSON with native parser and writer fixes.
 Implementation PRs are stacked on their preceding branch and reviewed in order;
 work continues while reviews are pending.
 
