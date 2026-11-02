@@ -186,6 +186,9 @@ class Utxo
 
   private:
 
+    /** @brief Allows transactions to use this value. */
+    friend class Transaction;
+
     /**
      * @brief Takes ownership of an existing reference.
      *

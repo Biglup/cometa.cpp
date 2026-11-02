@@ -258,6 +258,9 @@ class WitnessSet
     /** @brief Allows sub-transactions to copy this value. */
     friend class SubTransaction;
 
+    /** @brief Allows transactions to copy this value. */
+    friend class Transaction;
+
     /**
      * @brief Adopts an owned witness set.
      * @param value The owned witness set.

@@ -221,6 +221,9 @@ class Blake2bHashSet
 
   private:
 
+    /** @brief Allows transactions to use this value. */
+    friend class Transaction;
+
     /** @brief Allows transaction bodies to copy this value. */
     friend class TransactionBody;
 

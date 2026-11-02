@@ -167,6 +167,9 @@ class Voter
 
   private:
 
+    /** @brief Allows transactions to use this value. */
+    friend class Transaction;
+
     /** @brief Allows voting maps to transfer independent values. */
     friend class VotingProcedures;
 

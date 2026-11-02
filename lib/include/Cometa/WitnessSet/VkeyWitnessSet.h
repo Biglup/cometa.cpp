@@ -174,6 +174,9 @@ class VkeyWitnessSet
     /** @brief Allows sub-transactions to copy this value. */
     friend class SubTransaction;
 
+    /** @brief Allows transactions to copy this value. */
+    friend class Transaction;
+
     /** @brief Allows a witness set to copy this field. */
     friend class WitnessSet;
 

@@ -175,7 +175,7 @@ lib/include/cardano/scripts/script_language.h,public header,P06.4,implemented,"T
 lib/include/cardano/slot_config.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/time.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/transaction/sub_transaction.h,public header,P17,implemented,Cometa::SubTransaction
-lib/include/cardano/transaction/transaction.h,public header,P17,planned,idiomatic C++ API
+lib/include/cardano/transaction/transaction.h,public header,P17,implemented,Cometa::Transaction
 lib/include/cardano/transaction_body/account_balance_interval.h,public header,P16,implemented,Cometa::AccountBalanceInterval
 lib/include/cardano/transaction_body/account_balance_intervals_map.h,public header,P16,implemented,Cometa::AccountBalanceIntervalsMap
 lib/include/cardano/transaction_body/direct_deposit_map.h,public header,P16,implemented,Cometa::DirectDepositMap

@@ -200,6 +200,9 @@ class RewardAddress
 
   private:
 
+    /** @brief Allows transactions to use this value. */
+    friend class Transaction;
+
     /** @brief Allows proposal procedures to copy this value. */
     friend class ProposalProcedure;
 

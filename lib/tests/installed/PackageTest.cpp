@@ -725,6 +725,12 @@ main()
     return 1;
   }
 
+  const Cometa::Transaction transaction(Cometa::TransactionBody(Cometa::TransactionInputSet(), Cometa::TransactionOutputList(), 0), Cometa::WitnessSet());
+  if (Cometa::Transaction::fromCbor(transaction.toCbor()) != transaction)
+  {
+    return 1;
+  }
+
   const Cometa::TransactionBody transactionBody(Cometa::TransactionInputSet(), Cometa::TransactionOutputList(), 100);
   if (Cometa::TransactionBody::fromCbor(transactionBody.toCbor()) != transactionBody)
   {

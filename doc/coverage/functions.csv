@@ -2473,37 +2473,37 @@ cardano_sub_transaction_refcount,lib/include/cardano/transaction/sub_transaction
 cardano_sub_transaction_set_last_error,lib/include/cardano/transaction/sub_transaction.h,P17,internal,,,
 cardano_sub_transaction_get_last_error,lib/include/cardano/transaction/sub_transaction.h,P17,internal,,,
 cardano_sub_transaction_deep_clone,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_transaction_new,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_from_cbor,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_to_cbor,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_to_cip116_json,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_get_body,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_set_body,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_get_witness_set,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_set_witness_set,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_get_auxiliary_data,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_set_auxiliary_data,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_get_is_valid,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_set_is_valid,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_get_id,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_clear_cbor_cache,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_apply_vkey_witnesses,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_has_script_data,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_get_unique_signers,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_find_input_index,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_find_reference_input_index,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_find_output_index,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_find_mint_policy_index,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_find_withdrawal_index,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_find_certificate_index,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_find_vote_index,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_find_redeemer_index,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_unref,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_ref,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_refcount,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_set_last_error,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_get_last_error,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_transaction_deep_clone,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
+cardano_transaction_new,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_from_cbor,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_to_cbor,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_to_cip116_json,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_get_body,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_set_body,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_get_witness_set,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_set_witness_set,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_get_auxiliary_data,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_set_auxiliary_data,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_get_is_valid,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_set_is_valid,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_get_id,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_clear_cbor_cache,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_apply_vkey_witnesses,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_has_script_data,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_get_unique_signers,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_find_input_index,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_find_reference_input_index,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_find_output_index,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_find_mint_policy_index,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_find_withdrawal_index,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_find_certificate_index,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_find_vote_index,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_find_redeemer_index,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_unref,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
+cardano_transaction_ref,lib/include/cardano/transaction/transaction.h,P17,internal,,,Native ownership or diagnostics; handled internally.
+cardano_transaction_refcount,lib/include/cardano/transaction/transaction.h,P17,internal,,,Native ownership or diagnostics; handled internally.
+cardano_transaction_set_last_error,lib/include/cardano/transaction/transaction.h,P17,internal,,,Native ownership or diagnostics; handled internally.
+cardano_transaction_get_last_error,lib/include/cardano/transaction/transaction.h,P17,internal,,,Native ownership or diagnostics; handled internally.
+cardano_transaction_deep_clone,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp,API and ownership mapping pending.
 cardano_account_balance_interval_to_cip116_json,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp,
 cardano_account_balance_interval_new,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp,
 cardano_account_balance_interval_new_exact,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp,

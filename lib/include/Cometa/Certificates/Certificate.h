@@ -402,6 +402,9 @@ class Certificate
 
   private:
 
+    /** @brief Allows transactions to use this value. */
+    friend class Transaction;
+
     /**
      * @brief Adopts an owned certificate.
      * @param value The owned certificate.
