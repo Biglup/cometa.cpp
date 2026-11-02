@@ -26,7 +26,7 @@ cardano_blake2b_hash_size_t,enum,lib/include/cardano/crypto/blake2b_hash_size.h,
 cardano_blake2b_hash_t,opaque object,lib/include/cardano/crypto/blake2b_hash.h,P02,implemented,Blake2bHash,lib/tests/Crypto/Blake2bHashTest.cpp
 cardano_bls_key_t,opaque object,lib/include/cardano/pool_params/bls_key.h,P09,implemented,Cometa::BlsKey,lib/tests/PoolParams/BlsKeyTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_bootstrap_witness_set_t,opaque object,lib/include/cardano/witness_set/bootstrap_witness_set.h,P15,planned,,
-cardano_bootstrap_witness_t,opaque object,lib/include/cardano/witness_set/bootstrap_witness.h,P15,planned,,
+cardano_bootstrap_witness_t,opaque object,lib/include/cardano/witness_set/bootstrap_witness.h,P15,implemented,Cometa::BootstrapWitness,lib/tests/WitnessSet/BootstrapWitnessTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_buffer_t,opaque object,lib/include/cardano/buffer.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
 cardano_byron_address_attributes_t,struct,lib/include/cardano/address/byron_address_attributes.h,P03,implemented,Cometa::ByronAddressAttributes,lib/tests/Address/ByronAddressTest.cpp
 cardano_byron_address_t,opaque object,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress,lib/tests/Address/ByronAddressTest.cpp

@@ -1022,3 +1022,5 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 ``VkeyWitness`` pairs an Ed25519 verification key with its transaction signature and supports CBOR and CIP-116 JSON output.
 
 ``VkeyWitnessSet`` holds key witnesses. Adding or applying a witness with an existing verification key updates its signature. ``setUseTag`` controls the CBOR set tag.
+
+``BootstrapWitness`` adds a 32-byte chain code and bootstrap address attributes to a key witness.

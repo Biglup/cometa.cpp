@@ -213,6 +213,7 @@
 #include <Cometa/VotingProcedures/VotingProcedure.h>
 #include <Cometa/VotingProcedures/VotingProcedureList.h>
 #include <Cometa/VotingProcedures/VotingProcedures.h>
+#include <Cometa/WitnessSet/BootstrapWitness.h>
 #include <Cometa/WitnessSet/Redeemer.h>
 #include <Cometa/WitnessSet/RedeemerList.h>
 #include <Cometa/WitnessSet/RedeemerTag.h>

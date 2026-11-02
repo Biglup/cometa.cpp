@@ -136,6 +136,9 @@ class Ed25519Signature
     /** @brief Allows key witnesses to copy signed values. */
     friend class VkeyWitness;
 
+    /** @brief Allows bootstrap witnesses to copy signed values. */
+    friend class BootstrapWitness;
+
     friend class Ed25519PrivateKey;
 
     /**

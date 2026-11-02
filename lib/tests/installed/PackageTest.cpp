@@ -616,6 +616,12 @@ main()
     return 1;
   }
 
+  const Cometa::BootstrapWitness bootstrapWitness(Cometa::Ed25519PublicKey(std::vector<std::uint8_t>(32, 1)), Cometa::Ed25519Signature(std::vector<std::uint8_t>(64, 2)), std::vector<std::uint8_t>(32, 3), { 0xa0 });
+  if (Cometa::BootstrapWitness::fromCbor(bootstrapWitness.toCbor()) != bootstrapWitness)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

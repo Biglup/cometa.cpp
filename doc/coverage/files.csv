@@ -216,7 +216,7 @@ lib/include/cardano/voting_procedures/voter_type.h,public header,P14,implemented
 lib/include/cardano/voting_procedures/voting_procedure.h,public header,P14,implemented,Cometa::VotingProcedure
 lib/include/cardano/voting_procedures/voting_procedure_list.h,public header,P14,implemented,Cometa::VotingProcedureList
 lib/include/cardano/voting_procedures/voting_procedures.h,public header,P14,implemented,Cometa::VotingProcedures
-lib/include/cardano/witness_set/bootstrap_witness.h,public header,P15,planned,idiomatic C++ API
+lib/include/cardano/witness_set/bootstrap_witness.h,public header,P15,implemented,Cometa::BootstrapWitness
 lib/include/cardano/witness_set/bootstrap_witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/witness_set/native_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/witness_set/plutus_data_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
