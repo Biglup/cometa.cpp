@@ -153,6 +153,9 @@ class CertificateSet
 
   private:
 
+    /** @brief Allows sub-transaction bodies to copy this value. */
+    friend class SubTransactionBody;
+
     /**
      * @brief Adopts an owned collection.
      * @param value The owned collection.

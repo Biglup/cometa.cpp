@@ -165,6 +165,9 @@ class GuardSet
 
   private:
 
+    /** @brief Allows sub-transaction bodies to copy this value. */
+    friend class SubTransactionBody;
+
     /** @brief Allows a witness set to copy this field. */
     friend class WitnessSet;
 

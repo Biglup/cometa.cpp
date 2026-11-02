@@ -190,6 +190,9 @@ class AccountBalanceIntervalsMap
 
   private:
 
+    /** @brief Allows sub-transaction bodies to copy this value. */
+    friend class SubTransactionBody;
+
     /**
      * @brief Adopts an owned map.
      * @param value The owned map.

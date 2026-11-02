@@ -195,6 +195,9 @@ API reference
 .. doxygenclass:: Cometa::RequiredGuardsMap
    :members:
 
+.. doxygenclass:: Cometa::SubTransactionBody
+   :members:
+
 .. doxygenclass:: Cometa::Blake2bHashSet
    :members:
 

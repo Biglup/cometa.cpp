@@ -202,6 +202,9 @@ class TransactionOutputList
 
   private:
 
+    /** @brief Allows sub-transaction bodies to copy this value. */
+    friend class SubTransactionBody;
+
     /**
      * @brief Takes ownership of an existing reference.
      *

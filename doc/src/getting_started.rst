@@ -1042,3 +1042,5 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 ``GuardSet`` preserves guard order because script redeemers refer to guard positions. A key-only set uses the historical key-hash encoding; a set containing a script credential uses the credential encoding. Duplicates are rejected.
 
 ``RequiredGuardsMap`` associates guard credentials with optional Plutus data. ``get`` uses two optional layers: the outer layer distinguishes an absent credential, and the inner layer distinguishes a present credential with no datum. ``contains`` checks membership directly.
+
+``SubTransactionBody`` combines inputs and outputs with optional guards, required top-level guards, direct deposits, account balance requirements, validity slots, and the other supported body fields. ``hash()`` computes the sub-transaction body hash.

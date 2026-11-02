@@ -228,6 +228,9 @@ class TransactionInputSet
 
   private:
 
+    /** @brief Allows sub-transaction bodies to copy this value. */
+    friend class SubTransactionBody;
+
     /**
      * @brief Adopts one owned native set.
      *

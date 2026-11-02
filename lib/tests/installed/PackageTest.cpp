@@ -664,6 +664,12 @@ main()
     return 1;
   }
 
+  const Cometa::SubTransactionBody subBody { Cometa::TransactionInputSet(), Cometa::TransactionOutputList() };
+  if (Cometa::SubTransactionBody::fromCbor(subBody.toCbor()) != subBody)
+  {
+    return 1;
+  }
+
   Cometa::RequiredGuardsMap requiredGuards;
   requiredGuards.insert(Cometa::Credential::fromCbor("8200581c00112233445566778899aabbccddeeff00112233445566778899aabb"));
   if (Cometa::RequiredGuardsMap::fromCbor(requiredGuards.toCbor()) != requiredGuards)
