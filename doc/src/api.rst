@@ -46,3 +46,6 @@ API reference
 
 .. doxygenclass:: Cometa::GovernanceActionId
    :members:
+
+.. doxygenclass:: Cometa::BigInt
+   :members:

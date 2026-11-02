@@ -48,6 +48,13 @@ main()
     return 1;
   }
 
+  const Cometa::BigInt integer = Cometa::BigInt(2).pow(128);
+
+  if (integer.toString() != "340282366920938463463374607431768211456")
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

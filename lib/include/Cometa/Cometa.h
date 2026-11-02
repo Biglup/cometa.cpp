@@ -27,6 +27,7 @@
 
 #include <Cometa/Assets/AssetName.h>
 #include <Cometa/Common/Anchor.h>
+#include <Cometa/Common/BigInt.h>
 #include <Cometa/Common/ByteOrder.h>
 #include <Cometa/Common/Credential.h>
 #include <Cometa/Common/CredentialType.h>

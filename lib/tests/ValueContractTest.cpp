@@ -142,6 +142,13 @@ sampleValue<GovernanceActionId>()
   return GovernanceActionId(Blake2bHash::fromHex(std::string(64, '0')), 1);
 }
 
+template<>
+BigInt
+sampleValue<BigInt>()
+{
+  return BigInt::fromString("340282366920938463463374607431768211456");
+}
+
 using ValueTypes = testing::Types<Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
@@ -392,4 +399,71 @@ TEST(UnitInterval, FloatingPointConversionReleasesStateOnFailure)
 
   // Act & Assert
   EXPECT_THROW(UnitInterval::fromDouble(0.75), std::bad_alloc);
+}
+
+TEST(BigInt, FailedArithmeticPreservesOperands)
+{
+  // Arrange
+  BigInt       value  = sampleValue<BigInt>();
+  const BigInt before = value;
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(value *= value, std::bad_alloc);
+  }
+  EXPECT_EQ(value, before);
+}
+
+TEST(BigInt, FailedDivisionReleasesPartialResults)
+{
+  // Arrange
+  const BigInt value = sampleValue<BigInt>();
+  const BigInt divisor(7);
+
+  // Act & Assert
+  for (std::size_t i = 0; i < 2; ++i)
+  {
+    AllocationFailure fail(i);
+    EXPECT_THROW(value.divRem(divisor), std::bad_alloc);
+  }
+}
+
+TEST(BigInt, FailedCopyPreservesDestination)
+{
+  // Arrange
+  const BigInt source = sampleValue<BigInt>();
+  BigInt       destination(-7);
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(destination = source, std::bad_alloc);
+  }
+  EXPECT_EQ(destination, BigInt(-7));
+  EXPECT_EQ(source, sampleValue<BigInt>());
+}
+
+TEST(BigInt, ConstructorsReleaseStateOnFailure)
+{
+  // Arrange
+  const std::vector<std::uint8_t> bytes { 1, 2, 3 };
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(BigInt(1), std::bad_alloc);
+  }
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(BigInt::fromUnsigned(1), std::bad_alloc);
+  }
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(BigInt::fromString("12345678901234567890"), std::bad_alloc);
+  }
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(BigInt::fromBytes(bytes), std::bad_alloc);
+  }
 }
