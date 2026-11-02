@@ -58,7 +58,7 @@ lib/include/cardano/certs/stake_registration_cert.h,public header,P10,implemente
 lib/include/cardano/certs/stake_registration_delegation_cert.h,public header,P10,implemented,Combined stake registration and delegation with deposit.
 lib/include/cardano/certs/stake_vote_delegation_cert.h,public header,P11,implemented,Cometa::StakeVoteDelegationCert
 lib/include/cardano/certs/stake_vote_registration_delegation_cert.h,public header,P11,implemented,Cometa::StakeVoteRegistrationDelegationCert
-lib/include/cardano/certs/unregister_drep_cert.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/certs/unregister_drep_cert.h,public header,P11,implemented,Cometa::UnregisterDRepCert
 lib/include/cardano/certs/unregistration_cert.h,public header,P10,implemented,Deposit-bearing stake certificate with independent credential values.
 lib/include/cardano/certs/update_drep_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/vote_delegation_cert.h,public header,P11,implemented,Cometa::VoteDelegationCert

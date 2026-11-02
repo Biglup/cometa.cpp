@@ -211,7 +211,7 @@ cardano_tx_evaluate_func_t,callback,lib/include/cardano/transaction_builder/eval
 cardano_tx_evaluator_impl_t,struct,lib/include/cardano/transaction_builder/evaluation/tx_evaluator_impl.h,P21,planned,,
 cardano_tx_evaluator_t,opaque object,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,planned,,
 cardano_unit_interval_t,opaque object,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_unregister_drep_cert_t,opaque object,lib/include/cardano/certs/unregister_drep_cert.h,P11,planned,,
+cardano_unregister_drep_cert_t,opaque object,lib/include/cardano/certs/unregister_drep_cert.h,P11,implemented,Cometa::UnregisterDRepCert,lib/tests/Certificates/UnregisterDRepCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_unregistration_cert_t,opaque object,lib/include/cardano/certs/unregistration_cert.h,P10,implemented,Cometa::UnregistrationCert,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_update_committee_action_t,opaque object,lib/include/cardano/proposal_procedures/update_committee_action.h,P13,planned,,
 cardano_update_drep_cert_t,opaque object,lib/include/cardano/certs/update_drep_cert.h,P11,planned,,

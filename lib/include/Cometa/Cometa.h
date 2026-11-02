@@ -171,6 +171,7 @@
 #include <Cometa/Certificates/StakeRegistrationDelegationCert.h>
 #include <Cometa/Certificates/StakeVoteDelegationCert.h>
 #include <Cometa/Certificates/StakeVoteRegistrationDelegationCert.h>
+#include <Cometa/Certificates/UnregisterDRepCert.h>
 #include <Cometa/Certificates/UnregistrationCert.h>
 #include <Cometa/Certificates/VoteDelegationCert.h>
 #include <Cometa/Certificates/VoteRegistrationDelegationCert.h>

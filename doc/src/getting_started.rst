@@ -816,3 +816,6 @@ lovelace.
 
 ``StakeVoteRegistrationDelegationCert`` combines stake registration, pool
 delegation, and DRep delegation with one registration deposit.
+
+``UnregisterDRepCert`` unregisters a DRep credential and records the returned
+deposit in lovelace.

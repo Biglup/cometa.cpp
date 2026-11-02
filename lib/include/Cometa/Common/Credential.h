@@ -254,6 +254,9 @@ class Credential
     /** @brief Allows combined registration certificates to copy credentials. */
     friend class StakeVoteRegistrationDelegationCert;
 
+    /** @brief Allows DRep unregistration certificates to copy credentials. */
+    friend class UnregisterDRepCert;
+
     /** @brief Allows ScriptRequireGuard to copy script components. */
     friend class ScriptRequireGuard;
 
