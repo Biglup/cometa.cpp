@@ -162,3 +162,15 @@ API reference
 .. doxygentypedef:: Cometa::AssetNameList
 
 .. doxygentypedef:: Cometa::PolicyIdList
+
+.. doxygenclass:: Cometa::AssetIdMap
+   :members:
+
+.. doxygenclass:: Cometa::AssetNameMap
+   :members:
+
+.. doxygenclass:: Cometa::MultiAsset
+   :members:
+
+.. doxygenclass:: Cometa::Value
+   :members:

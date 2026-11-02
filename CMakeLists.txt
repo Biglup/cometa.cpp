@@ -53,8 +53,13 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Crypto/Bip32PublicKey.cpp
   lib/src/Crypto/Bip32PrivateKey.cpp
   lib/src/Crypto/Blake2bHash.cpp
+  lib/src/Assets/AssetArithmetic.cpp
+  lib/src/Assets/AssetIdMap.cpp
+  lib/src/Assets/AssetNameMap.cpp
+  lib/src/Assets/MultiAsset.cpp
   lib/src/Assets/AssetId.cpp
   lib/src/Assets/AssetName.cpp
+  lib/src/TransactionBody/Value.cpp
   lib/src/Common/Credential.cpp
 )
 
@@ -119,6 +124,9 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Common/NetworkIdTest.cpp
     lib/tests/Common/NetworkMagicTest.cpp
     lib/tests/Common/GovernanceKeyTypeTest.cpp
+    lib/tests/Assets/AssetIdMapTest.cpp
+    lib/tests/Assets/AssetNameMapTest.cpp
+    lib/tests/Assets/MultiAssetTest.cpp
     lib/tests/Assets/AssetIdTest.cpp
     lib/tests/Assets/AssetIdListTest.cpp
     lib/tests/Assets/AssetNameListTest.cpp
@@ -146,6 +154,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Crypto/Blake2bHashSizeTest.cpp
     lib/tests/Crypto/Blake2bHashTest.cpp
     lib/tests/Common/CredentialTest.cpp
+    lib/tests/TransactionBody/ValueTest.cpp
     lib/tests/ValueContractTest.cpp
   )
 

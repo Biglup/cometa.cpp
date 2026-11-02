@@ -234,6 +234,9 @@ class Blake2bHash
 
   private:
 
+    /** @brief Allows MultiAsset to copy policy components. */
+    friend class MultiAsset;
+
     /** @brief Allows AssetId to copy identifier components. */
     friend class AssetId;
 

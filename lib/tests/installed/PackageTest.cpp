@@ -118,6 +118,17 @@ main()
     return 1;
   }
 
+  Cometa::MultiAsset tokens;
+  tokens.set(token, 5);
+  Cometa::Value paymentValue(2'000'000, tokens);
+  paymentValue.addAsset(token, 2);
+  const Cometa::Value parsedValue = Cometa::Value::fromCbor(paymentValue.toCbor());
+
+  if (parsedValue != paymentValue || parsedValue.toAssetMap().at(token) != 7)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

@@ -199,6 +199,18 @@ class AssetId
 
   private:
 
+    /** @brief Allows AssetIdMap to copy map keys. */
+    friend class AssetIdMap;
+
+    /**
+     * @brief Adopts one owned native identifier.
+     *
+     * @param value The owned reference to transfer.
+     */
+    explicit AssetId(cardano_asset_id_t* value) noexcept;
+
+  private:
+
     /**
      * @brief Checks the lifetime and gets the stored reference.
      *

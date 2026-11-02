@@ -7,10 +7,10 @@ cardano_address_t,opaque object,lib/include/cardano/address/address.h,P03,implem
 cardano_address_type_t,enum,lib/include/cardano/address/address_type.h,P03,implemented,Cometa::AddressType,lib/tests/Address/AddressTypeTest.cpp
 cardano_anchor_t,opaque object,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_asset_id_list_t,opaque object,lib/include/cardano/assets/asset_id_list.h,P04.1,implemented,Cometa::AssetIdList,lib/tests/Assets/AssetIdListTest.cpp
-cardano_asset_id_map_t,opaque object,lib/include/cardano/assets/asset_id_map.h,P04,planned,,
+cardano_asset_id_map_t,opaque object,lib/include/cardano/assets/asset_id_map.h,P04.2,implemented,Cometa::AssetIdMap,lib/tests/Assets/AssetIdMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_asset_id_t,opaque object,lib/include/cardano/assets/asset_id.h,P04.1,implemented,Cometa::AssetId,lib/tests/Assets/AssetIdTest.cpp
 cardano_asset_name_list_t,opaque object,lib/include/cardano/assets/asset_name_list.h,P04.1,implemented,Cometa::AssetNameList,lib/tests/Assets/AssetNameListTest.cpp
-cardano_asset_name_map_t,opaque object,lib/include/cardano/assets/asset_name_map.h,P04,planned,,
+cardano_asset_name_map_t,opaque object,lib/include/cardano/assets/asset_name_map.h,P04.2,implemented,Cometa::AssetNameMap,lib/tests/Assets/AssetNameMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_asset_name_t,opaque object,lib/include/cardano/assets/asset_name.h,P04,implemented,AssetName,lib/tests/Assets/AssetNameTest.cpp
 cardano_auth_committee_hot_cert_t,opaque object,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,planned,,
 cardano_auxiliary_data_t,opaque object,lib/include/cardano/auxiliary_data/auxiliary_data.h,P08,planned,,
@@ -108,7 +108,7 @@ cardano_mir_cert_t,opaque object,lib/include/cardano/certs/mir_cert.h,P10,planne
 cardano_mir_cert_type_t,enum,lib/include/cardano/certs/mir_cert_type.h,P10,planned,,
 cardano_mir_to_pot_cert_t,opaque object,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,
 cardano_mir_to_stake_creds_cert_t,opaque object,lib/include/cardano/certs/mir_to_stake_creds_cert.h,P10,planned,,
-cardano_multi_asset_t,opaque object,lib/include/cardano/assets/multi_asset.h,P04,planned,,
+cardano_multi_asset_t,opaque object,lib/include/cardano/assets/multi_asset.h,P04.2,implemented,Cometa::MultiAsset,lib/tests/Assets/MultiAssetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_multi_host_name_relay_t,opaque object,lib/include/cardano/pool_params/multi_host_name_relay.h,P09,planned,,
 cardano_native_script_list_t,opaque object,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,
 cardano_native_script_set_t,opaque object,lib/include/cardano/witness_set/native_script_set.h,P15,planned,,
@@ -220,7 +220,7 @@ cardano_utxo_list_compare_item_t,callback,lib/include/cardano/common/utxo_list.h
 cardano_utxo_list_t,opaque object,lib/include/cardano/common/utxo_list.h,P07,planned,,
 cardano_utxo_list_unary_predicate_t,callback,lib/include/cardano/common/utxo_list.h,P07,planned,,
 cardano_utxo_t,opaque object,lib/include/cardano/common/utxo.h,P07,planned,,
-cardano_value_t,opaque object,lib/include/cardano/transaction_body/value.h,P04,planned,,
+cardano_value_t,opaque object,lib/include/cardano/transaction_body/value.h,P04.2,implemented,Cometa::Value,lib/tests/TransactionBody/ValueTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_vkey_witness_set_t,opaque object,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,
 cardano_vkey_witness_t,opaque object,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,
 cardano_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,
