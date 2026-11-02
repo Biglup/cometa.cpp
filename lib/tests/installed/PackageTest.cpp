@@ -664,6 +664,13 @@ main()
     return 1;
   }
 
+  Cometa::WitnessSet witnesses;
+  witnesses.setNativeScripts(Cometa::NativeScriptSet());
+  if (!witnesses.nativeScripts().has_value())
+  {
+    return 1;
+  }
+
   Cometa::PlutusV4ScriptSet plutusV4Scripts;
   plutusV4Scripts.add(Cometa::PlutusV4Script(std::vector<std::uint8_t> { 0x01, 0x02 }));
   if (Cometa::PlutusV4ScriptSet::fromCbor(plutusV4Scripts.toCbor()) != plutusV4Scripts)

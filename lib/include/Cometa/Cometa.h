@@ -226,3 +226,4 @@
 #include <Cometa/WitnessSet/RedeemerTag.h>
 #include <Cometa/WitnessSet/VkeyWitness.h>
 #include <Cometa/WitnessSet/VkeyWitnessSet.h>
+#include <Cometa/WitnessSet/WitnessSet.h>

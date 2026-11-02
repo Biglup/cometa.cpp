@@ -162,6 +162,9 @@ class RedeemerList
 
   private:
 
+    /** @brief Allows a witness set to copy this field. */
+    friend class WitnessSet;
+
     /**
      * @brief Adopts an owned collection.
      * @param value The owned collection.

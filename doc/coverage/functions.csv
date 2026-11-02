@@ -3303,34 +3303,34 @@ cardano_vkey_witness_set_refcount,lib/include/cardano/witness_set/vkey_witness_s
 cardano_vkey_witness_set_set_last_error,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessSetTest.cpp; lib/tests/ValueContractTest.cpp,Independent witnesses; duplicate keys update signatures.
 cardano_vkey_witness_set_get_last_error,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessSetTest.cpp; lib/tests/ValueContractTest.cpp,Independent witnesses; duplicate keys update signatures.
 cardano_vkey_witness_set_deep_clone,lib/include/cardano/witness_set/vkey_witness_set.h,P15,implemented,Cometa::VkeyWitnessSet / copy constructor,lib/tests/WitnessSet/VkeyWitnessSetTest.cpp; lib/tests/ValueContractTest.cpp,Independent witnesses; duplicate keys update signatures.
-cardano_witness_set_new,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_from_cbor,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_to_cbor,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_to_cip116_json,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_get_vkeys,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_set_vkeys,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_get_bootstrap,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_set_bootstrap,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_get_native_scripts,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_set_native_scripts,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_get_plutus_v1_scripts,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_set_plutus_v1_scripts,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_get_plutus_v2_scripts,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_set_plutus_v2_scripts,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_get_plutus_v3_scripts,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_set_plutus_v3_scripts,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_get_plutus_v4_scripts,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_set_plutus_v4_scripts,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_get_plutus_data,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_set_plutus_data,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_get_redeemers,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_set_redeemers,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_clear_cbor_cache,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_add_script,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_unref,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_ref,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_refcount,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_set_last_error,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_get_last_error,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_witness_set_deep_clone,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
+cardano_witness_set_new,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_from_cbor,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_to_cbor,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_to_cip116_json,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_get_vkeys,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_set_vkeys,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_get_bootstrap,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_set_bootstrap,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_get_native_scripts,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_set_native_scripts,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_get_plutus_v1_scripts,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_set_plutus_v1_scripts,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_get_plutus_v2_scripts,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_set_plutus_v2_scripts,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_get_plutus_v3_scripts,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_set_plutus_v3_scripts,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_get_plutus_v4_scripts,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_set_plutus_v4_scripts,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_get_plutus_data,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_set_plutus_data,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_get_redeemers,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_set_redeemers,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_clear_cbor_cache,lib/include/cardano/witness_set/witness_set.h,P15,internal,,,
+cardano_witness_set_add_script,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_unref,lib/include/cardano/witness_set/witness_set.h,P15,internal,,,
+cardano_witness_set_ref,lib/include/cardano/witness_set/witness_set.h,P15,internal,,,
+cardano_witness_set_refcount,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
+cardano_witness_set_set_last_error,lib/include/cardano/witness_set/witness_set.h,P15,internal,,,
+cardano_witness_set_get_last_error,lib/include/cardano/witness_set/witness_set.h,P15,internal,,,
+cardano_witness_set_deep_clone,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp,
 cardano_json_object_parse_ex,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::parse,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
