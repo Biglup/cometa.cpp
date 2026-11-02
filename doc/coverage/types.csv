@@ -167,7 +167,7 @@ cardano_required_guards_map_t,opaque object,lib/include/cardano/transaction_body
 cardano_resign_committee_cold_cert_t,opaque object,lib/include/cardano/certs/resign_committee_cold_cert.h,P11,planned,,
 cardano_resolve_datum_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_resolve_unspent_outputs_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
-cardano_reward_address_list_t,opaque object,lib/include/cardano/common/reward_address_list.h,P07,planned,,
+cardano_reward_address_list_t,opaque object,lib/include/cardano/common/reward_address_list.h,P07,implemented,Cometa::RewardAddressList,lib/tests/Common/RewardAddressListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_reward_address_t,opaque object,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress,lib/tests/Address/RewardAddressTest.cpp
 cardano_script_all_t,opaque object,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,implemented,Cometa::ScriptAll,lib/tests/Scripts/NativeScripts/ScriptAllTest.cpp
 cardano_script_any_t,opaque object,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,implemented,Cometa::ScriptAny,lib/tests/Scripts/NativeScripts/ScriptAnyTest.cpp
@@ -199,11 +199,11 @@ cardano_sub_transaction_t,opaque object,lib/include/cardano/transaction/sub_tran
 cardano_sub_tx_builder_t,opaque object,lib/include/cardano/transaction_builder/sub_transaction_builder.h,P23,planned,,
 cardano_submit_transaction_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_transaction_body_t,opaque object,lib/include/cardano/transaction_body/transaction_body.h,P17,planned,,
-cardano_transaction_input_set_t,opaque object,lib/include/cardano/transaction_body/transaction_input_set.h,P07,planned,,
-cardano_transaction_input_t,opaque object,lib/include/cardano/transaction_body/transaction_input.h,P07,planned,,
+cardano_transaction_input_set_t,opaque object,lib/include/cardano/transaction_body/transaction_input_set.h,P07,implemented,Cometa::TransactionInputSet,lib/tests/TransactionBody/TransactionInputSetTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_transaction_input_t,opaque object,lib/include/cardano/transaction_body/transaction_input.h,P07,implemented,Cometa::TransactionInput,lib/tests/TransactionBody/TransactionInputTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_transaction_metadata_t,opaque object,lib/include/cardano/auxiliary_data/transaction_metadata.h,P08,planned,,
-cardano_transaction_output_list_t,opaque object,lib/include/cardano/transaction_body/transaction_output_list.h,P07,planned,,
-cardano_transaction_output_t,opaque object,lib/include/cardano/transaction_body/transaction_output.h,P07,planned,,
+cardano_transaction_output_list_t,opaque object,lib/include/cardano/transaction_body/transaction_output_list.h,P07,implemented,Cometa::TransactionOutputList,lib/tests/TransactionBody/TransactionOutputListTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_transaction_output_t,opaque object,lib/include/cardano/transaction_body/transaction_output.h,P07,implemented,Cometa::TransactionOutput,lib/tests/TransactionBody/TransactionOutputTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_transaction_t,opaque object,lib/include/cardano/transaction/transaction.h,P17,planned,,
 cardano_treasury_withdrawals_action_t,opaque object,lib/include/cardano/proposal_procedures/treasury_withdrawals_action.h,P13,planned,,
 cardano_tx_builder_t,opaque object,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,
@@ -216,10 +216,10 @@ cardano_unregistration_cert_t,opaque object,lib/include/cardano/certs/unregistra
 cardano_update_committee_action_t,opaque object,lib/include/cardano/proposal_procedures/update_committee_action.h,P13,planned,,
 cardano_update_drep_cert_t,opaque object,lib/include/cardano/certs/update_drep_cert.h,P11,planned,,
 cardano_update_t,opaque object,lib/include/cardano/protocol_params/update.h,P12,planned,,
-cardano_utxo_list_compare_item_t,callback,lib/include/cardano/common/utxo_list.h,P07,planned,,
-cardano_utxo_list_t,opaque object,lib/include/cardano/common/utxo_list.h,P07,planned,,
-cardano_utxo_list_unary_predicate_t,callback,lib/include/cardano/common/utxo_list.h,P07,planned,,
-cardano_utxo_t,opaque object,lib/include/cardano/common/utxo.h,P07,planned,,
+cardano_utxo_list_compare_item_t,callback,lib/include/cardano/common/utxo_list.h,P07,implemented,Predicates and comparators accepted by standard C++ algorithms,lib/tests/Common/UtxoListTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_utxo_list_t,opaque object,lib/include/cardano/common/utxo_list.h,P07,implemented,Cometa::UtxoList,lib/tests/Common/UtxoListTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_utxo_list_unary_predicate_t,callback,lib/include/cardano/common/utxo_list.h,P07,implemented,Predicates and comparators accepted by standard C++ algorithms,lib/tests/Common/UtxoListTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_utxo_t,opaque object,lib/include/cardano/common/utxo.h,P07,implemented,Cometa::Utxo,lib/tests/Common/UtxoTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_value_t,opaque object,lib/include/cardano/transaction_body/value.h,P04.2,implemented,Cometa::Value,lib/tests/TransactionBody/ValueTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_vkey_witness_set_t,opaque object,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,
 cardano_vkey_witness_t,opaque object,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,
@@ -232,5 +232,5 @@ cardano_voter_type_t,enum,lib/include/cardano/voting_procedures/voter_type.h,P14
 cardano_voting_procedure_list_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,
 cardano_voting_procedure_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,
 cardano_voting_procedures_t,opaque object,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,
-cardano_withdrawal_map_t,opaque object,lib/include/cardano/common/withdrawal_map.h,P07,planned,,
+cardano_withdrawal_map_t,opaque object,lib/include/cardano/common/withdrawal_map.h,P07,implemented,Cometa::WithdrawalMap,lib/tests/Common/WithdrawalMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_witness_set_t,opaque object,lib/include/cardano/witness_set/witness_set.h,P15,planned,,

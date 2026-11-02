@@ -183,6 +183,20 @@ main()
     return 1;
   }
 
+  const Cometa::TransactionInput input(Cometa::Blake2bHash::fromHex(std::string(64, '1')), 5);
+  Cometa::TransactionOutput      output(parsedAddress, Cometa::Value(2'000'000));
+  output.setScriptRef(script);
+  const Cometa::Utxo                  utxo(input, output);
+  const Cometa::TransactionInputSet   inputs { input };
+  const Cometa::TransactionOutputList outputs { output };
+  Cometa::WithdrawalMap               withdrawals;
+  withdrawals.set("stake_test1uqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxtxu2s", 10);
+
+  if (Cometa::Utxo::fromCbor(utxo.toCbor()) != utxo || inputs.size() != 1 || outputs.size() != 1 || withdrawals.size() != 1)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

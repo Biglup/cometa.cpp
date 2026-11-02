@@ -288,7 +288,56 @@ sampleValue<Script>()
   return Script(sampleValue<NativeScript>());
 }
 
-using ValueTypes = testing::Types<Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
+template<>
+TransactionInput
+sampleValue<TransactionInput>()
+{
+  return TransactionInput::fromHex("0101010101010101010101010101010101010101010101010101010101010101", 5);
+}
+
+template<>
+TransactionOutput
+sampleValue<TransactionOutput>()
+{
+  TransactionOutput value(Address::fromString("addr_test1vqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxrcya6"), Value(10));
+  value.setDatum(Datum(PlutusData(std::int64_t { 42 })));
+  value.setScriptRef(Script(PlutusV4Script::fromHex("450100002499")));
+
+  return value;
+}
+
+template<>
+Utxo
+sampleValue<Utxo>()
+{
+  return Utxo(sampleValue<TransactionInput>(), sampleValue<TransactionOutput>());
+}
+
+template<>
+TransactionInputSet
+sampleValue<TransactionInputSet>()
+{
+  return TransactionInputSet { TransactionInput::fromHex("0101010101010101010101010101010101010101010101010101010101010101", 5) };
+}
+
+template<>
+TransactionOutputList
+sampleValue<TransactionOutputList>()
+{
+  return TransactionOutputList { sampleValue<TransactionOutput>() };
+}
+
+template<>
+WithdrawalMap
+sampleValue<WithdrawalMap>()
+{
+  WithdrawalMap value;
+  value.set("stake_test1uqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxtxu2s", std::numeric_limits<std::uint64_t>::max());
+
+  return value;
+}
+
+using ValueTypes = testing::Types<TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -4606,4 +4655,212 @@ TEST(Script, ReleasesEveryAllocationDuringPlutusV4Access)
   }
 
   EXPECT_EQ(script.language(), ScriptLanguage::PlutusV4);
+}
+
+TEST(TransactionOutput, FailedDatumPreservesValue)
+{
+  // Arrange
+  const TransactionOutput original    = sampleValue<TransactionOutput>();
+  const Datum             replacement = Datum(PlutusData(std::int64_t { 7 }));
+  std::size_t             count       = 0U;
+  {
+    TransactionOutput value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)value.setDatum(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    TransactionOutput value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setDatum(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+  }
+}
+
+TEST(TransactionOutput, FailedScriptRefPreservesValue)
+{
+  // Arrange
+  const TransactionOutput original    = sampleValue<TransactionOutput>();
+  const Script            replacement = Script(PlutusV3Script::fromHex("450100002499"));
+  std::size_t             count       = 0U;
+  {
+    TransactionOutput value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)value.setScriptRef(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    TransactionOutput value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setScriptRef(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+  }
+}
+
+TEST(TransactionOutput, FailedAmountPreservesValue)
+{
+  // Arrange
+  const TransactionOutput original    = sampleValue<TransactionOutput>();
+  const Value             replacement = Value(20);
+  std::size_t             count       = 0U;
+  {
+    TransactionOutput value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)value.setAmount(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    TransactionOutput value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setAmount(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+  }
+}
+
+TEST(Utxo, FailedInputPreservesValue)
+{
+  // Arrange
+  const Utxo             original    = sampleValue<Utxo>();
+  const TransactionInput replacement = TransactionInput::fromHex(std::string(64, '2'), 8);
+  std::size_t            count       = 0U;
+  {
+    Utxo              value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)value.setInput(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    Utxo value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setInput(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+  }
+}
+
+TEST(Utxo, FailedOutputPreservesValue)
+{
+  // Arrange
+  const Utxo              original    = sampleValue<Utxo>();
+  const TransactionOutput replacement = TransactionOutput(sampleValue<TransactionOutput>().address(), Value(20));
+  std::size_t             count       = 0U;
+  {
+    Utxo              value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)value.setOutput(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    Utxo value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setOutput(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+  }
+}
+
+TEST(TransactionInputSet, FailedInsertionPreservesValue)
+{
+  // Arrange
+  const TransactionInputSet original    = sampleValue<TransactionInputSet>();
+  const TransactionInput    replacement = TransactionInput::fromHex(std::string(64, '2'), 8);
+  std::size_t               count       = 0U;
+  {
+    TransactionInputSet value(original);
+    AllocationFailure   tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)value.insert(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    TransactionInputSet value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.insert(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+  }
+}
+
+TEST(TransactionOutputList, FailedAppendPreservesValue)
+{
+  // Arrange
+  const TransactionOutputList original    = sampleValue<TransactionOutputList>();
+  const TransactionOutput     replacement = sampleValue<TransactionOutput>();
+  std::size_t                 count       = 0U;
+  {
+    TransactionOutputList value(original);
+    AllocationFailure     tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)value.pushBack(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    TransactionOutputList value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.pushBack(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+  }
+}
+
+TEST(WithdrawalMap, FailedReplacementPreservesAllAmounts)
+{
+  // Arrange
+  const WithdrawalMap original = sampleValue<WithdrawalMap>();
+  const RewardAddress key      = original.keys().at(0);
+  std::size_t         count    = 0U;
+  {
+    WithdrawalMap     value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.set(key, 20);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    WithdrawalMap value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.set(key, 20), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+  }
 }

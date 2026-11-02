@@ -200,6 +200,9 @@ class RewardAddress
 
   private:
 
+    /** @brief Allows WithdrawalMap to copy reward addresses. */
+    friend class WithdrawalMap;
+
     /**
      * @brief Adopts an owned native address.
      *

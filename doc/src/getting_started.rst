@@ -471,3 +471,44 @@ script payload; ``hash`` uses the underlying script's language-specific hash.
 Native payloads retain their decoded encoding, including encodings that affect
 the hash. To normalize a native payload, normalize the value returned by
 ``asNative()`` and construct a replacement ``Script`` from it.
+
+Transaction values and withdrawals
+----------------------------------
+
+``TransactionInput`` identifies a previous output by its 32-byte transaction ID
+and output index. ``TransactionOutput`` contains an address and ``Value``;
+``Utxo`` combines an input reference with its output contents.
+
+.. code-block:: cpp
+
+   const Cometa::TransactionInput input = Cometa::TransactionInput::fromHex(
+     "0101010101010101010101010101010101010101010101010101010101010101", 5);
+   const Cometa::Address address = Cometa::Address::fromString(
+     "addr_test1vqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxrcya6");
+   Cometa::TransactionOutput output(address, Cometa::Value(2'000'000));
+   output.setDatum(Cometa::Datum(Cometa::PlutusData(std::int64_t { 42 })));
+   output.setScriptRef(Cometa::Script(
+     Cometa::PlutusV4Script::fromHex("450100002499")));
+
+   const Cometa::Utxo utxo(input, output);
+   output.setDatum(std::nullopt);
+
+``datum()`` and ``scriptRef()`` return ``std::optional`` values. Set either field
+to ``std::nullopt`` to remove it. Constructors, setters, and getters copy values,
+so changing ``output`` above does not change ``utxo``. Output lovelace must be
+nonnegative; constructing these values does not establish transaction validity.
+
+``TransactionInputSet`` sorts and deduplicates inputs. Its CBOR always includes
+set tag 258; ``wasTagged()`` reports the decoded input's tag presence and returns
+true for newly constructed sets. ``TransactionOutputList`` retains output order.
+Both serialize as definite-length arrays. Legacy output arrays decode normally
+and serialize in the current map form.
+
+``WithdrawalMap`` stores exact unsigned 64-bit lovelace amounts. ``set`` replaces
+an existing address's amount, including zero; ``get`` returns ``std::nullopt``
+when absent, while ``at`` throws ``std::out_of_range``. ``keys``, ``entries``, and
+``entryAt`` return independent values in serialization order.
+
+``UtxoList`` and ``RewardAddressList`` are standard ``std::vector`` aliases. Use
+normal vector operations and standard algorithms for sorting, finding, filtering,
+concatenation, and slicing; their elements retain independent value semantics.

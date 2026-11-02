@@ -370,6 +370,18 @@ class Value
 
   private:
 
+    /** @brief Allows TransactionOutput to copy output values. */
+    friend class TransactionOutput;
+
+    /**
+     * @brief Takes ownership of an existing reference.
+     *
+     * @param value The non-null owned reference.
+     */
+    explicit Value(cardano_value_t& value) noexcept;
+
+  private:
+
     /**
      * @brief Checks lifetime and gets the native value.
      *

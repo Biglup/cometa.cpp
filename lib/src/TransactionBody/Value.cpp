@@ -403,6 +403,11 @@ Value::operator!=(const Value& other) const
 
 /* PRIVATE FUNCTIONS *********************************************************/
 
+Value::Value(cardano_value_t& value) noexcept
+: m_value(&value)
+{
+}
+
 cardano_value_t*
 Value::checked() const
 {

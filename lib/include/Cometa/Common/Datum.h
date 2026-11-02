@@ -198,6 +198,9 @@ class Datum
 
   private:
 
+    /** @brief Allows TransactionOutput to copy components. */
+    friend class TransactionOutput;
+
     /**
      * @brief Takes ownership of an existing reference.
      *
