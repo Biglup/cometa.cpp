@@ -220,6 +220,9 @@ class Anchor
     /** @brief Allows DRep registration certificates to copy anchors. */
     friend class RegisterDRepCert;
 
+    /** @brief Allows DRep update certificates to copy anchors. */
+    friend class UpdateDRepCert;
+
   private:
 
     /**

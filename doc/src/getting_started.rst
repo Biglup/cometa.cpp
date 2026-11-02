@@ -822,3 +822,5 @@ deposit in lovelace.
 
 ``RegisterDRepCert`` registers a DRep credential with a deposit and an optional
 metadata anchor. The anchor can be replaced or removed.
+
+``UpdateDRepCert`` records a DRep credential and its optional metadata anchor.

@@ -214,7 +214,7 @@ cardano_unit_interval_t,opaque object,lib/include/cardano/common/unit_interval.h
 cardano_unregister_drep_cert_t,opaque object,lib/include/cardano/certs/unregister_drep_cert.h,P11,implemented,Cometa::UnregisterDRepCert,lib/tests/Certificates/UnregisterDRepCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_unregistration_cert_t,opaque object,lib/include/cardano/certs/unregistration_cert.h,P10,implemented,Cometa::UnregistrationCert,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_update_committee_action_t,opaque object,lib/include/cardano/proposal_procedures/update_committee_action.h,P13,planned,,
-cardano_update_drep_cert_t,opaque object,lib/include/cardano/certs/update_drep_cert.h,P11,planned,,
+cardano_update_drep_cert_t,opaque object,lib/include/cardano/certs/update_drep_cert.h,P11,implemented,Cometa::UpdateDRepCert,lib/tests/Certificates/UpdateDRepCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_update_t,opaque object,lib/include/cardano/protocol_params/update.h,P12,planned,,
 cardano_utxo_list_compare_item_t,callback,lib/include/cardano/common/utxo_list.h,P07,implemented,Predicates and comparators accepted by standard C++ algorithms,lib/tests/Common/UtxoListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_utxo_list_t,opaque object,lib/include/cardano/common/utxo_list.h,P07,implemented,Cometa::UtxoList,lib/tests/Common/UtxoListTest.cpp; lib/tests/ValueContractTest.cpp

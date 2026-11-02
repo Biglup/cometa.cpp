@@ -444,3 +444,6 @@ Historical MIR pot transfers
 
 .. doxygenclass:: Cometa::RegisterDRepCert
    :members:
+
+.. doxygenclass:: Cometa::UpdateDRepCert
+   :members:
