@@ -83,6 +83,15 @@ main()
     return 1;
   }
 
+  const Cometa::Bip32PrivateKey   root      = Cometa::Bip32PrivateKey::fromBip39Entropy(std::vector<std::uint8_t>(16, 0));
+  const Cometa::Ed25519PrivateKey key       = root.derive({ Cometa::hardenIndex(1852), 0 }).toEd25519();
+  const Cometa::Ed25519Signature  signature = key.sign({ 1, 2, 3 });
+
+  if (!key.publicKey().verify(signature, { 1, 2, 3 }))
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

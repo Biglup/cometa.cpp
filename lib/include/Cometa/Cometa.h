@@ -57,3 +57,10 @@
 #include <Cometa/Json/JsonType.h>
 #include <Cometa/Json/JsonValue.h>
 #include <Cometa/Json/JsonWriter.h>
+
+#include <Cometa/Crypto/Bip32.h>
+#include <Cometa/Crypto/Bip32PrivateKey.h>
+#include <Cometa/Crypto/Bip32PublicKey.h>
+#include <Cometa/Crypto/Ed25519PrivateKey.h>
+#include <Cometa/Crypto/Ed25519PublicKey.h>
+#include <Cometa/Crypto/Ed25519Signature.h>

@@ -1,5 +1,6 @@
 Next
 ---------------------
+- Add Ed25519 signatures and normal/extended keys, BIP32 derivation, and shared cryptographic fixture checks.
 - Add JSON values, writers, and enums with exact decimal tokens, owned child values, checked conversions, and allocation-failure tests; pin the native JSON fixes.
 - Add copyable CBOR readers/writers, typed enums, checked numeric boundaries, and owned byte/string results.
 - Add Base58 and Bech32 encoding helpers with owned results, checked inputs, and allocation-failure coverage; pin the native Base58 boundary fix.

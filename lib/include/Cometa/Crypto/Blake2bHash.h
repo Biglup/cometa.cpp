@@ -227,6 +227,16 @@ class Blake2bHash
      */
     explicit Blake2bHash(cardano_blake2b_hash_t* value) noexcept;
 
+    /**
+     * @brief Allows public-key hashing to adopt the returned digest.
+     */
+    friend class Ed25519PublicKey;
+
+    /**
+     * @brief Allows extended public-key hashing to adopt the returned digest.
+     */
+    friend class Bip32PublicKey;
+
   private:
 
     /**

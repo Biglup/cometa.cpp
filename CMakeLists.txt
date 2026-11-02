@@ -36,6 +36,12 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Common/ExUnits.cpp
   lib/src/Common/ProtocolVersion.cpp
   lib/src/Common/NetworkMagic.cpp
+  lib/src/Crypto/Bip32.cpp
+  lib/src/Crypto/Ed25519Signature.cpp
+  lib/src/Crypto/Ed25519PublicKey.cpp
+  lib/src/Crypto/Ed25519PrivateKey.cpp
+  lib/src/Crypto/Bip32PublicKey.cpp
+  lib/src/Crypto/Bip32PrivateKey.cpp
   lib/src/Crypto/Blake2bHash.cpp
   lib/src/Assets/AssetName.cpp
   lib/src/Common/Credential.cpp
@@ -103,6 +109,13 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Common/NetworkMagicTest.cpp
     lib/tests/Common/GovernanceKeyTypeTest.cpp
     lib/tests/Assets/AssetNameTest.cpp
+    lib/tests/Crypto/Bip32Test.cpp
+    lib/tests/Crypto/Ed25519SignatureTest.cpp
+    lib/tests/Crypto/Ed25519PublicKeyTest.cpp
+    lib/tests/Crypto/Ed25519PrivateKeyTest.cpp
+    lib/tests/Crypto/Bip32PublicKeyTest.cpp
+    lib/tests/Crypto/Bip32PrivateKeyTest.cpp
+    lib/tests/Crypto/PrimitiveConformanceTest.cpp
     lib/tests/Crypto/Blake2bHashTest.cpp
     lib/tests/Common/CredentialTest.cpp
     lib/tests/ValueContractTest.cpp
@@ -112,6 +125,11 @@ IF (COMETA_BUILD_TESTS)
     PRIVATE
       "${cardano_source}/lib"
       "${cardano_source}/lib/include"
+  )
+
+  TARGET_COMPILE_DEFINITIONS (cometa-tests
+    PRIVATE
+      COMETA_TEST_VECTOR_DIR="${cardano_source}/lib/tests/vectors/bindings/v1"
   )
 
   TARGET_LINK_LIBRARIES (cometa-tests PRIVATE Cometa::cometa GTest::gtest_main)

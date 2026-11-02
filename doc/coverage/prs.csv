@@ -3,7 +3,8 @@ P01a.1,Dependency pin and coverage ledger; enums; ExUnits; ProtocolVersion; chec
 P01a.2,BigInt; UnitInterval; Anchor; GovernanceActionId,P01a.1,Arithmetic validation; serialization; copy independence; native failure audit
 P01a.3,Base58 and Bech32; native encoding boundary fixes where needed,P01a.1,Known vectors; short inputs; empty data; invalid checksums and size calculations
 P01b,CBOR and JSON readers/writers and enums,P01a.2 P01a.3,Malformed input and buffer boundaries; independent byte/hex handling
-P02,Cryptographic keys/signatures; BIP32; BIP39; PBKDF2; EMIP3; CRC32; hash size utilities,P01a.2 P01a.3,Known signing/verification and derivation vectors; secret lifetime policy
+P02.1,Cryptographic keys/signatures and BIP32,P01a.2 P01a.3 P01b,Known signing/verification and derivation vectors; secret lifetime policy
+P02.2,BIP39; PBKDF2; EMIP3; CRC32; hash size utilities,P02.1,Known derivation and encryption vectors; invalid input and cleanup checks
 P03,Shelley and Byron addresses; attributes; stake pointers; address enums,P01a.2 P01a.3 P02,Round trips; all address variants; network and checksum validation
 P04,Asset IDs; multi-assets; Value; hash/credential/asset collections,P01a.2 P01a.3 P02,Unsigned boundary values; arithmetic; independent container elements
 P05,Plutus data; constructors/lists/maps; Datum,P01a.2 P01a.3 P01b,Arbitrary precision integers; canonical and preserved CBOR; invalid variants
