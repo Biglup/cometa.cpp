@@ -1,7 +1,7 @@
 /**
  * @file Emip3.cpp
  *
- * @brief BIP32 derivation indices.
+ * @brief EMIP-003 password encryption.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026

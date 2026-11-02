@@ -1,7 +1,7 @@
 /**
  * @file Pbkdf2.cpp
  *
- * @brief BIP32 derivation indices.
+ * @brief PBKDF2 HMAC-SHA512 key derivation.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026

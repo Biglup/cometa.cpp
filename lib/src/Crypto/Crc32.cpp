@@ -1,7 +1,7 @@
 /**
  * @file Crc32.cpp
  *
- * @brief BIP32 derivation indices.
+ * @brief CRC32 checksums.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026

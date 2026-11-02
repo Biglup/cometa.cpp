@@ -1,7 +1,7 @@
 /**
  * @file Bip39.cpp
  *
- * @brief BIP32 derivation indices.
+ * @brief English BIP39 mnemonic conversion.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
