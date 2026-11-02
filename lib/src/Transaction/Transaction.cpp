@@ -234,9 +234,9 @@ Transaction::uniqueSigners(const UtxoList& resolvedInputs) const
 std::optional<std::uint64_t>
 Transaction::findInputIndex(const TransactionInput& input) const
 {
-  const Blake2bHash     id     = input.id();
-  std::uint64_t         index  = 0;
-  const cardano_error_t status = cardano_transaction_find_input_index(checked(), id.checked(), input.index(), &index);
+  const Blake2bHash     inputId = input.id();
+  std::uint64_t         index   = 0;
+  const cardano_error_t status  = cardano_transaction_find_input_index(checked(), inputId.checked(), input.index(), &index);
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
     return std::nullopt;
@@ -249,9 +249,9 @@ Transaction::findInputIndex(const TransactionInput& input) const
 std::optional<std::uint64_t>
 Transaction::findReferenceInputIndex(const TransactionInput& input) const
 {
-  const Blake2bHash     id     = input.id();
-  std::uint64_t         index  = 0;
-  const cardano_error_t status = cardano_transaction_find_reference_input_index(checked(), id.checked(), input.index(), &index);
+  const Blake2bHash     inputId = input.id();
+  std::uint64_t         index   = 0;
+  const cardano_error_t status  = cardano_transaction_find_reference_input_index(checked(), inputId.checked(), input.index(), &index);
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
     return std::nullopt;
