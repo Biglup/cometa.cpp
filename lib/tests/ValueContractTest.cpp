@@ -492,7 +492,8 @@ TEST(Bech32, ReleasesStateOnEveryEncodingAllocationFailure)
   {
     AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
     const std::string encoded = encodeBech32("test", bytes);
-    count                     = allocationIndex;
+    EXPECT_FALSE(encoded.empty());
+    count = allocationIndex;
   }
   ASSERT_GT(count, 0);
 
@@ -527,7 +528,8 @@ TEST(Bech32, ReleasesStateOnEveryDecodingAllocationFailure)
   {
     AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
     const Bech32Data  decoded = decodeBech32(encoded);
-    count                     = allocationIndex;
+    EXPECT_EQ(decoded.prefix, "test");
+    count = allocationIndex;
   }
   ASSERT_GT(count, 0);
 

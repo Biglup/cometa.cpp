@@ -29,10 +29,31 @@
 
 #include <cardano/encoding/base58.h>
 
-/* FUNCTIONS IMPLEMENTATION **************************************************/
+#include <algorithm>
+
+/* INTERNAL IMPLEMENTATION ***************************************************/
 
 namespace Cometa
 {
+namespace
+{
+/**
+ * @brief Tests whether a character is outside the Base58 alphabet.
+ *
+ * @param character The character to inspect.
+ *
+ * @return True for an invalid Base58 digit.
+ */
+bool
+isInvalidBase58Character(char character)
+{
+  const std::string_view alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+
+  return alphabet.find(character) == std::string_view::npos;
+}
+} // namespace
+
+/* FUNCTIONS IMPLEMENTATION **************************************************/
 std::string
 encodeBase58(const std::vector<std::uint8_t>& bytes)
 {
@@ -65,14 +86,9 @@ decodeBase58(std::string_view text)
     return {};
   }
 
-  const std::string_view alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-
-  for (const char digit: text)
+  if (std::any_of(text.begin(), text.end(), isInvalidBase58Character))
   {
-    if (alphabet.find(digit) == std::string_view::npos)
-    {
-      throw std::invalid_argument("Invalid Base58 digit");
-    }
+    throw std::invalid_argument("Invalid Base58 digit");
   }
 
   const std::size_t size = cardano_encoding_base58_get_decoded_length(text.data(), text.size());
