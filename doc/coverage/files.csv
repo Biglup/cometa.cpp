@@ -87,7 +87,7 @@ lib/include/cardano/common/withdrawal_map.h,public header,P07,planned,domain con
 lib/include/cardano/crypto/bip32_private_key.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/include/cardano/crypto/bip32_public_key.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/include/cardano/crypto/blake2b_hash.h,public header,P02,implemented,idiomatic C++ API
-lib/include/cardano/crypto/blake2b_hash_set.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/crypto/blake2b_hash_set.h,public header,P04.3,implemented,Unique sorted sets with independent elements and tagged CBOR normalization.
 lib/include/cardano/crypto/blake2b_hash_size.h,public header,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/include/cardano/crypto/crc32.h,public header,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/include/cardano/crypto/ed25519_private_key.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
@@ -133,7 +133,7 @@ lib/include/cardano/pool_params/single_host_name_relay.h,public header,P09,plann
 lib/include/cardano/proposal_procedures/committee.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/committee_members_map.h,public header,P13,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/proposal_procedures/constitution.h,public header,P13,planned,idiomatic C++ API
-lib/include/cardano/proposal_procedures/credential_set.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/proposal_procedures/credential_set.h,public header,P04.3,implemented,Unique sorted sets with independent elements and tagged CBOR normalization.
 lib/include/cardano/proposal_procedures/governance_action_type.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/hard_fork_initiation_action.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/info_action.h,public header,P13,planned,idiomatic C++ API
@@ -348,7 +348,7 @@ lib/src/crypto/bip32_private_key.c,implementation file,P02,implemented,"Key/sign
 lib/src/crypto/bip32_public_key.c,implementation file,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/src/crypto/blake2b_hash.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/crypto/blake2b_hash_internal.h,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/crypto/blake2b_hash_set.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/blake2b_hash_set.c,implementation file,P04.3,implemented,Unique sorted sets with independent elements and tagged CBOR normalization.
 lib/src/crypto/crc32.c,implementation file,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/src/crypto/ed25519_private_key.c,implementation file,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/src/crypto/ed25519_public_key.c,implementation file,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
@@ -395,7 +395,7 @@ lib/src/pool_params/single_host_name_relay.c,implementation file,P09,internal,Na
 lib/src/proposal_procedures/committee.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/proposal_procedures/committee_members_map.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/proposal_procedures/constitution.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/proposal_procedures/credential_set.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/credential_set.c,implementation file,P04.3,implemented,Unique sorted sets with independent elements and tagged CBOR normalization.
 lib/src/proposal_procedures/governance_action_type.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/proposal_procedures/hard_fork_initiation_action.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/proposal_procedures/info_action.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.

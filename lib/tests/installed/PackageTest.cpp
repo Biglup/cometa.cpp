@@ -129,6 +129,14 @@ main()
     return 1;
   }
 
+  const Cometa::CredentialSet  credentials { payment };
+  const Cometa::Blake2bHashSet hashes { key.publicKey().hash() };
+
+  if (Cometa::CredentialSet::fromCbor(credentials.toCbor()) != credentials || !hashes.contains(key.publicKey().hash()))
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

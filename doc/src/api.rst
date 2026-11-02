@@ -174,3 +174,9 @@ API reference
 
 .. doxygenclass:: Cometa::Value
    :members:
+
+.. doxygenclass:: Cometa::Blake2bHashSet
+   :members:
+
+.. doxygenclass:: Cometa::CredentialSet
+   :members:

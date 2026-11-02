@@ -1,5 +1,6 @@
 Next
 ---------------------
+- Add unique hash and credential sets with sorted CBOR/JSON and independent element access.
 - Add signed asset maps, multi-assets, and Value with checked arithmetic, serialization, and independent components.
 - Add asset identifiers and standard C++ lists for identifiers, names, and policy hashes.
 - Add Shelley and Byron address values, checked conversions, network/prefix validation, independent credential access, and shared address vectors.
