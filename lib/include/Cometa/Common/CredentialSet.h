@@ -234,6 +234,9 @@ class CredentialSet
     /** @brief Allows committees to return member credentials. */
     friend class Committee;
 
+    /** @brief Allows update actions to copy member credentials. */
+    friend class UpdateCommitteeAction;
+
   private:
 
     /**

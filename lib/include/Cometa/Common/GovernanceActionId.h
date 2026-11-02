@@ -229,6 +229,9 @@ class GovernanceActionId
     /** @brief Allows constitution actions to copy identifiers. */
     friend class NewConstitutionAction;
 
+    /** @brief Allows committee updates to copy previous action IDs. */
+    friend class UpdateCommitteeAction;
+
     /**
      * @brief Takes ownership of an existing value.
      *

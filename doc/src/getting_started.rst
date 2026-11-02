@@ -970,3 +970,9 @@ expiration epochs::
    Cometa::Committee committee(Cometa::UnitInterval(1, 2));
    committee.addMember(coldCredential, 200);
    const Cometa::UnitInterval quorum = committee.quorumThreshold();
+
+``UpdateCommitteeAction`` proposes members to remove or add and a new quorum::
+
+   const Cometa::UpdateCommitteeAction updateCommittee(
+     Cometa::CredentialSet(), members, Cometa::UnitInterval(1, 2));
+   const std::vector<std::uint8_t> proposalCbor = updateCommittee.toCbor();

@@ -182,6 +182,9 @@ class CommitteeMembersMap
 
   private:
 
+    /** @brief Allows update actions to copy member terms. */
+    friend class UpdateCommitteeAction;
+
     /**
      * @brief Adopts an owned member map.
      * @param value The owned map.

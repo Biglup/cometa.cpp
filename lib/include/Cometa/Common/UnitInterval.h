@@ -237,6 +237,9 @@ class UnitInterval
     /** @brief Allows committees to copy quorum thresholds. */
     friend class Committee;
 
+    /** @brief Allows update actions to copy quorum thresholds. */
+    friend class UpdateCommitteeAction;
+
   private:
 
     /**
