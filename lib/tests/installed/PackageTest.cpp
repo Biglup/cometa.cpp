@@ -664,6 +664,13 @@ main()
     return 1;
   }
 
+  Cometa::RequiredGuardsMap requiredGuards;
+  requiredGuards.insert(Cometa::Credential::fromCbor("8200581c00112233445566778899aabbccddeeff00112233445566778899aabb"));
+  if (Cometa::RequiredGuardsMap::fromCbor(requiredGuards.toCbor()) != requiredGuards)
+  {
+    return 1;
+  }
+
   Cometa::GuardSet guards;
   guards.add(Cometa::Credential::fromCbor("8200581c6199186adb51974690d7247d2646097d2c62763b16fb7ed3f9f55d39"));
   if (Cometa::GuardSet::fromCbor(guards.toCbor()) != guards)

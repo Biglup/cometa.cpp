@@ -1040,3 +1040,5 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 ``DirectDepositMap`` associates reward accounts with unsigned lovelace deposits. It preserves zero deposits, orders entries canonically, and rejects duplicate addresses.
 
 ``GuardSet`` preserves guard order because script redeemers refer to guard positions. A key-only set uses the historical key-hash encoding; a set containing a script credential uses the credential encoding. Duplicates are rejected.
+
+``RequiredGuardsMap`` associates guard credentials with optional Plutus data. ``get`` uses two optional layers: the outer layer distinguishes an absent credential, and the inner layer distinguishes a present credential with no datum. ``contains`` checks membership directly.

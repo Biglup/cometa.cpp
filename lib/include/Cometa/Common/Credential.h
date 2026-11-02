@@ -221,6 +221,9 @@ class Credential
     /** @brief Allows guard sets to copy credentials. */
     friend class GuardSet;
 
+    /** @brief Allows required guard maps to copy credentials. */
+    friend class RequiredGuardsMap;
+
     /** @brief Allows RegistrationCert to copy its credential. */
     friend class RegistrationCert;
 

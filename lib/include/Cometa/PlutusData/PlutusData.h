@@ -274,6 +274,9 @@ class PlutusData
 
   private:
 
+    /** @brief Allows required guard maps to copy data. */
+    friend class RequiredGuardsMap;
+
     /** @brief Allows PlutusList to copy components. */
     friend class PlutusList;
 

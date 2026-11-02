@@ -192,6 +192,9 @@ API reference
 .. doxygenclass:: Cometa::GuardSet
    :members:
 
+.. doxygenclass:: Cometa::RequiredGuardsMap
+   :members:
+
 .. doxygenclass:: Cometa::Blake2bHashSet
    :members:
 
