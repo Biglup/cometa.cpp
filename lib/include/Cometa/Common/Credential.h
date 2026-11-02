@@ -239,6 +239,9 @@ class Credential
     /** @brief Allows MIR distributions to copy their credentials. */
     friend class MirToStakeCredentialsCert;
 
+    /** @brief Allows DRep values to copy their credentials. */
+    friend class DRep;
+
     /** @brief Allows ScriptRequireGuard to copy script components. */
     friend class ScriptRequireGuard;
 

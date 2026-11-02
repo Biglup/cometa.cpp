@@ -1018,23 +1018,23 @@ cardano_datum_refcount,lib/include/cardano/common/datum.h,P05,internal,"RAII, ow
 cardano_datum_set_last_error,lib/include/cardano/common/datum.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
 cardano_datum_get_last_error,lib/include/cardano/common/datum.h,P05,internal,"RAII, owned values, and exceptions",lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
 cardano_datum_deep_clone,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum::copy constructor / copy assignment,lib/tests/Common/DatumTest.cpp,Decoded encodings are preserved until mutation; mutable child results are independent.
-cardano_drep_new,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_from_string,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_from_cbor,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_to_cbor,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_to_cip116_json,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_get_string_size,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_to_string,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_get_credential,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_set_credential,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_get_type,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_set_type,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_unref,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_ref,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_refcount,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_set_last_error,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_get_last_error,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
-cardano_drep_deep_clone,lib/include/cardano/common/drep.h,P11,planned,,,API and ownership mapping pending.
+cardano_drep_new,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep::constructor,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_from_string,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep::fromString,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_from_cbor,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep::fromCbor,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_to_cbor,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep::toCbor,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_to_cip116_json,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep::toJson,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_get_string_size,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep::toString,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_to_string,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep::toString,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_get_credential,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep::credential,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_set_credential,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep::setCredential,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_get_type,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep::type,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_set_type,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep::setType,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_unref,lib/include/cardano/common/drep.h,P11,internal,RAII and exception handling,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_ref,lib/include/cardano/common/drep.h,P11,internal,RAII and exception handling,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_refcount,lib/include/cardano/common/drep.h,P11,internal,RAII and exception handling,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_set_last_error,lib/include/cardano/common/drep.h,P11,internal,RAII and exception handling,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_get_last_error,lib/include/cardano/common/drep.h,P11,internal,RAII and exception handling,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
+cardano_drep_deep_clone,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep::copy constructor / assignment,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp,DRep variants with native CBOR and bech32 fixtures.
 cardano_ex_units_new,lib/include/cardano/common/ex_units.h,P01a.1,implemented,ExUnits::ExUnits,lib/tests/Common/ExUnitsTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
 cardano_ex_units_from_cbor,lib/include/cardano/common/ex_units.h,P01a.1,implemented,ExUnits::fromCbor,lib/tests/Common/ExUnitsTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
 cardano_ex_units_to_cbor,lib/include/cardano/common/ex_units.h,P01a.1,implemented,ExUnits::toCbor,lib/tests/Common/ExUnitsTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.

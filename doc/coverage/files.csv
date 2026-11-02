@@ -70,8 +70,8 @@ lib/include/cardano/common/credential.h,public header,P01a.1,implemented,idiomat
 lib/include/cardano/common/credential_type.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/datum.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
 lib/include/cardano/common/datum_type.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
-lib/include/cardano/common/drep.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/common/drep_type.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/common/drep.h,public header,P11,implemented,Cometa::DRep
+lib/include/cardano/common/drep_type.h,public header,P11,implemented,Cometa::DRepType
 lib/include/cardano/common/ex_units.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/governance_action_id.h,public header,P01a.2,implemented,Cometa::GovernanceActionId; domain and value-contract tests
 lib/include/cardano/common/governance_key_type.h,public header,P01a.1,implemented,idiomatic C++ API

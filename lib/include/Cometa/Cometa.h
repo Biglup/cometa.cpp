@@ -39,6 +39,8 @@
 #include <Cometa/Common/Credential.h>
 #include <Cometa/Common/CredentialSet.h>
 #include <Cometa/Common/CredentialType.h>
+#include <Cometa/Common/DRep.h>
+#include <Cometa/Common/DRepType.h>
 #include <Cometa/Common/ExUnits.h>
 #include <Cometa/Common/GovernanceActionId.h>
 #include <Cometa/Common/GovernanceKeyType.h>

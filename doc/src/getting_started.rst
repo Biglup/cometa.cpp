@@ -797,3 +797,9 @@ lovelace.
 
 ``MirCert`` holds either historical form. The ``type()`` discriminator
 selects ``asToPot()`` or ``asToStakeCredentials()``.
+
+Delegated representatives
+-------------------------
+
+``DRep`` represents a key or script credential, abstention, or no confidence.
+Key and script representatives also support bech32 identifiers.

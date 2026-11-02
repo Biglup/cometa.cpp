@@ -38,6 +38,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Certificates/MirCert.cpp
   lib/src/Certificates/RegistrationCert.cpp
   lib/src/Certificates/UnregistrationCert.cpp
+  lib/src/Common/DRep.cpp
   lib/src/PoolParams/Ipv4.cpp
   lib/src/PoolParams/Ipv6.cpp
   lib/src/PoolParams/BlsKey.cpp
@@ -191,6 +192,8 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Certificates/MirCertTest.cpp
     lib/tests/Certificates/RegistrationCertTest.cpp
     lib/tests/Certificates/UnregistrationCertTest.cpp
+    lib/tests/Common/DRepTypeTest.cpp
+    lib/tests/Common/DRepTest.cpp
     lib/tests/PoolParams/Ipv4Test.cpp
     lib/tests/PoolParams/Ipv6Test.cpp
     lib/tests/PoolParams/BlsKeyTest.cpp

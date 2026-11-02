@@ -61,8 +61,8 @@ cardano_deferred_redeemer_fn_t,callback,lib/include/cardano/transaction_builder/
 cardano_deferred_redeemer_list_t,opaque object,lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,P23,planned,,
 cardano_derivation_path_t,struct,lib/include/cardano/key_handlers/derivation_path.h,P18,planned,,
 cardano_direct_deposit_map_t,opaque object,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,
-cardano_drep_t,opaque object,lib/include/cardano/common/drep.h,P11,planned,,
-cardano_drep_type_t,enum,lib/include/cardano/common/drep_type.h,P11,planned,,
+cardano_drep_t,opaque object,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_drep_type_t,enum,lib/include/cardano/common/drep_type.h,P11,implemented,Cometa::DRepType,lib/tests/Common/DRepTypeTest.cpp
 cardano_drep_voting_thresholds_t,opaque object,lib/include/cardano/protocol_params/drep_voting_thresholds.h,P12,planned,,
 cardano_ed25519_get_public_key_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
 cardano_ed25519_private_key_t,opaque object,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp

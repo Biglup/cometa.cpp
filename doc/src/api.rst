@@ -12,6 +12,11 @@ API reference
 .. doxygenclass:: Cometa::Credential
    :members:
 
+.. doxygenenum:: Cometa::DRepType
+
+.. doxygenclass:: Cometa::DRep
+   :members:
+
 .. doxygenclass:: Cometa::Error
    :members:
 
