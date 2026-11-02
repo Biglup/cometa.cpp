@@ -554,3 +554,13 @@ Voting collections
 
 .. doxygenclass:: Cometa::VotingProcedures
    :members:
+
+Witnesses and redeemers
+-----------------------
+
+.. doxygenenum:: Cometa::RedeemerTag
+
+.. doxygenfunction:: Cometa::toString(RedeemerTag)
+
+.. doxygenclass:: Cometa::Redeemer
+   :members:

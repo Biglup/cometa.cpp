@@ -280,6 +280,9 @@ class PlutusData
     /** @brief Allows PlutusMap to copy components. */
     friend class PlutusMap;
 
+    /** @brief Allows redeemers to copy their data. */
+    friend class Redeemer;
+
     /** @brief Allows Datum to copy components. */
     friend class Datum;
 

@@ -1008,3 +1008,11 @@ Voting IDs, voters, and procedures can be stored in ``GovernanceActionIdList``, 
 ``VotingProcedure`` records a choice and an optional metadata anchor::
 
    const Cometa::VotingProcedure castVote(Cometa::Vote::Yes);
+
+Script redeemers
+----------------
+
+A ``Redeemer`` contains its script purpose, index, Plutus data, and execution budget::
+
+   Cometa::Redeemer redeemer(Cometa::RedeemerTag::Spend, 0, Cometa::PlutusData(42), Cometa::ExUnits(500, 700));
+   const std::vector<std::uint8_t> cbor = redeemer.toCbor();

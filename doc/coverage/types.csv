@@ -156,8 +156,8 @@ cardano_protocol_version_t,opaque object,lib/include/cardano/common/protocol_ver
 cardano_provider_impl_t,struct,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_provider_t,opaque object,lib/include/cardano/providers/provider.h,P19,planned,,
 cardano_redeemer_list_t,opaque object,lib/include/cardano/witness_set/redeemer_list.h,P15,planned,,
-cardano_redeemer_t,opaque object,lib/include/cardano/witness_set/redeemer.h,P15,planned,,
-cardano_redeemer_tag_t,enum,lib/include/cardano/witness_set/redeemer_tag.h,P15,planned,,
+cardano_redeemer_t,opaque object,lib/include/cardano/witness_set/redeemer.h,P15,implemented,Cometa::Redeemer,lib/tests/WitnessSet/RedeemerTest.cpp
+cardano_redeemer_tag_t,enum,lib/include/cardano/witness_set/redeemer_tag.h,P15,implemented,Cometa::RedeemerTag,lib/tests/WitnessSet/RedeemerTagTest.cpp
 cardano_register_drep_cert_t,opaque object,lib/include/cardano/certs/register_drep_cert.h,P11,implemented,Cometa::RegisterDRepCert,lib/tests/Certificates/RegisterDRepCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_registration_cert_t,opaque object,lib/include/cardano/certs/registration_cert.h,P10,implemented,Cometa::RegistrationCert,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_relay_t,opaque object,lib/include/cardano/pool_params/relay.h,P09,implemented,Cometa::Relay,lib/tests/PoolParams/RelayTest.cpp; lib/tests/ValueContractTest.cpp
