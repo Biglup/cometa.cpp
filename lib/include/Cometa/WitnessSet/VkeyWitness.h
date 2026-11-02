@@ -167,6 +167,9 @@ class VkeyWitness
 
   private:
 
+    /** @brief Allows witness sets to copy their elements. */
+    friend class VkeyWitnessSet;
+
     /**
      * @brief Adopts an owned witness.
      * @param value The owned witness.

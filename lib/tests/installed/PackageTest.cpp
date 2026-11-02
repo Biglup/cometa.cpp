@@ -609,6 +609,13 @@ main()
     return 1;
   }
 
+  Cometa::VkeyWitnessSet keyWitnesses;
+  keyWitnesses.add(keyWitness);
+  if (Cometa::VkeyWitnessSet::fromCbor(keyWitnesses.toCbor()) != keyWitnesses)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

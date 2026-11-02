@@ -570,3 +570,6 @@ Witnesses and redeemers
 
 .. doxygenclass:: Cometa::VkeyWitness
    :members:
+
+.. doxygenclass:: Cometa::VkeyWitnessSet
+   :members:

@@ -221,7 +221,7 @@ cardano_utxo_list_t,opaque object,lib/include/cardano/common/utxo_list.h,P07,imp
 cardano_utxo_list_unary_predicate_t,callback,lib/include/cardano/common/utxo_list.h,P07,implemented,Predicates and comparators accepted by standard C++ algorithms,lib/tests/Common/UtxoListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_utxo_t,opaque object,lib/include/cardano/common/utxo.h,P07,implemented,Cometa::Utxo,lib/tests/Common/UtxoTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_value_t,opaque object,lib/include/cardano/transaction_body/value.h,P04.2,implemented,Cometa::Value,lib/tests/TransactionBody/ValueTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_vkey_witness_set_t,opaque object,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,
+cardano_vkey_witness_set_t,opaque object,lib/include/cardano/witness_set/vkey_witness_set.h,P15,implemented,Cometa::VkeyWitnessSet,lib/tests/WitnessSet/VkeyWitnessSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_vkey_witness_t,opaque object,lib/include/cardano/witness_set/vkey_witness.h,P15,implemented,Cometa::VkeyWitness,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_vote_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_registration_delegation_cert.h,P11,implemented,Cometa::VoteRegistrationDelegationCert,lib/tests/Certificates/VoteRegistrationDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp

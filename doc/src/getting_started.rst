@@ -1020,3 +1020,5 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 ``RedeemerList`` stores redeemers in purpose and index order and rejects duplicate keys. ``setExUnits`` updates an existing redeemer's budget.
 
 ``VkeyWitness`` pairs an Ed25519 verification key with its transaction signature and supports CBOR and CIP-116 JSON output.
+
+``VkeyWitnessSet`` holds key witnesses. Adding or applying a witness with an existing verification key updates its signature. ``setUseTag`` controls the CBOR set tag.

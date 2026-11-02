@@ -228,7 +228,7 @@ lib/include/cardano/witness_set/redeemer.h,public header,P15,implemented,Cometa:
 lib/include/cardano/witness_set/redeemer_list.h,public header,P15,implemented,Cometa::RedeemerList
 lib/include/cardano/witness_set/redeemer_tag.h,public header,P15,implemented,Cometa::RedeemerTag
 lib/include/cardano/witness_set/vkey_witness.h,public header,P15,implemented,Cometa::VkeyWitness
-lib/include/cardano/witness_set/vkey_witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/witness_set/vkey_witness_set.h,public header,P15,implemented,Cometa::VkeyWitnessSet
 lib/include/cardano/witness_set/witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/src/address/address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
 lib/src/address/base_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
