@@ -271,3 +271,15 @@ API reference
 .. doxygentypedef:: Cometa::UtxoList
 
 .. doxygentypedef:: Cometa::RewardAddressList
+
+.. doxygenclass:: Cometa::PlutusV1ScriptList
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV2ScriptList
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV3ScriptList
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV4ScriptList
+   :members:

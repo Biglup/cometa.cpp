@@ -16,6 +16,11 @@ INCLUDE (cmake/Cardano.cmake)
 
 # Library sources.
 ADD_LIBRARY (cometa STATIC
+  lib/src/AuxiliaryData/PlutusV1ScriptList.cpp
+  lib/src/AuxiliaryData/PlutusV2ScriptList.cpp
+  lib/src/AuxiliaryData/PlutusV3ScriptList.cpp
+  lib/src/AuxiliaryData/PlutusV4ScriptList.cpp
+
   lib/src/TransactionBody/TransactionInputSet.cpp
   lib/src/TransactionBody/TransactionOutputList.cpp
   lib/src/Common/WithdrawalMap.cpp
@@ -130,6 +135,11 @@ IF (COMETA_BUILD_TESTS)
   FIND_PACKAGE (GTest CONFIG REQUIRED)
 
   ADD_EXECUTABLE (cometa-tests
+    lib/tests/AuxiliaryData/PlutusV1ScriptListTest.cpp
+    lib/tests/AuxiliaryData/PlutusV2ScriptListTest.cpp
+    lib/tests/AuxiliaryData/PlutusV3ScriptListTest.cpp
+    lib/tests/AuxiliaryData/PlutusV4ScriptListTest.cpp
+
     lib/tests/TransactionBody/TransactionInputTest.cpp
     lib/tests/TransactionBody/TransactionOutputTest.cpp
     lib/tests/Common/UtxoTest.cpp

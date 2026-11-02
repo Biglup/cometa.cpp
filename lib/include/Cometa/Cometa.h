@@ -126,3 +126,8 @@
 #include <Cometa/Common/WithdrawalMap.h>
 #include <Cometa/TransactionBody/TransactionInputSet.h>
 #include <Cometa/TransactionBody/TransactionOutputList.h>
+
+#include <Cometa/AuxiliaryData/PlutusV1ScriptList.h>
+#include <Cometa/AuxiliaryData/PlutusV2ScriptList.h>
+#include <Cometa/AuxiliaryData/PlutusV3ScriptList.h>
+#include <Cometa/AuxiliaryData/PlutusV4ScriptList.h>
