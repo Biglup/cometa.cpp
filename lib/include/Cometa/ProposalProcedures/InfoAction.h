@@ -129,6 +129,9 @@ class InfoAction
 
   private:
 
+    /** @brief Allows proposal procedures to copy this value. */
+    friend class ProposalProcedure;
+
     /**
      * @brief Adopts an owned action.
      * @param value The owned action.

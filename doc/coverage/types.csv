@@ -148,7 +148,7 @@ cardano_pool_registration_cert_t,opaque object,lib/include/cardano/certs/pool_re
 cardano_pool_retirement_cert_t,opaque object,lib/include/cardano/certs/pool_retirement_cert.h,P10,implemented,Cometa::PoolRetirementCert,lib/tests/Certificates/PoolRetirementCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_pool_voting_thresholds_t,opaque object,lib/include/cardano/protocol_params/pool_voting_thresholds.h,P12,implemented,Cometa::PoolVotingThresholds,lib/tests/ProtocolParams/PoolVotingThresholdsTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_proposal_procedure_set_t,opaque object,lib/include/cardano/proposal_procedures/proposal_procedure_set.h,P13,planned,,
-cardano_proposal_procedure_t,opaque object,lib/include/cardano/proposal_procedures/proposal_procedure.h,P13,planned,,
+cardano_proposal_procedure_t,opaque object,lib/include/cardano/proposal_procedures/proposal_procedure.h,P13,implemented,Cometa::ProposalProcedure,lib/tests/ProposalProcedures/ProposalProcedureTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_proposed_param_updates_t,opaque object,lib/include/cardano/protocol_params/proposed_param_updates.h,P12,implemented,Cometa::ProposedParamUpdates,lib/tests/ProtocolParams/ProposedParamUpdatesTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_protocol_param_update_t,opaque object,lib/include/cardano/protocol_params/protocol_param_update.h,P12,implemented,Cometa::ProtocolParamUpdate,lib/tests/ProtocolParams/ProtocolParamUpdateTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_protocol_parameters_t,opaque object,lib/include/cardano/protocol_params/protocol_parameters.h,P12,implemented,Cometa::ProtocolParameters,lib/tests/ProtocolParams/ProtocolParametersTest.cpp

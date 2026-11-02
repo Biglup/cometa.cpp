@@ -161,8 +161,10 @@ class TreasuryWithdrawalsAction
 
   private:
 
+    /** @brief Allows proposal procedures to copy this value. */
+    friend class ProposalProcedure;
+
     /** @brief Allows governance actions to copy treasury withdrawal actions. */
-    friend class NewTreasuryWithdrawalsActionAction;
 
     /**
      * @brief Adopts an owned treasury withdrawal action.

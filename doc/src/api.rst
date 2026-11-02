@@ -523,3 +523,6 @@ Protocol parameters
 
 .. doxygenclass:: Cometa::UpdateCommitteeAction
    :members:
+
+.. doxygenclass:: Cometa::ProposalProcedure
+   :members:

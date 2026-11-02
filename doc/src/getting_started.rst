@@ -976,3 +976,12 @@ expiration epochs::
    const Cometa::UpdateCommitteeAction updateCommittee(
      Cometa::CredentialSet(), members, Cometa::UnitInterval(1, 2));
    const std::vector<std::uint8_t> proposalCbor = updateCommittee.toCbor();
+
+``ProposalProcedure`` pairs one governance action with its deposit, return
+address, and metadata anchor::
+
+   const Cometa::ProposalProcedure proposal(
+     500, Cometa::RewardAddress(Cometa::NetworkId::Testnet, coldCredential),
+     Cometa::Anchor("https://a", Cometa::Blake2bHash::fromHex(std::string(64, '0'))),
+     Cometa::InfoAction());
+   const Cometa::InfoAction action = proposal.asInfoAction();

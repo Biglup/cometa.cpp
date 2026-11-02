@@ -200,6 +200,9 @@ class RewardAddress
 
   private:
 
+    /** @brief Allows proposal procedures to copy this value. */
+    friend class ProposalProcedure;
+
     /** @brief Allows PoolParams to copy pool components. */
     friend class PoolParams;
 
