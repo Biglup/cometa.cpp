@@ -277,6 +277,9 @@ class PlutusData
     /** @brief Allows PlutusList to copy components. */
     friend class PlutusList;
 
+    /** @brief Allows witness sets to copy data values. */
+    friend class PlutusDataSet;
+
     /** @brief Allows PlutusMap to copy components. */
     friend class PlutusMap;
 

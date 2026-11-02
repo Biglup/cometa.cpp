@@ -629,6 +629,20 @@ main()
     return 1;
   }
 
+  Cometa::NativeScriptSet nativeScripts;
+  nativeScripts.add(Cometa::NativeScript(Cometa::ScriptInvalidBefore(5)));
+  if (Cometa::NativeScriptSet::fromCbor(nativeScripts.toCbor()) != nativeScripts)
+  {
+    return 1;
+  }
+
+  Cometa::PlutusDataSet datumValues;
+  datumValues.add(Cometa::PlutusData(1));
+  if (Cometa::PlutusDataSet::fromCbor(datumValues.toCbor()) != datumValues)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

@@ -215,6 +215,8 @@
 #include <Cometa/VotingProcedures/VotingProcedures.h>
 #include <Cometa/WitnessSet/BootstrapWitness.h>
 #include <Cometa/WitnessSet/BootstrapWitnessSet.h>
+#include <Cometa/WitnessSet/NativeScriptSet.h>
+#include <Cometa/WitnessSet/PlutusDataSet.h>
 #include <Cometa/WitnessSet/Redeemer.h>
 #include <Cometa/WitnessSet/RedeemerList.h>
 #include <Cometa/WitnessSet/RedeemerTag.h>

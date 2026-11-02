@@ -1026,3 +1026,7 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 ``BootstrapWitness`` adds a 32-byte chain code and bootstrap address attributes to a key witness.
 
 ``BootstrapWitnessSet`` groups bootstrap witnesses by Byron address root and updates the signature when a new witness has the same root.
+
+``NativeScriptSet`` stores distinct native scripts by script hash and controls the CBOR set tag.
+
+``PlutusDataSet`` stores distinct datum values. Adding to a decoded set updates its CBOR, and ``setUseTag`` controls the set tag.

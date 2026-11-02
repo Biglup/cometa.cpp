@@ -579,3 +579,9 @@ Witnesses and redeemers
 
 .. doxygenclass:: Cometa::BootstrapWitnessSet
    :members:
+
+.. doxygenclass:: Cometa::NativeScriptSet
+   :members:
+
+.. doxygenclass:: Cometa::PlutusDataSet
+   :members:

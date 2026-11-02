@@ -111,7 +111,7 @@ cardano_mir_to_stake_creds_cert_t,opaque object,lib/include/cardano/certs/mir_to
 cardano_multi_asset_t,opaque object,lib/include/cardano/assets/multi_asset.h,P04.2,implemented,Cometa::MultiAsset,lib/tests/Assets/MultiAssetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_multi_host_name_relay_t,opaque object,lib/include/cardano/pool_params/multi_host_name_relay.h,P09,implemented,Cometa::MultiHostNameRelay,lib/tests/PoolParams/MultiHostNameRelayTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_native_script_list_t,opaque object,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,implemented,Cometa::NativeScriptList,lib/tests/Scripts/NativeScripts/NativeScriptListTest.cpp
-cardano_native_script_set_t,opaque object,lib/include/cardano/witness_set/native_script_set.h,P15,planned,,
+cardano_native_script_set_t,opaque object,lib/include/cardano/witness_set/native_script_set.h,P15,implemented,Cometa::NativeScriptSet,lib/tests/WitnessSet/NativeScriptSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_native_script_t,opaque object,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,implemented,Cometa::NativeScript,lib/tests/Scripts/NativeScripts/NativeScriptTest.cpp
 cardano_native_script_type_t,enum,lib/include/cardano/scripts/native_scripts/native_script_type.h,P06.2,implemented,Cometa::NativeScriptType,lib/tests/Scripts/NativeScripts/NativeScriptTypeTest.cpp
 cardano_network_id_t,enum,lib/include/cardano/common/network_id.h,P01a.1,implemented,NetworkId,lib/tests/Common/NetworkIdTest.cpp
@@ -122,7 +122,7 @@ cardano_object_deallocator_t,callback,lib/include/cardano/object.h,P01a.1,intern
 cardano_object_t,struct,lib/include/cardano/object.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
 cardano_parameter_change_action_t,opaque object,lib/include/cardano/proposal_procedures/parameter_change_action.h,P13,implemented,Cometa::ParameterChangeAction,lib/tests/ProposalProcedures/ParameterChangeActionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_data_kind_t,enum,lib/include/cardano/plutus_data/plutus_data_kind.h,P05,implemented,Cometa::PlutusDataKind,lib/tests/PlutusData/PlutusDataKindTest.cpp
-cardano_plutus_data_set_t,opaque object,lib/include/cardano/witness_set/plutus_data_set.h,P15,planned,,
+cardano_plutus_data_set_t,opaque object,lib/include/cardano/witness_set/plutus_data_set.h,P15,implemented,Cometa::PlutusDataSet,lib/tests/WitnessSet/PlutusDataSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_data_t,opaque object,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData,lib/tests/PlutusData/PlutusDataTest.cpp
 cardano_plutus_language_version_t,enum,lib/include/cardano/scripts/plutus_scripts/plutus_language_version.h,P06.3,implemented,Cometa::PlutusLanguageVersion,lib/tests/Scripts/PlutusScripts/PlutusLanguageVersionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_list_t,opaque object,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList,lib/tests/PlutusData/PlutusListTest.cpp
