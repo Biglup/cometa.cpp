@@ -731,6 +731,14 @@ main()
     return 1;
   }
 
+  Cometa::DerivationPath keyPath;
+  keyPath.account = 2;
+  keyPath.role    = Cometa::DerivationRole::DRep;
+  if (keyPath.accountPath().account != 2 || keyPath.purpose != Cometa::Cip1852::StandardPurpose)
+  {
+    return 1;
+  }
+
   const Cometa::TransactionBody transactionBody(Cometa::TransactionInputSet(), Cometa::TransactionOutputList(), 100);
   if (Cometa::TransactionBody::fromCbor(transactionBody.toCbor()) != transactionBody)
   {

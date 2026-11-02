@@ -1051,4 +1051,6 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 
 ``Transaction`` pairs a top-level body with witnesses and optional auxiliary data. It exposes the validity flag, required signer discovery, and ledger-ordered indexes for redeemers and transaction components. ``applyVkeyWitnesses`` merges signatures into its witness set.
 
+For wallet keys, ``AccountDerivationPath`` represents the first three CIP-1852 path segments. ``DerivationPath`` adds a typed ``DerivationRole`` and key index. Supply segment values before hardening; software key handlers harden purpose, coin type, and account during derivation.
+
 ``SubTransactionSet`` keeps sub-transactions in insertion order and rejects duplicate body hashes. Use ``findById`` to look up an intent by its hash.

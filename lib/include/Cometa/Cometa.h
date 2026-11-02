@@ -81,6 +81,11 @@
 #include <Cometa/Json/JsonValue.h>
 #include <Cometa/Json/JsonWriter.h>
 
+#include <Cometa/KeyHandlers/AccountDerivationPath.h>
+#include <Cometa/KeyHandlers/Cip1852.h>
+#include <Cometa/KeyHandlers/DerivationPath.h>
+#include <Cometa/KeyHandlers/DerivationRole.h>
+
 #include <Cometa/Address/Address.h>
 #include <Cometa/Address/AddressType.h>
 #include <Cometa/Address/BaseAddress.h>

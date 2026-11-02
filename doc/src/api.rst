@@ -207,6 +207,17 @@ API reference
 .. doxygenclass:: Cometa::Transaction
    :members:
 
+.. doxygenstruct:: Cometa::AccountDerivationPath
+   :members:
+
+.. doxygenstruct:: Cometa::DerivationPath
+   :members:
+
+.. doxygenenum:: Cometa::DerivationRole
+
+.. doxygennamespace:: Cometa::Cip1852
+   :members:
+
 .. doxygenclass:: Cometa::SubTransactionSet
    :members:
 
