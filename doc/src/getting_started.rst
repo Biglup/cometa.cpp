@@ -763,3 +763,15 @@ The hash getter returns an independent value.
 .. code-block:: cpp
 
    Cometa::PoolRetirementCert retirement(poolKeyHash, retirementEpoch);
+
+Combined stake registration and delegation
+------------------------------------------
+
+``StakeRegistrationDelegationCert`` registers a stake credential and delegates
+to a pool in one certificate. It stores a deposit in lovelace and returns
+independent credential and pool hash values.
+
+.. code-block:: cpp
+
+   Cometa::StakeRegistrationDelegationCert cert(
+     stakeCredential, poolKeyHash, 2'000'000);

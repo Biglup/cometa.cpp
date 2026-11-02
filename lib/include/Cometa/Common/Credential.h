@@ -224,6 +224,9 @@ class Credential
     /** @brief Allows UnregistrationCert to copy its credential. */
     friend class UnregistrationCert;
 
+    /** @brief Allows StakeRegistrationDelegationCert to copy its credential. */
+    friend class StakeRegistrationDelegationCert;
+
     /** @brief Allows StakeDelegationCert to copy its credential. */
     friend class StakeDelegationCert;
 

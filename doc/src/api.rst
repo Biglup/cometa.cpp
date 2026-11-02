@@ -393,3 +393,9 @@ Pool retirement certificate
 
 .. doxygenclass:: Cometa::PoolRetirementCert
    :members:
+
+Stake registration and delegation
+---------------------------------
+
+.. doxygenclass:: Cometa::StakeRegistrationDelegationCert
+   :members:

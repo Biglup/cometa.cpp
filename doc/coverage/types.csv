@@ -190,7 +190,7 @@ cardano_stake_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_de
 cardano_stake_deregistration_cert_t,opaque object,lib/include/cardano/certs/stake_deregistration_cert.h,P10,implemented,Cometa::StakeDeregistrationCert,lib/tests/Certificates/StakeDeregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_stake_pointer_t,struct,lib/include/cardano/address/stake_pointer.h,P03,implemented,Cometa::StakePointer,lib/tests/Address/PointerAddressTest.cpp
 cardano_stake_registration_cert_t,opaque object,lib/include/cardano/certs/stake_registration_cert.h,P10,implemented,Cometa::StakeRegistrationCert,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_stake_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_registration_delegation_cert.h,P10,planned,,
+cardano_stake_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_registration_delegation_cert.h,P10,implemented,Cometa::StakeRegistrationDelegationCert,lib/tests/Certificates/StakeRegistrationDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_stake_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_vote_delegation_cert.h,P11,planned,,
 cardano_stake_vote_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_vote_registration_delegation_cert.h,P11,planned,,
 cardano_sub_transaction_body_t,opaque object,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,planned,,
