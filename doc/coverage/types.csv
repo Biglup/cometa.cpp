@@ -107,7 +107,7 @@ cardano_mir_cert_pot_type_t,enum,lib/include/cardano/certs/mir_cert_pot_type.h,P
 cardano_mir_cert_t,opaque object,lib/include/cardano/certs/mir_cert.h,P10,planned,,
 cardano_mir_cert_type_t,enum,lib/include/cardano/certs/mir_cert_type.h,P10,implemented,Cometa::MirCertType,lib/tests/Certificates/MirCertTypeTest.cpp
 cardano_mir_to_pot_cert_t,opaque object,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_mir_to_stake_creds_cert_t,opaque object,lib/include/cardano/certs/mir_to_stake_creds_cert.h,P10,planned,,
+cardano_mir_to_stake_creds_cert_t,opaque object,lib/include/cardano/certs/mir_to_stake_creds_cert.h,P10,implemented,Cometa::MirToStakeCredentialsCert,lib/tests/Certificates/MirToStakeCredentialsCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_multi_asset_t,opaque object,lib/include/cardano/assets/multi_asset.h,P04.2,implemented,Cometa::MultiAsset,lib/tests/Assets/MultiAssetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_multi_host_name_relay_t,opaque object,lib/include/cardano/pool_params/multi_host_name_relay.h,P09,implemented,Cometa::MultiHostNameRelay,lib/tests/PoolParams/MultiHostNameRelayTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_native_script_list_t,opaque object,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,implemented,Cometa::NativeScriptList,lib/tests/Scripts/NativeScripts/NativeScriptListTest.cpp

@@ -158,6 +158,7 @@
 #include <Cometa/Certificates/MirCertType.h>
 #include <Cometa/Certificates/MirPotType.h>
 #include <Cometa/Certificates/MirToPotCert.h>
+#include <Cometa/Certificates/MirToStakeCredentialsCert.h>
 #include <Cometa/Certificates/PoolRegistrationCert.h>
 #include <Cometa/Certificates/PoolRetirementCert.h>
 #include <Cometa/Certificates/RegistrationCert.h>

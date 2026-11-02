@@ -415,3 +415,6 @@ Historical MIR pot transfers
 
 .. doxygenclass:: Cometa::MirToPotCert
    :members:
+
+.. doxygenclass:: Cometa::MirToStakeCredentialsCert
+   :members:

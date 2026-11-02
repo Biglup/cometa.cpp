@@ -790,3 +790,7 @@ Historical MIR pot transfers
 reserve and treasury pots. ``MirPotType`` selects the source pot; amounts are
 expressed in lovelace. This historical certificate remains available for
 inspection of older transactions.
+
+``MirToStakeCredentialsCert`` records a historical distribution from either
+pot to stake credentials. Its entries contain a credential and an amount in
+lovelace.

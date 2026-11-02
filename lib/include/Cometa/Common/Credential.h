@@ -236,6 +236,9 @@ class Credential
     /** @brief Allows StakeRegistrationCert to copy its credential. */
     friend class StakeRegistrationCert;
 
+    /** @brief Allows MIR distributions to copy their credentials. */
+    friend class MirToStakeCredentialsCert;
+
     /** @brief Allows ScriptRequireGuard to copy script components. */
     friend class ScriptRequireGuard;
 
