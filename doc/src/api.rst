@@ -567,3 +567,6 @@ Witnesses and redeemers
 
 .. doxygenclass:: Cometa::RedeemerList
    :members:
+
+.. doxygenclass:: Cometa::VkeyWitness
+   :members:

@@ -77,6 +77,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/WitnessSet/RedeemerTag.cpp
   lib/src/WitnessSet/Redeemer.cpp
   lib/src/WitnessSet/RedeemerList.cpp
+  lib/src/WitnessSet/VkeyWitness.cpp
   lib/src/Certificates/RegistrationCert.cpp
   lib/src/Certificates/UnregistrationCert.cpp
   lib/src/Common/DRep.cpp
@@ -275,6 +276,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/WitnessSet/RedeemerTagTest.cpp
     lib/tests/WitnessSet/RedeemerTest.cpp
     lib/tests/WitnessSet/RedeemerListTest.cpp
+    lib/tests/WitnessSet/VkeyWitnessTest.cpp
     lib/tests/Certificates/RegistrationCertTest.cpp
     lib/tests/Certificates/UnregistrationCertTest.cpp
     lib/tests/Common/DRepTypeTest.cpp

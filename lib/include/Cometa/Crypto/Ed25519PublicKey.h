@@ -150,6 +150,9 @@ class Ed25519PublicKey
     /**
      * @brief Allows Ed25519PrivateKey to transfer or inspect key material.
      */
+    /** @brief Allows key witnesses to copy signed values. */
+    friend class VkeyWitness;
+
     friend class Ed25519PrivateKey;
 
     /**

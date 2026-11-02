@@ -3271,38 +3271,38 @@ cardano_redeemer_list_refcount,lib/include/cardano/witness_set/redeemer_list.h,P
 cardano_redeemer_list_set_last_error,lib/include/cardano/witness_set/redeemer_list.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/RedeemerListTest.cpp; lib/tests/ValueContractTest.cpp,"Sorted distinct keys, independent values, and cached CBOR invalidation."
 cardano_redeemer_list_get_last_error,lib/include/cardano/witness_set/redeemer_list.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/RedeemerListTest.cpp; lib/tests/ValueContractTest.cpp,"Sorted distinct keys, independent values, and cached CBOR invalidation."
 cardano_redeemer_list_deep_clone,lib/include/cardano/witness_set/redeemer_list.h,P15,implemented,Cometa::RedeemerList / copy constructor,lib/tests/WitnessSet/RedeemerListTest.cpp; lib/tests/ValueContractTest.cpp,"Sorted distinct keys, independent values, and cached CBOR invalidation."
-cardano_vkey_witness_new,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_from_cbor,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_to_cbor,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_to_cip116_json,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_has_public_key,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_get_vkey,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_vkey,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_get_signature,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_signature,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_unref,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_ref,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_refcount,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_last_error,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_get_last_error,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_deep_clone,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_new,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_from_cbor,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_to_cbor,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_to_cip116_json,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_get_length,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_get,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_add,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_apply,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_get_use_tag,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_set_use_tag,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_clear_cbor_cache,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_unref,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_ref,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_refcount,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_set_last_error,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_get_last_error,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
-cardano_vkey_witness_set_deep_clone,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,,API and ownership mapping pending.
+cardano_vkey_witness_new,lib/include/cardano/witness_set/vkey_witness.h,P15,implemented,Cometa::VkeyWitness / constructor,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_from_cbor,lib/include/cardano/witness_set/vkey_witness.h,P15,implemented,Cometa::VkeyWitness / fromCbor,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_to_cbor,lib/include/cardano/witness_set/vkey_witness.h,P15,implemented,Cometa::VkeyWitness / toCbor,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_to_cip116_json,lib/include/cardano/witness_set/vkey_witness.h,P15,implemented,Cometa::VkeyWitness / toJson,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_has_public_key,lib/include/cardano/witness_set/vkey_witness.h,P15,implemented,Cometa::VkeyWitness / hasPublicKey,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_get_vkey,lib/include/cardano/witness_set/vkey_witness.h,P15,implemented,Cometa::VkeyWitness / publicKey,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_vkey,lib/include/cardano/witness_set/vkey_witness.h,P15,implemented,Cometa::VkeyWitness / setPublicKey,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_get_signature,lib/include/cardano/witness_set/vkey_witness.h,P15,implemented,Cometa::VkeyWitness / signature,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_signature,lib/include/cardano/witness_set/vkey_witness.h,P15,implemented,Cometa::VkeyWitness / setSignature,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_unref,lib/include/cardano/witness_set/vkey_witness.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_ref,lib/include/cardano/witness_set/vkey_witness.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_refcount,lib/include/cardano/witness_set/vkey_witness.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_last_error,lib/include/cardano/witness_set/vkey_witness.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_get_last_error,lib/include/cardano/witness_set/vkey_witness.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_deep_clone,lib/include/cardano/witness_set/vkey_witness.h,P15,implemented,Cometa::VkeyWitness / copy constructor,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_new,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_from_cbor,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_to_cbor,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_to_cip116_json,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_get_length,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_get,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_add,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_apply,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_get_use_tag,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_set_use_tag,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_clear_cbor_cache,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_unref,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_ref,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_refcount,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_set_last_error,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_get_last_error,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
+cardano_vkey_witness_set_deep_clone,lib/include/cardano/witness_set/vkey_witness_set.h,P15,internal,RAII and exceptions,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp,Independent key and signature values.
 cardano_witness_set_new,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
 cardano_witness_set_from_cbor,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
 cardano_witness_set_to_cbor,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.

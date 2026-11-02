@@ -603,6 +603,12 @@ main()
     return 1;
   }
 
+  const Cometa::VkeyWitness keyWitness(Cometa::Ed25519PublicKey(std::vector<std::uint8_t>(32, 1)), Cometa::Ed25519Signature(std::vector<std::uint8_t>(64, 2)));
+  if (Cometa::VkeyWitness::fromCbor(keyWitness.toCbor()) != keyWitness)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0
