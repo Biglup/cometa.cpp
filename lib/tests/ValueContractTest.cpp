@@ -442,7 +442,42 @@ sampleValue<PoolMetadata>()
   return PoolMetadata("https://example.com", Blake2bHash::fromHex(std::string(64, '1')));
 }
 
-using ValueTypes = testing::Types<Ipv4, Ipv6, BlsKey, PoolMetadata, TransactionMetadata, AuxiliaryData, Metadatum, MetadatumList, MetadatumMap, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
+template<>
+SingleHostAddrRelay
+sampleValue<SingleHostAddrRelay>()
+{
+  return SingleHostAddrRelay(3001, sampleValue<Ipv4>(), sampleValue<Ipv6>());
+}
+
+template<>
+SingleHostNameRelay
+sampleValue<SingleHostNameRelay>()
+{
+  return SingleHostNameRelay("example.com", 3001);
+}
+
+template<>
+MultiHostNameRelay
+sampleValue<MultiHostNameRelay>()
+{
+  return MultiHostNameRelay("example.com");
+}
+
+template<>
+Relay
+sampleValue<Relay>()
+{
+  return Relay(sampleValue<SingleHostAddrRelay>());
+}
+
+template<>
+Relays
+sampleValue<Relays>()
+{
+  return Relays { sampleValue<Relay>(), Relay(sampleValue<SingleHostNameRelay>()), Relay(sampleValue<MultiHostNameRelay>()) };
+}
+
+using ValueTypes = testing::Types<SingleHostAddrRelay, SingleHostNameRelay, MultiHostNameRelay, Relay, Relays, Ipv4, Ipv6, BlsKey, PoolMetadata, TransactionMetadata, AuxiliaryData, Metadatum, MetadatumList, MetadatumMap, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -5383,4 +5418,115 @@ TEST(PoolMetadata, FailedSetHashPreservesValue)
     EXPECT_EQ(value, original);
     EXPECT_EQ(value.toCbor(), original.toCbor());
   }
+}
+
+TEST(SingleHostAddrRelay, FailedSetIpv4PreservesValue)
+{
+  // Arrange
+  const SingleHostAddrRelay original    = sampleValue<SingleHostAddrRelay>();
+  const std::optional<Ipv4> replacement = Ipv4::fromString("192.0.2.1");
+  std::size_t               count       = 0U;
+  {
+    SingleHostAddrRelay value(original);
+    AllocationFailure   tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.setIpv4(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    SingleHostAddrRelay value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setIpv4(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
+  }
+}
+
+TEST(SingleHostAddrRelay, FailedSetIpv6PreservesValue)
+{
+  // Arrange
+  const SingleHostAddrRelay original    = sampleValue<SingleHostAddrRelay>();
+  const std::optional<Ipv6> replacement = std::nullopt;
+  std::size_t               count       = 0U;
+  {
+    SingleHostAddrRelay value(original);
+    AllocationFailure   tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.setIpv6(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    SingleHostAddrRelay value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setIpv6(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
+  }
+}
+
+TEST(Relays, FailedPushBackPreservesValue)
+{
+  // Arrange
+  const Relays original    = sampleValue<Relays>();
+  const Relay  replacement = Relay(sampleValue<SingleHostNameRelay>());
+  std::size_t  count       = 0U;
+  {
+    Relays            value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.pushBack(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    Relays value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.pushBack(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
+  }
+}
+
+TEST(SingleHostAddrRelay, FailedPortAllocationPreservesAbsentPort)
+{
+  // Arrange
+  SingleHostAddrRelay       value = SingleHostAddrRelay();
+  const SingleHostAddrRelay original(value);
+
+  // Act & Assert
+  {
+    AllocationFailure failure(0U, true);
+    EXPECT_THROW(value.setPort(3001), std::bad_alloc);
+  }
+  EXPECT_FALSE(value.port());
+  EXPECT_EQ(value, original);
+}
+
+TEST(SingleHostNameRelay, FailedPortAllocationPreservesAbsentPort)
+{
+  // Arrange
+  SingleHostNameRelay       value = SingleHostNameRelay("example.com");
+  const SingleHostNameRelay original(value);
+
+  // Act & Assert
+  {
+    AllocationFailure failure(0U, true);
+    EXPECT_THROW(value.setPort(3001), std::bad_alloc);
+  }
+  EXPECT_FALSE(value.port());
+  EXPECT_EQ(value, original);
 }
