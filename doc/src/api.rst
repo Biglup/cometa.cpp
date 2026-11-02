@@ -82,3 +82,15 @@ API reference
 .. doxygenfunction:: Cometa::toString(CborSimpleValue)
 
 .. doxygenfunction:: Cometa::toString(CborReaderState)
+
+.. doxygenenum:: Cometa::JsonType
+
+.. doxygenenum:: Cometa::JsonFormat
+
+.. doxygenenum:: Cometa::JsonContext
+
+.. doxygenclass:: Cometa::JsonValue
+   :members:
+
+.. doxygenclass:: Cometa::JsonWriter
+   :members:

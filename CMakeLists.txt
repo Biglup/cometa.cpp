@@ -22,6 +22,8 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Cbor/CborReaderState.cpp
   lib/src/Cbor/CborReader.cpp
   lib/src/Cbor/CborWriter.cpp
+  lib/src/Json/JsonValue.cpp
+  lib/src/Json/JsonWriter.cpp
   lib/src/ErrorCode.cpp
   lib/src/Error.cpp
   lib/src/SlotConfig.cpp
@@ -81,6 +83,11 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Cbor/CborReaderStateTest.cpp
     lib/tests/Cbor/CborReaderTest.cpp
     lib/tests/Cbor/CborWriterTest.cpp
+    lib/tests/Json/JsonTypeTest.cpp
+    lib/tests/Json/JsonFormatTest.cpp
+    lib/tests/Json/JsonContextTest.cpp
+    lib/tests/Json/JsonValueTest.cpp
+    lib/tests/Json/JsonWriterTest.cpp
     lib/tests/ErrorTest.cpp
     lib/tests/SlotConfigTest.cpp
     lib/tests/Encoding/Base58Test.cpp

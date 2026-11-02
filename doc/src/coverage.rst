@@ -59,13 +59,16 @@ and callback adapters are tracked in :doc:`implementation_plan`.
    * - CBOR readers, writers, and enums
      - ``CborReader``, ``CborWriter``, ``CborTag``, ``CborMajorType``, ``CborSimpleValue``, and ``CborReaderState``; independent cursor/buffer copies
 
+   * - JSON values, writers, and enums
+     - ``JsonValue``, ``JsonWriter``, ``JsonType``, ``JsonFormat``, and ``JsonContext``; owned children, exact number tokens, checked writes
+
 Coverage ledger
 ---------------
 
 The inventory targets cardano-c commit
-``84dea5a53dae721db4377876b8e162670636d6e1``, matching the dependency pin.
+``9ebc1577832e871dca3e8f3e932f91872f2dd67d``, matching the dependency pin.
 It contains 231 public headers, 418 implementation files, 235 distinct public
-typedefs, and 3,334 exported function declarations. Tests and vendored dependencies
+typedefs, and 3,335 exported function declarations. Tests and vendored dependencies
 are outside the file inventory.
 
 * :download:`File inventory <coverage/files.csv>`

@@ -71,6 +71,18 @@ main()
     return 1;
   }
 
+  Cometa::JsonWriter json;
+  json.writeStartObject();
+  json.writePropertyName("amount");
+  json.writeBigInt(integer);
+  json.writeEndObject();
+  const Cometa::JsonValue parsed = Cometa::JsonValue::parse(json.toString());
+
+  if (parsed.at("amount").toJson() != integer.toString())
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

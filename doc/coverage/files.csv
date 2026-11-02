@@ -99,11 +99,11 @@ lib/include/cardano/encoding/base58.h,public header,P01a.3,implemented,Cometa::e
 lib/include/cardano/encoding/bech32.h,public header,P01a.3,implemented,Cometa::encodeBech32 and decodeBech32; known vectors and failure tests
 lib/include/cardano/error.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/export.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
-lib/include/cardano/json/json_context.h,public header,P01b,planned,idiomatic C++ API
-lib/include/cardano/json/json_format.h,public header,P01b,planned,idiomatic C++ API
-lib/include/cardano/json/json_object.h,public header,P01b,planned,idiomatic C++ API
-lib/include/cardano/json/json_object_type.h,public header,P01b,planned,idiomatic C++ API
-lib/include/cardano/json/json_writer.h,public header,P01b,planned,idiomatic C++ API
+lib/include/cardano/json/json_context.h,public header,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/include/cardano/json/json_format.h,public header,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/include/cardano/json/json_object.h,public header,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/include/cardano/json/json_object_type.h,public header,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/include/cardano/json/json_writer.h,public header,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
 lib/include/cardano/key_handlers/account_derivation_path.h,public header,P18,planned,idiomatic C++ API
 lib/include/cardano/key_handlers/cip_1852_constants.h,public header,P18,planned,idiomatic C++ API
 lib/include/cardano/key_handlers/derivation_path.h,public header,P18,planned,idiomatic C++ API
@@ -360,18 +360,18 @@ lib/src/encoding/bech32.c,implementation file,P01a.3,implemented,Cometa::encodeB
 lib/src/endian.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/endian.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/error.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/json/internals/json_object_common.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/json/internals/json_object_common.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/json/internals/json_object_serialization.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/json/internals/json_object_serialization.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/json/internals/json_parser.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/json/internals/json_parser.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/json/internals/json_writer_common.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/json/internals/json_writer_common.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/json/internals/utf8.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/json/internals/utf8.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/json/json_object.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/json/json_writer.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/json/internals/json_object_common.c,implementation file,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/src/json/internals/json_object_common.h,implementation file,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/src/json/internals/json_object_serialization.c,implementation file,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/src/json/internals/json_object_serialization.h,implementation file,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/src/json/internals/json_parser.c,implementation file,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/src/json/internals/json_parser.h,implementation file,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/src/json/internals/json_writer_common.c,implementation file,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/src/json/internals/json_writer_common.h,implementation file,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/src/json/internals/utf8.c,implementation file,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/src/json/internals/utf8.h,implementation file,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/src/json/json_object.c,implementation file,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
+lib/src/json/json_writer.c,implementation file,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
 lib/src/key_handlers/secure_key_handler.c,implementation file,P18,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/key_handlers/software_secure_key_handler.c,implementation file,P18,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/message_signing/cip8.c,implementation file,P18,internal,Native implementation reference; coverage is tracked against its public API.

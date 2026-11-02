@@ -1296,65 +1296,65 @@ cardano_encoding_bech32_encode,lib/include/cardano/encoding/bech32.h,P01a.3,impl
 cardano_encoding_bech32_get_decoded_length,lib/include/cardano/encoding/bech32.h,P01a.3,internal,Private allocation sizing,lib/tests/Encoding/Bech32Test.cpp,Output size is managed by C++ containers.
 cardano_encoding_bech32_decode,lib/include/cardano/encoding/bech32.h,P01a.3,implemented,Cometa::decodeBech32,lib/tests/Encoding/Bech32Test.cpp; lib/tests/ValueContractTest.cpp,Owned strings and byte vectors; no public buffer sizing or manual cleanup.
 cardano_error_to_string,lib/include/cardano/error.h,P01a.1,implemented,makeErrorCode().message(),lib/tests/ErrorTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
-cardano_json_object_parse,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_to_json_string,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_type,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_has_property,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_property_count,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_key_at,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_value_at,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_value_at_ex,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_ex,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_array_get_length,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_array_get,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_array_get_ex,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_string,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_is_negative_number,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_is_real_number,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_uint,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_signed_int,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_double,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_boolean,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_unref,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_ref,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_refcount,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_set_last_error,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_get_last_error,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_object_deep_clone,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_new,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_property_name,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_bool,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_null,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_bigint,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_start_array,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_end_array,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_start_object,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_end_object,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_raw_value,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_object,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_uint,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_uint_as_string,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_signed_int,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_signed_int_as_string,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_double,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_double_as_string,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_buffer_as_hex,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_bytes_as_hex,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_bytes_as_bech32,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_buffer_as_bech32,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_write_string,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_get_context,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_get_encoded_size,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_encode,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_encode_in_buffer,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_reset,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_unref,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_ref,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_refcount,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_set_last_error,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_get_last_error,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
-cardano_json_writer_deep_clone,lib/include/cardano/json/json_writer.h,P01b,planned,,,API and ownership mapping pending.
+cardano_json_object_parse,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::parse,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_to_json_string,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::toJson,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get_type,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::type,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_has_property,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::contains,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get_property_count,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::size,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get_key_at,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::keyAt,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get_value_at,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::valueAt,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get_value_at_ex,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::valueAt,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::at,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get_ex,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::at,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_array_get_length,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::size,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_array_get,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::at,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_array_get_ex,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::at,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get_string,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::asString,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get_is_negative_number,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::isNegative,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get_is_real_number,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::isReal,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get_uint,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::asUInt,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get_signed_int,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::asInt,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get_double,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::asDouble,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_get_boolean,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::asBool,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_object_unref,lib/include/cardano/json/json_object.h,P01b,internal,"RAII, owned containers, and exceptions",lib/tests/Json/JsonValueTest.cpp,"Native ownership, sizing, and diagnostics stay private."
+cardano_json_object_ref,lib/include/cardano/json/json_object.h,P01b,internal,"RAII, owned containers, and exceptions",lib/tests/Json/JsonValueTest.cpp,"Native ownership, sizing, and diagnostics stay private."
+cardano_json_object_refcount,lib/include/cardano/json/json_object.h,P01b,internal,"RAII, owned containers, and exceptions",lib/tests/Json/JsonValueTest.cpp,"Native ownership, sizing, and diagnostics stay private."
+cardano_json_object_set_last_error,lib/include/cardano/json/json_object.h,P01b,internal,"RAII, owned containers, and exceptions",lib/tests/Json/JsonValueTest.cpp,"Native ownership, sizing, and diagnostics stay private."
+cardano_json_object_get_last_error,lib/include/cardano/json/json_object.h,P01b,internal,"RAII, owned containers, and exceptions",lib/tests/Json/JsonValueTest.cpp,"Native ownership, sizing, and diagnostics stay private."
+cardano_json_object_deep_clone,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::copy constructor and assignment,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_new,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::constructor,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_property_name,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writePropertyName,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_bool,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeBool,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_null,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeNull,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_bigint,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeBigIntAsString,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_start_array,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeStartArray,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_end_array,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeEndArray,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_start_object,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeStartObject,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_end_object,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeEndObject,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_raw_value,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeRaw,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_object,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeValue,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_uint,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeUInt,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_uint_as_string,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeUIntAsString,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_signed_int,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeInt,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_signed_int_as_string,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeIntAsString,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_double,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeDouble,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_double_as_string,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeDoubleAsString,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_buffer_as_hex,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeBytesAsHex,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_bytes_as_hex,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeBytesAsHex,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_bytes_as_bech32,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeBytesAsBech32,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_buffer_as_bech32,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeBytesAsBech32,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_write_string,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::writeString,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_get_context,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::context,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_get_encoded_size,lib/include/cardano/json/json_writer.h,P01b,internal,"RAII, owned containers, and exceptions",lib/tests/Json/JsonWriterTest.cpp,"Native ownership, sizing, and diagnostics stay private."
+cardano_json_writer_encode,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::toString,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_encode_in_buffer,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::toString,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_reset,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::reset,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
+cardano_json_writer_unref,lib/include/cardano/json/json_writer.h,P01b,internal,"RAII, owned containers, and exceptions",lib/tests/Json/JsonWriterTest.cpp,"Native ownership, sizing, and diagnostics stay private."
+cardano_json_writer_ref,lib/include/cardano/json/json_writer.h,P01b,internal,"RAII, owned containers, and exceptions",lib/tests/Json/JsonWriterTest.cpp,"Native ownership, sizing, and diagnostics stay private."
+cardano_json_writer_refcount,lib/include/cardano/json/json_writer.h,P01b,internal,"RAII, owned containers, and exceptions",lib/tests/Json/JsonWriterTest.cpp,"Native ownership, sizing, and diagnostics stay private."
+cardano_json_writer_set_last_error,lib/include/cardano/json/json_writer.h,P01b,internal,"RAII, owned containers, and exceptions",lib/tests/Json/JsonWriterTest.cpp,"Native ownership, sizing, and diagnostics stay private."
+cardano_json_writer_get_last_error,lib/include/cardano/json/json_writer.h,P01b,internal,"RAII, owned containers, and exceptions",lib/tests/Json/JsonWriterTest.cpp,"Native ownership, sizing, and diagnostics stay private."
+cardano_json_writer_deep_clone,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter::copy constructor and assignment,lib/tests/Json/JsonWriterTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
 cardano_secure_key_handler_new,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
 cardano_secure_key_handler_get_name,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
 cardano_secure_key_handler_bip32_sign_transaction,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,,API and ownership mapping pending.
@@ -3333,3 +3333,4 @@ cardano_witness_set_refcount,lib/include/cardano/witness_set/witness_set.h,P15,p
 cardano_witness_set_set_last_error,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
 cardano_witness_set_get_last_error,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
 cardano_witness_set_deep_clone,lib/include/cardano/witness_set/witness_set.h,P15,planned,,,API and ownership mapping pending.
+cardano_json_object_parse_ex,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue::parse,lib/tests/Json/JsonValueTest.cpp,Parsed decimal tokens are preserved; child access deep-copies; write errors are exceptions.
