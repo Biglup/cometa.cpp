@@ -2430,28 +2430,28 @@ cardano_plutus_v4_script_refcount,lib/include/cardano/scripts/plutus_scripts/plu
 cardano_plutus_v4_script_set_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,internal,RAII and exceptions,lib/tests/Scripts/PlutusScripts/PlutusV4ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Compiled script bytes and outer CBOR are distinct; parameter application returns a new script.
 cardano_plutus_v4_script_get_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,internal,RAII and exceptions,lib/tests/Scripts/PlutusScripts/PlutusV4ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Compiled script bytes and outer CBOR are distinct; parameter application returns a new script.
 cardano_plutus_v4_script_deep_clone,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,implemented,Cometa::PlutusV4Script::copy constructor / copy assignment,lib/tests/Scripts/PlutusScripts/PlutusV4ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Compiled script bytes and outer CBOR are distinct; parameter application returns a new script.
-cardano_script_new_native,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_new_plutus_v1,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_new_plutus_v2,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_new_plutus_v3,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_new_plutus_v4,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_from_cbor,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_to_cbor,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_to_cip116_json,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_get_language,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_to_native,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_to_plutus_v1,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_to_plutus_v2,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_to_plutus_v3,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_to_plutus_v4,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_get_hash,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_equals,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_unref,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_ref,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_refcount,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_set_last_error,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_get_last_error,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
-cardano_script_deep_clone,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_new_native,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::constructor,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_new_plutus_v1,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::constructor,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_new_plutus_v2,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::constructor,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_new_plutus_v3,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::constructor,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_new_plutus_v4,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::constructor,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_from_cbor,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::fromCbor,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_to_cbor,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::toCbor,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_to_cip116_json,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::toJson,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_get_language,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::language,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_to_native,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::asNative,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_to_plutus_v1,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::asPlutusV1,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_to_plutus_v2,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::asPlutusV2,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_to_plutus_v3,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::asPlutusV3,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_to_plutus_v4,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::asPlutusV4,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_get_hash,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::hash,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_equals,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::operator==,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_unref,lib/include/cardano/scripts/script.h,P06.4,internal,RAII and exceptions,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_ref,lib/include/cardano/scripts/script.h,P06.4,internal,RAII and exceptions,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_refcount,lib/include/cardano/scripts/script.h,P06.4,internal,RAII and exceptions,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_set_last_error,lib/include/cardano/scripts/script.h,P06.4,internal,RAII and exceptions,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_get_last_error,lib/include/cardano/scripts/script.h,P06.4,internal,RAII and exceptions,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
+cardano_script_deep_clone,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::copy constructor / assignment,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
 cardano_compute_slot_from_unix_time,lib/include/cardano/time.h,P01a.1,implemented,SlotConfig::slotFromUnixTime,lib/tests/SlotConfigTest.cpp,"Rejects unsupported network configurations, arithmetic overflow and values before the reference."
 cardano_compute_unix_time_from_slot,lib/include/cardano/time.h,P01a.1,implemented,SlotConfig::unixTimeFromSlot,lib/tests/SlotConfigTest.cpp,"Rejects unsupported network configurations, arithmetic overflow and values before the reference."
 cardano_sub_transaction_to_cip116_json,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.

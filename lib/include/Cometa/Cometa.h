@@ -113,3 +113,6 @@
 #include <Cometa/Scripts/PlutusScripts/PlutusV2Script.h>
 #include <Cometa/Scripts/PlutusScripts/PlutusV3Script.h>
 #include <Cometa/Scripts/PlutusScripts/PlutusV4Script.h>
+
+#include <Cometa/Scripts/Script.h>
+#include <Cometa/Scripts/ScriptLanguage.h>

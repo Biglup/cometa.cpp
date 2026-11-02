@@ -281,7 +281,14 @@ sampleValue<PlutusV4Script>()
   return PlutusV4Script::fromHex("450100002499");
 }
 
-using ValueTypes = testing::Types<PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
+template<>
+Script
+sampleValue<Script>()
+{
+  return Script(sampleValue<NativeScript>());
+}
+
+using ValueTypes = testing::Types<Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -4489,4 +4496,114 @@ TEST(PlutusV4Script, ReleasesEveryAllocationDuringHashing)
   }
 
   EXPECT_EQ(script.toHex(), "450100002499");
+}
+
+TEST(Script, ReleasesEveryAllocationDuringNativeAccess)
+{
+  // Arrange
+  const Script script { NativeScript(ScriptInvalidBefore(5)) };
+  std::size_t  count = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.asNative();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.asNative(), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.language(), ScriptLanguage::Native);
+}
+
+TEST(Script, ReleasesEveryAllocationDuringPlutusV1Access)
+{
+  // Arrange
+  const Script script { PlutusV1Script::fromHex("450100002499") };
+  std::size_t  count = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.asPlutusV1();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.asPlutusV1(), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.language(), ScriptLanguage::PlutusV1);
+}
+
+TEST(Script, ReleasesEveryAllocationDuringPlutusV2Access)
+{
+  // Arrange
+  const Script script { PlutusV2Script::fromHex("450100002499") };
+  std::size_t  count = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.asPlutusV2();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.asPlutusV2(), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.language(), ScriptLanguage::PlutusV2);
+}
+
+TEST(Script, ReleasesEveryAllocationDuringPlutusV3Access)
+{
+  // Arrange
+  const Script script { PlutusV3Script::fromHex("450100002499") };
+  std::size_t  count = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.asPlutusV3();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.asPlutusV3(), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.language(), ScriptLanguage::PlutusV3);
+}
+
+TEST(Script, ReleasesEveryAllocationDuringPlutusV4Access)
+{
+  // Arrange
+  const Script script { PlutusV4Script::fromHex("450100002499") };
+  std::size_t  count = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)script.asPlutusV4();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(script.asPlutusV4(), std::bad_alloc) << index;
+  }
+
+  EXPECT_EQ(script.language(), ScriptLanguage::PlutusV4);
 }

@@ -244,3 +244,8 @@ API reference
    :members:
 
 .. doxygenenum:: Cometa::PlutusLanguageVersion
+
+.. doxygenclass:: Cometa::Script
+   :members:
+
+.. doxygenenum:: Cometa::ScriptLanguage

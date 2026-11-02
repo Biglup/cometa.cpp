@@ -446,3 +446,28 @@ script or change its ledger language version.
 ``hash`` includes the language prefix, so identical bytes in different Plutus
 versions have different hashes. Decoding an outer CBOR representation normalizes
 its bytestring header without changing the compiled bytes or script hash.
+
+Working with either script language
+-----------------------------------
+
+``Script`` holds a ``NativeScript`` or any of the four Plutus script types.
+Use ``language()`` to identify the variant and a typed accessor to obtain it.
+An accessor for a different language throws ``Error``.
+
+.. code-block:: cpp
+
+   const Cometa::Script script(
+     Cometa::PlutusV4Script::fromHex("450100002499"));
+
+   if (script.language() == Cometa::ScriptLanguage::PlutusV4)
+   {
+     const Cometa::PlutusV4Script validator = script.asPlutusV4();
+     const std::string bytes = validator.toHex();
+   }
+
+Constructors and accessors copy values. Replacing a returned script does not
+modify its parent. ``toCbor`` includes both the language discriminator and the
+script payload; ``hash`` uses the underlying script's language-specific hash.
+Native payloads retain their decoded encoding, including encodings that affect
+the hash. To normalize a native payload, normalize the value returned by
+``asNative()`` and construct a replacement ``Script`` from it.
