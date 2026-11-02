@@ -44,3 +44,10 @@
 #include <Cometa/Error.h>
 #include <Cometa/ErrorCode.h>
 #include <Cometa/SlotConfig.h>
+
+#include <Cometa/Cbor/CborMajorType.h>
+#include <Cometa/Cbor/CborReader.h>
+#include <Cometa/Cbor/CborReaderState.h>
+#include <Cometa/Cbor/CborSimpleValue.h>
+#include <Cometa/Cbor/CborTag.h>
+#include <Cometa/Cbor/CborWriter.h>

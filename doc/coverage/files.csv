@@ -31,12 +31,12 @@ lib/include/cardano/auxiliary_data/transaction_metadata.h,public header,P08,plan
 lib/include/cardano/bip39.h,public header,P02,planned,idiomatic C++ API
 lib/include/cardano/buffer.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
 lib/include/cardano/cardano.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
-lib/include/cardano/cbor/cbor_major_type.h,public header,P01b,planned,idiomatic C++ API
-lib/include/cardano/cbor/cbor_reader.h,public header,P01b,planned,idiomatic C++ API
-lib/include/cardano/cbor/cbor_reader_state.h,public header,P01b,planned,idiomatic C++ API
-lib/include/cardano/cbor/cbor_simple_value.h,public header,P01b,planned,idiomatic C++ API
-lib/include/cardano/cbor/cbor_tag.h,public header,P01b,planned,idiomatic C++ API
-lib/include/cardano/cbor/cbor_writer.h,public header,P01b,planned,idiomatic C++ API
+lib/include/cardano/cbor/cbor_major_type.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/include/cardano/cbor/cbor_reader.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/include/cardano/cbor/cbor_reader_state.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/include/cardano/cbor/cbor_simple_value.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/include/cardano/cbor/cbor_tag.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/include/cardano/cbor/cbor_writer.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
 lib/include/cardano/certs/auth_committee_hot_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/cert_type.h,public header,P10,planned,idiomatic C++ API
 lib/include/cardano/certs/certificate.h,public header,P10,planned,idiomatic C++ API
@@ -273,27 +273,27 @@ lib/src/bip39/bip39.c,implementation file,P02,internal,Native implementation ref
 lib/src/bip39/bip39_wordlist_en.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/buffer/buffer.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/cardano.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_additional_info.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_initial_byte.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_initial_byte.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_major_type.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_reader/cbor_reader.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_reader/cbor_reader_collections.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_reader/cbor_reader_collections.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_reader/cbor_reader_core.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_reader/cbor_reader_core.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_reader/cbor_reader_numeric.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_reader/cbor_reader_numeric.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_reader/cbor_reader_simple_values.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_reader/cbor_reader_simple_values.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_reader/cbor_reader_tags.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_reader/cbor_reader_tags.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_reader_state.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_simple_value.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_tag.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_validation.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_validation.h,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/cbor/cbor_writer.c,implementation file,P01b,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/cbor/cbor_additional_info.h,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_initial_byte.c,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_initial_byte.h,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_major_type.c,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_reader/cbor_reader.c,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_reader/cbor_reader_collections.c,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_reader/cbor_reader_collections.h,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_reader/cbor_reader_core.c,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_reader/cbor_reader_core.h,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_reader/cbor_reader_numeric.c,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_reader/cbor_reader_numeric.h,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_reader/cbor_reader_simple_values.c,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_reader/cbor_reader_simple_values.h,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_reader/cbor_reader_tags.c,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_reader/cbor_reader_tags.h,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_reader_state.c,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_simple_value.c,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_tag.c,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_validation.c,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_validation.h,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
+lib/src/cbor/cbor_writer.c,implementation file,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
 lib/src/certs/auth_committee_hot_cert.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/certs/cert_type.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/certs/certificate.c,implementation file,P10,internal,Native implementation reference; coverage is tracked against its public API.

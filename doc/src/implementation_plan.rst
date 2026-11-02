@@ -12,10 +12,10 @@ PR sequence
 
 The foundation is merged. The first common-types slice is divided into three
 PRs to keep numeric and encoding boundary work independently reviewable.
-P01a.1 and the domain-values portion of P01a.2 are merged. BigInt completes
-P01a.2 in the preceding PR. This slice implements P01a.3 encoding utilities. Implementation PRs are stacked
-on their preceding branch and reviewed in order; work continues while reviews
-are pending.
+P01a.1 and P01a.2 are merged; P01a.3 supplies encoding utilities.
+P01b is split into CBOR and JSON slices to keep parsing changes reviewable.
+Implementation PRs are stacked on their preceding branch and reviewed in order;
+work continues while reviews are pending.
 
 .. list-table:: Implementation slices
    :header-rows: 1

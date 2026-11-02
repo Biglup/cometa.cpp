@@ -51,6 +51,14 @@ namespace Cometa
  */
 class BigInt
 {
+  private:
+
+    /** @brief Allows CBOR decoding to adopt a decoded integer. */
+    friend class CborReader;
+
+    /** @brief Allows CBOR encoding to read the integer. */
+    friend class CborWriter;
+
   public:
 
     /**

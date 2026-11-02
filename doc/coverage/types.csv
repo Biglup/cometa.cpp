@@ -32,12 +32,12 @@ cardano_byron_address_attributes_t,struct,lib/include/cardano/address/byron_addr
 cardano_byron_address_t,opaque object,lib/include/cardano/address/byron_address.h,P03,planned,,
 cardano_byron_address_type_t,enum,lib/include/cardano/address/byron_address_type.h,P03,planned,,
 cardano_byte_order_t,enum,lib/include/cardano/common/byte_order.h,P01a.1,implemented,ByteOrder,lib/tests/Common/ByteOrderTest.cpp
-cardano_cbor_major_type_t,enum,lib/include/cardano/cbor/cbor_major_type.h,P01b,planned,,
-cardano_cbor_reader_state_t,enum,lib/include/cardano/cbor/cbor_reader_state.h,P01b,planned,,
-cardano_cbor_reader_t,opaque object,lib/include/cardano/cbor/cbor_reader.h,P01b,planned,,
-cardano_cbor_simple_value_t,enum,lib/include/cardano/cbor/cbor_simple_value.h,P01b,planned,,
-cardano_cbor_tag_t,enum,lib/include/cardano/cbor/cbor_tag.h,P01b,planned,,
-cardano_cbor_writer_t,opaque object,lib/include/cardano/cbor/cbor_writer.h,P01b,planned,,
+cardano_cbor_major_type_t,enum,lib/include/cardano/cbor/cbor_major_type.h,P01b,implemented,Cometa::CborMajorType,lib/tests/Cbor/CborMajorTypeTest.cpp
+cardano_cbor_reader_state_t,enum,lib/include/cardano/cbor/cbor_reader_state.h,P01b,implemented,Cometa::CborReaderState,lib/tests/Cbor/CborReaderStateTest.cpp
+cardano_cbor_reader_t,opaque object,lib/include/cardano/cbor/cbor_reader.h,P01b,implemented,Cometa::CborReader,lib/tests/Cbor/CborReaderTest.cpp
+cardano_cbor_simple_value_t,enum,lib/include/cardano/cbor/cbor_simple_value.h,P01b,implemented,Cometa::CborSimpleValue,lib/tests/Cbor/CborSimpleValueTest.cpp
+cardano_cbor_tag_t,enum,lib/include/cardano/cbor/cbor_tag.h,P01b,implemented,Cometa::CborTag,lib/tests/Cbor/CborTagTest.cpp
+cardano_cbor_writer_t,opaque object,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter,lib/tests/Cbor/CborWriterTest.cpp
 cardano_cert_type_t,enum,lib/include/cardano/certs/cert_type.h,P10,planned,,
 cardano_certificate_set_t,opaque object,lib/include/cardano/certs/certificate_set.h,P10,planned,,
 cardano_certificate_t,opaque object,lib/include/cardano/certs/certificate.h,P10,planned,,
