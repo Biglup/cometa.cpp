@@ -12,9 +12,10 @@ PR sequence
 
 The foundation is merged. The first common-types slice is divided into three
 PRs to keep numeric and encoding boundary work independently reviewable.
-P01a.1 and P01a.2 are merged; P01a.3 supplies encoding utilities.
+P01a.1, P01a.2, and P01a.3 are merged.
 P01b is split into CBOR and JSON slices to keep parsing changes reviewable.
-The CBOR slice is merged; this slice completes JSON with native parser and writer fixes.
+Both CBOR and JSON are merged. P02 is split into key/signature values and
+cryptographic utilities.
 Implementation PRs are stacked on their preceding branch and reviewed in order;
 work continues while reviews are pending.
 
@@ -37,27 +38,45 @@ work continues while reviews are pending.
    * - P01b
      - CBOR and JSON readers/writers and enums
      - P01a.2 P01a.3
-   * - P02
-     - Cryptographic keys/signatures; BIP32; BIP39; PBKDF2; EMIP3; CRC32; hash size utilities
+   * - P02.1
+     - Cryptographic keys/signatures and BIP32
      - P01a.2 P01a.3
+   * - P02.2
+     - BIP39; PBKDF2; EMIP3; CRC32; hash size utilities
+     - P02.1
    * - P03
      - Shelley and Byron addresses; attributes; stake pointers; address enums
      - P01a.2 P01a.3 P02
-   * - P04
-     - Asset IDs; multi-assets; Value; hash/credential/asset collections
-     - P01a.2 P01a.3 P02
+   * - P04.1
+     - Asset IDs and standard vector aliases for asset IDs, names, and policies
+     - P01a.2 P02
+   * - P04.2
+     - Asset maps; multi-assets; Value; checked arithmetic and serialization
+     - P04.1
+   * - P04.3
+     - Serialized hash and credential sets
+     - P02 P04.1
    * - P05
      - Plutus data; constructors/lists/maps; Datum
      - P01a.2 P01a.3 P01b
-   * - P06
-     - Native scripts and guards; Plutus V1-V4; Script; parameter application
-     - P02 P04 P05
+   * - P06.1
+     - Signature requirements; timelocks; required guards
+     - P02 P05
+   * - P06.2
+     - Native script composites; list; union; discriminator
+     - P06.1
+   * - P06.3
+     - Plutus V1-V4 scripts; language versions; parameter application
+     - P05
+   * - P06.4
+     - Script union and language discriminator
+     - P06.2 P06.3
    * - P07
      - Transaction inputs/outputs; UTxOs; withdrawals; address/output collections
-     - P03 P04 P05 P06
+     - P03 P04 P05 P06.4
    * - P08
      - Metadata and auxiliary data; Plutus script lists
-     - P05 P06
+     - P05 P06.4
    * - P09
      - Pool parameters; relays; IPv4/IPv6; metadata; BLS key representation
      - P02 P03 P04
@@ -78,7 +97,7 @@ work continues while reviews are pending.
      - P01a.2 P01a.3 P11
    * - P15
      - Witness sets; vkey/bootstrap witnesses; redeemers; script/data sets
-     - P02 P05 P06
+     - P02 P05 P06.4
    * - P16
      - Subtransaction body; account balance intervals; deposits; required guards
      - P07 P11 P13 P14 P15

@@ -199,3 +199,32 @@ TEST(PrimitiveConformanceTest, MatchesBlake2bFixturesIncludingInvalidInput)
 
   EXPECT_EQ(checked, 9U);
 }
+
+TEST(PrimitiveConformanceTest, MatchesAllAddressFixtures)
+{
+  // Arrange
+  const JsonValue cases   = primitiveCases();
+  std::size_t     checked = 0;
+
+  // Act & Assert
+  for (std::size_t index = 0; index < cases.size(); ++index)
+  {
+    const JsonValue item = cases.at(index);
+
+    if (item.at("operation").asString() != "address")
+    {
+      continue;
+    }
+
+    SCOPED_TRACE(item.at("id").asString());
+    const std::vector<std::uint8_t> bytes = decodeHex(item.at("input").at("bytes").asString());
+    const Address                   address(bytes);
+    const std::string               expected = item.at("expected").at("address").asString();
+
+    EXPECT_EQ(address.toString(), expected);
+    EXPECT_EQ(Address::fromString(expected).toBytes(), bytes);
+    ++checked;
+  }
+
+  EXPECT_EQ(checked, 16U);
+}

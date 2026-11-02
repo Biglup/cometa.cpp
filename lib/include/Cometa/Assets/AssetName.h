@@ -228,6 +228,15 @@ class AssetName
 
   private:
 
+    /** @brief Allows MultiAsset to copy policy components. */
+    friend class MultiAsset;
+
+    /** @brief Allows AssetNameMap to copy map keys. */
+    friend class AssetNameMap;
+
+    /** @brief Allows AssetId to copy identifier components. */
+    friend class AssetId;
+
     /**
      * @brief Takes ownership of an existing value.
      *

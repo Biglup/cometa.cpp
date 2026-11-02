@@ -1,5 +1,10 @@
 Next
 ---------------------
+- Add unique hash and credential sets with sorted CBOR/JSON and independent element access.
+- Add signed asset maps, multi-assets, and Value with checked arithmetic, serialization, and independent components.
+- Add asset identifiers and standard C++ lists for identifiers, names, and policy hashes.
+- Add Shelley and Byron address values, checked conversions, network/prefix validation, independent credential access, and shared address vectors.
+- Add BIP39 mnemonic conversion, PBKDF2, EMIP-003 encryption/decryption, CRC32, and named BLAKE2b digest lengths.
 - Add Ed25519 signatures and normal/extended keys, BIP32 derivation, and shared cryptographic fixture checks.
 - Add JSON values, writers, and enums with exact decimal tokens, owned child values, checked conversions, and allocation-failure tests; pin the native JSON fixes.
 - Add copyable CBOR readers/writers, typed enums, checked numeric boundaries, and owned byte/string results.

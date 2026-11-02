@@ -25,6 +25,8 @@
 
 /* INCLUDES ******************************************************************/
 
+#include <Cometa/Crypto/Blake2bHashSize.h>
+
 #include <cstddef>
 #include <cstdint>
 #include <string>
@@ -103,6 +105,18 @@ class Blake2bHash
      * @throws std::invalid_argument The input is empty or the digest length is outside the supported range.
      */
     static Blake2bHash compute(const std::vector<std::uint8_t>& data, std::size_t digestSize = 32);
+
+    /**
+     * @brief Computes a BLAKE2b digest with a named output length.
+     *
+     * @param data The nonempty input bytes.
+     * @param digestSize A supported digest length.
+     *
+     * @return The computed digest.
+     *
+     * @throws std::invalid_argument The input is empty or the enum value is unknown.
+     */
+    static Blake2bHash compute(const std::vector<std::uint8_t>& data, Blake2bHashSize digestSize);
 
     /**
      * @brief Creates a value from exactly one CBOR item.
@@ -220,6 +234,24 @@ class Blake2bHash
 
   private:
 
+    /** @brief Allows TransactionInput to copy components. */
+    friend class TransactionInput;
+
+    /** @brief Allows ScriptPubkey to copy script components. */
+    friend class ScriptPubkey;
+
+    /** @brief Allows Blake2bHashSet to copy set elements. */
+    friend class Blake2bHashSet;
+
+    /** @brief Allows MultiAsset to copy policy components. */
+    friend class MultiAsset;
+
+    /** @brief Allows AssetId to copy identifier components. */
+    friend class AssetId;
+
+    /** @brief Allows ByronAddress to copy credential components. */
+    friend class ByronAddress;
+
     /**
      * @brief Takes ownership of an existing value.
      *
@@ -252,6 +284,8 @@ class Blake2bHash
 
     /** @brief The owned reference, or null after a move. */
     cardano_blake2b_hash_t* m_value;
+    /** @brief Allows pool metadata to exchange content hashes. */
+    friend class PoolMetadata;
 };
 } // namespace Cometa
 

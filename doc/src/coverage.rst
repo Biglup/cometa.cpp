@@ -30,7 +30,7 @@ and callback adapters are tracked in :doc:`implementation_plan`.
    * - Asset name bytes, string, hex, CBOR, and CIP-116 JSON
      - ``toBytes``, ``toString``, ``toHex``, ``toCbor``, ``toJson``
    * - ``cardano_blake2b_hash_size_t`` size constants
-     - Digest size expressed as a byte count rather than a closed enum
+     - ``Blake2bHashSize`` named lengths and arbitrary byte counts from 1 through 64
    * - ``*_deep_clone``
      - Copy construction and assignment; independent ownership
 
@@ -65,11 +65,26 @@ and callback adapters are tracked in :doc:`implementation_plan`.
    * - Ed25519 and BIP32 keys and signatures
      - ``Ed25519Signature``, ``Ed25519PublicKey``, ``Ed25519PrivateKey``, ``Bip32PublicKey``, ``Bip32PrivateKey``, and ``hardenIndex``
 
+   * - BIP39, PBKDF2, EMIP-003, and CRC32
+     - Mnemonic conversion, password derivation, authenticated encryption, and checksums through owned strings and vectors
+
+   * - Shelley and Byron addresses
+     - ``Address`` and specialized address values, enums, ``StakePointer``, and ``ByronAddressAttributes``; independent credential getters and checked conversions
+
+   * - Asset identifiers and lists
+     - ``AssetId`` and standard vector aliases ``AssetIdList``, ``AssetNameList``, and ``PolicyIdList``
+
+   * - Asset maps and transfer values
+     - ``AssetNameMap``, ``AssetIdMap``, ``MultiAsset``, and ``Value``; checked signed arithmetic, independent components, CBOR and JSON
+
+   * - Serialized hash and credential sets
+     - ``Blake2bHashSet`` and ``CredentialSet``; unique insertion, independent sorted snapshots, tagged CBOR normalization
+
 Coverage ledger
 ---------------
 
 The inventory targets cardano-c commit
-``6fe1ded7f81e259631bb06f2f0a33601f33f9df7``, matching the dependency pin.
+``fd108f6271b4caf3df65907e21ffc5f5ea0bce55``, matching the dependency pin.
 It contains 231 public headers, 418 implementation files, 235 distinct public
 typedefs, and 3,335 exported function declarations. Tests and vendored dependencies
 are outside the file inventory.

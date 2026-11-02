@@ -25,11 +25,19 @@
 
 /* INCLUDES ******************************************************************/
 
+#include <Cometa/Assets/AssetId.h>
+#include <Cometa/Assets/AssetIdList.h>
+#include <Cometa/Assets/AssetIdMap.h>
 #include <Cometa/Assets/AssetName.h>
+#include <Cometa/Assets/AssetNameList.h>
+#include <Cometa/Assets/AssetNameMap.h>
+#include <Cometa/Assets/MultiAsset.h>
+#include <Cometa/Assets/PolicyIdList.h>
 #include <Cometa/Common/Anchor.h>
 #include <Cometa/Common/BigInt.h>
 #include <Cometa/Common/ByteOrder.h>
 #include <Cometa/Common/Credential.h>
+#include <Cometa/Common/CredentialSet.h>
 #include <Cometa/Common/CredentialType.h>
 #include <Cometa/Common/ExUnits.h>
 #include <Cometa/Common/GovernanceActionId.h>
@@ -39,11 +47,14 @@
 #include <Cometa/Common/ProtocolVersion.h>
 #include <Cometa/Common/UnitInterval.h>
 #include <Cometa/Crypto/Blake2bHash.h>
+#include <Cometa/Crypto/Blake2bHashSet.h>
+#include <Cometa/Crypto/Blake2bHashSize.h>
 #include <Cometa/Encoding/Base58.h>
 #include <Cometa/Encoding/Bech32.h>
 #include <Cometa/Error.h>
 #include <Cometa/ErrorCode.h>
 #include <Cometa/SlotConfig.h>
+#include <Cometa/TransactionBody/Value.h>
 
 #include <Cometa/Cbor/CborMajorType.h>
 #include <Cometa/Cbor/CborReader.h>
@@ -58,9 +69,79 @@
 #include <Cometa/Json/JsonValue.h>
 #include <Cometa/Json/JsonWriter.h>
 
+#include <Cometa/Address/Address.h>
+#include <Cometa/Address/AddressType.h>
+#include <Cometa/Address/BaseAddress.h>
+#include <Cometa/Address/ByronAddress.h>
+#include <Cometa/Address/ByronAddressAttributes.h>
+#include <Cometa/Address/ByronAddressType.h>
+#include <Cometa/Address/EnterpriseAddress.h>
+#include <Cometa/Address/PointerAddress.h>
+#include <Cometa/Address/RewardAddress.h>
+#include <Cometa/Address/StakePointer.h>
 #include <Cometa/Crypto/Bip32.h>
 #include <Cometa/Crypto/Bip32PrivateKey.h>
 #include <Cometa/Crypto/Bip32PublicKey.h>
+#include <Cometa/Crypto/Bip39.h>
+#include <Cometa/Crypto/Crc32.h>
 #include <Cometa/Crypto/Ed25519PrivateKey.h>
 #include <Cometa/Crypto/Ed25519PublicKey.h>
 #include <Cometa/Crypto/Ed25519Signature.h>
+#include <Cometa/Crypto/Emip3.h>
+#include <Cometa/Crypto/Pbkdf2.h>
+
+#include <Cometa/Common/Datum.h>
+#include <Cometa/PlutusData/ConstrPlutusData.h>
+#include <Cometa/PlutusData/PlutusData.h>
+#include <Cometa/PlutusData/PlutusList.h>
+#include <Cometa/PlutusData/PlutusMap.h>
+
+#include <Cometa/Scripts/NativeScripts/ScriptInvalidAfter.h>
+#include <Cometa/Scripts/NativeScripts/ScriptInvalidBefore.h>
+#include <Cometa/Scripts/NativeScripts/ScriptPubkey.h>
+#include <Cometa/Scripts/NativeScripts/ScriptRequireGuard.h>
+
+#include <Cometa/Scripts/NativeScripts/NativeScript.h>
+#include <Cometa/Scripts/NativeScripts/NativeScriptList.h>
+#include <Cometa/Scripts/NativeScripts/NativeScriptType.h>
+#include <Cometa/Scripts/NativeScripts/ScriptAll.h>
+#include <Cometa/Scripts/NativeScripts/ScriptAny.h>
+#include <Cometa/Scripts/NativeScripts/ScriptNOfK.h>
+
+#include <Cometa/Scripts/PlutusScripts/PlutusLanguageVersion.h>
+#include <Cometa/Scripts/PlutusScripts/PlutusV1Script.h>
+#include <Cometa/Scripts/PlutusScripts/PlutusV2Script.h>
+#include <Cometa/Scripts/PlutusScripts/PlutusV3Script.h>
+#include <Cometa/Scripts/PlutusScripts/PlutusV4Script.h>
+
+#include <Cometa/Scripts/Script.h>
+#include <Cometa/Scripts/ScriptLanguage.h>
+
+#include <Cometa/Common/Utxo.h>
+#include <Cometa/TransactionBody/TransactionInput.h>
+#include <Cometa/TransactionBody/TransactionOutput.h>
+
+#include <Cometa/Common/RewardAddressList.h>
+#include <Cometa/Common/UtxoList.h>
+#include <Cometa/Common/WithdrawalMap.h>
+#include <Cometa/TransactionBody/TransactionInputSet.h>
+#include <Cometa/TransactionBody/TransactionOutputList.h>
+
+#include <Cometa/AuxiliaryData/PlutusV1ScriptList.h>
+#include <Cometa/AuxiliaryData/PlutusV2ScriptList.h>
+#include <Cometa/AuxiliaryData/PlutusV3ScriptList.h>
+#include <Cometa/AuxiliaryData/PlutusV4ScriptList.h>
+
+#include <Cometa/AuxiliaryData/Metadatum.h>
+#include <Cometa/AuxiliaryData/MetadatumKind.h>
+#include <Cometa/AuxiliaryData/MetadatumList.h>
+#include <Cometa/AuxiliaryData/MetadatumMap.h>
+
+#include <Cometa/AuxiliaryData/AuxiliaryData.h>
+#include <Cometa/AuxiliaryData/MetadatumLabelList.h>
+#include <Cometa/AuxiliaryData/TransactionMetadata.h>
+
+#include <Cometa/PoolParams/BlsKey.h>
+#include <Cometa/PoolParams/Ipv4.h>
+#include <Cometa/PoolParams/Ipv6.h>
+#include <Cometa/PoolParams/PoolMetadata.h>

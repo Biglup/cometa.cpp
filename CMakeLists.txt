@@ -16,6 +16,50 @@ INCLUDE (cmake/Cardano.cmake)
 
 # Library sources.
 ADD_LIBRARY (cometa STATIC
+  lib/src/AuxiliaryData/TransactionMetadata.cpp
+  lib/src/PoolParams/Ipv4.cpp
+  lib/src/PoolParams/Ipv6.cpp
+  lib/src/PoolParams/BlsKey.cpp
+  lib/src/PoolParams/PoolMetadata.cpp
+  lib/src/AuxiliaryData/AuxiliaryData.cpp
+  lib/src/AuxiliaryData/Metadatum.cpp
+  lib/src/AuxiliaryData/MetadatumList.cpp
+  lib/src/AuxiliaryData/MetadatumMap.cpp
+
+  lib/src/AuxiliaryData/PlutusV1ScriptList.cpp
+  lib/src/AuxiliaryData/PlutusV2ScriptList.cpp
+  lib/src/AuxiliaryData/PlutusV3ScriptList.cpp
+  lib/src/AuxiliaryData/PlutusV4ScriptList.cpp
+
+  lib/src/TransactionBody/TransactionInputSet.cpp
+  lib/src/TransactionBody/TransactionOutputList.cpp
+  lib/src/Common/WithdrawalMap.cpp
+  lib/src/TransactionBody/TransactionInput.cpp
+  lib/src/TransactionBody/TransactionOutput.cpp
+  lib/src/Common/Utxo.cpp
+  lib/src/Scripts/Script.cpp
+  lib/src/Scripts/PlutusScripts/PlutusV1Script.cpp
+  lib/src/Scripts/PlutusScripts/PlutusV2Script.cpp
+  lib/src/Scripts/PlutusScripts/PlutusV3Script.cpp
+  lib/src/Scripts/PlutusScripts/PlutusV4Script.cpp
+  lib/src/Scripts/NativeScripts/NativeScriptType.cpp
+  lib/src/Scripts/NativeScripts/NativeScript.cpp
+  lib/src/Scripts/NativeScripts/NativeScriptList.cpp
+  lib/src/Scripts/NativeScripts/ScriptAll.cpp
+  lib/src/Scripts/NativeScripts/ScriptAny.cpp
+  lib/src/Scripts/NativeScripts/ScriptNOfK.cpp
+
+  lib/src/Scripts/NativeScripts/ScriptPubkey.cpp
+  lib/src/Scripts/NativeScripts/ScriptInvalidBefore.cpp
+  lib/src/Scripts/NativeScripts/ScriptInvalidAfter.cpp
+  lib/src/Scripts/NativeScripts/ScriptRequireGuard.cpp
+
+  lib/src/PlutusData/PlutusData.cpp
+  lib/src/PlutusData/PlutusList.cpp
+  lib/src/PlutusData/PlutusMap.cpp
+  lib/src/PlutusData/ConstrPlutusData.cpp
+  lib/src/Common/Datum.cpp
+
   lib/src/Cbor/CborTag.cpp
   lib/src/Cbor/CborMajorType.cpp
   lib/src/Cbor/CborSimpleValue.cpp
@@ -36,14 +80,32 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Common/ExUnits.cpp
   lib/src/Common/ProtocolVersion.cpp
   lib/src/Common/NetworkMagic.cpp
+  lib/src/Crypto/Bip39.cpp
+  lib/src/Crypto/Pbkdf2.cpp
+  lib/src/Crypto/Emip3.cpp
+  lib/src/Crypto/Crc32.cpp
+  lib/src/Address/Address.cpp
+  lib/src/Address/BaseAddress.cpp
+  lib/src/Address/EnterpriseAddress.cpp
+  lib/src/Address/RewardAddress.cpp
+  lib/src/Address/PointerAddress.cpp
+  lib/src/Address/ByronAddress.cpp
   lib/src/Crypto/Bip32.cpp
   lib/src/Crypto/Ed25519Signature.cpp
   lib/src/Crypto/Ed25519PublicKey.cpp
   lib/src/Crypto/Ed25519PrivateKey.cpp
   lib/src/Crypto/Bip32PublicKey.cpp
   lib/src/Crypto/Bip32PrivateKey.cpp
+  lib/src/Crypto/Blake2bHashSet.cpp
   lib/src/Crypto/Blake2bHash.cpp
+  lib/src/Assets/AssetArithmetic.cpp
+  lib/src/Assets/AssetIdMap.cpp
+  lib/src/Assets/AssetNameMap.cpp
+  lib/src/Assets/MultiAsset.cpp
+  lib/src/Assets/AssetId.cpp
   lib/src/Assets/AssetName.cpp
+  lib/src/TransactionBody/Value.cpp
+  lib/src/Common/CredentialSet.cpp
   lib/src/Common/Credential.cpp
 )
 
@@ -83,6 +145,59 @@ IF (COMETA_BUILD_TESTS)
   FIND_PACKAGE (GTest CONFIG REQUIRED)
 
   ADD_EXECUTABLE (cometa-tests
+    lib/tests/AuxiliaryData/TransactionMetadataTest.cpp
+    lib/tests/AuxiliaryData/MetadatumLabelListTest.cpp
+    lib/tests/PoolParams/Ipv4Test.cpp
+    lib/tests/PoolParams/Ipv6Test.cpp
+    lib/tests/PoolParams/BlsKeyTest.cpp
+    lib/tests/PoolParams/PoolMetadataTest.cpp
+    lib/tests/AuxiliaryData/AuxiliaryDataTest.cpp
+
+    lib/tests/AuxiliaryData/MetadatumTest.cpp
+    lib/tests/AuxiliaryData/MetadatumListTest.cpp
+    lib/tests/AuxiliaryData/MetadatumMapTest.cpp
+    lib/tests/AuxiliaryData/MetadatumKindTest.cpp
+
+    lib/tests/AuxiliaryData/PlutusV1ScriptListTest.cpp
+    lib/tests/AuxiliaryData/PlutusV2ScriptListTest.cpp
+    lib/tests/AuxiliaryData/PlutusV3ScriptListTest.cpp
+    lib/tests/AuxiliaryData/PlutusV4ScriptListTest.cpp
+
+    lib/tests/TransactionBody/TransactionInputTest.cpp
+    lib/tests/TransactionBody/TransactionOutputTest.cpp
+    lib/tests/Common/UtxoTest.cpp
+    lib/tests/TransactionBody/TransactionInputSetTest.cpp
+    lib/tests/TransactionBody/TransactionOutputListTest.cpp
+    lib/tests/Common/WithdrawalMapTest.cpp
+    lib/tests/Common/UtxoListTest.cpp
+    lib/tests/Common/RewardAddressListTest.cpp
+    lib/tests/Scripts/ScriptTest.cpp
+    lib/tests/Scripts/ScriptLanguageTest.cpp
+    lib/tests/Scripts/PlutusScripts/PlutusV1ScriptTest.cpp
+    lib/tests/Scripts/PlutusScripts/PlutusV2ScriptTest.cpp
+    lib/tests/Scripts/PlutusScripts/PlutusV3ScriptTest.cpp
+    lib/tests/Scripts/PlutusScripts/PlutusV4ScriptTest.cpp
+    lib/tests/Scripts/PlutusScripts/PlutusLanguageVersionTest.cpp
+    lib/tests/Scripts/NativeScripts/NativeScriptTest.cpp
+    lib/tests/Scripts/NativeScripts/NativeScriptListTest.cpp
+    lib/tests/Scripts/NativeScripts/ScriptAllTest.cpp
+    lib/tests/Scripts/NativeScripts/ScriptAnyTest.cpp
+    lib/tests/Scripts/NativeScripts/ScriptNOfKTest.cpp
+    lib/tests/Scripts/NativeScripts/NativeScriptTypeTest.cpp
+
+    lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp
+    lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp
+    lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp
+    lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp
+
+    lib/tests/PlutusData/PlutusDataTest.cpp
+    lib/tests/PlutusData/PlutusListTest.cpp
+    lib/tests/PlutusData/PlutusMapTest.cpp
+    lib/tests/PlutusData/ConstrPlutusDataTest.cpp
+    lib/tests/Common/DatumTest.cpp
+    lib/tests/Common/DatumTypeTest.cpp
+    lib/tests/PlutusData/PlutusDataKindTest.cpp
+
     lib/tests/Cbor/CborTagTest.cpp
     lib/tests/Cbor/CborMajorTypeTest.cpp
     lib/tests/Cbor/CborSimpleValueTest.cpp
@@ -108,7 +223,26 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Common/NetworkIdTest.cpp
     lib/tests/Common/NetworkMagicTest.cpp
     lib/tests/Common/GovernanceKeyTypeTest.cpp
+    lib/tests/Assets/AssetIdMapTest.cpp
+    lib/tests/Assets/AssetNameMapTest.cpp
+    lib/tests/Assets/MultiAssetTest.cpp
+    lib/tests/Assets/AssetIdTest.cpp
+    lib/tests/Assets/AssetIdListTest.cpp
+    lib/tests/Assets/AssetNameListTest.cpp
+    lib/tests/Assets/PolicyIdListTest.cpp
     lib/tests/Assets/AssetNameTest.cpp
+    lib/tests/Crypto/Bip39Test.cpp
+    lib/tests/Crypto/Pbkdf2Test.cpp
+    lib/tests/Crypto/Emip3Test.cpp
+    lib/tests/Crypto/Crc32Test.cpp
+    lib/tests/Address/AddressTypeTest.cpp
+    lib/tests/Address/ByronAddressTypeTest.cpp
+    lib/tests/Address/AddressTest.cpp
+    lib/tests/Address/BaseAddressTest.cpp
+    lib/tests/Address/EnterpriseAddressTest.cpp
+    lib/tests/Address/RewardAddressTest.cpp
+    lib/tests/Address/PointerAddressTest.cpp
+    lib/tests/Address/ByronAddressTest.cpp
     lib/tests/Crypto/Bip32Test.cpp
     lib/tests/Crypto/Ed25519SignatureTest.cpp
     lib/tests/Crypto/Ed25519PublicKeyTest.cpp
@@ -116,8 +250,12 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Crypto/Bip32PublicKeyTest.cpp
     lib/tests/Crypto/Bip32PrivateKeyTest.cpp
     lib/tests/Crypto/PrimitiveConformanceTest.cpp
+    lib/tests/Crypto/Blake2bHashSizeTest.cpp
+    lib/tests/Crypto/Blake2bHashSetTest.cpp
     lib/tests/Crypto/Blake2bHashTest.cpp
+    lib/tests/Common/CredentialSetTest.cpp
     lib/tests/Common/CredentialTest.cpp
+    lib/tests/TransactionBody/ValueTest.cpp
     lib/tests/ValueContractTest.cpp
   )
 

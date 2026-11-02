@@ -1,34 +1,34 @@
 path,kind,planned_pr,status,notes
-lib/include/cardano/address/address.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/address_type.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/base_address.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/byron_address.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/byron_address_attributes.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/byron_address_type.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/enterprise_address.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/pointer_address.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/reward_address.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/stake_pointer.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/assets/asset_id.h,public header,P04,planned,idiomatic C++ API
-lib/include/cardano/assets/asset_id_list.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/assets/asset_id_map.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/address/address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/address_type.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/base_address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/byron_address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/byron_address_attributes.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/byron_address_type.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/enterprise_address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/pointer_address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/reward_address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/stake_pointer.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/assets/asset_id.h,public header,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
+lib/include/cardano/assets/asset_id_list.h,public header,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
+lib/include/cardano/assets/asset_id_map.h,public header,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/include/cardano/assets/asset_name.h,public header,P04,implemented,idiomatic C++ API
-lib/include/cardano/assets/asset_name_list.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/assets/asset_name_map.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/assets/multi_asset.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/assets/policy_id_list.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/auxiliary_data.h,public header,P08,planned,idiomatic C++ API
-lib/include/cardano/auxiliary_data/metadatum.h,public header,P08,planned,idiomatic C++ API
-lib/include/cardano/auxiliary_data/metadatum_kind.h,public header,P08,planned,idiomatic C++ API
-lib/include/cardano/auxiliary_data/metadatum_label_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/metadatum_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/metadatum_map.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/plutus_v1_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/plutus_v2_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/plutus_v3_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/plutus_v4_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/transaction_metadata.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/bip39.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/assets/asset_name_list.h,public header,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
+lib/include/cardano/assets/asset_name_map.h,public header,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
+lib/include/cardano/assets/multi_asset.h,public header,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
+lib/include/cardano/assets/policy_id_list.h,public header,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
+lib/include/cardano/auxiliary_data/auxiliary_data.h,public header,P08,implemented,Independent auxiliary data and metadata; copied optional fields; coherent CBOR and hashes after edits.
+lib/include/cardano/auxiliary_data/metadatum.h,public header,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
+lib/include/cardano/auxiliary_data/metadatum_kind.h,public header,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
+lib/include/cardano/auxiliary_data/metadatum_label_list.h,public header,P08,implemented,Independent auxiliary data and metadata; copied optional fields; coherent CBOR and hashes after edits.
+lib/include/cardano/auxiliary_data/metadatum_list.h,public header,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
+lib/include/cardano/auxiliary_data/metadatum_map.h,public header,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
+lib/include/cardano/auxiliary_data/plutus_v1_script_list.h,public header,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/include/cardano/auxiliary_data/plutus_v2_script_list.h,public header,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/include/cardano/auxiliary_data/plutus_v3_script_list.h,public header,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/include/cardano/auxiliary_data/plutus_v4_script_list.h,public header,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/include/cardano/auxiliary_data/transaction_metadata.h,public header,P08,implemented,Independent auxiliary data and metadata; copied optional fields; coherent CBOR and hashes after edits.
+lib/include/cardano/bip39.h,public header,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/include/cardano/buffer.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
 lib/include/cardano/cardano.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
 lib/include/cardano/cbor/cbor_major_type.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
@@ -68,8 +68,8 @@ lib/include/cardano/common/bigint.h,public header,P01a.2,implemented,"Cometa::Bi
 lib/include/cardano/common/byte_order.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/credential.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/credential_type.h,public header,P01a.1,implemented,idiomatic C++ API
-lib/include/cardano/common/datum.h,public header,P05,planned,idiomatic C++ API
-lib/include/cardano/common/datum_type.h,public header,P05,planned,idiomatic C++ API
+lib/include/cardano/common/datum.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
+lib/include/cardano/common/datum_type.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
 lib/include/cardano/common/drep.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/common/drep_type.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/common/ex_units.h,public header,P01a.1,implemented,idiomatic C++ API
@@ -79,22 +79,22 @@ lib/include/cardano/common/guard_set.h,public header,P16,planned,domain containe
 lib/include/cardano/common/network_id.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/network_magic.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/protocol_version.h,public header,P01a.1,implemented,idiomatic C++ API
-lib/include/cardano/common/reward_address_list.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/common/reward_address_list.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/include/cardano/common/unit_interval.h,public header,P01a.2,implemented,Cometa::UnitInterval; domain and value-contract tests
-lib/include/cardano/common/utxo.h,public header,P07,planned,idiomatic C++ API
-lib/include/cardano/common/utxo_list.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/common/withdrawal_map.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/common/utxo.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/include/cardano/common/utxo_list.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/include/cardano/common/withdrawal_map.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/include/cardano/crypto/bip32_private_key.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/include/cardano/crypto/bip32_public_key.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/include/cardano/crypto/blake2b_hash.h,public header,P02,implemented,idiomatic C++ API
-lib/include/cardano/crypto/blake2b_hash_set.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/crypto/blake2b_hash_size.h,public header,P02,planned,idiomatic C++ API
-lib/include/cardano/crypto/crc32.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/crypto/blake2b_hash_set.h,public header,P04.3,implemented,Unique sorted sets with independent elements and tagged CBOR normalization.
+lib/include/cardano/crypto/blake2b_hash_size.h,public header,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
+lib/include/cardano/crypto/crc32.h,public header,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/include/cardano/crypto/ed25519_private_key.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/include/cardano/crypto/ed25519_public_key.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/include/cardano/crypto/ed25519_signature.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
-lib/include/cardano/crypto/emip3.h,public header,P02,planned,idiomatic C++ API
-lib/include/cardano/crypto/pbkdf2.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/crypto/emip3.h,public header,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
+lib/include/cardano/crypto/pbkdf2.h,public header,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/include/cardano/encoding/base58.h,public header,P01a.3,implemented,Cometa::encodeBase58 and decodeBase58; known vectors and failure tests
 lib/include/cardano/encoding/bech32.h,public header,P01a.3,implemented,Cometa::encodeBech32 and decodeBech32; known vectors and failure tests
 lib/include/cardano/error.h,public header,P01a.1,implemented,idiomatic C++ API
@@ -113,16 +113,16 @@ lib/include/cardano/key_handlers/secure_key_handler_type.h,public header,P18,pla
 lib/include/cardano/key_handlers/software_secure_key_handler.h,public header,P18,planned,idiomatic C++ API
 lib/include/cardano/message_signing/cip8.h,public header,P18,planned,idiomatic C++ API
 lib/include/cardano/object.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
-lib/include/cardano/plutus_data/constr_plutus_data.h,public header,P05,planned,idiomatic C++ API
-lib/include/cardano/plutus_data/plutus_data.h,public header,P05,planned,idiomatic C++ API
-lib/include/cardano/plutus_data/plutus_data_kind.h,public header,P05,planned,idiomatic C++ API
-lib/include/cardano/plutus_data/plutus_list.h,public header,P05,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/plutus_data/plutus_map.h,public header,P05,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/pool_params/bls_key.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/ipv4.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/ipv6.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/plutus_data/constr_plutus_data.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
+lib/include/cardano/plutus_data/plutus_data.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
+lib/include/cardano/plutus_data/plutus_data_kind.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
+lib/include/cardano/plutus_data/plutus_list.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
+lib/include/cardano/plutus_data/plutus_map.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
+lib/include/cardano/pool_params/bls_key.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
+lib/include/cardano/pool_params/ipv4.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
+lib/include/cardano/pool_params/ipv6.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/include/cardano/pool_params/multi_host_name_relay.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/pool_metadata.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/pool_metadata.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/include/cardano/pool_params/pool_owners.h,public header,P09,planned,idiomatic C++ API
 lib/include/cardano/pool_params/pool_params.h,public header,P09,planned,idiomatic C++ API
 lib/include/cardano/pool_params/relay.h,public header,P09,planned,idiomatic C++ API
@@ -133,7 +133,7 @@ lib/include/cardano/pool_params/single_host_name_relay.h,public header,P09,plann
 lib/include/cardano/proposal_procedures/committee.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/committee_members_map.h,public header,P13,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/proposal_procedures/constitution.h,public header,P13,planned,idiomatic C++ API
-lib/include/cardano/proposal_procedures/credential_set.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/proposal_procedures/credential_set.h,public header,P04.3,implemented,Unique sorted sets with independent elements and tagged CBOR normalization.
 lib/include/cardano/proposal_procedures/governance_action_type.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/hard_fork_initiation_action.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/info_action.h,public header,P13,planned,idiomatic C++ API
@@ -155,23 +155,23 @@ lib/include/cardano/protocol_params/protocol_parameters.h,public header,P12,plan
 lib/include/cardano/protocol_params/update.h,public header,P12,planned,idiomatic C++ API
 lib/include/cardano/providers/provider.h,public header,P19,planned,idiomatic C++ API
 lib/include/cardano/providers/provider_impl.h,public header,P19,planned,internal ABI/ownership support; no raw C wrapper API
-lib/include/cardano/scripts/native_scripts/native_script.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/native_scripts/native_script_list.h,public header,P06,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/scripts/native_scripts/native_script_type.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/native_scripts/script_all.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/native_scripts/script_any.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/native_scripts/script_invalid_after.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/native_scripts/script_invalid_before.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/native_scripts/script_n_of_k.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/native_scripts/script_pubkey.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/native_scripts/script_require_guard.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/plutus_scripts/plutus_language_version.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/script.h,public header,P06,planned,idiomatic C++ API
-lib/include/cardano/scripts/script_language.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/scripts/native_scripts/native_script.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/include/cardano/scripts/native_scripts/native_script_list.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/include/cardano/scripts/native_scripts/native_script_type.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/include/cardano/scripts/native_scripts/script_all.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/include/cardano/scripts/native_scripts/script_any.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/include/cardano/scripts/native_scripts/script_invalid_after.h,public header,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
+lib/include/cardano/scripts/native_scripts/script_invalid_before.h,public header,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
+lib/include/cardano/scripts/native_scripts/script_n_of_k.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/include/cardano/scripts/native_scripts/script_pubkey.h,public header,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
+lib/include/cardano/scripts/native_scripts/script_require_guard.h,public header,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
+lib/include/cardano/scripts/plutus_scripts/plutus_language_version.h,public header,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
+lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,public header,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
+lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,public header,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
+lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,public header,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
+lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,public header,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
+lib/include/cardano/scripts/script.h,public header,P06.4,implemented,"Typed native and Plutus variants; owned accessors; shared serialization, inspection, and hash fixtures."
+lib/include/cardano/scripts/script_language.h,public header,P06.4,implemented,"Typed native and Plutus variants; owned accessors; shared serialization, inspection, and hash fixtures."
 lib/include/cardano/slot_config.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/time.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/transaction/sub_transaction.h,public header,P17,planned,idiomatic C++ API
@@ -183,11 +183,11 @@ lib/include/cardano/transaction_body/required_guards_map.h,public header,P16,pla
 lib/include/cardano/transaction_body/sub_transaction_body.h,public header,P16,planned,idiomatic C++ API
 lib/include/cardano/transaction_body/sub_transaction_set.h,public header,P17,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/transaction_body/transaction_body.h,public header,P17,planned,idiomatic C++ API
-lib/include/cardano/transaction_body/transaction_input.h,public header,P07,planned,idiomatic C++ API
-lib/include/cardano/transaction_body/transaction_input_set.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/transaction_body/transaction_output.h,public header,P07,planned,idiomatic C++ API
-lib/include/cardano/transaction_body/transaction_output_list.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/transaction_body/value.h,public header,P04,planned,idiomatic C++ API
+lib/include/cardano/transaction_body/transaction_input.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/include/cardano/transaction_body/transaction_input_set.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/include/cardano/transaction_body/transaction_output.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/include/cardano/transaction_body/transaction_output_list.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/include/cardano/transaction_body/value.h,public header,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,public header,P23,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/transaction_builder/balancing/implicit_coin.h,public header,P22,planned,idiomatic C++ API
 lib/include/cardano/transaction_builder/balancing/input_to_redeemer_map.h,public header,P22,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
@@ -207,7 +207,7 @@ lib/include/cardano/transaction_builder/script_data_hash.h,public header,P22,pla
 lib/include/cardano/transaction_builder/sub_transaction_builder.h,public header,P23,planned,idiomatic C++ API
 lib/include/cardano/transaction_builder/transaction_builder.h,public header,P22,planned,idiomatic C++ API
 lib/include/cardano/typedefs.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
-lib/include/cardano/uplc/uplc_apply_params.h,public header,P06,planned,idiomatic C++ API
+lib/include/cardano/uplc/uplc_apply_params.h,public header,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
 lib/include/cardano/voting_procedures/governance_action_id_list.h,public header,P14,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/voting_procedures/vote.h,public header,P14,planned,idiomatic C++ API
 lib/include/cardano/voting_procedures/voter.h,public header,P14,planned,idiomatic C++ API
@@ -230,10 +230,10 @@ lib/include/cardano/witness_set/redeemer_tag.h,public header,P15,planned,idiomat
 lib/include/cardano/witness_set/vkey_witness.h,public header,P15,planned,idiomatic C++ API
 lib/include/cardano/witness_set/vkey_witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/witness_set/witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/src/address/address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/address/base_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/address/byron_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/address/enterprise_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/src/address/base_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/src/address/byron_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/src/address/enterprise_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
 lib/src/address/internals/addr_common.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/address/internals/addr_common.h,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/address/internals/base_addr_pack.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
@@ -247,29 +247,29 @@ lib/src/address/internals/pointer_addr_pack.c,implementation file,P03,internal,N
 lib/src/address/internals/pointer_addr_pack.h,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/address/internals/reward_addr_pack.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/address/internals/reward_addr_pack.h,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/address/pointer_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/address/reward_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/pointer_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/src/address/reward_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
 lib/src/allocators.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/allocators.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/assets/asset_id.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/assets/asset_id_list.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/assets/asset_id_map.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/asset_id.c,implementation file,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
+lib/src/assets/asset_id_list.c,implementation file,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
+lib/src/assets/asset_id_map.c,implementation file,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/src/assets/asset_name.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/assets/asset_name_list.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/assets/asset_name_map.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/assets/multi_asset.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/assets/policy_id_list.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/auxiliary_data.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/metadatum.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/metadatum_label_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/metadatum_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/metadatum_map.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/plutus_v1_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/plutus_v2_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/plutus_v3_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/plutus_v4_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/transaction_metadata.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/bip39/bip39.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/asset_name_list.c,implementation file,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
+lib/src/assets/asset_name_map.c,implementation file,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
+lib/src/assets/multi_asset.c,implementation file,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
+lib/src/assets/policy_id_list.c,implementation file,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
+lib/src/auxiliary_data/auxiliary_data.c,implementation file,P08,implemented,Independent auxiliary data and metadata; copied optional fields; coherent CBOR and hashes after edits.
+lib/src/auxiliary_data/metadatum.c,implementation file,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
+lib/src/auxiliary_data/metadatum_label_list.c,implementation file,P08,implemented,Independent auxiliary data and metadata; copied optional fields; coherent CBOR and hashes after edits.
+lib/src/auxiliary_data/metadatum_list.c,implementation file,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
+lib/src/auxiliary_data/metadatum_map.c,implementation file,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
+lib/src/auxiliary_data/plutus_v1_script_list.c,implementation file,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/src/auxiliary_data/plutus_v2_script_list.c,implementation file,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/src/auxiliary_data/plutus_v3_script_list.c,implementation file,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/src/auxiliary_data/plutus_v4_script_list.c,implementation file,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/src/auxiliary_data/transaction_metadata.c,implementation file,P08,implemented,Independent auxiliary data and metadata; copied optional fields; coherent CBOR and hashes after edits.
+lib/src/bip39/bip39.c,implementation file,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/src/bip39/bip39_wordlist_en.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/buffer/buffer.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/cardano.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
@@ -325,7 +325,7 @@ lib/src/collections/set.h,implementation file,P01a.2,internal,Native implementat
 lib/src/common/anchor.c,implementation file,P01a.2,implemented,Cometa::Anchor; domain and value-contract tests
 lib/src/common/bigint.c,implementation file,P01a.2,implemented,"Cometa::BigInt; arithmetic, conversion and value-contract tests"
 lib/src/common/credential.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/common/datum.c,implementation file,P05,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/datum.c,implementation file,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
 lib/src/common/drep.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/ex_units.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/governance_action_id.c,implementation file,P01a.2,implemented,Cometa::GovernanceActionId; domain and value-contract tests
@@ -334,11 +334,11 @@ lib/src/common/ledger_order.c,implementation file,P01a.2,internal,Native impleme
 lib/src/common/ledger_order.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/network_magic.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/protocol_version.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/common/reward_address_list.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/reward_address_list.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/src/common/unit_interval.c,implementation file,P01a.2,implemented,Cometa::UnitInterval; domain and value-contract tests
-lib/src/common/utxo.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/common/utxo_list.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/common/withdrawal_map.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/utxo.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/src/common/utxo_list.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/src/common/withdrawal_map.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/src/config.h.in,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/crypto/arithmetic.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/crypto/arithmetic.h,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
@@ -348,13 +348,13 @@ lib/src/crypto/bip32_private_key.c,implementation file,P02,implemented,"Key/sign
 lib/src/crypto/bip32_public_key.c,implementation file,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/src/crypto/blake2b_hash.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/crypto/blake2b_hash_internal.h,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/crypto/blake2b_hash_set.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/crypto/crc32.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/blake2b_hash_set.c,implementation file,P04.3,implemented,Unique sorted sets with independent elements and tagged CBOR normalization.
+lib/src/crypto/crc32.c,implementation file,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/src/crypto/ed25519_private_key.c,implementation file,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/src/crypto/ed25519_public_key.c,implementation file,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/src/crypto/ed25519_signature.c,implementation file,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
-lib/src/crypto/emip3.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/crypto/pbkdf2.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/emip3.c,implementation file,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
+lib/src/crypto/pbkdf2.c,implementation file,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/src/encoding/base58.c,implementation file,P01a.3,implemented,Cometa::encodeBase58 and decodeBase58; known vectors and failure tests
 lib/src/encoding/bech32.c,implementation file,P01a.3,implemented,Cometa::encodeBech32 and decodeBech32; known vectors and failure tests
 lib/src/endian.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
@@ -376,15 +376,15 @@ lib/src/key_handlers/secure_key_handler.c,implementation file,P18,internal,Nativ
 lib/src/key_handlers/software_secure_key_handler.c,implementation file,P18,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/message_signing/cip8.c,implementation file,P18,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/object.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/plutus_data/constr_plutus_data.c,implementation file,P05,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/plutus_data/plutus_data.c,implementation file,P05,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/plutus_data/plutus_list.c,implementation file,P05,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/plutus_data/plutus_map.c,implementation file,P05,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/bls_key.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/ipv4.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/ipv6.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/plutus_data/constr_plutus_data.c,implementation file,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
+lib/src/plutus_data/plutus_data.c,implementation file,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
+lib/src/plutus_data/plutus_list.c,implementation file,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
+lib/src/plutus_data/plutus_map.c,implementation file,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
+lib/src/pool_params/bls_key.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
+lib/src/pool_params/ipv4.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
+lib/src/pool_params/ipv6.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/src/pool_params/multi_host_name_relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/pool_metadata.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/pool_metadata.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/src/pool_params/pool_owners.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/pool_params/pool_params.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/pool_params/relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
@@ -395,7 +395,7 @@ lib/src/pool_params/single_host_name_relay.c,implementation file,P09,internal,Na
 lib/src/proposal_procedures/committee.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/proposal_procedures/committee_members_map.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/proposal_procedures/constitution.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/proposal_procedures/credential_set.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/proposal_procedures/credential_set.c,implementation file,P04.3,implemented,Unique sorted sets with independent elements and tagged CBOR normalization.
 lib/src/proposal_procedures/governance_action_type.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/proposal_procedures/hard_fork_initiation_action.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/proposal_procedures/info_action.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
@@ -417,21 +417,21 @@ lib/src/protocol_params/protocol_parameters.c,implementation file,P12,internal,N
 lib/src/protocol_params/update.c,implementation file,P12,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/providers/emscripten/emscripten_provider.c,implementation file,P19,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/providers/provider.c,implementation file,P19,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/native_script.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/native_script_list.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/native_script_type.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/script_all.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/script_any.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/script_invalid_after.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/script_invalid_before.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/script_n_of_k.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/script_pubkey.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/script_require_guard.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/plutus_scripts/plutus_v1_script.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/plutus_scripts/plutus_v2_script.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/plutus_scripts/plutus_v3_script.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/plutus_scripts/plutus_v4_script.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/script.c,implementation file,P06,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/native_scripts/native_script.c,implementation file,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/src/scripts/native_scripts/native_script_list.c,implementation file,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/src/scripts/native_scripts/native_script_type.c,implementation file,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/src/scripts/native_scripts/script_all.c,implementation file,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/src/scripts/native_scripts/script_any.c,implementation file,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/src/scripts/native_scripts/script_invalid_after.c,implementation file,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
+lib/src/scripts/native_scripts/script_invalid_before.c,implementation file,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
+lib/src/scripts/native_scripts/script_n_of_k.c,implementation file,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/src/scripts/native_scripts/script_pubkey.c,implementation file,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
+lib/src/scripts/native_scripts/script_require_guard.c,implementation file,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
+lib/src/scripts/plutus_scripts/plutus_v1_script.c,implementation file,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
+lib/src/scripts/plutus_scripts/plutus_v2_script.c,implementation file,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
+lib/src/scripts/plutus_scripts/plutus_v3_script.c,implementation file,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
+lib/src/scripts/plutus_scripts/plutus_v4_script.c,implementation file,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
+lib/src/scripts/script.c,implementation file,P06.4,implemented,"Typed native and Plutus variants; owned accessors; shared serialization, inspection, and hash fixtures."
 lib/src/string_safe.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/string_safe.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/time.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
@@ -446,11 +446,11 @@ lib/src/transaction_body/required_guards_map.c,implementation file,P16,internal,
 lib/src/transaction_body/sub_transaction_body.c,implementation file,P16,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/transaction_body/sub_transaction_set.c,implementation file,P17,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/transaction_body/transaction_body.c,implementation file,P17,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/transaction_body/transaction_input.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/transaction_body/transaction_input_set.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/transaction_body/transaction_output.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/transaction_body/transaction_output_list.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/transaction_body/value.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/transaction_input.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/src/transaction_body/transaction_input_set.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/src/transaction_body/transaction_output.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/src/transaction_body/transaction_output_list.c,implementation file,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
+lib/src/transaction_body/value.c,implementation file,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/src/transaction_builder/balancing/deferred_redeemer_list.c,implementation file,P23,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/transaction_builder/balancing/implicit_coin.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/transaction_builder/balancing/input_to_redeemer_map.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
@@ -624,7 +624,7 @@ lib/src/uplc/syntax/text_parser.c,implementation file,P21,internal,Native implem
 lib/src/uplc/syntax/text_parser.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/uplc/tx/script_context.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/uplc/tx/script_context.h,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/uplc/tx/uplc_apply_params.c,implementation file,P21,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/uplc/tx/uplc_apply_params.c,implementation file,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
 lib/src/voting_procedures/governance_action_id_list.c,implementation file,P14,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/voting_procedures/vote.c,implementation file,P14,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/voting_procedures/voter.c,implementation file,P14,internal,Native implementation reference; coverage is tracked against its public API.

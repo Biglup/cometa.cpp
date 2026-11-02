@@ -111,3 +111,209 @@ API reference
    :members:
 
 .. doxygenfunction:: Cometa::hardenIndex
+
+.. doxygenfunction:: Cometa::entropyToMnemonic
+
+.. doxygenfunction:: Cometa::mnemonicToEntropy
+
+.. doxygenfunction:: Cometa::pbkdf2HmacSha512
+
+.. doxygenfunction:: Cometa::encryptEmip3
+
+.. doxygenfunction:: Cometa::decryptEmip3
+
+.. doxygenfunction:: Cometa::crc32
+
+.. doxygenenum:: Cometa::Blake2bHashSize
+
+.. doxygenclass:: Cometa::Address
+   :members:
+
+.. doxygenclass:: Cometa::BaseAddress
+   :members:
+
+.. doxygenclass:: Cometa::EnterpriseAddress
+   :members:
+
+.. doxygenclass:: Cometa::RewardAddress
+   :members:
+
+.. doxygenclass:: Cometa::PointerAddress
+   :members:
+
+.. doxygenclass:: Cometa::ByronAddress
+   :members:
+
+.. doxygenenum:: Cometa::AddressType
+
+.. doxygenenum:: Cometa::ByronAddressType
+
+.. doxygenstruct:: Cometa::StakePointer
+   :members:
+
+.. doxygenstruct:: Cometa::ByronAddressAttributes
+   :members:
+
+.. doxygenclass:: Cometa::AssetId
+   :members:
+
+.. doxygentypedef:: Cometa::AssetIdList
+
+.. doxygentypedef:: Cometa::AssetNameList
+
+.. doxygentypedef:: Cometa::PolicyIdList
+
+.. doxygenclass:: Cometa::AssetIdMap
+   :members:
+
+.. doxygenclass:: Cometa::AssetNameMap
+   :members:
+
+.. doxygenclass:: Cometa::MultiAsset
+   :members:
+
+.. doxygenclass:: Cometa::Value
+   :members:
+
+.. doxygenclass:: Cometa::Blake2bHashSet
+   :members:
+
+.. doxygenclass:: Cometa::CredentialSet
+   :members:
+
+.. doxygenclass:: Cometa::PlutusData
+   :members:
+
+.. doxygenclass:: Cometa::PlutusList
+   :members:
+
+.. doxygenclass:: Cometa::PlutusMap
+   :members:
+
+.. doxygenclass:: Cometa::ConstrPlutusData
+   :members:
+
+.. doxygenclass:: Cometa::Datum
+   :members:
+
+.. doxygenenum:: Cometa::PlutusDataKind
+
+.. doxygenenum:: Cometa::DatumType
+
+.. doxygenclass:: Cometa::ScriptPubkey
+   :members:
+
+.. doxygenclass:: Cometa::ScriptInvalidBefore
+   :members:
+
+.. doxygenclass:: Cometa::ScriptInvalidAfter
+   :members:
+
+.. doxygenclass:: Cometa::ScriptRequireGuard
+   :members:
+
+.. doxygenclass:: Cometa::NativeScript
+   :members:
+
+.. doxygenclass:: Cometa::NativeScriptList
+   :members:
+
+.. doxygenclass:: Cometa::ScriptAll
+   :members:
+
+.. doxygenclass:: Cometa::ScriptAny
+   :members:
+
+.. doxygenclass:: Cometa::ScriptNOfK
+   :members:
+
+.. doxygenenum:: Cometa::NativeScriptType
+
+.. doxygenfunction:: Cometa::toString(NativeScriptType)
+
+.. doxygenclass:: Cometa::PlutusV1Script
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV2Script
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV3Script
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV4Script
+   :members:
+
+.. doxygenenum:: Cometa::PlutusLanguageVersion
+
+.. doxygenclass:: Cometa::Script
+   :members:
+
+.. doxygenenum:: Cometa::ScriptLanguage
+
+.. doxygenclass:: Cometa::TransactionInput
+   :members:
+
+.. doxygenclass:: Cometa::TransactionOutput
+   :members:
+
+.. doxygenclass:: Cometa::TransactionInputSet
+   :members:
+
+.. doxygenclass:: Cometa::TransactionOutputList
+   :members:
+
+.. doxygenclass:: Cometa::Utxo
+   :members:
+
+.. doxygenclass:: Cometa::WithdrawalMap
+   :members:
+
+.. doxygentypedef:: Cometa::UtxoList
+
+.. doxygentypedef:: Cometa::RewardAddressList
+
+.. doxygenclass:: Cometa::PlutusV1ScriptList
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV2ScriptList
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV3ScriptList
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV4ScriptList
+   :members:
+
+.. doxygenclass:: Cometa::Metadatum
+   :members:
+
+.. doxygenenum:: Cometa::MetadatumKind
+
+.. doxygenclass:: Cometa::MetadatumList
+   :members:
+
+.. doxygenclass:: Cometa::MetadatumMap
+   :members:
+
+.. doxygenclass:: Cometa::TransactionMetadata
+   :members:
+
+.. doxygentypedef:: Cometa::MetadatumLabelList
+
+.. doxygenclass:: Cometa::AuxiliaryData
+   :members:
+
+Pool primitives
+---------------
+
+.. doxygenclass:: Cometa::Ipv4
+   :members:
+
+.. doxygenclass:: Cometa::Ipv6
+   :members:
+
+.. doxygenclass:: Cometa::BlsKey
+   :members:
+
+.. doxygenclass:: Cometa::PoolMetadata
+   :members:

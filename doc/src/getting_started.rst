@@ -194,3 +194,431 @@ Private-key objects erase their owned key material when destroyed. Exported
 ``std::string`` and ``std::vector`` values are ordinary containers and do not erase
 their buffers automatically. Avoid exporting or logging secret material unless
 it is needed.
+
+Mnemonic and password utilities
+-------------------------------
+
+The BIP39 helpers use the English word list and validate the checksum when
+converting words back to entropy.
+
+.. code-block:: cpp
+
+   const std::vector<std::string> words = Cometa::entropyToMnemonic(entropy);
+   const std::vector<std::uint8_t> recovered = Cometa::mnemonicToEntropy(words);
+   const Cometa::Bip32PrivateKey root = Cometa::Bip32PrivateKey::fromBip39Entropy(recovered);
+
+EMIP-003 encryption includes a random salt, nonce, and authentication tag in its
+output. Decryption reports an error for a wrong password or altered ciphertext.
+
+.. code-block:: cpp
+
+   const std::vector<std::uint8_t> encrypted = Cometa::encryptEmip3(payload, password);
+   const std::vector<std::uint8_t> decrypted = Cometa::decryptEmip3(encrypted, password);
+
+``pbkdf2HmacSha512`` exposes explicit salt, iteration count, and output size.
+``crc32`` computes a checksum. Returned secret bytes and mnemonic words use
+ordinary standard containers; their memory is not automatically erased.
+
+Constructing and inspecting addresses
+-------------------------------------
+
+Build an address from credentials or parse its bytes or text. Credentials passed
+to a constructor and returned by getters are independent values.
+
+.. code-block:: cpp
+
+   const Cometa::BaseAddress paymentAddress(
+     Cometa::NetworkId::Testnet, paymentCredential, stakeCredential);
+   const std::string text = paymentAddress.toString();
+   const Cometa::Address parsed = Cometa::Address::fromString(text);
+   const std::optional<Cometa::BaseAddress> base = parsed.asBase();
+
+``Address`` accepts Bech32 Shelley addresses and Base58 Byron addresses.
+``asBase``, ``asEnterprise``, ``asPointer``, ``asReward``, and ``asByron`` return
+``std::nullopt`` for a different address format; allocation failures still throw.
+The specialized ``fromAddress`` factories report a wrong format as ``Cometa::Error``.
+
+Shelley byte input must be canonical and contain exactly one address. Text input
+checks the network/type prefix and rejects mixed case. Uppercase Bech32 input is
+accepted and formatted as lowercase. Network IDs preserve their four-bit value.
+
+``PointerAddress`` currently accepts slot, transaction index, and certificate index
+values up to ``UINT32_MAX``. Larger values are rejected rather than truncated.
+Byron attributes use an owned encrypted derivation path of at most 64 bytes and
+an optional nonnegative network magic; absence denotes mainnet.
+
+Identifying assets
+------------------
+
+An ``AssetId`` combines a 28-byte policy ID and an asset name of up to 32 bytes.
+The byte and hexadecimal representations concatenate those fields.
+``AssetId::lovelace()`` represents lovelace with empty bytes and hex; parsing
+an empty representation returns that same identifier. A policy with an empty
+asset name remains a native token.
+
+.. code-block:: cpp
+
+   const Cometa::AssetId token(policyId, Cometa::AssetName::fromString("Cometa"));
+   const Cometa::AssetIdList assets { Cometa::AssetId::lovelace(), token };
+   const std::optional<Cometa::Blake2bHash> policy = token.policyId();
+
+``AssetIdList``, ``AssetNameList``, and ``PolicyIdList`` are named ``std::vector``
+aliases. Use ordinary indexing, iteration, insertion, and copying. Their elements
+are independent values. Policy lists do not validate hash lengths on insertion;
+operations accepting policy IDs enforce the 28-byte requirement.
+
+Working with quantities
+-----------------------
+
+``AssetNameMap`` groups signed quantities under one policy; ``MultiAsset`` groups
+those maps by policy. ``Value`` adds a lovelace amount. ``AssetIdMap`` provides a
+flat identifier-to-quantity view. Getters return independent values.
+
+.. code-block:: cpp
+
+   const Cometa::AssetName name = Cometa::AssetName::fromString("Cometa");
+   Cometa::MultiAsset tokens;
+   tokens.set(policyId, name, 10);
+
+   Cometa::Value payment(2'000'000, tokens);
+   payment.addAsset(policyId, name, 5);
+   const std::vector<std::uint8_t> cbor = payment.toCbor();
+   const Cometa::Value decoded = Cometa::Value::fromCbor(cbor);
+
+``get`` returns ``std::nullopt`` for an absent asset. Map ``at`` throws
+``std::out_of_range`` instead. ``set`` retains zero amounts; addition and
+subtraction remove zero results. Quantities use ``std::int64_t``. Arithmetic
+throws ``std::overflow_error`` if a result cannot be represented, and failed
+mutations leave the original value unchanged.
+
+Negative quantities are useful for differences and minting. Negative lovelace
+cannot be encoded by ``Value::toCbor``. ``Value::toAssetMap`` retains nonzero
+lovelace of either sign so signed values round-trip through ``fromAssetMap``.
+CBOR parsing rejects duplicate asset names or policies, out-of-range amounts,
+invalid policy lengths, and trailing input.
+
+``keys``, ``policies``, and ``entries`` provide owned snapshots for ordinary C++
+iteration. ``toJson`` uses decimal strings for quantities. The asset-name and
+policy maps also offer ``toJsonEntries`` when an array representation is needed.
+
+``Value::assetCount`` includes all stored token entries and positive lovelace.
+``intersection`` includes shared token identifiers regardless of amount, and
+lovelace only when positive in both values. ``isZero`` requires zero lovelace and
+no stored policy entries; a retained zero token entry is not an empty value.
+
+Hash and credential sets
+------------------------
+
+``Blake2bHashSet`` and ``CredentialSet`` keep elements sorted and unique.
+``insert`` returns false for a duplicate; ``at`` and ``values`` return independent
+copies, so changing a returned credential does not alter membership.
+
+.. code-block:: cpp
+
+   Cometa::CredentialSet credentials { paymentCredential };
+   const bool inserted = credentials.insert(stakeCredential);
+   const std::vector<Cometa::Credential> snapshot = credentials.values();
+   const std::vector<std::uint8_t> cbor = credentials.toCbor();
+
+Parsing accepts tagged or untagged arrays and rejects duplicate elements.
+Encoding always writes a sorted definite-length array with CBOR set tag 258.
+An untagged, unsorted, or indefinite-length input therefore need not round-trip
+byte for byte. Other tags, including oversized values that could narrow to 258,
+are rejected. ``toJson`` writes the elements as a sorted JSON array.
+
+Plutus data and output datums
+-----------------------------
+
+Construct Plutus values with integers, byte vectors, lists, maps, or constructor
+fields. ``BigInt`` represents integers outside the machine integer range.
+
+.. code-block:: cpp
+
+   Cometa::PlutusList fields;
+   fields.pushBack(Cometa::PlutusData(42));
+   fields.pushBack(Cometa::PlutusData::fromHex("aabb"));
+
+   const Cometa::ConstrPlutusData constructor(0, fields);
+   const Cometa::PlutusData data(constructor);
+   const Cometa::Datum datum(data);
+   const Cometa::Blake2bHash datumHash = datum.hash();
+
+``PlutusMap`` retains insertion order and duplicate keys. ``insert`` appends a
+pair; ``get`` returns the first matching value or ``std::nullopt``. It does not
+replace an earlier pair with the same key.
+
+Decoded Plutus values retain their original CBOR bytes. This matters because
+datum hashes depend on the encoding, not only on the decoded fields. Copies
+retain that encoding. Mutating a list, map, or constructor rebuilds its encoding
+from the new fields. ``normalizeEncoding()`` explicitly rebuilds subsequent
+encodings, recursively; this can change the datum hash without changing the
+logical value.
+
+Child accessors return independent values. To change constructor fields, modify
+the returned list and pass it to ``setFields``. Changing a returned list does not
+change its parent.
+
+``Datum`` can hold either a 32-byte hash or inline data. ``inlineData()`` returns
+``std::nullopt`` for hash datums. ``hash()`` computes the hash of the preserved
+inline encoding when data is present. ``setHash()`` only applies to hash datums;
+replace an inline datum with a newly constructed ``Datum`` to change its data.
+
+Native script requirements
+--------------------------
+
+Use ``ScriptPubkey`` for a key signature, ``ScriptInvalidBefore`` and
+``ScriptInvalidAfter`` for slot bounds, and ``ScriptRequireGuard`` for a Dijkstra
+guard credential. Key hashes must contain 28 bytes.
+
+.. code-block:: cpp
+
+   const Cometa::Blake2bHash keyHash = publicKey.hash();
+   const Cometa::ScriptPubkey signature(keyHash);
+   const Cometa::ScriptInvalidBefore startsAt(1000);
+   const Cometa::ScriptInvalidAfter endsAt(2000);
+   const Cometa::ScriptRequireGuard guard(
+     Cometa::Credential(Cometa::CredentialType::KeyHash, keyHash));
+
+``fromJson`` accepts the cardano-cli native-script format: ``sig`` with
+``keyHash``, ``after`` with ``slot`` for an invalid-before bound, ``before`` with
+``slot`` for an invalid-after bound, and ``guard`` with exactly one of ``keyHash``
+or ``scriptHash``. Slot values must be unsigned integers without fractional or
+exponent notation. ``toJson`` produces CIP-116 inspection JSON, which uses a
+different schema.
+
+Copies and returned credentials are independent. CBOR decoded with ``fromCbor``
+retains its original encoding until a setter or ``normalizeEncoding`` is used.
+
+Composite native scripts
+------------------------
+
+Combine requirements with ``ScriptAll``, ``ScriptAny``, or ``ScriptNOfK`` and
+wrap the result in ``NativeScript``. A threshold may exceed the child count;
+that describes an unsatisfiable requirement rather than an invalid value.
+
+.. code-block:: cpp
+
+   const Cometa::NativeScriptList requirements {
+     Cometa::NativeScript(Cometa::ScriptPubkey(publicKey.hash())),
+     Cometa::NativeScript(Cometa::ScriptInvalidBefore(1000))
+   };
+   const Cometa::NativeScript policy { Cometa::ScriptAll(requirements) };
+   const Cometa::Blake2bHash policyId = policy.hash();
+
+``type()`` identifies the variant. Accessors such as ``asAll()`` return
+independent requirements and throw ``Error`` for a different variant. Change a
+returned composite with ``setScripts`` and construct a new ``NativeScript`` to
+replace the parent value.
+
+Script hashes use the original decoded CBOR, including nonminimal encodings.
+``normalizeEncoding()`` recursively rebuilds those encodings and can change the
+hash. ``NativeScriptList`` retains its definite or indefinite array form and its
+children's encodings, but normalizes nonminimal array-length headers. Appending a
+child does not normalize existing children.
+
+Native-script JSON uses the cardano-cli schema: ``all`` and ``any`` objects have
+a ``scripts`` array; ``atLeast`` additionally has an unsigned ``required`` count.
+``NativeScriptList::fromJson`` accepts an object containing a ``scripts`` array.
+
+Plutus scripts and parameters
+-----------------------------
+
+``PlutusV1Script`` through ``PlutusV4Script`` accept compiled script bytes.
+``fromHex`` decodes those bytes from hexadecimal; ``fromCbor`` decodes an outer
+CBOR bytestring containing them. ``toBytes`` and ``toHex`` return the compiled
+bytes, while ``toCbor`` adds that outer bytestring.
+
+.. code-block:: cpp
+
+   const Cometa::PlutusV4Script script =
+     Cometa::PlutusV4Script::fromHex("450100002499");
+   Cometa::PlutusList parameters;
+   parameters.pushBack(Cometa::PlutusData(std::int64_t { 42 }));
+
+   const Cometa::PlutusV4Script applied = script.applyParameters(parameters);
+   const Cometa::Blake2bHash scriptHash = applied.hash();
+
+``applyParameters`` requires a CBOR-wrapped Flat program, applies arguments in
+list order, and returns a new script. An empty list canonicalizes the program.
+Malformed programs throw ``Error``. Applying parameters does not execute the
+script or change its ledger language version.
+
+``hash`` includes the language prefix, so identical bytes in different Plutus
+versions have different hashes. Decoding an outer CBOR representation normalizes
+its bytestring header without changing the compiled bytes or script hash.
+
+Working with either script language
+-----------------------------------
+
+``Script`` holds a ``NativeScript`` or any of the four Plutus script types.
+Use ``language()`` to identify the variant and a typed accessor to obtain it.
+An accessor for a different language throws ``Error``.
+
+.. code-block:: cpp
+
+   const Cometa::Script script(
+     Cometa::PlutusV4Script::fromHex("450100002499"));
+
+   if (script.language() == Cometa::ScriptLanguage::PlutusV4)
+   {
+     const Cometa::PlutusV4Script validator = script.asPlutusV4();
+     const std::string bytes = validator.toHex();
+   }
+
+Constructors and accessors copy values. Replacing a returned script does not
+modify its parent. ``toCbor`` includes both the language discriminator and the
+script payload; ``hash`` uses the underlying script's language-specific hash.
+Native payloads retain their decoded encoding, including encodings that affect
+the hash. To normalize a native payload, normalize the value returned by
+``asNative()`` and construct a replacement ``Script`` from it.
+
+Transaction values and withdrawals
+----------------------------------
+
+``TransactionInput`` identifies a previous output by its 32-byte transaction ID
+and output index. ``TransactionOutput`` contains an address and ``Value``;
+``Utxo`` combines an input reference with its output contents.
+
+.. code-block:: cpp
+
+   const Cometa::TransactionInput input = Cometa::TransactionInput::fromHex(
+     "0101010101010101010101010101010101010101010101010101010101010101", 5);
+   const Cometa::Address address = Cometa::Address::fromString(
+     "addr_test1vqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxrcya6");
+   Cometa::TransactionOutput output(address, Cometa::Value(2'000'000));
+   output.setDatum(Cometa::Datum(Cometa::PlutusData(std::int64_t { 42 })));
+   output.setScriptRef(Cometa::Script(
+     Cometa::PlutusV4Script::fromHex("450100002499")));
+
+   const Cometa::Utxo utxo(input, output);
+   output.setDatum(std::nullopt);
+
+``datum()`` and ``scriptRef()`` return ``std::optional`` values. Set either field
+to ``std::nullopt`` to remove it. Constructors, setters, and getters copy values,
+so changing ``output`` above does not change ``utxo``. Output lovelace must be
+nonnegative; constructing these values does not establish transaction validity.
+
+``TransactionInputSet`` sorts and deduplicates inputs. Its CBOR always includes
+set tag 258; ``wasTagged()`` reports the decoded input's tag presence and returns
+true for newly constructed sets. ``TransactionOutputList`` retains output order.
+Both serialize as definite-length arrays. Legacy output arrays decode normally
+and serialize in the current map form.
+
+``WithdrawalMap`` stores exact unsigned 64-bit lovelace amounts. ``set`` replaces
+an existing address's amount, including zero; ``get`` returns ``std::nullopt``
+when absent, while ``at`` throws ``std::out_of_range``. ``keys``, ``entries``, and
+``entryAt`` return independent values in serialization order.
+
+``UtxoList`` and ``RewardAddressList`` are standard ``std::vector`` aliases. Use
+normal vector operations and standard algorithms for sorting, finding, filtering,
+concatenation, and slicing; their elements retain independent value semantics.
+
+Auxiliary Plutus script lists
+--------------------------------
+
+``PlutusV1ScriptList``, ``PlutusV2ScriptList``, ``PlutusV3ScriptList``, and
+``PlutusV4ScriptList`` retain ordered script values, including duplicates.
+Use ``pushBack`` to append a script, ``at`` to copy one element, and ``values``
+to obtain a standard vector of independent script values.
+
+.. code-block:: cpp
+
+   const Cometa::PlutusV4Script script =
+     Cometa::PlutusV4Script::fromHex("450100002499");
+   Cometa::PlutusV4ScriptList scripts { script };
+   scripts.pushBack(script);
+   const std::vector<std::uint8_t> cbor = scripts.toCbor();
+
+``fromCbor`` accepts bytes or hexadecimal text and rejects trailing input.
+Serialization produces a definite-length array of script byte strings;
+``toJson`` produces the CIP-116 inspection array. These collections do not
+execute scripts or establish their validity for a transaction.
+
+Metadata values
+---------------
+
+``Metadatum`` represents an integer, text, bytes, ``MetadatumList``, or
+``MetadatumMap``. Lists retain order; maps retain insertion order and duplicate
+keys. ``get`` returns the first matching map value or ``std::nullopt``.
+Constructors and getters provide independent values.
+
+.. code-block:: cpp
+
+   Cometa::MetadatumMap fields;
+   fields.insert(Cometa::Metadatum("name"), Cometa::Metadatum("Cometa"));
+   fields.insert(Cometa::Metadatum("count"), Cometa::Metadatum(std::int64_t { 42 }));
+   const Cometa::Metadatum metadata(fields);
+   const std::vector<std::uint8_t> cbor = metadata.toCbor();
+   const std::string plainJson = metadata.toPlainJson();
+
+``fromPlainJson`` accepts JSON integers, strings, arrays, and objects. Integer
+precision is retained; null, booleans, fractions, and exponents are rejected.
+``toPlainJson`` requires text map keys and rejects byte-string values. ``toJson``
+produces tagged CIP-116 inspection output for every metadata kind.
+
+Text preserves embedded null characters. Text and bytes may be stored at any
+length, but CBOR encoding rejects values longer than 64 bytes. Integers use
+``BigInt``; CBOR supports bignum tags for larger values. Constructing or decoding
+metadata does not establish its validity under a particular ledger's rules.
+
+CBOR serialization normalizes scalar encodings while retaining each list or
+map's definite or indefinite length form, including after appending entries.
+
+Transaction metadata and auxiliary data
+---------------------------------------
+
+``TransactionMetadata`` associates unsigned 64-bit labels with metadata values.
+``set`` replaces an existing label, ``get`` returns an optional independent value,
+and ``at`` throws ``std::out_of_range`` for a missing label. Entries serialize in
+ascending label order. Decoding rejects duplicate labels. ``MetadatumLabelList``
+is a standard vector of unsigned 64-bit labels.
+
+.. code-block:: cpp
+
+   Cometa::TransactionMetadata metadata;
+   metadata.set(674, Cometa::Metadatum::fromPlainJson(
+     R"({"msg":["Hello from Cometa"]})"));
+
+   Cometa::AuxiliaryData auxiliary;
+   auxiliary.setMetadata(metadata);
+   auxiliary.setPlutusV4Scripts(Cometa::PlutusV4ScriptList {
+     Cometa::PlutusV4Script::fromHex("450100002499") });
+   const Cometa::Blake2bHash hash = auxiliary.hash();
+   const std::vector<std::uint8_t> cbor = auxiliary.toCbor();
+
+``AuxiliaryData`` can contain metadata, native scripts, and Plutus V1 through V4
+script lists. Getters return optional independent values; setters accept
+``std::nullopt`` to remove a field. An absent field and a present empty collection
+remain distinct in CBOR.
+
+Decoded auxiliary data preserves its original CBOR and hash. Changing a field
+or calling ``normalizeEncoding`` selects the current tagged form for subsequent
+serialization; nested script encodings remain intact. ``hash`` always hashes the
+bytes returned by ``toCbor``. Equality compares field values, so equivalent values
+with different original encodings can have different hashes.
+
+Pool primitives
+---------------
+
+``Ipv4`` and ``Ipv6`` accept network-order bytes and provide CBOR, text, and byte
+conversions. IPv4 text contains four decimal octets. IPv6 text currently requires
+eight groups of four hexadecimal digits; compressed forms such as ``::1`` are
+not accepted. Address equality compares bytes, regardless of hexadecimal case.
+
+.. code-block:: cpp
+
+   const Cometa::Ipv4 address = Cometa::Ipv4::fromString("192.0.2.1");
+   const std::vector<std::uint8_t> bytes = address.toBytes();
+
+   const Cometa::Blake2bHash hash = Cometa::Blake2bHash::fromHex(std::string(64, '1'));
+   Cometa::PoolMetadata metadata("https://example.com/pool.json", hash);
+   metadata.setUrl("https://example.com/new.json");
+
+``PoolMetadata`` stores a URL of at most 128 bytes and a 32-byte content hash.
+An empty URL is allowed; embedded NUL characters are rejected by constructors and
+setters. Copies and returned hashes are independent values.
+
+``BlsKey`` stores a 96-byte public key and a 48-byte proof of possession. Construct
+it from two byte vectors, or use ``fromHex`` with 192 and 96 hexadecimal characters.
+It supports CBOR and CIP-116 JSON. These operations validate the encoding and
+lengths; they do not verify the proof cryptographically.

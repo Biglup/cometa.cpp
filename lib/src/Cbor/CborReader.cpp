@@ -325,27 +325,14 @@ CborReader::peekTag() const
 {
   cardano_cbor_tag_t tag = CARDANO_CBOR_TAG_DATE_TIME_STRING;
 
-  checkCardanoError(cardano_cbor_reader_peek_tag(checked(), &tag), "CborReader peekTag");
+  const cardano_error_t result = cardano_cbor_reader_peek_tag(checked(), &tag);
 
-  const std::vector<std::uint8_t> bytes      = remainderBytes();
-  const std::uint8_t              additional = bytes.front() & 31U;
-  std::uint64_t                   value      = additional;
-
-  if (additional >= 24U)
-  {
-    const std::size_t length = std::size_t { 1 } << (additional - 24U);
-    value                    = 0;
-
-    for (std::size_t index = 1; index <= length; ++index)
-    {
-      value = (value << 8U) | bytes.at(index);
-    }
-  }
-
-  if (value > static_cast<std::uint64_t>(std::numeric_limits<std::int32_t>::max()))
+  if (result == CARDANO_ERROR_INTEGER_OVERFLOW)
   {
     throw std::out_of_range("CBOR tag exceeds the supported range");
   }
+
+  checkCardanoError(result, "CborReader peekTag");
 
   return static_cast<CborTag>(tag);
 }

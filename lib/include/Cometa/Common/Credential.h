@@ -218,6 +218,24 @@ class Credential
 
   private:
 
+    /** @brief Allows ScriptRequireGuard to copy script components. */
+    friend class ScriptRequireGuard;
+
+    /** @brief Allows CredentialSet to copy set elements. */
+    friend class CredentialSet;
+
+    /** @brief Allows BaseAddress to copy credential components. */
+    friend class BaseAddress;
+
+    /** @brief Allows EnterpriseAddress to copy credential components. */
+    friend class EnterpriseAddress;
+
+    /** @brief Allows RewardAddress to copy credential components. */
+    friend class RewardAddress;
+
+    /** @brief Allows PointerAddress to copy credential components. */
+    friend class PointerAddress;
+
     /**
      * @brief Takes ownership of an existing value.
      *
