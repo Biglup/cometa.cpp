@@ -127,16 +127,16 @@ cardano_plutus_data_t,opaque object,lib/include/cardano/plutus_data/plutus_data.
 cardano_plutus_language_version_t,enum,lib/include/cardano/scripts/plutus_scripts/plutus_language_version.h,P06.3,implemented,Cometa::PlutusLanguageVersion,lib/tests/Scripts/PlutusScripts/PlutusLanguageVersionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_list_t,opaque object,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList,lib/tests/PlutusData/PlutusListTest.cpp
 cardano_plutus_map_t,opaque object,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap,lib/tests/PlutusData/PlutusMapTest.cpp
-cardano_plutus_v1_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v1_script_list.h,P08,planned,,
+cardano_plutus_v1_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v1_script_list.h,P08,implemented,Cometa::PlutusV1ScriptList,lib/tests/AuxiliaryData/PlutusV1ScriptListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_v1_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v1_script_set.h,P15,planned,,
 cardano_plutus_v1_script_t,opaque object,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,implemented,Cometa::PlutusV1Script,lib/tests/Scripts/PlutusScripts/PlutusV1ScriptTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_plutus_v2_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v2_script_list.h,P08,planned,,
+cardano_plutus_v2_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v2_script_list.h,P08,implemented,Cometa::PlutusV2ScriptList,lib/tests/AuxiliaryData/PlutusV2ScriptListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_v2_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v2_script_set.h,P15,planned,,
 cardano_plutus_v2_script_t,opaque object,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,implemented,Cometa::PlutusV2Script,lib/tests/Scripts/PlutusScripts/PlutusV2ScriptTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_plutus_v3_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v3_script_list.h,P08,planned,,
+cardano_plutus_v3_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v3_script_list.h,P08,implemented,Cometa::PlutusV3ScriptList,lib/tests/AuxiliaryData/PlutusV3ScriptListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_v3_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v3_script_set.h,P15,planned,,
 cardano_plutus_v3_script_t,opaque object,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,implemented,Cometa::PlutusV3Script,lib/tests/Scripts/PlutusScripts/PlutusV3ScriptTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_plutus_v4_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v4_script_list.h,P08,planned,,
+cardano_plutus_v4_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v4_script_list.h,P08,implemented,Cometa::PlutusV4ScriptList,lib/tests/AuxiliaryData/PlutusV4ScriptListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_v4_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v4_script_set.h,P15,planned,,
 cardano_plutus_v4_script_t,opaque object,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,implemented,Cometa::PlutusV4Script,lib/tests/Scripts/PlutusScripts/PlutusV4ScriptTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_pointer_address_t,opaque object,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress,lib/tests/Address/PointerAddressTest.cpp

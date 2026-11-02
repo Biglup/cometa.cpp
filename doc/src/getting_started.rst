@@ -512,3 +512,24 @@ when absent, while ``at`` throws ``std::out_of_range``. ``keys``, ``entries``, a
 ``UtxoList`` and ``RewardAddressList`` are standard ``std::vector`` aliases. Use
 normal vector operations and standard algorithms for sorting, finding, filtering,
 concatenation, and slicing; their elements retain independent value semantics.
+
+Auxiliary Plutus script lists
+--------------------------------
+
+``PlutusV1ScriptList``, ``PlutusV2ScriptList``, ``PlutusV3ScriptList``, and
+``PlutusV4ScriptList`` retain ordered script values, including duplicates.
+Use ``pushBack`` to append a script, ``at`` to copy one element, and ``values``
+to obtain a standard vector of independent script values.
+
+.. code-block:: cpp
+
+   const Cometa::PlutusV4Script script =
+     Cometa::PlutusV4Script::fromHex("450100002499");
+   Cometa::PlutusV4ScriptList scripts { script };
+   scripts.pushBack(script);
+   const std::vector<std::uint8_t> cbor = scripts.toCbor();
+
+``fromCbor`` accepts bytes or hexadecimal text and rejects trailing input.
+Serialization produces a definite-length array of script byte strings;
+``toJson`` produces the CIP-116 inspection array. These collections do not
+execute scripts or establish their validity for a transaction.

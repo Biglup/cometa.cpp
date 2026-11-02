@@ -289,6 +289,34 @@ sampleValue<Script>()
 }
 
 template<>
+PlutusV1ScriptList
+sampleValue<PlutusV1ScriptList>()
+{
+  return PlutusV1ScriptList { PlutusV1Script::fromHex("450100002499") };
+}
+
+template<>
+PlutusV2ScriptList
+sampleValue<PlutusV2ScriptList>()
+{
+  return PlutusV2ScriptList { PlutusV2Script::fromHex("450100002499") };
+}
+
+template<>
+PlutusV3ScriptList
+sampleValue<PlutusV3ScriptList>()
+{
+  return PlutusV3ScriptList { PlutusV3Script::fromHex("450100002499") };
+}
+
+template<>
+PlutusV4ScriptList
+sampleValue<PlutusV4ScriptList>()
+{
+  return PlutusV4ScriptList { PlutusV4Script::fromHex("450100002499") };
+}
+
+template<>
 TransactionInput
 sampleValue<TransactionInput>()
 {
@@ -337,7 +365,7 @@ sampleValue<WithdrawalMap>()
   return value;
 }
 
-using ValueTypes = testing::Types<TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
+using ValueTypes = testing::Types<PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -4860,6 +4888,110 @@ TEST(WithdrawalMap, FailedReplacementPreservesAllAmounts)
     {
       AllocationFailure failure(index, true);
       EXPECT_THROW(value.set(key, 20), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+  }
+}
+
+TEST(PlutusV1ScriptList, FailedAppendPreservesValue)
+{
+  // Arrange
+  const PlutusV1ScriptList original    = sampleValue<PlutusV1ScriptList>();
+  const PlutusV1Script     replacement = sampleValue<PlutusV1Script>();
+  std::size_t              count       = 0U;
+  {
+    PlutusV1ScriptList value(original);
+    AllocationFailure  tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)value.pushBack(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    PlutusV1ScriptList value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.pushBack(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+  }
+}
+
+TEST(PlutusV2ScriptList, FailedAppendPreservesValue)
+{
+  // Arrange
+  const PlutusV2ScriptList original    = sampleValue<PlutusV2ScriptList>();
+  const PlutusV2Script     replacement = sampleValue<PlutusV2Script>();
+  std::size_t              count       = 0U;
+  {
+    PlutusV2ScriptList value(original);
+    AllocationFailure  tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)value.pushBack(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    PlutusV2ScriptList value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.pushBack(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+  }
+}
+
+TEST(PlutusV3ScriptList, FailedAppendPreservesValue)
+{
+  // Arrange
+  const PlutusV3ScriptList original    = sampleValue<PlutusV3ScriptList>();
+  const PlutusV3Script     replacement = sampleValue<PlutusV3Script>();
+  std::size_t              count       = 0U;
+  {
+    PlutusV3ScriptList value(original);
+    AllocationFailure  tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)value.pushBack(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    PlutusV3ScriptList value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.pushBack(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+  }
+}
+
+TEST(PlutusV4ScriptList, FailedAppendPreservesValue)
+{
+  // Arrange
+  const PlutusV4ScriptList original    = sampleValue<PlutusV4ScriptList>();
+  const PlutusV4Script     replacement = sampleValue<PlutusV4Script>();
+  std::size_t              count       = 0U;
+  {
+    PlutusV4ScriptList value(original);
+    AllocationFailure  tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)value.pushBack(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    PlutusV4ScriptList value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.pushBack(replacement), std::bad_alloc) << index;
     }
     EXPECT_EQ(value, original);
   }

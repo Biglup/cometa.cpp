@@ -23,10 +23,10 @@ lib/include/cardano/auxiliary_data/metadatum_kind.h,public header,P08,planned,id
 lib/include/cardano/auxiliary_data/metadatum_label_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/auxiliary_data/metadatum_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/auxiliary_data/metadatum_map.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/plutus_v1_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/plutus_v2_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/plutus_v3_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/plutus_v4_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/auxiliary_data/plutus_v1_script_list.h,public header,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/include/cardano/auxiliary_data/plutus_v2_script_list.h,public header,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/include/cardano/auxiliary_data/plutus_v3_script_list.h,public header,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/include/cardano/auxiliary_data/plutus_v4_script_list.h,public header,P08,implemented,Independent ordered script collections with CBOR and inspection output.
 lib/include/cardano/auxiliary_data/transaction_metadata.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/bip39.h,public header,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/include/cardano/buffer.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
@@ -264,10 +264,10 @@ lib/src/auxiliary_data/metadatum.c,implementation file,P08,internal,Native imple
 lib/src/auxiliary_data/metadatum_label_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/auxiliary_data/metadatum_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/auxiliary_data/metadatum_map.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/plutus_v1_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/plutus_v2_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/plutus_v3_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/plutus_v4_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/auxiliary_data/plutus_v1_script_list.c,implementation file,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/src/auxiliary_data/plutus_v2_script_list.c,implementation file,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/src/auxiliary_data/plutus_v3_script_list.c,implementation file,P08,implemented,Independent ordered script collections with CBOR and inspection output.
+lib/src/auxiliary_data/plutus_v4_script_list.c,implementation file,P08,implemented,Independent ordered script collections with CBOR and inspection output.
 lib/src/auxiliary_data/transaction_metadata.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/bip39/bip39.c,implementation file,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/src/bip39/bip39_wordlist_en.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
