@@ -467,3 +467,91 @@ TEST(BigInt, ConstructorsReleaseStateOnFailure)
     EXPECT_THROW(BigInt::fromBytes(bytes), std::bad_alloc);
   }
 }
+
+TEST(Base58, ReportsAllocationFailures)
+{
+  // Arrange
+  const std::vector<std::uint8_t> bytes { 58 };
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(encodeBase58(bytes), std::bad_alloc);
+  }
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(decodeBase58("21"), std::bad_alloc);
+  }
+}
+
+TEST(Bech32, ReleasesStateOnEveryEncodingAllocationFailure)
+{
+  // Arrange
+  const std::vector<std::uint8_t> bytes { 1, 2, 3 };
+  std::size_t                     count = 0;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const std::string encoded = encodeBech32("test", bytes);
+    EXPECT_FALSE(encoded.empty());
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0);
+
+  // Act & Assert
+  for (std::size_t i = 0; i < count; ++i)
+  {
+    AllocationFailure fail(i);
+    bool              failed = false;
+
+    try
+    {
+      encodeBech32("test", bytes);
+    }
+    catch (const std::bad_alloc&)
+    {
+      failed = true;
+    }
+    catch (const Error&)
+    {
+      failed = true;
+    }
+
+    EXPECT_TRUE(failed);
+  }
+}
+
+TEST(Bech32, ReleasesStateOnEveryDecodingAllocationFailure)
+{
+  // Arrange
+  const std::string encoded = encodeBech32("test", { 1, 2, 3 });
+  std::size_t       count   = 0;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const Bech32Data  decoded = decodeBech32(encoded);
+    EXPECT_EQ(decoded.prefix, "test");
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0);
+
+  // Act & Assert
+  for (std::size_t i = 0; i < count; ++i)
+  {
+    AllocationFailure fail(i);
+    bool              failed = false;
+
+    try
+    {
+      decodeBech32(encoded);
+    }
+    catch (const std::bad_alloc&)
+    {
+      failed = true;
+    }
+    catch (const Error&)
+    {
+      failed = true;
+    }
+
+    EXPECT_TRUE(failed);
+  }
+}

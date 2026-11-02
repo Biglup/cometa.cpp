@@ -1287,14 +1287,14 @@ cardano_ed25519_signature_deep_clone,lib/include/cardano/crypto/ed25519_signatur
 cardano_crypto_emip3_encrypt,lib/include/cardano/crypto/emip3.h,P02,planned,,,API and ownership mapping pending.
 cardano_crypto_emip3_decrypt,lib/include/cardano/crypto/emip3.h,P02,planned,,,API and ownership mapping pending.
 cardano_crypto_pbkdf2_hmac_sha512,lib/include/cardano/crypto/pbkdf2.h,P02,planned,,,API and ownership mapping pending.
-cardano_encoding_base58_get_encoded_length,lib/include/cardano/encoding/base58.h,P01a.3,planned,,,API and ownership mapping pending.
-cardano_encoding_base58_encode,lib/include/cardano/encoding/base58.h,P01a.3,planned,,,API and ownership mapping pending.
-cardano_encoding_base58_get_decoded_length,lib/include/cardano/encoding/base58.h,P01a.3,planned,,,API and ownership mapping pending.
-cardano_encoding_base58_decode,lib/include/cardano/encoding/base58.h,P01a.3,planned,,,API and ownership mapping pending.
-cardano_encoding_bech32_get_encoded_length,lib/include/cardano/encoding/bech32.h,P01a.3,planned,,,API and ownership mapping pending.
-cardano_encoding_bech32_encode,lib/include/cardano/encoding/bech32.h,P01a.3,planned,,,API and ownership mapping pending.
-cardano_encoding_bech32_get_decoded_length,lib/include/cardano/encoding/bech32.h,P01a.3,planned,,,API and ownership mapping pending.
-cardano_encoding_bech32_decode,lib/include/cardano/encoding/bech32.h,P01a.3,planned,,,API and ownership mapping pending.
+cardano_encoding_base58_get_encoded_length,lib/include/cardano/encoding/base58.h,P01a.3,internal,Private allocation sizing,lib/tests/Encoding/Base58Test.cpp,Output size is managed by C++ containers.
+cardano_encoding_base58_encode,lib/include/cardano/encoding/base58.h,P01a.3,implemented,Cometa::encodeBase58,lib/tests/Encoding/Base58Test.cpp; lib/tests/ValueContractTest.cpp,Owned strings and byte vectors; no public buffer sizing or manual cleanup.
+cardano_encoding_base58_get_decoded_length,lib/include/cardano/encoding/base58.h,P01a.3,internal,Private allocation sizing,lib/tests/Encoding/Base58Test.cpp,Output size is managed by C++ containers.
+cardano_encoding_base58_decode,lib/include/cardano/encoding/base58.h,P01a.3,implemented,Cometa::decodeBase58,lib/tests/Encoding/Base58Test.cpp; lib/tests/ValueContractTest.cpp,Owned strings and byte vectors; no public buffer sizing or manual cleanup.
+cardano_encoding_bech32_get_encoded_length,lib/include/cardano/encoding/bech32.h,P01a.3,internal,Private allocation sizing,lib/tests/Encoding/Bech32Test.cpp,Output size is managed by C++ containers.
+cardano_encoding_bech32_encode,lib/include/cardano/encoding/bech32.h,P01a.3,implemented,Cometa::encodeBech32,lib/tests/Encoding/Bech32Test.cpp; lib/tests/ValueContractTest.cpp,Owned strings and byte vectors; no public buffer sizing or manual cleanup.
+cardano_encoding_bech32_get_decoded_length,lib/include/cardano/encoding/bech32.h,P01a.3,internal,Private allocation sizing,lib/tests/Encoding/Bech32Test.cpp,Output size is managed by C++ containers.
+cardano_encoding_bech32_decode,lib/include/cardano/encoding/bech32.h,P01a.3,implemented,Cometa::decodeBech32,lib/tests/Encoding/Bech32Test.cpp; lib/tests/ValueContractTest.cpp,Owned strings and byte vectors; no public buffer sizing or manual cleanup.
 cardano_error_to_string,lib/include/cardano/error.h,P01a.1,implemented,makeErrorCode().message(),lib/tests/ErrorTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
 cardano_json_object_parse,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.
 cardano_json_object_to_json_string,lib/include/cardano/json/json_object.h,P01b,planned,,,API and ownership mapping pending.

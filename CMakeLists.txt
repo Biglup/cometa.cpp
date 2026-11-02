@@ -19,6 +19,8 @@ ADD_LIBRARY (cometa STATIC
   lib/src/ErrorCode.cpp
   lib/src/Error.cpp
   lib/src/SlotConfig.cpp
+  lib/src/Encoding/Base58.cpp
+  lib/src/Encoding/Bech32.cpp
   lib/src/Common/BigInt.cpp
   lib/src/Common/UnitInterval.cpp
   lib/src/Common/Anchor.cpp
@@ -69,6 +71,8 @@ IF (COMETA_BUILD_TESTS)
   ADD_EXECUTABLE (cometa-tests
     lib/tests/ErrorTest.cpp
     lib/tests/SlotConfigTest.cpp
+    lib/tests/Encoding/Base58Test.cpp
+    lib/tests/Encoding/Bech32Test.cpp
     lib/tests/Common/BigIntTest.cpp
     lib/tests/Common/UnitIntervalTest.cpp
     lib/tests/Common/AnchorTest.cpp

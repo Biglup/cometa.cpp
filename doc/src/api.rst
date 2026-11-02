@@ -49,3 +49,14 @@ API reference
 
 .. doxygenclass:: Cometa::BigInt
    :members:
+
+.. doxygenfunction:: Cometa::encodeBase58
+
+.. doxygenfunction:: Cometa::decodeBase58
+
+.. doxygenfunction:: Cometa::encodeBech32
+
+.. doxygenfunction:: Cometa::decodeBech32
+
+.. doxygenstruct:: Cometa::Bech32Data
+   :members:
