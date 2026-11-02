@@ -900,3 +900,9 @@ hashes. Entries are sorted by hash, and accessors return independent values::
    proposals.add(delegate, update);
    const std::optional<Cometa::ProtocolParamUpdate> found =
      proposals.get(delegate);
+
+``Update`` combines the proposals with the epoch in which they take effect::
+
+   Cometa::Update epochUpdate(500, proposals);
+   const std::vector<std::uint8_t> cbor = epochUpdate.toCbor();
+   const Cometa::Update decoded = Cometa::Update::fromCbor(cbor);

@@ -176,6 +176,8 @@ class ProposedParamUpdates
 
   private:
 
+    friend class Update;
+
     /**
      * @brief Adopts an owned collection.
      * @param value The owned collection.

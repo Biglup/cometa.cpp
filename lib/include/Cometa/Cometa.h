@@ -190,3 +190,4 @@
 #include <Cometa/ProtocolParams/PoolVotingThresholds.h>
 #include <Cometa/ProtocolParams/ProposedParamUpdates.h>
 #include <Cometa/ProtocolParams/ProtocolParamUpdate.h>
+#include <Cometa/ProtocolParams/Update.h>

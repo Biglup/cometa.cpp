@@ -2193,20 +2193,20 @@ cardano_protocol_parameters_refcount,lib/include/cardano/protocol_params/protoco
 cardano_protocol_parameters_set_last_error,lib/include/cardano/protocol_params/protocol_parameters.h,P12,planned,,,API and ownership mapping pending.
 cardano_protocol_parameters_get_last_error,lib/include/cardano/protocol_params/protocol_parameters.h,P12,planned,,,API and ownership mapping pending.
 cardano_protocol_parameters_deep_clone,lib/include/cardano/protocol_params/protocol_parameters.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_new,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_from_cbor,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_to_cbor,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_to_cip116_json,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_get_epoch,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_get_proposed_parameters,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_set_epoch,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_set_proposed_parameters,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_unref,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_ref,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_refcount,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_set_last_error,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_get_last_error,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
-cardano_update_deep_clone,lib/include/cardano/protocol_params/update.h,P12,planned,,,API and ownership mapping pending.
+cardano_update_new,lib/include/cardano/protocol_params/update.h,P12,implemented,Cometa::Update::constructor,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
+cardano_update_from_cbor,lib/include/cardano/protocol_params/update.h,P12,implemented,Cometa::Update::fromCbor,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
+cardano_update_to_cbor,lib/include/cardano/protocol_params/update.h,P12,implemented,Cometa::Update::toCbor,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
+cardano_update_to_cip116_json,lib/include/cardano/protocol_params/update.h,P12,implemented,Cometa::Update::toJson,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
+cardano_update_get_epoch,lib/include/cardano/protocol_params/update.h,P12,implemented,Cometa::Update::epoch,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
+cardano_update_get_proposed_parameters,lib/include/cardano/protocol_params/update.h,P12,implemented,Cometa::Update::proposals,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
+cardano_update_set_epoch,lib/include/cardano/protocol_params/update.h,P12,implemented,Cometa::Update::setEpoch,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
+cardano_update_set_proposed_parameters,lib/include/cardano/protocol_params/update.h,P12,implemented,Cometa::Update::setProposals,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
+cardano_update_unref,lib/include/cardano/protocol_params/update.h,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
+cardano_update_ref,lib/include/cardano/protocol_params/update.h,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
+cardano_update_refcount,lib/include/cardano/protocol_params/update.h,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
+cardano_update_set_last_error,lib/include/cardano/protocol_params/update.h,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
+cardano_update_get_last_error,lib/include/cardano/protocol_params/update.h,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
+cardano_update_deep_clone,lib/include/cardano/protocol_params/update.h,P12,implemented,Cometa::Update::copy constructor / assignment,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
 cardano_provider_new,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
 cardano_provider_get_name,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
 cardano_provider_get_network_magic,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
