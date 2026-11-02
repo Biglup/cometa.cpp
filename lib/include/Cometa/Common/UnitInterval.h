@@ -228,6 +228,9 @@ class UnitInterval
     /** @brief Allows voting thresholds to copy their components. */
     friend class PoolVotingThresholds;
 
+    /** @brief Allows protocol updates to copy native values. */
+    friend class ProtocolParamUpdate;
+
   private:
 
     /**

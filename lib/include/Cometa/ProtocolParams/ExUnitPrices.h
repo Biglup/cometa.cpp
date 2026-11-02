@@ -157,6 +157,9 @@ class ExUnitPrices
      */
     bool operator!=(const ExUnitPrices& other) const;
 
+    /** @brief Allows protocol updates to copy native values. */
+    friend class ProtocolParamUpdate;
+
   private:
 
     /**

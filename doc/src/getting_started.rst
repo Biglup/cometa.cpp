@@ -877,3 +877,16 @@ independent copies and CBOR serialization::
    Cometa::PoolVotingThresholds pool =
      Cometa::PoolVotingThresholds::fromCbor(poolThresholdCbor);
    pool.setSecurityRelevantParam(Cometa::UnitInterval(1, 2));
+
+``ProtocolParamUpdate`` stores proposed changes as optional values. A missing
+value is omitted from the update; ``std::nullopt`` removes an existing proposal::
+
+   Cometa::ProtocolParamUpdate update;
+   update.setMinFeeA(std::uint64_t(44));
+   update.setPoolPledgeInfluence(Cometa::UnitInterval(1, 2));
+   update.setMinFeeA(std::nullopt);
+
+Max pledge leverage and the Peras bootstrap round also have an explicit
+ledger-null value, separate from absence. Use
+``setMaxPledgeLeverageUnbounded()`` or ``setPerasBootstrapRoundNull()`` to
+propose that value; use the matching ``clear`` method to omit the field.

@@ -193,6 +193,9 @@ class ProtocolVersion
      */
     bool operator!=(const ProtocolVersion& other) const;
 
+    /** @brief Allows protocol updates to copy native values. */
+    friend class ProtocolParamUpdate;
+
   private:
 
     /**

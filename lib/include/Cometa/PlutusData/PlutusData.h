@@ -283,6 +283,9 @@ class PlutusData
     /** @brief Allows Datum to copy components. */
     friend class Datum;
 
+    /** @brief Allows protocol updates to return Plutus data. */
+    friend class ProtocolParamUpdate;
+
     /**
      * @brief Takes ownership of an existing reference.
      *

@@ -189,6 +189,9 @@ class ExUnits
      */
     bool operator!=(const ExUnits& other) const;
 
+    /** @brief Allows protocol updates to copy native values. */
+    friend class ProtocolParamUpdate;
+
   private:
 
     /**

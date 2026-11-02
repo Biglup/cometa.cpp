@@ -52,6 +52,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/ProtocolParams/CostModels.cpp
   lib/src/ProtocolParams/DRepVotingThresholds.cpp
   lib/src/ProtocolParams/PoolVotingThresholds.cpp
+  lib/src/ProtocolParams/ProtocolParamUpdate.cpp
   lib/src/Certificates/RegistrationCert.cpp
   lib/src/Certificates/UnregistrationCert.cpp
   lib/src/Common/DRep.cpp
@@ -222,6 +223,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/ProtocolParams/CostModelsTest.cpp
     lib/tests/ProtocolParams/DRepVotingThresholdsTest.cpp
     lib/tests/ProtocolParams/PoolVotingThresholdsTest.cpp
+    lib/tests/ProtocolParams/ProtocolParamUpdateTest.cpp
     lib/tests/Certificates/RegistrationCertTest.cpp
     lib/tests/Certificates/UnregistrationCertTest.cpp
     lib/tests/Common/DRepTypeTest.cpp

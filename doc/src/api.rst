@@ -475,5 +475,8 @@ Protocol parameters
 .. doxygenclass:: Cometa::PoolVotingThresholds
    :members:
 
+.. doxygenclass:: Cometa::ProtocolParamUpdate
+   :members:
+
 .. doxygenclass:: Cometa::ExUnitPrices
    :members:
