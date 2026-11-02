@@ -80,6 +80,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/WitnessSet/VkeyWitness.cpp
   lib/src/WitnessSet/VkeyWitnessSet.cpp
   lib/src/WitnessSet/BootstrapWitness.cpp
+  lib/src/WitnessSet/BootstrapWitnessSet.cpp
   lib/src/Certificates/RegistrationCert.cpp
   lib/src/Certificates/UnregistrationCert.cpp
   lib/src/Common/DRep.cpp
@@ -281,6 +282,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/WitnessSet/VkeyWitnessTest.cpp
     lib/tests/WitnessSet/VkeyWitnessSetTest.cpp
     lib/tests/WitnessSet/BootstrapWitnessTest.cpp
+    lib/tests/WitnessSet/BootstrapWitnessSetTest.cpp
     lib/tests/Certificates/RegistrationCertTest.cpp
     lib/tests/Certificates/UnregistrationCertTest.cpp
     lib/tests/Common/DRepTypeTest.cpp

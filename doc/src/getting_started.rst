@@ -1024,3 +1024,5 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 ``VkeyWitnessSet`` holds key witnesses. Adding or applying a witness with an existing verification key updates its signature. ``setUseTag`` controls the CBOR set tag.
 
 ``BootstrapWitness`` adds a 32-byte chain code and bootstrap address attributes to a key witness.
+
+``BootstrapWitnessSet`` groups bootstrap witnesses by Byron address root and updates the signature when a new witness has the same root.
