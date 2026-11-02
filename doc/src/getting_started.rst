@@ -809,3 +809,7 @@ including the predefined abstain and no-confidence choices.
 
 ``StakeVoteDelegationCert`` combines pool delegation and DRep delegation for
 one stake credential.
+
+``VoteRegistrationDelegationCert`` registers a stake credential and delegates
+its voting rights in one certificate. It records the registration deposit in
+lovelace.
