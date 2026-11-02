@@ -19,6 +19,9 @@ ADD_LIBRARY (cometa STATIC
   lib/src/ErrorCode.cpp
   lib/src/Error.cpp
   lib/src/SlotConfig.cpp
+  lib/src/Common/UnitInterval.cpp
+  lib/src/Common/Anchor.cpp
+  lib/src/Common/GovernanceActionId.cpp
   lib/src/Common/ExUnits.cpp
   lib/src/Common/ProtocolVersion.cpp
   lib/src/Common/NetworkMagic.cpp
@@ -65,6 +68,9 @@ IF (COMETA_BUILD_TESTS)
   ADD_EXECUTABLE (cometa-tests
     lib/tests/ErrorTest.cpp
     lib/tests/SlotConfigTest.cpp
+    lib/tests/Common/UnitIntervalTest.cpp
+    lib/tests/Common/AnchorTest.cpp
+    lib/tests/Common/GovernanceActionIdTest.cpp
     lib/tests/Common/ExUnitsTest.cpp
     lib/tests/Common/ProtocolVersionTest.cpp
     lib/tests/Common/ByteOrderTest.cpp

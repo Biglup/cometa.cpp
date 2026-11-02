@@ -5,7 +5,7 @@ cardano_account_balance_intervals_map_t,opaque object,lib/include/cardano/transa
 cardano_account_derivation_path_t,struct,lib/include/cardano/key_handlers/account_derivation_path.h,P18,planned,,
 cardano_address_t,opaque object,lib/include/cardano/address/address.h,P03,planned,,
 cardano_address_type_t,enum,lib/include/cardano/address/address_type.h,P03,planned,,
-cardano_anchor_t,opaque object,lib/include/cardano/common/anchor.h,P01a.2,planned,,
+cardano_anchor_t,opaque object,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_asset_id_list_t,opaque object,lib/include/cardano/assets/asset_id_list.h,P04,planned,,
 cardano_asset_id_map_t,opaque object,lib/include/cardano/assets/asset_id_map.h,P04,planned,,
 cardano_asset_id_t,opaque object,lib/include/cardano/assets/asset_id.h,P04,planned,,
@@ -83,7 +83,7 @@ cardano_get_unspent_output_by_nft_func_t,callback,lib/include/cardano/providers/
 cardano_get_unspent_outputs_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_get_unspent_outputs_with_asset_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_governance_action_id_list_t,opaque object,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,
-cardano_governance_action_id_t,opaque object,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,
+cardano_governance_action_id_t,opaque object,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_governance_action_type_t,enum,lib/include/cardano/proposal_procedures/governance_action_type.h,P13,planned,,
 cardano_governance_key_type_t,enum,lib/include/cardano/common/governance_key_type.h,P01a.1,implemented,GovernanceKeyType,lib/tests/Common/GovernanceKeyTypeTest.cpp
 cardano_guard_set_t,opaque object,lib/include/cardano/common/guard_set.h,P16,planned,,
@@ -210,7 +210,7 @@ cardano_tx_builder_t,opaque object,lib/include/cardano/transaction_builder/trans
 cardano_tx_evaluate_func_t,callback,lib/include/cardano/transaction_builder/evaluation/tx_evaluator_impl.h,P21,planned,,
 cardano_tx_evaluator_impl_t,struct,lib/include/cardano/transaction_builder/evaluation/tx_evaluator_impl.h,P21,planned,,
 cardano_tx_evaluator_t,opaque object,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,planned,,
-cardano_unit_interval_t,opaque object,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,
+cardano_unit_interval_t,opaque object,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_unregister_drep_cert_t,opaque object,lib/include/cardano/certs/unregister_drep_cert.h,P11,planned,,
 cardano_unregistration_cert_t,opaque object,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,
 cardano_update_committee_action_t,opaque object,lib/include/cardano/proposal_procedures/update_committee_action.h,P13,planned,,

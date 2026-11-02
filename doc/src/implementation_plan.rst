@@ -12,7 +12,10 @@ PR sequence
 
 The foundation is merged. The first common-types slice is divided into three
 PRs to keep numeric and encoding boundary work independently reviewable.
-The current change implements P01a.1; subsequent entries are planned.
+P01a.1 is merged. P01a.2 is split into domain values (UnitInterval, Anchor,
+GovernanceActionId) and a subsequent BigInt PR. Implementation PRs are stacked
+on their preceding branch and reviewed in order; work continues while reviews
+are pending.
 
 .. list-table:: Implementation slices
    :header-rows: 1

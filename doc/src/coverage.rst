@@ -43,11 +43,18 @@ and callback adapters are tracked in :doc:`implementation_plan`.
    * - Slot configuration and time conversion
      - ``SlotConfig``; seconds and milliseconds are explicit, and overflow is rejected
 
+   * - ``cardano_unit_interval_t``
+     - ``UnitInterval`` preserves unsigned components and checks floating-point conversion
+   * - ``cardano_anchor_t``
+     - ``Anchor`` URL/hash access, mutation, CBOR, and JSON
+   * - ``cardano_governance_action_id_t``
+     - ``GovernanceActionId`` hash/index access, mutation, CBOR, JSON, and checked CIP-129 encoding
+
 Coverage ledger
 ---------------
 
 The inventory targets cardano-c commit
-``4630a4fcbddbea27aebf88fda7247b315e6d68a8``, matching the dependency pin.
+``40a614024ca269a74384912830a1ee8ed715cb66``, matching the dependency pin.
 It contains 231 public headers, 418 implementation files, 235 distinct public
 typedefs, and 3,334 exported function declarations. Tests and vendored dependencies
 are outside the file inventory.

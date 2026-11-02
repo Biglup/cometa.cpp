@@ -25,6 +25,8 @@
 
 #include <Cometa/Cometa.h>
 
+#include <string>
+
 /* IMPLEMENTATION ************************************************************/
 
 int
@@ -35,6 +37,16 @@ main()
   const Cometa::ExUnits         budget = Cometa::ExUnits::fromCbor("820102");
   const Cometa::ProtocolVersion version(12, 0);
   const Cometa::SlotConfig      slots = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preview);
+
+  const Cometa::UnitInterval       interval = Cometa::UnitInterval::fromDouble(0.75);
+  const Cometa::Blake2bHash        hash     = Cometa::Blake2bHash::fromHex(std::string(64, '0'));
+  const Cometa::Anchor             anchor("https://example.com", hash);
+  const Cometa::GovernanceActionId action(hash, 1);
+
+  if (interval.numerator() != 3 || anchor.hash() != hash || Cometa::GovernanceActionId::fromBech32(action.toBech32()) != action)
+  {
+    return 1;
+  }
 
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
