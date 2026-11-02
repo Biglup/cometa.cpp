@@ -218,6 +218,9 @@ class Credential
 
   private:
 
+    /** @brief Allows ScriptRequireGuard to copy script components. */
+    friend class ScriptRequireGuard;
+
     /** @brief Allows CredentialSet to copy set elements. */
     friend class CredentialSet;
 

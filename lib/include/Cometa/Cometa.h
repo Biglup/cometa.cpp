@@ -95,3 +95,8 @@
 #include <Cometa/PlutusData/PlutusData.h>
 #include <Cometa/PlutusData/PlutusList.h>
 #include <Cometa/PlutusData/PlutusMap.h>
+
+#include <Cometa/Scripts/NativeScripts/ScriptInvalidAfter.h>
+#include <Cometa/Scripts/NativeScripts/ScriptInvalidBefore.h>
+#include <Cometa/Scripts/NativeScripts/ScriptPubkey.h>
+#include <Cometa/Scripts/NativeScripts/ScriptRequireGuard.h>

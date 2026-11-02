@@ -234,6 +234,9 @@ class Blake2bHash
 
   private:
 
+    /** @brief Allows ScriptPubkey to copy script components. */
+    friend class ScriptPubkey;
+
     /** @brief Allows Blake2bHashSet to copy set elements. */
     friend class Blake2bHashSet;
 

@@ -59,15 +59,24 @@ work continues while reviews are pending.
    * - P05
      - Plutus data; constructors/lists/maps; Datum
      - P01a.2 P01a.3 P01b
-   * - P06
-     - Native scripts and guards; Plutus V1-V4; Script; parameter application
-     - P02 P04 P05
+   * - P06.1
+     - Signature requirements; timelocks; required guards
+     - P02 P05
+   * - P06.2
+     - Native script composites; list; union; discriminator
+     - P06.1
+   * - P06.3
+     - Plutus V1-V4 scripts; language versions; parameter application
+     - P05
+   * - P06.4
+     - Script union and language discriminator
+     - P06.2 P06.3
    * - P07
      - Transaction inputs/outputs; UTxOs; withdrawals; address/output collections
-     - P03 P04 P05 P06
+     - P03 P04 P05 P06.4
    * - P08
      - Metadata and auxiliary data; Plutus script lists
-     - P05 P06
+     - P05 P06.4
    * - P09
      - Pool parameters; relays; IPv4/IPv6; metadata; BLS key representation
      - P02 P03 P04
@@ -88,7 +97,7 @@ work continues while reviews are pending.
      - P01a.2 P01a.3 P11
    * - P15
      - Witness sets; vkey/bootstrap witnesses; redeemers; script/data sets
-     - P02 P05 P06
+     - P02 P05 P06.4
    * - P16
      - Subtransaction body; account balance intervals; deposits; required guards
      - P07 P11 P13 P14 P15

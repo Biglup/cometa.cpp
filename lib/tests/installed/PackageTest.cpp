@@ -146,6 +146,16 @@ main()
     return 1;
   }
 
+  const Cometa::ScriptPubkey       signatureRequirement(key.publicKey().hash());
+  const Cometa::ScriptRequireGuard guard(payment);
+  Cometa::ScriptInvalidBefore      starts(100);
+  starts.setSlot(200);
+
+  if (Cometa::ScriptPubkey::fromCbor(signatureRequirement.toCbor()) != signatureRequirement || Cometa::ScriptRequireGuard::fromCbor(guard.toCbor()) != guard || starts.slot() != 200)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

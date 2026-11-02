@@ -362,3 +362,29 @@ change its parent.
 ``std::nullopt`` for hash datums. ``hash()`` computes the hash of the preserved
 inline encoding when data is present. ``setHash()`` only applies to hash datums;
 replace an inline datum with a newly constructed ``Datum`` to change its data.
+
+Native script requirements
+--------------------------
+
+Use ``ScriptPubkey`` for a key signature, ``ScriptInvalidBefore`` and
+``ScriptInvalidAfter`` for slot bounds, and ``ScriptRequireGuard`` for a Dijkstra
+guard credential. Key hashes must contain 28 bytes.
+
+.. code-block:: cpp
+
+   const Cometa::Blake2bHash keyHash = publicKey.hash();
+   const Cometa::ScriptPubkey signature(keyHash);
+   const Cometa::ScriptInvalidBefore startsAt(1000);
+   const Cometa::ScriptInvalidAfter endsAt(2000);
+   const Cometa::ScriptRequireGuard guard(
+     Cometa::Credential(Cometa::CredentialType::KeyHash, keyHash));
+
+``fromJson`` accepts the cardano-cli native-script format: ``sig`` with
+``keyHash``, ``after`` with ``slot`` for an invalid-before bound, ``before`` with
+``slot`` for an invalid-after bound, and ``guard`` with exactly one of ``keyHash``
+or ``scriptHash``. Slot values must be unsigned integers without fractional or
+exponent notation. ``toJson`` produces CIP-116 inspection JSON, which uses a
+different schema.
+
+Copies and returned credentials are independent. CBOR decoded with ``fromCbor``
+retains its original encoding until a setter or ``normalizeEncoding`` is used.
