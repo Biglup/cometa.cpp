@@ -163,7 +163,7 @@ appending it. ``toString`` requires a complete document; ``reset`` clears the
 document and any write error while preserving the output format.
 
 Signing and deriving keys
-------------------------
+-------------------------
 
 Use ``Ed25519PrivateKey`` for a 32-byte seed or a 64-byte extended signing key.
 Signatures and public keys are ordinary copyable values.
