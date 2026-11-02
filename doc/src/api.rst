@@ -317,3 +317,23 @@ Pool primitives
 
 .. doxygenclass:: Cometa::PoolMetadata
    :members:
+
+Pool relays
+-----------
+
+.. doxygenclass:: Cometa::SingleHostAddrRelay
+   :members:
+
+.. doxygenclass:: Cometa::SingleHostNameRelay
+   :members:
+
+.. doxygenclass:: Cometa::MultiHostNameRelay
+   :members:
+
+.. doxygenclass:: Cometa::Relay
+   :members:
+
+.. doxygenclass:: Cometa::Relays
+   :members:
+
+.. doxygenenum:: Cometa::RelayType

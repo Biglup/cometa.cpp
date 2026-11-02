@@ -17,6 +17,12 @@ INCLUDE (cmake/Cardano.cmake)
 # Library sources.
 ADD_LIBRARY (cometa STATIC
   lib/src/AuxiliaryData/TransactionMetadata.cpp
+  lib/src/PoolParams/SingleHostAddrRelay.cpp
+  lib/src/PoolParams/SingleHostNameRelay.cpp
+  lib/src/PoolParams/MultiHostNameRelay.cpp
+  lib/src/PoolParams/Relay.cpp
+  lib/src/PoolParams/Relays.cpp
+  lib/src/PoolParams/RelayType.cpp
   lib/src/PoolParams/Ipv4.cpp
   lib/src/PoolParams/Ipv6.cpp
   lib/src/PoolParams/BlsKey.cpp
@@ -147,6 +153,12 @@ IF (COMETA_BUILD_TESTS)
   ADD_EXECUTABLE (cometa-tests
     lib/tests/AuxiliaryData/TransactionMetadataTest.cpp
     lib/tests/AuxiliaryData/MetadatumLabelListTest.cpp
+    lib/tests/PoolParams/SingleHostAddrRelayTest.cpp
+    lib/tests/PoolParams/SingleHostNameRelayTest.cpp
+    lib/tests/PoolParams/MultiHostNameRelayTest.cpp
+    lib/tests/PoolParams/RelayTest.cpp
+    lib/tests/PoolParams/RelaysTest.cpp
+    lib/tests/PoolParams/RelayTypeTest.cpp
     lib/tests/PoolParams/Ipv4Test.cpp
     lib/tests/PoolParams/Ipv6Test.cpp
     lib/tests/PoolParams/BlsKeyTest.cpp

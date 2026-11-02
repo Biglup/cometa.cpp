@@ -109,7 +109,7 @@ cardano_mir_cert_type_t,enum,lib/include/cardano/certs/mir_cert_type.h,P10,plann
 cardano_mir_to_pot_cert_t,opaque object,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,
 cardano_mir_to_stake_creds_cert_t,opaque object,lib/include/cardano/certs/mir_to_stake_creds_cert.h,P10,planned,,
 cardano_multi_asset_t,opaque object,lib/include/cardano/assets/multi_asset.h,P04.2,implemented,Cometa::MultiAsset,lib/tests/Assets/MultiAssetTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_multi_host_name_relay_t,opaque object,lib/include/cardano/pool_params/multi_host_name_relay.h,P09,planned,,
+cardano_multi_host_name_relay_t,opaque object,lib/include/cardano/pool_params/multi_host_name_relay.h,P09,implemented,Cometa::MultiHostNameRelay,lib/tests/PoolParams/MultiHostNameRelayTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_native_script_list_t,opaque object,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,implemented,Cometa::NativeScriptList,lib/tests/Scripts/NativeScripts/NativeScriptListTest.cpp
 cardano_native_script_set_t,opaque object,lib/include/cardano/witness_set/native_script_set.h,P15,planned,,
 cardano_native_script_t,opaque object,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,implemented,Cometa::NativeScript,lib/tests/Scripts/NativeScripts/NativeScriptTest.cpp
@@ -160,9 +160,9 @@ cardano_redeemer_t,opaque object,lib/include/cardano/witness_set/redeemer.h,P15,
 cardano_redeemer_tag_t,enum,lib/include/cardano/witness_set/redeemer_tag.h,P15,planned,,
 cardano_register_drep_cert_t,opaque object,lib/include/cardano/certs/register_drep_cert.h,P11,planned,,
 cardano_registration_cert_t,opaque object,lib/include/cardano/certs/registration_cert.h,P10,planned,,
-cardano_relay_t,opaque object,lib/include/cardano/pool_params/relay.h,P09,planned,,
-cardano_relay_type_t,enum,lib/include/cardano/pool_params/relay_type.h,P09,planned,,
-cardano_relays_t,opaque object,lib/include/cardano/pool_params/relays.h,P09,planned,,
+cardano_relay_t,opaque object,lib/include/cardano/pool_params/relay.h,P09,implemented,Cometa::Relay,lib/tests/PoolParams/RelayTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_relay_type_t,enum,lib/include/cardano/pool_params/relay_type.h,P09,implemented,Cometa::RelayType,lib/tests/PoolParams/RelayTypeTest.cpp
+cardano_relays_t,opaque object,lib/include/cardano/pool_params/relays.h,P09,implemented,Cometa::Relays,lib/tests/PoolParams/RelaysTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_required_guards_map_t,opaque object,lib/include/cardano/transaction_body/required_guards_map.h,P16,planned,,
 cardano_resign_committee_cold_cert_t,opaque object,lib/include/cardano/certs/resign_committee_cold_cert.h,P11,planned,,
 cardano_resolve_datum_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
@@ -183,8 +183,8 @@ cardano_secure_key_handler_t,opaque object,lib/include/cardano/key_handlers/secu
 cardano_secure_key_handler_type_t,enum,lib/include/cardano/key_handlers/secure_key_handler_type.h,P18,planned,,
 cardano_selection_strategy_t,enum,lib/include/cardano/transaction_builder/coin_selection/coin_selection_strategy.h,P20,planned,,
 cardano_serialize_secure_key_handler_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
-cardano_single_host_addr_relay_t,opaque object,lib/include/cardano/pool_params/single_host_addr_relay.h,P09,planned,,
-cardano_single_host_name_relay_t,opaque object,lib/include/cardano/pool_params/single_host_name_relay.h,P09,planned,,
+cardano_single_host_addr_relay_t,opaque object,lib/include/cardano/pool_params/single_host_addr_relay.h,P09,implemented,Cometa::SingleHostAddrRelay,lib/tests/PoolParams/SingleHostAddrRelayTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_single_host_name_relay_t,opaque object,lib/include/cardano/pool_params/single_host_name_relay.h,P09,implemented,Cometa::SingleHostNameRelay,lib/tests/PoolParams/SingleHostNameRelayTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_slot_config_t,struct,lib/include/cardano/slot_config.h,P01a.1,implemented,SlotConfig,lib/tests/SlotConfigTest.cpp
 cardano_stake_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_delegation_cert.h,P10,planned,,
 cardano_stake_deregistration_cert_t,opaque object,lib/include/cardano/certs/stake_deregistration_cert.h,P10,planned,,

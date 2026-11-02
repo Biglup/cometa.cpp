@@ -622,3 +622,32 @@ setters. Copies and returned hashes are independent values.
 it from two byte vectors, or use ``fromHex`` with 192 and 96 hexadecimal characters.
 It supports CBOR and CIP-116 JSON. These operations validate the encoding and
 lengths; they do not verify the proof cryptographically.
+
+Pool relays
+-----------
+
+``SingleHostAddrRelay`` holds optional IPv4/IPv6 addresses and a port.
+``SingleHostNameRelay`` holds a DNS name and optional port; ``MultiHostNameRelay``
+holds a DNS name for SRV lookup. DNS names contain 1 to 64 bytes without embedded
+NULs. These values describe relay configuration; they do not perform DNS lookup.
+
+.. code-block:: cpp
+
+   Cometa::SingleHostAddrRelay ipRelay(3001, Cometa::Ipv4::fromString("192.0.2.1"));
+   ipRelay.setIpv6(Cometa::Ipv6::fromString("0000:0000:0000:0000:0000:0000:0000:0001"));
+   ipRelay.setIpv4(std::nullopt);
+
+   Cometa::Relays relays {
+     Cometa::Relay(ipRelay),
+     Cometa::Relay(Cometa::SingleHostNameRelay("relay.example.com", 3001)),
+     Cometa::Relay(Cometa::MultiHostNameRelay("_cardano._tcp.example.com")) };
+
+   const std::vector<std::uint8_t> cbor = relays.toCbor();
+
+``Relay`` holds one of the three variants. Inspect ``type`` before calling
+``asSingleHostAddr``, ``asSingleHostName``, or ``asMultiHostName``; a mismatched
+accessor throws ``Error``. Returned variants and addresses are independent values.
+
+Optional setters accept ``std::nullopt`` to remove a field. Port zero is distinct
+from an absent port. ``Relays`` preserves insertion order and duplicates;
+``pushBack`` copies its argument, and ``at`` returns an independent relay.
