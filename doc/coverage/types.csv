@@ -38,7 +38,7 @@ cardano_cbor_reader_t,opaque object,lib/include/cardano/cbor/cbor_reader.h,P01b,
 cardano_cbor_simple_value_t,enum,lib/include/cardano/cbor/cbor_simple_value.h,P01b,implemented,Cometa::CborSimpleValue,lib/tests/Cbor/CborSimpleValueTest.cpp
 cardano_cbor_tag_t,enum,lib/include/cardano/cbor/cbor_tag.h,P01b,implemented,Cometa::CborTag,lib/tests/Cbor/CborTagTest.cpp
 cardano_cbor_writer_t,opaque object,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter,lib/tests/Cbor/CborWriterTest.cpp
-cardano_cert_type_t,enum,lib/include/cardano/certs/cert_type.h,P10,planned,,
+cardano_cert_type_t,enum,lib/include/cardano/certs/cert_type.h,P10,implemented,Cometa::CertificateType,lib/tests/Certificates/CertificateTypeTest.cpp
 cardano_certificate_set_t,opaque object,lib/include/cardano/certs/certificate_set.h,P10,planned,,
 cardano_certificate_t,opaque object,lib/include/cardano/certs/certificate.h,P10,planned,,
 cardano_coin_select_func_t,callback,lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,P20,planned,,
@@ -189,7 +189,7 @@ cardano_slot_config_t,struct,lib/include/cardano/slot_config.h,P01a.1,implemente
 cardano_stake_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_delegation_cert.h,P10,planned,,
 cardano_stake_deregistration_cert_t,opaque object,lib/include/cardano/certs/stake_deregistration_cert.h,P10,planned,,
 cardano_stake_pointer_t,struct,lib/include/cardano/address/stake_pointer.h,P03,implemented,Cometa::StakePointer,lib/tests/Address/PointerAddressTest.cpp
-cardano_stake_registration_cert_t,opaque object,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,
+cardano_stake_registration_cert_t,opaque object,lib/include/cardano/certs/stake_registration_cert.h,P10,implemented,Cometa::StakeRegistrationCert,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_stake_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_registration_delegation_cert.h,P10,planned,,
 cardano_stake_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_vote_delegation_cert.h,P11,planned,,
 cardano_stake_vote_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_vote_registration_delegation_cert.h,P11,planned,,

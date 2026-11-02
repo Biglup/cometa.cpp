@@ -549,7 +549,7 @@ cardano_auth_committee_hot_cert_refcount,lib/include/cardano/certs/auth_committe
 cardano_auth_committee_hot_cert_set_last_error,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_auth_committee_hot_cert_get_last_error,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_auth_committee_hot_cert_deep_clone,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_cert_type_to_string,lib/include/cardano/certs/cert_type.h,P10,planned,,,API and ownership mapping pending.
+cardano_cert_type_to_string,lib/include/cardano/certs/cert_type.h,P10,implemented,Cometa::toString(CertificateType),lib/tests/Certificates/CertificateTypeTest.cpp,All native discriminator values checked against C constants.
 cardano_certificate_new_auth_committee_hot,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
 cardano_certificate_new_genesis_key_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
 cardano_certificate_new_mir,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
@@ -768,18 +768,18 @@ cardano_stake_deregistration_cert_refcount,lib/include/cardano/certs/stake_dereg
 cardano_stake_deregistration_cert_set_last_error,lib/include/cardano/certs/stake_deregistration_cert.h,P10,planned,,,API and ownership mapping pending.
 cardano_stake_deregistration_cert_get_last_error,lib/include/cardano/certs/stake_deregistration_cert.h,P10,planned,,,API and ownership mapping pending.
 cardano_stake_deregistration_cert_deep_clone,lib/include/cardano/certs/stake_deregistration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_stake_registration_cert_new,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_stake_registration_cert_from_cbor,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_stake_registration_cert_to_cbor,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_stake_registration_cert_to_cip116_json,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_stake_registration_cert_get_credential,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_stake_registration_cert_set_credential,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_stake_registration_cert_unref,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_stake_registration_cert_ref,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_stake_registration_cert_refcount,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_stake_registration_cert_set_last_error,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_stake_registration_cert_get_last_error,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_stake_registration_cert_deep_clone,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,,API and ownership mapping pending.
+cardano_stake_registration_cert_new,lib/include/cardano/certs/stake_registration_cert.h,P10,implemented,Cometa::StakeRegistrationCert::constructor,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Independent credential values and native CBOR compatibility.
+cardano_stake_registration_cert_from_cbor,lib/include/cardano/certs/stake_registration_cert.h,P10,implemented,Cometa::StakeRegistrationCert::fromCbor,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Independent credential values and native CBOR compatibility.
+cardano_stake_registration_cert_to_cbor,lib/include/cardano/certs/stake_registration_cert.h,P10,implemented,Cometa::StakeRegistrationCert::toCbor,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Independent credential values and native CBOR compatibility.
+cardano_stake_registration_cert_to_cip116_json,lib/include/cardano/certs/stake_registration_cert.h,P10,implemented,Cometa::StakeRegistrationCert::toJson,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Independent credential values and native CBOR compatibility.
+cardano_stake_registration_cert_get_credential,lib/include/cardano/certs/stake_registration_cert.h,P10,implemented,Cometa::StakeRegistrationCert::credential,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Independent credential values and native CBOR compatibility.
+cardano_stake_registration_cert_set_credential,lib/include/cardano/certs/stake_registration_cert.h,P10,implemented,Cometa::StakeRegistrationCert::setCredential,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Independent credential values and native CBOR compatibility.
+cardano_stake_registration_cert_unref,lib/include/cardano/certs/stake_registration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Independent credential values and native CBOR compatibility.
+cardano_stake_registration_cert_ref,lib/include/cardano/certs/stake_registration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Independent credential values and native CBOR compatibility.
+cardano_stake_registration_cert_refcount,lib/include/cardano/certs/stake_registration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Independent credential values and native CBOR compatibility.
+cardano_stake_registration_cert_set_last_error,lib/include/cardano/certs/stake_registration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Independent credential values and native CBOR compatibility.
+cardano_stake_registration_cert_get_last_error,lib/include/cardano/certs/stake_registration_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Independent credential values and native CBOR compatibility.
+cardano_stake_registration_cert_deep_clone,lib/include/cardano/certs/stake_registration_cert.h,P10,implemented,Cometa::StakeRegistrationCert::copy constructor / assignment,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp,Independent credential values and native CBOR compatibility.
 cardano_stake_registration_delegation_cert_new,lib/include/cardano/certs/stake_registration_delegation_cert.h,P10,planned,,,API and ownership mapping pending.
 cardano_stake_registration_delegation_cert_from_cbor,lib/include/cardano/certs/stake_registration_delegation_cert.h,P10,planned,,,API and ownership mapping pending.
 cardano_stake_registration_delegation_cert_to_cbor,lib/include/cardano/certs/stake_registration_delegation_cert.h,P10,planned,,,API and ownership mapping pending.

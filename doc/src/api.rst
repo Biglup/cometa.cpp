@@ -349,3 +349,14 @@ Pool parameters
 
 .. doxygenclass:: Cometa::PoolParams
    :members:
+
+Certificate types
+-----------------
+
+.. doxygenenum:: Cometa::CertificateType
+
+Stake registration
+------------------
+
+.. doxygenclass:: Cometa::StakeRegistrationCert
+   :members:

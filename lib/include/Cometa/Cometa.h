@@ -153,5 +153,7 @@
 #include <Cometa/PoolParams/SingleHostAddrRelay.h>
 #include <Cometa/PoolParams/SingleHostNameRelay.h>
 
+#include <Cometa/Certificates/CertificateType.h>
+#include <Cometa/Certificates/StakeRegistrationCert.h>
 #include <Cometa/PoolParams/PoolOwners.h>
 #include <Cometa/PoolParams/PoolParams.h>

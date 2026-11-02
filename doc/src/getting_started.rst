@@ -688,3 +688,25 @@ all supplied values, and each component getter returns an independent value.
 
 CBOR contains the pool parameter fields as a sequence, with no outer array.
 ``setBlsKey(std::nullopt)`` and ``setMetadata(std::nullopt)`` remove optional fields.
+
+Certificate types
+-----------------
+
+``CertificateType`` identifies every supported certificate variant. Use
+``toString(type)`` when a readable type name is needed. Legacy staking and
+MIR variants remain represented so historical transactions can be inspected.
+
+Legacy stake registration
+-------------------------
+
+``StakeRegistrationCert`` represents the historical stake registration form.
+It copies the supplied credential; ``credential()`` returns an independent
+value. For current transactions, choose the deposit-bearing registration
+certificate when that ledger form is required.
+
+.. code-block:: cpp
+
+   Cometa::StakeRegistrationCert cert(stakeCredential);
+   const std::vector<std::uint8_t> cbor = cert.toCbor();
+   const Cometa::StakeRegistrationCert restored =
+     Cometa::StakeRegistrationCert::fromCbor(cbor);

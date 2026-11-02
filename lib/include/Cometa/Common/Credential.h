@@ -218,6 +218,9 @@ class Credential
 
   private:
 
+    /** @brief Allows StakeRegistrationCert to copy its credential. */
+    friend class StakeRegistrationCert;
+
     /** @brief Allows ScriptRequireGuard to copy script components. */
     friend class ScriptRequireGuard;
 

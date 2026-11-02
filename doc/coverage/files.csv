@@ -38,7 +38,7 @@ lib/include/cardano/cbor/cbor_simple_value.h,public header,P01b,implemented,"Cbo
 lib/include/cardano/cbor/cbor_tag.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
 lib/include/cardano/cbor/cbor_writer.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
 lib/include/cardano/certs/auth_committee_hot_cert.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/certs/cert_type.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/cert_type.h,public header,P10,implemented,Typed certificate discriminator and native display names.
 lib/include/cardano/certs/certificate.h,public header,P10,planned,idiomatic C++ API
 lib/include/cardano/certs/certificate_set.h,public header,P10,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/certs/genesis_key_delegation_cert.h,public header,P10,planned,idiomatic C++ API
@@ -54,7 +54,7 @@ lib/include/cardano/certs/registration_cert.h,public header,P10,planned,idiomati
 lib/include/cardano/certs/resign_committee_cold_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/stake_delegation_cert.h,public header,P10,planned,idiomatic C++ API
 lib/include/cardano/certs/stake_deregistration_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/stake_registration_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/stake_registration_cert.h,public header,P10,implemented,Legacy stake registration with owned credential values.
 lib/include/cardano/certs/stake_registration_delegation_cert.h,public header,P10,planned,idiomatic C++ API
 lib/include/cardano/certs/stake_vote_delegation_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/stake_vote_registration_delegation_cert.h,public header,P11,planned,idiomatic C++ API
