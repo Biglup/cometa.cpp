@@ -929,3 +929,9 @@ ledger action array ``[6]``::
 
    const Cometa::NoConfidenceAction noConfidence(std::nullopt);
    const std::vector<std::uint8_t> cbor = noConfidence.toCbor();
+
+``HardForkInitiationAction`` combines a proposed protocol version with an
+optional previous action identifier::
+
+   const Cometa::HardForkInitiationAction hardFork(
+     Cometa::ProtocolVersion(12, 0));

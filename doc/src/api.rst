@@ -499,3 +499,6 @@ Protocol parameters
 
 .. doxygenclass:: Cometa::NoConfidenceAction
    :members:
+
+.. doxygenclass:: Cometa::HardForkInitiationAction
+   :members:

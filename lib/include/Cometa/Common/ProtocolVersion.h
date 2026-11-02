@@ -199,6 +199,9 @@ class ProtocolVersion
     /** @brief Allows protocol parameters to copy native values. */
     friend class ProtocolParameters;
 
+    /** @brief Allows hard fork actions to copy protocol versions. */
+    friend class HardForkInitiationAction;
+
   private:
 
     /**

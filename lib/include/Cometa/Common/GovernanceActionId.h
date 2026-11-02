@@ -220,6 +220,9 @@ class GovernanceActionId
     /** @brief Allows governance actions to copy identifiers. */
     friend class NoConfidenceAction;
 
+    /** @brief Allows hard fork actions to copy identifiers. */
+    friend class HardForkInitiationAction;
+
     /**
      * @brief Takes ownership of an existing value.
      *

@@ -184,6 +184,7 @@
 #include <Cometa/PoolParams/PoolOwners.h>
 #include <Cometa/PoolParams/PoolParams.h>
 #include <Cometa/ProposalProcedures/GovernanceActionType.h>
+#include <Cometa/ProposalProcedures/HardForkInitiationAction.h>
 #include <Cometa/ProposalProcedures/InfoAction.h>
 #include <Cometa/ProposalProcedures/NoConfidenceAction.h>
 #include <Cometa/ProtocolParams/CostModel.h>
