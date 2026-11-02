@@ -91,6 +91,7 @@ TEST(CostModel, CopiesAndSettersAreIndependent)
 
   // Assert
   EXPECT_EQ(model.cost(1), 7);
+  EXPECT_EQ(values[1], 9);
   EXPECT_EQ(copy.cost(1), 2);
   EXPECT_EQ(assigned.cost(1), 2);
   EXPECT_THROW(model.cost(3), std::out_of_range);
