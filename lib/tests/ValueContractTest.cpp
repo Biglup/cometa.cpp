@@ -121,7 +121,28 @@ sampleValue<ProtocolVersion>()
   return ProtocolVersion(12, 0);
 }
 
-using ValueTypes = testing::Types<Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion>;
+template<>
+UnitInterval
+sampleValue<UnitInterval>()
+{
+  return UnitInterval(3, 4);
+}
+
+template<>
+Anchor
+sampleValue<Anchor>()
+{
+  return Anchor("https://example.com", Blake2bHash::fromHex(std::string(64, '0')));
+}
+
+template<>
+GovernanceActionId
+sampleValue<GovernanceActionId>()
+{
+  return GovernanceActionId(Blake2bHash::fromHex(std::string(64, '0')), 1);
+}
+
+using ValueTypes = testing::Types<Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -286,4 +307,89 @@ TYPED_TEST(ValueContract, ReleasesStateWhenConstructionFails)
 
   // Act & Assert
   EXPECT_THROW(sampleValue<TypeParam>(), std::bad_alloc);
+}
+
+TYPED_TEST(ValueContract, FailedCopyAssignmentPreservesDestination)
+{
+  // Arrange
+  const TypeParam source      = sampleValue<TypeParam>();
+  TypeParam       destination = sampleValue<TypeParam>();
+  const TypeParam before      = destination;
+  std::size_t     count       = 0;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    destination = source;
+    count       = allocationIndex;
+  }
+
+  // Act & Assert
+  for (std::size_t i = 0; i < count; ++i)
+  {
+    {
+      AllocationFailure fail(i);
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+    EXPECT_EQ(destination, before);
+  }
+}
+
+TEST(Anchor, FailedMutationPreservesValue)
+{
+  // Arrange
+  const Anchor before = sampleValue<Anchor>();
+  std::size_t  count  = 0;
+  {
+    Anchor            value = before;
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    value.setUrl("https://changed.example");
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0);
+
+  // Act & Assert
+  for (std::size_t i = 0; i < count; ++i)
+  {
+    Anchor value = before;
+    {
+      AllocationFailure fail(i);
+      EXPECT_THROW(value.setUrl("https://changed.example"), std::bad_alloc);
+    }
+    EXPECT_EQ(value, before);
+    EXPECT_EQ(value.toCbor(), before.toCbor());
+  }
+}
+
+TEST(GovernanceActionId, FailedMutationPreservesValue)
+{
+  // Arrange
+  const GovernanceActionId before = sampleValue<GovernanceActionId>();
+  std::size_t              count  = 0;
+  {
+    GovernanceActionId value = before;
+    AllocationFailure  tracker(std::numeric_limits<std::size_t>::max());
+    value.setIndex(2);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0);
+
+  // Act & Assert
+  for (std::size_t i = 0; i < count; ++i)
+  {
+    GovernanceActionId value = before;
+    {
+      AllocationFailure fail(i);
+      EXPECT_THROW(value.setIndex(2), std::bad_alloc);
+    }
+    EXPECT_EQ(value, before);
+    EXPECT_EQ(value.toCbor(), before.toCbor());
+  }
+}
+
+TEST(UnitInterval, FloatingPointConversionReleasesStateOnFailure)
+{
+  // Arrange
+  AllocationFailure fail(0);
+
+  // Act & Assert
+  EXPECT_THROW(UnitInterval::fromDouble(0.75), std::bad_alloc);
 }

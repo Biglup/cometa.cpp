@@ -37,3 +37,12 @@ API reference
 .. doxygenenum:: Cometa::GovernanceKeyType
 
 .. doxygenfunction:: Cometa::toString
+
+.. doxygenclass:: Cometa::UnitInterval
+   :members:
+
+.. doxygenclass:: Cometa::Anchor
+   :members:
+
+.. doxygenclass:: Cometa::GovernanceActionId
+   :members:

@@ -26,14 +26,17 @@
 /* INCLUDES ******************************************************************/
 
 #include <Cometa/Assets/AssetName.h>
+#include <Cometa/Common/Anchor.h>
 #include <Cometa/Common/ByteOrder.h>
 #include <Cometa/Common/Credential.h>
 #include <Cometa/Common/CredentialType.h>
 #include <Cometa/Common/ExUnits.h>
+#include <Cometa/Common/GovernanceActionId.h>
 #include <Cometa/Common/GovernanceKeyType.h>
 #include <Cometa/Common/NetworkId.h>
 #include <Cometa/Common/NetworkMagic.h>
 #include <Cometa/Common/ProtocolVersion.h>
+#include <Cometa/Common/UnitInterval.h>
 #include <Cometa/Crypto/Blake2bHash.h>
 #include <Cometa/Error.h>
 #include <Cometa/ErrorCode.h>

@@ -902,27 +902,27 @@ cardano_vote_registration_delegation_cert_refcount,lib/include/cardano/certs/vot
 cardano_vote_registration_delegation_cert_set_last_error,lib/include/cardano/certs/vote_registration_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_vote_registration_delegation_cert_get_last_error,lib/include/cardano/certs/vote_registration_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
 cardano_vote_registration_delegation_cert_deep_clone,lib/include/cardano/certs/vote_registration_delegation_cert.h,P11,planned,,,API and ownership mapping pending.
-cardano_anchor_new,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_from_hash_hex,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_from_hash_bytes,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_from_cbor,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_to_cbor,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_to_cip116_json,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_get_hash,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_get_hash_bytes_size,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_get_hash_bytes,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_get_hash_hex_size,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_get_hash_hex,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_get_url_size,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_get_url,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_set_url,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_set_hash,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_unref,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_ref,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_refcount,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_set_last_error,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_get_last_error,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_anchor_deep_clone,lib/include/cardano/common/anchor.h,P01a.2,planned,,,API and ownership mapping pending.
+cardano_anchor_new,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor::constructor,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_anchor_from_hash_hex,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor::constructor with Blake2bHash::fromHex,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_anchor_from_hash_bytes,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor::constructor,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_anchor_from_cbor,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor::fromCbor,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_anchor_to_cbor,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor::toCbor,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_anchor_to_cip116_json,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor::toJson,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_anchor_get_hash,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor::hash,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_anchor_get_hash_bytes_size,lib/include/cardano/common/anchor.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_anchor_get_hash_bytes,lib/include/cardano/common/anchor.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_anchor_get_hash_hex_size,lib/include/cardano/common/anchor.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_anchor_get_hash_hex,lib/include/cardano/common/anchor.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_anchor_get_url_size,lib/include/cardano/common/anchor.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_anchor_get_url,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor::url,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_anchor_set_url,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor::setUrl,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_anchor_set_hash,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor::setHash,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_anchor_unref,lib/include/cardano/common/anchor.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_anchor_ref,lib/include/cardano/common/anchor.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_anchor_refcount,lib/include/cardano/common/anchor.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_anchor_set_last_error,lib/include/cardano/common/anchor.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_anchor_get_last_error,lib/include/cardano/common/anchor.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_anchor_deep_clone,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor::copy constructor and assignment,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
 cardano_bigint_clone,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
 cardano_bigint_from_string,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
 cardano_bigint_get_string_size,lib/include/cardano/common/bigint.h,P01a.2,planned,,,API and ownership mapping pending.
@@ -1051,31 +1051,31 @@ cardano_ex_units_refcount,lib/include/cardano/common/ex_units.h,P01a.1,internal,
 cardano_ex_units_set_last_error,lib/include/cardano/common/ex_units.h,P01a.1,internal,Error,lib/tests/Common/ExUnitsTest.cpp,Failure reporting uses exceptions.
 cardano_ex_units_get_last_error,lib/include/cardano/common/ex_units.h,P01a.1,internal,Error,lib/tests/Common/ExUnitsTest.cpp,Failure reporting uses exceptions.
 cardano_ex_units_deep_clone,lib/include/cardano/common/ex_units.h,P01a.1,implemented,ExUnits copy constructor/operator=,lib/tests/ValueContractTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
-cardano_governance_action_id_new,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_from_bech32,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_from_hash_hex,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_from_hash_bytes,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_from_cbor,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_to_cbor,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_to_cip116_json,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_get_bech32_size,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_to_bech32,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_get_string,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_get_hash,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_get_hash_bytes_size,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_get_hash_bytes,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_get_hash_hex_size,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_get_hash_hex,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_get_index,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_set_index,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_set_hash,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_equals,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_unref,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_ref,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_refcount,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_set_last_error,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_get_last_error,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_governance_action_id_deep_clone,lib/include/cardano/common/governance_action_id.h,P01a.2,planned,,,API and ownership mapping pending.
+cardano_governance_action_id_new,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::constructor,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_governance_action_id_from_bech32,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::fromBech32,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_governance_action_id_from_hash_hex,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::constructor with Blake2bHash::fromHex,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_governance_action_id_from_hash_bytes,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::constructor,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_governance_action_id_from_cbor,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::fromCbor,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_governance_action_id_to_cbor,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::toCbor,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_governance_action_id_to_cip116_json,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::toJson,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_governance_action_id_get_bech32_size,lib/include/cardano/common/governance_action_id.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_governance_action_id_to_bech32,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::toBech32,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_governance_action_id_get_string,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::toBech32,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_governance_action_id_get_hash,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::hash,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_governance_action_id_get_hash_bytes_size,lib/include/cardano/common/governance_action_id.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_governance_action_id_get_hash_bytes,lib/include/cardano/common/governance_action_id.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_governance_action_id_get_hash_hex_size,lib/include/cardano/common/governance_action_id.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_governance_action_id_get_hash_hex,lib/include/cardano/common/governance_action_id.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_governance_action_id_get_index,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::index,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_governance_action_id_set_index,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::setIndex,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Reconstruct and swap to keep Bech32 consistent; destination unchanged on failure.
+cardano_governance_action_id_set_hash,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::setHash,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Reconstruct and swap to keep Bech32 consistent; destination unchanged on failure.
+cardano_governance_action_id_equals,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::operator==,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_governance_action_id_unref,lib/include/cardano/common/governance_action_id.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_governance_action_id_ref,lib/include/cardano/common/governance_action_id.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_governance_action_id_refcount,lib/include/cardano/common/governance_action_id.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_governance_action_id_set_last_error,lib/include/cardano/common/governance_action_id.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_governance_action_id_get_last_error,lib/include/cardano/common/governance_action_id.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_governance_action_id_deep_clone,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::copy constructor and assignment,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
 cardano_guard_set_to_cip116_json,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
 cardano_guard_set_new,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
 cardano_guard_set_from_cbor,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
@@ -1116,22 +1116,22 @@ cardano_reward_address_list_refcount,lib/include/cardano/common/reward_address_l
 cardano_reward_address_list_set_last_error,lib/include/cardano/common/reward_address_list.h,P07,planned,,,API and ownership mapping pending.
 cardano_reward_address_list_get_last_error,lib/include/cardano/common/reward_address_list.h,P07,planned,,,API and ownership mapping pending.
 cardano_reward_address_list_deep_clone,lib/include/cardano/common/reward_address_list.h,P07,planned,,,API and ownership mapping pending.
-cardano_unit_interval_new,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_from_double,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_from_cbor,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_to_cbor,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_to_cip116_json,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_get_numerator,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_set_numerator,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_get_denominator,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_to_double,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_set_denominator,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_unref,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_ref,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_refcount,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_set_last_error,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_get_last_error,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
-cardano_unit_interval_deep_clone,lib/include/cardano/common/unit_interval.h,P01a.2,planned,,,API and ownership mapping pending.
+cardano_unit_interval_new,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval::constructor,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_unit_interval_from_double,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval::fromDouble,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_unit_interval_from_cbor,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval::fromCbor,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_unit_interval_to_cbor,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval::toCbor,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_unit_interval_to_cip116_json,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval::toJson,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_unit_interval_get_numerator,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval::numerator,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_unit_interval_set_numerator,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval::setNumerator,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_unit_interval_get_denominator,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval::denominator,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_unit_interval_to_double,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval::toDouble,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_unit_interval_set_denominator,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval::setDenominator,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
+cardano_unit_interval_unref,lib/include/cardano/common/unit_interval.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_unit_interval_ref,lib/include/cardano/common/unit_interval.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_unit_interval_refcount,lib/include/cardano/common/unit_interval.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_unit_interval_set_last_error,lib/include/cardano/common/unit_interval.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_unit_interval_get_last_error,lib/include/cardano/common/unit_interval.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
+cardano_unit_interval_deep_clone,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval::copy constructor and assignment,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
 cardano_utxo_new,lib/include/cardano/common/utxo.h,P07,planned,,,API and ownership mapping pending.
 cardano_utxo_from_cbor,lib/include/cardano/common/utxo.h,P07,planned,,,API and ownership mapping pending.
 cardano_utxo_to_cbor,lib/include/cardano/common/utxo.h,P07,planned,,,API and ownership mapping pending.

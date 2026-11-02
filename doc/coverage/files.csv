@@ -63,7 +63,7 @@ lib/include/cardano/certs/unregistration_cert.h,public header,P10,planned,idioma
 lib/include/cardano/certs/update_drep_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/vote_delegation_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/vote_registration_delegation_cert.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/common/anchor.h,public header,P01a.2,planned,idiomatic C++ API
+lib/include/cardano/common/anchor.h,public header,P01a.2,implemented,Cometa::Anchor; domain and value-contract tests
 lib/include/cardano/common/bigint.h,public header,P01a.2,planned,idiomatic C++ API
 lib/include/cardano/common/byte_order.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/credential.h,public header,P01a.1,implemented,idiomatic C++ API
@@ -73,14 +73,14 @@ lib/include/cardano/common/datum_type.h,public header,P05,planned,idiomatic C++ 
 lib/include/cardano/common/drep.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/common/drep_type.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/common/ex_units.h,public header,P01a.1,implemented,idiomatic C++ API
-lib/include/cardano/common/governance_action_id.h,public header,P01a.2,planned,idiomatic C++ API
+lib/include/cardano/common/governance_action_id.h,public header,P01a.2,implemented,Cometa::GovernanceActionId; domain and value-contract tests
 lib/include/cardano/common/governance_key_type.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/guard_set.h,public header,P16,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/common/network_id.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/network_magic.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/protocol_version.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/reward_address_list.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/common/unit_interval.h,public header,P01a.2,planned,idiomatic C++ API
+lib/include/cardano/common/unit_interval.h,public header,P01a.2,implemented,Cometa::UnitInterval; domain and value-contract tests
 lib/include/cardano/common/utxo.h,public header,P07,planned,idiomatic C++ API
 lib/include/cardano/common/utxo_list.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/common/withdrawal_map.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
@@ -322,20 +322,20 @@ lib/src/collections/array.c,implementation file,P01a.2,internal,Native implement
 lib/src/collections/array.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/collections/set.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/collections/set.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/common/anchor.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/anchor.c,implementation file,P01a.2,implemented,Cometa::Anchor; domain and value-contract tests
 lib/src/common/bigint.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/credential.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/datum.c,implementation file,P05,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/drep.c,implementation file,P11,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/ex_units.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/common/governance_action_id.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/governance_action_id.c,implementation file,P01a.2,implemented,Cometa::GovernanceActionId; domain and value-contract tests
 lib/src/common/guard_set.c,implementation file,P16,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/ledger_order.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/ledger_order.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/network_magic.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/protocol_version.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/reward_address_list.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/common/unit_interval.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/common/unit_interval.c,implementation file,P01a.2,implemented,Cometa::UnitInterval; domain and value-contract tests
 lib/src/common/utxo.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/utxo_list.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/common/withdrawal_map.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
