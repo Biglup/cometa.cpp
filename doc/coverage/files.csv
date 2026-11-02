@@ -39,7 +39,7 @@ lib/include/cardano/cbor/cbor_tag.h,public header,P01b,implemented,"CborReader/C
 lib/include/cardano/cbor/cbor_writer.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
 lib/include/cardano/certs/auth_committee_hot_cert.h,public header,P11,implemented,Cometa::AuthCommitteeHotCert
 lib/include/cardano/certs/cert_type.h,public header,P10,implemented,Typed certificate discriminator and native display names.
-lib/include/cardano/certs/certificate.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/certificate.h,public header,P10,implemented,Cometa::Certificate
 lib/include/cardano/certs/certificate_set.h,public header,P10,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/certs/genesis_key_delegation_cert.h,public header,P10,implemented,Historical genesis delegation with three independently copied hashes.
 lib/include/cardano/certs/mir_cert.h,public header,P10,implemented,Cometa::MirCert

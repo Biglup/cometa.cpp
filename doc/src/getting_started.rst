@@ -830,3 +830,6 @@ credential.
 
 ``ResignCommitteeColdCert`` records a committee cold credential's resignation
 and optional anchor.
+
+``Certificate`` holds any ledger certificate and exposes its
+``CertificateType`` and independent typed values.

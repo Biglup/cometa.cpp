@@ -550,54 +550,54 @@ cardano_auth_committee_hot_cert_set_last_error,lib/include/cardano/certs/auth_co
 cardano_auth_committee_hot_cert_get_last_error,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,internal,RAII and exception handling,lib/tests/Certificates/AuthCommitteeHotCertTest.cpp; lib/tests/ValueContractTest.cpp,Committee hot-key authorization with native CBOR fixture.
 cardano_auth_committee_hot_cert_deep_clone,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,implemented,Cometa::AuthCommitteeHotCert::copy constructor / assignment,lib/tests/Certificates/AuthCommitteeHotCertTest.cpp; lib/tests/ValueContractTest.cpp,Committee hot-key authorization with native CBOR fixture.
 cardano_cert_type_to_string,lib/include/cardano/certs/cert_type.h,P10,implemented,Cometa::toString(CertificateType),lib/tests/Certificates/CertificateTypeTest.cpp,All native discriminator values checked against C constants.
-cardano_certificate_new_auth_committee_hot,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_genesis_key_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_mir,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_pool_registration,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_pool_retirement,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_register_drep,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_registration,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_resign_committee_cold,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_stake_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_stake_deregistration,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_stake_registration,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_stake_registration_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_stake_vote_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_stake_vote_registration_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_unregister_drep,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_unregistration,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_update_drep,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_vote_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_new_vote_registration_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_from_cbor,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_cbor,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_cip116_json,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_cert_get_type,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_auth_committee_hot,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_genesis_key_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_mir,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_pool_registration,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_pool_retirement,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_register_drep,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_registration,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_resign_committee_cold,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_stake_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_stake_deregistration,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_stake_registration,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_stake_registration_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_stake_vote_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_stake_vote_registration_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_unregister_drep,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_unregistration,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_update_drep,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_vote_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_to_vote_registration_delegation,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_unref,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_ref,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_refcount,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_set_last_error,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_get_last_error,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
-cardano_certificate_deep_clone,lib/include/cardano/certs/certificate.h,P10,planned,,,API and ownership mapping pending.
+cardano_certificate_new_auth_committee_hot,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_genesis_key_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_mir,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_pool_registration,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_pool_retirement,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_register_drep,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_registration,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_resign_committee_cold,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_stake_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_stake_deregistration,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_stake_registration,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_stake_registration_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_stake_vote_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_stake_vote_registration_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_unregister_drep,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_unregistration,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_update_drep,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_vote_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_new_vote_registration_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::constructor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_from_cbor,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::fromCbor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_cbor,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::toCbor,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_cip116_json,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::toJson,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_cert_get_type,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::type,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_auth_committee_hot,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asAuthCommitteeHot,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_genesis_key_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asGenesisKeyDelegation,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_mir,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asMir,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_pool_registration,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asPoolRegistration,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_pool_retirement,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asPoolRetirement,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_register_drep,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asRegisterDrep,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_registration,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asRegistration,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_resign_committee_cold,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asResignCommitteeCold,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_stake_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asStakeDelegation,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_stake_deregistration,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asStakeDeregistration,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_stake_registration,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asStakeRegistration,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_stake_registration_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asStakeRegistrationDelegation,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_stake_vote_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asStakeVoteDelegation,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_stake_vote_registration_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asStakeVoteRegistrationDelegation,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_unregister_drep,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asUnregisterDrep,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_unregistration,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asUnregistration,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_update_drep,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asUpdateDrep,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_vote_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asVoteDelegation,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_to_vote_registration_delegation,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::asVoteRegistrationDelegation,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_unref,lib/include/cardano/certs/certificate.h,P10,internal,RAII and exception handling,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_ref,lib/include/cardano/certs/certificate.h,P10,internal,RAII and exception handling,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_refcount,lib/include/cardano/certs/certificate.h,P10,internal,RAII and exception handling,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_set_last_error,lib/include/cardano/certs/certificate.h,P10,internal,RAII and exception handling,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_get_last_error,lib/include/cardano/certs/certificate.h,P10,internal,RAII and exception handling,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
+cardano_certificate_deep_clone,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate::copy constructor / assignment,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp,All 19 certificate variants with native CBOR fixtures.
 cardano_certificate_set_new,lib/include/cardano/certs/certificate_set.h,P10,planned,,,API and ownership mapping pending.
 cardano_certificate_set_from_cbor,lib/include/cardano/certs/certificate_set.h,P10,planned,,,API and ownership mapping pending.
 cardano_certificate_set_to_cbor,lib/include/cardano/certs/certificate_set.h,P10,planned,,,API and ownership mapping pending.
