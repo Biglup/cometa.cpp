@@ -289,6 +289,30 @@ sampleValue<Script>()
 }
 
 template<>
+Metadatum
+sampleValue<Metadatum>()
+{
+  return Metadatum::fromPlainJson(R"({"key":[1,"text"]})");
+}
+
+template<>
+MetadatumList
+sampleValue<MetadatumList>()
+{
+  return MetadatumList { sampleValue<Metadatum>() };
+}
+
+template<>
+MetadatumMap
+sampleValue<MetadatumMap>()
+{
+  MetadatumMap map;
+  map.insert(Metadatum("key"), sampleValue<Metadatum>());
+
+  return map;
+}
+
+template<>
 PlutusV1ScriptList
 sampleValue<PlutusV1ScriptList>()
 {
@@ -365,7 +389,7 @@ sampleValue<WithdrawalMap>()
   return value;
 }
 
-using ValueTypes = testing::Types<PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
+using ValueTypes = testing::Types<Metadatum, MetadatumList, MetadatumMap, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -4994,5 +5018,100 @@ TEST(PlutusV4ScriptList, FailedAppendPreservesValue)
       EXPECT_THROW(value.pushBack(replacement), std::bad_alloc) << index;
     }
     EXPECT_EQ(value, original);
+  }
+}
+
+TEST(MetadatumList, FailedAppendPreservesValue)
+{
+  // Arrange
+  const MetadatumList original    = sampleValue<MetadatumList>();
+  const Metadatum     replacement = sampleValue<Metadatum>();
+  std::size_t         count       = 0U;
+  {
+    MetadatumList     value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)value.pushBack(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    MetadatumList value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.pushBack(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+  }
+}
+
+TEST(Metadatum, PlainJsonReleasesTemporaryValuesOnAllocationFailure)
+{
+  // Arrange
+  const std::string json   = R"({"a":[42,"text"],"b":18446744073709551616})";
+  const Metadatum   source = Metadatum::fromPlainJson(json);
+  std::size_t       count  = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toPlainJson();
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(source.toPlainJson(), std::bad_alloc) << index;
+  }
+  EXPECT_EQ(source.toPlainJson(), json);
+}
+
+TEST(Metadatum, PlainJsonParsingReleasesPartialValues)
+{
+  // Arrange
+  const std::string json  = R"({"a":[42,"text"],"b":18446744073709551616})";
+  std::size_t       count = 0U;
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)Metadatum::fromPlainJson(json);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AllocationFailure failure(index, true);
+    EXPECT_THROW(Metadatum::fromPlainJson(json), std::bad_alloc) << index;
+  }
+}
+
+TEST(MetadatumMap, FailedInsertPreservesEntries)
+{
+  // Arrange
+  const MetadatumMap original = sampleValue<MetadatumMap>();
+  const Metadatum    key("new");
+  const Metadatum    replacement = sampleValue<Metadatum>();
+  std::size_t        count       = 0U;
+  {
+    MetadatumMap      map(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    map.insert(key, replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    MetadatumMap map(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(map.insert(key, replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(map, original);
   }
 }

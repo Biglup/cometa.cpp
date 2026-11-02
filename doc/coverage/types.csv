@@ -98,11 +98,11 @@ cardano_json_format_t,enum,lib/include/cardano/json/json_format.h,P01b,implement
 cardano_json_object_t,opaque object,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue,lib/tests/Json/JsonValueTest.cpp
 cardano_json_object_type_t,enum,lib/include/cardano/json/json_object_type.h,P01b,implemented,Cometa::JsonType,lib/tests/Json/JsonTypeTest.cpp
 cardano_json_writer_t,opaque object,lib/include/cardano/json/json_writer.h,P01b,implemented,Cometa::JsonWriter,lib/tests/Json/JsonWriterTest.cpp
-cardano_metadatum_kind_t,enum,lib/include/cardano/auxiliary_data/metadatum_kind.h,P08,planned,,
+cardano_metadatum_kind_t,enum,lib/include/cardano/auxiliary_data/metadatum_kind.h,P08,implemented,Cometa::MetadatumKind,lib/tests/AuxiliaryData/MetadatumKindTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_metadatum_label_list_t,opaque object,lib/include/cardano/auxiliary_data/metadatum_label_list.h,P08,planned,,
-cardano_metadatum_list_t,opaque object,lib/include/cardano/auxiliary_data/metadatum_list.h,P08,planned,,
-cardano_metadatum_map_t,opaque object,lib/include/cardano/auxiliary_data/metadatum_map.h,P08,planned,,
-cardano_metadatum_t,opaque object,lib/include/cardano/auxiliary_data/metadatum.h,P08,planned,,
+cardano_metadatum_list_t,opaque object,lib/include/cardano/auxiliary_data/metadatum_list.h,P08,implemented,Cometa::MetadatumList,lib/tests/AuxiliaryData/MetadatumListTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_metadatum_map_t,opaque object,lib/include/cardano/auxiliary_data/metadatum_map.h,P08,implemented,Cometa::MetadatumMap,lib/tests/AuxiliaryData/MetadatumMapTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_metadatum_t,opaque object,lib/include/cardano/auxiliary_data/metadatum.h,P08,implemented,Cometa::Metadatum,lib/tests/AuxiliaryData/MetadatumTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_mir_cert_pot_type_t,enum,lib/include/cardano/certs/mir_cert_pot_type.h,P10,planned,,
 cardano_mir_cert_t,opaque object,lib/include/cardano/certs/mir_cert.h,P10,planned,,
 cardano_mir_cert_type_t,enum,lib/include/cardano/certs/mir_cert_type.h,P10,planned,,
