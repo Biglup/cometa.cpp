@@ -388,3 +388,34 @@ different schema.
 
 Copies and returned credentials are independent. CBOR decoded with ``fromCbor``
 retains its original encoding until a setter or ``normalizeEncoding`` is used.
+
+Composite native scripts
+------------------------
+
+Combine requirements with ``ScriptAll``, ``ScriptAny``, or ``ScriptNOfK`` and
+wrap the result in ``NativeScript``. A threshold may exceed the child count;
+that describes an unsatisfiable requirement rather than an invalid value.
+
+.. code-block:: cpp
+
+   const Cometa::NativeScriptList requirements {
+     Cometa::NativeScript(Cometa::ScriptPubkey(publicKey.hash())),
+     Cometa::NativeScript(Cometa::ScriptInvalidBefore(1000))
+   };
+   const Cometa::NativeScript policy { Cometa::ScriptAll(requirements) };
+   const Cometa::Blake2bHash policyId = policy.hash();
+
+``type()`` identifies the variant. Accessors such as ``asAll()`` return
+independent requirements and throw ``Error`` for a different variant. Change a
+returned composite with ``setScripts`` and construct a new ``NativeScript`` to
+replace the parent value.
+
+Script hashes use the original decoded CBOR, including nonminimal encodings.
+``normalizeEncoding()`` recursively rebuilds those encodings and can change the
+hash. ``NativeScriptList`` retains its definite or indefinite array form and its
+children's encodings, but normalizes nonminimal array-length headers. Appending a
+child does not normalize existing children.
+
+Native-script JSON uses the cardano-cli schema: ``all`` and ``any`` objects have
+a ``scripts`` array; ``atLeast`` additionally has an unsigned ``required`` count.
+``NativeScriptList::fromJson`` accepts an object containing a ``scripts`` array.

@@ -16,6 +16,13 @@ INCLUDE (cmake/Cardano.cmake)
 
 # Library sources.
 ADD_LIBRARY (cometa STATIC
+  lib/src/Scripts/NativeScripts/NativeScriptType.cpp
+  lib/src/Scripts/NativeScripts/NativeScript.cpp
+  lib/src/Scripts/NativeScripts/NativeScriptList.cpp
+  lib/src/Scripts/NativeScripts/ScriptAll.cpp
+  lib/src/Scripts/NativeScripts/ScriptAny.cpp
+  lib/src/Scripts/NativeScripts/ScriptNOfK.cpp
+
   lib/src/Scripts/NativeScripts/ScriptPubkey.cpp
   lib/src/Scripts/NativeScripts/ScriptInvalidBefore.cpp
   lib/src/Scripts/NativeScripts/ScriptInvalidAfter.cpp
@@ -112,6 +119,13 @@ IF (COMETA_BUILD_TESTS)
   FIND_PACKAGE (GTest CONFIG REQUIRED)
 
   ADD_EXECUTABLE (cometa-tests
+    lib/tests/Scripts/NativeScripts/NativeScriptTest.cpp
+    lib/tests/Scripts/NativeScripts/NativeScriptListTest.cpp
+    lib/tests/Scripts/NativeScripts/ScriptAllTest.cpp
+    lib/tests/Scripts/NativeScripts/ScriptAnyTest.cpp
+    lib/tests/Scripts/NativeScripts/ScriptNOfKTest.cpp
+    lib/tests/Scripts/NativeScripts/NativeScriptTypeTest.cpp
+
     lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp
     lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp
     lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp

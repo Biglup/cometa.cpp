@@ -155,14 +155,14 @@ lib/include/cardano/protocol_params/protocol_parameters.h,public header,P12,plan
 lib/include/cardano/protocol_params/update.h,public header,P12,planned,idiomatic C++ API
 lib/include/cardano/providers/provider.h,public header,P19,planned,idiomatic C++ API
 lib/include/cardano/providers/provider_impl.h,public header,P19,planned,internal ABI/ownership support; no raw C wrapper API
-lib/include/cardano/scripts/native_scripts/native_script.h,public header,P06.2,planned,idiomatic C++ API
-lib/include/cardano/scripts/native_scripts/native_script_list.h,public header,P06.2,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/scripts/native_scripts/native_script_type.h,public header,P06.2,planned,idiomatic C++ API
-lib/include/cardano/scripts/native_scripts/script_all.h,public header,P06.2,planned,idiomatic C++ API
-lib/include/cardano/scripts/native_scripts/script_any.h,public header,P06.2,planned,idiomatic C++ API
+lib/include/cardano/scripts/native_scripts/native_script.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/include/cardano/scripts/native_scripts/native_script_list.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/include/cardano/scripts/native_scripts/native_script_type.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/include/cardano/scripts/native_scripts/script_all.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/include/cardano/scripts/native_scripts/script_any.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
 lib/include/cardano/scripts/native_scripts/script_invalid_after.h,public header,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
 lib/include/cardano/scripts/native_scripts/script_invalid_before.h,public header,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
-lib/include/cardano/scripts/native_scripts/script_n_of_k.h,public header,P06.2,planned,idiomatic C++ API
+lib/include/cardano/scripts/native_scripts/script_n_of_k.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
 lib/include/cardano/scripts/native_scripts/script_pubkey.h,public header,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
 lib/include/cardano/scripts/native_scripts/script_require_guard.h,public header,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
 lib/include/cardano/scripts/plutus_scripts/plutus_language_version.h,public header,P06.3,planned,idiomatic C++ API
@@ -417,14 +417,14 @@ lib/src/protocol_params/protocol_parameters.c,implementation file,P12,internal,N
 lib/src/protocol_params/update.c,implementation file,P12,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/providers/emscripten/emscripten_provider.c,implementation file,P19,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/providers/provider.c,implementation file,P19,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/native_script.c,implementation file,P06.2,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/native_script_list.c,implementation file,P06.2,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/native_script_type.c,implementation file,P06.2,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/script_all.c,implementation file,P06.2,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/scripts/native_scripts/script_any.c,implementation file,P06.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/native_scripts/native_script.c,implementation file,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/src/scripts/native_scripts/native_script_list.c,implementation file,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/src/scripts/native_scripts/native_script_type.c,implementation file,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/src/scripts/native_scripts/script_all.c,implementation file,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
+lib/src/scripts/native_scripts/script_any.c,implementation file,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
 lib/src/scripts/native_scripts/script_invalid_after.c,implementation file,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
 lib/src/scripts/native_scripts/script_invalid_before.c,implementation file,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
-lib/src/scripts/native_scripts/script_n_of_k.c,implementation file,P06.2,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/scripts/native_scripts/script_n_of_k.c,implementation file,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
 lib/src/scripts/native_scripts/script_pubkey.c,implementation file,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
 lib/src/scripts/native_scripts/script_require_guard.c,implementation file,P06.1,implemented,Native script requirements; independent components; checked hashes and JSON; encoding-preserving copies.
 lib/src/scripts/plutus_scripts/plutus_v1_script.c,implementation file,P06.3,internal,Native implementation reference; coverage is tracked against its public API.

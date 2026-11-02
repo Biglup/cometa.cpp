@@ -211,3 +211,22 @@ API reference
 
 .. doxygenclass:: Cometa::ScriptRequireGuard
    :members:
+
+.. doxygenclass:: Cometa::NativeScript
+   :members:
+
+.. doxygenclass:: Cometa::NativeScriptList
+   :members:
+
+.. doxygenclass:: Cometa::ScriptAll
+   :members:
+
+.. doxygenclass:: Cometa::ScriptAny
+   :members:
+
+.. doxygenclass:: Cometa::ScriptNOfK
+   :members:
+
+.. doxygenenum:: Cometa::NativeScriptType
+
+.. doxygenfunction:: Cometa::toString(NativeScriptType)

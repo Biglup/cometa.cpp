@@ -110,10 +110,10 @@ cardano_mir_to_pot_cert_t,opaque object,lib/include/cardano/certs/mir_to_pot_cer
 cardano_mir_to_stake_creds_cert_t,opaque object,lib/include/cardano/certs/mir_to_stake_creds_cert.h,P10,planned,,
 cardano_multi_asset_t,opaque object,lib/include/cardano/assets/multi_asset.h,P04.2,implemented,Cometa::MultiAsset,lib/tests/Assets/MultiAssetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_multi_host_name_relay_t,opaque object,lib/include/cardano/pool_params/multi_host_name_relay.h,P09,planned,,
-cardano_native_script_list_t,opaque object,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,
+cardano_native_script_list_t,opaque object,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,implemented,Cometa::NativeScriptList,lib/tests/Scripts/NativeScripts/NativeScriptListTest.cpp
 cardano_native_script_set_t,opaque object,lib/include/cardano/witness_set/native_script_set.h,P15,planned,,
-cardano_native_script_t,opaque object,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,
-cardano_native_script_type_t,enum,lib/include/cardano/scripts/native_scripts/native_script_type.h,P06.2,planned,,
+cardano_native_script_t,opaque object,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,implemented,Cometa::NativeScript,lib/tests/Scripts/NativeScripts/NativeScriptTest.cpp
+cardano_native_script_type_t,enum,lib/include/cardano/scripts/native_scripts/native_script_type.h,P06.2,implemented,Cometa::NativeScriptType,lib/tests/Scripts/NativeScripts/NativeScriptTypeTest.cpp
 cardano_network_id_t,enum,lib/include/cardano/common/network_id.h,P01a.1,implemented,NetworkId,lib/tests/Common/NetworkIdTest.cpp
 cardano_network_magic_t,enum,lib/include/cardano/common/network_magic.h,P01a.1,implemented,NetworkMagic,lib/tests/Common/NetworkMagicTest.cpp
 cardano_new_constitution_action_t,opaque object,lib/include/cardano/proposal_procedures/new_constitution_action.h,P13,planned,,
@@ -169,12 +169,12 @@ cardano_resolve_datum_func_t,callback,lib/include/cardano/providers/provider_imp
 cardano_resolve_unspent_outputs_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_reward_address_list_t,opaque object,lib/include/cardano/common/reward_address_list.h,P07,planned,,
 cardano_reward_address_t,opaque object,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress,lib/tests/Address/RewardAddressTest.cpp
-cardano_script_all_t,opaque object,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,
-cardano_script_any_t,opaque object,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,
+cardano_script_all_t,opaque object,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,implemented,Cometa::ScriptAll,lib/tests/Scripts/NativeScripts/ScriptAllTest.cpp
+cardano_script_any_t,opaque object,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,implemented,Cometa::ScriptAny,lib/tests/Scripts/NativeScripts/ScriptAnyTest.cpp
 cardano_script_invalid_after_t,opaque object,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,implemented,Cometa::ScriptInvalidAfter,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp
 cardano_script_invalid_before_t,opaque object,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,implemented,Cometa::ScriptInvalidBefore,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp
 cardano_script_language_t,enum,lib/include/cardano/scripts/script_language.h,P06.4,planned,,
-cardano_script_n_of_k_t,opaque object,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,
+cardano_script_n_of_k_t,opaque object,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,implemented,Cometa::ScriptNOfK,lib/tests/Scripts/NativeScripts/ScriptNOfKTest.cpp
 cardano_script_pubkey_t,opaque object,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,implemented,Cometa::ScriptPubkey,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp
 cardano_script_require_guard_t,opaque object,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,implemented,Cometa::ScriptRequireGuard,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp
 cardano_script_t,opaque object,lib/include/cardano/scripts/script.h,P06.4,planned,,

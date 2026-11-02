@@ -156,6 +156,16 @@ main()
     return 1;
   }
 
+  const Cometa::NativeScriptList requirements {
+    Cometa::NativeScript(signatureRequirement), Cometa::NativeScript(starts)
+  };
+  const Cometa::NativeScript policy(Cometa::ScriptNOfK(1, requirements));
+
+  if (Cometa::NativeScript::fromCbor(policy.toCbor()).hash() != policy.hash() || policy.asNOfK().required() != 1)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0
