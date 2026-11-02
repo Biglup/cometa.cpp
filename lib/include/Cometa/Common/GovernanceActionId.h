@@ -226,6 +226,9 @@ class GovernanceActionId
     /** @brief Allows parameter change actions to copy identifiers. */
     friend class ParameterChangeAction;
 
+    /** @brief Allows constitution actions to copy identifiers. */
+    friend class NewConstitutionAction;
+
     /**
      * @brief Takes ownership of an existing value.
      *

@@ -945,3 +945,8 @@ action identifier and policy hash are optional::
 ``Constitution`` holds its anchor and an optional script hash::
 
    const Cometa::Constitution constitution(anchor, std::nullopt);
+
+``NewConstitutionAction`` proposes a constitution and may refer to the
+previous constitutional action::
+
+   const Cometa::NewConstitutionAction newConstitution(constitution);

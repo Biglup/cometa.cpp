@@ -508,3 +508,6 @@ Protocol parameters
 
 .. doxygenclass:: Cometa::Constitution
    :members:
+
+.. doxygenclass:: Cometa::NewConstitutionAction
+   :members:

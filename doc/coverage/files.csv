@@ -137,7 +137,7 @@ lib/include/cardano/proposal_procedures/credential_set.h,public header,P04.3,imp
 lib/include/cardano/proposal_procedures/governance_action_type.h,public header,P13,implemented,Cometa::GovernanceActionType
 lib/include/cardano/proposal_procedures/hard_fork_initiation_action.h,public header,P13,implemented,Cometa::HardForkInitiationAction
 lib/include/cardano/proposal_procedures/info_action.h,public header,P13,implemented,Cometa::InfoAction
-lib/include/cardano/proposal_procedures/new_constitution_action.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/new_constitution_action.h,public header,P13,implemented,Cometa::NewConstitutionAction
 lib/include/cardano/proposal_procedures/no_confidence_action.h,public header,P13,implemented,Cometa::NoConfidenceAction
 lib/include/cardano/proposal_procedures/parameter_change_action.h,public header,P13,implemented,Cometa::ParameterChangeAction
 lib/include/cardano/proposal_procedures/proposal_procedure.h,public header,P13,planned,idiomatic C++ API

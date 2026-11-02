@@ -161,6 +161,9 @@ class Constitution
 
   private:
 
+    /** @brief Allows governance actions to copy constitutions. */
+    friend class NewConstitutionAction;
+
     /**
      * @brief Adopts an owned constitution.
      * @param value The owned constitution.

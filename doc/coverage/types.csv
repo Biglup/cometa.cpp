@@ -116,7 +116,7 @@ cardano_native_script_t,opaque object,lib/include/cardano/scripts/native_scripts
 cardano_native_script_type_t,enum,lib/include/cardano/scripts/native_scripts/native_script_type.h,P06.2,implemented,Cometa::NativeScriptType,lib/tests/Scripts/NativeScripts/NativeScriptTypeTest.cpp
 cardano_network_id_t,enum,lib/include/cardano/common/network_id.h,P01a.1,implemented,NetworkId,lib/tests/Common/NetworkIdTest.cpp
 cardano_network_magic_t,enum,lib/include/cardano/common/network_magic.h,P01a.1,implemented,NetworkMagic,lib/tests/Common/NetworkMagicTest.cpp
-cardano_new_constitution_action_t,opaque object,lib/include/cardano/proposal_procedures/new_constitution_action.h,P13,planned,,
+cardano_new_constitution_action_t,opaque object,lib/include/cardano/proposal_procedures/new_constitution_action.h,P13,implemented,Cometa::NewConstitutionAction,lib/tests/ProposalProcedures/NewConstitutionActionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_no_confidence_action_t,opaque object,lib/include/cardano/proposal_procedures/no_confidence_action.h,P13,implemented,Cometa::NoConfidenceAction,lib/tests/ProposalProcedures/NoConfidenceActionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_object_deallocator_t,callback,lib/include/cardano/object.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
 cardano_object_t,struct,lib/include/cardano/object.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,

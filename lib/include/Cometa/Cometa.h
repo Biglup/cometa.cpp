@@ -187,6 +187,7 @@
 #include <Cometa/ProposalProcedures/GovernanceActionType.h>
 #include <Cometa/ProposalProcedures/HardForkInitiationAction.h>
 #include <Cometa/ProposalProcedures/InfoAction.h>
+#include <Cometa/ProposalProcedures/NewConstitutionAction.h>
 #include <Cometa/ProposalProcedures/NoConfidenceAction.h>
 #include <Cometa/ProposalProcedures/ParameterChangeAction.h>
 #include <Cometa/ProtocolParams/CostModel.h>
