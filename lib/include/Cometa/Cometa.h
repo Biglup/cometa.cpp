@@ -193,6 +193,7 @@
 #include <Cometa/ProposalProcedures/NoConfidenceAction.h>
 #include <Cometa/ProposalProcedures/ParameterChangeAction.h>
 #include <Cometa/ProposalProcedures/ProposalProcedure.h>
+#include <Cometa/ProposalProcedures/ProposalProcedureSet.h>
 #include <Cometa/ProposalProcedures/TreasuryWithdrawalsAction.h>
 #include <Cometa/ProposalProcedures/UpdateCommitteeAction.h>
 #include <Cometa/ProtocolParams/CostModel.h>

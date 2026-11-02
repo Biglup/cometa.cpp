@@ -526,3 +526,6 @@ Protocol parameters
 
 .. doxygenclass:: Cometa::ProposalProcedure
    :members:
+
+.. doxygenclass:: Cometa::ProposalProcedureSet
+   :members:

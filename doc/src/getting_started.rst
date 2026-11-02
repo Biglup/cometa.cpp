@@ -985,3 +985,9 @@ address, and metadata anchor::
      Cometa::Anchor("https://a", Cometa::Blake2bHash::fromHex(std::string(64, '0'))),
      Cometa::InfoAction());
    const Cometa::InfoAction action = proposal.asInfoAction();
+
+``ProposalProcedureSet`` stores proposals in insertion order::
+
+   Cometa::ProposalProcedureSet proposals;
+   proposals.add(proposal);
+   const Cometa::ProposalProcedure first = proposals.at(0);

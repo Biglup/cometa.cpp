@@ -291,6 +291,9 @@ class ProposalProcedure
 
   private:
 
+    /** @brief Allows proposal collections to copy their elements. */
+    friend class ProposalProcedureSet;
+
     /**
      * @brief Adopts an owned proposal.
      * @param value The owned proposal.
