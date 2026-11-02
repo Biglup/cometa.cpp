@@ -55,6 +55,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/ProtocolParams/ProtocolParamUpdate.cpp
   lib/src/ProtocolParams/ProposedParamUpdates.cpp
   lib/src/ProtocolParams/Update.cpp
+  lib/src/ProtocolParams/ProtocolParameters.cpp
   lib/src/Certificates/RegistrationCert.cpp
   lib/src/Certificates/UnregistrationCert.cpp
   lib/src/Common/DRep.cpp
@@ -228,6 +229,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/ProtocolParams/ProtocolParamUpdateTest.cpp
     lib/tests/ProtocolParams/ProposedParamUpdatesTest.cpp
     lib/tests/ProtocolParams/UpdateTest.cpp
+    lib/tests/ProtocolParams/ProtocolParametersTest.cpp
     lib/tests/Certificates/RegistrationCertTest.cpp
     lib/tests/Certificates/UnregistrationCertTest.cpp
     lib/tests/Common/DRepTypeTest.cpp

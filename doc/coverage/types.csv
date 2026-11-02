@@ -151,7 +151,7 @@ cardano_proposal_procedure_set_t,opaque object,lib/include/cardano/proposal_proc
 cardano_proposal_procedure_t,opaque object,lib/include/cardano/proposal_procedures/proposal_procedure.h,P13,planned,,
 cardano_proposed_param_updates_t,opaque object,lib/include/cardano/protocol_params/proposed_param_updates.h,P12,implemented,Cometa::ProposedParamUpdates,lib/tests/ProtocolParams/ProposedParamUpdatesTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_protocol_param_update_t,opaque object,lib/include/cardano/protocol_params/protocol_param_update.h,P12,implemented,Cometa::ProtocolParamUpdate,lib/tests/ProtocolParams/ProtocolParamUpdateTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_protocol_parameters_t,opaque object,lib/include/cardano/protocol_params/protocol_parameters.h,P12,planned,,
+cardano_protocol_parameters_t,opaque object,lib/include/cardano/protocol_params/protocol_parameters.h,P12,implemented,Cometa::ProtocolParameters,lib/tests/ProtocolParams/ProtocolParametersTest.cpp
 cardano_protocol_version_t,opaque object,lib/include/cardano/common/protocol_version.h,P01a.1,implemented,ProtocolVersion,lib/tests/Common/ProtocolVersionTest.cpp
 cardano_provider_impl_t,struct,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_provider_t,opaque object,lib/include/cardano/providers/provider.h,P19,planned,,

@@ -484,5 +484,8 @@ Protocol parameters
 .. doxygenclass:: Cometa::Update
    :members:
 
+.. doxygenclass:: Cometa::ProtocolParameters
+   :members:
+
 .. doxygenclass:: Cometa::ExUnitPrices
    :members:

@@ -906,3 +906,15 @@ hashes. Entries are sorted by hash, and accessors return independent values::
    Cometa::Update epochUpdate(500, proposals);
    const std::vector<std::uint8_t> cbor = epochUpdate.toCbor();
    const Cometa::Update decoded = Cometa::Update::fromCbor(cbor);
+
+``ProtocolParameters`` holds the current network settings. It includes the
+Conway, Leios, and Peras fields, with typed values for prices, execution units,
+thresholds, and cost models::
+
+   Cometa::ProtocolParameters parameters;
+   parameters.setMinFeeA(44);
+   parameters.setMaxTxExUnits(Cometa::ExUnits(10'000'000, 10'000'000'000));
+   parameters.setPerasBootstrapRound(std::nullopt);
+
+Copies own independent values. A missing max pledge leverage or Peras bootstrap
+round is represented by ``std::nullopt``.

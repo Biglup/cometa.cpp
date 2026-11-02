@@ -196,6 +196,9 @@ class ProtocolVersion
     /** @brief Allows protocol updates to copy native values. */
     friend class ProtocolParamUpdate;
 
+    /** @brief Allows protocol parameters to copy native values. */
+    friend class ProtocolParameters;
+
   private:
 
     /**

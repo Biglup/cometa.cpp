@@ -927,6 +927,30 @@ TYPED_TEST(ValueContract, FailedCopyAssignmentPreservesDestination)
   }
 }
 
+TEST(ProtocolParameters, ReleasesPartialCopiesOnAllocationFailure)
+{
+  // Arrange
+  ProtocolParameters parameters;
+  parameters.setMinFeeA(44);
+  parameters.setMaxPledgeLeverage(UnitInterval(1, 2));
+  std::size_t count = 0;
+  {
+    AllocationFailure        tracker(std::numeric_limits<std::size_t>::max());
+    const ProtocolParameters copy(parameters);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0);
+
+  // Act & Assert
+  for (std::size_t i = 0; i < count; ++i)
+  {
+    AllocationFailure fail(i);
+    EXPECT_THROW({ const ProtocolParameters copy(parameters); }, std::bad_alloc);
+  }
+  EXPECT_EQ(parameters.minFeeA(), 44);
+  EXPECT_EQ(parameters.maxPledgeLeverage(), UnitInterval(1, 2));
+}
+
 TEST(Anchor, FailedMutationPreservesValue)
 {
   // Arrange
