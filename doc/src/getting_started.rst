@@ -833,3 +833,10 @@ and optional anchor.
 
 ``Certificate`` holds any ledger certificate and exposes its
 ``CertificateType`` and independent typed values.
+
+``CertificateSet`` keeps certificates in insertion order and accepts any
+``Certificate`` variant. Accessors return independent values::
+
+   Cometa::CertificateSet certificates;
+   certificates.add(Cometa::Certificate(registration));
+   const Cometa::Certificate first = certificates.at(0);

@@ -423,6 +423,14 @@ main()
     return 1;
   }
 
+  Cometa::CertificateSet certificateSet;
+  certificateSet.add(genericCertificate);
+
+  if (Cometa::CertificateSet::fromCbor(certificateSet.toCbor()).at(0) != genericCertificate)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

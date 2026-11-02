@@ -157,6 +157,7 @@
 
 #include <Cometa/Certificates/AuthCommitteeHotCert.h>
 #include <Cometa/Certificates/Certificate.h>
+#include <Cometa/Certificates/CertificateSet.h>
 #include <Cometa/Certificates/CertificateType.h>
 #include <Cometa/Certificates/GenesisKeyDelegationCert.h>
 #include <Cometa/Certificates/MirCert.h>

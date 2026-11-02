@@ -39,7 +39,7 @@ cardano_cbor_simple_value_t,enum,lib/include/cardano/cbor/cbor_simple_value.h,P0
 cardano_cbor_tag_t,enum,lib/include/cardano/cbor/cbor_tag.h,P01b,implemented,Cometa::CborTag,lib/tests/Cbor/CborTagTest.cpp
 cardano_cbor_writer_t,opaque object,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter,lib/tests/Cbor/CborWriterTest.cpp
 cardano_cert_type_t,enum,lib/include/cardano/certs/cert_type.h,P10,implemented,Cometa::CertificateType,lib/tests/Certificates/CertificateTypeTest.cpp
-cardano_certificate_set_t,opaque object,lib/include/cardano/certs/certificate_set.h,P10,planned,,
+cardano_certificate_set_t,opaque object,lib/include/cardano/certs/certificate_set.h,P10,implemented,Cometa::CertificateSet,lib/tests/Certificates/CertificateSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_certificate_t,opaque object,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_coin_select_func_t,callback,lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,P20,planned,,
 cardano_coin_selection_request_t,struct,lib/include/cardano/transaction_builder/coin_selection/coin_selection_request.h,P20,planned,,
