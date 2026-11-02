@@ -47,8 +47,8 @@ lib/include/cardano/certs/mir_cert_pot_type.h,public header,P10,planned,idiomati
 lib/include/cardano/certs/mir_cert_type.h,public header,P10,planned,idiomatic C++ API
 lib/include/cardano/certs/mir_to_pot_cert.h,public header,P10,planned,idiomatic C++ API
 lib/include/cardano/certs/mir_to_stake_creds_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/pool_registration_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/pool_retirement_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/pool_registration_cert.h,public header,P10,implemented,Pool registration with independent PoolParams values.
+lib/include/cardano/certs/pool_retirement_cert.h,public header,P10,implemented,Pool retirement epoch and independent 28-byte pool key hash.
 lib/include/cardano/certs/register_drep_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/registration_cert.h,public header,P10,implemented,Deposit-bearing stake certificate with independent credential values.
 lib/include/cardano/certs/resign_committee_cold_cert.h,public header,P11,planned,idiomatic C++ API

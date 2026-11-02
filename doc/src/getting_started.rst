@@ -740,3 +740,26 @@ hash. It copies both components and provides CBOR and inspection JSON.
    Cometa::StakeDelegationCert delegation(stakeCredential, poolKeyHash);
    const Cometa::StakeDelegationCert restored =
      Cometa::StakeDelegationCert::fromCbor(delegation.toCbor());
+
+Pool registration certificate
+-----------------------------
+
+``PoolRegistrationCert`` contains a copied ``PoolParams`` value. The ``params``
+getter returns an independent value, which can be changed and supplied to
+``setParams``.
+
+.. code-block:: cpp
+
+   Cometa::PoolRegistrationCert registration(params);
+   const Cometa::PoolRegistrationCert restored =
+     Cometa::PoolRegistrationCert::fromCbor(registration.toCbor());
+
+Pool retirement certificate
+---------------------------
+
+``PoolRetirementCert`` stores a 28-byte pool key hash and the retirement epoch.
+The hash getter returns an independent value.
+
+.. code-block:: cpp
+
+   Cometa::PoolRetirementCert retirement(poolKeyHash, retirementEpoch);

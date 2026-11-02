@@ -312,6 +312,9 @@ class PoolParams
 
   private:
 
+    /** @brief Allows pool registration certificates to copy their parameters. */
+    friend class PoolRegistrationCert;
+
     /**
      * @brief Adopts an owned native value.
      *

@@ -144,8 +144,8 @@ cardano_policy_id_list_t,opaque object,lib/include/cardano/assets/policy_id_list
 cardano_pool_metadata_t,opaque object,lib/include/cardano/pool_params/pool_metadata.h,P09,implemented,Cometa::PoolMetadata,lib/tests/PoolParams/PoolMetadataTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_pool_owners_t,opaque object,lib/include/cardano/pool_params/pool_owners.h,P09,implemented,Cometa::PoolOwners,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_pool_params_t,opaque object,lib/include/cardano/pool_params/pool_params.h,P09,implemented,Cometa::PoolParams,lib/tests/PoolParams/PoolParamsTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_pool_registration_cert_t,opaque object,lib/include/cardano/certs/pool_registration_cert.h,P10,planned,,
-cardano_pool_retirement_cert_t,opaque object,lib/include/cardano/certs/pool_retirement_cert.h,P10,planned,,
+cardano_pool_registration_cert_t,opaque object,lib/include/cardano/certs/pool_registration_cert.h,P10,implemented,Cometa::PoolRegistrationCert,lib/tests/Certificates/PoolRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_pool_retirement_cert_t,opaque object,lib/include/cardano/certs/pool_retirement_cert.h,P10,implemented,Cometa::PoolRetirementCert,lib/tests/Certificates/PoolRetirementCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_pool_voting_thresholds_t,opaque object,lib/include/cardano/protocol_params/pool_voting_thresholds.h,P12,planned,,
 cardano_proposal_procedure_set_t,opaque object,lib/include/cardano/proposal_procedures/proposal_procedure_set.h,P13,planned,,
 cardano_proposal_procedure_t,opaque object,lib/include/cardano/proposal_procedures/proposal_procedure.h,P13,planned,,

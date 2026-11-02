@@ -296,6 +296,20 @@ main()
     return 1;
   }
 
+  const Cometa::PoolRegistrationCert poolRegistration(poolParams);
+
+  if (Cometa::PoolRegistrationCert::fromCbor(poolRegistration.toCbor()) != poolRegistration)
+  {
+    return 1;
+  }
+
+  const Cometa::PoolRetirementCert poolRetirement(poolOperator, 1000);
+
+  if (Cometa::PoolRetirementCert::fromCbor(poolRetirement.toCbor()) != poolRetirement)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0
