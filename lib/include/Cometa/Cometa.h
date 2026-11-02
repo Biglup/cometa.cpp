@@ -183,6 +183,7 @@
 #include <Cometa/Certificates/VoteRegistrationDelegationCert.h>
 #include <Cometa/PoolParams/PoolOwners.h>
 #include <Cometa/PoolParams/PoolParams.h>
+#include <Cometa/ProposalProcedures/CommitteeMembersMap.h>
 #include <Cometa/ProposalProcedures/Constitution.h>
 #include <Cometa/ProposalProcedures/GovernanceActionType.h>
 #include <Cometa/ProposalProcedures/HardForkInitiationAction.h>

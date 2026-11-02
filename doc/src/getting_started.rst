@@ -954,3 +954,13 @@ previous constitutional action::
 ``TreasuryWithdrawalsAction`` holds a withdrawal map and optional policy hash::
 
    const Cometa::TreasuryWithdrawalsAction treasury(withdrawals);
+
+``CommitteeMembersMap`` associates committee credentials with their term
+expiration epochs::
+
+   Cometa::CommitteeMembersMap members;
+   const Cometa::Credential coldCredential(
+     Cometa::CredentialType::KeyHash,
+     Cometa::Blake2bHash::fromHex(std::string(56, '0')));
+   members.insert(coldCredential, 200);
+   const std::optional<std::uint64_t> expiration = members.get(coldCredential);

@@ -514,3 +514,6 @@ Protocol parameters
 
 .. doxygenclass:: Cometa::TreasuryWithdrawalsAction
    :members:
+
+.. doxygenclass:: Cometa::CommitteeMembersMap
+   :members:

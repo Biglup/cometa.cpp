@@ -537,6 +537,14 @@ main()
     return 1;
   }
 
+  Cometa::CommitteeMembersMap committeeMembers;
+  const Cometa::Credential    committeeMember(Cometa::CredentialType::KeyHash, Cometa::Blake2bHash::fromHex(std::string(56, '0')));
+  committeeMembers.insert(committeeMember, 200);
+  if (Cometa::CommitteeMembersMap::fromCbor(committeeMembers.toCbor()) != committeeMembers || !committeeMembers.keys().contains(committeeMember))
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0
