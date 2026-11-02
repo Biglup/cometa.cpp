@@ -134,9 +134,9 @@ lib/include/cardano/proposal_procedures/committee.h,public header,P13,planned,id
 lib/include/cardano/proposal_procedures/committee_members_map.h,public header,P13,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/proposal_procedures/constitution.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/credential_set.h,public header,P04.3,implemented,Unique sorted sets with independent elements and tagged CBOR normalization.
-lib/include/cardano/proposal_procedures/governance_action_type.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/governance_action_type.h,public header,P13,implemented,Cometa::GovernanceActionType
 lib/include/cardano/proposal_procedures/hard_fork_initiation_action.h,public header,P13,planned,idiomatic C++ API
-lib/include/cardano/proposal_procedures/info_action.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/info_action.h,public header,P13,implemented,Cometa::InfoAction
 lib/include/cardano/proposal_procedures/new_constitution_action.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/no_confidence_action.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/parameter_change_action.h,public header,P13,planned,idiomatic C++ API

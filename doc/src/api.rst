@@ -489,3 +489,10 @@ Protocol parameters
 
 .. doxygenclass:: Cometa::ExUnitPrices
    :members:
+
+.. doxygenenum:: Cometa::GovernanceActionType
+
+.. doxygenfunction:: Cometa::toString(GovernanceActionType)
+
+.. doxygenclass:: Cometa::InfoAction
+   :members:

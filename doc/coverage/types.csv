@@ -84,12 +84,12 @@ cardano_get_unspent_outputs_func_t,callback,lib/include/cardano/providers/provid
 cardano_get_unspent_outputs_with_asset_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_governance_action_id_list_t,opaque object,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,
 cardano_governance_action_id_t,opaque object,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_governance_action_type_t,enum,lib/include/cardano/proposal_procedures/governance_action_type.h,P13,planned,,
+cardano_governance_action_type_t,enum,lib/include/cardano/proposal_procedures/governance_action_type.h,P13,implemented,Cometa::GovernanceActionType,lib/tests/ProposalProcedures/GovernanceActionTypeTest.cpp
 cardano_governance_key_type_t,enum,lib/include/cardano/common/governance_key_type.h,P01a.1,implemented,GovernanceKeyType,lib/tests/Common/GovernanceKeyTypeTest.cpp
 cardano_guard_set_t,opaque object,lib/include/cardano/common/guard_set.h,P16,planned,,
 cardano_hard_fork_initiation_action_t,opaque object,lib/include/cardano/proposal_procedures/hard_fork_initiation_action.h,P13,planned,,
 cardano_implicit_coin_t,struct,lib/include/cardano/transaction_builder/balancing/implicit_coin.h,P22,planned,,
-cardano_info_action_t,opaque object,lib/include/cardano/proposal_procedures/info_action.h,P13,planned,,
+cardano_info_action_t,opaque object,lib/include/cardano/proposal_procedures/info_action.h,P13,implemented,Cometa::InfoAction,lib/tests/ProposalProcedures/InfoActionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_input_to_redeemer_map_t,opaque object,lib/include/cardano/transaction_builder/balancing/input_to_redeemer_map.h,P22,planned,,
 cardano_ipv4_t,opaque object,lib/include/cardano/pool_params/ipv4.h,P09,implemented,Cometa::Ipv4,lib/tests/PoolParams/Ipv4Test.cpp; lib/tests/ValueContractTest.cpp
 cardano_ipv6_t,opaque object,lib/include/cardano/pool_params/ipv6.h,P09,implemented,Cometa::Ipv6,lib/tests/PoolParams/Ipv6Test.cpp; lib/tests/ValueContractTest.cpp

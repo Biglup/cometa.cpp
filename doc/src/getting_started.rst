@@ -918,3 +918,9 @@ thresholds, and cost models::
 
 Copies own independent values. A missing max pledge leverage or Peras bootstrap
 round is represented by ``std::nullopt``.
+
+``InfoAction`` is an informational governance proposal. Its CBOR is the
+ledger action array ``[6]``::
+
+   const Cometa::InfoAction action;
+   const std::vector<std::uint8_t> cbor = action.toCbor();
