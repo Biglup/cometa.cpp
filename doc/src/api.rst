@@ -189,6 +189,9 @@ API reference
 .. doxygenclass:: Cometa::DirectDepositMap
    :members:
 
+.. doxygenclass:: Cometa::GuardSet
+   :members:
+
 .. doxygenclass:: Cometa::Blake2bHashSet
    :members:
 

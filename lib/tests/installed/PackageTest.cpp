@@ -664,6 +664,13 @@ main()
     return 1;
   }
 
+  Cometa::GuardSet guards;
+  guards.add(Cometa::Credential::fromCbor("8200581c6199186adb51974690d7247d2646097d2c62763b16fb7ed3f9f55d39"));
+  if (Cometa::GuardSet::fromCbor(guards.toCbor()) != guards)
+  {
+    return 1;
+  }
+
   Cometa::DirectDepositMap directDeposits;
   directDeposits.insert(Cometa::RewardAddress::fromBech32("stake_test1uqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxtxu2s"), 1000);
   if (Cometa::DirectDepositMap::fromCbor(directDeposits.toCbor()) != directDeposits)

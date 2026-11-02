@@ -218,6 +218,9 @@ class Credential
 
   private:
 
+    /** @brief Allows guard sets to copy credentials. */
+    friend class GuardSet;
+
     /** @brief Allows RegistrationCert to copy its credential. */
     friend class RegistrationCert;
 

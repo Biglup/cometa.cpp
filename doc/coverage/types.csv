@@ -86,7 +86,7 @@ cardano_governance_action_id_list_t,opaque object,lib/include/cardano/voting_pro
 cardano_governance_action_id_t,opaque object,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_governance_action_type_t,enum,lib/include/cardano/proposal_procedures/governance_action_type.h,P13,implemented,Cometa::GovernanceActionType,lib/tests/ProposalProcedures/GovernanceActionTypeTest.cpp
 cardano_governance_key_type_t,enum,lib/include/cardano/common/governance_key_type.h,P01a.1,implemented,GovernanceKeyType,lib/tests/Common/GovernanceKeyTypeTest.cpp
-cardano_guard_set_t,opaque object,lib/include/cardano/common/guard_set.h,P16,planned,,
+cardano_guard_set_t,opaque object,lib/include/cardano/common/guard_set.h,P16,implemented,Cometa::GuardSet,lib/tests/TransactionBody/GuardSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_hard_fork_initiation_action_t,opaque object,lib/include/cardano/proposal_procedures/hard_fork_initiation_action.h,P13,implemented,Cometa::HardForkInitiationAction,lib/tests/ProposalProcedures/HardForkInitiationActionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_implicit_coin_t,struct,lib/include/cardano/transaction_builder/balancing/implicit_coin.h,P22,planned,,
 cardano_info_action_t,opaque object,lib/include/cardano/proposal_procedures/info_action.h,P13,implemented,Cometa::InfoAction,lib/tests/ProposalProcedures/InfoActionTest.cpp; lib/tests/ValueContractTest.cpp

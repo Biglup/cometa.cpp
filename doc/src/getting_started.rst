@@ -1038,3 +1038,5 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 ``AccountBalanceIntervalsMap`` associates reward addresses with balance requirements. Entries are returned in canonical CBOR order, and duplicate addresses are rejected.
 
 ``DirectDepositMap`` associates reward accounts with unsigned lovelace deposits. It preserves zero deposits, orders entries canonically, and rejects duplicate addresses.
+
+``GuardSet`` preserves guard order because script redeemers refer to guard positions. A key-only set uses the historical key-hash encoding; a set containing a script credential uses the credential encoding. Duplicates are rejected.

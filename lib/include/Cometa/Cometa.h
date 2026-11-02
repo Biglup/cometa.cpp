@@ -59,6 +59,7 @@
 #include <Cometa/TransactionBody/AccountBalanceInterval.h>
 #include <Cometa/TransactionBody/AccountBalanceIntervalsMap.h>
 #include <Cometa/TransactionBody/DirectDepositMap.h>
+#include <Cometa/TransactionBody/GuardSet.h>
 #include <Cometa/TransactionBody/Value.h>
 
 #include <Cometa/Cbor/CborMajorType.h>

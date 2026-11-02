@@ -75,7 +75,7 @@ lib/include/cardano/common/drep_type.h,public header,P11,implemented,Cometa::DRe
 lib/include/cardano/common/ex_units.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/governance_action_id.h,public header,P01a.2,implemented,Cometa::GovernanceActionId; domain and value-contract tests
 lib/include/cardano/common/governance_key_type.h,public header,P01a.1,implemented,idiomatic C++ API
-lib/include/cardano/common/guard_set.h,public header,P16,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/common/guard_set.h,public header,P16,implemented,Cometa::GuardSet
 lib/include/cardano/common/network_id.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/network_magic.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/protocol_version.h,public header,P01a.1,implemented,idiomatic C++ API

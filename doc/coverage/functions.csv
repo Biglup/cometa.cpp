@@ -1076,21 +1076,21 @@ cardano_governance_action_id_refcount,lib/include/cardano/common/governance_acti
 cardano_governance_action_id_set_last_error,lib/include/cardano/common/governance_action_id.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
 cardano_governance_action_id_get_last_error,lib/include/cardano/common/governance_action_id.h,P01a.2,internal,Private ownership and standard value results,,"C buffers, reference counting and error storage are not public C++ APIs."
 cardano_governance_action_id_deep_clone,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId::copy constructor and assignment,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp,Idiomatic value API; automatic ownership.
-cardano_guard_set_to_cip116_json,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_new,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_from_cbor,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_to_cbor,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_get_length,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_get,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_add,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_is_tagged,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_set_use_tag,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_unref,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_ref,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_refcount,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_set_last_error,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_get_last_error,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
-cardano_guard_set_deep_clone,lib/include/cardano/common/guard_set.h,P16,planned,,,API and ownership mapping pending.
+cardano_guard_set_to_cip116_json,lib/include/cardano/common/guard_set.h,P16,implemented,Cometa::GuardSet,lib/tests/TransactionBody/GuardSetTest.cpp,
+cardano_guard_set_new,lib/include/cardano/common/guard_set.h,P16,implemented,Cometa::GuardSet,lib/tests/TransactionBody/GuardSetTest.cpp,
+cardano_guard_set_from_cbor,lib/include/cardano/common/guard_set.h,P16,implemented,Cometa::GuardSet,lib/tests/TransactionBody/GuardSetTest.cpp,
+cardano_guard_set_to_cbor,lib/include/cardano/common/guard_set.h,P16,implemented,Cometa::GuardSet,lib/tests/TransactionBody/GuardSetTest.cpp,
+cardano_guard_set_get_length,lib/include/cardano/common/guard_set.h,P16,implemented,Cometa::GuardSet,lib/tests/TransactionBody/GuardSetTest.cpp,
+cardano_guard_set_get,lib/include/cardano/common/guard_set.h,P16,implemented,Cometa::GuardSet,lib/tests/TransactionBody/GuardSetTest.cpp,
+cardano_guard_set_add,lib/include/cardano/common/guard_set.h,P16,implemented,Cometa::GuardSet,lib/tests/TransactionBody/GuardSetTest.cpp,
+cardano_guard_set_is_tagged,lib/include/cardano/common/guard_set.h,P16,implemented,Cometa::GuardSet,lib/tests/TransactionBody/GuardSetTest.cpp,
+cardano_guard_set_set_use_tag,lib/include/cardano/common/guard_set.h,P16,implemented,Cometa::GuardSet,lib/tests/TransactionBody/GuardSetTest.cpp,
+cardano_guard_set_unref,lib/include/cardano/common/guard_set.h,P16,internal,,,
+cardano_guard_set_ref,lib/include/cardano/common/guard_set.h,P16,internal,,,
+cardano_guard_set_refcount,lib/include/cardano/common/guard_set.h,P16,internal,,,
+cardano_guard_set_set_last_error,lib/include/cardano/common/guard_set.h,P16,internal,,,
+cardano_guard_set_get_last_error,lib/include/cardano/common/guard_set.h,P16,internal,,,
+cardano_guard_set_deep_clone,lib/include/cardano/common/guard_set.h,P16,implemented,Cometa::GuardSet,lib/tests/TransactionBody/GuardSetTest.cpp,
 cardano_network_magic_to_string,lib/include/cardano/common/network_magic.h,P01a.1,implemented,toString(NetworkMagic),lib/tests/Common/NetworkMagicTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
 cardano_protocol_version_new,lib/include/cardano/common/protocol_version.h,P01a.1,implemented,ProtocolVersion::ProtocolVersion,lib/tests/Common/ProtocolVersionTest.cpp,"Rejects minor versions above UINT32_MAX, matching the native CBOR decoder."
 cardano_protocol_version_from_cbor,lib/include/cardano/common/protocol_version.h,P01a.1,implemented,ProtocolVersion::fromCbor,lib/tests/Common/ProtocolVersionTest.cpp,C output buffers and error statuses are adapted to C++ values and exceptions.
