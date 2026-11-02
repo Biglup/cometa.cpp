@@ -12,7 +12,7 @@ cardano_asset_id_t,opaque object,lib/include/cardano/assets/asset_id.h,P04.1,imp
 cardano_asset_name_list_t,opaque object,lib/include/cardano/assets/asset_name_list.h,P04.1,implemented,Cometa::AssetNameList,lib/tests/Assets/AssetNameListTest.cpp
 cardano_asset_name_map_t,opaque object,lib/include/cardano/assets/asset_name_map.h,P04.2,implemented,Cometa::AssetNameMap,lib/tests/Assets/AssetNameMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_asset_name_t,opaque object,lib/include/cardano/assets/asset_name.h,P04,implemented,AssetName,lib/tests/Assets/AssetNameTest.cpp
-cardano_auth_committee_hot_cert_t,opaque object,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,planned,,
+cardano_auth_committee_hot_cert_t,opaque object,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,implemented,Cometa::AuthCommitteeHotCert,lib/tests/Certificates/AuthCommitteeHotCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_auxiliary_data_t,opaque object,lib/include/cardano/auxiliary_data/auxiliary_data.h,P08,implemented,Cometa::AuxiliaryData,lib/tests/AuxiliaryData/AuxiliaryDataTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_base_address_t,opaque object,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress,lib/tests/Address/BaseAddressTest.cpp
 cardano_bigint_t,opaque object,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp

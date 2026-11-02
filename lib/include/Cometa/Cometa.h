@@ -155,6 +155,7 @@
 #include <Cometa/PoolParams/SingleHostAddrRelay.h>
 #include <Cometa/PoolParams/SingleHostNameRelay.h>
 
+#include <Cometa/Certificates/AuthCommitteeHotCert.h>
 #include <Cometa/Certificates/CertificateType.h>
 #include <Cometa/Certificates/GenesisKeyDelegationCert.h>
 #include <Cometa/Certificates/MirCert.h>

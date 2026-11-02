@@ -43,6 +43,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Certificates/UnregisterDRepCert.cpp
   lib/src/Certificates/RegisterDRepCert.cpp
   lib/src/Certificates/UpdateDRepCert.cpp
+  lib/src/Certificates/AuthCommitteeHotCert.cpp
   lib/src/Certificates/RegistrationCert.cpp
   lib/src/Certificates/UnregistrationCert.cpp
   lib/src/Common/DRep.cpp
@@ -204,6 +205,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Certificates/UnregisterDRepCertTest.cpp
     lib/tests/Certificates/RegisterDRepCertTest.cpp
     lib/tests/Certificates/UpdateDRepCertTest.cpp
+    lib/tests/Certificates/AuthCommitteeHotCertTest.cpp
     lib/tests/Certificates/RegistrationCertTest.cpp
     lib/tests/Certificates/UnregistrationCertTest.cpp
     lib/tests/Common/DRepTypeTest.cpp

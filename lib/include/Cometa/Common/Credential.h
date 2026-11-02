@@ -263,6 +263,9 @@ class Credential
     /** @brief Allows DRep update certificates to copy credentials. */
     friend class UpdateDRepCert;
 
+    /** @brief Allows committee authorization certificates to copy credentials. */
+    friend class AuthCommitteeHotCert;
+
     /** @brief Allows ScriptRequireGuard to copy script components. */
     friend class ScriptRequireGuard;
 

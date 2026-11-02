@@ -824,3 +824,6 @@ deposit in lovelace.
 metadata anchor. The anchor can be replaced or removed.
 
 ``UpdateDRepCert`` records a DRep credential and its optional metadata anchor.
+
+``AuthCommitteeHotCert`` authorizes a committee hot credential with a cold
+credential.
