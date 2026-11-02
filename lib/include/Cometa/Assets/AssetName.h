@@ -228,6 +228,9 @@ class AssetName
 
   private:
 
+    /** @brief Allows AssetId to copy identifier components. */
+    friend class AssetId;
+
     /**
      * @brief Takes ownership of an existing value.
      *

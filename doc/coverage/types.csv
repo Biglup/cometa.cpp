@@ -6,10 +6,10 @@ cardano_account_derivation_path_t,struct,lib/include/cardano/key_handlers/accoun
 cardano_address_t,opaque object,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address,lib/tests/Address/AddressTest.cpp
 cardano_address_type_t,enum,lib/include/cardano/address/address_type.h,P03,implemented,Cometa::AddressType,lib/tests/Address/AddressTypeTest.cpp
 cardano_anchor_t,opaque object,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_asset_id_list_t,opaque object,lib/include/cardano/assets/asset_id_list.h,P04,planned,,
+cardano_asset_id_list_t,opaque object,lib/include/cardano/assets/asset_id_list.h,P04.1,implemented,Cometa::AssetIdList,lib/tests/Assets/AssetIdListTest.cpp
 cardano_asset_id_map_t,opaque object,lib/include/cardano/assets/asset_id_map.h,P04,planned,,
-cardano_asset_id_t,opaque object,lib/include/cardano/assets/asset_id.h,P04,planned,,
-cardano_asset_name_list_t,opaque object,lib/include/cardano/assets/asset_name_list.h,P04,planned,,
+cardano_asset_id_t,opaque object,lib/include/cardano/assets/asset_id.h,P04.1,implemented,Cometa::AssetId,lib/tests/Assets/AssetIdTest.cpp
+cardano_asset_name_list_t,opaque object,lib/include/cardano/assets/asset_name_list.h,P04.1,implemented,Cometa::AssetNameList,lib/tests/Assets/AssetNameListTest.cpp
 cardano_asset_name_map_t,opaque object,lib/include/cardano/assets/asset_name_map.h,P04,planned,,
 cardano_asset_name_t,opaque object,lib/include/cardano/assets/asset_name.h,P04,implemented,AssetName,lib/tests/Assets/AssetNameTest.cpp
 cardano_auth_committee_hot_cert_t,opaque object,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,planned,,
@@ -140,7 +140,7 @@ cardano_plutus_v4_script_list_t,opaque object,lib/include/cardano/auxiliary_data
 cardano_plutus_v4_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v4_script_set.h,P15,planned,,
 cardano_plutus_v4_script_t,opaque object,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,
 cardano_pointer_address_t,opaque object,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress,lib/tests/Address/PointerAddressTest.cpp
-cardano_policy_id_list_t,opaque object,lib/include/cardano/assets/policy_id_list.h,P04,planned,,
+cardano_policy_id_list_t,opaque object,lib/include/cardano/assets/policy_id_list.h,P04.1,implemented,Cometa::PolicyIdList,lib/tests/Assets/PolicyIdListTest.cpp
 cardano_pool_metadata_t,opaque object,lib/include/cardano/pool_params/pool_metadata.h,P09,planned,,
 cardano_pool_owners_t,opaque object,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,
 cardano_pool_params_t,opaque object,lib/include/cardano/pool_params/pool_params.h,P09,planned,,

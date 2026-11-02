@@ -25,7 +25,11 @@
 
 /* INCLUDES ******************************************************************/
 
+#include <Cometa/Assets/AssetId.h>
+#include <Cometa/Assets/AssetIdList.h>
 #include <Cometa/Assets/AssetName.h>
+#include <Cometa/Assets/AssetNameList.h>
+#include <Cometa/Assets/PolicyIdList.h>
 #include <Cometa/Common/Anchor.h>
 #include <Cometa/Common/BigInt.h>
 #include <Cometa/Common/ByteOrder.h>

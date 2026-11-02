@@ -1491,3 +1491,99 @@ TEST(BaseAddress, FailedCredentialCopyDoesNotMutateAddress)
   EXPECT_EQ(address.paymentCredential(), credential);
   EXPECT_EQ(address.stakeCredential(), credential);
 }
+
+TEST(AssetId, FailedCopiesPreserveDestinationAndReleasePartialState)
+{
+  // Arrange
+  const AssetId source      = AssetId::fromHex(std::string(56, '1') + "0100");
+  std::size_t   allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const AssetId     copy(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AssetId destination = AssetId::lovelace();
+
+    {
+      AllocationFailure fail(index);
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_TRUE(destination.isLovelace());
+    EXPECT_EQ(source.toHex(), std::string(56, '1') + "0100");
+  }
+}
+
+TEST(AssetId, ComponentConstructionReleasesEveryPartialAllocation)
+{
+  // Arrange
+  const Blake2bHash policy(std::vector<std::uint8_t>(28, 1));
+  const AssetName   name        = AssetName::fromString("test");
+  std::size_t       allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const AssetId     value(policy, name);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index);
+    EXPECT_THROW((void)AssetId(policy, name), std::bad_alloc);
+  }
+}
+
+TEST(AssetId, GettersPropagateCopyFailures)
+{
+  // Arrange
+  const AssetId value = AssetId::fromHex(std::string(56, '1') + "01");
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(value.policyId(), std::bad_alloc);
+  }
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(value.assetName(), std::bad_alloc);
+  }
+
+  EXPECT_EQ(value.policyId()->toHex(), std::string(56, '1'));
+  EXPECT_EQ(value.assetName()->toHex(), "01");
+}
+
+TEST(AssetId, ByteParsingReleasesEveryPartialAllocation)
+{
+  // Arrange
+  const std::vector<std::uint8_t> bytes(60, 1);
+  std::size_t                     allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const AssetId     value(bytes);
+    allocations = allocationIndex;
+  }
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index);
+    EXPECT_THROW((void)AssetId(bytes), std::bad_alloc);
+  }
+
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(AssetId::lovelace(), std::bad_alloc);
+  }
+}

@@ -234,6 +234,9 @@ class Blake2bHash
 
   private:
 
+    /** @brief Allows AssetId to copy identifier components. */
+    friend class AssetId;
+
     /** @brief Allows ByronAddress to copy credential components. */
     friend class ByronAddress;
 

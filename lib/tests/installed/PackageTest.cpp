@@ -110,6 +110,14 @@ main()
     return 1;
   }
 
+  const Cometa::AssetId     token(key.publicKey().hash(), name);
+  const Cometa::AssetIdList assets { Cometa::AssetId::lovelace(), token };
+
+  if (Cometa::AssetId::fromHex(token.toHex()) != assets.back() || !assets.front().isLovelace())
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

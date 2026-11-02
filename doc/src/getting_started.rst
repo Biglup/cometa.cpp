@@ -246,3 +246,23 @@ accepted and formatted as lowercase. Network IDs preserve their four-bit value.
 values up to ``UINT32_MAX``. Larger values are rejected rather than truncated.
 Byron attributes use an owned encrypted derivation path of at most 64 bytes and
 an optional nonnegative network magic; absence denotes mainnet.
+
+Identifying assets
+------------------
+
+An ``AssetId`` combines a 28-byte policy ID and an asset name of up to 32 bytes.
+The byte and hexadecimal representations concatenate those fields.
+``AssetId::lovelace()`` represents lovelace with empty bytes and hex; parsing
+an empty representation returns that same identifier. A policy with an empty
+asset name remains a native token.
+
+.. code-block:: cpp
+
+   const Cometa::AssetId token(policyId, Cometa::AssetName::fromString("Cometa"));
+   const Cometa::AssetIdList assets { Cometa::AssetId::lovelace(), token };
+   const std::optional<Cometa::Blake2bHash> policy = token.policyId();
+
+``AssetIdList``, ``AssetNameList``, and ``PolicyIdList`` are named ``std::vector``
+aliases. Use ordinary indexing, iteration, insertion, and copying. Their elements
+are independent values. Policy lists do not validate hash lengths on insertion;
+operations accepting policy IDs enforce the 28-byte requirement.
