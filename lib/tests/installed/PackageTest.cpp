@@ -374,6 +374,13 @@ main()
     return 1;
   }
 
+  const Cometa::StakeVoteRegistrationDelegationCert combinedRegistrationDelegation(payment, poolOperator, representative, 2'000'000);
+
+  if (Cometa::StakeVoteRegistrationDelegationCert::fromCbor(combinedRegistrationDelegation.toCbor()) != combinedRegistrationDelegation)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

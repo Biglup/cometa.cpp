@@ -813,3 +813,6 @@ one stake credential.
 ``VoteRegistrationDelegationCert`` registers a stake credential and delegates
 its voting rights in one certificate. It records the registration deposit in
 lovelace.
+
+``StakeVoteRegistrationDelegationCert`` combines stake registration, pool
+delegation, and DRep delegation with one registration deposit.

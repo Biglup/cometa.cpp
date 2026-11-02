@@ -211,6 +211,9 @@ class DRep
     /** @brief Allows vote registration certificates to copy DRep references. */
     friend class VoteRegistrationDelegationCert;
 
+    /** @brief Allows combined registration certificates to copy DRep references. */
+    friend class StakeVoteRegistrationDelegationCert;
+
   private:
 
     /** @brief The owned DRep. */
