@@ -1,5 +1,6 @@
 Next
 ---------------------
+- Add signed asset maps, multi-assets, and Value with checked arithmetic, serialization, and independent components.
 - Add asset identifiers and standard C++ lists for identifiers, names, and policy hashes.
 - Add Shelley and Byron address values, checked conversions, network/prefix validation, independent credential access, and shared address vectors.
 - Add BIP39 mnemonic conversion, PBKDF2, EMIP-003 encryption/decryption, CRC32, and named BLAKE2b digest lengths.

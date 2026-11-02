@@ -59,15 +59,21 @@ failingMalloc(std::size_t size)
   return allocationIndex++ == failureIndex ? nullptr : std::malloc(size);
 }
 
+void*
+failingRealloc(void* pointer, std::size_t size)
+{
+  return allocationIndex++ == failureIndex ? nullptr : std::realloc(pointer, size);
+}
+
 class AllocationFailure
 {
   public:
 
-    explicit AllocationFailure(std::size_t index)
+    explicit AllocationFailure(std::size_t index, bool trackRealloc = false)
     {
       allocationIndex = 0;
       failureIndex    = index;
-      cardano_set_allocators(failingMalloc, std::realloc, std::free);
+      cardano_set_allocators(failingMalloc, trackRealloc ? failingRealloc : std::realloc, std::free);
     }
 
     ~AllocationFailure()
@@ -1585,5 +1591,1029 @@ TEST(AssetId, ByteParsingReleasesEveryPartialAllocation)
   {
     AllocationFailure fail(0);
     EXPECT_THROW(AssetId::lovelace(), std::bad_alloc);
+  }
+}
+
+TEST(AssetNameMap, FailedCopiesPreserveDestinationAndReleasePartialState)
+{
+  // Arrange
+  const AssetName    name = AssetName::fromHex("01");
+  const AssetNameMap source { { name, 3 } };
+  std::size_t        allocations = 0;
+
+  {
+    AllocationFailure  tracker(std::numeric_limits<std::size_t>::max(), true);
+    const AssetNameMap copy(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AssetNameMap       destination = AssetNameMap();
+    const AssetNameMap before(destination);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination, before);
+  }
+}
+
+TEST(AssetNameMap, FailedAdditionPreservesDestination)
+{
+  // Arrange
+  const AssetName    name = AssetName::fromHex("01");
+  const AssetNameMap source { { name, 3 } };
+  std::size_t        allocations = 0;
+
+  {
+    AssetNameMap      destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination += source;
+    allocations = allocationIndex;
+    EXPECT_NE(destination, source);
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AssetNameMap destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination += source, std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(AssetNameMap, FailedSubtractionPreservesDestination)
+{
+  // Arrange
+  const AssetName    name = AssetName::fromHex("01");
+  const AssetNameMap source { { name, 3 } };
+  std::size_t        allocations = 0;
+
+  {
+    AssetNameMap      destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination -= source;
+    allocations = allocationIndex;
+    EXPECT_NE(destination, source);
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AssetNameMap destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination -= source, std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(AssetNameMap, FailedKeyRetrievalReleasesPartialResults)
+{
+  // Arrange
+  const AssetName    name = AssetName::fromHex("01");
+  const AssetNameMap source { { name, 3 } };
+  std::size_t        allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.keys();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.keys(), std::exception);
+  }
+}
+
+TEST(AssetNameMap, FailedEntryRetrievalReleasesPartialResults)
+{
+  // Arrange
+  const AssetName    name = AssetName::fromHex("01");
+  const AssetNameMap source { { name, 3 } };
+  std::size_t        allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.entries();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.entries(), std::exception);
+  }
+}
+
+TEST(AssetNameMap, FailedCborSerializationReleasesPartialResults)
+{
+  // Arrange
+  const AssetName    name = AssetName::fromHex("01");
+  const AssetNameMap source { { name, 3 } };
+  std::size_t        allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.toCbor(), std::exception);
+  }
+}
+
+TEST(AssetNameMap, FailedJsonSerializationReleasesPartialResults)
+{
+  // Arrange
+  const AssetName    name = AssetName::fromHex("01");
+  const AssetNameMap source { { name, 3 } };
+  std::size_t        allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.toJson(), std::exception);
+  }
+}
+
+TEST(AssetNameMap, FailedParsingReleasesPartialResults)
+{
+  // Arrange
+  const AssetName                 name = AssetName::fromHex("01");
+  const AssetNameMap              source { { name, 3 } };
+  const std::vector<std::uint8_t> cbor        = source.toCbor();
+  std::size_t                     allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)AssetNameMap::fromCbor(cbor);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(AssetNameMap::fromCbor(cbor), std::exception);
+  }
+}
+
+TEST(AssetNameMap, FailedInsertionPreservesOriginalValue)
+{
+  // Arrange
+  const AssetName    name = AssetName::fromHex("01");
+  const AssetNameMap source { { name, 3 } };
+  std::size_t        allocations = 0;
+
+  {
+    AssetNameMap      destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination.set(AssetName::fromHex("02"), 5);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AssetNameMap destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination.set(AssetName::fromHex("02"), 5), std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(AssetIdMap, FailedCopiesPreserveDestinationAndReleasePartialState)
+{
+  // Arrange
+  const AssetId    id = AssetId::fromHex(std::string(56, '1'));
+  const AssetIdMap source { { id, 3 } };
+  std::size_t      allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    const AssetIdMap  copy(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AssetIdMap       destination = AssetIdMap();
+    const AssetIdMap before(destination);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination, before);
+  }
+}
+
+TEST(AssetIdMap, FailedAdditionPreservesDestination)
+{
+  // Arrange
+  const AssetId    id = AssetId::fromHex(std::string(56, '1'));
+  const AssetIdMap source { { id, 3 } };
+  std::size_t      allocations = 0;
+
+  {
+    AssetIdMap        destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination += source;
+    allocations = allocationIndex;
+    EXPECT_NE(destination, source);
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AssetIdMap destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination += source, std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(AssetIdMap, FailedSubtractionPreservesDestination)
+{
+  // Arrange
+  const AssetId    id = AssetId::fromHex(std::string(56, '1'));
+  const AssetIdMap source { { id, 3 } };
+  std::size_t      allocations = 0;
+
+  {
+    AssetIdMap        destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination -= source;
+    allocations = allocationIndex;
+    EXPECT_NE(destination, source);
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AssetIdMap destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination -= source, std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(AssetIdMap, FailedKeyRetrievalReleasesPartialResults)
+{
+  // Arrange
+  const AssetId    id = AssetId::fromHex(std::string(56, '1'));
+  const AssetIdMap source { { id, 3 } };
+  std::size_t      allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.keys();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.keys(), std::exception);
+  }
+}
+
+TEST(AssetIdMap, FailedEntryRetrievalReleasesPartialResults)
+{
+  // Arrange
+  const AssetId    id = AssetId::fromHex(std::string(56, '1'));
+  const AssetIdMap source { { id, 3 } };
+  std::size_t      allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.entries();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.entries(), std::exception);
+  }
+}
+
+TEST(AssetIdMap, FailedInsertionPreservesOriginalValue)
+{
+  // Arrange
+  const AssetId    id = AssetId::fromHex(std::string(56, '1'));
+  const AssetIdMap source { { id, 3 } };
+  std::size_t      allocations = 0;
+
+  {
+    AssetIdMap        destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination.set(AssetId::lovelace(), 5);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AssetIdMap destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination.set(AssetId::lovelace(), 5), std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(MultiAsset, FailedCopiesPreserveDestinationAndReleasePartialState)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  MultiAsset    source;
+  source.set(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    const MultiAsset  copy(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    MultiAsset       destination = MultiAsset();
+    const MultiAsset before(destination);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination, before);
+  }
+}
+
+TEST(MultiAsset, FailedAdditionPreservesDestination)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  MultiAsset    source;
+  source.set(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    MultiAsset        destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination += source;
+    allocations = allocationIndex;
+    EXPECT_NE(destination, source);
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    MultiAsset destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination += source, std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(MultiAsset, FailedSubtractionPreservesDestination)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  MultiAsset    source;
+  source.set(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    MultiAsset        destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination -= source;
+    allocations = allocationIndex;
+    EXPECT_NE(destination, source);
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    MultiAsset destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination -= source, std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(MultiAsset, FailedPolicyRetrievalReleasesPartialResults)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  MultiAsset    source;
+  source.set(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.policies();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.policies(), std::exception);
+  }
+}
+
+TEST(MultiAsset, FailedAssetRetrievalReleasesPartialResults)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  MultiAsset    source;
+  source.set(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.assets(*id.policyId());
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.assets(*id.policyId()), std::exception);
+  }
+}
+
+TEST(MultiAsset, FailedCborSerializationReleasesPartialResults)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  MultiAsset    source;
+  source.set(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.toCbor(), std::exception);
+  }
+}
+
+TEST(MultiAsset, FailedJsonSerializationReleasesPartialResults)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  MultiAsset    source;
+  source.set(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.toJson(), std::exception);
+  }
+}
+
+TEST(MultiAsset, FailedParsingReleasesPartialResults)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  MultiAsset    source;
+  source.set(id, 3);
+  const std::vector<std::uint8_t> cbor        = source.toCbor();
+  std::size_t                     allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)MultiAsset::fromCbor(cbor);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(MultiAsset::fromCbor(cbor), std::exception);
+  }
+}
+
+TEST(MultiAsset, FailedAssetUpdatePreservesOriginalValue)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  MultiAsset    source;
+  source.set(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    MultiAsset        destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination.set(AssetId::fromHex(std::string(56, '2')), 5);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    MultiAsset destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination.set(AssetId::fromHex(std::string(56, '2')), 5), std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(MultiAsset, FailedPolicyReplacementPreservesOriginalValue)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  MultiAsset    source;
+  source.set(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    MultiAsset        destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination.setAssets(*id.policyId(), AssetNameMap());
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    MultiAsset destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination.setAssets(*id.policyId(), AssetNameMap()), std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(Value, FailedCopiesPreserveDestinationAndReleasePartialState)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  Value         source(7);
+  source.addAsset(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    const Value       copy(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    Value       destination = Value();
+    const Value before(destination);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination, before);
+  }
+}
+
+TEST(Value, FailedAdditionPreservesDestination)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  Value         source(7);
+  source.addAsset(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    Value             destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination += source;
+    allocations = allocationIndex;
+    EXPECT_NE(destination, source);
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    Value destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination += source, std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(Value, FailedSubtractionPreservesDestination)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  Value         source(7);
+  source.addAsset(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    Value             destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination -= source;
+    allocations = allocationIndex;
+    EXPECT_NE(destination, source);
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    Value destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination -= source, std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(Value, FailedAssetRetrievalReleasesPartialResults)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  Value         source(7);
+  source.addAsset(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.assets();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.assets(), std::exception);
+  }
+}
+
+TEST(Value, FailedAssetMapConversionReleasesPartialResults)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  Value         source(7);
+  source.addAsset(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toAssetMap();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.toAssetMap(), std::exception);
+  }
+}
+
+TEST(Value, FailedCborSerializationReleasesPartialResults)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  Value         source(7);
+  source.addAsset(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.toCbor(), std::exception);
+  }
+}
+
+TEST(Value, FailedJsonSerializationReleasesPartialResults)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  Value         source(7);
+  source.addAsset(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(source.toJson(), std::exception);
+  }
+}
+
+TEST(Value, FailedParsingReleasesPartialResults)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  Value         source(7);
+  source.addAsset(id, 3);
+  const std::vector<std::uint8_t> cbor        = source.toCbor();
+  std::size_t                     allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)Value::fromCbor(cbor);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW(Value::fromCbor(cbor), std::exception);
+  }
+}
+
+TEST(Value, FailedAssetAdditionPreservesOriginalValue)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  Value         source(7);
+  source.addAsset(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    Value             destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination.addAsset(id, 5);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    Value destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination.addAsset(id, 5), std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(Value, FailedAssetReplacementPreservesOriginalValue)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  Value         source(7);
+  source.addAsset(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    Value             destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination.setAssets(MultiAsset());
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    Value destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination.setAssets(MultiAsset()), std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(Value, FailedAssetCollectionAdditionPreservesOriginalValue)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  Value         source(7);
+  source.addAsset(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    Value             destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination.addAssets(source.assets());
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    Value destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination.addAssets(source.assets()), std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
+  }
+}
+
+TEST(Value, FailedAssetCollectionSubtractionPreservesOriginalValue)
+{
+  // Arrange
+  const AssetId id = AssetId::fromHex(std::string(56, '1'));
+  Value         source(7);
+  source.addAsset(id, 3);
+  std::size_t allocations = 0;
+
+  {
+    Value             destination(source);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    destination.subtractAssets(source.assets());
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    Value destination(source);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(destination.subtractAssets(source.assets()), std::exception);
+    }
+
+    EXPECT_EQ(destination, source);
   }
 }

@@ -27,8 +27,11 @@
 
 #include <Cometa/Assets/AssetId.h>
 #include <Cometa/Assets/AssetIdList.h>
+#include <Cometa/Assets/AssetIdMap.h>
 #include <Cometa/Assets/AssetName.h>
 #include <Cometa/Assets/AssetNameList.h>
+#include <Cometa/Assets/AssetNameMap.h>
+#include <Cometa/Assets/MultiAsset.h>
 #include <Cometa/Assets/PolicyIdList.h>
 #include <Cometa/Common/Anchor.h>
 #include <Cometa/Common/BigInt.h>
@@ -49,6 +52,7 @@
 #include <Cometa/Error.h>
 #include <Cometa/ErrorCode.h>
 #include <Cometa/SlotConfig.h>
+#include <Cometa/TransactionBody/Value.h>
 
 #include <Cometa/Cbor/CborMajorType.h>
 #include <Cometa/Cbor/CborReader.h>

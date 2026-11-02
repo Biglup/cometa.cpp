@@ -11,11 +11,11 @@ lib/include/cardano/address/reward_address.h,public header,P03,implemented,"Addr
 lib/include/cardano/address/stake_pointer.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
 lib/include/cardano/assets/asset_id.h,public header,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
 lib/include/cardano/assets/asset_id_list.h,public header,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
-lib/include/cardano/assets/asset_id_map.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/assets/asset_id_map.h,public header,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/include/cardano/assets/asset_name.h,public header,P04,implemented,idiomatic C++ API
 lib/include/cardano/assets/asset_name_list.h,public header,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
-lib/include/cardano/assets/asset_name_map.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/assets/multi_asset.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/assets/asset_name_map.h,public header,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
+lib/include/cardano/assets/multi_asset.h,public header,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/include/cardano/assets/policy_id_list.h,public header,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
 lib/include/cardano/auxiliary_data/auxiliary_data.h,public header,P08,planned,idiomatic C++ API
 lib/include/cardano/auxiliary_data/metadatum.h,public header,P08,planned,idiomatic C++ API
@@ -187,7 +187,7 @@ lib/include/cardano/transaction_body/transaction_input.h,public header,P07,plann
 lib/include/cardano/transaction_body/transaction_input_set.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/transaction_body/transaction_output.h,public header,P07,planned,idiomatic C++ API
 lib/include/cardano/transaction_body/transaction_output_list.h,public header,P07,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/transaction_body/value.h,public header,P04,planned,idiomatic C++ API
+lib/include/cardano/transaction_body/value.h,public header,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,public header,P23,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/transaction_builder/balancing/implicit_coin.h,public header,P22,planned,idiomatic C++ API
 lib/include/cardano/transaction_builder/balancing/input_to_redeemer_map.h,public header,P22,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
@@ -253,11 +253,11 @@ lib/src/allocators.c,implementation file,P01a.2,internal,Native implementation r
 lib/src/allocators.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/assets/asset_id.c,implementation file,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
 lib/src/assets/asset_id_list.c,implementation file,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
-lib/src/assets/asset_id_map.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/asset_id_map.c,implementation file,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/src/assets/asset_name.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/assets/asset_name_list.c,implementation file,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
-lib/src/assets/asset_name_map.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/assets/multi_asset.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/assets/asset_name_map.c,implementation file,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
+lib/src/assets/multi_asset.c,implementation file,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/src/assets/policy_id_list.c,implementation file,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
 lib/src/auxiliary_data/auxiliary_data.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/auxiliary_data/metadatum.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
@@ -450,7 +450,7 @@ lib/src/transaction_body/transaction_input.c,implementation file,P07,internal,Na
 lib/src/transaction_body/transaction_input_set.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/transaction_body/transaction_output.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/transaction_body/transaction_output_list.c,implementation file,P07,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/transaction_body/value.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/transaction_body/value.c,implementation file,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/src/transaction_builder/balancing/deferred_redeemer_list.c,implementation file,P23,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/transaction_builder/balancing/implicit_coin.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/transaction_builder/balancing/input_to_redeemer_map.c,implementation file,P22,internal,Native implementation reference; coverage is tracked against its public API.

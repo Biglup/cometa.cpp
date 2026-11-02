@@ -74,11 +74,14 @@ and callback adapters are tracked in :doc:`implementation_plan`.
    * - Asset identifiers and lists
      - ``AssetId`` and standard vector aliases ``AssetIdList``, ``AssetNameList``, and ``PolicyIdList``
 
+   * - Asset maps and transfer values
+     - ``AssetNameMap``, ``AssetIdMap``, ``MultiAsset``, and ``Value``; checked signed arithmetic, independent components, CBOR and JSON
+
 Coverage ledger
 ---------------
 
 The inventory targets cardano-c commit
-``8831058672e9960f63d6aac3dfc791f0b2d8b295``, matching the dependency pin.
+``a84174c54363b371ef68ffb97b3d29992ca1d9e6``, matching the dependency pin.
 It contains 231 public headers, 418 implementation files, 235 distinct public
 typedefs, and 3,335 exported function declarations. Tests and vendored dependencies
 are outside the file inventory.

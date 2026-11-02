@@ -201,6 +201,11 @@ AssetId::operator<(const AssetId& other) const
 
 /* PRIVATE FUNCTIONS *********************************************************/
 
+AssetId::AssetId(cardano_asset_id_t* value) noexcept
+: m_value(value)
+{
+}
+
 cardano_asset_id_t*
 AssetId::checked() const
 {
