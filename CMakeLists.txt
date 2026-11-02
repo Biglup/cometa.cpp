@@ -49,6 +49,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Certificates/CertificateSet.cpp
   lib/src/ProtocolParams/ExUnitPrices.cpp
   lib/src/ProtocolParams/CostModel.cpp
+  lib/src/ProtocolParams/CostModels.cpp
   lib/src/Certificates/RegistrationCert.cpp
   lib/src/Certificates/UnregistrationCert.cpp
   lib/src/Common/DRep.cpp
@@ -216,6 +217,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Certificates/CertificateSetTest.cpp
     lib/tests/ProtocolParams/ExUnitPricesTest.cpp
     lib/tests/ProtocolParams/CostModelTest.cpp
+    lib/tests/ProtocolParams/CostModelsTest.cpp
     lib/tests/Certificates/RegistrationCertTest.cpp
     lib/tests/Certificates/UnregistrationCertTest.cpp
     lib/tests/Common/DRepTypeTest.cpp

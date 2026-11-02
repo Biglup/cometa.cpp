@@ -51,7 +51,7 @@ cardano_confirm_transaction_func_t,callback,lib/include/cardano/providers/provid
 cardano_constitution_t,opaque object,lib/include/cardano/proposal_procedures/constitution.h,P13,planned,,
 cardano_constr_plutus_data_t,opaque object,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData,lib/tests/PlutusData/ConstrPlutusDataTest.cpp
 cardano_cost_model_t,opaque object,lib/include/cardano/protocol_params/cost_model.h,P12,implemented,Cometa::CostModel,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_costmdls_t,opaque object,lib/include/cardano/protocol_params/costmdls.h,P12,planned,,
+cardano_costmdls_t,opaque object,lib/include/cardano/protocol_params/costmdls.h,P12,implemented,Cometa::CostModels,lib/tests/ProtocolParams/CostModelsTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_credential_set_t,opaque object,lib/include/cardano/proposal_procedures/credential_set.h,P04.3,implemented,Cometa::CredentialSet,lib/tests/Common/CredentialSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_credential_t,opaque object,lib/include/cardano/common/credential.h,P01a.1,implemented,Credential,lib/tests/Common/CredentialTest.cpp
 cardano_credential_type_t,enum,lib/include/cardano/common/credential_type.h,P01a.1,implemented,CredentialType,lib/tests/Common/CredentialTest.cpp

@@ -145,7 +145,7 @@ lib/include/cardano/proposal_procedures/proposal_procedure_set.h,public header,P
 lib/include/cardano/proposal_procedures/treasury_withdrawals_action.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/update_committee_action.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/protocol_params/cost_model.h,public header,P12,implemented,Indexed costs with unknown language ID preservation and native CBOR fixtures.
-lib/include/cardano/protocol_params/costmdls.h,public header,P12,planned,idiomatic C++ API
+lib/include/cardano/protocol_params/costmdls.h,public header,P12,implemented,Cost model map including unknown language IDs and language views.
 lib/include/cardano/protocol_params/drep_voting_thresholds.h,public header,P12,planned,idiomatic C++ API
 lib/include/cardano/protocol_params/ex_unit_prices.h,public header,P12,implemented,Rational execution prices with native CBOR fixture and independent copy contract.
 lib/include/cardano/protocol_params/pool_voting_thresholds.h,public header,P12,planned,idiomatic C++ API

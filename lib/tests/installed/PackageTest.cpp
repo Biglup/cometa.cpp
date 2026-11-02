@@ -445,6 +445,14 @@ main()
     return 1;
   }
 
+  Cometa::CostModels costModels;
+  costModels.insert(costModel);
+
+  if (Cometa::CostModels::fromCbor(costModels.toCbor()) != costModels)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

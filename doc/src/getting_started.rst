@@ -857,3 +857,11 @@ unknown language IDs so a model can be read and re-encoded without loss::
    Cometa::CostModel model(Cometa::PlutusLanguageVersion::V4, { 1, 2, 3 });
    model.setCost(1, 7);
    const std::vector<std::int64_t> costs = model.costs();
+
+``CostModels`` stores cost models by language ID. The collection retains models
+for future language IDs when decoding CBOR::
+
+   Cometa::CostModels models;
+   models.insert(model);
+   const std::optional<Cometa::CostModel> v4 =
+     models.get(Cometa::PlutusLanguageVersion::V4);

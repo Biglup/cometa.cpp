@@ -175,6 +175,9 @@ class CostModel
 
   private:
 
+    /** @brief Allows CostModels to copy model values. */
+    friend class CostModels;
+
     /**
      * @brief Adopts an owned model.
      * @param value The owned model.

@@ -184,4 +184,5 @@
 #include <Cometa/PoolParams/PoolOwners.h>
 #include <Cometa/PoolParams/PoolParams.h>
 #include <Cometa/ProtocolParams/CostModel.h>
+#include <Cometa/ProtocolParams/CostModels.h>
 #include <Cometa/ProtocolParams/ExUnitPrices.h>

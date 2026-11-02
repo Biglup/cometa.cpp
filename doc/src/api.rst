@@ -466,5 +466,8 @@ Protocol parameters
 .. doxygenclass:: Cometa::CostModel
    :members:
 
+.. doxygenclass:: Cometa::CostModels
+   :members:
+
 .. doxygenclass:: Cometa::ExUnitPrices
    :members:
