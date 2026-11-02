@@ -85,6 +85,7 @@ TEST(SingleHostAddrRelay, ReturnsIndependentAddresses)
   Ipv4                      address = Ipv4::fromString("127.0.0.1");
   const SingleHostAddrRelay relay(0, address);
   std::optional<Ipv4>       result = relay.ipv4();
+  EXPECT_EQ(result->toString(), "127.0.0.1");
 
   // Act
   address = Ipv4::fromString("192.0.2.1");
