@@ -225,7 +225,7 @@ lib/include/cardano/witness_set/plutus_v2_script_set.h,public header,P15,planned
 lib/include/cardano/witness_set/plutus_v3_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/witness_set/plutus_v4_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/witness_set/redeemer.h,public header,P15,implemented,Cometa::Redeemer
-lib/include/cardano/witness_set/redeemer_list.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/witness_set/redeemer_list.h,public header,P15,implemented,Cometa::RedeemerList
 lib/include/cardano/witness_set/redeemer_tag.h,public header,P15,implemented,Cometa::RedeemerTag
 lib/include/cardano/witness_set/vkey_witness.h,public header,P15,planned,idiomatic C++ API
 lib/include/cardano/witness_set/vkey_witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations

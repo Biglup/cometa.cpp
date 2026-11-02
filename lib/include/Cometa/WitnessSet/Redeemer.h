@@ -187,6 +187,9 @@ class Redeemer
 
   private:
 
+    /** @brief Allows redeemer lists to copy their elements. */
+    friend class RedeemerList;
+
     /**
      * @brief Adopts an owned redeemer.
      * @param value The owned redeemer.

@@ -1016,3 +1016,5 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 
    Cometa::Redeemer redeemer(Cometa::RedeemerTag::Spend, 0, Cometa::PlutusData(42), Cometa::ExUnits(500, 700));
    const std::vector<std::uint8_t> cbor = redeemer.toCbor();
+
+``RedeemerList`` stores redeemers in purpose and index order and rejects duplicate keys. ``setExUnits`` updates an existing redeemer's budget.
