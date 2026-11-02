@@ -294,3 +294,11 @@ API reference
 
 .. doxygenclass:: Cometa::MetadatumMap
    :members:
+
+.. doxygenclass:: Cometa::TransactionMetadata
+   :members:
+
+.. doxygentypedef:: Cometa::MetadatumLabelList
+
+.. doxygenclass:: Cometa::AuxiliaryData
+   :members:

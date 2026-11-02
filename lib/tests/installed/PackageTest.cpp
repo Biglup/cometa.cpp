@@ -211,6 +211,17 @@ main()
     return 1;
   }
 
+  Cometa::TransactionMetadata transactionMetadata;
+  transactionMetadata.set(674, metadata);
+  Cometa::AuxiliaryData auxiliary;
+  auxiliary.setMetadata(transactionMetadata);
+  auxiliary.setPlutusV4Scripts(auxiliaryScripts);
+
+  if (Cometa::AuxiliaryData::fromCbor(auxiliary.toCbor()) != auxiliary || auxiliary.hash().toBytes().size() != 32U)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

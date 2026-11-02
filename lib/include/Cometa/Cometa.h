@@ -136,3 +136,7 @@
 #include <Cometa/AuxiliaryData/MetadatumKind.h>
 #include <Cometa/AuxiliaryData/MetadatumList.h>
 #include <Cometa/AuxiliaryData/MetadatumMap.h>
+
+#include <Cometa/AuxiliaryData/AuxiliaryData.h>
+#include <Cometa/AuxiliaryData/MetadatumLabelList.h>
+#include <Cometa/AuxiliaryData/TransactionMetadata.h>

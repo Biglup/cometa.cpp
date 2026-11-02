@@ -289,6 +289,31 @@ sampleValue<Script>()
 }
 
 template<>
+TransactionMetadata
+sampleValue<TransactionMetadata>()
+{
+  TransactionMetadata metadata;
+  metadata.set(1, Metadatum("value"));
+
+  return metadata;
+}
+
+template<>
+AuxiliaryData
+sampleValue<AuxiliaryData>()
+{
+  AuxiliaryData value;
+  value.setMetadata(sampleValue<TransactionMetadata>());
+  value.setNativeScripts(NativeScriptList { NativeScript(ScriptInvalidBefore(5)) });
+  value.setPlutusV1Scripts(PlutusV1ScriptList { PlutusV1Script::fromHex("450100002499") });
+  value.setPlutusV2Scripts(PlutusV2ScriptList { PlutusV2Script::fromHex("450100002499") });
+  value.setPlutusV3Scripts(PlutusV3ScriptList { PlutusV3Script::fromHex("450100002499") });
+  value.setPlutusV4Scripts(PlutusV4ScriptList { PlutusV4Script::fromHex("450100002499") });
+
+  return value;
+}
+
+template<>
 Metadatum
 sampleValue<Metadatum>()
 {
@@ -389,7 +414,7 @@ sampleValue<WithdrawalMap>()
   return value;
 }
 
-using ValueTypes = testing::Types<Metadatum, MetadatumList, MetadatumMap, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
+using ValueTypes = testing::Types<TransactionMetadata, AuxiliaryData, Metadatum, MetadatumList, MetadatumMap, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -5113,5 +5138,194 @@ TEST(MetadatumMap, FailedInsertPreservesEntries)
       EXPECT_THROW(map.insert(key, replacement), std::bad_alloc) << index;
     }
     EXPECT_EQ(map, original);
+  }
+}
+
+TEST(TransactionMetadata, FailedSetPreservesValue)
+{
+  // Arrange
+  const TransactionMetadata original = sampleValue<TransactionMetadata>();
+  const Metadatum           replacement("updated");
+  std::size_t               count = 0U;
+  {
+    TransactionMetadata value(original);
+    AllocationFailure   tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.set(1, replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    TransactionMetadata value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.set(1, replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
+  }
+}
+
+TEST(AuxiliaryData, FailedSetMetadataPreservesValue)
+{
+  // Arrange
+  const AuxiliaryData       original    = sampleValue<AuxiliaryData>();
+  const TransactionMetadata replacement = *original.metadata();
+  std::size_t               count       = 0U;
+  {
+    AuxiliaryData     value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.setMetadata(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AuxiliaryData value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setMetadata(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
+  }
+}
+
+TEST(AuxiliaryData, FailedSetNativeScriptsPreservesValue)
+{
+  // Arrange
+  const AuxiliaryData    original    = sampleValue<AuxiliaryData>();
+  const NativeScriptList replacement = *original.nativeScripts();
+  std::size_t            count       = 0U;
+  {
+    AuxiliaryData     value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.setNativeScripts(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AuxiliaryData value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setNativeScripts(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
+  }
+}
+
+TEST(AuxiliaryData, FailedSetPlutusV1ScriptsPreservesValue)
+{
+  // Arrange
+  const AuxiliaryData      original    = sampleValue<AuxiliaryData>();
+  const PlutusV1ScriptList replacement = *original.plutusV1Scripts();
+  std::size_t              count       = 0U;
+  {
+    AuxiliaryData     value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.setPlutusV1Scripts(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AuxiliaryData value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setPlutusV1Scripts(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
+  }
+}
+
+TEST(AuxiliaryData, FailedSetPlutusV2ScriptsPreservesValue)
+{
+  // Arrange
+  const AuxiliaryData      original    = sampleValue<AuxiliaryData>();
+  const PlutusV2ScriptList replacement = *original.plutusV2Scripts();
+  std::size_t              count       = 0U;
+  {
+    AuxiliaryData     value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.setPlutusV2Scripts(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AuxiliaryData value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setPlutusV2Scripts(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
+  }
+}
+
+TEST(AuxiliaryData, FailedSetPlutusV3ScriptsPreservesValue)
+{
+  // Arrange
+  const AuxiliaryData      original    = sampleValue<AuxiliaryData>();
+  const PlutusV3ScriptList replacement = *original.plutusV3Scripts();
+  std::size_t              count       = 0U;
+  {
+    AuxiliaryData     value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.setPlutusV3Scripts(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AuxiliaryData value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setPlutusV3Scripts(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
+  }
+}
+
+TEST(AuxiliaryData, FailedSetPlutusV4ScriptsPreservesValue)
+{
+  // Arrange
+  const AuxiliaryData      original    = sampleValue<AuxiliaryData>();
+  const PlutusV4ScriptList replacement = *original.plutusV4Scripts();
+  std::size_t              count       = 0U;
+  {
+    AuxiliaryData     value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.setPlutusV4Scripts(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    AuxiliaryData value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setPlutusV4Scripts(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
   }
 }

@@ -563,3 +563,36 @@ metadata does not establish its validity under a particular ledger's rules.
 
 CBOR serialization normalizes scalar encodings while retaining each list or
 map's definite or indefinite length form, including after appending entries.
+
+Transaction metadata and auxiliary data
+---------------------------------------
+
+``TransactionMetadata`` associates unsigned 64-bit labels with metadata values.
+``set`` replaces an existing label, ``get`` returns an optional independent value,
+and ``at`` throws ``std::out_of_range`` for a missing label. Entries serialize in
+ascending label order. Decoding rejects duplicate labels. ``MetadatumLabelList``
+is a standard vector of unsigned 64-bit labels.
+
+.. code-block:: cpp
+
+   Cometa::TransactionMetadata metadata;
+   metadata.set(674, Cometa::Metadatum::fromPlainJson(
+     R"({"msg":["Hello from Cometa"]})"));
+
+   Cometa::AuxiliaryData auxiliary;
+   auxiliary.setMetadata(metadata);
+   auxiliary.setPlutusV4Scripts(Cometa::PlutusV4ScriptList {
+     Cometa::PlutusV4Script::fromHex("450100002499") });
+   const Cometa::Blake2bHash hash = auxiliary.hash();
+   const std::vector<std::uint8_t> cbor = auxiliary.toCbor();
+
+``AuxiliaryData`` can contain metadata, native scripts, and Plutus V1 through V4
+script lists. Getters return optional independent values; setters accept
+``std::nullopt`` to remove a field. An absent field and a present empty collection
+remain distinct in CBOR.
+
+Decoded auxiliary data preserves its original CBOR and hash. Changing a field
+or calling ``normalizeEncoding`` selects the current tagged form for subsequent
+serialization; nested script encodings remain intact. ``hash`` always hashes the
+bytes returned by ``toCbor``. Equality compares field values, so equivalent values
+with different original encodings can have different hashes.
