@@ -641,20 +641,20 @@ cardano_mir_cert_refcount,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API
 cardano_mir_cert_set_last_error,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
 cardano_mir_cert_get_last_error,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
 cardano_mir_cert_deep_clone,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_new,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_from_cbor,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_to_cbor,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_to_cip116_json,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_get_pot,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_set_pot,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_get_amount,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_set_amount,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_unref,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_ref,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_refcount,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_set_last_error,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_get_last_error,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_to_pot_cert_deep_clone,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,,API and ownership mapping pending.
+cardano_mir_to_pot_cert_new,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert::constructor,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
+cardano_mir_to_pot_cert_from_cbor,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert::fromCbor,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
+cardano_mir_to_pot_cert_to_cbor,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert::toCbor,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
+cardano_mir_to_pot_cert_to_cip116_json,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert::toJson,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
+cardano_mir_to_pot_cert_get_pot,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert::pot,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
+cardano_mir_to_pot_cert_set_pot,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert::setPot,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
+cardano_mir_to_pot_cert_get_amount,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert::amount,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
+cardano_mir_to_pot_cert_set_amount,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert::setAmount,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
+cardano_mir_to_pot_cert_unref,lib/include/cardano/certs/mir_to_pot_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
+cardano_mir_to_pot_cert_ref,lib/include/cardano/certs/mir_to_pot_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
+cardano_mir_to_pot_cert_refcount,lib/include/cardano/certs/mir_to_pot_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
+cardano_mir_to_pot_cert_set_last_error,lib/include/cardano/certs/mir_to_pot_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
+cardano_mir_to_pot_cert_get_last_error,lib/include/cardano/certs/mir_to_pot_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
+cardano_mir_to_pot_cert_deep_clone,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert::copy constructor / assignment,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
 cardano_mir_to_stake_creds_cert_new,lib/include/cardano/certs/mir_to_stake_creds_cert.h,P10,planned,,,API and ownership mapping pending.
 cardano_mir_to_stake_creds_cert_from_cbor,lib/include/cardano/certs/mir_to_stake_creds_cert.h,P10,planned,,,API and ownership mapping pending.
 cardano_mir_to_stake_creds_cert_to_cbor,lib/include/cardano/certs/mir_to_stake_creds_cert.h,P10,planned,,,API and ownership mapping pending.

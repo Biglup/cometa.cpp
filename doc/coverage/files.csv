@@ -43,9 +43,9 @@ lib/include/cardano/certs/certificate.h,public header,P10,planned,idiomatic C++ 
 lib/include/cardano/certs/certificate_set.h,public header,P10,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/certs/genesis_key_delegation_cert.h,public header,P10,implemented,Historical genesis delegation with three independently copied hashes.
 lib/include/cardano/certs/mir_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/mir_cert_pot_type.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/mir_cert_type.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/mir_to_pot_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/mir_cert_pot_type.h,public header,P10,implemented,Historical MIR pot transfer and discriminators.
+lib/include/cardano/certs/mir_cert_type.h,public header,P10,implemented,Historical MIR pot transfer and discriminators.
+lib/include/cardano/certs/mir_to_pot_cert.h,public header,P10,implemented,Historical MIR pot transfer and discriminators.
 lib/include/cardano/certs/mir_to_stake_creds_cert.h,public header,P10,planned,idiomatic C++ API
 lib/include/cardano/certs/pool_registration_cert.h,public header,P10,implemented,Pool registration with independent PoolParams values.
 lib/include/cardano/certs/pool_retirement_cert.h,public header,P10,implemented,Pool retirement epoch and independent 28-byte pool key hash.

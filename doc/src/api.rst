@@ -405,3 +405,13 @@ Genesis key delegation certificate
 
 .. doxygenclass:: Cometa::GenesisKeyDelegationCert
    :members:
+
+Historical MIR pot transfers
+----------------------------
+
+.. doxygenenum:: Cometa::MirPotType
+
+.. doxygenenum:: Cometa::MirCertType
+
+.. doxygenclass:: Cometa::MirToPotCert
+   :members:

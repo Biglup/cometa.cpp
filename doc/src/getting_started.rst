@@ -782,3 +782,11 @@ Genesis key delegation
 ``GenesisKeyDelegationCert`` represents the historical delegation of a
 genesis key to a delegate key and VRF key. It requires 28-byte genesis and
 delegate hashes and a 32-byte VRF hash.
+
+Historical MIR pot transfers
+----------------------------
+
+``MirToPotCert`` represents an instantaneous reward transfer between the
+reserve and treasury pots. ``MirPotType`` selects the source pot; amounts are
+expressed in lovelace. This historical certificate remains available for
+inspection of older transactions.

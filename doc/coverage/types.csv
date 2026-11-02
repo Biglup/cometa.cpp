@@ -103,10 +103,10 @@ cardano_metadatum_label_list_t,opaque object,lib/include/cardano/auxiliary_data/
 cardano_metadatum_list_t,opaque object,lib/include/cardano/auxiliary_data/metadatum_list.h,P08,implemented,Cometa::MetadatumList,lib/tests/AuxiliaryData/MetadatumListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_metadatum_map_t,opaque object,lib/include/cardano/auxiliary_data/metadatum_map.h,P08,implemented,Cometa::MetadatumMap,lib/tests/AuxiliaryData/MetadatumMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_metadatum_t,opaque object,lib/include/cardano/auxiliary_data/metadatum.h,P08,implemented,Cometa::Metadatum,lib/tests/AuxiliaryData/MetadatumTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_mir_cert_pot_type_t,enum,lib/include/cardano/certs/mir_cert_pot_type.h,P10,planned,,
+cardano_mir_cert_pot_type_t,enum,lib/include/cardano/certs/mir_cert_pot_type.h,P10,implemented,Cometa::MirPotType,lib/tests/Certificates/MirPotTypeTest.cpp
 cardano_mir_cert_t,opaque object,lib/include/cardano/certs/mir_cert.h,P10,planned,,
-cardano_mir_cert_type_t,enum,lib/include/cardano/certs/mir_cert_type.h,P10,planned,,
-cardano_mir_to_pot_cert_t,opaque object,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,
+cardano_mir_cert_type_t,enum,lib/include/cardano/certs/mir_cert_type.h,P10,implemented,Cometa::MirCertType,lib/tests/Certificates/MirCertTypeTest.cpp
+cardano_mir_to_pot_cert_t,opaque object,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_mir_to_stake_creds_cert_t,opaque object,lib/include/cardano/certs/mir_to_stake_creds_cert.h,P10,planned,,
 cardano_multi_asset_t,opaque object,lib/include/cardano/assets/multi_asset.h,P04.2,implemented,Cometa::MultiAsset,lib/tests/Assets/MultiAssetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_multi_host_name_relay_t,opaque object,lib/include/cardano/pool_params/multi_host_name_relay.h,P09,implemented,Cometa::MultiHostNameRelay,lib/tests/PoolParams/MultiHostNameRelayTest.cpp; lib/tests/ValueContractTest.cpp

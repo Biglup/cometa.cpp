@@ -33,6 +33,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Certificates/PoolRegistrationCert.cpp
   lib/src/Certificates/PoolRetirementCert.cpp
   lib/src/Certificates/GenesisKeyDelegationCert.cpp
+  lib/src/Certificates/MirToPotCert.cpp
   lib/src/Certificates/RegistrationCert.cpp
   lib/src/Certificates/UnregistrationCert.cpp
   lib/src/PoolParams/Ipv4.cpp
@@ -181,6 +182,9 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Certificates/PoolRegistrationCertTest.cpp
     lib/tests/Certificates/PoolRetirementCertTest.cpp
     lib/tests/Certificates/GenesisKeyDelegationCertTest.cpp
+    lib/tests/Certificates/MirPotTypeTest.cpp
+    lib/tests/Certificates/MirCertTypeTest.cpp
+    lib/tests/Certificates/MirToPotCertTest.cpp
     lib/tests/Certificates/RegistrationCertTest.cpp
     lib/tests/Certificates/UnregistrationCertTest.cpp
     lib/tests/PoolParams/Ipv4Test.cpp
