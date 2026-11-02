@@ -670,6 +670,12 @@ main()
     return 1;
   }
 
+  const Cometa::SubTransaction subTransaction(subBody, Cometa::WitnessSet());
+  if (Cometa::SubTransaction::fromCbor(subTransaction.toCbor()) != subTransaction)
+  {
+    return 1;
+  }
+
   Cometa::RequiredGuardsMap requiredGuards;
   requiredGuards.insert(Cometa::Credential::fromCbor("8200581c00112233445566778899aabbccddeeff00112233445566778899aabb"));
   if (Cometa::RequiredGuardsMap::fromCbor(requiredGuards.toCbor()) != requiredGuards)

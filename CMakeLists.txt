@@ -185,6 +185,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/TransactionBody/GuardSet.cpp
   lib/src/TransactionBody/RequiredGuardsMap.cpp
   lib/src/TransactionBody/SubTransactionBody.cpp
+  lib/src/Transaction/SubTransaction.cpp
   lib/src/Common/CredentialSet.cpp
   lib/src/Common/Credential.cpp
 )
@@ -422,6 +423,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/TransactionBody/GuardSetTest.cpp
     lib/tests/TransactionBody/RequiredGuardsMapTest.cpp
     lib/tests/TransactionBody/SubTransactionBodyTest.cpp
+    lib/tests/Transaction/SubTransactionTest.cpp
     lib/tests/ValueContractTest.cpp
   )
 

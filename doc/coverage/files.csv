@@ -174,7 +174,7 @@ lib/include/cardano/scripts/script.h,public header,P06.4,implemented,"Typed nati
 lib/include/cardano/scripts/script_language.h,public header,P06.4,implemented,"Typed native and Plutus variants; owned accessors; shared serialization, inspection, and hash fixtures."
 lib/include/cardano/slot_config.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/time.h,public header,P01a.1,implemented,idiomatic C++ API
-lib/include/cardano/transaction/sub_transaction.h,public header,P17,planned,idiomatic C++ API
+lib/include/cardano/transaction/sub_transaction.h,public header,P17,implemented,Cometa::SubTransaction
 lib/include/cardano/transaction/transaction.h,public header,P17,planned,idiomatic C++ API
 lib/include/cardano/transaction_body/account_balance_interval.h,public header,P16,implemented,Cometa::AccountBalanceInterval
 lib/include/cardano/transaction_body/account_balance_intervals_map.h,public header,P16,implemented,Cometa::AccountBalanceIntervalsMap

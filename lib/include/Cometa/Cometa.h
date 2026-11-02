@@ -56,6 +56,7 @@
 #include <Cometa/Error.h>
 #include <Cometa/ErrorCode.h>
 #include <Cometa/SlotConfig.h>
+#include <Cometa/Transaction/SubTransaction.h>
 #include <Cometa/TransactionBody/AccountBalanceInterval.h>
 #include <Cometa/TransactionBody/AccountBalanceIntervalsMap.h>
 #include <Cometa/TransactionBody/DirectDepositMap.h>

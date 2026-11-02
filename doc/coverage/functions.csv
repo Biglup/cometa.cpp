@@ -2454,25 +2454,25 @@ cardano_script_get_last_error,lib/include/cardano/scripts/script.h,P06.4,interna
 cardano_script_deep_clone,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script::copy constructor / assignment,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp,Language discriminator and checked accessors preserve independent value semantics.
 cardano_compute_slot_from_unix_time,lib/include/cardano/time.h,P01a.1,implemented,SlotConfig::slotFromUnixTime,lib/tests/SlotConfigTest.cpp,"Rejects unsupported network configurations, arithmetic overflow and values before the reference."
 cardano_compute_unix_time_from_slot,lib/include/cardano/time.h,P01a.1,implemented,SlotConfig::unixTimeFromSlot,lib/tests/SlotConfigTest.cpp,"Rejects unsupported network configurations, arithmetic overflow and values before the reference."
-cardano_sub_transaction_to_cip116_json,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_new,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_from_cbor,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_to_cbor,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_get_body,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_body,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_get_witness_set,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_witness_set,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_get_auxiliary_data,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_auxiliary_data,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_get_id,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_clear_cbor_cache,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_apply_vkey_witnesses,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_unref,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_ref,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_refcount,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_last_error,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_get_last_error,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_deep_clone,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
+cardano_sub_transaction_to_cip116_json,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_new,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_from_cbor,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_to_cbor,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_get_body,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_body,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_get_witness_set,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_witness_set,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_get_auxiliary_data,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_auxiliary_data,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_get_id,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_clear_cbor_cache,lib/include/cardano/transaction/sub_transaction.h,P17,internal,,,
+cardano_sub_transaction_apply_vkey_witnesses,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_unref,lib/include/cardano/transaction/sub_transaction.h,P17,internal,,,
+cardano_sub_transaction_ref,lib/include/cardano/transaction/sub_transaction.h,P17,internal,,,
+cardano_sub_transaction_refcount,lib/include/cardano/transaction/sub_transaction.h,P17,internal,,,
+cardano_sub_transaction_set_last_error,lib/include/cardano/transaction/sub_transaction.h,P17,internal,,,
+cardano_sub_transaction_get_last_error,lib/include/cardano/transaction/sub_transaction.h,P17,internal,,,
+cardano_sub_transaction_deep_clone,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
 cardano_transaction_new,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
 cardano_transaction_from_cbor,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
 cardano_transaction_to_cbor,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
@@ -2572,72 +2572,72 @@ cardano_required_guards_map_refcount,lib/include/cardano/transaction_body/requir
 cardano_required_guards_map_set_last_error,lib/include/cardano/transaction_body/required_guards_map.h,P16,internal,,,
 cardano_required_guards_map_get_last_error,lib/include/cardano/transaction_body/required_guards_map.h,P16,internal,,,
 cardano_required_guards_map_deep_clone,lib/include/cardano/transaction_body/required_guards_map.h,P16,implemented,Cometa::RequiredGuardsMap,lib/tests/TransactionBody/RequiredGuardsMapTest.cpp,
-cardano_sub_transaction_body_to_cip116_json,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_new,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_from_cbor,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_to_cbor,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_inputs,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_inputs,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_outputs,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_outputs,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_invalid_after,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_invalid_after,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_certificates,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_certificates,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_withdrawals,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_withdrawals,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_aux_data_hash,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_aux_data_hash,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_invalid_before,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_invalid_before,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_mint,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_mint,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_script_data_hash,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_script_data_hash,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_guards,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_guards,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_network_id,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_network_id,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_reference_inputs,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_reference_inputs,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_voting_procedures,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_voting_procedures,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_proposal_procedures,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_proposal_procedures,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_treasury_value,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_treasury_value,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_donation,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_donation,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_required_top_level_guards,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_required_top_level_guards,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_direct_deposits,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_direct_deposits,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_account_balance_intervals,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_set_account_balance_intervals,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_get_hash,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_body_clear_cbor_cache,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,internal,,,
-cardano_sub_transaction_body_unref,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,internal,,,
-cardano_sub_transaction_body_ref,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,internal,,,
-cardano_sub_transaction_body_refcount,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,internal,,,
-cardano_sub_transaction_body_set_last_error,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,internal,,,
-cardano_sub_transaction_body_get_last_error,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,internal,,,
-cardano_sub_transaction_body_deep_clone,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp,
-cardano_sub_transaction_set_to_cip116_json,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_new,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_from_cbor,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_to_cbor,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_get_length,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_get,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_add,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_find_by_id,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_is_tagged,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_set_use_tag,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_unref,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_ref,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_refcount,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_set_last_error,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_get_last_error,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
-cardano_sub_transaction_set_deep_clone,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,,API and ownership mapping pending.
+cardano_sub_transaction_body_to_cip116_json,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_new,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_from_cbor,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_to_cbor,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_inputs,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_inputs,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_outputs,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_outputs,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_invalid_after,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_invalid_after,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_certificates,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_certificates,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_withdrawals,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_withdrawals,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_aux_data_hash,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_aux_data_hash,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_invalid_before,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_invalid_before,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_mint,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_mint,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_script_data_hash,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_script_data_hash,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_guards,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_guards,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_network_id,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_network_id,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_reference_inputs,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_reference_inputs,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_voting_procedures,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_voting_procedures,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_proposal_procedures,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_proposal_procedures,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_treasury_value,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_treasury_value,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_donation,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_donation,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_required_top_level_guards,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_required_top_level_guards,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_direct_deposits,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_direct_deposits,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_account_balance_intervals,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_account_balance_intervals,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_hash,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_clear_cbor_cache,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_unref,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_ref,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_refcount,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_set_last_error,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_get_last_error,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_body_deep_clone,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_to_cip116_json,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_new,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_from_cbor,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_to_cbor,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_get_length,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_get,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_add,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_find_by_id,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_is_tagged,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_set_use_tag,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_unref,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_ref,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_refcount,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_set_last_error,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_get_last_error,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_deep_clone,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
 cardano_transaction_body_new,lib/include/cardano/transaction_body/transaction_body.h,P17,planned,,,API and ownership mapping pending.
 cardano_transaction_body_from_cbor,lib/include/cardano/transaction_body/transaction_body.h,P17,planned,,,API and ownership mapping pending.
 cardano_transaction_body_to_cbor,lib/include/cardano/transaction_body/transaction_body.h,P17,planned,,,API and ownership mapping pending.

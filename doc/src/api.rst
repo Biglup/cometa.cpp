@@ -198,6 +198,9 @@ API reference
 .. doxygenclass:: Cometa::SubTransactionBody
    :members:
 
+.. doxygenclass:: Cometa::SubTransaction
+   :members:
+
 .. doxygenclass:: Cometa::Blake2bHashSet
    :members:
 

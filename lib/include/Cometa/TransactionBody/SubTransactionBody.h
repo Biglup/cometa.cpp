@@ -383,6 +383,9 @@ class SubTransactionBody
 
   private:
 
+    /** @brief Allows sub-transactions to copy this value. */
+    friend class SubTransaction;
+
     /**
      * @brief Adopts an owned body.
      * @param value The owned body.

@@ -1044,3 +1044,5 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 ``RequiredGuardsMap`` associates guard credentials with optional Plutus data. ``get`` uses two optional layers: the outer layer distinguishes an absent credential, and the inner layer distinguishes a present credential with no datum. ``contains`` checks membership directly.
 
 ``SubTransactionBody`` combines inputs and outputs with optional guards, required top-level guards, direct deposits, account balance requirements, validity slots, and the other supported body fields. ``hash()`` computes the sub-transaction body hash.
+
+``SubTransaction`` pairs a sub-transaction body with witnesses and optional auxiliary data. ``applyVkeyWitnesses`` merges signatures into its witness set, and ``id()`` returns the body hash used for signing.
