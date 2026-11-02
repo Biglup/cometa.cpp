@@ -453,6 +453,20 @@ main()
     return 1;
   }
 
+  const Cometa::DRepVotingThresholds dRepVotingThresholds(Cometa::UnitInterval(0, 1), Cometa::UnitInterval(1, 2), Cometa::UnitInterval(2, 3), Cometa::UnitInterval(3, 4), Cometa::UnitInterval(4, 5), Cometa::UnitInterval(5, 6), Cometa::UnitInterval(6, 7), Cometa::UnitInterval(7, 8), Cometa::UnitInterval(8, 9), Cometa::UnitInterval(9, 10));
+
+  if (Cometa::DRepVotingThresholds::fromCbor(dRepVotingThresholds.toCbor()) != dRepVotingThresholds)
+  {
+    return 1;
+  }
+
+  const Cometa::PoolVotingThresholds poolVotingThresholds(Cometa::UnitInterval(0, 1), Cometa::UnitInterval(1, 2), Cometa::UnitInterval(2, 3), Cometa::UnitInterval(3, 4), Cometa::UnitInterval(4, 5));
+
+  if (Cometa::PoolVotingThresholds::fromCbor(poolVotingThresholds.toCbor()) != poolVotingThresholds)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

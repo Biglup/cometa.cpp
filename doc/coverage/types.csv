@@ -63,7 +63,7 @@ cardano_derivation_path_t,struct,lib/include/cardano/key_handlers/derivation_pat
 cardano_direct_deposit_map_t,opaque object,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,
 cardano_drep_t,opaque object,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_drep_type_t,enum,lib/include/cardano/common/drep_type.h,P11,implemented,Cometa::DRepType,lib/tests/Common/DRepTypeTest.cpp
-cardano_drep_voting_thresholds_t,opaque object,lib/include/cardano/protocol_params/drep_voting_thresholds.h,P12,planned,,
+cardano_drep_voting_thresholds_t,opaque object,lib/include/cardano/protocol_params/drep_voting_thresholds.h,P12,implemented,Cometa::DRepVotingThresholds,lib/tests/ProtocolParams/DRepVotingThresholdsTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_ed25519_get_public_key_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
 cardano_ed25519_private_key_t,opaque object,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp
 cardano_ed25519_public_key_t,opaque object,lib/include/cardano/crypto/ed25519_public_key.h,P02,implemented,Cometa::Ed25519PublicKey,lib/tests/Crypto/Ed25519PublicKeyTest.cpp
@@ -146,7 +146,7 @@ cardano_pool_owners_t,opaque object,lib/include/cardano/pool_params/pool_owners.
 cardano_pool_params_t,opaque object,lib/include/cardano/pool_params/pool_params.h,P09,implemented,Cometa::PoolParams,lib/tests/PoolParams/PoolParamsTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_pool_registration_cert_t,opaque object,lib/include/cardano/certs/pool_registration_cert.h,P10,implemented,Cometa::PoolRegistrationCert,lib/tests/Certificates/PoolRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_pool_retirement_cert_t,opaque object,lib/include/cardano/certs/pool_retirement_cert.h,P10,implemented,Cometa::PoolRetirementCert,lib/tests/Certificates/PoolRetirementCertTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_pool_voting_thresholds_t,opaque object,lib/include/cardano/protocol_params/pool_voting_thresholds.h,P12,planned,,
+cardano_pool_voting_thresholds_t,opaque object,lib/include/cardano/protocol_params/pool_voting_thresholds.h,P12,implemented,Cometa::PoolVotingThresholds,lib/tests/ProtocolParams/PoolVotingThresholdsTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_proposal_procedure_set_t,opaque object,lib/include/cardano/proposal_procedures/proposal_procedure_set.h,P13,planned,,
 cardano_proposal_procedure_t,opaque object,lib/include/cardano/proposal_procedures/proposal_procedure.h,P13,planned,,
 cardano_proposed_param_updates_t,opaque object,lib/include/cardano/protocol_params/proposed_param_updates.h,P12,planned,,

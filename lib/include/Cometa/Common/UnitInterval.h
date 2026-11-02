@@ -222,6 +222,12 @@ class UnitInterval
     /** @brief Allows ExUnitPrices to copy price components. */
     friend class ExUnitPrices;
 
+    /** @brief Allows voting thresholds to copy their components. */
+    friend class DRepVotingThresholds;
+
+    /** @brief Allows voting thresholds to copy their components. */
+    friend class PoolVotingThresholds;
+
   private:
 
     /**

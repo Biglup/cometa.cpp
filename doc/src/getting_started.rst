@@ -865,3 +865,15 @@ for future language IDs when decoding CBOR::
    models.insert(model);
    const std::optional<Cometa::CostModel> v4 =
      models.get(Cometa::PlutusLanguageVersion::V4);
+
+``DRepVotingThresholds`` and ``PoolVotingThresholds`` expose each governance
+threshold by name. Both accept rational ``UnitInterval`` values and support
+independent copies and CBOR serialization::
+
+   Cometa::DRepVotingThresholds drep =
+     Cometa::DRepVotingThresholds::fromCbor(drepThresholdCbor);
+   drep.setTreasuryWithdrawal(Cometa::UnitInterval(2, 3));
+
+   Cometa::PoolVotingThresholds pool =
+     Cometa::PoolVotingThresholds::fromCbor(poolThresholdCbor);
+   pool.setSecurityRelevantParam(Cometa::UnitInterval(1, 2));

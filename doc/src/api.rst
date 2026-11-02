@@ -469,5 +469,11 @@ Protocol parameters
 .. doxygenclass:: Cometa::CostModels
    :members:
 
+.. doxygenclass:: Cometa::DRepVotingThresholds
+   :members:
+
+.. doxygenclass:: Cometa::PoolVotingThresholds
+   :members:
+
 .. doxygenclass:: Cometa::ExUnitPrices
    :members:
