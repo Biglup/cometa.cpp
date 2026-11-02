@@ -239,5 +239,8 @@ or create unsigned commits when signing is required.
 
 Stack successive implementation PRs on the preceding branch rather than waiting
 for each merge. State the dependency and review order in each PR. Keep each diff
-focused on its own slice, and update the stack as its base PRs merge. Keep the
+focused on its own slice, and update the stack as its base PRs merge. After opening
+or updating a PR, track its CI checks, fix failures, and confirm lint, tests,
+documentation, and memory checks pass before starting the next implementation PR.
+Do not treat passing local checks as a substitute for CI. Keep the
 coverage ledger in the repository until the bindings are complete.

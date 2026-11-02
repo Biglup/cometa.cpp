@@ -109,15 +109,15 @@ UnitInterval::fromDouble(double value)
   checkCardanoError(result, "UnitInterval fromDouble");
 
   UnitInterval        converted(owner.release());
-  const std::uint64_t numerator   = converted.numerator();
-  const std::uint64_t denominator = converted.denominator();
+  const std::uint64_t fractionalNumerator   = converted.numerator();
+  const std::uint64_t fractionalDenominator = converted.denominator();
 
-  if (whole > (std::numeric_limits<std::uint64_t>::max() - numerator) / denominator)
+  if (whole > (std::numeric_limits<std::uint64_t>::max() - fractionalNumerator) / fractionalDenominator)
   {
     throw std::overflow_error("UnitInterval numerator exceeds 64 bits");
   }
 
-  converted.setNumerator(whole * denominator + numerator);
+  converted.setNumerator(whole * fractionalDenominator + fractionalNumerator);
 
   return converted;
 }
