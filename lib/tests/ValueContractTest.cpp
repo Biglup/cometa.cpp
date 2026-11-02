@@ -218,7 +218,42 @@ sampleValue<ScriptRequireGuard>()
   return ScriptRequireGuard(Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1'))));
 }
 
-using ValueTypes = testing::Types<ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
+template<>
+NativeScript
+sampleValue<NativeScript>()
+{
+  return NativeScript(ScriptInvalidBefore(5));
+}
+
+template<>
+NativeScriptList
+sampleValue<NativeScriptList>()
+{
+  return NativeScriptList { NativeScript(ScriptInvalidBefore(5)), NativeScript(ScriptInvalidAfter(7)) };
+}
+
+template<>
+ScriptAll
+sampleValue<ScriptAll>()
+{
+  return ScriptAll(NativeScriptList { NativeScript(ScriptInvalidBefore(5)), NativeScript(ScriptInvalidAfter(7)) });
+}
+
+template<>
+ScriptAny
+sampleValue<ScriptAny>()
+{
+  return ScriptAny(NativeScriptList { NativeScript(ScriptInvalidBefore(5)), NativeScript(ScriptInvalidAfter(7)) });
+}
+
+template<>
+ScriptNOfK
+sampleValue<ScriptNOfK>()
+{
+  return ScriptNOfK(1, NativeScriptList { NativeScript(ScriptInvalidBefore(5)), NativeScript(ScriptInvalidAfter(7)) });
+}
+
+using ValueTypes = testing::Types<NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -3717,5 +3752,445 @@ TEST(ScriptRequireGuard, FailedJsonParsingReleasesEveryAllocation)
   {
     AllocationFailure fail(index, true);
     EXPECT_THROW((void)ScriptRequireGuard::fromJson(json), std::exception);
+  }
+}
+
+TEST(NativeScript, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const NativeScript source      = sampleValue<NativeScript>();
+  std::size_t        allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(NativeScript, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const NativeScript source      = sampleValue<NativeScript>();
+  std::size_t        allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(NativeScript, FailedJsonParsingReleasesEveryAllocation)
+{
+  // Arrange
+  const std::string json        = R"({"type":"after","slot":5})";
+  std::size_t       allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)NativeScript::fromJson(json);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)NativeScript::fromJson(json), std::exception);
+  }
+}
+
+TEST(NativeScript, FailedCopyReleasesEveryAllocation)
+{
+  // Arrange
+  const NativeScript source      = sampleValue<NativeScript>();
+  std::size_t        allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)NativeScript(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)NativeScript(source), std::exception);
+  }
+}
+
+TEST(NativeScriptList, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const NativeScriptList source      = sampleValue<NativeScriptList>();
+  std::size_t            allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(NativeScriptList, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const NativeScriptList source      = sampleValue<NativeScriptList>();
+  std::size_t            allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(NativeScriptList, FailedJsonParsingReleasesEveryAllocation)
+{
+  // Arrange
+  const std::string json        = R"({"scripts":[{"type":"after","slot":5},{"type":"before","slot":7}]})";
+  std::size_t       allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)NativeScriptList::fromJson(json);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)NativeScriptList::fromJson(json), std::exception);
+  }
+}
+
+TEST(NativeScriptList, FailedCopyReleasesEveryAllocation)
+{
+  // Arrange
+  const NativeScriptList source      = sampleValue<NativeScriptList>();
+  std::size_t            allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)NativeScriptList(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)NativeScriptList(source), std::exception);
+  }
+}
+
+TEST(ScriptAll, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptAll source      = sampleValue<ScriptAll>();
+  std::size_t     allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(ScriptAll, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptAll source      = sampleValue<ScriptAll>();
+  std::size_t     allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(ScriptAll, FailedJsonParsingReleasesEveryAllocation)
+{
+  // Arrange
+  const std::string json        = R"({"type":"all","scripts":[{"type":"after","slot":5},{"type":"before","slot":7}]})";
+  std::size_t       allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)ScriptAll::fromJson(json);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)ScriptAll::fromJson(json), std::exception);
+  }
+}
+
+TEST(ScriptAll, FailedCopyReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptAll source      = sampleValue<ScriptAll>();
+  std::size_t     allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)ScriptAll(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)ScriptAll(source), std::exception);
+  }
+}
+
+TEST(ScriptAny, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptAny source      = sampleValue<ScriptAny>();
+  std::size_t     allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(ScriptAny, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptAny source      = sampleValue<ScriptAny>();
+  std::size_t     allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(ScriptAny, FailedJsonParsingReleasesEveryAllocation)
+{
+  // Arrange
+  const std::string json        = R"({"type":"any","scripts":[{"type":"after","slot":5},{"type":"before","slot":7}]})";
+  std::size_t       allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)ScriptAny::fromJson(json);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)ScriptAny::fromJson(json), std::exception);
+  }
+}
+
+TEST(ScriptAny, FailedCopyReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptAny source      = sampleValue<ScriptAny>();
+  std::size_t     allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)ScriptAny(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)ScriptAny(source), std::exception);
+  }
+}
+
+TEST(ScriptNOfK, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptNOfK source      = sampleValue<ScriptNOfK>();
+  std::size_t      allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(ScriptNOfK, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptNOfK source      = sampleValue<ScriptNOfK>();
+  std::size_t      allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(ScriptNOfK, FailedJsonParsingReleasesEveryAllocation)
+{
+  // Arrange
+  const std::string json        = R"({"type":"atLeast","required":1,"scripts":[{"type":"after","slot":5},{"type":"before","slot":7}]})";
+  std::size_t       allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)ScriptNOfK::fromJson(json);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)ScriptNOfK::fromJson(json), std::exception);
+  }
+}
+
+TEST(ScriptNOfK, FailedCopyReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptNOfK source      = sampleValue<ScriptNOfK>();
+  std::size_t      allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)ScriptNOfK(source);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)ScriptNOfK(source), std::exception);
   }
 }

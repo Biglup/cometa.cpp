@@ -100,3 +100,10 @@
 #include <Cometa/Scripts/NativeScripts/ScriptInvalidBefore.h>
 #include <Cometa/Scripts/NativeScripts/ScriptPubkey.h>
 #include <Cometa/Scripts/NativeScripts/ScriptRequireGuard.h>
+
+#include <Cometa/Scripts/NativeScripts/NativeScript.h>
+#include <Cometa/Scripts/NativeScripts/NativeScriptList.h>
+#include <Cometa/Scripts/NativeScripts/NativeScriptType.h>
+#include <Cometa/Scripts/NativeScripts/ScriptAll.h>
+#include <Cometa/Scripts/NativeScripts/ScriptAny.h>
+#include <Cometa/Scripts/NativeScripts/ScriptNOfK.h>
