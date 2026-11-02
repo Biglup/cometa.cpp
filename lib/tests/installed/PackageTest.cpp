@@ -137,6 +137,15 @@ main()
     return 1;
   }
 
+  Cometa::PlutusList fields;
+  fields.pushBack(Cometa::PlutusData(42));
+  const Cometa::Datum datum(Cometa::PlutusData(Cometa::ConstrPlutusData(0, fields)));
+
+  if (Cometa::Datum::fromCbor(datum.toCbor()) != datum || datum.inlineData()->asConstructor().fields().at(0).asInteger() != Cometa::BigInt(42))
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

@@ -49,14 +49,14 @@ cardano_committee_members_map_t,opaque object,lib/include/cardano/proposal_proce
 cardano_committee_t,opaque object,lib/include/cardano/proposal_procedures/committee.h,P13,planned,,
 cardano_confirm_transaction_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_constitution_t,opaque object,lib/include/cardano/proposal_procedures/constitution.h,P13,planned,,
-cardano_constr_plutus_data_t,opaque object,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,planned,,
+cardano_constr_plutus_data_t,opaque object,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData,lib/tests/PlutusData/ConstrPlutusDataTest.cpp
 cardano_cost_model_t,opaque object,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,
 cardano_costmdls_t,opaque object,lib/include/cardano/protocol_params/costmdls.h,P12,planned,,
 cardano_credential_set_t,opaque object,lib/include/cardano/proposal_procedures/credential_set.h,P04.3,implemented,Cometa::CredentialSet,lib/tests/Common/CredentialSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_credential_t,opaque object,lib/include/cardano/common/credential.h,P01a.1,implemented,Credential,lib/tests/Common/CredentialTest.cpp
 cardano_credential_type_t,enum,lib/include/cardano/common/credential_type.h,P01a.1,implemented,CredentialType,lib/tests/Common/CredentialTest.cpp
-cardano_datum_t,opaque object,lib/include/cardano/common/datum.h,P05,planned,,
-cardano_datum_type_t,enum,lib/include/cardano/common/datum_type.h,P05,planned,,
+cardano_datum_t,opaque object,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum,lib/tests/Common/DatumTest.cpp
+cardano_datum_type_t,enum,lib/include/cardano/common/datum_type.h,P05,implemented,Cometa::DatumType,lib/tests/Common/DatumTypeTest.cpp
 cardano_deferred_redeemer_fn_t,callback,lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,P23,planned,,
 cardano_deferred_redeemer_list_t,opaque object,lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,P23,planned,,
 cardano_derivation_path_t,struct,lib/include/cardano/key_handlers/derivation_path.h,P18,planned,,
@@ -121,12 +121,12 @@ cardano_no_confidence_action_t,opaque object,lib/include/cardano/proposal_proced
 cardano_object_deallocator_t,callback,lib/include/cardano/object.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
 cardano_object_t,struct,lib/include/cardano/object.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
 cardano_parameter_change_action_t,opaque object,lib/include/cardano/proposal_procedures/parameter_change_action.h,P13,planned,,
-cardano_plutus_data_kind_t,enum,lib/include/cardano/plutus_data/plutus_data_kind.h,P05,planned,,
+cardano_plutus_data_kind_t,enum,lib/include/cardano/plutus_data/plutus_data_kind.h,P05,implemented,Cometa::PlutusDataKind,lib/tests/PlutusData/PlutusDataKindTest.cpp
 cardano_plutus_data_set_t,opaque object,lib/include/cardano/witness_set/plutus_data_set.h,P15,planned,,
-cardano_plutus_data_t,opaque object,lib/include/cardano/plutus_data/plutus_data.h,P05,planned,,
+cardano_plutus_data_t,opaque object,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData,lib/tests/PlutusData/PlutusDataTest.cpp
 cardano_plutus_language_version_t,enum,lib/include/cardano/scripts/plutus_scripts/plutus_language_version.h,P06,planned,,
-cardano_plutus_list_t,opaque object,lib/include/cardano/plutus_data/plutus_list.h,P05,planned,,
-cardano_plutus_map_t,opaque object,lib/include/cardano/plutus_data/plutus_map.h,P05,planned,,
+cardano_plutus_list_t,opaque object,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList,lib/tests/PlutusData/PlutusListTest.cpp
+cardano_plutus_map_t,opaque object,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap,lib/tests/PlutusData/PlutusMapTest.cpp
 cardano_plutus_v1_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v1_script_list.h,P08,planned,,
 cardano_plutus_v1_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v1_script_set.h,P15,planned,,
 cardano_plutus_v1_script_t,opaque object,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,

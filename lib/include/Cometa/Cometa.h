@@ -89,3 +89,9 @@
 #include <Cometa/Crypto/Ed25519Signature.h>
 #include <Cometa/Crypto/Emip3.h>
 #include <Cometa/Crypto/Pbkdf2.h>
+
+#include <Cometa/Common/Datum.h>
+#include <Cometa/PlutusData/ConstrPlutusData.h>
+#include <Cometa/PlutusData/PlutusData.h>
+#include <Cometa/PlutusData/PlutusList.h>
+#include <Cometa/PlutusData/PlutusMap.h>
