@@ -194,7 +194,7 @@ cardano_stake_registration_delegation_cert_t,opaque object,lib/include/cardano/c
 cardano_stake_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_vote_delegation_cert.h,P11,implemented,Cometa::StakeVoteDelegationCert,lib/tests/Certificates/StakeVoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_stake_vote_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_vote_registration_delegation_cert.h,P11,implemented,Cometa::StakeVoteRegistrationDelegationCert,lib/tests/Certificates/StakeVoteRegistrationDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_sub_transaction_body_t,opaque object,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_sub_transaction_set_t,opaque object,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,
+cardano_sub_transaction_set_t,opaque object,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_sub_transaction_t,opaque object,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_sub_tx_builder_t,opaque object,lib/include/cardano/transaction_builder/sub_transaction_builder.h,P23,planned,,
 cardano_submit_transaction_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,

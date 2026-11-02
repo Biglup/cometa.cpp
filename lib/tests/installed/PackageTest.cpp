@@ -725,6 +725,12 @@ main()
     return 1;
   }
 
+  const Cometa::SubTransactionSet subTransactions = Cometa::SubTransactionSet::fromCbor("d901028183a200d90102800180a0f6");
+  if (subTransactions.size() != 1 || !subTransactions.findById(subTransactions.at(0).id()).has_value())
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

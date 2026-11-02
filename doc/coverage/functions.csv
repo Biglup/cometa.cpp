@@ -2622,22 +2622,22 @@ cardano_sub_transaction_body_refcount,lib/include/cardano/transaction_body/sub_t
 cardano_sub_transaction_body_set_last_error,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
 cardano_sub_transaction_body_get_last_error,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
 cardano_sub_transaction_body_deep_clone,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_to_cip116_json,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_new,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_from_cbor,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_to_cbor,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_get_length,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_get,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_add,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_find_by_id,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_is_tagged,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_set_use_tag,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_unref,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_ref,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_refcount,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_set_last_error,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_get_last_error,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
-cardano_sub_transaction_set_deep_clone,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp,
+cardano_sub_transaction_set_to_cip116_json,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp,
+cardano_sub_transaction_set_new,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp,
+cardano_sub_transaction_set_from_cbor,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp,
+cardano_sub_transaction_set_to_cbor,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp,
+cardano_sub_transaction_set_get_length,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp,
+cardano_sub_transaction_set_get,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp,
+cardano_sub_transaction_set_add,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp,
+cardano_sub_transaction_set_find_by_id,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp,
+cardano_sub_transaction_set_is_tagged,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp,
+cardano_sub_transaction_set_set_use_tag,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp,
+cardano_sub_transaction_set_unref,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp,
+cardano_sub_transaction_set_ref,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,internal,,,Native ownership or diagnostics; handled internally.
+cardano_sub_transaction_set_refcount,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,internal,,,Native ownership or diagnostics; handled internally.
+cardano_sub_transaction_set_set_last_error,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,internal,,,Native ownership or diagnostics; handled internally.
+cardano_sub_transaction_set_get_last_error,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,internal,,,Native ownership or diagnostics; handled internally.
+cardano_sub_transaction_set_deep_clone,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp,
 cardano_transaction_body_new,lib/include/cardano/transaction_body/transaction_body.h,P17,planned,,,API and ownership mapping pending.
 cardano_transaction_body_from_cbor,lib/include/cardano/transaction_body/transaction_body.h,P17,planned,,,API and ownership mapping pending.
 cardano_transaction_body_to_cbor,lib/include/cardano/transaction_body/transaction_body.h,P17,planned,,,API and ownership mapping pending.

@@ -189,6 +189,9 @@ class SubTransaction
 
   private:
 
+    /** @brief Allows sub-transaction sets to copy this value. */
+    friend class SubTransactionSet;
+
     /**
      * @brief Adopts an owned sub-transaction.
      * @param value The owned sub-transaction.

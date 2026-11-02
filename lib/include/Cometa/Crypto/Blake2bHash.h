@@ -234,6 +234,9 @@ class Blake2bHash
 
   private:
 
+    /** @brief Allows sub-transaction sets to copy this value. */
+    friend class SubTransactionSet;
+
     /** @brief Allows sub-transactions to copy this value. */
     friend class SubTransaction;
 
