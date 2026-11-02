@@ -183,4 +183,5 @@
 #include <Cometa/Certificates/VoteRegistrationDelegationCert.h>
 #include <Cometa/PoolParams/PoolOwners.h>
 #include <Cometa/PoolParams/PoolParams.h>
+#include <Cometa/ProtocolParams/CostModel.h>
 #include <Cometa/ProtocolParams/ExUnitPrices.h>

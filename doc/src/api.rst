@@ -463,5 +463,8 @@ Historical MIR pot transfers
 Protocol parameters
 -------------------
 
+.. doxygenclass:: Cometa::CostModel
+   :members:
+
 .. doxygenclass:: Cometa::ExUnitPrices
    :members:

@@ -438,6 +438,13 @@ main()
     return 1;
   }
 
+  const Cometa::CostModel costModel(Cometa::PlutusLanguageVersion::V1, { 1, 2, 3 });
+
+  if (Cometa::CostModel::fromCbor(costModel.toCbor()) != costModel)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

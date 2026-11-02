@@ -850,3 +850,10 @@ execution. Both prices can be read and replaced independently::
    Cometa::ExUnitPrices prices(Cometa::UnitInterval(1, 2),
                                Cometa::UnitInterval(1, 3));
    prices.setMemoryPrice(Cometa::UnitInterval(2, 3));
+
+``CostModel`` holds operation costs for a Plutus language. Decoding retains
+unknown language IDs so a model can be read and re-encoded without loss::
+
+   Cometa::CostModel model(Cometa::PlutusLanguageVersion::V4, { 1, 2, 3 });
+   model.setCost(1, 7);
+   const std::vector<std::int64_t> costs = model.costs();

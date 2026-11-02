@@ -1833,22 +1833,22 @@ cardano_update_committee_action_refcount,lib/include/cardano/proposal_procedures
 cardano_update_committee_action_set_last_error,lib/include/cardano/proposal_procedures/update_committee_action.h,P13,planned,,,API and ownership mapping pending.
 cardano_update_committee_action_get_last_error,lib/include/cardano/proposal_procedures/update_committee_action.h,P13,planned,,,API and ownership mapping pending.
 cardano_update_committee_action_deep_clone,lib/include/cardano/proposal_procedures/update_committee_action.h,P13,planned,,,API and ownership mapping pending.
-cardano_cost_model_new,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_from_cbor,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_to_cbor,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_to_cip116_json,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_set_cost,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_get_cost,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_get_costs_size,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_get_costs,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_get_language,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_get_language_id,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_unref,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_ref,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_refcount,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_set_last_error,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_get_last_error,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
-cardano_cost_model_deep_clone,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,,API and ownership mapping pending.
+cardano_cost_model_new,lib/include/cardano/protocol_params/cost_model.h,P12,P12,implemented,Cometa::CostModel::constructor,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_from_cbor,lib/include/cardano/protocol_params/cost_model.h,P12,P12,implemented,Cometa::CostModel::fromCbor,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_to_cbor,lib/include/cardano/protocol_params/cost_model.h,P12,P12,implemented,Cometa::CostModel::toCbor,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_to_cip116_json,lib/include/cardano/protocol_params/cost_model.h,P12,P12,implemented,Cometa::CostModel::toJson,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_set_cost,lib/include/cardano/protocol_params/cost_model.h,P12,P12,implemented,Cometa::CostModel::setCost,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_get_cost,lib/include/cardano/protocol_params/cost_model.h,P12,P12,implemented,Cometa::CostModel::cost,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_get_costs_size,lib/include/cardano/protocol_params/cost_model.h,P12,P12,implemented,Cometa::CostModel::size,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_get_costs,lib/include/cardano/protocol_params/cost_model.h,P12,P12,implemented,Cometa::CostModel::costs,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_get_language,lib/include/cardano/protocol_params/cost_model.h,P12,P12,implemented,Cometa::CostModel::language,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_get_language_id,lib/include/cardano/protocol_params/cost_model.h,P12,P12,implemented,Cometa::CostModel::languageId,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_unref,lib/include/cardano/protocol_params/cost_model.h,P12,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_ref,lib/include/cardano/protocol_params/cost_model.h,P12,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_refcount,lib/include/cardano/protocol_params/cost_model.h,P12,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_set_last_error,lib/include/cardano/protocol_params/cost_model.h,P12,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_get_last_error,lib/include/cardano/protocol_params/cost_model.h,P12,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
+cardano_cost_model_deep_clone,lib/include/cardano/protocol_params/cost_model.h,P12,P12,implemented,Cometa::CostModel::copy constructor / assignment,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp,Unknown language IDs and indexed costs covered by native CBOR fixtures.
 cardano_costmdls_new,lib/include/cardano/protocol_params/costmdls.h,P12,planned,,,API and ownership mapping pending.
 cardano_costmdls_from_cbor,lib/include/cardano/protocol_params/costmdls.h,P12,planned,,,API and ownership mapping pending.
 cardano_costmdls_to_cbor,lib/include/cardano/protocol_params/costmdls.h,P12,planned,,,API and ownership mapping pending.
