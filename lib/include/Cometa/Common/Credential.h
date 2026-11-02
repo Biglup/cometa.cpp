@@ -281,6 +281,9 @@ class Credential
     /** @brief Allows committees to copy member credentials. */
     friend class Committee;
 
+    /** @brief Allows voters to copy their credentials. */
+    friend class Voter;
+
     /** @brief Allows BaseAddress to copy credential components. */
     friend class BaseAddress;
 

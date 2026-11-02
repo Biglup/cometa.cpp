@@ -225,10 +225,10 @@ cardano_vkey_witness_set_t,opaque object,lib/include/cardano/witness_set/vkey_wi
 cardano_vkey_witness_t,opaque object,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,
 cardano_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_vote_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_registration_delegation_cert.h,P11,implemented,Cometa::VoteRegistrationDelegationCert,lib/tests/Certificates/VoteRegistrationDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_vote_t,enum,lib/include/cardano/voting_procedures/vote.h,P14,planned,,
+cardano_vote_t,enum,lib/include/cardano/voting_procedures/vote.h,P14,implemented,Cometa::Vote,lib/tests/VotingProcedures/VoteTest.cpp
 cardano_voter_list_t,opaque object,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,
-cardano_voter_t,opaque object,lib/include/cardano/voting_procedures/voter.h,P14,planned,,
-cardano_voter_type_t,enum,lib/include/cardano/voting_procedures/voter_type.h,P14,planned,,
+cardano_voter_t,opaque object,lib/include/cardano/voting_procedures/voter.h,P14,implemented,Cometa::Voter,lib/tests/VotingProcedures/VoterTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_voter_type_t,enum,lib/include/cardano/voting_procedures/voter_type.h,P14,implemented,Cometa::VoterType,lib/tests/VotingProcedures/VoterTypeTest.cpp
 cardano_voting_procedure_list_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,
 cardano_voting_procedure_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,
 cardano_voting_procedures_t,opaque object,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,

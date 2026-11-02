@@ -991,3 +991,12 @@ address, and metadata anchor::
    Cometa::ProposalProcedureSet proposals;
    proposals.add(proposal);
    const Cometa::ProposalProcedure first = proposals.at(0);
+
+``Vote`` and ``VoterType`` identify governance choices and voter credentials::
+
+   const Cometa::Vote choice = Cometa::Vote::Yes;
+   const Cometa::VoterType voter = Cometa::VoterType::DRepKeyHash;
+
+``Voter`` combines a voter kind with its credential::
+
+   const Cometa::Voter drepVoter(Cometa::VoterType::DRepKeyHash, coldCredential);

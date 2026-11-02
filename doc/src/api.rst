@@ -529,3 +529,17 @@ Protocol parameters
 
 .. doxygenclass:: Cometa::ProposalProcedureSet
    :members:
+
+Voting procedures
+-----------------
+
+.. doxygenenum:: Cometa::Vote
+
+.. doxygenfunction:: Cometa::toString(Vote)
+
+.. doxygenenum:: Cometa::VoterType
+
+.. doxygenfunction:: Cometa::toString(VoterType)
+
+.. doxygenclass:: Cometa::Voter
+   :members:

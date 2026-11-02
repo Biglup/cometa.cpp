@@ -205,3 +205,6 @@
 #include <Cometa/ProtocolParams/ProtocolParameters.h>
 #include <Cometa/ProtocolParams/ProtocolParamUpdate.h>
 #include <Cometa/ProtocolParams/Update.h>
+#include <Cometa/VotingProcedures/Vote.h>
+#include <Cometa/VotingProcedures/Voter.h>
+#include <Cometa/VotingProcedures/VoterType.h>
