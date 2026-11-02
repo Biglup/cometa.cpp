@@ -130,7 +130,7 @@ JsonValue
 JsonValue::at(std::size_t index) const
 {
   requireType(JsonType::Array);
-  cardano_json_object_t* value = cardano_json_object_array_get_ex(checked(), index);
+  const cardano_json_object_t* value = cardano_json_object_array_get_ex(checked(), index);
 
   if (!value)
   {
@@ -159,7 +159,7 @@ JsonValue
 JsonValue::valueAt(std::size_t index) const
 {
   requireType(JsonType::Object);
-  cardano_json_object_t* value = cardano_json_object_get_value_at_ex(checked(), index);
+  const cardano_json_object_t* value = cardano_json_object_get_value_at_ex(checked(), index);
 
   if (!value)
   {
