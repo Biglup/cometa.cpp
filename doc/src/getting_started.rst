@@ -1034,3 +1034,5 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 ``PlutusV1ScriptSet`` through ``PlutusV4ScriptSet`` hold distinct compiled scripts by hash. ``WitnessSet`` groups signatures, scripts, data, and redeemers; its optional fields can be read, replaced, or cleared.
 
 ``AccountBalanceInterval::exact`` requires one lovelace balance. The range constructor accepts an inclusive lower bound, an exclusive upper bound, or both.
+
+``AccountBalanceIntervalsMap`` associates reward addresses with balance requirements. Entries are returned in canonical CBOR order, and duplicate addresses are rejected.

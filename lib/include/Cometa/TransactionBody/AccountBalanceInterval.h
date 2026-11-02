@@ -166,6 +166,9 @@ class AccountBalanceInterval
 
   private:
 
+    /** @brief Allows account balance maps to copy intervals. */
+    friend class AccountBalanceIntervalsMap;
+
     /**
      * @brief Adopts an owned interval.
      * @param value The owned interval.

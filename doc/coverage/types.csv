@@ -1,7 +1,7 @@
 c_type,kind,header,planned_pr,status,cpp_api,test
 byte_t,alias,lib/include/cardano/typedefs.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
 cardano_account_balance_interval_t,opaque object,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_account_balance_intervals_map_t,opaque object,lib/include/cardano/transaction_body/account_balance_intervals_map.h,P16,planned,,
+cardano_account_balance_intervals_map_t,opaque object,lib/include/cardano/transaction_body/account_balance_intervals_map.h,P16,implemented,Cometa::AccountBalanceIntervalsMap,lib/tests/TransactionBody/AccountBalanceIntervalsMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_account_derivation_path_t,struct,lib/include/cardano/key_handlers/account_derivation_path.h,P18,planned,,
 cardano_address_t,opaque object,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address,lib/tests/Address/AddressTest.cpp
 cardano_address_type_t,enum,lib/include/cardano/address/address_type.h,P03,implemented,Cometa::AddressType,lib/tests/Address/AddressTypeTest.cpp

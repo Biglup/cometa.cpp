@@ -209,6 +209,9 @@ class RewardAddress
     /** @brief Allows WithdrawalMap to copy reward addresses. */
     friend class WithdrawalMap;
 
+    /** @brief Allows account balance maps to copy addresses. */
+    friend class AccountBalanceIntervalsMap;
+
     /**
      * @brief Adopts an owned native address.
      *
