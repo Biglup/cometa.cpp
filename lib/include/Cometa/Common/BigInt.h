@@ -56,6 +56,9 @@ class BigInt
     /** @brief Allows Plutus data to copy integer components. */
     friend class PlutusData;
 
+    /** @brief Allows Metadatum to copy integer values. */
+    friend class Metadatum;
+
     /** @brief Allows CBOR decoding to adopt a decoded integer. */
     friend class CborReader;
 

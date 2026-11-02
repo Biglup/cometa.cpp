@@ -283,3 +283,14 @@ API reference
 
 .. doxygenclass:: Cometa::PlutusV4ScriptList
    :members:
+
+.. doxygenclass:: Cometa::Metadatum
+   :members:
+
+.. doxygenenum:: Cometa::MetadatumKind
+
+.. doxygenclass:: Cometa::MetadatumList
+   :members:
+
+.. doxygenclass:: Cometa::MetadatumMap
+   :members:

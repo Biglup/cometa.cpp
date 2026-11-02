@@ -18,11 +18,11 @@ lib/include/cardano/assets/asset_name_map.h,public header,P04.2,implemented,"Sig
 lib/include/cardano/assets/multi_asset.h,public header,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/include/cardano/assets/policy_id_list.h,public header,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
 lib/include/cardano/auxiliary_data/auxiliary_data.h,public header,P08,planned,idiomatic C++ API
-lib/include/cardano/auxiliary_data/metadatum.h,public header,P08,planned,idiomatic C++ API
-lib/include/cardano/auxiliary_data/metadatum_kind.h,public header,P08,planned,idiomatic C++ API
+lib/include/cardano/auxiliary_data/metadatum.h,public header,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
+lib/include/cardano/auxiliary_data/metadatum_kind.h,public header,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
 lib/include/cardano/auxiliary_data/metadatum_label_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/metadatum_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/auxiliary_data/metadatum_map.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/auxiliary_data/metadatum_list.h,public header,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
+lib/include/cardano/auxiliary_data/metadatum_map.h,public header,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
 lib/include/cardano/auxiliary_data/plutus_v1_script_list.h,public header,P08,implemented,Independent ordered script collections with CBOR and inspection output.
 lib/include/cardano/auxiliary_data/plutus_v2_script_list.h,public header,P08,implemented,Independent ordered script collections with CBOR and inspection output.
 lib/include/cardano/auxiliary_data/plutus_v3_script_list.h,public header,P08,implemented,Independent ordered script collections with CBOR and inspection output.
@@ -260,10 +260,10 @@ lib/src/assets/asset_name_map.c,implementation file,P04.2,implemented,"Signed as
 lib/src/assets/multi_asset.c,implementation file,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
 lib/src/assets/policy_id_list.c,implementation file,P04.1,implemented,Asset identifiers and standard C++ vector aliases; native marshalling belongs to consuming APIs.
 lib/src/auxiliary_data/auxiliary_data.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/metadatum.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/auxiliary_data/metadatum.c,implementation file,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
 lib/src/auxiliary_data/metadatum_label_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/metadatum_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/auxiliary_data/metadatum_map.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/auxiliary_data/metadatum_list.c,implementation file,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
+lib/src/auxiliary_data/metadatum_map.c,implementation file,P08,implemented,Independent metadata values; exact plain JSON; explicit CBOR and inspection output.
 lib/src/auxiliary_data/plutus_v1_script_list.c,implementation file,P08,implemented,Independent ordered script collections with CBOR and inspection output.
 lib/src/auxiliary_data/plutus_v2_script_list.c,implementation file,P08,implemented,Independent ordered script collections with CBOR and inspection output.
 lib/src/auxiliary_data/plutus_v3_script_list.c,implementation file,P08,implemented,Independent ordered script collections with CBOR and inspection output.

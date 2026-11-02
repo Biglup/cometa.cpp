@@ -533,3 +533,33 @@ to obtain a standard vector of independent script values.
 Serialization produces a definite-length array of script byte strings;
 ``toJson`` produces the CIP-116 inspection array. These collections do not
 execute scripts or establish their validity for a transaction.
+
+Metadata values
+---------------
+
+``Metadatum`` represents an integer, text, bytes, ``MetadatumList``, or
+``MetadatumMap``. Lists retain order; maps retain insertion order and duplicate
+keys. ``get`` returns the first matching map value or ``std::nullopt``.
+Constructors and getters provide independent values.
+
+.. code-block:: cpp
+
+   Cometa::MetadatumMap fields;
+   fields.insert(Cometa::Metadatum("name"), Cometa::Metadatum("Cometa"));
+   fields.insert(Cometa::Metadatum("count"), Cometa::Metadatum(std::int64_t { 42 }));
+   const Cometa::Metadatum metadata(fields);
+   const std::vector<std::uint8_t> cbor = metadata.toCbor();
+   const std::string plainJson = metadata.toPlainJson();
+
+``fromPlainJson`` accepts JSON integers, strings, arrays, and objects. Integer
+precision is retained; null, booleans, fractions, and exponents are rejected.
+``toPlainJson`` requires text map keys and rejects byte-string values. ``toJson``
+produces tagged CIP-116 inspection output for every metadata kind.
+
+Text preserves embedded null characters. Text and bytes may be stored at any
+length, but CBOR encoding rejects values longer than 64 bytes. Integers use
+``BigInt``; CBOR supports bignum tags for larger values. Constructing or decoding
+metadata does not establish its validity under a particular ledger's rules.
+
+CBOR serialization normalizes scalar encodings while retaining each list or
+map's definite or indefinite length form, including after appending entries.

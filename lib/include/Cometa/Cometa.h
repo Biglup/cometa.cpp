@@ -131,3 +131,8 @@
 #include <Cometa/AuxiliaryData/PlutusV2ScriptList.h>
 #include <Cometa/AuxiliaryData/PlutusV3ScriptList.h>
 #include <Cometa/AuxiliaryData/PlutusV4ScriptList.h>
+
+#include <Cometa/AuxiliaryData/Metadatum.h>
+#include <Cometa/AuxiliaryData/MetadatumKind.h>
+#include <Cometa/AuxiliaryData/MetadatumList.h>
+#include <Cometa/AuxiliaryData/MetadatumMap.h>
