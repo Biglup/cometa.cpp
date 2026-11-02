@@ -234,6 +234,9 @@ class UnitInterval
     /** @brief Allows protocol parameters to copy native values. */
     friend class ProtocolParameters;
 
+    /** @brief Allows committees to copy quorum thresholds. */
+    friend class Committee;
+
   private:
 
     /**

@@ -517,3 +517,6 @@ Protocol parameters
 
 .. doxygenclass:: Cometa::CommitteeMembersMap
    :members:
+
+.. doxygenclass:: Cometa::Committee
+   :members:

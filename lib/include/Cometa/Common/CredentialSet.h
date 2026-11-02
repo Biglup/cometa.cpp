@@ -231,6 +231,9 @@ class CredentialSet
     /** @brief Allows CommitteeMembersMap to return member credentials. */
     friend class CommitteeMembersMap;
 
+    /** @brief Allows committees to return member credentials. */
+    friend class Committee;
+
   private:
 
     /**

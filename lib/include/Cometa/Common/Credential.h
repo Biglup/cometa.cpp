@@ -278,6 +278,9 @@ class Credential
     /** @brief Allows CommitteeMembersMap to copy member credentials. */
     friend class CommitteeMembersMap;
 
+    /** @brief Allows committees to copy member credentials. */
+    friend class Committee;
+
     /** @brief Allows BaseAddress to copy credential components. */
     friend class BaseAddress;
 

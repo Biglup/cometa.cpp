@@ -964,3 +964,9 @@ expiration epochs::
      Cometa::Blake2bHash::fromHex(std::string(56, '0')));
    members.insert(coldCredential, 200);
    const std::optional<std::uint64_t> expiration = members.get(coldCredential);
+
+``Committee`` adds a quorum threshold to the member terms::
+
+   Cometa::Committee committee(Cometa::UnitInterval(1, 2));
+   committee.addMember(coldCredential, 200);
+   const Cometa::UnitInterval quorum = committee.quorumThreshold();

@@ -545,6 +545,13 @@ main()
     return 1;
   }
 
+  Cometa::Committee committee(Cometa::UnitInterval(1, 2));
+  committee.addMember(committeeMember, 200);
+  if (Cometa::Committee::fromCbor(committee.toCbor()) != committee || !committee.keys().contains(committeeMember))
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0
