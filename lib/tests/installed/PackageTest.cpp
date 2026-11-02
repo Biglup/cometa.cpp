@@ -233,6 +233,19 @@ main()
     return 1;
   }
 
+  Cometa::SingleHostAddrRelay ipRelay(3001, poolAddress, poolAddressV6);
+  ipRelay.setIpv4(std::nullopt);
+  const Cometa::Relays poolRelays {
+    Cometa::Relay(ipRelay),
+    Cometa::Relay(Cometa::SingleHostNameRelay("example.com", 3001)),
+    Cometa::Relay(Cometa::MultiHostNameRelay("example.com"))
+  };
+
+  if (Cometa::Relays::fromCbor(poolRelays.toCbor()) != poolRelays || poolRelays.at(1).type() != Cometa::RelayType::SingleHostName || Cometa::toString(Cometa::RelayType::SingleHostAddress).empty())
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

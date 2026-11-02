@@ -145,3 +145,10 @@
 #include <Cometa/PoolParams/Ipv4.h>
 #include <Cometa/PoolParams/Ipv6.h>
 #include <Cometa/PoolParams/PoolMetadata.h>
+
+#include <Cometa/PoolParams/MultiHostNameRelay.h>
+#include <Cometa/PoolParams/Relay.h>
+#include <Cometa/PoolParams/Relays.h>
+#include <Cometa/PoolParams/RelayType.h>
+#include <Cometa/PoolParams/SingleHostAddrRelay.h>
+#include <Cometa/PoolParams/SingleHostNameRelay.h>

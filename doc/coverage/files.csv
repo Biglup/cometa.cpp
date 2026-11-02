@@ -121,15 +121,15 @@ lib/include/cardano/plutus_data/plutus_map.h,public header,P05,implemented,"Valu
 lib/include/cardano/pool_params/bls_key.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/include/cardano/pool_params/ipv4.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/include/cardano/pool_params/ipv6.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
-lib/include/cardano/pool_params/multi_host_name_relay.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/multi_host_name_relay.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
 lib/include/cardano/pool_params/pool_metadata.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/include/cardano/pool_params/pool_owners.h,public header,P09,planned,idiomatic C++ API
 lib/include/cardano/pool_params/pool_params.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/relay.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/relay_type.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/relays.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/single_host_addr_relay.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/single_host_name_relay.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/relay.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/include/cardano/pool_params/relay_type.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/include/cardano/pool_params/relays.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/include/cardano/pool_params/single_host_addr_relay.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/include/cardano/pool_params/single_host_name_relay.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
 lib/include/cardano/proposal_procedures/committee.h,public header,P13,planned,idiomatic C++ API
 lib/include/cardano/proposal_procedures/committee_members_map.h,public header,P13,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/proposal_procedures/constitution.h,public header,P13,planned,idiomatic C++ API
@@ -383,15 +383,15 @@ lib/src/plutus_data/plutus_map.c,implementation file,P05,implemented,"Value copi
 lib/src/pool_params/bls_key.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/src/pool_params/ipv4.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/src/pool_params/ipv6.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
-lib/src/pool_params/multi_host_name_relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/multi_host_name_relay.c,implementation file,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
 lib/src/pool_params/pool_metadata.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/src/pool_params/pool_owners.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/pool_params/pool_params.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/relay_type.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/relays.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/single_host_addr_relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/single_host_name_relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/relay.c,implementation file,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/src/pool_params/relay_type.c,implementation file,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/src/pool_params/relays.c,implementation file,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/src/pool_params/single_host_addr_relay.c,implementation file,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/src/pool_params/single_host_name_relay.c,implementation file,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
 lib/src/proposal_procedures/committee.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/proposal_procedures/committee_members_map.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/proposal_procedures/constitution.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
