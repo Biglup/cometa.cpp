@@ -496,3 +496,6 @@ Protocol parameters
 
 .. doxygenclass:: Cometa::InfoAction
    :members:
+
+.. doxygenclass:: Cometa::NoConfidenceAction
+   :members:

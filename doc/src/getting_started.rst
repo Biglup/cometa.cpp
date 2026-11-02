@@ -924,3 +924,8 @@ ledger action array ``[6]``::
 
    const Cometa::InfoAction action;
    const std::vector<std::uint8_t> cbor = action.toCbor();
+
+``NoConfidenceAction`` accepts an optional previous action identifier::
+
+   const Cometa::NoConfidenceAction noConfidence(std::nullopt);
+   const std::vector<std::uint8_t> cbor = noConfidence.toCbor();

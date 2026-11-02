@@ -217,6 +217,9 @@ class GovernanceActionId
 
   private:
 
+    /** @brief Allows governance actions to copy identifiers. */
+    friend class NoConfidenceAction;
+
     /**
      * @brief Takes ownership of an existing value.
      *
