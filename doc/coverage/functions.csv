@@ -2225,233 +2225,233 @@ cardano_provider_ref,lib/include/cardano/providers/provider.h,P19,planned,,,API 
 cardano_provider_refcount,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
 cardano_provider_set_last_error,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
 cardano_provider_get_last_error,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
-cardano_native_script_new_all,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_new_any,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_new_n_of_k,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_new_pubkey,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_new_invalid_after,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_new_invalid_before,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_new_require_guard,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_from_cbor,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_to_cbor,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_to_cip116_json,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_from_json,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_get_type,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_to_all,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_to_any,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_to_n_of_k,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_to_pubkey,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_to_invalid_after,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_to_invalid_before,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_to_require_guard,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_get_hash,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_equals,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_unref,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_ref,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_refcount,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_set_last_error,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_get_last_error,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_deep_clone,lib/include/cardano/scripts/native_scripts/native_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_new,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_from_cbor,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_to_cbor,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_to_cip116_json,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_from_json,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_get_length,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_get,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_add,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_equals,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_unref,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_ref,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_refcount,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_set_last_error,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_get_last_error,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_list_deep_clone,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06,planned,,,API and ownership mapping pending.
-cardano_native_script_type_to_string,lib/include/cardano/scripts/native_scripts/native_script_type.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_new,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_from_cbor,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_to_cbor,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_from_json,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_get_length,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_get_scripts,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_set_scripts,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_equals,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_unref,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_ref,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_refcount,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_set_last_error,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_get_last_error,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_all_deep_clone,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_new,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_from_cbor,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_to_cbor,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_get_length,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_get_scripts,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_set_scripts,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_equals,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_unref,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_ref,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_refcount,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_set_last_error,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_get_last_error,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_any_deep_clone,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_new,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_from_cbor,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_to_cbor,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_get_slot,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_set_slot,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_equals,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_unref,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_ref,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_refcount,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_set_last_error,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_get_last_error,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_after_deep_clone,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_new,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_from_cbor,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_to_cbor,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_get_slot,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_set_slot,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_equals,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_unref,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_ref,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_refcount,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_set_last_error,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_get_last_error,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_invalid_before_deep_clone,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_new,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_from_cbor,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_to_cbor,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_get_length,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_get_required,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_set_required,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_get_scripts,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_set_scripts,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_equals,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_unref,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_ref,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_refcount,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_set_last_error,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_get_last_error,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_n_of_k_deep_clone,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_new,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_from_cbor,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_to_cbor,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_get_key_hash,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_set_key_hash,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_equals,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_unref,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_ref,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_refcount,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_set_last_error,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_get_last_error,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_pubkey_deep_clone,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_new,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_from_cbor,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_to_cbor,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_get_credential,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_set_credential,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_equals,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_unref,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_ref,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_refcount,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_set_last_error,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_get_last_error,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_require_guard_deep_clone,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_new_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_new_bytes_from_hex,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_from_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_to_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_to_cip116_json,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_to_raw_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_get_hash,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_equals,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_unref,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_ref,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_refcount,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_set_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_get_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v1_script_deep_clone,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_new_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_new_bytes_from_hex,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_from_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_to_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_to_cip116_json,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_to_raw_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_get_hash,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_equals,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_unref,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_ref,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_refcount,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_set_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_get_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v2_script_deep_clone,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_new_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_new_bytes_from_hex,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_from_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_to_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_to_cip116_json,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_to_raw_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_get_hash,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_equals,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_unref,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_ref,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_refcount,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_set_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_get_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v3_script_deep_clone,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_new_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_new_bytes_from_hex,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_from_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_to_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_to_cip116_json,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_to_raw_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_get_hash,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_equals,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_unref,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_ref,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_refcount,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_set_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_get_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_plutus_v4_script_deep_clone,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_new_native,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_new_plutus_v1,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_new_plutus_v2,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_new_plutus_v3,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_new_plutus_v4,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_from_cbor,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_to_cbor,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_to_cip116_json,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_get_language,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_to_native,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_to_plutus_v1,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_to_plutus_v2,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_to_plutus_v3,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_to_plutus_v4,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_get_hash,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_equals,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_unref,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_ref,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_refcount,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_set_last_error,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_get_last_error,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
-cardano_script_deep_clone,lib/include/cardano/scripts/script.h,P06,planned,,,API and ownership mapping pending.
+cardano_native_script_new_all,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_new_any,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_new_n_of_k,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_new_pubkey,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_new_invalid_after,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_new_invalid_before,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_new_require_guard,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_from_cbor,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_to_cbor,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_to_cip116_json,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_from_json,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_get_type,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_to_all,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_to_any,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_to_n_of_k,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_to_pubkey,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_to_invalid_after,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_to_invalid_before,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_to_require_guard,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_get_hash,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_equals,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_unref,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_ref,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_refcount,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_set_last_error,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_get_last_error,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_deep_clone,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_new,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_from_cbor,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_to_cbor,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_to_cip116_json,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_from_json,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_get_length,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_get,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_add,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_equals,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_unref,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_ref,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_refcount,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_set_last_error,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_get_last_error,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_list_deep_clone,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_native_script_type_to_string,lib/include/cardano/scripts/native_scripts/native_script_type.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_new,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_from_cbor,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_to_cbor,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_from_json,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_get_length,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_get_scripts,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_set_scripts,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_equals,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_unref,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_ref,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_refcount,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_set_last_error,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_get_last_error,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_all_deep_clone,lib/include/cardano/scripts/native_scripts/script_all.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_new,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_from_cbor,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_to_cbor,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_get_length,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_get_scripts,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_set_scripts,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_equals,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_unref,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_ref,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_refcount,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_set_last_error,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_get_last_error,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_any_deep_clone,lib/include/cardano/scripts/native_scripts/script_any.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_invalid_after_new,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,implemented,Cometa::ScriptInvalidAfter::constructor,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_after_from_cbor,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,implemented,Cometa::ScriptInvalidAfter::fromCbor,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_after_to_cbor,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,implemented,Cometa::ScriptInvalidAfter::toCbor,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_after_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,implemented,Cometa::ScriptInvalidAfter::toJson,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_after_get_slot,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,implemented,Cometa::ScriptInvalidAfter::slot,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_after_set_slot,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,implemented,Cometa::ScriptInvalidAfter::setSlot,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_after_equals,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,implemented,Cometa::ScriptInvalidAfter::operator==,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_after_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,implemented,Cometa::ScriptInvalidAfter::normalizeEncoding,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_after_unref,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_after_ref,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_after_refcount,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_after_set_last_error,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_after_get_last_error,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_after_deep_clone,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06.1,implemented,Cometa::ScriptInvalidAfter::copy constructor / copy assignment,lib/tests/Scripts/NativeScripts/ScriptInvalidAfterTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_new,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,implemented,Cometa::ScriptInvalidBefore::constructor,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_from_cbor,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,implemented,Cometa::ScriptInvalidBefore::fromCbor,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_to_cbor,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,implemented,Cometa::ScriptInvalidBefore::toCbor,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,implemented,Cometa::ScriptInvalidBefore::toJson,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_get_slot,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,implemented,Cometa::ScriptInvalidBefore::slot,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_set_slot,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,implemented,Cometa::ScriptInvalidBefore::setSlot,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_equals,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,implemented,Cometa::ScriptInvalidBefore::operator==,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,implemented,Cometa::ScriptInvalidBefore::normalizeEncoding,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_unref,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_ref,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_refcount,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_set_last_error,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_get_last_error,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_invalid_before_deep_clone,lib/include/cardano/scripts/native_scripts/script_invalid_before.h,P06.1,implemented,Cometa::ScriptInvalidBefore::copy constructor / copy assignment,lib/tests/Scripts/NativeScripts/ScriptInvalidBeforeTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_n_of_k_new,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_from_cbor,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_to_cbor,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_get_length,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_get_required,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_set_required,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_get_scripts,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_set_scripts,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_equals,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_unref,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_ref,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_refcount,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_set_last_error,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_get_last_error,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_n_of_k_deep_clone,lib/include/cardano/scripts/native_scripts/script_n_of_k.h,P06.2,planned,,,API and ownership mapping pending.
+cardano_script_pubkey_new,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,implemented,Cometa::ScriptPubkey::constructor,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_pubkey_from_cbor,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,implemented,Cometa::ScriptPubkey::fromCbor,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_pubkey_to_cbor,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,implemented,Cometa::ScriptPubkey::toCbor,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_pubkey_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,implemented,Cometa::ScriptPubkey::toJson,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_pubkey_get_key_hash,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,implemented,Cometa::ScriptPubkey::keyHash,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_pubkey_set_key_hash,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,implemented,Cometa::ScriptPubkey::setKeyHash,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_pubkey_equals,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,implemented,Cometa::ScriptPubkey::operator==,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_pubkey_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,implemented,Cometa::ScriptPubkey::normalizeEncoding,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_pubkey_unref,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_pubkey_ref,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_pubkey_refcount,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_pubkey_set_last_error,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_pubkey_get_last_error,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_pubkey_deep_clone,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,implemented,Cometa::ScriptPubkey::copy constructor / copy assignment,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_new,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,implemented,Cometa::ScriptRequireGuard::constructor,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_from_cbor,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,implemented,Cometa::ScriptRequireGuard::fromCbor,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_to_cbor,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,implemented,Cometa::ScriptRequireGuard::toCbor,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_to_cip116_json,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,implemented,Cometa::ScriptRequireGuard::toJson,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_get_credential,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,implemented,Cometa::ScriptRequireGuard::credential,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_set_credential,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,implemented,Cometa::ScriptRequireGuard::setCredential,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_equals,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,implemented,Cometa::ScriptRequireGuard::operator==,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_clear_cbor_cache,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,implemented,Cometa::ScriptRequireGuard::normalizeEncoding,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_unref,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_ref,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_refcount,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_set_last_error,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_get_last_error,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,internal,RAII and exceptions,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_script_require_guard_deep_clone,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,implemented,Cometa::ScriptRequireGuard::copy constructor / copy assignment,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp,CLI JSON input; CIP-116 JSON output; owned children and automatic cleanup.
+cardano_plutus_v1_script_new_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v1_script_new_bytes_from_hex,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v1_script_from_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v1_script_to_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v1_script_to_cip116_json,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v1_script_to_raw_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v1_script_get_hash,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v1_script_equals,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v1_script_unref,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v1_script_ref,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v1_script_refcount,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v1_script_set_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v1_script_get_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v1_script_deep_clone,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_new_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_new_bytes_from_hex,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_from_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_to_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_to_cip116_json,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_to_raw_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_get_hash,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_equals,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_unref,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_ref,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_refcount,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_set_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_get_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v2_script_deep_clone,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_new_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_new_bytes_from_hex,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_from_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_to_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_to_cip116_json,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_to_raw_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_get_hash,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_equals,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_unref,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_ref,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_refcount,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_set_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_get_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v3_script_deep_clone,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_new_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_new_bytes_from_hex,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_from_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_to_cbor,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_to_cip116_json,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_to_raw_bytes,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_get_hash,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_equals,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_unref,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_ref,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_refcount,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_set_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_get_last_error,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_plutus_v4_script_deep_clone,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,planned,,,API and ownership mapping pending.
+cardano_script_new_native,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_new_plutus_v1,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_new_plutus_v2,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_new_plutus_v3,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_new_plutus_v4,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_from_cbor,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_to_cbor,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_to_cip116_json,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_get_language,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_to_native,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_to_plutus_v1,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_to_plutus_v2,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_to_plutus_v3,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_to_plutus_v4,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_get_hash,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_equals,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_unref,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_ref,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_refcount,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_set_last_error,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_get_last_error,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
+cardano_script_deep_clone,lib/include/cardano/scripts/script.h,P06.4,planned,,,API and ownership mapping pending.
 cardano_compute_slot_from_unix_time,lib/include/cardano/time.h,P01a.1,implemented,SlotConfig::slotFromUnixTime,lib/tests/SlotConfigTest.cpp,"Rejects unsupported network configurations, arithmetic overflow and values before the reference."
 cardano_compute_unix_time_from_slot,lib/include/cardano/time.h,P01a.1,implemented,SlotConfig::unixTimeFromSlot,lib/tests/SlotConfigTest.cpp,"Rejects unsupported network configurations, arithmetic overflow and values before the reference."
 cardano_sub_transaction_to_cip116_json,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,,API and ownership mapping pending.
@@ -3034,7 +3034,7 @@ cardano_tx_builder_ref,lib/include/cardano/transaction_builder/transaction_build
 cardano_tx_builder_refcount,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
 cardano_tx_builder_set_last_error,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
 cardano_tx_builder_get_last_error,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
-cardano_uplc_apply_params_to_script,lib/include/cardano/uplc/uplc_apply_params.h,P06,planned,,,API and ownership mapping pending.
+cardano_uplc_apply_params_to_script,lib/include/cardano/uplc/uplc_apply_params.h,P06.2,planned,,,API and ownership mapping pending.
 cardano_governance_action_id_list_new,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,,API and ownership mapping pending.
 cardano_governance_action_id_list_get_length,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,,API and ownership mapping pending.
 cardano_governance_action_id_list_get,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,,API and ownership mapping pending.

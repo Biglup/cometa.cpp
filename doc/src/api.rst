@@ -199,3 +199,15 @@ API reference
 .. doxygenenum:: Cometa::PlutusDataKind
 
 .. doxygenenum:: Cometa::DatumType
+
+.. doxygenclass:: Cometa::ScriptPubkey
+   :members:
+
+.. doxygenclass:: Cometa::ScriptInvalidBefore
+   :members:
+
+.. doxygenclass:: Cometa::ScriptInvalidAfter
+   :members:
+
+.. doxygenclass:: Cometa::ScriptRequireGuard
+   :members:

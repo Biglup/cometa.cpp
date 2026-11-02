@@ -190,7 +190,35 @@ sampleValue<Datum>()
   return Datum(PlutusData::fromCbor("d87982a1010243aabbcc"));
 }
 
-using ValueTypes = testing::Types<PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
+template<>
+ScriptPubkey
+sampleValue<ScriptPubkey>()
+{
+  return ScriptPubkey(Blake2bHash::fromHex(std::string(56, '1')));
+}
+
+template<>
+ScriptInvalidBefore
+sampleValue<ScriptInvalidBefore>()
+{
+  return ScriptInvalidBefore(42);
+}
+
+template<>
+ScriptInvalidAfter
+sampleValue<ScriptInvalidAfter>()
+{
+  return ScriptInvalidAfter(42);
+}
+
+template<>
+ScriptRequireGuard
+sampleValue<ScriptRequireGuard>()
+{
+  return ScriptRequireGuard(Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1'))));
+}
+
+using ValueTypes = testing::Types<ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -3425,5 +3453,269 @@ TEST(ConstrPlutusData, FailedMutationPreservesValue)
     }
     EXPECT_EQ(destination, source);
     EXPECT_EQ(destination.toCbor(), source.toCbor());
+  }
+}
+
+TEST(ScriptPubkey, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptPubkey source      = ScriptPubkey(Blake2bHash::fromHex(std::string(56, '1')));
+  std::size_t        allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(ScriptPubkey, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptPubkey source      = ScriptPubkey(Blake2bHash::fromHex(std::string(56, '1')));
+  std::size_t        allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(ScriptPubkey, FailedJsonParsingReleasesEveryAllocation)
+{
+  // Arrange
+  const std::string json        = "{\"type\":\"sig\",\"keyHash\":\"" + std::string(56, '1') + "\"}";
+  std::size_t       allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)ScriptPubkey::fromJson(json);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)ScriptPubkey::fromJson(json), std::exception);
+  }
+}
+
+TEST(ScriptInvalidBefore, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptInvalidBefore source      = ScriptInvalidBefore(42);
+  std::size_t               allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(ScriptInvalidBefore, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptInvalidBefore source      = ScriptInvalidBefore(42);
+  std::size_t               allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(ScriptInvalidBefore, FailedJsonParsingReleasesEveryAllocation)
+{
+  // Arrange
+  const std::string json        = "{\"type\":\"after\",\"slot\":42}";
+  std::size_t       allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)ScriptInvalidBefore::fromJson(json);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)ScriptInvalidBefore::fromJson(json), std::exception);
+  }
+}
+
+TEST(ScriptInvalidAfter, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptInvalidAfter source      = ScriptInvalidAfter(42);
+  std::size_t              allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(ScriptInvalidAfter, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptInvalidAfter source      = ScriptInvalidAfter(42);
+  std::size_t              allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(ScriptInvalidAfter, FailedJsonParsingReleasesEveryAllocation)
+{
+  // Arrange
+  const std::string json        = "{\"type\":\"before\",\"slot\":42}";
+  std::size_t       allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)ScriptInvalidAfter::fromJson(json);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)ScriptInvalidAfter::fromJson(json), std::exception);
+  }
+}
+
+TEST(ScriptRequireGuard, FailedCborEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptRequireGuard source      = ScriptRequireGuard(Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1'))));
+  std::size_t              allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toCbor();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toCbor(), std::exception);
+  }
+}
+
+TEST(ScriptRequireGuard, FailedJsonEncodingReleasesEveryAllocation)
+{
+  // Arrange
+  const ScriptRequireGuard source      = ScriptRequireGuard(Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1'))));
+  std::size_t              allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)source.toJson();
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)source.toJson(), std::exception);
+  }
+}
+
+TEST(ScriptRequireGuard, FailedJsonParsingReleasesEveryAllocation)
+{
+  // Arrange
+  const std::string json        = "{\"type\":\"guard\",\"keyHash\":\"" + std::string(56, '1') + "\"}";
+  std::size_t       allocations = 0U;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    (void)ScriptRequireGuard::fromJson(json);
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < allocations; ++index)
+  {
+    AllocationFailure fail(index, true);
+    EXPECT_THROW((void)ScriptRequireGuard::fromJson(json), std::exception);
   }
 }
