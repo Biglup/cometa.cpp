@@ -125,3 +125,31 @@ API reference
 .. doxygenfunction:: Cometa::crc32
 
 .. doxygenenum:: Cometa::Blake2bHashSize
+
+.. doxygenclass:: Cometa::Address
+   :members:
+
+.. doxygenclass:: Cometa::BaseAddress
+   :members:
+
+.. doxygenclass:: Cometa::EnterpriseAddress
+   :members:
+
+.. doxygenclass:: Cometa::RewardAddress
+   :members:
+
+.. doxygenclass:: Cometa::PointerAddress
+   :members:
+
+.. doxygenclass:: Cometa::ByronAddress
+   :members:
+
+.. doxygenenum:: Cometa::AddressType
+
+.. doxygenenum:: Cometa::ByronAddressType
+
+.. doxygenstruct:: Cometa::StakePointer
+   :members:
+
+.. doxygenstruct:: Cometa::ByronAddressAttributes
+   :members:

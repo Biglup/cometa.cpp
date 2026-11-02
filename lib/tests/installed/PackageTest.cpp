@@ -101,6 +101,15 @@ main()
     return 1;
   }
 
+  const Cometa::Credential        payment(Cometa::CredentialType::KeyHash, key.publicKey().hash());
+  const Cometa::EnterpriseAddress paymentAddress(Cometa::NetworkId::Testnet, payment);
+  const Cometa::Address           parsedAddress = Cometa::Address::fromString(paymentAddress.toString());
+
+  if (parsedAddress.asEnterprise() != paymentAddress || parsedAddress.asBase().has_value())
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

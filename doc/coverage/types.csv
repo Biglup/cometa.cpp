@@ -3,8 +3,8 @@ byte_t,alias,lib/include/cardano/typedefs.h,P01a.1,internal,C++ scalar/container
 cardano_account_balance_interval_t,opaque object,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,
 cardano_account_balance_intervals_map_t,opaque object,lib/include/cardano/transaction_body/account_balance_intervals_map.h,P16,planned,,
 cardano_account_derivation_path_t,struct,lib/include/cardano/key_handlers/account_derivation_path.h,P18,planned,,
-cardano_address_t,opaque object,lib/include/cardano/address/address.h,P03,planned,,
-cardano_address_type_t,enum,lib/include/cardano/address/address_type.h,P03,planned,,
+cardano_address_t,opaque object,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address,lib/tests/Address/AddressTest.cpp
+cardano_address_type_t,enum,lib/include/cardano/address/address_type.h,P03,implemented,Cometa::AddressType,lib/tests/Address/AddressTypeTest.cpp
 cardano_anchor_t,opaque object,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_asset_id_list_t,opaque object,lib/include/cardano/assets/asset_id_list.h,P04,planned,,
 cardano_asset_id_map_t,opaque object,lib/include/cardano/assets/asset_id_map.h,P04,planned,,
@@ -14,7 +14,7 @@ cardano_asset_name_map_t,opaque object,lib/include/cardano/assets/asset_name_map
 cardano_asset_name_t,opaque object,lib/include/cardano/assets/asset_name.h,P04,implemented,AssetName,lib/tests/Assets/AssetNameTest.cpp
 cardano_auth_committee_hot_cert_t,opaque object,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,planned,,
 cardano_auxiliary_data_t,opaque object,lib/include/cardano/auxiliary_data/auxiliary_data.h,P08,planned,,
-cardano_base_address_t,opaque object,lib/include/cardano/address/base_address.h,P03,planned,,
+cardano_base_address_t,opaque object,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress,lib/tests/Address/BaseAddressTest.cpp
 cardano_bigint_t,opaque object,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_bip32_get_extended_account_public_key_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
 cardano_bip32_private_key_t,opaque object,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::Bip32PrivateKey,lib/tests/Crypto/Bip32PrivateKeyTest.cpp
@@ -28,9 +28,9 @@ cardano_bls_key_t,opaque object,lib/include/cardano/pool_params/bls_key.h,P09,pl
 cardano_bootstrap_witness_set_t,opaque object,lib/include/cardano/witness_set/bootstrap_witness_set.h,P15,planned,,
 cardano_bootstrap_witness_t,opaque object,lib/include/cardano/witness_set/bootstrap_witness.h,P15,planned,,
 cardano_buffer_t,opaque object,lib/include/cardano/buffer.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
-cardano_byron_address_attributes_t,struct,lib/include/cardano/address/byron_address_attributes.h,P03,planned,,
-cardano_byron_address_t,opaque object,lib/include/cardano/address/byron_address.h,P03,planned,,
-cardano_byron_address_type_t,enum,lib/include/cardano/address/byron_address_type.h,P03,planned,,
+cardano_byron_address_attributes_t,struct,lib/include/cardano/address/byron_address_attributes.h,P03,implemented,Cometa::ByronAddressAttributes,lib/tests/Address/ByronAddressTest.cpp
+cardano_byron_address_t,opaque object,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress,lib/tests/Address/ByronAddressTest.cpp
+cardano_byron_address_type_t,enum,lib/include/cardano/address/byron_address_type.h,P03,implemented,Cometa::ByronAddressType,lib/tests/Address/ByronAddressTypeTest.cpp
 cardano_byte_order_t,enum,lib/include/cardano/common/byte_order.h,P01a.1,implemented,ByteOrder,lib/tests/Common/ByteOrderTest.cpp
 cardano_cbor_major_type_t,enum,lib/include/cardano/cbor/cbor_major_type.h,P01b,implemented,Cometa::CborMajorType,lib/tests/Cbor/CborMajorTypeTest.cpp
 cardano_cbor_reader_state_t,enum,lib/include/cardano/cbor/cbor_reader_state.h,P01b,implemented,Cometa::CborReaderState,lib/tests/Cbor/CborReaderStateTest.cpp
@@ -70,7 +70,7 @@ cardano_ed25519_public_key_t,opaque object,lib/include/cardano/crypto/ed25519_pu
 cardano_ed25519_sign_sub_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
 cardano_ed25519_sign_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
 cardano_ed25519_signature_t,opaque object,lib/include/cardano/crypto/ed25519_signature.h,P02,implemented,Cometa::Ed25519Signature,lib/tests/Crypto/Ed25519SignatureTest.cpp
-cardano_enterprise_address_t,opaque object,lib/include/cardano/address/enterprise_address.h,P03,planned,,
+cardano_enterprise_address_t,opaque object,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress,lib/tests/Address/EnterpriseAddressTest.cpp
 cardano_error_t,enum,lib/include/cardano/error.h,P01a.1,implemented,ErrorCode,lib/tests/ErrorTest.cpp
 cardano_evaluate_transaction_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_ex_unit_prices_t,opaque object,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,
@@ -139,7 +139,7 @@ cardano_plutus_v3_script_t,opaque object,lib/include/cardano/scripts/plutus_scri
 cardano_plutus_v4_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v4_script_list.h,P08,planned,,
 cardano_plutus_v4_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v4_script_set.h,P15,planned,,
 cardano_plutus_v4_script_t,opaque object,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06,planned,,
-cardano_pointer_address_t,opaque object,lib/include/cardano/address/pointer_address.h,P03,planned,,
+cardano_pointer_address_t,opaque object,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress,lib/tests/Address/PointerAddressTest.cpp
 cardano_policy_id_list_t,opaque object,lib/include/cardano/assets/policy_id_list.h,P04,planned,,
 cardano_pool_metadata_t,opaque object,lib/include/cardano/pool_params/pool_metadata.h,P09,planned,,
 cardano_pool_owners_t,opaque object,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,
@@ -168,7 +168,7 @@ cardano_resign_committee_cold_cert_t,opaque object,lib/include/cardano/certs/res
 cardano_resolve_datum_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_resolve_unspent_outputs_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_reward_address_list_t,opaque object,lib/include/cardano/common/reward_address_list.h,P07,planned,,
-cardano_reward_address_t,opaque object,lib/include/cardano/address/reward_address.h,P03,planned,,
+cardano_reward_address_t,opaque object,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress,lib/tests/Address/RewardAddressTest.cpp
 cardano_script_all_t,opaque object,lib/include/cardano/scripts/native_scripts/script_all.h,P06,planned,,
 cardano_script_any_t,opaque object,lib/include/cardano/scripts/native_scripts/script_any.h,P06,planned,,
 cardano_script_invalid_after_t,opaque object,lib/include/cardano/scripts/native_scripts/script_invalid_after.h,P06,planned,,
@@ -188,7 +188,7 @@ cardano_single_host_name_relay_t,opaque object,lib/include/cardano/pool_params/s
 cardano_slot_config_t,struct,lib/include/cardano/slot_config.h,P01a.1,implemented,SlotConfig,lib/tests/SlotConfigTest.cpp
 cardano_stake_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_delegation_cert.h,P10,planned,,
 cardano_stake_deregistration_cert_t,opaque object,lib/include/cardano/certs/stake_deregistration_cert.h,P10,planned,,
-cardano_stake_pointer_t,struct,lib/include/cardano/address/stake_pointer.h,P03,planned,,
+cardano_stake_pointer_t,struct,lib/include/cardano/address/stake_pointer.h,P03,implemented,Cometa::StakePointer,lib/tests/Address/PointerAddressTest.cpp
 cardano_stake_registration_cert_t,opaque object,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,
 cardano_stake_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_registration_delegation_cert.h,P10,planned,,
 cardano_stake_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_vote_delegation_cert.h,P11,planned,,

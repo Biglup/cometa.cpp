@@ -59,6 +59,16 @@
 #include <Cometa/Json/JsonValue.h>
 #include <Cometa/Json/JsonWriter.h>
 
+#include <Cometa/Address/Address.h>
+#include <Cometa/Address/AddressType.h>
+#include <Cometa/Address/BaseAddress.h>
+#include <Cometa/Address/ByronAddress.h>
+#include <Cometa/Address/ByronAddressAttributes.h>
+#include <Cometa/Address/ByronAddressType.h>
+#include <Cometa/Address/EnterpriseAddress.h>
+#include <Cometa/Address/PointerAddress.h>
+#include <Cometa/Address/RewardAddress.h>
+#include <Cometa/Address/StakePointer.h>
 #include <Cometa/Crypto/Bip32.h>
 #include <Cometa/Crypto/Bip32PrivateKey.h>
 #include <Cometa/Crypto/Bip32PublicKey.h>

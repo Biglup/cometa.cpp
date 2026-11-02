@@ -1111,3 +1111,383 @@ TEST(Emip3, AllocationFailuresReleaseTemporaryBuffers)
 
   EXPECT_EQ(decryptEmip3(encrypted, "password"), plaintext);
 }
+
+TEST(Address, FailedCopiesPreserveDestinationAndReleasePartialState)
+{
+  // Arrange
+  const Credential credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  const Address    source      = EnterpriseAddress(NetworkId::Testnet, credential).toAddress();
+  std::size_t      allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const Address     copy(source);
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    Address           destination = source;
+    const std::string before      = destination.toString();
+
+    {
+      AllocationFailure fail(index);
+
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination.toString(), before);
+    EXPECT_EQ(source, destination);
+  }
+}
+
+TEST(Address, ComponentConstructionReleasesEveryPartialAllocation)
+{
+  // Arrange
+  const Credential credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  std::size_t      allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const Address     address = EnterpriseAddress(NetworkId::Testnet, credential).toAddress();
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index);
+
+    EXPECT_THROW((void)EnterpriseAddress(NetworkId::Testnet, credential).toAddress(), std::exception);
+  }
+}
+
+TEST(BaseAddress, FailedCopiesPreserveDestinationAndReleasePartialState)
+{
+  // Arrange
+  const Credential  credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  const BaseAddress source      = BaseAddress(NetworkId::Testnet, credential, credential);
+  std::size_t       allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const BaseAddress copy(source);
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    BaseAddress       destination = source;
+    const std::string before      = destination.toString();
+
+    {
+      AllocationFailure fail(index);
+
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination.toString(), before);
+    EXPECT_EQ(source, destination);
+  }
+}
+
+TEST(BaseAddress, ComponentConstructionReleasesEveryPartialAllocation)
+{
+  // Arrange
+  const Credential credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  std::size_t      allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max());
+    const BaseAddress address = BaseAddress(NetworkId::Testnet, credential, credential);
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index);
+
+    EXPECT_THROW((void)BaseAddress(NetworkId::Testnet, credential, credential), std::exception);
+  }
+}
+
+TEST(EnterpriseAddress, FailedCopiesPreserveDestinationAndReleasePartialState)
+{
+  // Arrange
+  const Credential        credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  const EnterpriseAddress source      = EnterpriseAddress(NetworkId::Testnet, credential);
+  std::size_t             allocations = 0;
+
+  {
+    AllocationFailure       tracker(std::numeric_limits<std::size_t>::max());
+    const EnterpriseAddress copy(source);
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    EnterpriseAddress destination = source;
+    const std::string before      = destination.toString();
+
+    {
+      AllocationFailure fail(index);
+
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination.toString(), before);
+    EXPECT_EQ(source, destination);
+  }
+}
+
+TEST(EnterpriseAddress, ComponentConstructionReleasesEveryPartialAllocation)
+{
+  // Arrange
+  const Credential credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  std::size_t      allocations = 0;
+
+  {
+    AllocationFailure       tracker(std::numeric_limits<std::size_t>::max());
+    const EnterpriseAddress address = EnterpriseAddress(NetworkId::Testnet, credential);
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index);
+
+    EXPECT_THROW((void)EnterpriseAddress(NetworkId::Testnet, credential), std::exception);
+  }
+}
+
+TEST(RewardAddress, FailedCopiesPreserveDestinationAndReleasePartialState)
+{
+  // Arrange
+  const Credential    credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  const RewardAddress source      = RewardAddress(NetworkId::Testnet, credential);
+  std::size_t         allocations = 0;
+
+  {
+    AllocationFailure   tracker(std::numeric_limits<std::size_t>::max());
+    const RewardAddress copy(source);
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    RewardAddress     destination = source;
+    const std::string before      = destination.toString();
+
+    {
+      AllocationFailure fail(index);
+
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination.toString(), before);
+    EXPECT_EQ(source, destination);
+  }
+}
+
+TEST(RewardAddress, ComponentConstructionReleasesEveryPartialAllocation)
+{
+  // Arrange
+  const Credential credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  std::size_t      allocations = 0;
+
+  {
+    AllocationFailure   tracker(std::numeric_limits<std::size_t>::max());
+    const RewardAddress address = RewardAddress(NetworkId::Testnet, credential);
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index);
+
+    EXPECT_THROW((void)RewardAddress(NetworkId::Testnet, credential), std::exception);
+  }
+}
+
+TEST(PointerAddress, FailedCopiesPreserveDestinationAndReleasePartialState)
+{
+  // Arrange
+  const Credential     credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  const PointerAddress source      = PointerAddress(NetworkId::Testnet, credential, { 42, 1, 2 });
+  std::size_t          allocations = 0;
+
+  {
+    AllocationFailure    tracker(std::numeric_limits<std::size_t>::max());
+    const PointerAddress copy(source);
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    PointerAddress    destination = source;
+    const std::string before      = destination.toString();
+
+    {
+      AllocationFailure fail(index);
+
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination.toString(), before);
+    EXPECT_EQ(source, destination);
+  }
+}
+
+TEST(PointerAddress, ComponentConstructionReleasesEveryPartialAllocation)
+{
+  // Arrange
+  const Credential credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  std::size_t      allocations = 0;
+
+  {
+    AllocationFailure    tracker(std::numeric_limits<std::size_t>::max());
+    const PointerAddress address = PointerAddress(NetworkId::Testnet, credential, { 42, 1, 2 });
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index);
+
+    EXPECT_THROW((void)PointerAddress(NetworkId::Testnet, credential, { 42, 1, 2 }), std::exception);
+  }
+}
+
+TEST(ByronAddress, FailedCopiesPreserveDestinationAndReleasePartialState)
+{
+  // Arrange
+  const Credential   credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  const ByronAddress source      = ByronAddress(credential.hash(), {}, ByronAddressType::PublicKey);
+  std::size_t        allocations = 0;
+
+  {
+    AllocationFailure  tracker(std::numeric_limits<std::size_t>::max());
+    const ByronAddress copy(source);
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    ByronAddress      destination = source;
+    const std::string before      = destination.toString();
+
+    {
+      AllocationFailure fail(index);
+
+      EXPECT_THROW(destination = source, std::bad_alloc);
+    }
+
+    EXPECT_EQ(destination.toString(), before);
+    EXPECT_EQ(source, destination);
+  }
+}
+
+TEST(ByronAddress, ComponentConstructionReleasesEveryPartialAllocation)
+{
+  // Arrange
+  const Credential credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  std::size_t      allocations = 0;
+
+  {
+    AllocationFailure  tracker(std::numeric_limits<std::size_t>::max());
+    const ByronAddress address = ByronAddress(credential.hash(), {}, ByronAddressType::PublicKey);
+
+    allocations = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    AllocationFailure fail(index);
+
+    EXPECT_THROW((void)ByronAddress(credential.hash(), {}, ByronAddressType::PublicKey), std::exception);
+  }
+}
+
+TEST(Address, OptionalConversionsPropagateAllocationFailures)
+{
+  // Arrange
+  const Credential credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  const Address    address = BaseAddress(NetworkId::Testnet, credential, credential).toAddress();
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+
+    EXPECT_THROW(address.asBase(), std::bad_alloc);
+  }
+
+  EXPECT_TRUE(address.asBase().has_value());
+}
+
+TEST(BaseAddress, FailedCredentialCopyDoesNotMutateAddress)
+{
+  // Arrange
+  const Credential  credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  const BaseAddress address(NetworkId::Testnet, credential, credential);
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+
+    EXPECT_THROW(address.paymentCredential(), std::bad_alloc);
+  }
+  {
+    AllocationFailure fail(0);
+
+    EXPECT_THROW(address.stakeCredential(), std::bad_alloc);
+  }
+
+  EXPECT_EQ(address.paymentCredential(), credential);
+  EXPECT_EQ(address.stakeCredential(), credential);
+}

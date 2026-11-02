@@ -1,14 +1,14 @@
 path,kind,planned_pr,status,notes
-lib/include/cardano/address/address.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/address_type.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/base_address.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/byron_address.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/byron_address_attributes.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/byron_address_type.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/enterprise_address.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/pointer_address.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/reward_address.h,public header,P03,planned,idiomatic C++ API
-lib/include/cardano/address/stake_pointer.h,public header,P03,planned,idiomatic C++ API
+lib/include/cardano/address/address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/address_type.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/base_address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/byron_address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/byron_address_attributes.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/byron_address_type.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/enterprise_address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/pointer_address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/reward_address.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/include/cardano/address/stake_pointer.h,public header,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
 lib/include/cardano/assets/asset_id.h,public header,P04,planned,idiomatic C++ API
 lib/include/cardano/assets/asset_id_list.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/assets/asset_id_map.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
@@ -230,10 +230,10 @@ lib/include/cardano/witness_set/redeemer_tag.h,public header,P15,planned,idiomat
 lib/include/cardano/witness_set/vkey_witness.h,public header,P15,planned,idiomatic C++ API
 lib/include/cardano/witness_set/vkey_witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/witness_set/witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/src/address/address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/address/base_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/address/byron_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/address/enterprise_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/src/address/base_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/src/address/byron_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/src/address/enterprise_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
 lib/src/address/internals/addr_common.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/address/internals/addr_common.h,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/address/internals/base_addr_pack.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
@@ -247,8 +247,8 @@ lib/src/address/internals/pointer_addr_pack.c,implementation file,P03,internal,N
 lib/src/address/internals/pointer_addr_pack.h,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/address/internals/reward_addr_pack.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/address/internals/reward_addr_pack.h,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/address/pointer_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/address/reward_address.c,implementation file,P03,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/address/pointer_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
+lib/src/address/reward_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
 lib/src/allocators.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/allocators.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/assets/asset_id.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
