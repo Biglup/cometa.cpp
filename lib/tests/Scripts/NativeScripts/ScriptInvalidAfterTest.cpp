@@ -1,7 +1,7 @@
 /**
  * @file ScriptInvalidAfterTest.cpp
  *
- * @brief Unit tests for PlutusData.
+ * @brief Unit tests for ScriptInvalidAfter.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026

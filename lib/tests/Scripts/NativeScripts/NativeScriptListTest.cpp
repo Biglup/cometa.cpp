@@ -1,7 +1,7 @@
 /**
  * @file NativeScriptListTest.cpp
  *
- * @brief Unit tests for PlutusData.
+ * @brief Unit tests for NativeScriptList.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026

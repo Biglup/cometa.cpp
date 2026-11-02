@@ -1,7 +1,7 @@
 /**
  * @file ScriptAnyTest.cpp
  *
- * @brief Unit tests for PlutusData.
+ * @brief Unit tests for ScriptAny.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
