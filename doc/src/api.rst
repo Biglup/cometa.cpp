@@ -229,6 +229,9 @@ API reference
 .. doxygenclass:: Cometa::SecureKeyHandler
    :members:
 
+.. doxygenclass:: Cometa::Provider
+   :members:
+
 .. doxygenstruct:: Cometa::Cip8Signature
    :members:
 
