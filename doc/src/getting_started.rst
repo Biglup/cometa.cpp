@@ -710,3 +710,9 @@ certificate when that ledger form is required.
    const std::vector<std::uint8_t> cbor = cert.toCbor();
    const Cometa::StakeRegistrationCert restored =
      Cometa::StakeRegistrationCert::fromCbor(cbor);
+
+Legacy stake deregistration
+---------------------------
+
+``StakeDeregistrationCert`` represents the historical stake deregistration
+form. It copies its credential and provides CBOR and CIP-116 JSON conversion.

@@ -53,7 +53,7 @@ lib/include/cardano/certs/register_drep_cert.h,public header,P11,planned,idiomat
 lib/include/cardano/certs/registration_cert.h,public header,P10,planned,idiomatic C++ API
 lib/include/cardano/certs/resign_committee_cold_cert.h,public header,P11,planned,idiomatic C++ API
 lib/include/cardano/certs/stake_delegation_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/stake_deregistration_cert.h,public header,P10,planned,idiomatic C++ API
+lib/include/cardano/certs/stake_deregistration_cert.h,public header,P10,implemented,Legacy stake deregistration with owned credential values.
 lib/include/cardano/certs/stake_registration_cert.h,public header,P10,implemented,Legacy stake registration with owned credential values.
 lib/include/cardano/certs/stake_registration_delegation_cert.h,public header,P10,planned,idiomatic C++ API
 lib/include/cardano/certs/stake_vote_delegation_cert.h,public header,P11,planned,idiomatic C++ API

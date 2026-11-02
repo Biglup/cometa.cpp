@@ -218,6 +218,9 @@ class Credential
 
   private:
 
+    /** @brief Allows StakeDeregistrationCert to copy its credential. */
+    friend class StakeDeregistrationCert;
+
     /** @brief Allows StakeRegistrationCert to copy its credential. */
     friend class StakeRegistrationCert;
 

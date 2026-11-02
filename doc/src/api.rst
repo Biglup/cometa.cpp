@@ -360,3 +360,9 @@ Stake registration
 
 .. doxygenclass:: Cometa::StakeRegistrationCert
    :members:
+
+Stake deregistration
+--------------------
+
+.. doxygenclass:: Cometa::StakeDeregistrationCert
+   :members:

@@ -27,6 +27,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/PoolParams/PoolParams.cpp
   lib/src/Certificates/CertificateType.cpp
   lib/src/Certificates/StakeRegistrationCert.cpp
+  lib/src/Certificates/StakeDeregistrationCert.cpp
   lib/src/PoolParams/Ipv4.cpp
   lib/src/PoolParams/Ipv6.cpp
   lib/src/PoolParams/BlsKey.cpp
@@ -167,6 +168,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/PoolParams/PoolParamsTest.cpp
     lib/tests/Certificates/CertificateTypeTest.cpp
     lib/tests/Certificates/StakeRegistrationCertTest.cpp
+    lib/tests/Certificates/StakeDeregistrationCertTest.cpp
     lib/tests/PoolParams/Ipv4Test.cpp
     lib/tests/PoolParams/Ipv6Test.cpp
     lib/tests/PoolParams/BlsKeyTest.cpp
