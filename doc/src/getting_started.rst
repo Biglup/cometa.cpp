@@ -194,3 +194,27 @@ Private-key objects erase their owned key material when destroyed. Exported
 ``std::string`` and ``std::vector`` values are ordinary containers and do not erase
 their buffers automatically. Avoid exporting or logging secret material unless
 it is needed.
+
+Mnemonic and password utilities
+-------------------------------
+
+The BIP39 helpers use the English word list and validate the checksum when
+converting words back to entropy.
+
+.. code-block:: cpp
+
+   const std::vector<std::string> words = Cometa::entropyToMnemonic(entropy);
+   const std::vector<std::uint8_t> recovered = Cometa::mnemonicToEntropy(words);
+   const Cometa::Bip32PrivateKey root = Cometa::Bip32PrivateKey::fromBip39Entropy(recovered);
+
+EMIP-003 encryption includes a random salt, nonce, and authentication tag in its
+output. Decryption reports an error for a wrong password or altered ciphertext.
+
+.. code-block:: cpp
+
+   const std::vector<std::uint8_t> encrypted = Cometa::encryptEmip3(payload, password);
+   const std::vector<std::uint8_t> decrypted = Cometa::decryptEmip3(encrypted, password);
+
+``pbkdf2HmacSha512`` exposes explicit salt, iteration count, and output size.
+``crc32`` computes a checksum. Returned secret bytes and mnemonic words use
+ordinary standard containers; their memory is not automatically erased.

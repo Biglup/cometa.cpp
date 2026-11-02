@@ -108,6 +108,20 @@ Blake2bHash::compute(const std::vector<std::uint8_t>& data, std::size_t digestSi
 }
 
 Blake2bHash
+Blake2bHash::compute(const std::vector<std::uint8_t>& data, Blake2bHashSize digestSize)
+{
+  switch (digestSize)
+  {
+    case Blake2bHashSize::Bits224:
+    case Blake2bHashSize::Bits256:
+    case Blake2bHashSize::Bits512:
+      return compute(data, static_cast<std::size_t>(digestSize));
+    default:
+      throw std::invalid_argument("Unknown BLAKE2b digest length");
+  }
+}
+
+Blake2bHash
 Blake2bHash::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   return Blake2bHash(decodeCbor<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>(cbor, cardano_blake2b_hash_from_cbor));

@@ -1068,3 +1068,46 @@ TEST(Ed25519PrivateKey, ExtendedSigningReleasesEveryPartialAllocation)
     EXPECT_EQ(key.toHex(), before);
   }
 }
+
+TEST(Emip3, AllocationFailuresReleaseTemporaryBuffers)
+{
+  // Arrange
+  const std::vector<std::uint8_t> plaintext { 1, 2, 3 };
+  const std::vector<std::uint8_t> encrypted             = encryptEmip3(plaintext, "password");
+  std::size_t                     encryptionAllocations = 0;
+  std::size_t                     decryptionAllocations = 0;
+
+  {
+    AllocationFailure               tracker(std::numeric_limits<std::size_t>::max());
+    const std::vector<std::uint8_t> result = encryptEmip3(plaintext, "password");
+
+    encryptionAllocations = allocationIndex;
+    EXPECT_EQ(result.size(), plaintext.size() + 60);
+  }
+  {
+    AllocationFailure               tracker(std::numeric_limits<std::size_t>::max());
+    const std::vector<std::uint8_t> result = decryptEmip3(encrypted, "password");
+
+    decryptionAllocations = allocationIndex;
+    EXPECT_EQ(result, plaintext);
+  }
+
+  ASSERT_GT(encryptionAllocations, 0U);
+  ASSERT_GT(decryptionAllocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < encryptionAllocations; ++index)
+  {
+    AllocationFailure fail(index);
+
+    EXPECT_THROW(encryptEmip3(plaintext, "password"), std::bad_alloc);
+  }
+  for (std::size_t index = 0; index < decryptionAllocations; ++index)
+  {
+    AllocationFailure fail(index);
+
+    EXPECT_THROW(decryptEmip3(encrypted, "password"), std::bad_alloc);
+  }
+
+  EXPECT_EQ(decryptEmip3(encrypted, "password"), plaintext);
+}

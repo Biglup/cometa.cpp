@@ -22,7 +22,7 @@ cardano_bip32_public_key_t,opaque object,lib/include/cardano/crypto/bip32_public
 cardano_bip32_sign_sub_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
 cardano_bip32_sign_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
 cardano_blake2b_hash_set_t,opaque object,lib/include/cardano/crypto/blake2b_hash_set.h,P04,planned,,
-cardano_blake2b_hash_size_t,enum,lib/include/cardano/crypto/blake2b_hash_size.h,P02,planned,,
+cardano_blake2b_hash_size_t,enum,lib/include/cardano/crypto/blake2b_hash_size.h,P02,implemented,Cometa::Blake2bHashSize,lib/tests/Crypto/Blake2bHashSizeTest.cpp
 cardano_blake2b_hash_t,opaque object,lib/include/cardano/crypto/blake2b_hash.h,P02,implemented,Blake2bHash,lib/tests/Crypto/Blake2bHashTest.cpp
 cardano_bls_key_t,opaque object,lib/include/cardano/pool_params/bls_key.h,P09,planned,,
 cardano_bootstrap_witness_set_t,opaque object,lib/include/cardano/witness_set/bootstrap_witness_set.h,P15,planned,,

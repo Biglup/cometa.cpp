@@ -28,7 +28,7 @@ lib/include/cardano/auxiliary_data/plutus_v2_script_list.h,public header,P08,pla
 lib/include/cardano/auxiliary_data/plutus_v3_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/auxiliary_data/plutus_v4_script_list.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/auxiliary_data/transaction_metadata.h,public header,P08,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/bip39.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/bip39.h,public header,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/include/cardano/buffer.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
 lib/include/cardano/cardano.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
 lib/include/cardano/cbor/cbor_major_type.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
@@ -88,13 +88,13 @@ lib/include/cardano/crypto/bip32_private_key.h,public header,P02,implemented,"Ke
 lib/include/cardano/crypto/bip32_public_key.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/include/cardano/crypto/blake2b_hash.h,public header,P02,implemented,idiomatic C++ API
 lib/include/cardano/crypto/blake2b_hash_set.h,public header,P04,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/crypto/blake2b_hash_size.h,public header,P02,planned,idiomatic C++ API
-lib/include/cardano/crypto/crc32.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/crypto/blake2b_hash_size.h,public header,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
+lib/include/cardano/crypto/crc32.h,public header,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/include/cardano/crypto/ed25519_private_key.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/include/cardano/crypto/ed25519_public_key.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/include/cardano/crypto/ed25519_signature.h,public header,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
-lib/include/cardano/crypto/emip3.h,public header,P02,planned,idiomatic C++ API
-lib/include/cardano/crypto/pbkdf2.h,public header,P02,planned,idiomatic C++ API
+lib/include/cardano/crypto/emip3.h,public header,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
+lib/include/cardano/crypto/pbkdf2.h,public header,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/include/cardano/encoding/base58.h,public header,P01a.3,implemented,Cometa::encodeBase58 and decodeBase58; known vectors and failure tests
 lib/include/cardano/encoding/bech32.h,public header,P01a.3,implemented,Cometa::encodeBech32 and decodeBech32; known vectors and failure tests
 lib/include/cardano/error.h,public header,P01a.1,implemented,idiomatic C++ API
@@ -269,7 +269,7 @@ lib/src/auxiliary_data/plutus_v2_script_list.c,implementation file,P08,internal,
 lib/src/auxiliary_data/plutus_v3_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/auxiliary_data/plutus_v4_script_list.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/auxiliary_data/transaction_metadata.c,implementation file,P08,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/bip39/bip39.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/bip39/bip39.c,implementation file,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/src/bip39/bip39_wordlist_en.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/buffer/buffer.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/cardano.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.
@@ -349,12 +349,12 @@ lib/src/crypto/bip32_public_key.c,implementation file,P02,implemented,"Key/signa
 lib/src/crypto/blake2b_hash.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/crypto/blake2b_hash_internal.h,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/crypto/blake2b_hash_set.c,implementation file,P04,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/crypto/crc32.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/crc32.c,implementation file,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/src/crypto/ed25519_private_key.c,implementation file,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/src/crypto/ed25519_public_key.c,implementation file,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
 lib/src/crypto/ed25519_signature.c,implementation file,P02,implemented,"Key/signature values, independent copies, shared primitive fixtures and allocation-failure tests."
-lib/src/crypto/emip3.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/crypto/pbkdf2.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/crypto/emip3.c,implementation file,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
+lib/src/crypto/pbkdf2.c,implementation file,P02,implemented,Covered by cryptographic utility APIs and known-vector tests.
 lib/src/encoding/base58.c,implementation file,P01a.3,implemented,Cometa::encodeBase58 and decodeBase58; known vectors and failure tests
 lib/src/encoding/bech32.c,implementation file,P01a.3,implemented,Cometa::encodeBech32 and decodeBech32; known vectors and failure tests
 lib/src/endian.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.

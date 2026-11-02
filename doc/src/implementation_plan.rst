@@ -12,9 +12,10 @@ PR sequence
 
 The foundation is merged. The first common-types slice is divided into three
 PRs to keep numeric and encoding boundary work independently reviewable.
-P01a.1 and P01a.2 are merged; P01a.3 supplies encoding utilities.
+P01a.1, P01a.2, and P01a.3 are merged.
 P01b is split into CBOR and JSON slices to keep parsing changes reviewable.
-The CBOR slice is merged; this slice completes JSON with native parser and writer fixes.
+Both CBOR and JSON are merged. P02 is split into key/signature values and
+cryptographic utilities.
 Implementation PRs are stacked on their preceding branch and reviewed in order;
 work continues while reviews are pending.
 
@@ -37,9 +38,12 @@ work continues while reviews are pending.
    * - P01b
      - CBOR and JSON readers/writers and enums
      - P01a.2 P01a.3
-   * - P02
-     - Cryptographic keys/signatures; BIP32; BIP39; PBKDF2; EMIP3; CRC32; hash size utilities
+   * - P02.1
+     - Cryptographic keys/signatures and BIP32
      - P01a.2 P01a.3
+   * - P02.2
+     - BIP39; PBKDF2; EMIP3; CRC32; hash size utilities
+     - P02.1
    * - P03
      - Shelley and Byron addresses; attributes; stake pointers; address enums
      - P01a.2 P01a.3 P02

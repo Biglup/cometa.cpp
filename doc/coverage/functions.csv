@@ -411,8 +411,8 @@ cardano_transaction_metadata_refcount,lib/include/cardano/auxiliary_data/transac
 cardano_transaction_metadata_set_last_error,lib/include/cardano/auxiliary_data/transaction_metadata.h,P08,planned,,,API and ownership mapping pending.
 cardano_transaction_metadata_get_last_error,lib/include/cardano/auxiliary_data/transaction_metadata.h,P08,planned,,,API and ownership mapping pending.
 cardano_transaction_metadata_deep_clone,lib/include/cardano/auxiliary_data/transaction_metadata.h,P08,planned,,,API and ownership mapping pending.
-cardano_bip39_entropy_to_mnemonic_words,lib/include/cardano/bip39.h,P02,planned,,,API and ownership mapping pending.
-cardano_bip39_mnemonic_words_to_entropy,lib/include/cardano/bip39.h,P02,planned,,,API and ownership mapping pending.
+cardano_bip39_entropy_to_mnemonic_words,lib/include/cardano/bip39.h,P02,implemented,Cometa::entropyToMnemonic,lib/tests/Crypto/Bip39Test.cpp,Owned standard containers and exceptions; temporary EMIP-003 plaintext is erased on release.
+cardano_bip39_mnemonic_words_to_entropy,lib/include/cardano/bip39.h,P02,implemented,Cometa::mnemonicToEntropy,lib/tests/Crypto/Bip39Test.cpp,Owned standard containers and exceptions; temporary EMIP-003 plaintext is erased on release.
 cardano_buffer_new,lib/include/cardano/buffer.h,P01a.1,internal,C++ containers/streams or private runtime support,,No public C buffer or reference-counting wrapper; buffer I/O support remains subject to the codec/secret-storage slices.
 cardano_buffer_new_from,lib/include/cardano/buffer.h,P01a.1,internal,C++ containers/streams or private runtime support,,No public C buffer or reference-counting wrapper; buffer I/O support remains subject to the codec/secret-storage slices.
 cardano_buffer_concat,lib/include/cardano/buffer.h,P01a.1,internal,C++ containers/streams or private runtime support,,No public C buffer or reference-counting wrapper; buffer I/O support remains subject to the codec/secret-storage slices.
@@ -1244,7 +1244,7 @@ cardano_blake2b_hash_set_refcount,lib/include/cardano/crypto/blake2b_hash_set.h,
 cardano_blake2b_hash_set_set_last_error,lib/include/cardano/crypto/blake2b_hash_set.h,P04,planned,,,API and ownership mapping pending.
 cardano_blake2b_hash_set_get_last_error,lib/include/cardano/crypto/blake2b_hash_set.h,P04,planned,,,API and ownership mapping pending.
 cardano_blake2b_hash_set_deep_clone,lib/include/cardano/crypto/blake2b_hash_set.h,P04,planned,,,API and ownership mapping pending.
-cardano_checksum_crc32,lib/include/cardano/crypto/crc32.h,P02,planned,,,API and ownership mapping pending.
+cardano_checksum_crc32,lib/include/cardano/crypto/crc32.h,P02,implemented,Cometa::crc32,lib/tests/Crypto/Crc32Test.cpp,Owned standard containers and exceptions; temporary EMIP-003 plaintext is erased on release.
 cardano_ed25519_private_key_from_normal_bytes,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey::fromNormalBytes,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
 cardano_ed25519_private_key_from_extended_bytes,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey::fromExtendedBytes,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
 cardano_ed25519_private_key_from_normal_hex,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey::fromNormalHex,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp,Known vectors and allocation-failure cleanup tests.
@@ -1284,9 +1284,9 @@ cardano_ed25519_signature_to_bytes,lib/include/cardano/crypto/ed25519_signature.
 cardano_ed25519_signature_get_hex_size,lib/include/cardano/crypto/ed25519_signature.h,P02,internal,RAII and owned byte/string results,lib/tests/Crypto/Ed25519SignatureTest.cpp,Native ownership and buffer sizing remain private.
 cardano_ed25519_signature_to_hex,lib/include/cardano/crypto/ed25519_signature.h,P02,implemented,Cometa::Ed25519Signature::toHex,lib/tests/Crypto/Ed25519SignatureTest.cpp,Known vectors and allocation-failure cleanup tests.
 cardano_ed25519_signature_deep_clone,lib/include/cardano/crypto/ed25519_signature.h,P02,implemented,Cometa::Ed25519Signature::copy constructor and assignment,lib/tests/Crypto/Ed25519SignatureTest.cpp,Known vectors and allocation-failure cleanup tests.
-cardano_crypto_emip3_encrypt,lib/include/cardano/crypto/emip3.h,P02,planned,,,API and ownership mapping pending.
-cardano_crypto_emip3_decrypt,lib/include/cardano/crypto/emip3.h,P02,planned,,,API and ownership mapping pending.
-cardano_crypto_pbkdf2_hmac_sha512,lib/include/cardano/crypto/pbkdf2.h,P02,planned,,,API and ownership mapping pending.
+cardano_crypto_emip3_encrypt,lib/include/cardano/crypto/emip3.h,P02,implemented,Cometa::encryptEmip3,lib/tests/Crypto/Emip3Test.cpp,Owned standard containers and exceptions; temporary EMIP-003 plaintext is erased on release.
+cardano_crypto_emip3_decrypt,lib/include/cardano/crypto/emip3.h,P02,implemented,Cometa::decryptEmip3,lib/tests/Crypto/Emip3Test.cpp,Owned standard containers and exceptions; temporary EMIP-003 plaintext is erased on release.
+cardano_crypto_pbkdf2_hmac_sha512,lib/include/cardano/crypto/pbkdf2.h,P02,implemented,Cometa::pbkdf2HmacSha512,lib/tests/Crypto/Pbkdf2Test.cpp,Owned standard containers and exceptions; temporary EMIP-003 plaintext is erased on release.
 cardano_encoding_base58_get_encoded_length,lib/include/cardano/encoding/base58.h,P01a.3,internal,Private allocation sizing,lib/tests/Encoding/Base58Test.cpp,Output size is managed by C++ containers.
 cardano_encoding_base58_encode,lib/include/cardano/encoding/base58.h,P01a.3,implemented,Cometa::encodeBase58,lib/tests/Encoding/Base58Test.cpp; lib/tests/ValueContractTest.cpp,Owned strings and byte vectors; no public buffer sizing or manual cleanup.
 cardano_encoding_base58_get_decoded_length,lib/include/cardano/encoding/base58.h,P01a.3,internal,Private allocation sizing,lib/tests/Encoding/Base58Test.cpp,Output size is managed by C++ containers.
