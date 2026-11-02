@@ -246,6 +246,9 @@ class Blake2bHash
     /** @brief Allows StakeDelegationCert to copy its pool key hash. */
     friend class StakeDelegationCert;
 
+    /** @brief Allows combined delegation certificates to copy pool hashes. */
+    friend class StakeVoteDelegationCert;
+
     /** @brief Allows PoolParams to copy pool components. */
     friend class PoolParams;
 

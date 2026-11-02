@@ -429,3 +429,6 @@ Historical MIR pot transfers
 
 .. doxygenclass:: Cometa::VoteDelegationCert
    :members:
+
+.. doxygenclass:: Cometa::StakeVoteDelegationCert
+   :members:

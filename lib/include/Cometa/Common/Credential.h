@@ -245,6 +245,9 @@ class Credential
     /** @brief Allows vote delegation certificates to copy credentials. */
     friend class VoteDelegationCert;
 
+    /** @brief Allows combined delegation certificates to copy credentials. */
+    friend class StakeVoteDelegationCert;
+
     /** @brief Allows ScriptRequireGuard to copy script components. */
     friend class ScriptRequireGuard;
 

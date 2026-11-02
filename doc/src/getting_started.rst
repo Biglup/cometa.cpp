@@ -806,3 +806,6 @@ Key and script representatives also support bech32 identifiers.
 
 ``VoteDelegationCert`` assigns a stake credential's voting rights to a DRep,
 including the predefined abstain and no-confidence choices.
+
+``StakeVoteDelegationCert`` combines pool delegation and DRep delegation for
+one stake credential.

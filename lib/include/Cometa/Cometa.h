@@ -169,6 +169,7 @@
 #include <Cometa/Certificates/StakeDeregistrationCert.h>
 #include <Cometa/Certificates/StakeRegistrationCert.h>
 #include <Cometa/Certificates/StakeRegistrationDelegationCert.h>
+#include <Cometa/Certificates/StakeVoteDelegationCert.h>
 #include <Cometa/Certificates/UnregistrationCert.h>
 #include <Cometa/Certificates/VoteDelegationCert.h>
 #include <Cometa/PoolParams/PoolOwners.h>
