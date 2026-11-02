@@ -218,11 +218,77 @@ class Credential
 
   private:
 
+    /** @brief Allows guard sets to copy credentials. */
+    friend class GuardSet;
+
+    /** @brief Allows required guard maps to copy credentials. */
+    friend class RequiredGuardsMap;
+
+    /** @brief Allows RegistrationCert to copy its credential. */
+    friend class RegistrationCert;
+
+    /** @brief Allows UnregistrationCert to copy its credential. */
+    friend class UnregistrationCert;
+
+    /** @brief Allows StakeRegistrationDelegationCert to copy its credential. */
+    friend class StakeRegistrationDelegationCert;
+
+    /** @brief Allows StakeDelegationCert to copy its credential. */
+    friend class StakeDelegationCert;
+
+    /** @brief Allows StakeDeregistrationCert to copy its credential. */
+    friend class StakeDeregistrationCert;
+
+    /** @brief Allows StakeRegistrationCert to copy its credential. */
+    friend class StakeRegistrationCert;
+
+    /** @brief Allows MIR distributions to copy their credentials. */
+    friend class MirToStakeCredentialsCert;
+
+    /** @brief Allows DRep values to copy their credentials. */
+    friend class DRep;
+
+    /** @brief Allows vote delegation certificates to copy credentials. */
+    friend class VoteDelegationCert;
+
+    /** @brief Allows combined delegation certificates to copy credentials. */
+    friend class StakeVoteDelegationCert;
+
+    /** @brief Allows vote registration certificates to copy credentials. */
+    friend class VoteRegistrationDelegationCert;
+
+    /** @brief Allows combined registration certificates to copy credentials. */
+    friend class StakeVoteRegistrationDelegationCert;
+
+    /** @brief Allows DRep unregistration certificates to copy credentials. */
+    friend class UnregisterDRepCert;
+
+    /** @brief Allows DRep registration certificates to copy credentials. */
+    friend class RegisterDRepCert;
+
+    /** @brief Allows DRep update certificates to copy credentials. */
+    friend class UpdateDRepCert;
+
+    /** @brief Allows committee authorization certificates to copy credentials. */
+    friend class AuthCommitteeHotCert;
+
+    /** @brief Allows committee resignation certificates to copy credentials. */
+    friend class ResignCommitteeColdCert;
+
     /** @brief Allows ScriptRequireGuard to copy script components. */
     friend class ScriptRequireGuard;
 
     /** @brief Allows CredentialSet to copy set elements. */
     friend class CredentialSet;
+
+    /** @brief Allows CommitteeMembersMap to copy member credentials. */
+    friend class CommitteeMembersMap;
+
+    /** @brief Allows committees to copy member credentials. */
+    friend class Committee;
+
+    /** @brief Allows voters to copy their credentials. */
+    friend class Voter;
 
     /** @brief Allows BaseAddress to copy credential components. */
     friend class BaseAddress;

@@ -308,6 +308,9 @@ class NativeScript
     /** @brief Allows NativeScriptList to copy script elements. */
     friend class NativeScriptList;
 
+    /** @brief Allows witness sets to copy native scripts. */
+    friend class NativeScriptSet;
+
     /**
      * @brief Takes ownership of an existing reference.
      *

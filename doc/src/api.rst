@@ -12,6 +12,11 @@ API reference
 .. doxygenclass:: Cometa::Credential
    :members:
 
+.. doxygenenum:: Cometa::DRepType
+
+.. doxygenclass:: Cometa::DRep
+   :members:
+
 .. doxygenclass:: Cometa::Error
    :members:
 
@@ -175,6 +180,65 @@ API reference
 .. doxygenclass:: Cometa::Value
    :members:
 
+.. doxygenclass:: Cometa::AccountBalanceInterval
+   :members:
+
+.. doxygenclass:: Cometa::AccountBalanceIntervalsMap
+   :members:
+
+.. doxygenclass:: Cometa::DirectDepositMap
+   :members:
+
+.. doxygenclass:: Cometa::GuardSet
+   :members:
+
+.. doxygenclass:: Cometa::RequiredGuardsMap
+   :members:
+
+.. doxygenclass:: Cometa::SubTransactionBody
+   :members:
+
+.. doxygenclass:: Cometa::TransactionBody
+   :members:
+
+.. doxygenclass:: Cometa::SubTransaction
+   :members:
+
+.. doxygenclass:: Cometa::Transaction
+   :members:
+
+.. doxygenstruct:: Cometa::AccountDerivationPath
+   :members:
+
+.. doxygenstruct:: Cometa::DerivationPath
+   :members:
+
+.. doxygenenum:: Cometa::DerivationRole
+
+.. doxygennamespace:: Cometa::Cip1852
+   :members:
+
+.. doxygenstruct:: Cometa::Bip32KeyCallbacks
+
+.. doxygenstruct:: Cometa::Ed25519KeyCallbacks
+
+.. doxygentypedef:: Cometa::PassphraseProvider
+
+.. doxygenenum:: Cometa::SecureKeyHandlerType
+
+.. doxygenclass:: Cometa::SecureKeyHandler
+   :members:
+
+.. doxygenstruct:: Cometa::Cip8Signature
+   :members:
+
+.. doxygenfunction:: Cometa::signCip8(const std::vector<std::uint8_t>&, const Address&, const Ed25519PrivateKey&)
+
+.. doxygenfunction:: Cometa::signCip8(const std::vector<std::uint8_t>&, const Blake2bHash&, const Ed25519PrivateKey&)
+
+.. doxygenclass:: Cometa::SubTransactionSet
+   :members:
+
 .. doxygenclass:: Cometa::Blake2bHashSet
    :members:
 
@@ -316,4 +380,282 @@ Pool primitives
    :members:
 
 .. doxygenclass:: Cometa::PoolMetadata
+   :members:
+
+Pool relays
+-----------
+
+.. doxygenclass:: Cometa::SingleHostAddrRelay
+   :members:
+
+.. doxygenclass:: Cometa::SingleHostNameRelay
+   :members:
+
+.. doxygenclass:: Cometa::MultiHostNameRelay
+   :members:
+
+.. doxygenclass:: Cometa::Relay
+   :members:
+
+.. doxygenclass:: Cometa::Relays
+   :members:
+
+.. doxygenenum:: Cometa::RelayType
+
+Pool owners
+-----------
+
+.. doxygenclass:: Cometa::PoolOwners
+   :members:
+
+Pool parameters
+---------------
+
+.. doxygenclass:: Cometa::PoolParams
+   :members:
+
+Certificate types
+-----------------
+
+.. doxygenenum:: Cometa::CertificateType
+
+Stake registration
+------------------
+
+.. doxygenclass:: Cometa::StakeRegistrationCert
+   :members:
+
+Stake deregistration
+--------------------
+
+.. doxygenclass:: Cometa::StakeDeregistrationCert
+   :members:
+
+Registration certificates
+-------------------------
+
+.. doxygenclass:: Cometa::RegistrationCert
+   :members:
+
+.. doxygenclass:: Cometa::UnregistrationCert
+   :members:
+
+Stake delegation
+----------------
+
+.. doxygenclass:: Cometa::StakeDelegationCert
+   :members:
+
+Pool registration certificate
+-----------------------------
+
+.. doxygenclass:: Cometa::PoolRegistrationCert
+   :members:
+
+Pool retirement certificate
+---------------------------
+
+.. doxygenclass:: Cometa::PoolRetirementCert
+   :members:
+
+Stake registration and delegation
+---------------------------------
+
+.. doxygenclass:: Cometa::StakeRegistrationDelegationCert
+   :members:
+
+Genesis key delegation certificate
+----------------------------------
+
+.. doxygenclass:: Cometa::GenesisKeyDelegationCert
+   :members:
+
+Historical MIR pot transfers
+----------------------------
+
+.. doxygenenum:: Cometa::MirPotType
+
+.. doxygenenum:: Cometa::MirCertType
+
+.. doxygenclass:: Cometa::MirToPotCert
+   :members:
+
+.. doxygenclass:: Cometa::MirToStakeCredentialsCert
+   :members:
+
+.. doxygenclass:: Cometa::MirCert
+   :members:
+
+.. doxygenclass:: Cometa::VoteDelegationCert
+   :members:
+
+.. doxygenclass:: Cometa::StakeVoteDelegationCert
+   :members:
+
+.. doxygenclass:: Cometa::VoteRegistrationDelegationCert
+   :members:
+
+.. doxygenclass:: Cometa::StakeVoteRegistrationDelegationCert
+   :members:
+
+.. doxygenclass:: Cometa::UnregisterDRepCert
+   :members:
+
+.. doxygenclass:: Cometa::RegisterDRepCert
+   :members:
+
+.. doxygenclass:: Cometa::UpdateDRepCert
+   :members:
+
+.. doxygenclass:: Cometa::AuthCommitteeHotCert
+   :members:
+
+.. doxygenclass:: Cometa::ResignCommitteeColdCert
+   :members:
+
+.. doxygenclass:: Cometa::Certificate
+   :members:
+
+.. doxygenclass:: Cometa::CertificateSet
+   :members:
+
+Protocol parameters
+-------------------
+
+.. doxygenclass:: Cometa::CostModel
+   :members:
+
+.. doxygenclass:: Cometa::CostModels
+   :members:
+
+.. doxygenclass:: Cometa::DRepVotingThresholds
+   :members:
+
+.. doxygenclass:: Cometa::PoolVotingThresholds
+   :members:
+
+.. doxygenclass:: Cometa::ProtocolParamUpdate
+   :members:
+
+.. doxygenclass:: Cometa::ProposedParamUpdates
+   :members:
+
+.. doxygenclass:: Cometa::Update
+   :members:
+
+.. doxygenclass:: Cometa::ProtocolParameters
+   :members:
+
+.. doxygenclass:: Cometa::ExUnitPrices
+   :members:
+
+.. doxygenenum:: Cometa::GovernanceActionType
+
+.. doxygenfunction:: Cometa::toString(GovernanceActionType)
+
+.. doxygenclass:: Cometa::InfoAction
+   :members:
+
+.. doxygenclass:: Cometa::NoConfidenceAction
+   :members:
+
+.. doxygenclass:: Cometa::HardForkInitiationAction
+   :members:
+
+.. doxygenclass:: Cometa::ParameterChangeAction
+   :members:
+
+.. doxygenclass:: Cometa::Constitution
+   :members:
+
+.. doxygenclass:: Cometa::NewConstitutionAction
+   :members:
+
+.. doxygenclass:: Cometa::TreasuryWithdrawalsAction
+   :members:
+
+.. doxygenclass:: Cometa::CommitteeMembersMap
+   :members:
+
+.. doxygenclass:: Cometa::Committee
+   :members:
+
+.. doxygenclass:: Cometa::UpdateCommitteeAction
+   :members:
+
+.. doxygenclass:: Cometa::ProposalProcedure
+   :members:
+
+.. doxygenclass:: Cometa::ProposalProcedureSet
+   :members:
+
+Voting procedures
+-----------------
+
+.. doxygenenum:: Cometa::Vote
+
+.. doxygenfunction:: Cometa::toString(Vote)
+
+.. doxygenenum:: Cometa::VoterType
+
+.. doxygenfunction:: Cometa::toString(VoterType)
+
+.. doxygenclass:: Cometa::Voter
+   :members:
+
+Voting collections
+~~~~~~~~~~~~~~~~~~
+
+``GovernanceActionIdList``, ``VoterList``, and ``VotingProcedureList`` are ordered standard C++ vectors of independent values.
+
+.. doxygenclass:: Cometa::VotingProcedure
+   :members:
+
+.. doxygenclass:: Cometa::VotingProcedures
+   :members:
+
+Witnesses and redeemers
+-----------------------
+
+.. doxygenenum:: Cometa::RedeemerTag
+
+.. doxygenfunction:: Cometa::toString(RedeemerTag)
+
+.. doxygenclass:: Cometa::Redeemer
+   :members:
+
+.. doxygenclass:: Cometa::RedeemerList
+   :members:
+
+.. doxygenclass:: Cometa::VkeyWitness
+   :members:
+
+.. doxygenclass:: Cometa::VkeyWitnessSet
+   :members:
+
+.. doxygenclass:: Cometa::BootstrapWitness
+   :members:
+
+.. doxygenclass:: Cometa::BootstrapWitnessSet
+   :members:
+
+.. doxygenclass:: Cometa::NativeScriptSet
+   :members:
+
+.. doxygenclass:: Cometa::PlutusDataSet
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV1ScriptSet
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV2ScriptSet
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV3ScriptSet
+   :members:
+
+.. doxygenclass:: Cometa::PlutusV4ScriptSet
+   :members:
+
+.. doxygenclass:: Cometa::WitnessSet
    :members:

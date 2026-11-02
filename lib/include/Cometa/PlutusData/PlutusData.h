@@ -274,14 +274,26 @@ class PlutusData
 
   private:
 
+    /** @brief Allows required guard maps to copy data. */
+    friend class RequiredGuardsMap;
+
     /** @brief Allows PlutusList to copy components. */
     friend class PlutusList;
+
+    /** @brief Allows witness sets to copy data values. */
+    friend class PlutusDataSet;
 
     /** @brief Allows PlutusMap to copy components. */
     friend class PlutusMap;
 
+    /** @brief Allows redeemers to copy their data. */
+    friend class Redeemer;
+
     /** @brief Allows Datum to copy components. */
     friend class Datum;
+
+    /** @brief Allows protocol updates to return Plutus data. */
+    friend class ProtocolParamUpdate;
 
     /**
      * @brief Takes ownership of an existing reference.

@@ -228,6 +228,15 @@ class CredentialSet
      */
     explicit CredentialSet(cardano_credential_set_t* value) noexcept;
 
+    /** @brief Allows CommitteeMembersMap to return member credentials. */
+    friend class CommitteeMembersMap;
+
+    /** @brief Allows committees to return member credentials. */
+    friend class Committee;
+
+    /** @brief Allows update actions to copy member credentials. */
+    friend class UpdateCommitteeAction;
+
   private:
 
     /**

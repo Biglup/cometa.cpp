@@ -233,6 +233,524 @@ main()
     return 1;
   }
 
+  Cometa::SingleHostAddrRelay ipRelay(3001, poolAddress, poolAddressV6);
+  ipRelay.setIpv4(std::nullopt);
+  const Cometa::Relays poolRelays {
+    Cometa::Relay(ipRelay),
+    Cometa::Relay(Cometa::SingleHostNameRelay("example.com", 3001)),
+    Cometa::Relay(Cometa::MultiHostNameRelay("example.com"))
+  };
+
+  if (Cometa::Relays::fromCbor(poolRelays.toCbor()) != poolRelays || poolRelays.at(1).type() != Cometa::RelayType::SingleHostName || Cometa::toString(Cometa::RelayType::SingleHostAddress).empty())
+  {
+    return 1;
+  }
+
+  const Cometa::PoolOwners poolOwners { Cometa::Blake2bHash::fromHex(std::string(56, '1')) };
+
+  if (Cometa::PoolOwners::fromCbor(poolOwners.toCbor()) != poolOwners || poolOwners.size() != 1)
+  {
+    return 1;
+  }
+
+  const Cometa::Blake2bHash   poolOperator = Cometa::Blake2bHash::fromHex(std::string(56, '1'));
+  const Cometa::RewardAddress poolReward(Cometa::NetworkId::Testnet, Cometa::Credential(Cometa::CredentialType::KeyHash, poolOperator));
+  const Cometa::PoolParams    poolParams(poolOperator, hash, 10'000'000, 340'000, Cometa::UnitInterval(1, 20), poolReward, poolOwners, poolRelays);
+
+  if (Cometa::PoolParams::fromCbor(poolParams.toCbor()) != poolParams)
+  {
+    return 1;
+  }
+
+  if (Cometa::toString(Cometa::CertificateType::PoolRegistration).empty())
+  {
+    return 1;
+  }
+
+  const Cometa::StakeRegistrationCert stakeCert(payment);
+
+  if (Cometa::StakeRegistrationCert::fromCbor(stakeCert.toCbor()) != stakeCert)
+  {
+    return 1;
+  }
+
+  const Cometa::StakeDeregistrationCert stakeDeregistration(payment);
+
+  if (Cometa::StakeDeregistrationCert::fromCbor(stakeDeregistration.toCbor()) != stakeDeregistration)
+  {
+    return 1;
+  }
+
+  const Cometa::RegistrationCert   registration(payment, 2'000'000);
+  const Cometa::UnregistrationCert unregistration(payment, 2'000'000);
+
+  if (Cometa::RegistrationCert::fromCbor(registration.toCbor()) != registration || Cometa::UnregistrationCert::fromCbor(unregistration.toCbor()) != unregistration)
+  {
+    return 1;
+  }
+
+  const Cometa::StakeDelegationCert delegation(payment, poolOperator);
+
+  if (Cometa::StakeDelegationCert::fromCbor(delegation.toCbor()) != delegation)
+  {
+    return 1;
+  }
+
+  const Cometa::PoolRegistrationCert poolRegistration(poolParams);
+
+  if (Cometa::PoolRegistrationCert::fromCbor(poolRegistration.toCbor()) != poolRegistration)
+  {
+    return 1;
+  }
+
+  const Cometa::PoolRetirementCert poolRetirement(poolOperator, 1000);
+
+  if (Cometa::PoolRetirementCert::fromCbor(poolRetirement.toCbor()) != poolRetirement)
+  {
+    return 1;
+  }
+
+  const Cometa::StakeRegistrationDelegationCert combinedRegistration(payment, poolOperator, 2'000'000);
+
+  if (Cometa::StakeRegistrationDelegationCert::fromCbor(combinedRegistration.toCbor()) != combinedRegistration)
+  {
+    return 1;
+  }
+
+  const Cometa::GenesisKeyDelegationCert genesisDelegation(poolOperator, poolOperator, hash);
+
+  if (Cometa::GenesisKeyDelegationCert::fromCbor(genesisDelegation.toCbor()) != genesisDelegation)
+  {
+    return 1;
+  }
+
+  const Cometa::MirToPotCert mir(Cometa::MirPotType::Reserve, 1'000'000);
+
+  if (Cometa::MirToPotCert::fromCbor(mir.toCbor()) != mir)
+  {
+    return 1;
+  }
+
+  Cometa::MirToStakeCredentialsCert mirRewards(Cometa::MirPotType::Reserve);
+  mirRewards.insert(payment, 1'000'000);
+
+  if (Cometa::MirToStakeCredentialsCert::fromCbor(mirRewards.toCbor()) != mirRewards)
+  {
+    return 1;
+  }
+
+  const Cometa::MirCert mirVariant(mirRewards);
+
+  if (Cometa::MirCert::fromCbor(mirVariant.toCbor()) != mirVariant)
+  {
+    return 1;
+  }
+
+  const Cometa::DRep representative(payment);
+
+  if (Cometa::DRep::fromCbor(representative.toCbor()) != representative)
+  {
+    return 1;
+  }
+
+  const Cometa::VoteDelegationCert voteDelegation(payment, representative);
+
+  if (Cometa::VoteDelegationCert::fromCbor(voteDelegation.toCbor()) != voteDelegation)
+  {
+    return 1;
+  }
+
+  const Cometa::StakeVoteDelegationCert combinedDelegation(payment, poolOperator, representative);
+
+  if (Cometa::StakeVoteDelegationCert::fromCbor(combinedDelegation.toCbor()) != combinedDelegation)
+  {
+    return 1;
+  }
+
+  const Cometa::VoteRegistrationDelegationCert voteRegistration(payment, 2'000'000, representative);
+
+  if (Cometa::VoteRegistrationDelegationCert::fromCbor(voteRegistration.toCbor()) != voteRegistration)
+  {
+    return 1;
+  }
+
+  const Cometa::StakeVoteRegistrationDelegationCert combinedRegistrationDelegation(payment, poolOperator, representative, 2'000'000);
+
+  if (Cometa::StakeVoteRegistrationDelegationCert::fromCbor(combinedRegistrationDelegation.toCbor()) != combinedRegistrationDelegation)
+  {
+    return 1;
+  }
+
+  const Cometa::UnregisterDRepCert unregisterDRep(payment, 2'000'000);
+
+  if (Cometa::UnregisterDRepCert::fromCbor(unregisterDRep.toCbor()) != unregisterDRep)
+  {
+    return 1;
+  }
+
+  const Cometa::RegisterDRepCert registerDRep(payment, 2'000'000);
+
+  if (Cometa::RegisterDRepCert::fromCbor(registerDRep.toCbor()) != registerDRep)
+  {
+    return 1;
+  }
+
+  const Cometa::UpdateDRepCert updateDRep(payment);
+
+  if (Cometa::UpdateDRepCert::fromCbor(updateDRep.toCbor()) != updateDRep)
+  {
+    return 1;
+  }
+
+  const Cometa::AuthCommitteeHotCert committeeAuthorization(payment, payment);
+
+  if (Cometa::AuthCommitteeHotCert::fromCbor(committeeAuthorization.toCbor()) != committeeAuthorization)
+  {
+    return 1;
+  }
+
+  const Cometa::ResignCommitteeColdCert committeeResignation(payment);
+
+  if (Cometa::ResignCommitteeColdCert::fromCbor(committeeResignation.toCbor()) != committeeResignation)
+  {
+    return 1;
+  }
+
+  const Cometa::Certificate genericCertificate(committeeAuthorization);
+
+  if (Cometa::Certificate::fromCbor(genericCertificate.toCbor()) != genericCertificate)
+  {
+    return 1;
+  }
+
+  Cometa::CertificateSet certificateSet;
+  certificateSet.add(genericCertificate);
+
+  if (Cometa::CertificateSet::fromCbor(certificateSet.toCbor()).at(0) != genericCertificate)
+  {
+    return 1;
+  }
+
+  const Cometa::ExUnitPrices prices(Cometa::UnitInterval(1, 2), Cometa::UnitInterval(1, 3));
+
+  if (Cometa::ExUnitPrices::fromCbor(prices.toCbor()) != prices)
+  {
+    return 1;
+  }
+
+  const Cometa::CostModel costModel(Cometa::PlutusLanguageVersion::V1, { 1, 2, 3 });
+
+  if (Cometa::CostModel::fromCbor(costModel.toCbor()) != costModel)
+  {
+    return 1;
+  }
+
+  Cometa::CostModels costModels;
+  costModels.insert(costModel);
+
+  if (Cometa::CostModels::fromCbor(costModels.toCbor()) != costModels)
+  {
+    return 1;
+  }
+
+  const Cometa::DRepVotingThresholds dRepVotingThresholds(Cometa::UnitInterval(0, 1), Cometa::UnitInterval(1, 2), Cometa::UnitInterval(2, 3), Cometa::UnitInterval(3, 4), Cometa::UnitInterval(4, 5), Cometa::UnitInterval(5, 6), Cometa::UnitInterval(6, 7), Cometa::UnitInterval(7, 8), Cometa::UnitInterval(8, 9), Cometa::UnitInterval(9, 10));
+
+  if (Cometa::DRepVotingThresholds::fromCbor(dRepVotingThresholds.toCbor()) != dRepVotingThresholds)
+  {
+    return 1;
+  }
+
+  const Cometa::PoolVotingThresholds poolVotingThresholds(Cometa::UnitInterval(0, 1), Cometa::UnitInterval(1, 2), Cometa::UnitInterval(2, 3), Cometa::UnitInterval(3, 4), Cometa::UnitInterval(4, 5));
+
+  if (Cometa::PoolVotingThresholds::fromCbor(poolVotingThresholds.toCbor()) != poolVotingThresholds)
+  {
+    return 1;
+  }
+
+  Cometa::ProtocolParamUpdate parameterUpdate;
+  parameterUpdate.setMinFeeA(std::uint64_t(44));
+
+  if (Cometa::ProtocolParamUpdate::fromCbor(parameterUpdate.toCbor()) != parameterUpdate)
+  {
+    return 1;
+  }
+
+  Cometa::ProposedParamUpdates proposals;
+  proposals.add(Cometa::Blake2bHash::fromHex(std::string(56, '0')), parameterUpdate);
+
+  if (Cometa::ProposedParamUpdates::fromCbor(proposals.toCbor()) != proposals)
+  {
+    return 1;
+  }
+
+  const Cometa::Update epochUpdate(12, proposals);
+
+  if (Cometa::Update::fromCbor(epochUpdate.toCbor()) != epochUpdate)
+  {
+    return 1;
+  }
+
+  Cometa::ProtocolParameters protocolParameters;
+  protocolParameters.setMinFeeA(44);
+  if (Cometa::ProtocolParameters(protocolParameters).minFeeA() != 44)
+  {
+    return 1;
+  }
+
+  if (Cometa::InfoAction::fromCbor(Cometa::InfoAction().toCbor()) != Cometa::InfoAction())
+  {
+    return 1;
+  }
+
+  if (Cometa::NoConfidenceAction::fromCbor(Cometa::NoConfidenceAction().toCbor()) != Cometa::NoConfidenceAction())
+  {
+    return 1;
+  }
+
+  const Cometa::HardForkInitiationAction hardFork(Cometa::ProtocolVersion(12, 0));
+  if (Cometa::HardForkInitiationAction::fromCbor(hardFork.toCbor()) != hardFork)
+  {
+    return 1;
+  }
+
+  const Cometa::ParameterChangeAction parameterChange(parameterUpdate);
+  if (Cometa::ParameterChangeAction::fromCbor(parameterChange.toCbor()) != parameterChange)
+  {
+    return 1;
+  }
+
+  const Cometa::Constitution constitution(Cometa::Anchor("https://a", Cometa::Blake2bHash::fromHex(std::string(64, '0'))));
+  if (Cometa::Constitution::fromCbor(constitution.toCbor()) != constitution)
+  {
+    return 1;
+  }
+
+  const Cometa::NewConstitutionAction newConstitution(constitution);
+  if (Cometa::NewConstitutionAction::fromCbor(newConstitution.toCbor()) != newConstitution)
+  {
+    return 1;
+  }
+
+  const Cometa::TreasuryWithdrawalsAction treasuryWithdrawals { Cometa::WithdrawalMap() };
+  if (Cometa::TreasuryWithdrawalsAction::fromCbor(treasuryWithdrawals.toCbor()) != treasuryWithdrawals)
+  {
+    return 1;
+  }
+
+  Cometa::CommitteeMembersMap committeeMembers;
+  const Cometa::Credential    committeeMember(Cometa::CredentialType::KeyHash, Cometa::Blake2bHash::fromHex(std::string(56, '0')));
+  committeeMembers.insert(committeeMember, 200);
+  if (Cometa::CommitteeMembersMap::fromCbor(committeeMembers.toCbor()) != committeeMembers || !committeeMembers.keys().contains(committeeMember))
+  {
+    return 1;
+  }
+
+  Cometa::Committee committee(Cometa::UnitInterval(1, 2));
+  committee.addMember(committeeMember, 200);
+  if (Cometa::Committee::fromCbor(committee.toCbor()) != committee || !committee.keys().contains(committeeMember))
+  {
+    return 1;
+  }
+
+  const Cometa::UpdateCommitteeAction committeeUpdate(Cometa::CredentialSet(), committeeMembers, Cometa::UnitInterval(1, 2));
+  if (Cometa::UpdateCommitteeAction::fromCbor(committeeUpdate.toCbor()) != committeeUpdate)
+  {
+    return 1;
+  }
+
+  const Cometa::ProposalProcedure governanceProposal(500, Cometa::RewardAddress(Cometa::NetworkId::Testnet, committeeMember), Cometa::Anchor("https://a", Cometa::Blake2bHash::fromHex(std::string(64, '0'))), Cometa::InfoAction());
+  if (Cometa::ProposalProcedure::fromCbor(governanceProposal.toCbor()) != governanceProposal)
+  {
+    return 1;
+  }
+
+  Cometa::ProposalProcedureSet governanceProposals;
+  governanceProposals.add(governanceProposal);
+  if (Cometa::ProposalProcedureSet::fromCbor(governanceProposals.toCbor()) != governanceProposals)
+  {
+    return 1;
+  }
+
+  const Cometa::Voter voter(Cometa::VoterType::DRepKeyHash, committeeMember);
+  if (Cometa::Voter::fromCbor(voter.toCbor()) != voter || Cometa::toString(Cometa::Vote::Yes).empty())
+  {
+    return 1;
+  }
+
+  const Cometa::VotingProcedure vote(Cometa::Vote::Yes);
+  if (Cometa::VotingProcedure::fromCbor(vote.toCbor()) != vote)
+  {
+    return 1;
+  }
+
+  Cometa::VotingProcedures votes;
+  votes.insert(voter, Cometa::GovernanceActionId(Cometa::Blake2bHash::fromHex(std::string(64, '0')), 0), vote);
+  if (Cometa::VotingProcedures::fromCbor(votes.toCbor()) != votes || votes.voters().size() != 1U)
+  {
+    return 1;
+  }
+
+  const Cometa::Redeemer redeemer(Cometa::RedeemerTag::Spend, 0, Cometa::PlutusData(1), Cometa::ExUnits(5, 7));
+  if (Cometa::Redeemer::fromCbor(redeemer.toCbor()) != redeemer)
+  {
+    return 1;
+  }
+
+  Cometa::RedeemerList redeemers;
+  redeemers.add(redeemer);
+  if (Cometa::RedeemerList::fromCbor(redeemers.toCbor()) != redeemers)
+  {
+    return 1;
+  }
+
+  const Cometa::VkeyWitness keyWitness(Cometa::Ed25519PublicKey(std::vector<std::uint8_t>(32, 1)), Cometa::Ed25519Signature(std::vector<std::uint8_t>(64, 2)));
+  if (Cometa::VkeyWitness::fromCbor(keyWitness.toCbor()) != keyWitness)
+  {
+    return 1;
+  }
+
+  Cometa::VkeyWitnessSet keyWitnesses;
+  keyWitnesses.add(keyWitness);
+  if (Cometa::VkeyWitnessSet::fromCbor(keyWitnesses.toCbor()) != keyWitnesses)
+  {
+    return 1;
+  }
+
+  const Cometa::BootstrapWitness bootstrapWitness(Cometa::Ed25519PublicKey(std::vector<std::uint8_t>(32, 1)), Cometa::Ed25519Signature(std::vector<std::uint8_t>(64, 2)), std::vector<std::uint8_t>(32, 3), { 0xa0 });
+  if (Cometa::BootstrapWitness::fromCbor(bootstrapWitness.toCbor()) != bootstrapWitness)
+  {
+    return 1;
+  }
+
+  Cometa::BootstrapWitnessSet bootstrapWitnesses;
+  bootstrapWitnesses.add(bootstrapWitness);
+  if (Cometa::BootstrapWitnessSet::fromCbor(bootstrapWitnesses.toCbor()) != bootstrapWitnesses)
+  {
+    return 1;
+  }
+
+  Cometa::NativeScriptSet nativeScripts;
+  nativeScripts.add(Cometa::NativeScript(Cometa::ScriptInvalidBefore(5)));
+  if (Cometa::NativeScriptSet::fromCbor(nativeScripts.toCbor()) != nativeScripts)
+  {
+    return 1;
+  }
+
+  Cometa::PlutusDataSet datumValues;
+  datumValues.add(Cometa::PlutusData(1));
+  if (Cometa::PlutusDataSet::fromCbor(datumValues.toCbor()) != datumValues)
+  {
+    return 1;
+  }
+
+  Cometa::PlutusV1ScriptSet plutusV1Scripts;
+  plutusV1Scripts.add(Cometa::PlutusV1Script(std::vector<std::uint8_t> { 0x01, 0x02 }));
+  if (Cometa::PlutusV1ScriptSet::fromCbor(plutusV1Scripts.toCbor()) != plutusV1Scripts)
+  {
+    return 1;
+  }
+
+  Cometa::PlutusV2ScriptSet plutusV2Scripts;
+  plutusV2Scripts.add(Cometa::PlutusV2Script(std::vector<std::uint8_t> { 0x01, 0x02 }));
+  if (Cometa::PlutusV2ScriptSet::fromCbor(plutusV2Scripts.toCbor()) != plutusV2Scripts)
+  {
+    return 1;
+  }
+
+  Cometa::PlutusV3ScriptSet plutusV3Scripts;
+  plutusV3Scripts.add(Cometa::PlutusV3Script(std::vector<std::uint8_t> { 0x01, 0x02 }));
+  if (Cometa::PlutusV3ScriptSet::fromCbor(plutusV3Scripts.toCbor()) != plutusV3Scripts)
+  {
+    return 1;
+  }
+
+  const Cometa::SubTransactionBody subBody { Cometa::TransactionInputSet(), Cometa::TransactionOutputList() };
+  if (Cometa::SubTransactionBody::fromCbor(subBody.toCbor()) != subBody)
+  {
+    return 1;
+  }
+
+  const Cometa::SubTransaction subTransaction(subBody, Cometa::WitnessSet());
+  if (Cometa::SubTransaction::fromCbor(subTransaction.toCbor()) != subTransaction)
+  {
+    return 1;
+  }
+
+  Cometa::RequiredGuardsMap requiredGuards;
+  requiredGuards.insert(Cometa::Credential::fromCbor("8200581c00112233445566778899aabbccddeeff00112233445566778899aabb"));
+  if (Cometa::RequiredGuardsMap::fromCbor(requiredGuards.toCbor()) != requiredGuards)
+  {
+    return 1;
+  }
+
+  Cometa::GuardSet guards;
+  guards.add(Cometa::Credential::fromCbor("8200581c6199186adb51974690d7247d2646097d2c62763b16fb7ed3f9f55d39"));
+  if (Cometa::GuardSet::fromCbor(guards.toCbor()) != guards)
+  {
+    return 1;
+  }
+
+  Cometa::DirectDepositMap directDeposits;
+  directDeposits.insert(Cometa::RewardAddress::fromBech32("stake_test1uqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxtxu2s"), 1000);
+  if (Cometa::DirectDepositMap::fromCbor(directDeposits.toCbor()) != directDeposits)
+  {
+    return 1;
+  }
+
+  Cometa::AccountBalanceIntervalsMap accountBalances;
+  const Cometa::RewardAddress        mapAddress = Cometa::RewardAddress::fromBech32("stake_test1uqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxtxu2s");
+  accountBalances.insert(mapAddress, Cometa::AccountBalanceInterval::exact(1000));
+  if (Cometa::AccountBalanceIntervalsMap::fromCbor(accountBalances.toCbor()) != accountBalances)
+  {
+    return 1;
+  }
+
+  const Cometa::AccountBalanceInterval accountBalance = Cometa::AccountBalanceInterval::exact(1000);
+  if (Cometa::AccountBalanceInterval::fromCbor(accountBalance.toCbor()) != accountBalance)
+  {
+    return 1;
+  }
+
+  Cometa::WitnessSet witnesses;
+  witnesses.setNativeScripts(Cometa::NativeScriptSet());
+  if (!witnesses.nativeScripts().has_value())
+  {
+    return 1;
+  }
+
+  Cometa::PlutusV4ScriptSet plutusV4Scripts;
+  plutusV4Scripts.add(Cometa::PlutusV4Script(std::vector<std::uint8_t> { 0x01, 0x02 }));
+  if (Cometa::PlutusV4ScriptSet::fromCbor(plutusV4Scripts.toCbor()) != plutusV4Scripts)
+  {
+    return 1;
+  }
+
+  const Cometa::Transaction transaction(Cometa::TransactionBody(Cometa::TransactionInputSet(), Cometa::TransactionOutputList(), 0), Cometa::WitnessSet());
+  if (Cometa::Transaction::fromCbor(transaction.toCbor()) != transaction)
+  {
+    return 1;
+  }
+
+  Cometa::DerivationPath keyPath;
+  keyPath.account = 2;
+  keyPath.role    = Cometa::DerivationRole::DRep;
+  if (keyPath.accountPath().account != 2 || keyPath.purpose != Cometa::Cip1852::StandardPurpose)
+  {
+    return 1;
+  }
+
+  const Cometa::TransactionBody transactionBody(Cometa::TransactionInputSet(), Cometa::TransactionOutputList(), 100);
+  if (Cometa::TransactionBody::fromCbor(transactionBody.toCbor()) != transactionBody)
+  {
+    return 1;
+  }
+
+  const Cometa::SubTransactionSet subTransactions = Cometa::SubTransactionSet::fromCbor("d901028183a200d90102800180a0f6");
+  if (subTransactions.size() != 1 || !subTransactions.findById(subTransactions.at(0).id()).has_value())
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

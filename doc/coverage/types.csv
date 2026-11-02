@@ -1,8 +1,8 @@
 c_type,kind,header,planned_pr,status,cpp_api,test
 byte_t,alias,lib/include/cardano/typedefs.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
-cardano_account_balance_interval_t,opaque object,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,
-cardano_account_balance_intervals_map_t,opaque object,lib/include/cardano/transaction_body/account_balance_intervals_map.h,P16,planned,,
-cardano_account_derivation_path_t,struct,lib/include/cardano/key_handlers/account_derivation_path.h,P18,planned,,
+cardano_account_balance_interval_t,opaque object,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_account_balance_intervals_map_t,opaque object,lib/include/cardano/transaction_body/account_balance_intervals_map.h,P16,implemented,Cometa::AccountBalanceIntervalsMap,lib/tests/TransactionBody/AccountBalanceIntervalsMapTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_account_derivation_path_t,struct,lib/include/cardano/key_handlers/account_derivation_path.h,P18,implemented,Cometa::AccountDerivationPath,lib/tests/KeyHandlers/AccountDerivationPathTest.cpp
 cardano_address_t,opaque object,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address,lib/tests/Address/AddressTest.cpp
 cardano_address_type_t,enum,lib/include/cardano/address/address_type.h,P03,implemented,Cometa::AddressType,lib/tests/Address/AddressTypeTest.cpp
 cardano_anchor_t,opaque object,lib/include/cardano/common/anchor.h,P01a.2,implemented,Cometa::Anchor,lib/tests/Common/AnchorTest.cpp; lib/tests/ValueContractTest.cpp
@@ -12,21 +12,21 @@ cardano_asset_id_t,opaque object,lib/include/cardano/assets/asset_id.h,P04.1,imp
 cardano_asset_name_list_t,opaque object,lib/include/cardano/assets/asset_name_list.h,P04.1,implemented,Cometa::AssetNameList,lib/tests/Assets/AssetNameListTest.cpp
 cardano_asset_name_map_t,opaque object,lib/include/cardano/assets/asset_name_map.h,P04.2,implemented,Cometa::AssetNameMap,lib/tests/Assets/AssetNameMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_asset_name_t,opaque object,lib/include/cardano/assets/asset_name.h,P04,implemented,AssetName,lib/tests/Assets/AssetNameTest.cpp
-cardano_auth_committee_hot_cert_t,opaque object,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,planned,,
+cardano_auth_committee_hot_cert_t,opaque object,lib/include/cardano/certs/auth_committee_hot_cert.h,P11,implemented,Cometa::AuthCommitteeHotCert,lib/tests/Certificates/AuthCommitteeHotCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_auxiliary_data_t,opaque object,lib/include/cardano/auxiliary_data/auxiliary_data.h,P08,implemented,Cometa::AuxiliaryData,lib/tests/AuxiliaryData/AuxiliaryDataTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_base_address_t,opaque object,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress,lib/tests/Address/BaseAddressTest.cpp
 cardano_bigint_t,opaque object,lib/include/cardano/common/bigint.h,P01a.2,implemented,Cometa::BigInt,lib/tests/Common/BigIntTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_bip32_get_extended_account_public_key_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
+cardano_bip32_get_extended_account_public_key_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,implemented,Cometa::Bip32KeyCallbacks::accountPublicKey,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp; lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
 cardano_bip32_private_key_t,opaque object,lib/include/cardano/crypto/bip32_private_key.h,P02,implemented,Cometa::Bip32PrivateKey,lib/tests/Crypto/Bip32PrivateKeyTest.cpp
 cardano_bip32_public_key_t,opaque object,lib/include/cardano/crypto/bip32_public_key.h,P02,implemented,Cometa::Bip32PublicKey,lib/tests/Crypto/Bip32PublicKeyTest.cpp
-cardano_bip32_sign_sub_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
-cardano_bip32_sign_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
+cardano_bip32_sign_sub_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,implemented,Cometa::Bip32KeyCallbacks::signSubTransaction,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp; lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
+cardano_bip32_sign_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,implemented,Cometa::Bip32KeyCallbacks::signTransaction,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp; lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
 cardano_blake2b_hash_set_t,opaque object,lib/include/cardano/crypto/blake2b_hash_set.h,P04.3,implemented,Cometa::Blake2bHashSet,lib/tests/Crypto/Blake2bHashSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_blake2b_hash_size_t,enum,lib/include/cardano/crypto/blake2b_hash_size.h,P02,implemented,Cometa::Blake2bHashSize,lib/tests/Crypto/Blake2bHashSizeTest.cpp
 cardano_blake2b_hash_t,opaque object,lib/include/cardano/crypto/blake2b_hash.h,P02,implemented,Blake2bHash,lib/tests/Crypto/Blake2bHashTest.cpp
 cardano_bls_key_t,opaque object,lib/include/cardano/pool_params/bls_key.h,P09,implemented,Cometa::BlsKey,lib/tests/PoolParams/BlsKeyTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_bootstrap_witness_set_t,opaque object,lib/include/cardano/witness_set/bootstrap_witness_set.h,P15,planned,,
-cardano_bootstrap_witness_t,opaque object,lib/include/cardano/witness_set/bootstrap_witness.h,P15,planned,,
+cardano_bootstrap_witness_set_t,opaque object,lib/include/cardano/witness_set/bootstrap_witness_set.h,P15,implemented,Cometa::BootstrapWitnessSet,lib/tests/WitnessSet/BootstrapWitnessSetTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_bootstrap_witness_t,opaque object,lib/include/cardano/witness_set/bootstrap_witness.h,P15,implemented,Cometa::BootstrapWitness,lib/tests/WitnessSet/BootstrapWitnessTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_buffer_t,opaque object,lib/include/cardano/buffer.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
 cardano_byron_address_attributes_t,struct,lib/include/cardano/address/byron_address_attributes.h,P03,implemented,Cometa::ByronAddressAttributes,lib/tests/Address/ByronAddressTest.cpp
 cardano_byron_address_t,opaque object,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress,lib/tests/Address/ByronAddressTest.cpp
@@ -38,20 +38,20 @@ cardano_cbor_reader_t,opaque object,lib/include/cardano/cbor/cbor_reader.h,P01b,
 cardano_cbor_simple_value_t,enum,lib/include/cardano/cbor/cbor_simple_value.h,P01b,implemented,Cometa::CborSimpleValue,lib/tests/Cbor/CborSimpleValueTest.cpp
 cardano_cbor_tag_t,enum,lib/include/cardano/cbor/cbor_tag.h,P01b,implemented,Cometa::CborTag,lib/tests/Cbor/CborTagTest.cpp
 cardano_cbor_writer_t,opaque object,lib/include/cardano/cbor/cbor_writer.h,P01b,implemented,Cometa::CborWriter,lib/tests/Cbor/CborWriterTest.cpp
-cardano_cert_type_t,enum,lib/include/cardano/certs/cert_type.h,P10,planned,,
-cardano_certificate_set_t,opaque object,lib/include/cardano/certs/certificate_set.h,P10,planned,,
-cardano_certificate_t,opaque object,lib/include/cardano/certs/certificate.h,P10,planned,,
+cardano_cert_type_t,enum,lib/include/cardano/certs/cert_type.h,P10,implemented,Cometa::CertificateType,lib/tests/Certificates/CertificateTypeTest.cpp
+cardano_certificate_set_t,opaque object,lib/include/cardano/certs/certificate_set.h,P10,implemented,Cometa::CertificateSet,lib/tests/Certificates/CertificateSetTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_certificate_t,opaque object,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_coin_select_func_t,callback,lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,P20,planned,,
 cardano_coin_selection_request_t,struct,lib/include/cardano/transaction_builder/coin_selection/coin_selection_request.h,P20,planned,,
 cardano_coin_selector_impl_t,struct,lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,P20,planned,,
 cardano_coin_selector_t,opaque object,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,planned,,
-cardano_committee_members_map_t,opaque object,lib/include/cardano/proposal_procedures/committee_members_map.h,P13,planned,,
-cardano_committee_t,opaque object,lib/include/cardano/proposal_procedures/committee.h,P13,planned,,
+cardano_committee_members_map_t,opaque object,lib/include/cardano/proposal_procedures/committee_members_map.h,P13,implemented,Cometa::CommitteeMembersMap,lib/tests/ProposalProcedures/CommitteeMembersMapTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_committee_t,opaque object,lib/include/cardano/proposal_procedures/committee.h,P13,implemented,Cometa::Committee,lib/tests/ProposalProcedures/CommitteeTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_confirm_transaction_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
-cardano_constitution_t,opaque object,lib/include/cardano/proposal_procedures/constitution.h,P13,planned,,
+cardano_constitution_t,opaque object,lib/include/cardano/proposal_procedures/constitution.h,P13,implemented,Cometa::Constitution,lib/tests/ProposalProcedures/ConstitutionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_constr_plutus_data_t,opaque object,lib/include/cardano/plutus_data/constr_plutus_data.h,P05,implemented,Cometa::ConstrPlutusData,lib/tests/PlutusData/ConstrPlutusDataTest.cpp
-cardano_cost_model_t,opaque object,lib/include/cardano/protocol_params/cost_model.h,P12,planned,,
-cardano_costmdls_t,opaque object,lib/include/cardano/protocol_params/costmdls.h,P12,planned,,
+cardano_cost_model_t,opaque object,lib/include/cardano/protocol_params/cost_model.h,P12,implemented,Cometa::CostModel,lib/tests/ProtocolParams/CostModelTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_costmdls_t,opaque object,lib/include/cardano/protocol_params/costmdls.h,P12,implemented,Cometa::CostModels,lib/tests/ProtocolParams/CostModelsTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_credential_set_t,opaque object,lib/include/cardano/proposal_procedures/credential_set.h,P04.3,implemented,Cometa::CredentialSet,lib/tests/Common/CredentialSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_credential_t,opaque object,lib/include/cardano/common/credential.h,P01a.1,implemented,Credential,lib/tests/Common/CredentialTest.cpp
 cardano_credential_type_t,enum,lib/include/cardano/common/credential_type.h,P01a.1,implemented,CredentialType,lib/tests/Common/CredentialTest.cpp
@@ -59,37 +59,37 @@ cardano_datum_t,opaque object,lib/include/cardano/common/datum.h,P05,implemented
 cardano_datum_type_t,enum,lib/include/cardano/common/datum_type.h,P05,implemented,Cometa::DatumType,lib/tests/Common/DatumTypeTest.cpp
 cardano_deferred_redeemer_fn_t,callback,lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,P23,planned,,
 cardano_deferred_redeemer_list_t,opaque object,lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,P23,planned,,
-cardano_derivation_path_t,struct,lib/include/cardano/key_handlers/derivation_path.h,P18,planned,,
-cardano_direct_deposit_map_t,opaque object,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,planned,,
-cardano_drep_t,opaque object,lib/include/cardano/common/drep.h,P11,planned,,
-cardano_drep_type_t,enum,lib/include/cardano/common/drep_type.h,P11,planned,,
-cardano_drep_voting_thresholds_t,opaque object,lib/include/cardano/protocol_params/drep_voting_thresholds.h,P12,planned,,
-cardano_ed25519_get_public_key_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
+cardano_derivation_path_t,struct,lib/include/cardano/key_handlers/derivation_path.h,P18,implemented,Cometa::DerivationPath,lib/tests/KeyHandlers/DerivationPathTest.cpp
+cardano_direct_deposit_map_t,opaque object,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_drep_t,opaque object,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_drep_type_t,enum,lib/include/cardano/common/drep_type.h,P11,implemented,Cometa::DRepType,lib/tests/Common/DRepTypeTest.cpp
+cardano_drep_voting_thresholds_t,opaque object,lib/include/cardano/protocol_params/drep_voting_thresholds.h,P12,implemented,Cometa::DRepVotingThresholds,lib/tests/ProtocolParams/DRepVotingThresholdsTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_ed25519_get_public_key_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,implemented,Cometa::Ed25519KeyCallbacks::publicKey,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp; lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
 cardano_ed25519_private_key_t,opaque object,lib/include/cardano/crypto/ed25519_private_key.h,P02,implemented,Cometa::Ed25519PrivateKey,lib/tests/Crypto/Ed25519PrivateKeyTest.cpp
 cardano_ed25519_public_key_t,opaque object,lib/include/cardano/crypto/ed25519_public_key.h,P02,implemented,Cometa::Ed25519PublicKey,lib/tests/Crypto/Ed25519PublicKeyTest.cpp
-cardano_ed25519_sign_sub_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
-cardano_ed25519_sign_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
+cardano_ed25519_sign_sub_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,implemented,Cometa::Ed25519KeyCallbacks::signSubTransaction,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp; lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
+cardano_ed25519_sign_transaction_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,implemented,Cometa::Ed25519KeyCallbacks::signTransaction,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp; lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
 cardano_ed25519_signature_t,opaque object,lib/include/cardano/crypto/ed25519_signature.h,P02,implemented,Cometa::Ed25519Signature,lib/tests/Crypto/Ed25519SignatureTest.cpp
 cardano_enterprise_address_t,opaque object,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress,lib/tests/Address/EnterpriseAddressTest.cpp
 cardano_error_t,enum,lib/include/cardano/error.h,P01a.1,implemented,ErrorCode,lib/tests/ErrorTest.cpp
 cardano_evaluate_transaction_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
-cardano_ex_unit_prices_t,opaque object,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,
+cardano_ex_unit_prices_t,opaque object,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,implemented,Cometa::ExUnitPrices,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_ex_units_t,opaque object,lib/include/cardano/common/ex_units.h,P01a.1,implemented,ExUnits,lib/tests/Common/ExUnitsTest.cpp
-cardano_genesis_key_delegation_cert_t,opaque object,lib/include/cardano/certs/genesis_key_delegation_cert.h,P10,planned,,
+cardano_genesis_key_delegation_cert_t,opaque object,lib/include/cardano/certs/genesis_key_delegation_cert.h,P10,implemented,Cometa::GenesisKeyDelegationCert,lib/tests/Certificates/GenesisKeyDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_get_parameters_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
-cardano_get_passphrase_func_t,callback,lib/include/cardano/key_handlers/software_secure_key_handler.h,P18,planned,,
+cardano_get_passphrase_func_t,callback,lib/include/cardano/key_handlers/software_secure_key_handler.h,P18,implemented,Cometa::PassphraseProvider,lib/tests/KeyHandlers/SoftwareSecureKeyHandlerTest.cpp
 cardano_get_rewards_balance_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_get_unspent_output_by_nft_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_get_unspent_outputs_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_get_unspent_outputs_with_asset_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
-cardano_governance_action_id_list_t,opaque object,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,planned,,
+cardano_governance_action_id_list_t,opaque object,lib/include/cardano/voting_procedures/governance_action_id_list.h,P14,implemented,Cometa::GovernanceActionIdList,lib/tests/VotingProcedures/GovernanceActionIdListTest.cpp
 cardano_governance_action_id_t,opaque object,lib/include/cardano/common/governance_action_id.h,P01a.2,implemented,Cometa::GovernanceActionId,lib/tests/Common/GovernanceActionIdTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_governance_action_type_t,enum,lib/include/cardano/proposal_procedures/governance_action_type.h,P13,planned,,
+cardano_governance_action_type_t,enum,lib/include/cardano/proposal_procedures/governance_action_type.h,P13,implemented,Cometa::GovernanceActionType,lib/tests/ProposalProcedures/GovernanceActionTypeTest.cpp
 cardano_governance_key_type_t,enum,lib/include/cardano/common/governance_key_type.h,P01a.1,implemented,GovernanceKeyType,lib/tests/Common/GovernanceKeyTypeTest.cpp
-cardano_guard_set_t,opaque object,lib/include/cardano/common/guard_set.h,P16,planned,,
-cardano_hard_fork_initiation_action_t,opaque object,lib/include/cardano/proposal_procedures/hard_fork_initiation_action.h,P13,planned,,
+cardano_guard_set_t,opaque object,lib/include/cardano/common/guard_set.h,P16,implemented,Cometa::GuardSet,lib/tests/TransactionBody/GuardSetTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_hard_fork_initiation_action_t,opaque object,lib/include/cardano/proposal_procedures/hard_fork_initiation_action.h,P13,implemented,Cometa::HardForkInitiationAction,lib/tests/ProposalProcedures/HardForkInitiationActionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_implicit_coin_t,struct,lib/include/cardano/transaction_builder/balancing/implicit_coin.h,P22,planned,,
-cardano_info_action_t,opaque object,lib/include/cardano/proposal_procedures/info_action.h,P13,planned,,
+cardano_info_action_t,opaque object,lib/include/cardano/proposal_procedures/info_action.h,P13,implemented,Cometa::InfoAction,lib/tests/ProposalProcedures/InfoActionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_input_to_redeemer_map_t,opaque object,lib/include/cardano/transaction_builder/balancing/input_to_redeemer_map.h,P22,planned,,
 cardano_ipv4_t,opaque object,lib/include/cardano/pool_params/ipv4.h,P09,implemented,Cometa::Ipv4,lib/tests/PoolParams/Ipv4Test.cpp; lib/tests/ValueContractTest.cpp
 cardano_ipv6_t,opaque object,lib/include/cardano/pool_params/ipv6.h,P09,implemented,Cometa::Ipv6,lib/tests/PoolParams/Ipv6Test.cpp; lib/tests/ValueContractTest.cpp
@@ -103,68 +103,68 @@ cardano_metadatum_label_list_t,opaque object,lib/include/cardano/auxiliary_data/
 cardano_metadatum_list_t,opaque object,lib/include/cardano/auxiliary_data/metadatum_list.h,P08,implemented,Cometa::MetadatumList,lib/tests/AuxiliaryData/MetadatumListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_metadatum_map_t,opaque object,lib/include/cardano/auxiliary_data/metadatum_map.h,P08,implemented,Cometa::MetadatumMap,lib/tests/AuxiliaryData/MetadatumMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_metadatum_t,opaque object,lib/include/cardano/auxiliary_data/metadatum.h,P08,implemented,Cometa::Metadatum,lib/tests/AuxiliaryData/MetadatumTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_mir_cert_pot_type_t,enum,lib/include/cardano/certs/mir_cert_pot_type.h,P10,planned,,
-cardano_mir_cert_t,opaque object,lib/include/cardano/certs/mir_cert.h,P10,planned,,
-cardano_mir_cert_type_t,enum,lib/include/cardano/certs/mir_cert_type.h,P10,planned,,
-cardano_mir_to_pot_cert_t,opaque object,lib/include/cardano/certs/mir_to_pot_cert.h,P10,planned,,
-cardano_mir_to_stake_creds_cert_t,opaque object,lib/include/cardano/certs/mir_to_stake_creds_cert.h,P10,planned,,
+cardano_mir_cert_pot_type_t,enum,lib/include/cardano/certs/mir_cert_pot_type.h,P10,implemented,Cometa::MirPotType,lib/tests/Certificates/MirPotTypeTest.cpp
+cardano_mir_cert_t,opaque object,lib/include/cardano/certs/mir_cert.h,P10,implemented,Cometa::MirCert,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_mir_cert_type_t,enum,lib/include/cardano/certs/mir_cert_type.h,P10,implemented,Cometa::MirCertType,lib/tests/Certificates/MirCertTypeTest.cpp
+cardano_mir_to_pot_cert_t,opaque object,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_mir_to_stake_creds_cert_t,opaque object,lib/include/cardano/certs/mir_to_stake_creds_cert.h,P10,implemented,Cometa::MirToStakeCredentialsCert,lib/tests/Certificates/MirToStakeCredentialsCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_multi_asset_t,opaque object,lib/include/cardano/assets/multi_asset.h,P04.2,implemented,Cometa::MultiAsset,lib/tests/Assets/MultiAssetTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_multi_host_name_relay_t,opaque object,lib/include/cardano/pool_params/multi_host_name_relay.h,P09,planned,,
+cardano_multi_host_name_relay_t,opaque object,lib/include/cardano/pool_params/multi_host_name_relay.h,P09,implemented,Cometa::MultiHostNameRelay,lib/tests/PoolParams/MultiHostNameRelayTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_native_script_list_t,opaque object,lib/include/cardano/scripts/native_scripts/native_script_list.h,P06.2,implemented,Cometa::NativeScriptList,lib/tests/Scripts/NativeScripts/NativeScriptListTest.cpp
-cardano_native_script_set_t,opaque object,lib/include/cardano/witness_set/native_script_set.h,P15,planned,,
+cardano_native_script_set_t,opaque object,lib/include/cardano/witness_set/native_script_set.h,P15,implemented,Cometa::NativeScriptSet,lib/tests/WitnessSet/NativeScriptSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_native_script_t,opaque object,lib/include/cardano/scripts/native_scripts/native_script.h,P06.2,implemented,Cometa::NativeScript,lib/tests/Scripts/NativeScripts/NativeScriptTest.cpp
 cardano_native_script_type_t,enum,lib/include/cardano/scripts/native_scripts/native_script_type.h,P06.2,implemented,Cometa::NativeScriptType,lib/tests/Scripts/NativeScripts/NativeScriptTypeTest.cpp
 cardano_network_id_t,enum,lib/include/cardano/common/network_id.h,P01a.1,implemented,NetworkId,lib/tests/Common/NetworkIdTest.cpp
 cardano_network_magic_t,enum,lib/include/cardano/common/network_magic.h,P01a.1,implemented,NetworkMagic,lib/tests/Common/NetworkMagicTest.cpp
-cardano_new_constitution_action_t,opaque object,lib/include/cardano/proposal_procedures/new_constitution_action.h,P13,planned,,
-cardano_no_confidence_action_t,opaque object,lib/include/cardano/proposal_procedures/no_confidence_action.h,P13,planned,,
+cardano_new_constitution_action_t,opaque object,lib/include/cardano/proposal_procedures/new_constitution_action.h,P13,implemented,Cometa::NewConstitutionAction,lib/tests/ProposalProcedures/NewConstitutionActionTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_no_confidence_action_t,opaque object,lib/include/cardano/proposal_procedures/no_confidence_action.h,P13,implemented,Cometa::NoConfidenceAction,lib/tests/ProposalProcedures/NoConfidenceActionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_object_deallocator_t,callback,lib/include/cardano/object.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
 cardano_object_t,struct,lib/include/cardano/object.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
-cardano_parameter_change_action_t,opaque object,lib/include/cardano/proposal_procedures/parameter_change_action.h,P13,planned,,
+cardano_parameter_change_action_t,opaque object,lib/include/cardano/proposal_procedures/parameter_change_action.h,P13,implemented,Cometa::ParameterChangeAction,lib/tests/ProposalProcedures/ParameterChangeActionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_data_kind_t,enum,lib/include/cardano/plutus_data/plutus_data_kind.h,P05,implemented,Cometa::PlutusDataKind,lib/tests/PlutusData/PlutusDataKindTest.cpp
-cardano_plutus_data_set_t,opaque object,lib/include/cardano/witness_set/plutus_data_set.h,P15,planned,,
+cardano_plutus_data_set_t,opaque object,lib/include/cardano/witness_set/plutus_data_set.h,P15,implemented,Cometa::PlutusDataSet,lib/tests/WitnessSet/PlutusDataSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_data_t,opaque object,lib/include/cardano/plutus_data/plutus_data.h,P05,implemented,Cometa::PlutusData,lib/tests/PlutusData/PlutusDataTest.cpp
 cardano_plutus_language_version_t,enum,lib/include/cardano/scripts/plutus_scripts/plutus_language_version.h,P06.3,implemented,Cometa::PlutusLanguageVersion,lib/tests/Scripts/PlutusScripts/PlutusLanguageVersionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_list_t,opaque object,lib/include/cardano/plutus_data/plutus_list.h,P05,implemented,Cometa::PlutusList,lib/tests/PlutusData/PlutusListTest.cpp
 cardano_plutus_map_t,opaque object,lib/include/cardano/plutus_data/plutus_map.h,P05,implemented,Cometa::PlutusMap,lib/tests/PlutusData/PlutusMapTest.cpp
 cardano_plutus_v1_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v1_script_list.h,P08,implemented,Cometa::PlutusV1ScriptList,lib/tests/AuxiliaryData/PlutusV1ScriptListTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_plutus_v1_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v1_script_set.h,P15,planned,,
+cardano_plutus_v1_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v1_script_set.h,P15,implemented,Cometa::PlutusV1ScriptSet,lib/tests/WitnessSet/PlutusV1ScriptSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_v1_script_t,opaque object,lib/include/cardano/scripts/plutus_scripts/plutus_v1_script.h,P06.3,implemented,Cometa::PlutusV1Script,lib/tests/Scripts/PlutusScripts/PlutusV1ScriptTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_v2_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v2_script_list.h,P08,implemented,Cometa::PlutusV2ScriptList,lib/tests/AuxiliaryData/PlutusV2ScriptListTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_plutus_v2_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v2_script_set.h,P15,planned,,
+cardano_plutus_v2_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v2_script_set.h,P15,implemented,Cometa::PlutusV2ScriptSet,lib/tests/WitnessSet/PlutusV2ScriptSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_v2_script_t,opaque object,lib/include/cardano/scripts/plutus_scripts/plutus_v2_script.h,P06.3,implemented,Cometa::PlutusV2Script,lib/tests/Scripts/PlutusScripts/PlutusV2ScriptTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_v3_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v3_script_list.h,P08,implemented,Cometa::PlutusV3ScriptList,lib/tests/AuxiliaryData/PlutusV3ScriptListTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_plutus_v3_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v3_script_set.h,P15,planned,,
+cardano_plutus_v3_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v3_script_set.h,P15,implemented,Cometa::PlutusV3ScriptSet,lib/tests/WitnessSet/PlutusV3ScriptSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_v3_script_t,opaque object,lib/include/cardano/scripts/plutus_scripts/plutus_v3_script.h,P06.3,implemented,Cometa::PlutusV3Script,lib/tests/Scripts/PlutusScripts/PlutusV3ScriptTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_v4_script_list_t,opaque object,lib/include/cardano/auxiliary_data/plutus_v4_script_list.h,P08,implemented,Cometa::PlutusV4ScriptList,lib/tests/AuxiliaryData/PlutusV4ScriptListTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_plutus_v4_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v4_script_set.h,P15,planned,,
+cardano_plutus_v4_script_set_t,opaque object,lib/include/cardano/witness_set/plutus_v4_script_set.h,P15,implemented,Cometa::PlutusV4ScriptSet,lib/tests/WitnessSet/PlutusV4ScriptSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_plutus_v4_script_t,opaque object,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,implemented,Cometa::PlutusV4Script,lib/tests/Scripts/PlutusScripts/PlutusV4ScriptTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_pointer_address_t,opaque object,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress,lib/tests/Address/PointerAddressTest.cpp
 cardano_policy_id_list_t,opaque object,lib/include/cardano/assets/policy_id_list.h,P04.1,implemented,Cometa::PolicyIdList,lib/tests/Assets/PolicyIdListTest.cpp
 cardano_pool_metadata_t,opaque object,lib/include/cardano/pool_params/pool_metadata.h,P09,implemented,Cometa::PoolMetadata,lib/tests/PoolParams/PoolMetadataTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_pool_owners_t,opaque object,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,
-cardano_pool_params_t,opaque object,lib/include/cardano/pool_params/pool_params.h,P09,planned,,
-cardano_pool_registration_cert_t,opaque object,lib/include/cardano/certs/pool_registration_cert.h,P10,planned,,
-cardano_pool_retirement_cert_t,opaque object,lib/include/cardano/certs/pool_retirement_cert.h,P10,planned,,
-cardano_pool_voting_thresholds_t,opaque object,lib/include/cardano/protocol_params/pool_voting_thresholds.h,P12,planned,,
-cardano_proposal_procedure_set_t,opaque object,lib/include/cardano/proposal_procedures/proposal_procedure_set.h,P13,planned,,
-cardano_proposal_procedure_t,opaque object,lib/include/cardano/proposal_procedures/proposal_procedure.h,P13,planned,,
-cardano_proposed_param_updates_t,opaque object,lib/include/cardano/protocol_params/proposed_param_updates.h,P12,planned,,
-cardano_protocol_param_update_t,opaque object,lib/include/cardano/protocol_params/protocol_param_update.h,P12,planned,,
-cardano_protocol_parameters_t,opaque object,lib/include/cardano/protocol_params/protocol_parameters.h,P12,planned,,
+cardano_pool_owners_t,opaque object,lib/include/cardano/pool_params/pool_owners.h,P09,implemented,Cometa::PoolOwners,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_pool_params_t,opaque object,lib/include/cardano/pool_params/pool_params.h,P09,implemented,Cometa::PoolParams,lib/tests/PoolParams/PoolParamsTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_pool_registration_cert_t,opaque object,lib/include/cardano/certs/pool_registration_cert.h,P10,implemented,Cometa::PoolRegistrationCert,lib/tests/Certificates/PoolRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_pool_retirement_cert_t,opaque object,lib/include/cardano/certs/pool_retirement_cert.h,P10,implemented,Cometa::PoolRetirementCert,lib/tests/Certificates/PoolRetirementCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_pool_voting_thresholds_t,opaque object,lib/include/cardano/protocol_params/pool_voting_thresholds.h,P12,implemented,Cometa::PoolVotingThresholds,lib/tests/ProtocolParams/PoolVotingThresholdsTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_proposal_procedure_set_t,opaque object,lib/include/cardano/proposal_procedures/proposal_procedure_set.h,P13,implemented,Cometa::ProposalProcedureSet,lib/tests/ProposalProcedures/ProposalProcedureSetTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_proposal_procedure_t,opaque object,lib/include/cardano/proposal_procedures/proposal_procedure.h,P13,implemented,Cometa::ProposalProcedure,lib/tests/ProposalProcedures/ProposalProcedureTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_proposed_param_updates_t,opaque object,lib/include/cardano/protocol_params/proposed_param_updates.h,P12,implemented,Cometa::ProposedParamUpdates,lib/tests/ProtocolParams/ProposedParamUpdatesTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_protocol_param_update_t,opaque object,lib/include/cardano/protocol_params/protocol_param_update.h,P12,implemented,Cometa::ProtocolParamUpdate,lib/tests/ProtocolParams/ProtocolParamUpdateTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_protocol_parameters_t,opaque object,lib/include/cardano/protocol_params/protocol_parameters.h,P12,implemented,Cometa::ProtocolParameters,lib/tests/ProtocolParams/ProtocolParametersTest.cpp
 cardano_protocol_version_t,opaque object,lib/include/cardano/common/protocol_version.h,P01a.1,implemented,ProtocolVersion,lib/tests/Common/ProtocolVersionTest.cpp
 cardano_provider_impl_t,struct,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_provider_t,opaque object,lib/include/cardano/providers/provider.h,P19,planned,,
-cardano_redeemer_list_t,opaque object,lib/include/cardano/witness_set/redeemer_list.h,P15,planned,,
-cardano_redeemer_t,opaque object,lib/include/cardano/witness_set/redeemer.h,P15,planned,,
-cardano_redeemer_tag_t,enum,lib/include/cardano/witness_set/redeemer_tag.h,P15,planned,,
-cardano_register_drep_cert_t,opaque object,lib/include/cardano/certs/register_drep_cert.h,P11,planned,,
-cardano_registration_cert_t,opaque object,lib/include/cardano/certs/registration_cert.h,P10,planned,,
-cardano_relay_t,opaque object,lib/include/cardano/pool_params/relay.h,P09,planned,,
-cardano_relay_type_t,enum,lib/include/cardano/pool_params/relay_type.h,P09,planned,,
-cardano_relays_t,opaque object,lib/include/cardano/pool_params/relays.h,P09,planned,,
-cardano_required_guards_map_t,opaque object,lib/include/cardano/transaction_body/required_guards_map.h,P16,planned,,
-cardano_resign_committee_cold_cert_t,opaque object,lib/include/cardano/certs/resign_committee_cold_cert.h,P11,planned,,
+cardano_redeemer_list_t,opaque object,lib/include/cardano/witness_set/redeemer_list.h,P15,implemented,Cometa::RedeemerList,lib/tests/WitnessSet/RedeemerListTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_redeemer_t,opaque object,lib/include/cardano/witness_set/redeemer.h,P15,implemented,Cometa::Redeemer,lib/tests/WitnessSet/RedeemerTest.cpp
+cardano_redeemer_tag_t,enum,lib/include/cardano/witness_set/redeemer_tag.h,P15,implemented,Cometa::RedeemerTag,lib/tests/WitnessSet/RedeemerTagTest.cpp
+cardano_register_drep_cert_t,opaque object,lib/include/cardano/certs/register_drep_cert.h,P11,implemented,Cometa::RegisterDRepCert,lib/tests/Certificates/RegisterDRepCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_registration_cert_t,opaque object,lib/include/cardano/certs/registration_cert.h,P10,implemented,Cometa::RegistrationCert,lib/tests/Certificates/RegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_relay_t,opaque object,lib/include/cardano/pool_params/relay.h,P09,implemented,Cometa::Relay,lib/tests/PoolParams/RelayTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_relay_type_t,enum,lib/include/cardano/pool_params/relay_type.h,P09,implemented,Cometa::RelayType,lib/tests/PoolParams/RelayTypeTest.cpp
+cardano_relays_t,opaque object,lib/include/cardano/pool_params/relays.h,P09,implemented,Cometa::Relays,lib/tests/PoolParams/RelaysTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_required_guards_map_t,opaque object,lib/include/cardano/transaction_body/required_guards_map.h,P16,implemented,Cometa::RequiredGuardsMap,lib/tests/TransactionBody/RequiredGuardsMapTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_resign_committee_cold_cert_t,opaque object,lib/include/cardano/certs/resign_committee_cold_cert.h,P11,implemented,Cometa::ResignCommitteeColdCert,lib/tests/Certificates/ResignCommitteeColdCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_resolve_datum_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_resolve_unspent_outputs_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
 cardano_reward_address_list_t,opaque object,lib/include/cardano/common/reward_address_list.h,P07,implemented,Cometa::RewardAddressList,lib/tests/Common/RewardAddressListTest.cpp; lib/tests/ValueContractTest.cpp
@@ -178,59 +178,59 @@ cardano_script_n_of_k_t,opaque object,lib/include/cardano/scripts/native_scripts
 cardano_script_pubkey_t,opaque object,lib/include/cardano/scripts/native_scripts/script_pubkey.h,P06.1,implemented,Cometa::ScriptPubkey,lib/tests/Scripts/NativeScripts/ScriptPubkeyTest.cpp
 cardano_script_require_guard_t,opaque object,lib/include/cardano/scripts/native_scripts/script_require_guard.h,P06.1,implemented,Cometa::ScriptRequireGuard,lib/tests/Scripts/NativeScripts/ScriptRequireGuardTest.cpp
 cardano_script_t,opaque object,lib/include/cardano/scripts/script.h,P06.4,implemented,Cometa::Script,lib/tests/Scripts/ScriptTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_secure_key_handler_impl_t,struct,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
-cardano_secure_key_handler_t,opaque object,lib/include/cardano/key_handlers/secure_key_handler.h,P18,planned,,
-cardano_secure_key_handler_type_t,enum,lib/include/cardano/key_handlers/secure_key_handler_type.h,P18,planned,,
+cardano_secure_key_handler_impl_t,struct,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,internal,,
+cardano_secure_key_handler_t,opaque object,lib/include/cardano/key_handlers/secure_key_handler.h,P18,implemented,Cometa::SecureKeyHandler,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp; lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
+cardano_secure_key_handler_type_t,enum,lib/include/cardano/key_handlers/secure_key_handler_type.h,P18,implemented,Cometa::SecureKeyHandlerType,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp; lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
 cardano_selection_strategy_t,enum,lib/include/cardano/transaction_builder/coin_selection/coin_selection_strategy.h,P20,planned,,
-cardano_serialize_secure_key_handler_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,planned,,
-cardano_single_host_addr_relay_t,opaque object,lib/include/cardano/pool_params/single_host_addr_relay.h,P09,planned,,
-cardano_single_host_name_relay_t,opaque object,lib/include/cardano/pool_params/single_host_name_relay.h,P09,planned,,
+cardano_serialize_secure_key_handler_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,implemented,Cometa::Bip32KeyCallbacks::serialize; Cometa::Ed25519KeyCallbacks::serialize,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp; lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
+cardano_single_host_addr_relay_t,opaque object,lib/include/cardano/pool_params/single_host_addr_relay.h,P09,implemented,Cometa::SingleHostAddrRelay,lib/tests/PoolParams/SingleHostAddrRelayTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_single_host_name_relay_t,opaque object,lib/include/cardano/pool_params/single_host_name_relay.h,P09,implemented,Cometa::SingleHostNameRelay,lib/tests/PoolParams/SingleHostNameRelayTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_slot_config_t,struct,lib/include/cardano/slot_config.h,P01a.1,implemented,SlotConfig,lib/tests/SlotConfigTest.cpp
-cardano_stake_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_delegation_cert.h,P10,planned,,
-cardano_stake_deregistration_cert_t,opaque object,lib/include/cardano/certs/stake_deregistration_cert.h,P10,planned,,
+cardano_stake_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_delegation_cert.h,P10,implemented,Cometa::StakeDelegationCert,lib/tests/Certificates/StakeDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_stake_deregistration_cert_t,opaque object,lib/include/cardano/certs/stake_deregistration_cert.h,P10,implemented,Cometa::StakeDeregistrationCert,lib/tests/Certificates/StakeDeregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_stake_pointer_t,struct,lib/include/cardano/address/stake_pointer.h,P03,implemented,Cometa::StakePointer,lib/tests/Address/PointerAddressTest.cpp
-cardano_stake_registration_cert_t,opaque object,lib/include/cardano/certs/stake_registration_cert.h,P10,planned,,
-cardano_stake_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_registration_delegation_cert.h,P10,planned,,
-cardano_stake_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_vote_delegation_cert.h,P11,planned,,
-cardano_stake_vote_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_vote_registration_delegation_cert.h,P11,planned,,
-cardano_sub_transaction_body_t,opaque object,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,planned,,
-cardano_sub_transaction_set_t,opaque object,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,planned,,
-cardano_sub_transaction_t,opaque object,lib/include/cardano/transaction/sub_transaction.h,P17,planned,,
+cardano_stake_registration_cert_t,opaque object,lib/include/cardano/certs/stake_registration_cert.h,P10,implemented,Cometa::StakeRegistrationCert,lib/tests/Certificates/StakeRegistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_stake_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_registration_delegation_cert.h,P10,implemented,Cometa::StakeRegistrationDelegationCert,lib/tests/Certificates/StakeRegistrationDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_stake_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_vote_delegation_cert.h,P11,implemented,Cometa::StakeVoteDelegationCert,lib/tests/Certificates/StakeVoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_stake_vote_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/stake_vote_registration_delegation_cert.h,P11,implemented,Cometa::StakeVoteRegistrationDelegationCert,lib/tests/Certificates/StakeVoteRegistrationDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_sub_transaction_body_t,opaque object,lib/include/cardano/transaction_body/sub_transaction_body.h,P16,implemented,Cometa::SubTransactionBody,lib/tests/TransactionBody/SubTransactionBodyTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_sub_transaction_set_t,opaque object,lib/include/cardano/transaction_body/sub_transaction_set.h,P17,implemented,Cometa::SubTransactionSet,lib/tests/Transaction/SubTransactionSetTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_sub_transaction_t,opaque object,lib/include/cardano/transaction/sub_transaction.h,P17,implemented,Cometa::SubTransaction,lib/tests/Transaction/SubTransactionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_sub_tx_builder_t,opaque object,lib/include/cardano/transaction_builder/sub_transaction_builder.h,P23,planned,,
 cardano_submit_transaction_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
-cardano_transaction_body_t,opaque object,lib/include/cardano/transaction_body/transaction_body.h,P17,planned,,
+cardano_transaction_body_t,opaque object,lib/include/cardano/transaction_body/transaction_body.h,P17,implemented,Cometa::TransactionBody,lib/tests/TransactionBody/TransactionBodyTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_transaction_input_set_t,opaque object,lib/include/cardano/transaction_body/transaction_input_set.h,P07,implemented,Cometa::TransactionInputSet,lib/tests/TransactionBody/TransactionInputSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_transaction_input_t,opaque object,lib/include/cardano/transaction_body/transaction_input.h,P07,implemented,Cometa::TransactionInput,lib/tests/TransactionBody/TransactionInputTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_transaction_metadata_t,opaque object,lib/include/cardano/auxiliary_data/transaction_metadata.h,P08,implemented,Cometa::TransactionMetadata,lib/tests/AuxiliaryData/TransactionMetadataTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_transaction_output_list_t,opaque object,lib/include/cardano/transaction_body/transaction_output_list.h,P07,implemented,Cometa::TransactionOutputList,lib/tests/TransactionBody/TransactionOutputListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_transaction_output_t,opaque object,lib/include/cardano/transaction_body/transaction_output.h,P07,implemented,Cometa::TransactionOutput,lib/tests/TransactionBody/TransactionOutputTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_transaction_t,opaque object,lib/include/cardano/transaction/transaction.h,P17,planned,,
-cardano_treasury_withdrawals_action_t,opaque object,lib/include/cardano/proposal_procedures/treasury_withdrawals_action.h,P13,planned,,
+cardano_transaction_t,opaque object,lib/include/cardano/transaction/transaction.h,P17,implemented,Cometa::Transaction,lib/tests/Transaction/TransactionTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_treasury_withdrawals_action_t,opaque object,lib/include/cardano/proposal_procedures/treasury_withdrawals_action.h,P13,implemented,Cometa::TreasuryWithdrawalsAction,lib/tests/ProposalProcedures/TreasuryWithdrawalsActionTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_tx_builder_t,opaque object,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,
 cardano_tx_evaluate_func_t,callback,lib/include/cardano/transaction_builder/evaluation/tx_evaluator_impl.h,P21,planned,,
 cardano_tx_evaluator_impl_t,struct,lib/include/cardano/transaction_builder/evaluation/tx_evaluator_impl.h,P21,planned,,
 cardano_tx_evaluator_t,opaque object,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,planned,,
 cardano_unit_interval_t,opaque object,lib/include/cardano/common/unit_interval.h,P01a.2,implemented,Cometa::UnitInterval,lib/tests/Common/UnitIntervalTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_unregister_drep_cert_t,opaque object,lib/include/cardano/certs/unregister_drep_cert.h,P11,planned,,
-cardano_unregistration_cert_t,opaque object,lib/include/cardano/certs/unregistration_cert.h,P10,planned,,
-cardano_update_committee_action_t,opaque object,lib/include/cardano/proposal_procedures/update_committee_action.h,P13,planned,,
-cardano_update_drep_cert_t,opaque object,lib/include/cardano/certs/update_drep_cert.h,P11,planned,,
-cardano_update_t,opaque object,lib/include/cardano/protocol_params/update.h,P12,planned,,
+cardano_unregister_drep_cert_t,opaque object,lib/include/cardano/certs/unregister_drep_cert.h,P11,implemented,Cometa::UnregisterDRepCert,lib/tests/Certificates/UnregisterDRepCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_unregistration_cert_t,opaque object,lib/include/cardano/certs/unregistration_cert.h,P10,implemented,Cometa::UnregistrationCert,lib/tests/Certificates/UnregistrationCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_update_committee_action_t,opaque object,lib/include/cardano/proposal_procedures/update_committee_action.h,P13,implemented,Cometa::UpdateCommitteeAction,lib/tests/ProposalProcedures/UpdateCommitteeActionTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_update_drep_cert_t,opaque object,lib/include/cardano/certs/update_drep_cert.h,P11,implemented,Cometa::UpdateDRepCert,lib/tests/Certificates/UpdateDRepCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_update_t,opaque object,lib/include/cardano/protocol_params/update.h,P12,implemented,Cometa::Update,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_utxo_list_compare_item_t,callback,lib/include/cardano/common/utxo_list.h,P07,implemented,Predicates and comparators accepted by standard C++ algorithms,lib/tests/Common/UtxoListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_utxo_list_t,opaque object,lib/include/cardano/common/utxo_list.h,P07,implemented,Cometa::UtxoList,lib/tests/Common/UtxoListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_utxo_list_unary_predicate_t,callback,lib/include/cardano/common/utxo_list.h,P07,implemented,Predicates and comparators accepted by standard C++ algorithms,lib/tests/Common/UtxoListTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_utxo_t,opaque object,lib/include/cardano/common/utxo.h,P07,implemented,Cometa::Utxo,lib/tests/Common/UtxoTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_value_t,opaque object,lib/include/cardano/transaction_body/value.h,P04.2,implemented,Cometa::Value,lib/tests/TransactionBody/ValueTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_vkey_witness_set_t,opaque object,lib/include/cardano/witness_set/vkey_witness_set.h,P15,planned,,
-cardano_vkey_witness_t,opaque object,lib/include/cardano/witness_set/vkey_witness.h,P15,planned,,
-cardano_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_delegation_cert.h,P11,planned,,
-cardano_vote_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_registration_delegation_cert.h,P11,planned,,
-cardano_vote_t,enum,lib/include/cardano/voting_procedures/vote.h,P14,planned,,
-cardano_voter_list_t,opaque object,lib/include/cardano/voting_procedures/voter_list.h,P14,planned,,
-cardano_voter_t,opaque object,lib/include/cardano/voting_procedures/voter.h,P14,planned,,
-cardano_voter_type_t,enum,lib/include/cardano/voting_procedures/voter_type.h,P14,planned,,
-cardano_voting_procedure_list_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,planned,,
-cardano_voting_procedure_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure.h,P14,planned,,
-cardano_voting_procedures_t,opaque object,lib/include/cardano/voting_procedures/voting_procedures.h,P14,planned,,
+cardano_vkey_witness_set_t,opaque object,lib/include/cardano/witness_set/vkey_witness_set.h,P15,implemented,Cometa::VkeyWitnessSet,lib/tests/WitnessSet/VkeyWitnessSetTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_vkey_witness_t,opaque object,lib/include/cardano/witness_set/vkey_witness.h,P15,implemented,Cometa::VkeyWitness,lib/tests/WitnessSet/VkeyWitnessTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_vote_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_delegation_cert.h,P11,implemented,Cometa::VoteDelegationCert,lib/tests/Certificates/VoteDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_vote_registration_delegation_cert_t,opaque object,lib/include/cardano/certs/vote_registration_delegation_cert.h,P11,implemented,Cometa::VoteRegistrationDelegationCert,lib/tests/Certificates/VoteRegistrationDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_vote_t,enum,lib/include/cardano/voting_procedures/vote.h,P14,implemented,Cometa::Vote,lib/tests/VotingProcedures/VoteTest.cpp
+cardano_voter_list_t,opaque object,lib/include/cardano/voting_procedures/voter_list.h,P14,implemented,Cometa::VoterList,lib/tests/VotingProcedures/VoterListTest.cpp
+cardano_voter_t,opaque object,lib/include/cardano/voting_procedures/voter.h,P14,implemented,Cometa::Voter,lib/tests/VotingProcedures/VoterTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_voter_type_t,enum,lib/include/cardano/voting_procedures/voter_type.h,P14,implemented,Cometa::VoterType,lib/tests/VotingProcedures/VoterTypeTest.cpp
+cardano_voting_procedure_list_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure_list.h,P14,implemented,Cometa::VotingProcedureList,lib/tests/VotingProcedures/VotingProcedureListTest.cpp
+cardano_voting_procedure_t,opaque object,lib/include/cardano/voting_procedures/voting_procedure.h,P14,implemented,Cometa::VotingProcedure,lib/tests/VotingProcedures/VotingProcedureTest.cpp; lib/tests/ValueContractTest.cpp
+cardano_voting_procedures_t,opaque object,lib/include/cardano/voting_procedures/voting_procedures.h,P14,implemented,Cometa::VotingProcedures,lib/tests/VotingProcedures/VotingProceduresTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_withdrawal_map_t,opaque object,lib/include/cardano/common/withdrawal_map.h,P07,implemented,Cometa::WithdrawalMap,lib/tests/Common/WithdrawalMapTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_witness_set_t,opaque object,lib/include/cardano/witness_set/witness_set.h,P15,planned,,
+cardano_witness_set_t,opaque object,lib/include/cardano/witness_set/witness_set.h,P15,implemented,Cometa::WitnessSet,lib/tests/WitnessSet/WitnessSetTest.cpp; lib/tests/ValueContractTest.cpp

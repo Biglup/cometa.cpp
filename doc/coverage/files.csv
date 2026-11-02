@@ -37,32 +37,32 @@ lib/include/cardano/cbor/cbor_reader_state.h,public header,P01b,implemented,"Cbo
 lib/include/cardano/cbor/cbor_simple_value.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
 lib/include/cardano/cbor/cbor_tag.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
 lib/include/cardano/cbor/cbor_writer.h,public header,P01b,implemented,"CborReader/CborWriter and typed enums; nested copy, malformed input, exact bytes and cleanup tests."
-lib/include/cardano/certs/auth_committee_hot_cert.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/certs/cert_type.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/certificate.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/certificate_set.h,public header,P10,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/certs/genesis_key_delegation_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/mir_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/mir_cert_pot_type.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/mir_cert_type.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/mir_to_pot_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/mir_to_stake_creds_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/pool_registration_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/pool_retirement_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/register_drep_cert.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/certs/registration_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/resign_committee_cold_cert.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/certs/stake_delegation_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/stake_deregistration_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/stake_registration_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/stake_registration_delegation_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/stake_vote_delegation_cert.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/certs/stake_vote_registration_delegation_cert.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/certs/unregister_drep_cert.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/certs/unregistration_cert.h,public header,P10,planned,idiomatic C++ API
-lib/include/cardano/certs/update_drep_cert.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/certs/vote_delegation_cert.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/certs/vote_registration_delegation_cert.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/certs/auth_committee_hot_cert.h,public header,P11,implemented,Cometa::AuthCommitteeHotCert
+lib/include/cardano/certs/cert_type.h,public header,P10,implemented,Typed certificate discriminator and native display names.
+lib/include/cardano/certs/certificate.h,public header,P10,implemented,Cometa::Certificate
+lib/include/cardano/certs/certificate_set.h,public header,P10,implemented,Certificate collection with native CBOR fixture and independent copy contract.domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/certs/genesis_key_delegation_cert.h,public header,P10,implemented,Historical genesis delegation with three independently copied hashes.
+lib/include/cardano/certs/mir_cert.h,public header,P10,implemented,Cometa::MirCert
+lib/include/cardano/certs/mir_cert_pot_type.h,public header,P10,implemented,Historical MIR pot transfer and discriminators.
+lib/include/cardano/certs/mir_cert_type.h,public header,P10,implemented,Historical MIR pot transfer and discriminators.
+lib/include/cardano/certs/mir_to_pot_cert.h,public header,P10,implemented,Historical MIR pot transfer and discriminators.
+lib/include/cardano/certs/mir_to_stake_creds_cert.h,public header,P10,implemented,Cometa::MirToStakeCredentialsCert
+lib/include/cardano/certs/pool_registration_cert.h,public header,P10,implemented,Pool registration with independent PoolParams values.
+lib/include/cardano/certs/pool_retirement_cert.h,public header,P10,implemented,Pool retirement epoch and independent 28-byte pool key hash.
+lib/include/cardano/certs/register_drep_cert.h,public header,P11,implemented,Cometa::RegisterDRepCert
+lib/include/cardano/certs/registration_cert.h,public header,P10,implemented,Deposit-bearing stake certificate with independent credential values.
+lib/include/cardano/certs/resign_committee_cold_cert.h,public header,P11,implemented,Cometa::ResignCommitteeColdCert
+lib/include/cardano/certs/stake_delegation_cert.h,public header,P10,implemented,Stake delegation with independent credential and pool hash values.
+lib/include/cardano/certs/stake_deregistration_cert.h,public header,P10,implemented,Legacy stake deregistration with owned credential values.
+lib/include/cardano/certs/stake_registration_cert.h,public header,P10,implemented,Legacy stake registration with owned credential values.
+lib/include/cardano/certs/stake_registration_delegation_cert.h,public header,P10,implemented,Combined stake registration and delegation with deposit.
+lib/include/cardano/certs/stake_vote_delegation_cert.h,public header,P11,implemented,Cometa::StakeVoteDelegationCert
+lib/include/cardano/certs/stake_vote_registration_delegation_cert.h,public header,P11,implemented,Cometa::StakeVoteRegistrationDelegationCert
+lib/include/cardano/certs/unregister_drep_cert.h,public header,P11,implemented,Cometa::UnregisterDRepCert
+lib/include/cardano/certs/unregistration_cert.h,public header,P10,implemented,Deposit-bearing stake certificate with independent credential values.
+lib/include/cardano/certs/update_drep_cert.h,public header,P11,implemented,Cometa::UpdateDRepCert
+lib/include/cardano/certs/vote_delegation_cert.h,public header,P11,implemented,Cometa::VoteDelegationCert
+lib/include/cardano/certs/vote_registration_delegation_cert.h,public header,P11,implemented,Cometa::VoteRegistrationDelegationCert
 lib/include/cardano/common/anchor.h,public header,P01a.2,implemented,Cometa::Anchor; domain and value-contract tests
 lib/include/cardano/common/bigint.h,public header,P01a.2,implemented,"Cometa::BigInt; arithmetic, conversion and value-contract tests"
 lib/include/cardano/common/byte_order.h,public header,P01a.1,implemented,idiomatic C++ API
@@ -70,12 +70,12 @@ lib/include/cardano/common/credential.h,public header,P01a.1,implemented,idiomat
 lib/include/cardano/common/credential_type.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/datum.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
 lib/include/cardano/common/datum_type.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
-lib/include/cardano/common/drep.h,public header,P11,planned,idiomatic C++ API
-lib/include/cardano/common/drep_type.h,public header,P11,planned,idiomatic C++ API
+lib/include/cardano/common/drep.h,public header,P11,implemented,Cometa::DRep
+lib/include/cardano/common/drep_type.h,public header,P11,implemented,Cometa::DRepType
 lib/include/cardano/common/ex_units.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/governance_action_id.h,public header,P01a.2,implemented,Cometa::GovernanceActionId; domain and value-contract tests
 lib/include/cardano/common/governance_key_type.h,public header,P01a.1,implemented,idiomatic C++ API
-lib/include/cardano/common/guard_set.h,public header,P16,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/common/guard_set.h,public header,P16,implemented,Cometa::GuardSet
 lib/include/cardano/common/network_id.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/network_magic.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/common/protocol_version.h,public header,P01a.1,implemented,idiomatic C++ API
@@ -104,14 +104,14 @@ lib/include/cardano/json/json_format.h,public header,P01b,implemented,"JsonValue
 lib/include/cardano/json/json_object.h,public header,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
 lib/include/cardano/json/json_object_type.h,public header,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
 lib/include/cardano/json/json_writer.h,public header,P01b,implemented,"JsonValue/JsonWriter and enums; syntax, exact numbers, independent children, and failure cleanup tests."
-lib/include/cardano/key_handlers/account_derivation_path.h,public header,P18,planned,idiomatic C++ API
-lib/include/cardano/key_handlers/cip_1852_constants.h,public header,P18,planned,idiomatic C++ API
-lib/include/cardano/key_handlers/derivation_path.h,public header,P18,planned,idiomatic C++ API
-lib/include/cardano/key_handlers/secure_key_handler.h,public header,P18,planned,idiomatic C++ API
-lib/include/cardano/key_handlers/secure_key_handler_impl.h,public header,P18,planned,internal ABI/ownership support; no raw C wrapper API
-lib/include/cardano/key_handlers/secure_key_handler_type.h,public header,P18,planned,idiomatic C++ API
-lib/include/cardano/key_handlers/software_secure_key_handler.h,public header,P18,planned,idiomatic C++ API
-lib/include/cardano/message_signing/cip8.h,public header,P18,planned,idiomatic C++ API
+lib/include/cardano/key_handlers/account_derivation_path.h,public header,P18,implemented,Cometa::AccountDerivationPath
+lib/include/cardano/key_handlers/cip_1852_constants.h,public header,P18,implemented,Cometa::Cip1852 and Cometa::DerivationRole
+lib/include/cardano/key_handlers/derivation_path.h,public header,P18,implemented,Cometa::DerivationPath
+lib/include/cardano/key_handlers/secure_key_handler.h,public header,P18,implemented,Cometa::SecureKeyHandler
+lib/include/cardano/key_handlers/secure_key_handler_impl.h,public header,P18,internal,Native callback ABI used by Cometa::SecureKeyHandler.
+lib/include/cardano/key_handlers/secure_key_handler_type.h,public header,P18,implemented,Cometa::SecureKeyHandlerType
+lib/include/cardano/key_handlers/software_secure_key_handler.h,public header,P18,implemented,Cometa::SecureKeyHandler software factories
+lib/include/cardano/message_signing/cip8.h,public header,P18,implemented,Cometa::signCip8
 lib/include/cardano/object.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
 lib/include/cardano/plutus_data/constr_plutus_data.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
 lib/include/cardano/plutus_data/plutus_data.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
@@ -121,38 +121,38 @@ lib/include/cardano/plutus_data/plutus_map.h,public header,P05,implemented,"Valu
 lib/include/cardano/pool_params/bls_key.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/include/cardano/pool_params/ipv4.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/include/cardano/pool_params/ipv6.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
-lib/include/cardano/pool_params/multi_host_name_relay.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/multi_host_name_relay.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
 lib/include/cardano/pool_params/pool_metadata.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
-lib/include/cardano/pool_params/pool_owners.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/pool_params.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/relay.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/relay_type.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/relays.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/single_host_addr_relay.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/single_host_name_relay.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/proposal_procedures/committee.h,public header,P13,planned,idiomatic C++ API
-lib/include/cardano/proposal_procedures/committee_members_map.h,public header,P13,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/proposal_procedures/constitution.h,public header,P13,planned,idiomatic C++ API
+lib/include/cardano/pool_params/pool_owners.h,public header,P09,implemented,Sorted unique 28-byte key hashes; independent values and owned results.
+lib/include/cardano/pool_params/pool_params.h,public header,P09,implemented,Independent stake pool parameter values with optional BLS key and metadata.
+lib/include/cardano/pool_params/relay.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/include/cardano/pool_params/relay_type.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/include/cardano/pool_params/relays.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/include/cardano/pool_params/single_host_addr_relay.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/include/cardano/pool_params/single_host_name_relay.h,public header,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/include/cardano/proposal_procedures/committee.h,public header,P13,implemented,Cometa::Committee
+lib/include/cardano/proposal_procedures/committee_members_map.h,public header,P13,implemented,Cometa::CommitteeMembersMap
+lib/include/cardano/proposal_procedures/constitution.h,public header,P13,implemented,Cometa::Constitution
 lib/include/cardano/proposal_procedures/credential_set.h,public header,P04.3,implemented,Unique sorted sets with independent elements and tagged CBOR normalization.
-lib/include/cardano/proposal_procedures/governance_action_type.h,public header,P13,planned,idiomatic C++ API
-lib/include/cardano/proposal_procedures/hard_fork_initiation_action.h,public header,P13,planned,idiomatic C++ API
-lib/include/cardano/proposal_procedures/info_action.h,public header,P13,planned,idiomatic C++ API
-lib/include/cardano/proposal_procedures/new_constitution_action.h,public header,P13,planned,idiomatic C++ API
-lib/include/cardano/proposal_procedures/no_confidence_action.h,public header,P13,planned,idiomatic C++ API
-lib/include/cardano/proposal_procedures/parameter_change_action.h,public header,P13,planned,idiomatic C++ API
-lib/include/cardano/proposal_procedures/proposal_procedure.h,public header,P13,planned,idiomatic C++ API
-lib/include/cardano/proposal_procedures/proposal_procedure_set.h,public header,P13,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/proposal_procedures/treasury_withdrawals_action.h,public header,P13,planned,idiomatic C++ API
-lib/include/cardano/proposal_procedures/update_committee_action.h,public header,P13,planned,idiomatic C++ API
-lib/include/cardano/protocol_params/cost_model.h,public header,P12,planned,idiomatic C++ API
-lib/include/cardano/protocol_params/costmdls.h,public header,P12,planned,idiomatic C++ API
-lib/include/cardano/protocol_params/drep_voting_thresholds.h,public header,P12,planned,idiomatic C++ API
-lib/include/cardano/protocol_params/ex_unit_prices.h,public header,P12,planned,idiomatic C++ API
-lib/include/cardano/protocol_params/pool_voting_thresholds.h,public header,P12,planned,idiomatic C++ API
-lib/include/cardano/protocol_params/proposed_param_updates.h,public header,P12,planned,idiomatic C++ API
-lib/include/cardano/protocol_params/protocol_param_update.h,public header,P12,planned,idiomatic C++ API
-lib/include/cardano/protocol_params/protocol_parameters.h,public header,P12,planned,idiomatic C++ API
-lib/include/cardano/protocol_params/update.h,public header,P12,planned,idiomatic C++ API
+lib/include/cardano/proposal_procedures/governance_action_type.h,public header,P13,implemented,Cometa::GovernanceActionType
+lib/include/cardano/proposal_procedures/hard_fork_initiation_action.h,public header,P13,implemented,Cometa::HardForkInitiationAction
+lib/include/cardano/proposal_procedures/info_action.h,public header,P13,implemented,Cometa::InfoAction
+lib/include/cardano/proposal_procedures/new_constitution_action.h,public header,P13,implemented,Cometa::NewConstitutionAction
+lib/include/cardano/proposal_procedures/no_confidence_action.h,public header,P13,implemented,Cometa::NoConfidenceAction
+lib/include/cardano/proposal_procedures/parameter_change_action.h,public header,P13,implemented,Cometa::ParameterChangeAction
+lib/include/cardano/proposal_procedures/proposal_procedure.h,public header,P13,implemented,Cometa::ProposalProcedure
+lib/include/cardano/proposal_procedures/proposal_procedure_set.h,public header,P13,implemented,Cometa::ProposalProcedureSet
+lib/include/cardano/proposal_procedures/treasury_withdrawals_action.h,public header,P13,implemented,Cometa::TreasuryWithdrawalsAction
+lib/include/cardano/proposal_procedures/update_committee_action.h,public header,P13,implemented,Cometa::UpdateCommitteeAction
+lib/include/cardano/protocol_params/cost_model.h,public header,P12,implemented,Indexed costs with unknown language ID preservation and native CBOR fixtures.
+lib/include/cardano/protocol_params/costmdls.h,public header,P12,implemented,Cost model map including unknown language IDs and language views.
+lib/include/cardano/protocol_params/drep_voting_thresholds.h,public header,P12,implemented,Named governance threshold accessors with native CBOR fixtures.
+lib/include/cardano/protocol_params/ex_unit_prices.h,public header,P12,implemented,Rational execution prices with native CBOR fixture and independent copy contract.
+lib/include/cardano/protocol_params/pool_voting_thresholds.h,public header,P12,implemented,Named governance threshold accessors with native CBOR fixtures.
+lib/include/cardano/protocol_params/proposed_param_updates.h,public header,P12,implemented,Sorted genesis delegate proposals with independent value access.
+lib/include/cardano/protocol_params/protocol_param_update.h,public header,P12,implemented,Optional parameter proposals with distinct ledger-null states and native CBOR fixtures.
+lib/include/cardano/protocol_params/protocol_parameters.h,public header,P12,implemented,Cometa::ProtocolParameters
+lib/include/cardano/protocol_params/update.h,public header,P12,implemented,Cometa::Update
 lib/include/cardano/providers/provider.h,public header,P19,planned,idiomatic C++ API
 lib/include/cardano/providers/provider_impl.h,public header,P19,planned,internal ABI/ownership support; no raw C wrapper API
 lib/include/cardano/scripts/native_scripts/native_script.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
@@ -174,15 +174,15 @@ lib/include/cardano/scripts/script.h,public header,P06.4,implemented,"Typed nati
 lib/include/cardano/scripts/script_language.h,public header,P06.4,implemented,"Typed native and Plutus variants; owned accessors; shared serialization, inspection, and hash fixtures."
 lib/include/cardano/slot_config.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/time.h,public header,P01a.1,implemented,idiomatic C++ API
-lib/include/cardano/transaction/sub_transaction.h,public header,P17,planned,idiomatic C++ API
-lib/include/cardano/transaction/transaction.h,public header,P17,planned,idiomatic C++ API
-lib/include/cardano/transaction_body/account_balance_interval.h,public header,P16,planned,idiomatic C++ API
-lib/include/cardano/transaction_body/account_balance_intervals_map.h,public header,P16,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/transaction_body/direct_deposit_map.h,public header,P16,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/transaction_body/required_guards_map.h,public header,P16,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/transaction_body/sub_transaction_body.h,public header,P16,planned,idiomatic C++ API
-lib/include/cardano/transaction_body/sub_transaction_set.h,public header,P17,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/transaction_body/transaction_body.h,public header,P17,planned,idiomatic C++ API
+lib/include/cardano/transaction/sub_transaction.h,public header,P17,implemented,Cometa::SubTransaction
+lib/include/cardano/transaction/transaction.h,public header,P17,implemented,Cometa::Transaction
+lib/include/cardano/transaction_body/account_balance_interval.h,public header,P16,implemented,Cometa::AccountBalanceInterval
+lib/include/cardano/transaction_body/account_balance_intervals_map.h,public header,P16,implemented,Cometa::AccountBalanceIntervalsMap
+lib/include/cardano/transaction_body/direct_deposit_map.h,public header,P16,implemented,Cometa::DirectDepositMap
+lib/include/cardano/transaction_body/required_guards_map.h,public header,P16,implemented,Cometa::RequiredGuardsMap
+lib/include/cardano/transaction_body/sub_transaction_body.h,public header,P16,implemented,Cometa::SubTransactionBody
+lib/include/cardano/transaction_body/sub_transaction_set.h,public header,P17,implemented,Cometa::SubTransactionSet
+lib/include/cardano/transaction_body/transaction_body.h,public header,P17,implemented,Cometa::TransactionBody
 lib/include/cardano/transaction_body/transaction_input.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/include/cardano/transaction_body/transaction_input_set.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/include/cardano/transaction_body/transaction_output.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
@@ -208,28 +208,28 @@ lib/include/cardano/transaction_builder/sub_transaction_builder.h,public header,
 lib/include/cardano/transaction_builder/transaction_builder.h,public header,P22,planned,idiomatic C++ API
 lib/include/cardano/typedefs.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
 lib/include/cardano/uplc/uplc_apply_params.h,public header,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
-lib/include/cardano/voting_procedures/governance_action_id_list.h,public header,P14,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/voting_procedures/vote.h,public header,P14,planned,idiomatic C++ API
-lib/include/cardano/voting_procedures/voter.h,public header,P14,planned,idiomatic C++ API
-lib/include/cardano/voting_procedures/voter_list.h,public header,P14,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/voting_procedures/voter_type.h,public header,P14,planned,idiomatic C++ API
-lib/include/cardano/voting_procedures/voting_procedure.h,public header,P14,planned,idiomatic C++ API
-lib/include/cardano/voting_procedures/voting_procedure_list.h,public header,P14,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/voting_procedures/voting_procedures.h,public header,P14,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/witness_set/bootstrap_witness.h,public header,P15,planned,idiomatic C++ API
-lib/include/cardano/witness_set/bootstrap_witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/witness_set/native_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/witness_set/plutus_data_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/witness_set/plutus_v1_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/witness_set/plutus_v2_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/witness_set/plutus_v3_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/witness_set/plutus_v4_script_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/witness_set/redeemer.h,public header,P15,planned,idiomatic C++ API
-lib/include/cardano/witness_set/redeemer_list.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/witness_set/redeemer_tag.h,public header,P15,planned,idiomatic C++ API
-lib/include/cardano/witness_set/vkey_witness.h,public header,P15,planned,idiomatic C++ API
-lib/include/cardano/witness_set/vkey_witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/witness_set/witness_set.h,public header,P15,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
+lib/include/cardano/voting_procedures/governance_action_id_list.h,public header,P14,implemented,Cometa::GovernanceActionIdList
+lib/include/cardano/voting_procedures/vote.h,public header,P14,implemented,Cometa::Vote
+lib/include/cardano/voting_procedures/voter.h,public header,P14,implemented,Cometa::Voter
+lib/include/cardano/voting_procedures/voter_list.h,public header,P14,implemented,Cometa::VoterList
+lib/include/cardano/voting_procedures/voter_type.h,public header,P14,implemented,Cometa::VoterType
+lib/include/cardano/voting_procedures/voting_procedure.h,public header,P14,implemented,Cometa::VotingProcedure
+lib/include/cardano/voting_procedures/voting_procedure_list.h,public header,P14,implemented,Cometa::VotingProcedureList
+lib/include/cardano/voting_procedures/voting_procedures.h,public header,P14,implemented,Cometa::VotingProcedures
+lib/include/cardano/witness_set/bootstrap_witness.h,public header,P15,implemented,Cometa::BootstrapWitness
+lib/include/cardano/witness_set/bootstrap_witness_set.h,public header,P15,implemented,Cometa::BootstrapWitnessSet
+lib/include/cardano/witness_set/native_script_set.h,public header,P15,implemented,Cometa::NativeScriptSet
+lib/include/cardano/witness_set/plutus_data_set.h,public header,P15,implemented,Cometa::PlutusDataSet
+lib/include/cardano/witness_set/plutus_v1_script_set.h,public header,P15,implemented,Cometa::PlutusV1ScriptSet
+lib/include/cardano/witness_set/plutus_v2_script_set.h,public header,P15,implemented,Cometa::PlutusV2ScriptSet
+lib/include/cardano/witness_set/plutus_v3_script_set.h,public header,P15,implemented,Cometa::PlutusV3ScriptSet
+lib/include/cardano/witness_set/plutus_v4_script_set.h,public header,P15,implemented,Cometa::PlutusV4ScriptSet
+lib/include/cardano/witness_set/redeemer.h,public header,P15,implemented,Cometa::Redeemer
+lib/include/cardano/witness_set/redeemer_list.h,public header,P15,implemented,Cometa::RedeemerList
+lib/include/cardano/witness_set/redeemer_tag.h,public header,P15,implemented,Cometa::RedeemerTag
+lib/include/cardano/witness_set/vkey_witness.h,public header,P15,implemented,Cometa::VkeyWitness
+lib/include/cardano/witness_set/vkey_witness_set.h,public header,P15,implemented,Cometa::VkeyWitnessSet
+lib/include/cardano/witness_set/witness_set.h,public header,P15,implemented,Cometa::WitnessSet; lib/tests/WitnessSet/WitnessSetTest.cpp
 lib/src/address/address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
 lib/src/address/base_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
 lib/src/address/byron_address.c,implementation file,P03,implemented,"Address values, checked conversions, independent credentials, and shared CIP19 fixtures."
@@ -383,15 +383,15 @@ lib/src/plutus_data/plutus_map.c,implementation file,P05,implemented,"Value copi
 lib/src/pool_params/bls_key.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/src/pool_params/ipv4.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/src/pool_params/ipv6.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
-lib/src/pool_params/multi_host_name_relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/multi_host_name_relay.c,implementation file,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
 lib/src/pool_params/pool_metadata.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/src/pool_params/pool_owners.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/pool_params/pool_params.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/relay_type.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/relays.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/single_host_addr_relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/single_host_name_relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/relay.c,implementation file,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/src/pool_params/relay_type.c,implementation file,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/src/pool_params/relays.c,implementation file,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/src/pool_params/single_host_addr_relay.c,implementation file,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
+lib/src/pool_params/single_host_name_relay.c,implementation file,P09,implemented,Relay value types; optional addresses and ports; ordered independent relay collections.
 lib/src/proposal_procedures/committee.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/proposal_procedures/committee_members_map.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/proposal_procedures/constitution.c,implementation file,P13,internal,Native implementation reference; coverage is tracked against its public API.

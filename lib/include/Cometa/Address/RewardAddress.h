@@ -200,8 +200,23 @@ class RewardAddress
 
   private:
 
+    /** @brief Allows transactions to use this value. */
+    friend class Transaction;
+
+    /** @brief Allows proposal procedures to copy this value. */
+    friend class ProposalProcedure;
+
+    /** @brief Allows PoolParams to copy pool components. */
+    friend class PoolParams;
+
     /** @brief Allows WithdrawalMap to copy reward addresses. */
     friend class WithdrawalMap;
+
+    /** @brief Allows account balance maps to copy addresses. */
+    friend class AccountBalanceIntervalsMap;
+
+    /** @brief Allows direct deposit maps to copy addresses. */
+    friend class DirectDepositMap;
 
     /**
      * @brief Adopts an owned native address.

@@ -234,6 +234,51 @@ class Blake2bHash
 
   private:
 
+    /** @brief Allows transactions to use this value. */
+    friend class Transaction;
+
+    /** @brief Allows sub-transaction sets to copy this value. */
+    friend class SubTransactionSet;
+
+    /** @brief Allows sub-transactions to copy this value. */
+    friend class SubTransaction;
+
+    /** @brief Allows sub-transaction bodies to copy this value. */
+    friend class SubTransactionBody;
+
+    /** @brief Allows transaction bodies to copy this value. */
+    friend class TransactionBody;
+
+    /** @brief Allows parameter change actions to copy policy hashes. */
+    friend class ParameterChangeAction;
+
+    /** @brief Allows constitutions to copy script hashes. */
+    friend class Constitution;
+
+    /** @brief Allows treasury actions to copy policy hashes. */
+    friend class TreasuryWithdrawalsAction;
+
+    /** @brief Allows GenesisKeyDelegationCert to copy its hashes. */
+    friend class GenesisKeyDelegationCert;
+
+    /** @brief Allows PoolRetirementCert to copy its pool key hash. */
+    friend class PoolRetirementCert;
+
+    /** @brief Allows StakeRegistrationDelegationCert to copy its pool key hash. */
+    friend class StakeRegistrationDelegationCert;
+
+    /** @brief Allows StakeDelegationCert to copy its pool key hash. */
+    friend class StakeDelegationCert;
+
+    /** @brief Allows combined delegation certificates to copy pool hashes. */
+    friend class StakeVoteDelegationCert;
+
+    /** @brief Allows combined registration certificates to copy pool hashes. */
+    friend class StakeVoteRegistrationDelegationCert;
+
+    /** @brief Allows PoolParams to copy pool components. */
+    friend class PoolParams;
+
     /** @brief Allows TransactionInput to copy components. */
     friend class TransactionInput;
 
@@ -242,6 +287,9 @@ class Blake2bHash
 
     /** @brief Allows Blake2bHashSet to copy set elements. */
     friend class Blake2bHashSet;
+
+    /** @brief Allows proposed parameter updates to copy hash keys. */
+    friend class ProposedParamUpdates;
 
     /** @brief Allows MultiAsset to copy policy components. */
     friend class MultiAsset;
@@ -286,6 +334,9 @@ class Blake2bHash
     cardano_blake2b_hash_t* m_value;
     /** @brief Allows pool metadata to exchange content hashes. */
     friend class PoolMetadata;
+
+    /** @brief Allows pool owners to copy hashes. */
+    friend class PoolOwners;
 };
 } // namespace Cometa
 

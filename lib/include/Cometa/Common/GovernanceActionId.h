@@ -217,6 +217,24 @@ class GovernanceActionId
 
   private:
 
+    /** @brief Allows voting maps to transfer independent values. */
+    friend class VotingProcedures;
+
+    /** @brief Allows governance actions to copy identifiers. */
+    friend class NoConfidenceAction;
+
+    /** @brief Allows hard fork actions to copy identifiers. */
+    friend class HardForkInitiationAction;
+
+    /** @brief Allows parameter change actions to copy identifiers. */
+    friend class ParameterChangeAction;
+
+    /** @brief Allows constitution actions to copy identifiers. */
+    friend class NewConstitutionAction;
+
+    /** @brief Allows committee updates to copy previous action IDs. */
+    friend class UpdateCommitteeAction;
+
     /**
      * @brief Takes ownership of an existing value.
      *

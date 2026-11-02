@@ -308,6 +308,12 @@ class MultiAsset
 
   private:
 
+    /** @brief Allows sub-transaction bodies to copy this value. */
+    friend class SubTransactionBody;
+
+    /** @brief Allows transaction bodies to copy this value. */
+    friend class TransactionBody;
+
     /** @brief Allows Value to copy its token quantities. */
     friend class Value;
 

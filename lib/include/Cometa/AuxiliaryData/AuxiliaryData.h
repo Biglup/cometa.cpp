@@ -260,6 +260,12 @@ class AuxiliaryData
 
   private:
 
+    /** @brief Allows sub-transactions to copy this value. */
+    friend class SubTransaction;
+
+    /** @brief Allows transactions to copy this value. */
+    friend class Transaction;
+
     /**
      * @brief Takes ownership of an existing reference.
      *

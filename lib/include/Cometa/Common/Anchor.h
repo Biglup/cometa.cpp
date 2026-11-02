@@ -199,6 +199,12 @@ class Anchor
 
   private:
 
+    /** @brief Allows proposal procedures to copy this value. */
+    friend class ProposalProcedure;
+
+    /** @brief Allows voting procedures to copy metadata anchors. */
+    friend class VotingProcedure;
+
     /**
      * @brief Takes ownership of an existing value.
      *
@@ -216,6 +222,18 @@ class Anchor
      * @throws std::logic_error This instance has been moved from.
      */
     cardano_anchor_t* checked() const;
+
+    /** @brief Allows DRep registration certificates to copy anchors. */
+    friend class RegisterDRepCert;
+
+    /** @brief Allows DRep update certificates to copy anchors. */
+    friend class UpdateDRepCert;
+
+    /** @brief Allows committee resignation certificates to copy anchors. */
+    friend class ResignCommitteeColdCert;
+
+    /** @brief Allows constitutions to copy anchors. */
+    friend class Constitution;
 
   private:
 

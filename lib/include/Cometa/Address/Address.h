@@ -236,6 +236,9 @@ class Address
 
   private:
 
+    /** @brief Allows transactions to use this value. */
+    friend class Transaction;
+
     /** @brief Allows TransactionOutput to copy components. */
     friend class TransactionOutput;
 

@@ -216,6 +216,30 @@ class UnitInterval
      */
     bool operator!=(const UnitInterval& other) const;
 
+    /** @brief Allows PoolParams to copy pool components. */
+    friend class PoolParams;
+
+    /** @brief Allows ExUnitPrices to copy price components. */
+    friend class ExUnitPrices;
+
+    /** @brief Allows voting thresholds to copy their components. */
+    friend class DRepVotingThresholds;
+
+    /** @brief Allows voting thresholds to copy their components. */
+    friend class PoolVotingThresholds;
+
+    /** @brief Allows protocol updates to copy native values. */
+    friend class ProtocolParamUpdate;
+
+    /** @brief Allows protocol parameters to copy native values. */
+    friend class ProtocolParameters;
+
+    /** @brief Allows committees to copy quorum thresholds. */
+    friend class Committee;
+
+    /** @brief Allows update actions to copy quorum thresholds. */
+    friend class UpdateCommitteeAction;
+
   private:
 
     /**

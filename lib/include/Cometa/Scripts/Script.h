@@ -248,6 +248,9 @@ class Script
 
   private:
 
+    /** @brief Allows WitnessSet to copy scripts. */
+    friend class WitnessSet;
+
     /** @brief Allows TransactionOutput to copy components. */
     friend class TransactionOutput;
 

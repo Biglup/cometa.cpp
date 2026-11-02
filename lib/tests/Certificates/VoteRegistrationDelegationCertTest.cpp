@@ -1,0 +1,95 @@
+/**
+ * @file VoteRegistrationDelegationCertTest.cpp
+ *
+ * @brief Unit tests for vote registration and delegation certificates.
+ *
+ * @author angel.castillo
+ * @date   Nov 02, 2026
+ *
+ * Copyright 2026 Biglup Labs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* INCLUDES ******************************************************************/
+
+#include <Cometa/Cometa.h>
+
+#include <gtest/gtest.h>
+
+/* USINGS ********************************************************************/
+
+using namespace Cometa;
+
+/* IMPLEMENTATION ************************************************************/
+
+TEST(VoteRegistrationDelegationCert, MatchesNativeCborFixture)
+{
+  // Arrange
+  const std::string cbor =
+    "840c8200581c000000000000000000000000000000000000000000000000000000008200581c0000000000000000000000000000000000000000000000000000000000";
+  const Credential stake(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '0')));
+  const DRep       drep(stake);
+  CborReader       reader(cbor);
+
+  // Act
+  const VoteRegistrationDelegationCert cert(stake, 0, drep);
+
+  // Assert
+  EXPECT_EQ(cert.credential(), stake);
+  EXPECT_EQ(cert.drep(), drep);
+  EXPECT_EQ(cert.deposit(), 0U);
+  EXPECT_EQ(cert.toCbor(), reader.readEncodedValue());
+  EXPECT_EQ(VoteRegistrationDelegationCert::fromCbor(cbor), cert);
+  EXPECT_FALSE(cert.toJson().empty());
+}
+
+TEST(VoteRegistrationDelegationCert, CopiesAndReplacesFields)
+{
+  // Arrange
+  const Credential                     first(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1')));
+  const Credential                     second(CredentialType::ScriptHash, Blake2bHash::fromHex(std::string(56, '2')));
+  const DRep                           firstDRep(first);
+  const DRep                           secondDRep(DRepType::Abstain);
+  VoteRegistrationDelegationCert       cert(first, 1, firstDRep);
+  const VoteRegistrationDelegationCert original(cert);
+  DRep                                 returned = cert.drep();
+
+  // Act
+  returned.setType(DRepType::NoConfidence);
+  cert.setCredential(second);
+  cert.setDRep(secondDRep);
+  cert.setDeposit(2);
+
+  // Assert
+  EXPECT_EQ(original.credential(), first);
+  EXPECT_EQ(original.drep(), firstDRep);
+  EXPECT_EQ(original.deposit(), 1U);
+  EXPECT_EQ(cert.credential(), second);
+  EXPECT_EQ(cert.drep(), secondDRep);
+  EXPECT_EQ(cert.deposit(), 2U);
+  EXPECT_NE(cert, original);
+  EXPECT_EQ(VoteRegistrationDelegationCert::fromCbor(cert.toCbor()), cert);
+}
+
+TEST(VoteRegistrationDelegationCert, RejectsTrailingCbor)
+{
+  // Arrange
+  const Credential                     stake(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '0')));
+  const VoteRegistrationDelegationCert cert(stake, 0, DRep(DRepType::Abstain));
+  std::vector<std::uint8_t>            trailing = cert.toCbor();
+  trailing.push_back(0);
+
+  // Act & Assert
+  EXPECT_THROW(VoteRegistrationDelegationCert::fromCbor(trailing), std::invalid_argument);
+}

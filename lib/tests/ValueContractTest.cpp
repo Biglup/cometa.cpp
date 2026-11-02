@@ -442,7 +442,606 @@ sampleValue<PoolMetadata>()
   return PoolMetadata("https://example.com", Blake2bHash::fromHex(std::string(64, '1')));
 }
 
-using ValueTypes = testing::Types<Ipv4, Ipv6, BlsKey, PoolMetadata, TransactionMetadata, AuxiliaryData, Metadatum, MetadatumList, MetadatumMap, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
+template<>
+SingleHostAddrRelay
+sampleValue<SingleHostAddrRelay>()
+{
+  return SingleHostAddrRelay(3001, sampleValue<Ipv4>(), sampleValue<Ipv6>());
+}
+
+template<>
+SingleHostNameRelay
+sampleValue<SingleHostNameRelay>()
+{
+  return SingleHostNameRelay("example.com", 3001);
+}
+
+template<>
+MultiHostNameRelay
+sampleValue<MultiHostNameRelay>()
+{
+  return MultiHostNameRelay("example.com");
+}
+
+template<>
+Relay
+sampleValue<Relay>()
+{
+  return Relay(sampleValue<SingleHostAddrRelay>());
+}
+
+template<>
+Relays
+sampleValue<Relays>()
+{
+  return Relays { sampleValue<Relay>(), Relay(sampleValue<SingleHostNameRelay>()), Relay(sampleValue<MultiHostNameRelay>()) };
+}
+
+template<>
+PoolOwners
+sampleValue<PoolOwners>()
+{
+  return PoolOwners { Blake2bHash::fromHex(std::string(56, '1')) };
+}
+
+template<>
+PoolParams
+sampleValue<PoolParams>()
+{
+  const Blake2bHash   operatorHash = Blake2bHash::fromHex(std::string(56, '1'));
+  const Blake2bHash   vrfHash      = Blake2bHash::fromHex(std::string(64, '2'));
+  const Credential    credential(CredentialType::KeyHash, operatorHash);
+  const RewardAddress reward(NetworkId::Testnet, credential);
+
+  return PoolParams(operatorHash, vrfHash, 10'000'000, 340'000, UnitInterval(1, 20), reward, PoolOwners { operatorHash }, sampleValue<Relays>());
+}
+
+template<>
+StakeRegistrationCert
+sampleValue<StakeRegistrationCert>()
+{
+  return StakeRegistrationCert(Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1'))));
+}
+
+template<>
+StakeDeregistrationCert
+sampleValue<StakeDeregistrationCert>()
+{
+  return StakeDeregistrationCert(Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1'))));
+}
+
+template<>
+RegistrationCert
+sampleValue<RegistrationCert>()
+{
+  return RegistrationCert(Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1'))), 2'000'000);
+}
+
+template<>
+UnregistrationCert
+sampleValue<UnregistrationCert>()
+{
+  return UnregistrationCert(Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1'))), 2'000'000);
+}
+
+template<>
+StakeDelegationCert
+sampleValue<StakeDelegationCert>()
+{
+  return StakeDelegationCert(Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1'))), Blake2bHash::fromHex(std::string(56, '2')));
+}
+
+template<>
+PoolRegistrationCert
+sampleValue<PoolRegistrationCert>()
+{
+  return PoolRegistrationCert(sampleValue<PoolParams>());
+}
+
+template<>
+PoolRetirementCert
+sampleValue<PoolRetirementCert>()
+{
+  return PoolRetirementCert(Blake2bHash::fromHex(std::string(56, '1')), 1000);
+}
+
+template<>
+StakeRegistrationDelegationCert
+sampleValue<StakeRegistrationDelegationCert>()
+{
+  return StakeRegistrationDelegationCert(Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '1'))), Blake2bHash::fromHex(std::string(56, '2')), 2'000'000);
+}
+
+template<>
+GenesisKeyDelegationCert
+sampleValue<GenesisKeyDelegationCert>()
+{
+  return GenesisKeyDelegationCert(Blake2bHash::fromHex(std::string(56, '1')), Blake2bHash::fromHex(std::string(56, '2')), Blake2bHash::fromHex(std::string(64, '3')));
+}
+
+template<>
+MirToPotCert
+sampleValue<MirToPotCert>()
+{
+  return MirToPotCert(MirPotType::Reserve, 1'000'000);
+}
+
+template<>
+MirToStakeCredentialsCert
+sampleValue<MirToStakeCredentialsCert>()
+{
+  MirToStakeCredentialsCert cert(MirPotType::Reserve);
+  cert.insert(Credential(CredentialType::KeyHash, keyHash()), 1'000'000);
+  return cert;
+}
+
+template<>
+MirCert
+sampleValue<MirCert>()
+{
+  return MirCert(MirToPotCert(MirPotType::Reserve, 1'000'000));
+}
+
+template<>
+DRep
+sampleValue<DRep>()
+{
+  return DRep(Credential(CredentialType::KeyHash, keyHash()));
+}
+
+template<>
+VoteDelegationCert
+sampleValue<VoteDelegationCert>()
+{
+  const Credential credential(CredentialType::KeyHash, keyHash());
+  return VoteDelegationCert(credential, DRep(credential));
+}
+
+template<>
+StakeVoteDelegationCert
+sampleValue<StakeVoteDelegationCert>()
+{
+  const Credential credential(CredentialType::KeyHash, keyHash());
+  return StakeVoteDelegationCert(credential, keyHash(), DRep(credential));
+}
+
+template<>
+VoteRegistrationDelegationCert
+sampleValue<VoteRegistrationDelegationCert>()
+{
+  const Credential credential(CredentialType::KeyHash, keyHash());
+  return VoteRegistrationDelegationCert(credential, 2'000'000, DRep(credential));
+}
+
+template<>
+StakeVoteRegistrationDelegationCert
+sampleValue<StakeVoteRegistrationDelegationCert>()
+{
+  const Credential credential(CredentialType::KeyHash, keyHash());
+  return StakeVoteRegistrationDelegationCert(credential, keyHash(), DRep(credential), 2'000'000);
+}
+
+template<>
+UnregisterDRepCert
+sampleValue<UnregisterDRepCert>()
+{
+  return UnregisterDRepCert(Credential(CredentialType::KeyHash, keyHash()), 2'000'000);
+}
+
+template<>
+RegisterDRepCert
+sampleValue<RegisterDRepCert>()
+{
+  return RegisterDRepCert(Credential(CredentialType::KeyHash, keyHash()), 2'000'000);
+}
+
+template<>
+UpdateDRepCert
+sampleValue<UpdateDRepCert>()
+{
+  return UpdateDRepCert(Credential(CredentialType::KeyHash, keyHash()));
+}
+
+template<>
+AuthCommitteeHotCert
+sampleValue<AuthCommitteeHotCert>()
+{
+  const Credential credential(CredentialType::KeyHash, keyHash());
+  return AuthCommitteeHotCert(credential, credential);
+}
+
+template<>
+ResignCommitteeColdCert
+sampleValue<ResignCommitteeColdCert>()
+{
+  return ResignCommitteeColdCert(Credential(CredentialType::KeyHash, keyHash()));
+}
+
+template<>
+Certificate
+sampleValue<Certificate>()
+{
+  return Certificate(StakeRegistrationCert(Credential(CredentialType::KeyHash, keyHash())));
+}
+
+template<>
+CertificateSet
+sampleValue<CertificateSet>()
+{
+  CertificateSet set;
+  set.add(sampleValue<Certificate>());
+  return set;
+}
+
+template<>
+ExUnitPrices
+sampleValue<ExUnitPrices>()
+{
+  return ExUnitPrices(UnitInterval(1, 2), UnitInterval(1, 3));
+}
+
+template<>
+CostModel
+sampleValue<CostModel>()
+{
+  return CostModel(PlutusLanguageVersion::V1, { 1, 2, 3 });
+}
+
+template<>
+CostModels
+sampleValue<CostModels>()
+{
+  CostModels models;
+  models.insert(sampleValue<CostModel>());
+  return models;
+}
+
+template<>
+DRepVotingThresholds
+sampleValue<DRepVotingThresholds>()
+{
+  return DRepVotingThresholds(UnitInterval(0, 1), UnitInterval(1, 2), UnitInterval(2, 3), UnitInterval(3, 4), UnitInterval(4, 5), UnitInterval(5, 6), UnitInterval(6, 7), UnitInterval(7, 8), UnitInterval(8, 9), UnitInterval(9, 10));
+}
+
+template<>
+PoolVotingThresholds
+sampleValue<PoolVotingThresholds>()
+{
+  return PoolVotingThresholds(UnitInterval(0, 1), UnitInterval(1, 2), UnitInterval(2, 3), UnitInterval(3, 4), UnitInterval(4, 5));
+}
+
+template<>
+ProtocolParamUpdate
+sampleValue<ProtocolParamUpdate>()
+{
+  ProtocolParamUpdate update;
+  update.setMinFeeA(std::uint64_t(44));
+  update.setPoolPledgeInfluence(UnitInterval(1, 2));
+  return update;
+}
+
+template<>
+ProposedParamUpdates
+sampleValue<ProposedParamUpdates>()
+{
+  ProposedParamUpdates proposals;
+  proposals.add(Blake2bHash::fromHex(std::string(56, '0')), sampleValue<ProtocolParamUpdate>());
+  return proposals;
+}
+
+template<>
+Update
+sampleValue<Update>()
+{
+  return Update(12, sampleValue<ProposedParamUpdates>());
+}
+
+template<>
+InfoAction
+sampleValue<InfoAction>()
+{
+  return InfoAction();
+}
+
+template<>
+NoConfidenceAction
+sampleValue<NoConfidenceAction>()
+{
+  return NoConfidenceAction();
+}
+
+template<>
+HardForkInitiationAction
+sampleValue<HardForkInitiationAction>()
+{
+  return HardForkInitiationAction(ProtocolVersion(12, 0));
+}
+
+template<>
+ParameterChangeAction
+sampleValue<ParameterChangeAction>()
+{
+  ProtocolParamUpdate update;
+  update.setMinFeeA(std::uint64_t(44));
+  return ParameterChangeAction(update);
+}
+
+template<>
+Constitution
+sampleValue<Constitution>()
+{
+  return Constitution(Anchor("https://a", Blake2bHash::fromHex(std::string(64, '0'))));
+}
+
+template<>
+NewConstitutionAction
+sampleValue<NewConstitutionAction>()
+{
+  return NewConstitutionAction(sampleValue<Constitution>());
+}
+
+template<>
+TreasuryWithdrawalsAction
+sampleValue<TreasuryWithdrawalsAction>()
+{
+  return TreasuryWithdrawalsAction(WithdrawalMap());
+}
+
+template<>
+CommitteeMembersMap
+sampleValue<CommitteeMembersMap>()
+{
+  CommitteeMembersMap map;
+  map.insert(Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '0'))), 200);
+  return map;
+}
+
+template<>
+Committee
+sampleValue<Committee>()
+{
+  Committee committee(UnitInterval(1, 2));
+  committee.addMember(Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '0'))), 200);
+  return committee;
+}
+
+template<>
+UpdateCommitteeAction
+sampleValue<UpdateCommitteeAction>()
+{
+  return UpdateCommitteeAction(CredentialSet(), CommitteeMembersMap(), UnitInterval(1, 2));
+}
+
+template<>
+ProposalProcedure
+sampleValue<ProposalProcedure>()
+{
+  const Credential credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '0')));
+  return ProposalProcedure(500, RewardAddress(NetworkId::Testnet, credential), Anchor("https://a", Blake2bHash::fromHex(std::string(64, '0'))), InfoAction());
+}
+
+template<>
+ProposalProcedureSet
+sampleValue<ProposalProcedureSet>()
+{
+  ProposalProcedureSet set;
+  set.add(sampleValue<ProposalProcedure>());
+  return set;
+}
+
+template<>
+Voter
+sampleValue<Voter>()
+{
+  return Voter(VoterType::DRepKeyHash, Credential(CredentialType::KeyHash, Blake2bHash::fromHex(std::string(56, '0'))));
+}
+
+template<>
+VotingProcedure
+sampleValue<VotingProcedure>()
+{
+  return VotingProcedure(Vote::Yes, Anchor("https://a", Blake2bHash::fromHex(std::string(64, '0'))));
+}
+
+template<>
+VotingProcedures
+sampleValue<VotingProcedures>()
+{
+  VotingProcedures result;
+  result.insert(sampleValue<Voter>(), GovernanceActionId(Blake2bHash::fromHex(std::string(64, '1')), 0), sampleValue<VotingProcedure>());
+  return result;
+}
+
+template<>
+Redeemer
+sampleValue<Redeemer>()
+{
+  return Redeemer(RedeemerTag::Spend, 0, PlutusData(1), ExUnits(5, 7));
+}
+
+template<>
+RedeemerList
+sampleValue<RedeemerList>()
+{
+  RedeemerList result;
+  result.add(sampleValue<Redeemer>());
+  return result;
+}
+
+template<>
+VkeyWitness
+sampleValue<VkeyWitness>()
+{
+  return VkeyWitness(Ed25519PublicKey(std::vector<std::uint8_t>(32, 1)), Ed25519Signature(std::vector<std::uint8_t>(64, 2)));
+}
+
+template<>
+VkeyWitnessSet
+sampleValue<VkeyWitnessSet>()
+{
+  VkeyWitnessSet result;
+  result.add(sampleValue<VkeyWitness>());
+  return result;
+}
+
+template<>
+BootstrapWitness
+sampleValue<BootstrapWitness>()
+{
+  return BootstrapWitness(Ed25519PublicKey(std::vector<std::uint8_t>(32, 1)), Ed25519Signature(std::vector<std::uint8_t>(64, 2)), std::vector<std::uint8_t>(32, 3), { 0xa0 });
+}
+
+template<>
+BootstrapWitnessSet
+sampleValue<BootstrapWitnessSet>()
+{
+  BootstrapWitnessSet result;
+  result.add(sampleValue<BootstrapWitness>());
+  return result;
+}
+
+template<>
+NativeScriptSet
+sampleValue<NativeScriptSet>()
+{
+  NativeScriptSet result;
+  result.add(NativeScript(ScriptInvalidBefore(5)));
+  return result;
+}
+
+template<>
+PlutusDataSet
+sampleValue<PlutusDataSet>()
+{
+  PlutusDataSet result;
+  result.add(PlutusData(1));
+  return result;
+}
+
+template<>
+PlutusV1ScriptSet
+sampleValue<PlutusV1ScriptSet>()
+{
+  PlutusV1ScriptSet result;
+  result.add(PlutusV1Script(std::vector<std::uint8_t> { 0x01, 0x02 }));
+  return result;
+}
+
+template<>
+PlutusV2ScriptSet
+sampleValue<PlutusV2ScriptSet>()
+{
+  PlutusV2ScriptSet result;
+  result.add(PlutusV2Script(std::vector<std::uint8_t> { 0x01, 0x02 }));
+  return result;
+}
+
+template<>
+PlutusV3ScriptSet
+sampleValue<PlutusV3ScriptSet>()
+{
+  PlutusV3ScriptSet result;
+  result.add(PlutusV3Script(std::vector<std::uint8_t> { 0x01, 0x02 }));
+  return result;
+}
+
+template<>
+PlutusV4ScriptSet
+sampleValue<PlutusV4ScriptSet>()
+{
+  PlutusV4ScriptSet result;
+  result.add(PlutusV4Script(std::vector<std::uint8_t> { 0x01, 0x02 }));
+  return result;
+}
+
+template<>
+WitnessSet
+sampleValue<WitnessSet>()
+{
+  WitnessSet result;
+  result.setNativeScripts(NativeScriptSet());
+  return result;
+}
+
+template<>
+AccountBalanceInterval
+sampleValue<AccountBalanceInterval>()
+{
+  return AccountBalanceInterval::exact(1000);
+}
+
+template<>
+AccountBalanceIntervalsMap
+sampleValue<AccountBalanceIntervalsMap>()
+{
+  AccountBalanceIntervalsMap result;
+  result.insert(RewardAddress::fromBech32("stake_test1uqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxtxu2s"), AccountBalanceInterval::exact(1000));
+  return result;
+}
+
+template<>
+DirectDepositMap
+sampleValue<DirectDepositMap>()
+{
+  DirectDepositMap result;
+  result.insert(RewardAddress::fromBech32("stake_test1uqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxtxu2s"), 1000);
+  return result;
+}
+
+template<>
+GuardSet
+sampleValue<GuardSet>()
+{
+  GuardSet result;
+  result.add(Credential::fromCbor("8200581c6199186adb51974690d7247d2646097d2c62763b16fb7ed3f9f55d39"));
+  return result;
+}
+
+template<>
+RequiredGuardsMap
+sampleValue<RequiredGuardsMap>()
+{
+  RequiredGuardsMap result;
+  result.insert(Credential::fromCbor("8200581c00112233445566778899aabbccddeeff00112233445566778899aabb"));
+  return result;
+}
+
+template<>
+SubTransactionBody
+sampleValue<SubTransactionBody>()
+{
+  return SubTransactionBody(TransactionInputSet(), TransactionOutputList());
+}
+
+template<>
+SubTransaction
+sampleValue<SubTransaction>()
+{
+  return SubTransaction(SubTransactionBody(TransactionInputSet(), TransactionOutputList()), WitnessSet());
+}
+
+template<>
+SubTransactionSet
+sampleValue<SubTransactionSet>()
+{
+  return SubTransactionSet::fromCbor("d901028183a200d90102800180a0f6");
+}
+
+template<>
+TransactionBody
+sampleValue<TransactionBody>()
+{
+  return TransactionBody(TransactionInputSet(), TransactionOutputList(), 0);
+}
+
+template<>
+Transaction
+sampleValue<Transaction>()
+{
+  return Transaction(TransactionBody(TransactionInputSet(), TransactionOutputList(), 0), WitnessSet());
+}
+
+using ValueTypes = testing::Types<Transaction, TransactionBody, SubTransactionSet, SubTransaction, SubTransactionBody, RequiredGuardsMap, GuardSet, DirectDepositMap, AccountBalanceIntervalsMap, AccountBalanceInterval, WitnessSet, PlutusV1ScriptSet, PlutusV2ScriptSet, PlutusV3ScriptSet, PlutusV4ScriptSet, PlutusDataSet, NativeScriptSet, BootstrapWitnessSet, BootstrapWitness, VkeyWitnessSet, VkeyWitness, RedeemerList, Redeemer, VotingProcedures, VotingProcedure, Voter, ProposalProcedureSet, ProposalProcedure, UpdateCommitteeAction, Committee, CommitteeMembersMap, TreasuryWithdrawalsAction, NewConstitutionAction, Constitution, ParameterChangeAction, HardForkInitiationAction, NoConfidenceAction, InfoAction, Update, ProposedParamUpdates, ProtocolParamUpdate, DRepVotingThresholds, PoolVotingThresholds, CostModels, CostModel, ExUnitPrices, CertificateSet, Certificate, ResignCommitteeColdCert, AuthCommitteeHotCert, UpdateDRepCert, RegisterDRepCert, UnregisterDRepCert, StakeVoteRegistrationDelegationCert, VoteRegistrationDelegationCert, StakeVoteDelegationCert, VoteDelegationCert, DRep, MirCert, MirToStakeCredentialsCert, MirToPotCert, GenesisKeyDelegationCert, StakeRegistrationDelegationCert, PoolRetirementCert, PoolRegistrationCert, StakeDelegationCert, RegistrationCert, UnregistrationCert, StakeDeregistrationCert, StakeRegistrationCert, PoolParams, PoolOwners, SingleHostAddrRelay, SingleHostNameRelay, MultiHostNameRelay, Relay, Relays, Ipv4, Ipv6, BlsKey, PoolMetadata, TransactionMetadata, AuxiliaryData, Metadatum, MetadatumList, MetadatumMap, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -631,6 +1230,30 @@ TYPED_TEST(ValueContract, FailedCopyAssignmentPreservesDestination)
     }
     EXPECT_EQ(destination, before);
   }
+}
+
+TEST(ProtocolParameters, ReleasesPartialCopiesOnAllocationFailure)
+{
+  // Arrange
+  ProtocolParameters parameters;
+  parameters.setMinFeeA(44);
+  parameters.setMaxPledgeLeverage(UnitInterval(1, 2));
+  std::size_t count = 0;
+  {
+    AllocationFailure        tracker(std::numeric_limits<std::size_t>::max());
+    const ProtocolParameters copy(parameters);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0);
+
+  // Act & Assert
+  for (std::size_t i = 0; i < count; ++i)
+  {
+    AllocationFailure fail(i);
+    EXPECT_THROW({ const ProtocolParameters copy(parameters); }, std::bad_alloc);
+  }
+  EXPECT_EQ(parameters.minFeeA(), 44);
+  EXPECT_EQ(parameters.maxPledgeLeverage(), UnitInterval(1, 2));
 }
 
 TEST(Anchor, FailedMutationPreservesValue)
@@ -5383,4 +6006,115 @@ TEST(PoolMetadata, FailedSetHashPreservesValue)
     EXPECT_EQ(value, original);
     EXPECT_EQ(value.toCbor(), original.toCbor());
   }
+}
+
+TEST(SingleHostAddrRelay, FailedSetIpv4PreservesValue)
+{
+  // Arrange
+  const SingleHostAddrRelay original    = sampleValue<SingleHostAddrRelay>();
+  const std::optional<Ipv4> replacement = Ipv4::fromString("192.0.2.1");
+  std::size_t               count       = 0U;
+  {
+    SingleHostAddrRelay value(original);
+    AllocationFailure   tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.setIpv4(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    SingleHostAddrRelay value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setIpv4(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
+  }
+}
+
+TEST(SingleHostAddrRelay, FailedSetIpv6PreservesValue)
+{
+  // Arrange
+  const SingleHostAddrRelay original    = sampleValue<SingleHostAddrRelay>();
+  const std::optional<Ipv6> replacement = std::nullopt;
+  std::size_t               count       = 0U;
+  {
+    SingleHostAddrRelay value(original);
+    AllocationFailure   tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.setIpv6(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    SingleHostAddrRelay value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setIpv6(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
+  }
+}
+
+TEST(Relays, FailedPushBackPreservesValue)
+{
+  // Arrange
+  const Relays original    = sampleValue<Relays>();
+  const Relay  replacement = Relay(sampleValue<SingleHostNameRelay>());
+  std::size_t  count       = 0U;
+  {
+    Relays            value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.pushBack(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    Relays value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.pushBack(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
+  }
+}
+
+TEST(SingleHostAddrRelay, FailedPortAllocationPreservesAbsentPort)
+{
+  // Arrange
+  SingleHostAddrRelay       value = SingleHostAddrRelay();
+  const SingleHostAddrRelay original(value);
+
+  // Act & Assert
+  {
+    AllocationFailure failure(0U, true);
+    EXPECT_THROW(value.setPort(3001), std::bad_alloc);
+  }
+  EXPECT_FALSE(value.port());
+  EXPECT_EQ(value, original);
+}
+
+TEST(SingleHostNameRelay, FailedPortAllocationPreservesAbsentPort)
+{
+  // Arrange
+  SingleHostNameRelay       value = SingleHostNameRelay("example.com");
+  const SingleHostNameRelay original(value);
+
+  // Act & Assert
+  {
+    AllocationFailure failure(0U, true);
+    EXPECT_THROW(value.setPort(3001), std::bad_alloc);
+  }
+  EXPECT_FALSE(value.port());
+  EXPECT_EQ(value, original);
 }

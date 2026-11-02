@@ -195,6 +195,66 @@ Private-key objects erase their owned key material when destroyed. Exported
 their buffers automatically. Avoid exporting or logging secret material unless
 it is needed.
 
+Custom signing handlers
+-----------------------
+
+``SecureKeyHandler`` accepts C++ signing operations, including signers backed by
+hardware wallets or remote services. Supply transaction and sub-transaction
+signing functions and the matching public-key lookup. The handler keeps these
+operations available for its lifetime and releases its native resources when
+destroyed.
+
+.. code-block:: cpp
+
+   Cometa::Bip32KeyCallbacks callbacks;
+   callbacks.signTransaction = signTransaction;
+   callbacks.signSubTransaction = signSubTransaction;
+   callbacks.accountPublicKey = accountPublicKey;
+
+   const Cometa::SecureKeyHandler signer =
+     Cometa::SecureKeyHandler::bip32("hardware-wallet", callbacks);
+   const Cometa::DerivationPath paymentPath {
+     1852, 1815, 0, Cometa::DerivationRole::External, 0 };
+   const Cometa::VkeyWitnessSet witnesses =
+     signer.signTransaction(transaction, { paymentPath });
+
+The assigned functions return ``VkeyWitnessSet`` and receive ``Transaction`` or
+``SubTransaction`` values. A BIP32 public-key function receives
+``AccountDerivationPath`` and returns ``Bip32PublicKey``. Use
+``Ed25519KeyCallbacks`` and ``SecureKeyHandler::ed25519`` for a single-key signer.
+Exceptions thrown by a callback become ``Cometa::Error`` at the signing call;
+``lastError()`` provides the callback's message.
+
+For a local encrypted signer, create a software handler with entropy or an
+Ed25519 key and a passphrase provider. The provider returns passphrase bytes
+when the signer needs to decrypt the key. The returned handler supports the
+same signing operations and can be serialized for encrypted storage.
+
+.. code-block:: cpp
+
+   const Cometa::SecureKeyHandler signer =
+     Cometa::SecureKeyHandler::softwareBip32(entropy, passphrase, getPassphrase);
+   const Cometa::SecureKeyHandler restored =
+     Cometa::SecureKeyHandler::deserializeSoftware(signer.serialize(), getPassphrase);
+
+The passphrase provider must return a nonempty value of at most 128 bytes.
+The handler clears its temporary passphrase copy after each operation; callers
+remain responsible for their original passphrase storage.
+
+Signing data with CIP-8
+-----------------------
+
+``signCip8`` signs bytes with an Ed25519 key and binds the result to an address
+or key hash. The result contains COSE_Sign1 and COSE_Key CBOR bytes suitable for
+Cardano wallet message-signing interfaces.
+
+.. code-block:: cpp
+
+   const Cometa::Cip8Signature signedMessage =
+     Cometa::signCip8(message, address, signingKey);
+   const std::vector<std::uint8_t>& coseSign1 = signedMessage.coseSign1;
+   const std::vector<std::uint8_t>& coseKey = signedMessage.coseKey;
+
 Mnemonic and password utilities
 -------------------------------
 
@@ -622,3 +682,435 @@ setters. Copies and returned hashes are independent values.
 it from two byte vectors, or use ``fromHex`` with 192 and 96 hexadecimal characters.
 It supports CBOR and CIP-116 JSON. These operations validate the encoding and
 lengths; they do not verify the proof cryptographically.
+
+Pool relays
+-----------
+
+``SingleHostAddrRelay`` holds optional IPv4/IPv6 addresses and a port.
+``SingleHostNameRelay`` holds a DNS name and optional port; ``MultiHostNameRelay``
+holds a DNS name for SRV lookup. DNS names contain 1 to 64 bytes without embedded
+NULs. These values describe relay configuration; they do not perform DNS lookup.
+
+.. code-block:: cpp
+
+   Cometa::SingleHostAddrRelay ipRelay(3001, Cometa::Ipv4::fromString("192.0.2.1"));
+   ipRelay.setIpv6(Cometa::Ipv6::fromString("0000:0000:0000:0000:0000:0000:0000:0001"));
+   ipRelay.setIpv4(std::nullopt);
+
+   Cometa::Relays relays {
+     Cometa::Relay(ipRelay),
+     Cometa::Relay(Cometa::SingleHostNameRelay("relay.example.com", 3001)),
+     Cometa::Relay(Cometa::MultiHostNameRelay("_cardano._tcp.example.com")) };
+
+   const std::vector<std::uint8_t> cbor = relays.toCbor();
+
+``Relay`` holds one of the three variants. Inspect ``type`` before calling
+``asSingleHostAddr``, ``asSingleHostName``, or ``asMultiHostName``; a mismatched
+accessor throws ``Error``. Returned variants and addresses are independent values.
+
+Optional setters accept ``std::nullopt`` to remove a field. Port zero is distinct
+from an absent port. ``Relays`` preserves insertion order and duplicates;
+``pushBack`` copies its argument, and ``at`` returns an independent relay.
+
+Pool owners
+-----------
+
+``PoolOwners`` stores unique 28-byte pool owner key hashes in sorted order.
+Inserting an existing hash returns ``false``. The collection copies inserted
+values and returns independent values from ``at`` and ``values``.
+
+.. code-block:: cpp
+
+   Cometa::PoolOwners owners;
+   owners.insert(Cometa::Blake2bHash::fromHex(std::string(56, '1')));
+   const std::vector<std::uint8_t> cbor = owners.toCbor();
+   const Cometa::PoolOwners restored = Cometa::PoolOwners::fromCbor(cbor);
+
+The CBOR encoder applies set tag 258. The decoder also accepts an untagged
+array, rejects duplicate hashes, and rejects malformed lengths.
+
+Pool parameters
+---------------
+
+``PoolParams`` holds the operator and VRF hashes, pledge, cost, margin, reward
+address, owner hashes, relay list, and optional metadata or BLS key. It copies
+all supplied values, and each component getter returns an independent value.
+
+.. code-block:: cpp
+
+   Cometa::PoolParams params(operatorHash, vrfHash, 10'000'000, 340'000,
+                              Cometa::UnitInterval(1, 20), rewardAddress,
+                              owners, relays);
+   params.setMetadata(Cometa::PoolMetadata(
+     "https://example.com/pool.json", metadataHash));
+   const std::vector<std::uint8_t> cbor = params.toCbor();
+   const Cometa::PoolParams restored = Cometa::PoolParams::fromCbor(cbor);
+
+CBOR contains the pool parameter fields as a sequence, with no outer array.
+``setBlsKey(std::nullopt)`` and ``setMetadata(std::nullopt)`` remove optional fields.
+
+Certificate types
+-----------------
+
+``CertificateType`` identifies every supported certificate variant. Use
+``toString(type)`` when a readable type name is needed. Legacy staking and
+MIR variants remain represented so historical transactions can be inspected.
+
+Legacy stake registration
+-------------------------
+
+``StakeRegistrationCert`` represents the historical stake registration form.
+It copies the supplied credential; ``credential()`` returns an independent
+value. For current transactions, choose the deposit-bearing registration
+certificate when that ledger form is required.
+
+.. code-block:: cpp
+
+   Cometa::StakeRegistrationCert cert(stakeCredential);
+   const std::vector<std::uint8_t> cbor = cert.toCbor();
+   const Cometa::StakeRegistrationCert restored =
+     Cometa::StakeRegistrationCert::fromCbor(cbor);
+
+Legacy stake deregistration
+---------------------------
+
+``StakeDeregistrationCert`` represents the historical stake deregistration
+form. It copies its credential and provides CBOR and CIP-116 JSON conversion.
+
+Deposit-bearing registration certificates
+-----------------------------------------
+
+``RegistrationCert`` and ``UnregistrationCert`` hold a stake credential and
+a deposit amount in lovelace. They copy credentials and return independent
+values. The two forms encode with distinct CBOR certificate tags.
+
+.. code-block:: cpp
+
+   Cometa::RegistrationCert registration(stakeCredential, 2'000'000);
+   Cometa::UnregistrationCert unregistration(stakeCredential, 2'000'000);
+
+Stake delegation
+----------------
+
+``StakeDelegationCert`` associates a stake credential with a 28-byte pool key
+hash. It copies both components and provides CBOR and inspection JSON.
+
+.. code-block:: cpp
+
+   Cometa::StakeDelegationCert delegation(stakeCredential, poolKeyHash);
+   const Cometa::StakeDelegationCert restored =
+     Cometa::StakeDelegationCert::fromCbor(delegation.toCbor());
+
+Pool registration certificate
+-----------------------------
+
+``PoolRegistrationCert`` contains a copied ``PoolParams`` value. The ``params``
+getter returns an independent value, which can be changed and supplied to
+``setParams``.
+
+.. code-block:: cpp
+
+   Cometa::PoolRegistrationCert registration(params);
+   const Cometa::PoolRegistrationCert restored =
+     Cometa::PoolRegistrationCert::fromCbor(registration.toCbor());
+
+Pool retirement certificate
+---------------------------
+
+``PoolRetirementCert`` stores a 28-byte pool key hash and the retirement epoch.
+The hash getter returns an independent value.
+
+.. code-block:: cpp
+
+   Cometa::PoolRetirementCert retirement(poolKeyHash, retirementEpoch);
+
+Combined stake registration and delegation
+------------------------------------------
+
+``StakeRegistrationDelegationCert`` registers a stake credential and delegates
+to a pool in one certificate. It stores a deposit in lovelace and returns
+independent credential and pool hash values.
+
+.. code-block:: cpp
+
+   Cometa::StakeRegistrationDelegationCert cert(
+     stakeCredential, poolKeyHash, 2'000'000);
+
+Genesis key delegation
+----------------------
+
+``GenesisKeyDelegationCert`` represents the historical delegation of a
+genesis key to a delegate key and VRF key. It requires 28-byte genesis and
+delegate hashes and a 32-byte VRF hash.
+
+Historical MIR pot transfers
+----------------------------
+
+``MirToPotCert`` represents an instantaneous reward transfer between the
+reserve and treasury pots. ``MirPotType`` selects the source pot; amounts are
+expressed in lovelace. This historical certificate remains available for
+inspection of older transactions.
+
+``MirToStakeCredentialsCert`` records a historical distribution from either
+pot to stake credentials. Its entries contain a credential and an amount in
+lovelace.
+
+``MirCert`` holds either historical form. The ``type()`` discriminator
+selects ``asToPot()`` or ``asToStakeCredentials()``.
+
+Delegated representatives
+-------------------------
+
+``DRep`` represents a key or script credential, abstention, or no confidence.
+Key and script representatives also support bech32 identifiers.
+
+``VoteDelegationCert`` assigns a stake credential's voting rights to a DRep,
+including the predefined abstain and no-confidence choices.
+
+``StakeVoteDelegationCert`` combines pool delegation and DRep delegation for
+one stake credential.
+
+``VoteRegistrationDelegationCert`` registers a stake credential and delegates
+its voting rights in one certificate. It records the registration deposit in
+lovelace.
+
+``StakeVoteRegistrationDelegationCert`` combines stake registration, pool
+delegation, and DRep delegation with one registration deposit.
+
+``UnregisterDRepCert`` unregisters a DRep credential and records the returned
+deposit in lovelace.
+
+``RegisterDRepCert`` registers a DRep credential with a deposit and an optional
+metadata anchor. The anchor can be replaced or removed.
+
+``UpdateDRepCert`` records a DRep credential and its optional metadata anchor.
+
+``AuthCommitteeHotCert`` authorizes a committee hot credential with a cold
+credential.
+
+``ResignCommitteeColdCert`` records a committee cold credential's resignation
+and optional anchor.
+
+``Certificate`` holds any ledger certificate and exposes its
+``CertificateType`` and independent typed values.
+
+``CertificateSet`` keeps certificates in insertion order and accepts any
+``Certificate`` variant. Accessors return independent values::
+
+   Cometa::CertificateSet certificates;
+   certificates.add(Cometa::Certificate(registration));
+   const Cometa::Certificate first = certificates.at(0);
+
+Protocol parameters
+-------------------
+
+``ExUnitPrices`` holds the rational memory and CPU step prices used by Plutus
+execution. Both prices can be read and replaced independently::
+
+   Cometa::ExUnitPrices prices(Cometa::UnitInterval(1, 2),
+                               Cometa::UnitInterval(1, 3));
+   prices.setMemoryPrice(Cometa::UnitInterval(2, 3));
+
+``CostModel`` holds operation costs for a Plutus language. Decoding retains
+unknown language IDs so a model can be read and re-encoded without loss::
+
+   Cometa::CostModel model(Cometa::PlutusLanguageVersion::V4, { 1, 2, 3 });
+   model.setCost(1, 7);
+   const std::vector<std::int64_t> costs = model.costs();
+
+``CostModels`` stores cost models by language ID. The collection retains models
+for future language IDs when decoding CBOR::
+
+   Cometa::CostModels models;
+   models.insert(model);
+   const std::optional<Cometa::CostModel> v4 =
+     models.get(Cometa::PlutusLanguageVersion::V4);
+
+``DRepVotingThresholds`` and ``PoolVotingThresholds`` expose each governance
+threshold by name. Both accept rational ``UnitInterval`` values and support
+independent copies and CBOR serialization::
+
+   Cometa::DRepVotingThresholds drep =
+     Cometa::DRepVotingThresholds::fromCbor(drepThresholdCbor);
+   drep.setTreasuryWithdrawal(Cometa::UnitInterval(2, 3));
+
+   Cometa::PoolVotingThresholds pool =
+     Cometa::PoolVotingThresholds::fromCbor(poolThresholdCbor);
+   pool.setSecurityRelevantParam(Cometa::UnitInterval(1, 2));
+
+``ProtocolParamUpdate`` stores proposed changes as optional values. A missing
+value is omitted from the update; ``std::nullopt`` removes an existing proposal::
+
+   Cometa::ProtocolParamUpdate update;
+   update.setMinFeeA(std::uint64_t(44));
+   update.setPoolPledgeInfluence(Cometa::UnitInterval(1, 2));
+   update.setMinFeeA(std::nullopt);
+
+Max pledge leverage and the Peras bootstrap round also have an explicit
+ledger-null value, separate from absence. Use
+``setMaxPledgeLeverageUnbounded()`` or ``setPerasBootstrapRoundNull()`` to
+propose that value; use the matching ``clear`` method to omit the field.
+
+``ProposedParamUpdates`` associates proposed changes with genesis delegate key
+hashes. Entries are sorted by hash, and accessors return independent values::
+
+   Cometa::ProposedParamUpdates proposals;
+   const Cometa::Blake2bHash delegate =
+     Cometa::Blake2bHash::fromHex(delegateHashHex);
+   proposals.add(delegate, update);
+   const std::optional<Cometa::ProtocolParamUpdate> found =
+     proposals.get(delegate);
+
+``Update`` combines the proposals with the epoch in which they take effect::
+
+   Cometa::Update epochUpdate(500, proposals);
+   const std::vector<std::uint8_t> cbor = epochUpdate.toCbor();
+   const Cometa::Update decoded = Cometa::Update::fromCbor(cbor);
+
+``ProtocolParameters`` holds the current network settings. It includes the
+Conway, Leios, and Peras fields, with typed values for prices, execution units,
+thresholds, and cost models::
+
+   Cometa::ProtocolParameters parameters;
+   parameters.setMinFeeA(44);
+   parameters.setMaxTxExUnits(Cometa::ExUnits(10'000'000, 10'000'000'000));
+   parameters.setPerasBootstrapRound(std::nullopt);
+
+Copies own independent values. A missing max pledge leverage or Peras bootstrap
+round is represented by ``std::nullopt``.
+
+``InfoAction`` is an informational governance proposal. Its CBOR is the
+ledger action array ``[6]``::
+
+   const Cometa::InfoAction action;
+   const std::vector<std::uint8_t> cbor = action.toCbor();
+
+``NoConfidenceAction`` accepts an optional previous action identifier::
+
+   const Cometa::NoConfidenceAction noConfidence(std::nullopt);
+   const std::vector<std::uint8_t> cbor = noConfidence.toCbor();
+
+``HardForkInitiationAction`` combines a proposed protocol version with an
+optional previous action identifier::
+
+   const Cometa::HardForkInitiationAction hardFork(
+     Cometa::ProtocolVersion(12, 0));
+
+``ParameterChangeAction`` proposes protocol parameter changes. The previous
+action identifier and policy hash are optional::
+
+   const Cometa::ParameterChangeAction change(update);
+   const std::vector<std::uint8_t> cbor = change.toCbor();
+
+``Constitution`` holds its anchor and an optional script hash::
+
+   const Cometa::Constitution constitution(anchor, std::nullopt);
+
+``NewConstitutionAction`` proposes a constitution and may refer to the
+previous constitutional action::
+
+   const Cometa::NewConstitutionAction newConstitution(constitution);
+
+``TreasuryWithdrawalsAction`` holds a withdrawal map and optional policy hash::
+
+   const Cometa::TreasuryWithdrawalsAction treasury(withdrawals);
+
+``CommitteeMembersMap`` associates committee credentials with their term
+expiration epochs::
+
+   Cometa::CommitteeMembersMap members;
+   const Cometa::Credential coldCredential(
+     Cometa::CredentialType::KeyHash,
+     Cometa::Blake2bHash::fromHex(std::string(56, '0')));
+   members.insert(coldCredential, 200);
+   const std::optional<std::uint64_t> expiration = members.get(coldCredential);
+
+``Committee`` adds a quorum threshold to the member terms::
+
+   Cometa::Committee committee(Cometa::UnitInterval(1, 2));
+   committee.addMember(coldCredential, 200);
+   const Cometa::UnitInterval quorum = committee.quorumThreshold();
+
+``UpdateCommitteeAction`` proposes members to remove or add and a new quorum::
+
+   const Cometa::UpdateCommitteeAction updateCommittee(
+     Cometa::CredentialSet(), members, Cometa::UnitInterval(1, 2));
+   const std::vector<std::uint8_t> proposalCbor = updateCommittee.toCbor();
+
+``ProposalProcedure`` pairs one governance action with its deposit, return
+address, and metadata anchor::
+
+   const Cometa::ProposalProcedure proposal(
+     500, Cometa::RewardAddress(Cometa::NetworkId::Testnet, coldCredential),
+     Cometa::Anchor("https://a", Cometa::Blake2bHash::fromHex(std::string(64, '0'))),
+     Cometa::InfoAction());
+   const Cometa::InfoAction action = proposal.asInfoAction();
+
+``ProposalProcedureSet`` stores proposals in insertion order::
+
+   Cometa::ProposalProcedureSet proposals;
+   proposals.add(proposal);
+   const Cometa::ProposalProcedure first = proposals.at(0);
+
+``Vote`` and ``VoterType`` identify governance choices and voter credentials::
+
+   const Cometa::Vote choice = Cometa::Vote::Yes;
+   const Cometa::VoterType voter = Cometa::VoterType::DRepKeyHash;
+
+``Voter`` combines a voter kind with its credential::
+
+   const Cometa::Voter drepVoter(Cometa::VoterType::DRepKeyHash, coldCredential);
+
+Voting IDs, voters, and procedures can be stored in ``GovernanceActionIdList``, ``VoterList``, and ``VotingProcedureList`` with the usual ``std::vector`` operations.
+
+``VotingProcedures`` stores votes by voter and governance action. Its ``insert``, ``get``, ``voters``, and ``actionIds`` methods work with independent C++ values.
+
+``VotingProcedure`` records a choice and an optional metadata anchor::
+
+   const Cometa::VotingProcedure castVote(Cometa::Vote::Yes);
+
+Script redeemers
+----------------
+
+A ``Redeemer`` contains its script purpose, index, Plutus data, and execution budget::
+
+   Cometa::Redeemer redeemer(Cometa::RedeemerTag::Spend, 0, Cometa::PlutusData(42), Cometa::ExUnits(500, 700));
+   const std::vector<std::uint8_t> cbor = redeemer.toCbor();
+
+``RedeemerList`` stores redeemers in purpose and index order and rejects duplicate keys. ``setExUnits`` updates an existing redeemer's budget.
+
+``VkeyWitness`` pairs an Ed25519 verification key with its transaction signature and supports CBOR and CIP-116 JSON output.
+
+``VkeyWitnessSet`` holds key witnesses. Adding or applying a witness with an existing verification key updates its signature. ``setUseTag`` controls the CBOR set tag.
+
+``BootstrapWitness`` adds a 32-byte chain code and bootstrap address attributes to a key witness.
+
+``BootstrapWitnessSet`` groups bootstrap witnesses by Byron address root and updates the signature when a new witness has the same root.
+
+``NativeScriptSet`` stores distinct native scripts by script hash and controls the CBOR set tag.
+
+``PlutusDataSet`` stores distinct datum values. Adding to a decoded set updates its CBOR, and ``setUseTag`` controls the set tag.
+
+``PlutusV1ScriptSet`` through ``PlutusV4ScriptSet`` hold distinct compiled scripts by hash. ``WitnessSet`` groups signatures, scripts, data, and redeemers; its optional fields can be read, replaced, or cleared.
+
+``AccountBalanceInterval::exact`` requires one lovelace balance. The range constructor accepts an inclusive lower bound, an exclusive upper bound, or both.
+
+``AccountBalanceIntervalsMap`` associates reward addresses with balance requirements. Entries are returned in canonical CBOR order, and duplicate addresses are rejected.
+
+``DirectDepositMap`` associates reward accounts with unsigned lovelace deposits. It preserves zero deposits, orders entries canonically, and rejects duplicate addresses.
+
+``GuardSet`` preserves guard order because script redeemers refer to guard positions. A key-only set uses the historical key-hash encoding; a set containing a script credential uses the credential encoding. Duplicates are rejected.
+
+``RequiredGuardsMap`` associates guard credentials with optional Plutus data. ``get`` uses two optional layers: the outer layer distinguishes an absent credential, and the inner layer distinguishes a present credential with no datum. ``contains`` checks membership directly.
+
+``SubTransactionBody`` combines inputs and outputs with optional guards, required top-level guards, direct deposits, account balance requirements, validity slots, and the other supported body fields. ``hash()`` computes the sub-transaction body hash.
+
+``TransactionBody`` represents a top-level transaction body, including its fee, collateral, signing requirements, governance fields, and optional Dijkstra sub-transactions. Its fields can be updated before signing; ``hash()`` returns the current body hash.
+
+``SubTransaction`` pairs a sub-transaction body with witnesses and optional auxiliary data. ``applyVkeyWitnesses`` merges signatures into its witness set, and ``id()`` returns the body hash used for signing.
+
+``Transaction`` pairs a top-level body with witnesses and optional auxiliary data. It exposes the validity flag, required signer discovery, and ledger-ordered indexes for redeemers and transaction components. ``applyVkeyWitnesses`` merges signatures into its witness set.
+
+For wallet keys, ``AccountDerivationPath`` represents the first three CIP-1852 path segments. ``DerivationPath`` adds a typed ``DerivationRole`` and key index. Supply segment values before hardening; software key handlers harden purpose, coin type, and account during derivation.
+
+``SubTransactionSet`` keeps sub-transactions in insertion order and rejects duplicate body hashes. Use ``findById`` to look up an intent by its hash.

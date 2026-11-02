@@ -1,0 +1,181 @@
+/**
+ * @file StakeDeregistrationCert.cpp
+ *
+ * @brief Legacy stake deregistration certificates.
+ *
+ * @author angel.castillo
+ * @date   Nov 02, 2026
+ *
+ * Copyright 2026 Biglup Labs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* INCLUDES ******************************************************************/
+
+#include <Cometa/Certificates/StakeDeregistrationCert.h>
+
+#include "../CardanoInterop.h"
+
+#include <cardano/certs/stake_deregistration_cert.h>
+
+/* CLASS IMPLEMENTATION ******************************************************/
+
+namespace Cometa
+{
+StakeDeregistrationCert::StakeDeregistrationCert(const Credential& credential)
+: m_value(nullptr)
+{
+  const Credential                                                                            copy(credential);
+  cardano_stake_deregistration_cert_t*                                                        value  = nullptr;
+  const cardano_error_t                                                                       status = cardano_stake_deregistration_cert_new(copy.checked(), &value);
+  CardanoObject<cardano_stake_deregistration_cert_t, cardano_stake_deregistration_cert_unref> owner(value);
+
+  checkCardanoError(status, "StakeDeregistrationCert");
+  m_value = owner.release();
+}
+
+StakeDeregistrationCert::StakeDeregistrationCert(const StakeDeregistrationCert& other)
+: m_value(nullptr)
+{
+  cardano_stake_deregistration_cert_t*                                                        value  = nullptr;
+  const cardano_error_t                                                                       status = cardano_stake_deregistration_cert_deep_clone(other.checked(), &value);
+  CardanoObject<cardano_stake_deregistration_cert_t, cardano_stake_deregistration_cert_unref> owner(value);
+
+  checkCardanoError(status, "StakeDeregistrationCert copy");
+  m_value = owner.release();
+}
+
+StakeDeregistrationCert::StakeDeregistrationCert(StakeDeregistrationCert&& other) noexcept
+: m_value(std::exchange(other.m_value, nullptr))
+{
+}
+
+StakeDeregistrationCert::~StakeDeregistrationCert()
+{
+  cardano_stake_deregistration_cert_unref(&m_value);
+}
+
+StakeDeregistrationCert
+StakeDeregistrationCert::fromCbor(const std::vector<std::uint8_t>& cbor)
+{
+  return StakeDeregistrationCert(decodeCbor<cardano_stake_deregistration_cert_t, cardano_stake_deregistration_cert_unref>(
+    cbor, cardano_stake_deregistration_cert_from_cbor));
+}
+
+StakeDeregistrationCert
+StakeDeregistrationCert::fromCbor(std::string_view cborHex)
+{
+  return fromCbor(decodeHex(cborHex));
+}
+
+Credential
+StakeDeregistrationCert::credential() const
+{
+  cardano_credential_t* value = cardano_stake_deregistration_cert_get_credential(checked());
+  if (!value)
+  {
+    throw std::logic_error("Stake deregistration certificate has no credential");
+  }
+
+  const Credential result(value);
+  return Credential(result);
+}
+
+void
+StakeDeregistrationCert::setCredential(const Credential& value)
+{
+  const Credential copy(value);
+  checkCardanoError(cardano_stake_deregistration_cert_set_credential(checked(), copy.checked()), "StakeDeregistrationCert setCredential");
+}
+
+std::vector<std::uint8_t>
+StakeDeregistrationCert::toCbor() const
+{
+  return encodeCbor(checked(), cardano_stake_deregistration_cert_to_cbor);
+}
+
+std::string
+StakeDeregistrationCert::toJson() const
+{
+  return encodeJson(checked(), cardano_stake_deregistration_cert_to_cip116_json);
+}
+
+void
+StakeDeregistrationCert::swap(StakeDeregistrationCert& other) noexcept
+{
+  std::swap(m_value, other.m_value);
+}
+
+StakeDeregistrationCert&
+StakeDeregistrationCert::operator=(const StakeDeregistrationCert& other)
+{
+  if (this != &other)
+  {
+    StakeDeregistrationCert copy(other);
+    swap(copy);
+  }
+
+  return *this;
+}
+
+StakeDeregistrationCert&
+StakeDeregistrationCert::operator=(StakeDeregistrationCert&& other) noexcept
+{
+  if (this != &other)
+  {
+    cardano_stake_deregistration_cert_unref(&m_value);
+    m_value = std::exchange(other.m_value, nullptr);
+  }
+
+  return *this;
+}
+
+bool
+StakeDeregistrationCert::operator==(const StakeDeregistrationCert& other) const
+{
+  return credential() == other.credential();
+}
+
+bool
+StakeDeregistrationCert::operator!=(const StakeDeregistrationCert& other) const
+{
+  return !(*this == other);
+}
+
+/* PRIVATE FUNCTIONS *********************************************************/
+
+StakeDeregistrationCert::StakeDeregistrationCert(cardano_stake_deregistration_cert_t* value) noexcept
+: m_value(value)
+{
+}
+
+cardano_stake_deregistration_cert_t*
+StakeDeregistrationCert::checked() const
+{
+  if (!m_value)
+  {
+    throw std::logic_error("Cannot observe a moved-from StakeDeregistrationCert");
+  }
+
+  return m_value;
+}
+
+/* FUNCTIONS IMPLEMENTATION **************************************************/
+
+void
+swap(StakeDeregistrationCert& lhs, StakeDeregistrationCert& rhs) noexcept
+{
+  lhs.swap(rhs);
+}
+} // namespace Cometa

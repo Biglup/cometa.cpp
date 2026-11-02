@@ -17,6 +17,80 @@ INCLUDE (cmake/Cardano.cmake)
 # Library sources.
 ADD_LIBRARY (cometa STATIC
   lib/src/AuxiliaryData/TransactionMetadata.cpp
+  lib/src/PoolParams/SingleHostAddrRelay.cpp
+  lib/src/PoolParams/SingleHostNameRelay.cpp
+  lib/src/PoolParams/MultiHostNameRelay.cpp
+  lib/src/PoolParams/Relay.cpp
+  lib/src/PoolParams/Relays.cpp
+  lib/src/PoolParams/RelayType.cpp
+  lib/src/PoolParams/PoolOwners.cpp
+  lib/src/PoolParams/PoolParams.cpp
+  lib/src/Certificates/CertificateType.cpp
+  lib/src/Certificates/StakeRegistrationCert.cpp
+  lib/src/Certificates/StakeDeregistrationCert.cpp
+  lib/src/Certificates/StakeDelegationCert.cpp
+  lib/src/Certificates/StakeRegistrationDelegationCert.cpp
+  lib/src/Certificates/PoolRegistrationCert.cpp
+  lib/src/Certificates/PoolRetirementCert.cpp
+  lib/src/Certificates/GenesisKeyDelegationCert.cpp
+  lib/src/Certificates/MirToPotCert.cpp
+  lib/src/Certificates/MirToStakeCredentialsCert.cpp
+  lib/src/Certificates/MirCert.cpp
+  lib/src/Certificates/VoteDelegationCert.cpp
+  lib/src/Certificates/StakeVoteDelegationCert.cpp
+  lib/src/Certificates/VoteRegistrationDelegationCert.cpp
+  lib/src/Certificates/StakeVoteRegistrationDelegationCert.cpp
+  lib/src/Certificates/UnregisterDRepCert.cpp
+  lib/src/Certificates/RegisterDRepCert.cpp
+  lib/src/Certificates/UpdateDRepCert.cpp
+  lib/src/Certificates/AuthCommitteeHotCert.cpp
+  lib/src/Certificates/ResignCommitteeColdCert.cpp
+  lib/src/Certificates/Certificate.cpp
+  lib/src/Certificates/CertificateSet.cpp
+  lib/src/ProtocolParams/ExUnitPrices.cpp
+  lib/src/ProtocolParams/CostModel.cpp
+  lib/src/ProtocolParams/CostModels.cpp
+  lib/src/ProtocolParams/DRepVotingThresholds.cpp
+  lib/src/ProtocolParams/PoolVotingThresholds.cpp
+  lib/src/ProtocolParams/ProtocolParamUpdate.cpp
+  lib/src/ProtocolParams/ProposedParamUpdates.cpp
+  lib/src/ProtocolParams/Update.cpp
+  lib/src/ProtocolParams/ProtocolParameters.cpp
+  lib/src/ProposalProcedures/GovernanceActionType.cpp
+  lib/src/ProposalProcedures/InfoAction.cpp
+  lib/src/ProposalProcedures/NoConfidenceAction.cpp
+  lib/src/ProposalProcedures/HardForkInitiationAction.cpp
+  lib/src/ProposalProcedures/ParameterChangeAction.cpp
+  lib/src/ProposalProcedures/Constitution.cpp
+  lib/src/ProposalProcedures/NewConstitutionAction.cpp
+  lib/src/ProposalProcedures/TreasuryWithdrawalsAction.cpp
+  lib/src/ProposalProcedures/CommitteeMembersMap.cpp
+  lib/src/ProposalProcedures/Committee.cpp
+  lib/src/ProposalProcedures/UpdateCommitteeAction.cpp
+  lib/src/ProposalProcedures/ProposalProcedure.cpp
+  lib/src/ProposalProcedures/ProposalProcedureSet.cpp
+  lib/src/VotingProcedures/Vote.cpp
+  lib/src/VotingProcedures/VoterType.cpp
+  lib/src/VotingProcedures/Voter.cpp
+  lib/src/VotingProcedures/VotingProcedure.cpp
+  lib/src/VotingProcedures/VotingProcedures.cpp
+  lib/src/WitnessSet/RedeemerTag.cpp
+  lib/src/WitnessSet/Redeemer.cpp
+  lib/src/WitnessSet/RedeemerList.cpp
+  lib/src/WitnessSet/VkeyWitness.cpp
+  lib/src/WitnessSet/VkeyWitnessSet.cpp
+  lib/src/WitnessSet/BootstrapWitness.cpp
+  lib/src/WitnessSet/BootstrapWitnessSet.cpp
+  lib/src/WitnessSet/NativeScriptSet.cpp
+  lib/src/WitnessSet/PlutusDataSet.cpp
+  lib/src/WitnessSet/PlutusV1ScriptSet.cpp
+  lib/src/WitnessSet/PlutusV2ScriptSet.cpp
+  lib/src/WitnessSet/PlutusV3ScriptSet.cpp
+  lib/src/WitnessSet/PlutusV4ScriptSet.cpp
+  lib/src/WitnessSet/WitnessSet.cpp
+  lib/src/Certificates/RegistrationCert.cpp
+  lib/src/Certificates/UnregistrationCert.cpp
+  lib/src/Common/DRep.cpp
   lib/src/PoolParams/Ipv4.cpp
   lib/src/PoolParams/Ipv6.cpp
   lib/src/PoolParams/BlsKey.cpp
@@ -83,6 +157,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Crypto/Bip39.cpp
   lib/src/Crypto/Pbkdf2.cpp
   lib/src/Crypto/Emip3.cpp
+  lib/src/MessageSigning/Cip8.cpp
   lib/src/Crypto/Crc32.cpp
   lib/src/Address/Address.cpp
   lib/src/Address/BaseAddress.cpp
@@ -105,6 +180,19 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Assets/AssetId.cpp
   lib/src/Assets/AssetName.cpp
   lib/src/TransactionBody/Value.cpp
+  lib/src/TransactionBody/AccountBalanceInterval.cpp
+  lib/src/TransactionBody/AccountBalanceIntervalsMap.cpp
+  lib/src/TransactionBody/DirectDepositMap.cpp
+  lib/src/TransactionBody/GuardSet.cpp
+  lib/src/TransactionBody/RequiredGuardsMap.cpp
+  lib/src/TransactionBody/SubTransactionBody.cpp
+  lib/src/TransactionBody/TransactionBody.cpp
+  lib/src/Transaction/SubTransaction.cpp
+  lib/src/Transaction/Transaction.cpp
+  lib/src/KeyHandlers/AccountDerivationPath.cpp
+  lib/src/KeyHandlers/DerivationPath.cpp
+  lib/src/KeyHandlers/SecureKeyHandler.cpp
+  lib/src/Transaction/SubTransactionSet.cpp
   lib/src/Common/CredentialSet.cpp
   lib/src/Common/Credential.cpp
 )
@@ -147,6 +235,86 @@ IF (COMETA_BUILD_TESTS)
   ADD_EXECUTABLE (cometa-tests
     lib/tests/AuxiliaryData/TransactionMetadataTest.cpp
     lib/tests/AuxiliaryData/MetadatumLabelListTest.cpp
+    lib/tests/PoolParams/SingleHostAddrRelayTest.cpp
+    lib/tests/PoolParams/SingleHostNameRelayTest.cpp
+    lib/tests/PoolParams/MultiHostNameRelayTest.cpp
+    lib/tests/PoolParams/RelayTest.cpp
+    lib/tests/PoolParams/RelaysTest.cpp
+    lib/tests/PoolParams/RelayTypeTest.cpp
+    lib/tests/PoolParams/PoolOwnersTest.cpp
+    lib/tests/PoolParams/PoolParamsTest.cpp
+    lib/tests/Certificates/CertificateTypeTest.cpp
+    lib/tests/Certificates/StakeRegistrationCertTest.cpp
+    lib/tests/Certificates/StakeDeregistrationCertTest.cpp
+    lib/tests/Certificates/StakeDelegationCertTest.cpp
+    lib/tests/Certificates/StakeRegistrationDelegationCertTest.cpp
+    lib/tests/Certificates/PoolRegistrationCertTest.cpp
+    lib/tests/Certificates/PoolRetirementCertTest.cpp
+    lib/tests/Certificates/GenesisKeyDelegationCertTest.cpp
+    lib/tests/Certificates/MirPotTypeTest.cpp
+    lib/tests/Certificates/MirCertTypeTest.cpp
+    lib/tests/Certificates/MirToPotCertTest.cpp
+    lib/tests/Certificates/MirToStakeCredentialsCertTest.cpp
+    lib/tests/Certificates/MirCertTest.cpp
+    lib/tests/Certificates/VoteDelegationCertTest.cpp
+    lib/tests/Certificates/StakeVoteDelegationCertTest.cpp
+    lib/tests/Certificates/VoteRegistrationDelegationCertTest.cpp
+    lib/tests/Certificates/StakeVoteRegistrationDelegationCertTest.cpp
+    lib/tests/Certificates/UnregisterDRepCertTest.cpp
+    lib/tests/Certificates/RegisterDRepCertTest.cpp
+    lib/tests/Certificates/UpdateDRepCertTest.cpp
+    lib/tests/Certificates/AuthCommitteeHotCertTest.cpp
+    lib/tests/Certificates/ResignCommitteeColdCertTest.cpp
+    lib/tests/Certificates/CertificateTest.cpp
+    lib/tests/Certificates/CertificateSetTest.cpp
+    lib/tests/ProtocolParams/ExUnitPricesTest.cpp
+    lib/tests/ProtocolParams/CostModelTest.cpp
+    lib/tests/ProtocolParams/CostModelsTest.cpp
+    lib/tests/ProtocolParams/DRepVotingThresholdsTest.cpp
+    lib/tests/ProtocolParams/PoolVotingThresholdsTest.cpp
+    lib/tests/ProtocolParams/ProtocolParamUpdateTest.cpp
+    lib/tests/ProtocolParams/ProposedParamUpdatesTest.cpp
+    lib/tests/ProtocolParams/UpdateTest.cpp
+    lib/tests/ProtocolParams/ProtocolParametersTest.cpp
+    lib/tests/ProposalProcedures/GovernanceActionTypeTest.cpp
+    lib/tests/ProposalProcedures/InfoActionTest.cpp
+    lib/tests/ProposalProcedures/NoConfidenceActionTest.cpp
+    lib/tests/ProposalProcedures/HardForkInitiationActionTest.cpp
+    lib/tests/ProposalProcedures/ParameterChangeActionTest.cpp
+    lib/tests/ProposalProcedures/ConstitutionTest.cpp
+    lib/tests/ProposalProcedures/NewConstitutionActionTest.cpp
+    lib/tests/ProposalProcedures/TreasuryWithdrawalsActionTest.cpp
+    lib/tests/ProposalProcedures/CommitteeMembersMapTest.cpp
+    lib/tests/ProposalProcedures/CommitteeTest.cpp
+    lib/tests/ProposalProcedures/UpdateCommitteeActionTest.cpp
+    lib/tests/ProposalProcedures/ProposalProcedureTest.cpp
+    lib/tests/ProposalProcedures/ProposalProcedureSetTest.cpp
+    lib/tests/VotingProcedures/VoteTest.cpp
+    lib/tests/VotingProcedures/VoterTypeTest.cpp
+    lib/tests/VotingProcedures/VoterTest.cpp
+    lib/tests/VotingProcedures/VotingProcedureTest.cpp
+    lib/tests/VotingProcedures/GovernanceActionIdListTest.cpp
+    lib/tests/VotingProcedures/VoterListTest.cpp
+    lib/tests/VotingProcedures/VotingProcedureListTest.cpp
+    lib/tests/VotingProcedures/VotingProceduresTest.cpp
+    lib/tests/WitnessSet/RedeemerTagTest.cpp
+    lib/tests/WitnessSet/RedeemerTest.cpp
+    lib/tests/WitnessSet/RedeemerListTest.cpp
+    lib/tests/WitnessSet/VkeyWitnessTest.cpp
+    lib/tests/WitnessSet/VkeyWitnessSetTest.cpp
+    lib/tests/WitnessSet/BootstrapWitnessTest.cpp
+    lib/tests/WitnessSet/BootstrapWitnessSetTest.cpp
+    lib/tests/WitnessSet/NativeScriptSetTest.cpp
+    lib/tests/WitnessSet/PlutusDataSetTest.cpp
+    lib/tests/WitnessSet/PlutusV1ScriptSetTest.cpp
+    lib/tests/WitnessSet/PlutusV2ScriptSetTest.cpp
+    lib/tests/WitnessSet/PlutusV3ScriptSetTest.cpp
+    lib/tests/WitnessSet/PlutusV4ScriptSetTest.cpp
+    lib/tests/WitnessSet/WitnessSetTest.cpp
+    lib/tests/Certificates/RegistrationCertTest.cpp
+    lib/tests/Certificates/UnregistrationCertTest.cpp
+    lib/tests/Common/DRepTypeTest.cpp
+    lib/tests/Common/DRepTest.cpp
     lib/tests/PoolParams/Ipv4Test.cpp
     lib/tests/PoolParams/Ipv6Test.cpp
     lib/tests/PoolParams/BlsKeyTest.cpp
@@ -234,6 +402,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Crypto/Bip39Test.cpp
     lib/tests/Crypto/Pbkdf2Test.cpp
     lib/tests/Crypto/Emip3Test.cpp
+    lib/tests/MessageSigning/Cip8Test.cpp
     lib/tests/Crypto/Crc32Test.cpp
     lib/tests/Address/AddressTypeTest.cpp
     lib/tests/Address/ByronAddressTypeTest.cpp
@@ -256,8 +425,29 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Common/CredentialSetTest.cpp
     lib/tests/Common/CredentialTest.cpp
     lib/tests/TransactionBody/ValueTest.cpp
+    lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp
+    lib/tests/TransactionBody/AccountBalanceIntervalsMapTest.cpp
+    lib/tests/TransactionBody/DirectDepositMapTest.cpp
+    lib/tests/TransactionBody/GuardSetTest.cpp
+    lib/tests/TransactionBody/RequiredGuardsMapTest.cpp
+    lib/tests/TransactionBody/SubTransactionBodyTest.cpp
+    lib/tests/TransactionBody/TransactionBodyTest.cpp
+    lib/tests/Transaction/SubTransactionTest.cpp
+    lib/tests/Transaction/TransactionTest.cpp
+    lib/tests/KeyHandlers/Cip1852Test.cpp
+    lib/tests/KeyHandlers/DerivationRoleTest.cpp
+    lib/tests/KeyHandlers/AccountDerivationPathTest.cpp
+    lib/tests/KeyHandlers/DerivationPathTest.cpp
+    lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
+    lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp
+    lib/tests/KeyHandlers/SoftwareSecureKeyHandlerTest.cpp
+    lib/tests/Transaction/SubTransactionSetTest.cpp
     lib/tests/ValueContractTest.cpp
   )
+
+  IF (MSVC)
+    TARGET_COMPILE_OPTIONS (cometa-tests PRIVATE /bigobj)
+  ENDIF ()
 
   TARGET_INCLUDE_DIRECTORIES (cometa-tests
     PRIVATE
