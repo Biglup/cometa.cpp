@@ -840,3 +840,13 @@ and optional anchor.
    Cometa::CertificateSet certificates;
    certificates.add(Cometa::Certificate(registration));
    const Cometa::Certificate first = certificates.at(0);
+
+Protocol parameters
+-------------------
+
+``ExUnitPrices`` holds the rational memory and CPU step prices used by Plutus
+execution. Both prices can be read and replaced independently::
+
+   Cometa::ExUnitPrices prices(Cometa::UnitInterval(1, 2),
+                               Cometa::UnitInterval(1, 3));
+   prices.setMemoryPrice(Cometa::UnitInterval(2, 3));

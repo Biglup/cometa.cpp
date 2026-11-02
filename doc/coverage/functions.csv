@@ -1894,20 +1894,20 @@ cardano_drep_voting_thresholds_refcount,lib/include/cardano/protocol_params/drep
 cardano_drep_voting_thresholds_set_last_error,lib/include/cardano/protocol_params/drep_voting_thresholds.h,P12,planned,,,API and ownership mapping pending.
 cardano_drep_voting_thresholds_get_last_error,lib/include/cardano/protocol_params/drep_voting_thresholds.h,P12,planned,,,API and ownership mapping pending.
 cardano_drep_voting_thresholds_deep_clone,lib/include/cardano/protocol_params/drep_voting_thresholds.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_new,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_from_cbor,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_to_cbor,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_to_cip116_json,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_get_memory_prices,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_get_steps_prices,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_set_memory_prices,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_set_steps_prices,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_unref,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_ref,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_refcount,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_set_last_error,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_get_last_error,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
-cardano_ex_unit_prices_deep_clone,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,,API and ownership mapping pending.
+cardano_ex_unit_prices_new,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,implemented,Cometa::ExUnitPrices::constructor,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
+cardano_ex_unit_prices_from_cbor,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,implemented,Cometa::ExUnitPrices::fromCbor,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
+cardano_ex_unit_prices_to_cbor,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,implemented,Cometa::ExUnitPrices::toCbor,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
+cardano_ex_unit_prices_to_cip116_json,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,implemented,Cometa::ExUnitPrices::toJson,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
+cardano_ex_unit_prices_get_memory_prices,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,implemented,Cometa::ExUnitPrices::memoryPrice,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
+cardano_ex_unit_prices_get_steps_prices,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,implemented,Cometa::ExUnitPrices::stepsPrice,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
+cardano_ex_unit_prices_set_memory_prices,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,implemented,Cometa::ExUnitPrices::setMemoryPrice,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
+cardano_ex_unit_prices_set_steps_prices,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,implemented,Cometa::ExUnitPrices::setStepsPrice,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
+cardano_ex_unit_prices_unref,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
+cardano_ex_unit_prices_ref,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
+cardano_ex_unit_prices_refcount,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
+cardano_ex_unit_prices_set_last_error,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
+cardano_ex_unit_prices_get_last_error,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
+cardano_ex_unit_prices_deep_clone,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,P12,implemented,Cometa::ExUnitPrices::copy constructor / assignment,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp,Native CBOR price fixture and independent copy contract.
 cardano_pool_voting_thresholds_new,lib/include/cardano/protocol_params/pool_voting_thresholds.h,P12,planned,,,API and ownership mapping pending.
 cardano_pool_voting_thresholds_from_cbor,lib/include/cardano/protocol_params/pool_voting_thresholds.h,P12,planned,,,API and ownership mapping pending.
 cardano_pool_voting_thresholds_to_cbor,lib/include/cardano/protocol_params/pool_voting_thresholds.h,P12,planned,,,API and ownership mapping pending.

@@ -219,6 +219,9 @@ class UnitInterval
     /** @brief Allows PoolParams to copy pool components. */
     friend class PoolParams;
 
+    /** @brief Allows ExUnitPrices to copy price components. */
+    friend class ExUnitPrices;
+
   private:
 
     /**

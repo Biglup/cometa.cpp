@@ -459,3 +459,9 @@ Historical MIR pot transfers
 
 .. doxygenclass:: Cometa::CertificateSet
    :members:
+
+Protocol parameters
+-------------------
+
+.. doxygenclass:: Cometa::ExUnitPrices
+   :members:

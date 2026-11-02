@@ -73,7 +73,7 @@ cardano_ed25519_signature_t,opaque object,lib/include/cardano/crypto/ed25519_sig
 cardano_enterprise_address_t,opaque object,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress,lib/tests/Address/EnterpriseAddressTest.cpp
 cardano_error_t,enum,lib/include/cardano/error.h,P01a.1,implemented,ErrorCode,lib/tests/ErrorTest.cpp
 cardano_evaluate_transaction_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
-cardano_ex_unit_prices_t,opaque object,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,planned,,
+cardano_ex_unit_prices_t,opaque object,lib/include/cardano/protocol_params/ex_unit_prices.h,P12,implemented,Cometa::ExUnitPrices,lib/tests/ProtocolParams/ExUnitPricesTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_ex_units_t,opaque object,lib/include/cardano/common/ex_units.h,P01a.1,implemented,ExUnits,lib/tests/Common/ExUnitsTest.cpp
 cardano_genesis_key_delegation_cert_t,opaque object,lib/include/cardano/certs/genesis_key_delegation_cert.h,P10,implemented,Cometa::GenesisKeyDelegationCert,lib/tests/Certificates/GenesisKeyDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_get_parameters_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,planned,,
