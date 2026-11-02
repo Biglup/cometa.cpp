@@ -284,6 +284,8 @@ class Blake2bHash
 
     /** @brief The owned reference, or null after a move. */
     cardano_blake2b_hash_t* m_value;
+    /** @brief Allows pool metadata to exchange content hashes. */
+    friend class PoolMetadata;
 };
 } // namespace Cometa
 

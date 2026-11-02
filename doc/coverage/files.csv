@@ -118,11 +118,11 @@ lib/include/cardano/plutus_data/plutus_data.h,public header,P05,implemented,"Val
 lib/include/cardano/plutus_data/plutus_data_kind.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
 lib/include/cardano/plutus_data/plutus_list.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
 lib/include/cardano/plutus_data/plutus_map.h,public header,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
-lib/include/cardano/pool_params/bls_key.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/ipv4.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/ipv6.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/bls_key.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
+lib/include/cardano/pool_params/ipv4.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
+lib/include/cardano/pool_params/ipv6.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/include/cardano/pool_params/multi_host_name_relay.h,public header,P09,planned,idiomatic C++ API
-lib/include/cardano/pool_params/pool_metadata.h,public header,P09,planned,idiomatic C++ API
+lib/include/cardano/pool_params/pool_metadata.h,public header,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/include/cardano/pool_params/pool_owners.h,public header,P09,planned,idiomatic C++ API
 lib/include/cardano/pool_params/pool_params.h,public header,P09,planned,idiomatic C++ API
 lib/include/cardano/pool_params/relay.h,public header,P09,planned,idiomatic C++ API
@@ -380,11 +380,11 @@ lib/src/plutus_data/constr_plutus_data.c,implementation file,P05,implemented,"Va
 lib/src/plutus_data/plutus_data.c,implementation file,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
 lib/src/plutus_data/plutus_list.c,implementation file,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
 lib/src/plutus_data/plutus_map.c,implementation file,P05,implemented,"Value copies, owned children, preserved CBOR, mutation invalidation, allocation failures, and shared Plutus fixtures."
-lib/src/pool_params/bls_key.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/ipv4.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/ipv6.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/bls_key.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
+lib/src/pool_params/ipv4.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
+lib/src/pool_params/ipv6.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/src/pool_params/multi_host_name_relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/pool_params/pool_metadata.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/pool_params/pool_metadata.c,implementation file,P09,implemented,Pool primitive values; owned bytes and text; fixed-length key/hash validation.
 lib/src/pool_params/pool_owners.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/pool_params/pool_params.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/pool_params/relay.c,implementation file,P09,internal,Native implementation reference; coverage is tracked against its public API.

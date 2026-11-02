@@ -24,7 +24,7 @@ cardano_bip32_sign_transaction_func_t,callback,lib/include/cardano/key_handlers/
 cardano_blake2b_hash_set_t,opaque object,lib/include/cardano/crypto/blake2b_hash_set.h,P04.3,implemented,Cometa::Blake2bHashSet,lib/tests/Crypto/Blake2bHashSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_blake2b_hash_size_t,enum,lib/include/cardano/crypto/blake2b_hash_size.h,P02,implemented,Cometa::Blake2bHashSize,lib/tests/Crypto/Blake2bHashSizeTest.cpp
 cardano_blake2b_hash_t,opaque object,lib/include/cardano/crypto/blake2b_hash.h,P02,implemented,Blake2bHash,lib/tests/Crypto/Blake2bHashTest.cpp
-cardano_bls_key_t,opaque object,lib/include/cardano/pool_params/bls_key.h,P09,planned,,
+cardano_bls_key_t,opaque object,lib/include/cardano/pool_params/bls_key.h,P09,implemented,Cometa::BlsKey,lib/tests/PoolParams/BlsKeyTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_bootstrap_witness_set_t,opaque object,lib/include/cardano/witness_set/bootstrap_witness_set.h,P15,planned,,
 cardano_bootstrap_witness_t,opaque object,lib/include/cardano/witness_set/bootstrap_witness.h,P15,planned,,
 cardano_buffer_t,opaque object,lib/include/cardano/buffer.h,P01a.1,internal,C++ scalar/container types and private ownership helpers,
@@ -91,8 +91,8 @@ cardano_hard_fork_initiation_action_t,opaque object,lib/include/cardano/proposal
 cardano_implicit_coin_t,struct,lib/include/cardano/transaction_builder/balancing/implicit_coin.h,P22,planned,,
 cardano_info_action_t,opaque object,lib/include/cardano/proposal_procedures/info_action.h,P13,planned,,
 cardano_input_to_redeemer_map_t,opaque object,lib/include/cardano/transaction_builder/balancing/input_to_redeemer_map.h,P22,planned,,
-cardano_ipv4_t,opaque object,lib/include/cardano/pool_params/ipv4.h,P09,planned,,
-cardano_ipv6_t,opaque object,lib/include/cardano/pool_params/ipv6.h,P09,planned,,
+cardano_ipv4_t,opaque object,lib/include/cardano/pool_params/ipv4.h,P09,implemented,Cometa::Ipv4,lib/tests/PoolParams/Ipv4Test.cpp; lib/tests/ValueContractTest.cpp
+cardano_ipv6_t,opaque object,lib/include/cardano/pool_params/ipv6.h,P09,implemented,Cometa::Ipv6,lib/tests/PoolParams/Ipv6Test.cpp; lib/tests/ValueContractTest.cpp
 cardano_json_context_t,enum,lib/include/cardano/json/json_context.h,P01b,implemented,Cometa::JsonContext,lib/tests/Json/JsonContextTest.cpp
 cardano_json_format_t,enum,lib/include/cardano/json/json_format.h,P01b,implemented,Cometa::JsonFormat,lib/tests/Json/JsonFormatTest.cpp
 cardano_json_object_t,opaque object,lib/include/cardano/json/json_object.h,P01b,implemented,Cometa::JsonValue,lib/tests/Json/JsonValueTest.cpp
@@ -141,7 +141,7 @@ cardano_plutus_v4_script_set_t,opaque object,lib/include/cardano/witness_set/plu
 cardano_plutus_v4_script_t,opaque object,lib/include/cardano/scripts/plutus_scripts/plutus_v4_script.h,P06.3,implemented,Cometa::PlutusV4Script,lib/tests/Scripts/PlutusScripts/PlutusV4ScriptTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_pointer_address_t,opaque object,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress,lib/tests/Address/PointerAddressTest.cpp
 cardano_policy_id_list_t,opaque object,lib/include/cardano/assets/policy_id_list.h,P04.1,implemented,Cometa::PolicyIdList,lib/tests/Assets/PolicyIdListTest.cpp
-cardano_pool_metadata_t,opaque object,lib/include/cardano/pool_params/pool_metadata.h,P09,planned,,
+cardano_pool_metadata_t,opaque object,lib/include/cardano/pool_params/pool_metadata.h,P09,implemented,Cometa::PoolMetadata,lib/tests/PoolParams/PoolMetadataTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_pool_owners_t,opaque object,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,
 cardano_pool_params_t,opaque object,lib/include/cardano/pool_params/pool_params.h,P09,planned,,
 cardano_pool_registration_cert_t,opaque object,lib/include/cardano/certs/pool_registration_cert.h,P10,planned,,

@@ -596,3 +596,29 @@ or calling ``normalizeEncoding`` selects the current tagged form for subsequent
 serialization; nested script encodings remain intact. ``hash`` always hashes the
 bytes returned by ``toCbor``. Equality compares field values, so equivalent values
 with different original encodings can have different hashes.
+
+Pool primitives
+---------------
+
+``Ipv4`` and ``Ipv6`` accept network-order bytes and provide CBOR, text, and byte
+conversions. IPv4 text contains four decimal octets. IPv6 text currently requires
+eight groups of four hexadecimal digits; compressed forms such as ``::1`` are
+not accepted. Address equality compares bytes, regardless of hexadecimal case.
+
+.. code-block:: cpp
+
+   const Cometa::Ipv4 address = Cometa::Ipv4::fromString("192.0.2.1");
+   const std::vector<std::uint8_t> bytes = address.toBytes();
+
+   const Cometa::Blake2bHash hash = Cometa::Blake2bHash::fromHex(std::string(64, '1'));
+   Cometa::PoolMetadata metadata("https://example.com/pool.json", hash);
+   metadata.setUrl("https://example.com/new.json");
+
+``PoolMetadata`` stores a URL of at most 128 bytes and a 32-byte content hash.
+An empty URL is allowed; embedded NUL characters are rejected by constructors and
+setters. Copies and returned hashes are independent values.
+
+``BlsKey`` stores a 96-byte public key and a 48-byte proof of possession. Construct
+it from two byte vectors, or use ``fromHex`` with 192 and 96 hexadecimal characters.
+It supports CBOR and CIP-116 JSON. These operations validate the encoding and
+lengths; they do not verify the proof cryptographically.

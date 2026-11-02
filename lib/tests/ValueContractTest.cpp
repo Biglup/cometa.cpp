@@ -414,7 +414,35 @@ sampleValue<WithdrawalMap>()
   return value;
 }
 
-using ValueTypes = testing::Types<TransactionMetadata, AuxiliaryData, Metadatum, MetadatumList, MetadatumMap, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
+template<>
+Ipv4
+sampleValue<Ipv4>()
+{
+  return Ipv4::fromString("127.0.0.1");
+}
+
+template<>
+Ipv6
+sampleValue<Ipv6>()
+{
+  return Ipv6::fromString("0000:0000:0000:0000:0000:0000:0000:0001");
+}
+
+template<>
+BlsKey
+sampleValue<BlsKey>()
+{
+  return BlsKey(std::vector<std::uint8_t>(96, 1), std::vector<std::uint8_t>(48, 2));
+}
+
+template<>
+PoolMetadata
+sampleValue<PoolMetadata>()
+{
+  return PoolMetadata("https://example.com", Blake2bHash::fromHex(std::string(64, '1')));
+}
+
+using ValueTypes = testing::Types<Ipv4, Ipv6, BlsKey, PoolMetadata, TransactionMetadata, AuxiliaryData, Metadatum, MetadatumList, MetadatumMap, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
 
@@ -5324,6 +5352,33 @@ TEST(AuxiliaryData, FailedSetPlutusV4ScriptsPreservesValue)
     {
       AllocationFailure failure(index, true);
       EXPECT_THROW(value.setPlutusV4Scripts(replacement), std::bad_alloc) << index;
+    }
+    EXPECT_EQ(value, original);
+    EXPECT_EQ(value.toCbor(), original.toCbor());
+  }
+}
+
+TEST(PoolMetadata, FailedSetHashPreservesValue)
+{
+  // Arrange
+  const PoolMetadata original    = sampleValue<PoolMetadata>();
+  const Blake2bHash  replacement = Blake2bHash::fromHex(std::string(64, '2'));
+  std::size_t        count       = 0U;
+  {
+    PoolMetadata      value(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    value.setHash(replacement);
+    count = allocationIndex;
+  }
+  ASSERT_GT(count, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0U; index < count; ++index)
+  {
+    PoolMetadata value(original);
+    {
+      AllocationFailure failure(index, true);
+      EXPECT_THROW(value.setHash(replacement), std::bad_alloc) << index;
     }
     EXPECT_EQ(value, original);
     EXPECT_EQ(value.toCbor(), original.toCbor());
