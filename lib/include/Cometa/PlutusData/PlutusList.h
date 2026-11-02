@@ -202,6 +202,18 @@ class PlutusList
 
   private:
 
+    /** @brief Allows PlutusV1Script to apply data parameters. */
+    friend class PlutusV1Script;
+
+    /** @brief Allows PlutusV2Script to apply data parameters. */
+    friend class PlutusV2Script;
+
+    /** @brief Allows PlutusV3Script to apply data parameters. */
+    friend class PlutusV3Script;
+
+    /** @brief Allows PlutusV4Script to apply data parameters. */
+    friend class PlutusV4Script;
+
     /** @brief Allows PlutusData to copy components. */
     friend class PlutusData;
 

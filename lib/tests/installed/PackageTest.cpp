@@ -166,6 +166,16 @@ main()
     return 1;
   }
 
+  const Cometa::PlutusV4Script plutus = Cometa::PlutusV4Script::fromHex("450100002499");
+  Cometa::PlutusList           parameters;
+  parameters.pushBack(Cometa::PlutusData(std::int64_t { 0 }));
+  const Cometa::PlutusV4Script applied = plutus.applyParameters(parameters);
+
+  if (applied.toHex() != "4b0100003249930101000001" || applied.languageVersion() != Cometa::PlutusLanguageVersion::V4)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

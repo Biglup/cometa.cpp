@@ -419,3 +419,30 @@ child does not normalize existing children.
 Native-script JSON uses the cardano-cli schema: ``all`` and ``any`` objects have
 a ``scripts`` array; ``atLeast`` additionally has an unsigned ``required`` count.
 ``NativeScriptList::fromJson`` accepts an object containing a ``scripts`` array.
+
+Plutus scripts and parameters
+-----------------------------
+
+``PlutusV1Script`` through ``PlutusV4Script`` accept compiled script bytes.
+``fromHex`` decodes those bytes from hexadecimal; ``fromCbor`` decodes an outer
+CBOR bytestring containing them. ``toBytes`` and ``toHex`` return the compiled
+bytes, while ``toCbor`` adds that outer bytestring.
+
+.. code-block:: cpp
+
+   const Cometa::PlutusV4Script script =
+     Cometa::PlutusV4Script::fromHex("450100002499");
+   Cometa::PlutusList parameters;
+   parameters.pushBack(Cometa::PlutusData(std::int64_t { 42 }));
+
+   const Cometa::PlutusV4Script applied = script.applyParameters(parameters);
+   const Cometa::Blake2bHash scriptHash = applied.hash();
+
+``applyParameters`` requires a CBOR-wrapped Flat program, applies arguments in
+list order, and returns a new script. An empty list canonicalizes the program.
+Malformed programs throw ``Error``. Applying parameters does not execute the
+script or change its ledger language version.
+
+``hash`` includes the language prefix, so identical bytes in different Plutus
+versions have different hashes. Decoding an outer CBOR representation normalizes
+its bytestring header without changing the compiled bytes or script hash.
