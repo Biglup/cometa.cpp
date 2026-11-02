@@ -179,6 +179,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Assets/AssetId.cpp
   lib/src/Assets/AssetName.cpp
   lib/src/TransactionBody/Value.cpp
+  lib/src/TransactionBody/AccountBalanceInterval.cpp
   lib/src/Common/CredentialSet.cpp
   lib/src/Common/Credential.cpp
 )
@@ -410,6 +411,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Common/CredentialSetTest.cpp
     lib/tests/Common/CredentialTest.cpp
     lib/tests/TransactionBody/ValueTest.cpp
+    lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp
     lib/tests/ValueContractTest.cpp
   )
 

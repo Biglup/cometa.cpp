@@ -2504,21 +2504,21 @@ cardano_transaction_refcount,lib/include/cardano/transaction/transaction.h,P17,p
 cardano_transaction_set_last_error,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
 cardano_transaction_get_last_error,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
 cardano_transaction_deep_clone,lib/include/cardano/transaction/transaction.h,P17,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_to_cip116_json,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_new,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_new_exact,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_from_cbor,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_to_cbor,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_get_inclusive_lower_bound,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_get_exclusive_upper_bound,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_get_exact_balance,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_is_exact,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_unref,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_ref,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_refcount,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_set_last_error,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_get_last_error,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
-cardano_account_balance_interval_deep_clone,lib/include/cardano/transaction_body/account_balance_interval.h,P16,planned,,,API and ownership mapping pending.
+cardano_account_balance_interval_to_cip116_json,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp,
+cardano_account_balance_interval_new,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp,
+cardano_account_balance_interval_new_exact,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp,
+cardano_account_balance_interval_from_cbor,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp,
+cardano_account_balance_interval_to_cbor,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp,
+cardano_account_balance_interval_get_inclusive_lower_bound,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp,
+cardano_account_balance_interval_get_exclusive_upper_bound,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp,
+cardano_account_balance_interval_get_exact_balance,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp,
+cardano_account_balance_interval_is_exact,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp,
+cardano_account_balance_interval_unref,lib/include/cardano/transaction_body/account_balance_interval.h,P16,internal,,,
+cardano_account_balance_interval_ref,lib/include/cardano/transaction_body/account_balance_interval.h,P16,internal,,,
+cardano_account_balance_interval_refcount,lib/include/cardano/transaction_body/account_balance_interval.h,P16,internal,,,
+cardano_account_balance_interval_set_last_error,lib/include/cardano/transaction_body/account_balance_interval.h,P16,internal,,,
+cardano_account_balance_interval_get_last_error,lib/include/cardano/transaction_body/account_balance_interval.h,P16,internal,,,
+cardano_account_balance_interval_deep_clone,lib/include/cardano/transaction_body/account_balance_interval.h,P16,implemented,Cometa::AccountBalanceInterval,lib/tests/TransactionBody/AccountBalanceIntervalTest.cpp,
 cardano_account_balance_intervals_map_to_cip116_json,lib/include/cardano/transaction_body/account_balance_intervals_map.h,P16,planned,,,API and ownership mapping pending.
 cardano_account_balance_intervals_map_new,lib/include/cardano/transaction_body/account_balance_intervals_map.h,P16,planned,,,API and ownership mapping pending.
 cardano_account_balance_intervals_map_from_cbor,lib/include/cardano/transaction_body/account_balance_intervals_map.h,P16,planned,,,API and ownership mapping pending.

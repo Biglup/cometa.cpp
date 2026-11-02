@@ -180,6 +180,9 @@ API reference
 .. doxygenclass:: Cometa::Value
    :members:
 
+.. doxygenclass:: Cometa::AccountBalanceInterval
+   :members:
+
 .. doxygenclass:: Cometa::Blake2bHashSet
    :members:
 

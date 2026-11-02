@@ -664,6 +664,12 @@ main()
     return 1;
   }
 
+  const Cometa::AccountBalanceInterval accountBalance = Cometa::AccountBalanceInterval::exact(1000);
+  if (Cometa::AccountBalanceInterval::fromCbor(accountBalance.toCbor()) != accountBalance)
+  {
+    return 1;
+  }
+
   Cometa::WitnessSet witnesses;
   witnesses.setNativeScripts(Cometa::NativeScriptSet());
   if (!witnesses.nativeScripts().has_value())

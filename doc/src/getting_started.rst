@@ -1032,3 +1032,5 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 ``PlutusDataSet`` stores distinct datum values. Adding to a decoded set updates its CBOR, and ``setUseTag`` controls the set tag.
 
 ``PlutusV1ScriptSet`` through ``PlutusV4ScriptSet`` hold distinct compiled scripts by hash. ``WitnessSet`` groups signatures, scripts, data, and redeemers; its optional fields can be read, replaced, or cleared.
+
+``AccountBalanceInterval::exact`` requires one lovelace balance. The range constructor accepts an inclusive lower bound, an exclusive upper bound, or both.
