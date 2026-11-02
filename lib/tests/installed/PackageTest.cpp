@@ -55,6 +55,13 @@ main()
     return 1;
   }
 
+  const Cometa::Bech32Data decoded = Cometa::decodeBech32("a12uel5l");
+
+  if (Cometa::encodeBase58({ 58 }) != "21" || decoded.prefix != "a" || !decoded.bytes.empty() || Cometa::encodeBech32(decoded.prefix, decoded.bytes) != "a12uel5l")
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

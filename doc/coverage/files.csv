@@ -95,8 +95,8 @@ lib/include/cardano/crypto/ed25519_public_key.h,public header,P02,planned,idioma
 lib/include/cardano/crypto/ed25519_signature.h,public header,P02,planned,idiomatic C++ API
 lib/include/cardano/crypto/emip3.h,public header,P02,planned,idiomatic C++ API
 lib/include/cardano/crypto/pbkdf2.h,public header,P02,planned,idiomatic C++ API
-lib/include/cardano/encoding/base58.h,public header,P01a.3,planned,idiomatic C++ API
-lib/include/cardano/encoding/bech32.h,public header,P01a.3,planned,idiomatic C++ API
+lib/include/cardano/encoding/base58.h,public header,P01a.3,implemented,Cometa::encodeBase58 and decodeBase58; known vectors and failure tests
+lib/include/cardano/encoding/bech32.h,public header,P01a.3,implemented,Cometa::encodeBech32 and decodeBech32; known vectors and failure tests
 lib/include/cardano/error.h,public header,P01a.1,implemented,idiomatic C++ API
 lib/include/cardano/export.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
 lib/include/cardano/json/json_context.h,public header,P01b,planned,idiomatic C++ API
@@ -355,8 +355,8 @@ lib/src/crypto/ed25519_public_key.c,implementation file,P02,internal,Native impl
 lib/src/crypto/ed25519_signature.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/crypto/emip3.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/crypto/pbkdf2.c,implementation file,P02,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/encoding/base58.c,implementation file,P01a.3,internal,Native implementation reference; coverage is tracked against its public API.
-lib/src/encoding/bech32.c,implementation file,P01a.3,internal,Native implementation reference; coverage is tracked against its public API.
+lib/src/encoding/base58.c,implementation file,P01a.3,implemented,Cometa::encodeBase58 and decodeBase58; known vectors and failure tests
+lib/src/encoding/bech32.c,implementation file,P01a.3,implemented,Cometa::encodeBech32 and decodeBech32; known vectors and failure tests
 lib/src/endian.c,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/endian.h,implementation file,P01a.2,internal,Native implementation reference; coverage is tracked against its public API.
 lib/src/error.c,implementation file,P01a.1,internal,Native implementation reference; coverage is tracked against its public API.

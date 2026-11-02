@@ -1,5 +1,6 @@
 Next
 ---------------------
+- Add Base58 and Bech32 encoding helpers with owned results, checked inputs, and allocation-failure coverage; pin the native Base58 boundary fix.
 - Add arbitrary-precision BigInt arithmetic, checked conversions, bitwise and modular operations, and independent value semantics.
 - Add UnitInterval, Anchor, and GovernanceActionId values with checked conversions, independent copies, and CBOR/JSON encoding.
 - Add C++17 hash, credential, and asset-name value types with native deep copies and automatic memory management.

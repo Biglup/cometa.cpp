@@ -39,6 +39,8 @@
 #include <Cometa/Common/ProtocolVersion.h>
 #include <Cometa/Common/UnitInterval.h>
 #include <Cometa/Crypto/Blake2bHash.h>
+#include <Cometa/Encoding/Base58.h>
+#include <Cometa/Encoding/Bech32.h>
 #include <Cometa/Error.h>
 #include <Cometa/ErrorCode.h>
 #include <Cometa/SlotConfig.h>

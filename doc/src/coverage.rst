@@ -53,11 +53,14 @@ and callback adapters are tracked in :doc:`implementation_plan`.
    * - ``cardano_bigint_t``
      - ``BigInt`` arithmetic, comparisons, checked narrowing, byte/string encoding, and bitwise/modular operations
 
+   * - Base58 and Bech32 encoding
+     - ``encodeBase58``, ``decodeBase58``, ``encodeBech32``, and ``decodeBech32``; strings, byte vectors, and ``Bech32Data``
+
 Coverage ledger
 ---------------
 
 The inventory targets cardano-c commit
-``40a614024ca269a74384912830a1ee8ed715cb66``, matching the dependency pin.
+``84dea5a53dae721db4377876b8e162670636d6e1``, matching the dependency pin.
 It contains 231 public headers, 418 implementation files, 235 distinct public
 typedefs, and 3,334 exported function declarations. Tests and vendored dependencies
 are outside the file inventory.

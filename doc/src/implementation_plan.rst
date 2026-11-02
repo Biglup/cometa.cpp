@@ -12,8 +12,8 @@ PR sequence
 
 The foundation is merged. The first common-types slice is divided into three
 PRs to keep numeric and encoding boundary work independently reviewable.
-P01a.1 and the domain-values portion of P01a.2 are merged. This slice
-completes P01a.2 with BigInt. Implementation PRs are stacked
+P01a.1 and the domain-values portion of P01a.2 are merged. BigInt completes
+P01a.2 in the preceding PR. This slice implements P01a.3 encoding utilities. Implementation PRs are stacked
 on their preceding branch and reviewed in order; work continues while reviews
 are pending.
 
@@ -109,14 +109,14 @@ are pending.
      - BlockfrostProvider implementation and end-to-end validation
      - P23 P24
 
-Encoding follow-up
-------------------
+Encoding validation
+-------------------
 
-P01a.3 must fix and test a confirmed native Base58 boundary defect before using
-the decoder: at the pinned revision, decoding ``"2"`` estimates zero output bytes
-and returns a zero byte instead of the expected byte ``0x01``. Add the regression
-to cardano-c and update the dependency once the fix is merged. Audit other short
-inputs, leading zeroes, and output-size calculations in the same change.
+P01a.3 pins the native Base58 fix for short inputs, embedded zero digits, and
+leading zero bytes. Tests include known text/byte vectors, every single-byte
+value, exact decoded lengths, malformed characters, and buffer boundaries.
+Bech32 covers checksum validation, empty and long payloads, prefix bounds,
+case handling, and allocation-failure cleanup.
 
 Extensible services
 -------------------
