@@ -794,3 +794,6 @@ inspection of older transactions.
 ``MirToStakeCredentialsCert`` records a historical distribution from either
 pot to stake credentials. Its entries contain a credential and an amount in
 lovelace.
+
+``MirCert`` holds either historical form. The ``type()`` discriminator
+selects ``asToPot()`` or ``asToStakeCredentials()``.

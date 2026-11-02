@@ -155,6 +155,7 @@
 
 #include <Cometa/Certificates/CertificateType.h>
 #include <Cometa/Certificates/GenesisKeyDelegationCert.h>
+#include <Cometa/Certificates/MirCert.h>
 #include <Cometa/Certificates/MirCertType.h>
 #include <Cometa/Certificates/MirPotType.h>
 #include <Cometa/Certificates/MirToPotCert.h>

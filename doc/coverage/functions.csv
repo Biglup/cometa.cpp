@@ -627,20 +627,20 @@ cardano_genesis_key_delegation_cert_refcount,lib/include/cardano/certs/genesis_k
 cardano_genesis_key_delegation_cert_set_last_error,lib/include/cardano/certs/genesis_key_delegation_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/GenesisKeyDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Three independent hashes; native CBOR fixture and length checks.
 cardano_genesis_key_delegation_cert_get_last_error,lib/include/cardano/certs/genesis_key_delegation_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/GenesisKeyDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Three independent hashes; native CBOR fixture and length checks.
 cardano_genesis_key_delegation_cert_deep_clone,lib/include/cardano/certs/genesis_key_delegation_cert.h,P10,implemented,Cometa::GenesisKeyDelegationCert::copy constructor / assignment,lib/tests/Certificates/GenesisKeyDelegationCertTest.cpp; lib/tests/ValueContractTest.cpp,Three independent hashes; native CBOR fixture and length checks.
-cardano_mir_cert_new_to_other_pot,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_cert_new_to_stake_creds,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_cert_from_cbor,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_cert_to_cbor,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_cert_to_cip116_json,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_cert_get_type,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_cert_as_to_other_pot,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_cert_as_to_stake_creds,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_cert_unref,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_cert_ref,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_cert_refcount,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_cert_set_last_error,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_cert_get_last_error,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
-cardano_mir_cert_deep_clone,lib/include/cardano/certs/mir_cert.h,P10,planned,,,API and ownership mapping pending.
+cardano_mir_cert_new_to_other_pot,lib/include/cardano/certs/mir_cert.h,P10,implemented,Cometa::MirCert::constructor,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
+cardano_mir_cert_new_to_stake_creds,lib/include/cardano/certs/mir_cert.h,P10,implemented,Cometa::MirCert::constructor,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
+cardano_mir_cert_from_cbor,lib/include/cardano/certs/mir_cert.h,P10,implemented,Cometa::MirCert::fromCbor,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
+cardano_mir_cert_to_cbor,lib/include/cardano/certs/mir_cert.h,P10,implemented,Cometa::MirCert::toCbor,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
+cardano_mir_cert_to_cip116_json,lib/include/cardano/certs/mir_cert.h,P10,implemented,Cometa::MirCert::toJson,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
+cardano_mir_cert_get_type,lib/include/cardano/certs/mir_cert.h,P10,implemented,Cometa::MirCert::type,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
+cardano_mir_cert_as_to_other_pot,lib/include/cardano/certs/mir_cert.h,P10,implemented,Cometa::MirCert::asToPot,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
+cardano_mir_cert_as_to_stake_creds,lib/include/cardano/certs/mir_cert.h,P10,implemented,Cometa::MirCert::asToStakeCredentials,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
+cardano_mir_cert_unref,lib/include/cardano/certs/mir_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
+cardano_mir_cert_ref,lib/include/cardano/certs/mir_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
+cardano_mir_cert_refcount,lib/include/cardano/certs/mir_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
+cardano_mir_cert_set_last_error,lib/include/cardano/certs/mir_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
+cardano_mir_cert_get_last_error,lib/include/cardano/certs/mir_cert.h,P10,internal,RAII and exception handling,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
+cardano_mir_cert_deep_clone,lib/include/cardano/certs/mir_cert.h,P10,implemented,Cometa::MirCert::copy constructor / assignment,lib/tests/Certificates/MirCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical MIR variants and native CBOR fixtures.
 cardano_mir_to_pot_cert_new,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert::constructor,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
 cardano_mir_to_pot_cert_from_cbor,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert::fromCbor,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
 cardano_mir_to_pot_cert_to_cbor,lib/include/cardano/certs/mir_to_pot_cert.h,P10,implemented,Cometa::MirToPotCert::toCbor,lib/tests/Certificates/MirToPotCertTest.cpp; lib/tests/ValueContractTest.cpp,Historical reserve/treasury transfer and native CBOR fixtures.
