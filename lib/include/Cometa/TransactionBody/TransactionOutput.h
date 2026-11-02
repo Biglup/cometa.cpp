@@ -217,6 +217,9 @@ class TransactionOutput
 
   private:
 
+    /** @brief Allows transaction bodies to copy this value. */
+    friend class TransactionBody;
+
     /** @brief Allows Utxo to copy and validate components. */
     friend class Utxo;
 

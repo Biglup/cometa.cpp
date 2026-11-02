@@ -159,6 +159,9 @@ class Update
 
   private:
 
+    /** @brief Allows transaction bodies to copy this value. */
+    friend class TransactionBody;
+
     /**
      * @brief Adopts an owned update.
      * @param value The owned update.

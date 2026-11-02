@@ -192,6 +192,9 @@ class DirectDepositMap
     /** @brief Allows sub-transaction bodies to copy this value. */
     friend class SubTransactionBody;
 
+    /** @brief Allows transaction bodies to copy this value. */
+    friend class TransactionBody;
+
     /**
      * @brief Adopts an owned map.
      * @param value The owned map.

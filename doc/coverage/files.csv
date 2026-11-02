@@ -182,7 +182,7 @@ lib/include/cardano/transaction_body/direct_deposit_map.h,public header,P16,impl
 lib/include/cardano/transaction_body/required_guards_map.h,public header,P16,implemented,Cometa::RequiredGuardsMap
 lib/include/cardano/transaction_body/sub_transaction_body.h,public header,P16,implemented,Cometa::SubTransactionBody
 lib/include/cardano/transaction_body/sub_transaction_set.h,public header,P17,implemented,Cometa::SubTransactionSet
-lib/include/cardano/transaction_body/transaction_body.h,public header,P17,planned,idiomatic C++ API
+lib/include/cardano/transaction_body/transaction_body.h,public header,P17,implemented,Cometa::TransactionBody
 lib/include/cardano/transaction_body/transaction_input.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/include/cardano/transaction_body/transaction_input_set.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/include/cardano/transaction_body/transaction_output.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.

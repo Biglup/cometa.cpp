@@ -725,6 +725,12 @@ main()
     return 1;
   }
 
+  const Cometa::TransactionBody transactionBody(Cometa::TransactionInputSet(), Cometa::TransactionOutputList(), 100);
+  if (Cometa::TransactionBody::fromCbor(transactionBody.toCbor()) != transactionBody)
+  {
+    return 1;
+  }
+
   const Cometa::SubTransactionSet subTransactions = Cometa::SubTransactionSet::fromCbor("d901028183a200d90102800180a0f6");
   if (subTransactions.size() != 1 || !subTransactions.findById(subTransactions.at(0).id()).has_value())
   {

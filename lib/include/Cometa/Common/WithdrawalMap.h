@@ -234,6 +234,9 @@ class WithdrawalMap
     /** @brief Allows sub-transaction bodies to copy this value. */
     friend class SubTransactionBody;
 
+    /** @brief Allows transaction bodies to copy this value. */
+    friend class TransactionBody;
+
     /** @brief Allows treasury actions to copy withdrawals. */
     friend class TreasuryWithdrawalsAction;
 

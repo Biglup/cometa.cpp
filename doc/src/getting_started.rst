@@ -1045,6 +1045,8 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 
 ``SubTransactionBody`` combines inputs and outputs with optional guards, required top-level guards, direct deposits, account balance requirements, validity slots, and the other supported body fields. ``hash()`` computes the sub-transaction body hash.
 
+``TransactionBody`` represents a top-level transaction body, including its fee, collateral, signing requirements, governance fields, and optional Dijkstra sub-transactions. Its fields can be updated before signing; ``hash()`` returns the current body hash.
+
 ``SubTransaction`` pairs a sub-transaction body with witnesses and optional auxiliary data. ``applyVkeyWitnesses`` merges signatures into its witness set, and ``id()`` returns the body hash used for signing.
 
 ``SubTransactionSet`` keeps sub-transactions in insertion order and rejects duplicate body hashes. Use ``findById`` to look up an intent by its hash.

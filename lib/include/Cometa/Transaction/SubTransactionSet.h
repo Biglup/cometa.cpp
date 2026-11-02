@@ -180,6 +180,9 @@ class SubTransactionSet
 
   private:
 
+    /** @brief Allows transaction bodies to copy this value. */
+    friend class TransactionBody;
+
     /**
      * @brief Adopts an owned set.
      * @param value The owned set.

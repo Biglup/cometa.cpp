@@ -64,6 +64,7 @@
 #include <Cometa/TransactionBody/GuardSet.h>
 #include <Cometa/TransactionBody/RequiredGuardsMap.h>
 #include <Cometa/TransactionBody/SubTransactionBody.h>
+#include <Cometa/TransactionBody/TransactionBody.h>
 #include <Cometa/TransactionBody/Value.h>
 
 #include <Cometa/Cbor/CborMajorType.h>
