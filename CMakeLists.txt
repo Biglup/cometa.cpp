@@ -40,6 +40,12 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Crypto/Pbkdf2.cpp
   lib/src/Crypto/Emip3.cpp
   lib/src/Crypto/Crc32.cpp
+  lib/src/Address/Address.cpp
+  lib/src/Address/BaseAddress.cpp
+  lib/src/Address/EnterpriseAddress.cpp
+  lib/src/Address/RewardAddress.cpp
+  lib/src/Address/PointerAddress.cpp
+  lib/src/Address/ByronAddress.cpp
   lib/src/Crypto/Bip32.cpp
   lib/src/Crypto/Ed25519Signature.cpp
   lib/src/Crypto/Ed25519PublicKey.cpp
@@ -117,6 +123,14 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Crypto/Pbkdf2Test.cpp
     lib/tests/Crypto/Emip3Test.cpp
     lib/tests/Crypto/Crc32Test.cpp
+    lib/tests/Address/AddressTypeTest.cpp
+    lib/tests/Address/ByronAddressTypeTest.cpp
+    lib/tests/Address/AddressTest.cpp
+    lib/tests/Address/BaseAddressTest.cpp
+    lib/tests/Address/EnterpriseAddressTest.cpp
+    lib/tests/Address/RewardAddressTest.cpp
+    lib/tests/Address/PointerAddressTest.cpp
+    lib/tests/Address/ByronAddressTest.cpp
     lib/tests/Crypto/Bip32Test.cpp
     lib/tests/Crypto/Ed25519SignatureTest.cpp
     lib/tests/Crypto/Ed25519PublicKeyTest.cpp

@@ -1,5 +1,6 @@
 Next
 ---------------------
+- Add Shelley and Byron address values, checked conversions, network/prefix validation, independent credential access, and shared address vectors.
 - Add BIP39 mnemonic conversion, PBKDF2, EMIP-003 encryption/decryption, CRC32, and named BLAKE2b digest lengths.
 - Add Ed25519 signatures and normal/extended keys, BIP32 derivation, and shared cryptographic fixture checks.
 - Add JSON values, writers, and enums with exact decimal tokens, owned child values, checked conversions, and allocation-failure tests; pin the native JSON fixes.

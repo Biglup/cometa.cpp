@@ -1,128 +1,128 @@
 c_function,header,planned_pr,status,cpp_api,test,notes
-cardano_address_from_bytes,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_get_bytes_size,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_to_bytes,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_get_bytes,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_from_string,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_get_string_size,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_to_string,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_get_string,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_is_valid_bech32,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_is_valid_byron,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_is_valid,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_get_type,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_get_network_id,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_to_byron_address,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_to_reward_address,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_to_pointer_address,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_to_enterprise_address,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_to_base_address,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_equals,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_unref,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_ref,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_refcount,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_set_last_error,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_get_last_error,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_address_deep_clone,lib/include/cardano/address/address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_from_credentials,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_from_address,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_to_address,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_get_payment_credential,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_get_stake_credential,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_from_bytes,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_get_bytes_size,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_get_bytes,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_to_bytes,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_from_bech32,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_get_bech32_size,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_to_bech32,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_get_string,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_get_network_id,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_unref,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_ref,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_refcount,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_set_last_error,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_get_last_error,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_base_address_deep_clone,lib/include/cardano/address/base_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_from_credentials,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_from_address,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_to_address,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_get_attributes,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_get_type,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_get_root,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_from_bytes,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_get_bytes_size,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_get_bytes,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_to_bytes,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_from_base58,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_get_base58_size,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_to_base58,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_get_string,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_get_network_id,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_unref,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_ref,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_refcount,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_set_last_error,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_get_last_error,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_byron_address_deep_clone,lib/include/cardano/address/byron_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_from_credentials,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_from_address,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_to_address,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_get_payment_credential,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_from_bytes,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_get_bytes_size,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_get_bytes,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_to_bytes,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_from_bech32,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_get_bech32_size,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_to_bech32,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_get_string,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_get_network_id,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_unref,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_ref,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_refcount,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_set_last_error,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_get_last_error,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_enterprise_address_deep_clone,lib/include/cardano/address/enterprise_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_from_credentials,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_from_address,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_to_address,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_get_payment_credential,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_get_stake_pointer,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_from_bytes,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_get_bytes_size,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_get_bytes,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_to_bytes,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_from_bech32,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_get_bech32_size,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_to_bech32,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_get_string,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_get_network_id,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_unref,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_ref,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_refcount,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_set_last_error,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_get_last_error,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_pointer_address_deep_clone,lib/include/cardano/address/pointer_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_from_credentials,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_from_address,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_to_address,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_get_credential,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_from_bytes,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_get_bytes_size,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_get_bytes,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_to_bytes,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_from_bech32,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_get_bech32_size,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_to_bech32,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_get_string,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_get_network_id,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_unref,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_ref,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_refcount,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_set_last_error,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_get_last_error,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
-cardano_reward_address_deep_clone,lib/include/cardano/address/reward_address.h,P03,planned,,,API and ownership mapping pending.
+cardano_address_from_bytes,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::constructor,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_get_bytes_size,lib/include/cardano/address/address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/AddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_address_to_bytes,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::toBytes,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_get_bytes,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::toBytes,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_from_string,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::fromString,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_get_string_size,lib/include/cardano/address/address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/AddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_address_to_string,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::toString,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_get_string,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::toString,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_is_valid_bech32,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::isValidBech32,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_is_valid_byron,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::isValidByron,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_is_valid,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::isValid,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_get_type,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::type,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_get_network_id,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::networkId,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_to_byron_address,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::asByron,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_to_reward_address,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::asReward,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_to_pointer_address,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::asPointer,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_to_enterprise_address,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::asEnterprise,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_to_base_address,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::asBase,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_equals,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::operator==,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_address_unref,lib/include/cardano/address/address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/AddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_address_ref,lib/include/cardano/address/address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/AddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_address_refcount,lib/include/cardano/address/address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/AddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_address_set_last_error,lib/include/cardano/address/address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/AddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_address_get_last_error,lib/include/cardano/address/address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/AddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_address_deep_clone,lib/include/cardano/address/address.h,P03,implemented,Cometa::Address::copy constructor and assignment,lib/tests/Address/AddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_base_address_from_credentials,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress::constructor,lib/tests/Address/BaseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_base_address_from_address,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress::fromAddress,lib/tests/Address/BaseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_base_address_to_address,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress::toAddress,lib/tests/Address/BaseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_base_address_get_payment_credential,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress::paymentCredential,lib/tests/Address/BaseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_base_address_get_stake_credential,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress::stakeCredential,lib/tests/Address/BaseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_base_address_from_bytes,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress::constructor,lib/tests/Address/BaseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_base_address_get_bytes_size,lib/include/cardano/address/base_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/BaseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_base_address_get_bytes,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress::toBytes,lib/tests/Address/BaseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_base_address_to_bytes,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress::toBytes,lib/tests/Address/BaseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_base_address_from_bech32,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress::fromBech32,lib/tests/Address/BaseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_base_address_get_bech32_size,lib/include/cardano/address/base_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/BaseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_base_address_to_bech32,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress::toString,lib/tests/Address/BaseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_base_address_get_string,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress::toString,lib/tests/Address/BaseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_base_address_get_network_id,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress::networkId,lib/tests/Address/BaseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_base_address_unref,lib/include/cardano/address/base_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/BaseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_base_address_ref,lib/include/cardano/address/base_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/BaseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_base_address_refcount,lib/include/cardano/address/base_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/BaseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_base_address_set_last_error,lib/include/cardano/address/base_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/BaseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_base_address_get_last_error,lib/include/cardano/address/base_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/BaseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_base_address_deep_clone,lib/include/cardano/address/base_address.h,P03,implemented,Cometa::BaseAddress::copy constructor and assignment,lib/tests/Address/BaseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_from_credentials,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::constructor,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_from_address,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::fromAddress,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_to_address,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::toAddress,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_get_attributes,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::attributes,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_get_type,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::type,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_get_root,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::root,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_from_bytes,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::constructor,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_get_bytes_size,lib/include/cardano/address/byron_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/ByronAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_byron_address_get_bytes,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::toBytes,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_to_bytes,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::toBytes,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_from_base58,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::fromBase58,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_get_base58_size,lib/include/cardano/address/byron_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/ByronAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_byron_address_to_base58,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::toString,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_get_string,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::toString,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_get_network_id,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::networkId,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_byron_address_unref,lib/include/cardano/address/byron_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/ByronAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_byron_address_ref,lib/include/cardano/address/byron_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/ByronAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_byron_address_refcount,lib/include/cardano/address/byron_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/ByronAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_byron_address_set_last_error,lib/include/cardano/address/byron_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/ByronAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_byron_address_get_last_error,lib/include/cardano/address/byron_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/ByronAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_byron_address_deep_clone,lib/include/cardano/address/byron_address.h,P03,implemented,Cometa::ByronAddress::copy constructor and assignment,lib/tests/Address/ByronAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_enterprise_address_from_credentials,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress::constructor,lib/tests/Address/EnterpriseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_enterprise_address_from_address,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress::fromAddress,lib/tests/Address/EnterpriseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_enterprise_address_to_address,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress::toAddress,lib/tests/Address/EnterpriseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_enterprise_address_get_payment_credential,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress::paymentCredential,lib/tests/Address/EnterpriseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_enterprise_address_from_bytes,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress::constructor,lib/tests/Address/EnterpriseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_enterprise_address_get_bytes_size,lib/include/cardano/address/enterprise_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/EnterpriseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_enterprise_address_get_bytes,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress::toBytes,lib/tests/Address/EnterpriseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_enterprise_address_to_bytes,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress::toBytes,lib/tests/Address/EnterpriseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_enterprise_address_from_bech32,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress::fromBech32,lib/tests/Address/EnterpriseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_enterprise_address_get_bech32_size,lib/include/cardano/address/enterprise_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/EnterpriseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_enterprise_address_to_bech32,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress::toString,lib/tests/Address/EnterpriseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_enterprise_address_get_string,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress::toString,lib/tests/Address/EnterpriseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_enterprise_address_get_network_id,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress::networkId,lib/tests/Address/EnterpriseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_enterprise_address_unref,lib/include/cardano/address/enterprise_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/EnterpriseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_enterprise_address_ref,lib/include/cardano/address/enterprise_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/EnterpriseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_enterprise_address_refcount,lib/include/cardano/address/enterprise_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/EnterpriseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_enterprise_address_set_last_error,lib/include/cardano/address/enterprise_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/EnterpriseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_enterprise_address_get_last_error,lib/include/cardano/address/enterprise_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/EnterpriseAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_enterprise_address_deep_clone,lib/include/cardano/address/enterprise_address.h,P03,implemented,Cometa::EnterpriseAddress::copy constructor and assignment,lib/tests/Address/EnterpriseAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_pointer_address_from_credentials,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress::constructor,lib/tests/Address/PointerAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_pointer_address_from_address,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress::fromAddress,lib/tests/Address/PointerAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_pointer_address_to_address,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress::toAddress,lib/tests/Address/PointerAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_pointer_address_get_payment_credential,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress::paymentCredential,lib/tests/Address/PointerAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_pointer_address_get_stake_pointer,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress::stakePointer,lib/tests/Address/PointerAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_pointer_address_from_bytes,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress::constructor,lib/tests/Address/PointerAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_pointer_address_get_bytes_size,lib/include/cardano/address/pointer_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/PointerAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_pointer_address_get_bytes,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress::toBytes,lib/tests/Address/PointerAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_pointer_address_to_bytes,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress::toBytes,lib/tests/Address/PointerAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_pointer_address_from_bech32,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress::fromBech32,lib/tests/Address/PointerAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_pointer_address_get_bech32_size,lib/include/cardano/address/pointer_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/PointerAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_pointer_address_to_bech32,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress::toString,lib/tests/Address/PointerAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_pointer_address_get_string,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress::toString,lib/tests/Address/PointerAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_pointer_address_get_network_id,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress::networkId,lib/tests/Address/PointerAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_pointer_address_unref,lib/include/cardano/address/pointer_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/PointerAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_pointer_address_ref,lib/include/cardano/address/pointer_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/PointerAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_pointer_address_refcount,lib/include/cardano/address/pointer_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/PointerAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_pointer_address_set_last_error,lib/include/cardano/address/pointer_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/PointerAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_pointer_address_get_last_error,lib/include/cardano/address/pointer_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/PointerAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_pointer_address_deep_clone,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress::copy constructor and assignment,lib/tests/Address/PointerAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_reward_address_from_credentials,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress::constructor,lib/tests/Address/RewardAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_reward_address_from_address,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress::fromAddress,lib/tests/Address/RewardAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_reward_address_to_address,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress::toAddress,lib/tests/Address/RewardAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_reward_address_get_credential,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress::credential,lib/tests/Address/RewardAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_reward_address_from_bytes,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress::constructor,lib/tests/Address/RewardAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_reward_address_get_bytes_size,lib/include/cardano/address/reward_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/RewardAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_reward_address_get_bytes,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress::toBytes,lib/tests/Address/RewardAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_reward_address_to_bytes,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress::toBytes,lib/tests/Address/RewardAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_reward_address_from_bech32,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress::fromBech32,lib/tests/Address/RewardAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_reward_address_get_bech32_size,lib/include/cardano/address/reward_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/RewardAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_reward_address_to_bech32,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress::toString,lib/tests/Address/RewardAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_reward_address_get_string,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress::toString,lib/tests/Address/RewardAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_reward_address_get_network_id,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress::networkId,lib/tests/Address/RewardAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
+cardano_reward_address_unref,lib/include/cardano/address/reward_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/RewardAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_reward_address_ref,lib/include/cardano/address/reward_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/RewardAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_reward_address_refcount,lib/include/cardano/address/reward_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/RewardAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_reward_address_set_last_error,lib/include/cardano/address/reward_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/RewardAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_reward_address_get_last_error,lib/include/cardano/address/reward_address.h,P03,internal,"RAII, owned results, and exceptions",lib/tests/Address/RewardAddressTest.cpp,Native ownership and buffer sizing stay private.
+cardano_reward_address_deep_clone,lib/include/cardano/address/reward_address.h,P03,implemented,Cometa::RewardAddress::copy constructor and assignment,lib/tests/Address/RewardAddressTest.cpp,"Conversions preserve value semantics; invalid prefixes, trailing Shelley bytes, and pointer narrowing are rejected."
 cardano_asset_id_new,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
 cardano_asset_id_new_lovelace,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.
 cardano_asset_id_from_bytes,lib/include/cardano/assets/asset_id.h,P04,planned,,,API and ownership mapping pending.

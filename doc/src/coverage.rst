@@ -68,11 +68,14 @@ and callback adapters are tracked in :doc:`implementation_plan`.
    * - BIP39, PBKDF2, EMIP-003, and CRC32
      - Mnemonic conversion, password derivation, authenticated encryption, and checksums through owned strings and vectors
 
+   * - Shelley and Byron addresses
+     - ``Address`` and specialized address values, enums, ``StakePointer``, and ``ByronAddressAttributes``; independent credential getters and checked conversions
+
 Coverage ledger
 ---------------
 
 The inventory targets cardano-c commit
-``fcfcc096f31a03a9b8ce391cb3e8cc7556af8e71``, matching the dependency pin.
+``8831058672e9960f63d6aac3dfc791f0b2d8b295``, matching the dependency pin.
 It contains 231 public headers, 418 implementation files, 235 distinct public
 typedefs, and 3,335 exported function declarations. Tests and vendored dependencies
 are outside the file inventory.
