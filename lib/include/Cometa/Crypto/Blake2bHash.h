@@ -286,6 +286,9 @@ class Blake2bHash
     cardano_blake2b_hash_t* m_value;
     /** @brief Allows pool metadata to exchange content hashes. */
     friend class PoolMetadata;
+
+    /** @brief Allows pool owners to copy hashes. */
+    friend class PoolOwners;
 };
 } // namespace Cometa
 

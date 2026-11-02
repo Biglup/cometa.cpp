@@ -651,3 +651,20 @@ accessor throws ``Error``. Returned variants and addresses are independent value
 Optional setters accept ``std::nullopt`` to remove a field. Port zero is distinct
 from an absent port. ``Relays`` preserves insertion order and duplicates;
 ``pushBack`` copies its argument, and ``at`` returns an independent relay.
+
+Pool owners
+-----------
+
+``PoolOwners`` stores unique 28-byte pool owner key hashes in sorted order.
+Inserting an existing hash returns ``false``. The collection copies inserted
+values and returns independent values from ``at`` and ``values``.
+
+.. code-block:: cpp
+
+   Cometa::PoolOwners owners;
+   owners.insert(Cometa::Blake2bHash::fromHex(std::string(56, '1')));
+   const std::vector<std::uint8_t> cbor = owners.toCbor();
+   const Cometa::PoolOwners restored = Cometa::PoolOwners::fromCbor(cbor);
+
+The CBOR encoder applies set tag 258. The decoder also accepts an untagged
+array, rejects duplicate hashes, and rejects malformed lengths.

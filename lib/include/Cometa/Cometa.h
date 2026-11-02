@@ -152,3 +152,5 @@
 #include <Cometa/PoolParams/RelayType.h>
 #include <Cometa/PoolParams/SingleHostAddrRelay.h>
 #include <Cometa/PoolParams/SingleHostNameRelay.h>
+
+#include <Cometa/PoolParams/PoolOwners.h>

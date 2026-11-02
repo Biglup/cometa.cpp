@@ -1525,19 +1525,19 @@ cardano_pool_metadata_refcount,lib/include/cardano/pool_params/pool_metadata.h,P
 cardano_pool_metadata_set_last_error,lib/include/cardano/pool_params/pool_metadata.h,P09,internal,"RAII, exceptions, and standard container sizes",lib/tests/PoolParams/PoolMetadataTest.cpp; lib/tests/ValueContractTest.cpp,Independent values and owned results; IPv6 text uses expanded notation; BLS validates lengths only.
 cardano_pool_metadata_get_last_error,lib/include/cardano/pool_params/pool_metadata.h,P09,internal,"RAII, exceptions, and standard container sizes",lib/tests/PoolParams/PoolMetadataTest.cpp; lib/tests/ValueContractTest.cpp,Independent values and owned results; IPv6 text uses expanded notation; BLS validates lengths only.
 cardano_pool_metadata_deep_clone,lib/include/cardano/pool_params/pool_metadata.h,P09,implemented,Cometa::PoolMetadata::copy constructor / assignment,lib/tests/PoolParams/PoolMetadataTest.cpp; lib/tests/ValueContractTest.cpp,Independent values and owned results; IPv6 text uses expanded notation; BLS validates lengths only.
-cardano_pool_owners_new,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,,API and ownership mapping pending.
-cardano_pool_owners_from_cbor,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,,API and ownership mapping pending.
-cardano_pool_owners_to_cbor,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,,API and ownership mapping pending.
-cardano_pool_owners_to_cip116_json,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,,API and ownership mapping pending.
-cardano_pool_owners_get_length,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,,API and ownership mapping pending.
-cardano_pool_owners_get,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,,API and ownership mapping pending.
-cardano_pool_owners_add,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,,API and ownership mapping pending.
-cardano_pool_owners_unref,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,,API and ownership mapping pending.
-cardano_pool_owners_ref,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,,API and ownership mapping pending.
-cardano_pool_owners_refcount,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,,API and ownership mapping pending.
-cardano_pool_owners_set_last_error,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,,API and ownership mapping pending.
-cardano_pool_owners_get_last_error,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,,API and ownership mapping pending.
-cardano_pool_owners_deep_clone,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,,API and ownership mapping pending.
+cardano_pool_owners_new,lib/include/cardano/pool_params/pool_owners.h,P09,implemented,Cometa::PoolOwners::constructor,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp,Unique sorted 28-byte owner hashes; independent value semantics.
+cardano_pool_owners_from_cbor,lib/include/cardano/pool_params/pool_owners.h,P09,implemented,Cometa::PoolOwners::fromCbor,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp,Unique sorted 28-byte owner hashes; independent value semantics.
+cardano_pool_owners_to_cbor,lib/include/cardano/pool_params/pool_owners.h,P09,implemented,Cometa::PoolOwners::toCbor,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp,Unique sorted 28-byte owner hashes; independent value semantics.
+cardano_pool_owners_to_cip116_json,lib/include/cardano/pool_params/pool_owners.h,P09,implemented,Cometa::PoolOwners::toJson,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp,Unique sorted 28-byte owner hashes; independent value semantics.
+cardano_pool_owners_get_length,lib/include/cardano/pool_params/pool_owners.h,P09,implemented,Cometa::PoolOwners::size,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp,Unique sorted 28-byte owner hashes; independent value semantics.
+cardano_pool_owners_get,lib/include/cardano/pool_params/pool_owners.h,P09,implemented,Cometa::PoolOwners::at,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp,Unique sorted 28-byte owner hashes; independent value semantics.
+cardano_pool_owners_add,lib/include/cardano/pool_params/pool_owners.h,P09,implemented,Cometa::PoolOwners::insert,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp,Unique sorted 28-byte owner hashes; independent value semantics.
+cardano_pool_owners_unref,lib/include/cardano/pool_params/pool_owners.h,P09,internal,RAII and exception handling,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp,Unique sorted 28-byte owner hashes; independent value semantics.
+cardano_pool_owners_ref,lib/include/cardano/pool_params/pool_owners.h,P09,internal,RAII and exception handling,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp,Unique sorted 28-byte owner hashes; independent value semantics.
+cardano_pool_owners_refcount,lib/include/cardano/pool_params/pool_owners.h,P09,internal,RAII and exception handling,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp,Unique sorted 28-byte owner hashes; independent value semantics.
+cardano_pool_owners_set_last_error,lib/include/cardano/pool_params/pool_owners.h,P09,internal,RAII and exception handling,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp,Unique sorted 28-byte owner hashes; independent value semantics.
+cardano_pool_owners_get_last_error,lib/include/cardano/pool_params/pool_owners.h,P09,internal,RAII and exception handling,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp,Unique sorted 28-byte owner hashes; independent value semantics.
+cardano_pool_owners_deep_clone,lib/include/cardano/pool_params/pool_owners.h,P09,implemented,Cometa::PoolOwners::copy constructor / assignment,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp,Unique sorted 28-byte owner hashes; independent value semantics.
 cardano_pool_params_new,lib/include/cardano/pool_params/pool_params.h,P09,planned,,,API and ownership mapping pending.
 cardano_pool_params_from_cbor,lib/include/cardano/pool_params/pool_params.h,P09,planned,,,API and ownership mapping pending.
 cardano_pool_params_to_cbor,lib/include/cardano/pool_params/pool_params.h,P09,planned,,,API and ownership mapping pending.

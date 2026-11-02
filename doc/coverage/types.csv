@@ -142,7 +142,7 @@ cardano_plutus_v4_script_t,opaque object,lib/include/cardano/scripts/plutus_scri
 cardano_pointer_address_t,opaque object,lib/include/cardano/address/pointer_address.h,P03,implemented,Cometa::PointerAddress,lib/tests/Address/PointerAddressTest.cpp
 cardano_policy_id_list_t,opaque object,lib/include/cardano/assets/policy_id_list.h,P04.1,implemented,Cometa::PolicyIdList,lib/tests/Assets/PolicyIdListTest.cpp
 cardano_pool_metadata_t,opaque object,lib/include/cardano/pool_params/pool_metadata.h,P09,implemented,Cometa::PoolMetadata,lib/tests/PoolParams/PoolMetadataTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_pool_owners_t,opaque object,lib/include/cardano/pool_params/pool_owners.h,P09,planned,,
+cardano_pool_owners_t,opaque object,lib/include/cardano/pool_params/pool_owners.h,P09,implemented,Cometa::PoolOwners,lib/tests/PoolParams/PoolOwnersTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_pool_params_t,opaque object,lib/include/cardano/pool_params/pool_params.h,P09,planned,,
 cardano_pool_registration_cert_t,opaque object,lib/include/cardano/certs/pool_registration_cert.h,P10,planned,,
 cardano_pool_retirement_cert_t,opaque object,lib/include/cardano/certs/pool_retirement_cert.h,P10,planned,,

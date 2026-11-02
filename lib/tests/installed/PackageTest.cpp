@@ -246,6 +246,13 @@ main()
     return 1;
   }
 
+  const Cometa::PoolOwners poolOwners { Cometa::Blake2bHash::fromHex(std::string(56, '1')) };
+
+  if (Cometa::PoolOwners::fromCbor(poolOwners.toCbor()) != poolOwners || poolOwners.size() != 1)
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

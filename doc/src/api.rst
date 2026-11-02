@@ -337,3 +337,9 @@ Pool relays
    :members:
 
 .. doxygenenum:: Cometa::RelayType
+
+Pool owners
+-----------
+
+.. doxygenclass:: Cometa::PoolOwners
+   :members:
