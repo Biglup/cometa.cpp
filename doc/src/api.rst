@@ -505,3 +505,6 @@ Protocol parameters
 
 .. doxygenclass:: Cometa::ParameterChangeAction
    :members:
+
+.. doxygenclass:: Cometa::Constitution
+   :members:

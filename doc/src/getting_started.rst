@@ -941,3 +941,7 @@ action identifier and policy hash are optional::
 
    const Cometa::ParameterChangeAction change(update);
    const std::vector<std::uint8_t> cbor = change.toCbor();
+
+``Constitution`` holds its anchor and an optional script hash::
+
+   const Cometa::Constitution constitution(anchor, std::nullopt);

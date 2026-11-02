@@ -237,6 +237,9 @@ class Blake2bHash
     /** @brief Allows parameter change actions to copy policy hashes. */
     friend class ParameterChangeAction;
 
+    /** @brief Allows constitutions to copy script hashes. */
+    friend class Constitution;
+
     /** @brief Allows GenesisKeyDelegationCert to copy its hashes. */
     friend class GenesisKeyDelegationCert;
 

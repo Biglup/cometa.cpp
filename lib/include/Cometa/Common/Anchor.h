@@ -226,6 +226,9 @@ class Anchor
     /** @brief Allows committee resignation certificates to copy anchors. */
     friend class ResignCommitteeColdCert;
 
+    /** @brief Allows constitutions to copy anchors. */
+    friend class Constitution;
+
   private:
 
     /**
