@@ -41,9 +41,9 @@ cardano_cbor_writer_t,opaque object,lib/include/cardano/cbor/cbor_writer.h,P01b,
 cardano_cert_type_t,enum,lib/include/cardano/certs/cert_type.h,P10,implemented,Cometa::CertificateType,lib/tests/Certificates/CertificateTypeTest.cpp
 cardano_certificate_set_t,opaque object,lib/include/cardano/certs/certificate_set.h,P10,implemented,Cometa::CertificateSet,lib/tests/Certificates/CertificateSetTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_certificate_t,opaque object,lib/include/cardano/certs/certificate.h,P10,implemented,Cometa::Certificate,lib/tests/Certificates/CertificateTest.cpp; lib/tests/ValueContractTest.cpp
-cardano_coin_select_func_t,callback,lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,P20,planned,,
-cardano_coin_selection_request_t,struct,lib/include/cardano/transaction_builder/coin_selection/coin_selection_request.h,P20,planned,,
-cardano_coin_selector_impl_t,struct,lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,P20,planned,,
+cardano_coin_select_func_t,callback,lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,P20,implemented,Cometa::CoinSelector::select,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp
+cardano_coin_selection_request_t,struct,lib/include/cardano/transaction_builder/coin_selection/coin_selection_request.h,P20,implemented,Cometa::CoinSelectionRequest,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp
+cardano_coin_selector_impl_t,struct,lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,P20,internal,Private native adapter,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp
 cardano_coin_selector_t,opaque object,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,planned,,
 cardano_committee_members_map_t,opaque object,lib/include/cardano/proposal_procedures/committee_members_map.h,P13,implemented,Cometa::CommitteeMembersMap,lib/tests/ProposalProcedures/CommitteeMembersMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_committee_t,opaque object,lib/include/cardano/proposal_procedures/committee.h,P13,implemented,Cometa::Committee,lib/tests/ProposalProcedures/CommitteeTest.cpp; lib/tests/ValueContractTest.cpp

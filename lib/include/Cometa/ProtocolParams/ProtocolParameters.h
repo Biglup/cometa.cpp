@@ -785,6 +785,9 @@ class ProtocolParameters
     /** @brief Allows the provider bridge to copy parameters into native calls. */
     friend class ProviderAdapter;
 
+    /** @brief Allows the coin selection bridge to copy parameters into native calls. */
+    friend class CoinSelectorAdapter;
+
     /**
      * @brief Gets the stored parameters.
      * @return The borrowed parameters.

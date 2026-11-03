@@ -2828,10 +2828,10 @@ cardano_is_transaction_balanced,lib/include/cardano/transaction_builder/balancin
 cardano_compute_transaction_imbalance,lib/include/cardano/transaction_builder/balancing/transaction_balancing.h,P22,planned,,,API and ownership mapping pending.
 cardano_compute_sub_transaction_imbalance,lib/include/cardano/transaction_builder/balancing/transaction_balancing.h,P22,planned,,,API and ownership mapping pending.
 cardano_compute_transaction_batch_imbalance,lib/include/cardano/transaction_builder/balancing/transaction_balancing.h,P22,planned,,,API and ownership mapping pending.
-cardano_coin_selector_new,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,planned,,,API and ownership mapping pending.
+cardano_coin_selector_new,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,internal,Cometa::createCoinSelectorAdapter,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp,Private native callback bridge retains the C++ selector.
 cardano_coin_selector_get_name,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,planned,,,API and ownership mapping pending.
-cardano_coin_selector_select,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,planned,,,API and ownership mapping pending.
-cardano_coin_selector_unref,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,planned,,,API and ownership mapping pending.
+cardano_coin_selector_select,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,implemented,Cometa::CoinSelector::select,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp,Request and result values are copied across the callback boundary.
+cardano_coin_selector_unref,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,internal,Scoped native ownership,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp,Native selector references are released by the bridge owner.
 cardano_coin_selector_ref,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,planned,,,API and ownership mapping pending.
 cardano_coin_selector_refcount,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,planned,,,API and ownership mapping pending.
 cardano_coin_selector_set_last_error,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,planned,,,API and ownership mapping pending.
