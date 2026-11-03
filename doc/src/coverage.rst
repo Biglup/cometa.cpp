@@ -1,9 +1,10 @@
 Native API mapping
 ==================
 
-This binding is under development. The native revision is
-pinned in ``cmake/Cardano.cmake``. Remaining domain types, builders, providers, signing,
-and callback adapters are tracked in :doc:`implementation_plan`.
+The native revision is pinned in ``cmake/Cardano.cmake``. This ledger maps
+cardano-c concepts to their C++ interfaces. The shared cardano-c binding corpus
+and the local unit suite exercise serialization, builders, callbacks, and
+ownership. See :doc:`getting_started` for usage.
 
 .. list-table:: Implemented domain operations
    :header-rows: 1
@@ -83,8 +84,10 @@ and callback adapters are tracked in :doc:`implementation_plan`.
 Coverage ledger
 ---------------
 
-The inventory targets cardano-c commit
-``fd108f6271b4caf3df65907e21ffc5f5ea0bce55``, matching the dependency pin.
+The inventory is a planning snapshot from cardano-c commit
+``fd108f6271b4caf3df65907e21ffc5f5ea0bce55``. The build revision is pinned
+separately in ``cmake/Cardano.cmake``. Reconcile this ledger against that revision
+before treating its status columns as a current completeness measure.
 It contains 231 public headers, 418 implementation files, 235 distinct public
 typedefs, and 3,335 exported function declarations. Tests and vendored dependencies
 are outside the file inventory.
@@ -101,8 +104,7 @@ C operation has a dedicated C++ test. ``planned`` entries remain unfinished.
 Function rows name the C++ operation and its associated test suite when available.
 Detailed ownership audits remain part of implementing each planned operation.
 
-Update the ledger when adding an API or changing the native pin. Passing tests
-or the shared corpus does not establish complete API coverage.
+Passing tests or the shared corpus does not establish complete API coverage.
 
 Error mapping
 -------------

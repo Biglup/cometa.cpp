@@ -45,6 +45,8 @@ struct cardano_protocol_parameters_t;
 
 namespace Cometa
 {
+class ProviderAdapter;
+
 /** @brief Current network protocol parameters. */
 class ProtocolParameters
 {
@@ -779,6 +781,18 @@ class ProtocolParameters
     bool operator!=(const ProtocolParameters& other) const;
 
   private:
+
+    /** @brief Allows the provider bridge to copy parameters into native calls. */
+    friend class ProviderAdapter;
+
+    /** @brief Allows the coin selection bridge to copy parameters into native calls. */
+    friend class CoinSelectorAdapter;
+
+    /** @brief Allows transaction builders to retain protocol parameters. */
+    friend class TransactionBuilder;
+
+    /** @brief Allows sub-transaction builders to retain protocol parameters. */
+    friend class SubTransactionBuilder;
 
     /**
      * @brief Gets the stored parameters.

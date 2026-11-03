@@ -1,5 +1,5 @@
 name: Build and test Cometa
-description: Build static libraries, test values, and verify a relocated installation
+description: Build static and shared libraries, test values, and verify a relocated installation
 runs:
   using: composite
   steps:

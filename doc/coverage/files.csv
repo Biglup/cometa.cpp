@@ -154,7 +154,7 @@ lib/include/cardano/protocol_params/protocol_param_update.h,public header,P12,im
 lib/include/cardano/protocol_params/protocol_parameters.h,public header,P12,implemented,Cometa::ProtocolParameters
 lib/include/cardano/protocol_params/update.h,public header,P12,implemented,Cometa::Update
 lib/include/cardano/providers/provider.h,public header,P19,planned,idiomatic C++ API
-lib/include/cardano/providers/provider_impl.h,public header,P19,planned,internal ABI/ownership support; no raw C wrapper API
+lib/include/cardano/providers/provider_impl.h,public header,P19,implemented,Cometa::Provider callback adapter
 lib/include/cardano/scripts/native_scripts/native_script.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
 lib/include/cardano/scripts/native_scripts/native_script_list.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
 lib/include/cardano/scripts/native_scripts/native_script_type.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
@@ -192,16 +192,16 @@ lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,publi
 lib/include/cardano/transaction_builder/balancing/implicit_coin.h,public header,P22,planned,idiomatic C++ API
 lib/include/cardano/transaction_builder/balancing/input_to_redeemer_map.h,public header,P22,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/transaction_builder/balancing/transaction_balancing.h,public header,P22,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/coin_selection/coin_selection_request.h,public header,P20,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/coin_selection/coin_selection_strategy.h,public header,P20,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,public header,P20,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,public header,P20,planned,internal ABI/ownership support; no raw C wrapper API
-lib/include/cardano/transaction_builder/coin_selection/large_first_coin_selector.h,public header,P20,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/coin_selection/random_improve_coin_selector.h,public header,P20,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/evaluation/native_tx_evaluator.h,public header,P21,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/evaluation/provider_tx_evaluator.h,public header,P21,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,public header,P21,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/evaluation/tx_evaluator_impl.h,public header,P21,planned,internal ABI/ownership support; no raw C wrapper API
+lib/include/cardano/transaction_builder/coin_selection/coin_selection_request.h,public header,P20,implemented,Idiomatic C++ coin selection strategy.
+lib/include/cardano/transaction_builder/coin_selection/coin_selection_strategy.h,public header,P20,implemented,Idiomatic C++ coin selection strategy.
+lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,public header,P20,implemented,Idiomatic C++ coin selection strategy.
+lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,public header,P20,internal,Private native callback bridge.
+lib/include/cardano/transaction_builder/coin_selection/large_first_coin_selector.h,public header,P20,implemented,Idiomatic C++ coin selection strategy.
+lib/include/cardano/transaction_builder/coin_selection/random_improve_coin_selector.h,public header,P20,implemented,Idiomatic C++ coin selection strategy.
+lib/include/cardano/transaction_builder/evaluation/native_tx_evaluator.h,public header,P21,implemented,Idiomatic C++ evaluator interface and implementations.
+lib/include/cardano/transaction_builder/evaluation/provider_tx_evaluator.h,public header,P21,implemented,Idiomatic C++ evaluator interface and implementations.
+lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,public header,P21,implemented,Idiomatic C++ evaluator interface and implementations.
+lib/include/cardano/transaction_builder/evaluation/tx_evaluator_impl.h,public header,P21,internal,Private native callback bridge.
 lib/include/cardano/transaction_builder/fee.h,public header,P22,planned,idiomatic C++ API
 lib/include/cardano/transaction_builder/script_data_hash.h,public header,P22,planned,idiomatic C++ API
 lib/include/cardano/transaction_builder/sub_transaction_builder.h,public header,P23,planned,idiomatic C++ API

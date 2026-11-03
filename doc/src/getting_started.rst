@@ -16,23 +16,73 @@ To use a local checkout, set ``COMETA_CARDANO_SOURCE_DIR`` instead.
    cmake --install build --prefix /path/to/cometa
 
 Pass ``-DCOMETA_BUILD_TESTS=OFF`` if GoogleTest is not installed. Tests
-are excluded from the installed package.
+are excluded from the installed package. Pass ``-DCOMETA_BUILD_SHARED=OFF``
+for a static-only build.
 
 Consuming an installed package
 ------------------------------
 
-Set ``CMAKE_PREFIX_PATH`` to the extracted ZIP or installation prefix. Use the
-CMake target to link both static archives and the platform libraries correctly.
-The package does not require a cardano-c shared library at runtime.
+Set ``CMAKE_PREFIX_PATH`` to the extracted ZIP or installation prefix.
+``Cometa::cometa`` links the static archives; ``Cometa::cometa_shared`` links the
+shared Cometa library. The shared library includes its own cardano-c code.
 
 .. code-block:: cmake
 
    FIND_PACKAGE (Cometa CONFIG REQUIRED)
-   TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::cometa)
+   TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::cometa_shared)
+
+Use ``Cometa::cometa`` for static linking. For the default HTTPS transport,
+request the HTTP component and link ``Cometa::http`` (static Cometa) or
+``Cometa::http_shared`` (shared Cometa)::
+
+   FIND_PACKAGE (Cometa CONFIG REQUIRED COMPONENTS http)
+   TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::http_shared)
+
+The HTTP component uses WinHTTP on Windows and libcurl on Linux and macOS.
+Unix builds need a libcurl development package. Core targets do not require
+an HTTP dependency. On Windows, place the Cometa DLLs beside the executable.
+On Linux and macOS, set the installed executable's runtime search path to the
+directory containing the shared libraries. CMake's
+``$<TARGET_RUNTIME_DLLS:...>`` can copy the Windows DLLs after a build.
 
 Use an archive built for your compiler, standard library, architecture, and runtime.
 MSVC packages use the default dynamic C/C++ runtime; native cardano-c code is static.
 A ZIP is not a universal binary compatible with every C++ ABI.
+
+Using Blockfrost
+----------------
+
+The default transport is available when libcurl is found on Unix or WinHTTP is
+enabled on Windows. Supply a project ID for the selected network and pass the
+transport to ``BlockfrostProvider``:
+
+.. code-block:: cpp
+
+   #include <Cometa/Providers/BlockfrostProvider.h>
+   #include <Cometa/Providers/DefaultHttpTransport.h>
+
+   #include <cstdlib>
+   #include <memory>
+   #include <stdexcept>
+
+   const char* projectId = std::getenv("BLOCKFROST_API_KEY");
+
+   if (projectId == nullptr)
+   {
+     throw std::runtime_error("Set BLOCKFROST_API_KEY");
+   }
+
+   std::shared_ptr<Cometa::HttpTransport> http =
+     std::make_shared<Cometa::DefaultHttpTransport>();
+   Cometa::BlockfrostProvider provider(
+     Cometa::NetworkMagic::Preprod, projectId, http);
+
+   Cometa::ProtocolParameters parameters = provider.getParameters();
+
+Link the curl target for the chosen link mode. The project ID is sent in
+the Blockfrost ``project_id`` header. Set it at runtime and keep it out of
+source files and release archives. For a different HTTP stack, implement
+``HttpTransport`` and pass it to the same provider.
 
 Using values
 ------------
@@ -1114,3 +1164,72 @@ A ``Redeemer`` contains its script purpose, index, Plutus data, and execution bu
 For wallet keys, ``AccountDerivationPath`` represents the first three CIP-1852 path segments. ``DerivationPath`` adds a typed ``DerivationRole`` and key index. Supply segment values before hardening; software key handlers harden purpose, coin type, and account during derivation.
 
 ``SubTransactionSet`` keeps sub-transactions in insertion order and rejects duplicate body hashes. Use ``findById`` to look up an intent by its hash.
+
+Building a transaction
+----------------------
+
+``TransactionBuilder`` balances fees and change from the available UTxOs and
+current protocol parameters. Supply a change address and the outputs to create.
+For example, with an existing ``provider``, ``sender``, ``recipient``, and
+``signer``::
+
+   const Cometa::ProtocolParameters parameters = provider.getParameters();
+   const Cometa::UtxoList available = provider.getUnspentOutputs(sender);
+
+   Cometa::TransactionBuilder builder(
+     parameters, Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
+   builder.setUtxos(available)
+     .setChangeAddress(sender)
+     .sendLovelace(recipient, 2000000);
+
+   Cometa::Transaction transaction = builder.build();
+   transaction.applyVkeyWitnesses(signer.signTransaction(transaction));
+   provider.submitTransaction(transaction);
+
+Use the network's slot configuration and protocol parameters. An application
+should set a validity interval and confirm submission as appropriate for its
+flow. ``send_lovelace_example.cpp`` in the repository is a complete preprod
+example.
+
+Coin selection and evaluation
+-----------------------------
+
+Builders use the built-in coin selector and native script evaluator unless
+another service is supplied. Implement ``CoinSelector`` or
+``TransactionEvaluator`` to use a different strategy. The builder retains the
+shared service during construction and building::
+
+   builder.setCoinSelector(std::make_shared<Cometa::LargeFirstCoinSelector>());
+   builder.setTransactionEvaluator(
+     std::make_shared<Cometa::ProviderTransactionEvaluator>(providerPtr));
+
+``providerPtr`` is a ``std::shared_ptr<Cometa::Provider>``. The native evaluator
+is the default. Use provider-backed evaluation only when the application needs
+network-side execution budgets.
+
+Subtransactions and deferred redeemers
+--------------------------------------
+
+``SubTransactionBuilder`` creates a signed intent. It uses the same value types
+as ``TransactionBuilder``. A top-level builder can add the signed intent and its
+resolved UTxOs::
+
+   Cometa::SubTransactionBuilder intentBuilder(parameters, slots);
+   intentBuilder.addInput(partyUtxo)
+     .sendLovelace(partyAddress, 5000000)
+     .requireTopLevelGuard(batcherCredential);
+
+   Cometa::SubTransaction intent = intentBuilder.build();
+   intent.applyVkeyWitnesses(partySigner.signSubTransaction(intent));
+
+   Cometa::TransactionBuilder batch(parameters, slots);
+   batch.setUtxos(batcherUtxos)
+     .setChangeAddress(batcherAddress)
+     .addSubTransaction(intent, Cometa::UtxoList { partyUtxo })
+     .addGuard(batcherCredential);
+
+Use ``addInputWithDeferredRedeemer`` or ``mintTokenWithDeferredRedeemer`` when
+redeemer data depends on the balanced transaction. The callback receives the
+current draft and resolved inputs; the builder may invoke it more than once, so
+it should return the same data for the same draft. The complete batch and
+deferred-redeemer examples are in ``examples/``.

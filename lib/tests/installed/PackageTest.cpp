@@ -25,6 +25,11 @@
 
 #include <Cometa/Cometa.h>
 
+#ifdef COMETA_TEST_HTTP_TRANSPORT
+#include <Cometa/Providers/DefaultHttpTransport.h>
+#endif
+
+#include <stdexcept>
 #include <string>
 
 /* IMPLEMENTATION ************************************************************/
@@ -32,6 +37,19 @@
 int
 main()
 {
+#ifdef COMETA_TEST_HTTP_TRANSPORT
+  const Cometa::DefaultHttpTransport transport;
+
+  try
+  {
+    transport.execute({ "DELETE", "https://example.com", {}, {} });
+    return 1;
+  }
+  catch (const std::invalid_argument&)
+  {
+  }
+#endif
+
   const Cometa::AssetName name = Cometa::AssetName::fromCbor("46436f6d657461");
 
   const Cometa::ExUnits         budget = Cometa::ExUnits::fromCbor("820102");

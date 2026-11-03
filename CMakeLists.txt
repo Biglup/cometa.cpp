@@ -10,6 +10,10 @@ INCLUDE (CMakePackageConfigHelpers)
 # Build options and native dependency.
 OPTION (COMETA_BUILD_TESTS "Build unit tests" ON)
 OPTION (COMETA_BUILD_DOCS "Build documentation" OFF)
+OPTION (COMETA_BUILD_EXAMPLES "Build C++ examples" ON)
+OPTION (COMETA_BUILD_SHARED "Build shared Cometa libraries" ON)
+OPTION (COMETA_BUILD_CURL_TRANSPORT "Build the libcurl HTTP transport when available" ON)
+OPTION (COMETA_BUILD_WINHTTP_TRANSPORT "Build the Windows HTTP transport" ON)
 SET (COMETA_CARDANO_SOURCE_DIR "" CACHE PATH "Local cardano-c checkout with deep-clone APIs")
 
 INCLUDE (cmake/Cardano.cmake)
@@ -192,6 +196,18 @@ ADD_LIBRARY (cometa STATIC
   lib/src/KeyHandlers/AccountDerivationPath.cpp
   lib/src/KeyHandlers/DerivationPath.cpp
   lib/src/KeyHandlers/SecureKeyHandler.cpp
+  lib/src/Providers/ProviderAdapter.cpp
+  lib/src/Providers/BlockfrostProvider.cpp
+  lib/src/TransactionBuilder/CoinSelectionRequest.cpp
+  lib/src/TransactionBuilder/CoinSelectorAdapter.cpp
+  lib/src/TransactionBuilder/LargeFirstCoinSelector.cpp
+  lib/src/TransactionBuilder/RandomImproveCoinSelector.cpp
+  lib/src/TransactionBuilder/TransactionEvaluatorAdapter.cpp
+  lib/src/TransactionBuilder/NativeTransactionEvaluator.cpp
+  lib/src/TransactionBuilder/ProviderTransactionEvaluator.cpp
+  lib/src/TransactionBuilder/TransactionBuilder.cpp
+  lib/src/TransactionBuilder/SubTransactionBuilder.cpp
+  lib/src/TransactionBuilder/DeferredRedeemerAdapter.cpp
   lib/src/Transaction/SubTransactionSet.cpp
   lib/src/Common/CredentialSet.cpp
   lib/src/Common/Credential.cpp
@@ -199,7 +215,246 @@ ADD_LIBRARY (cometa STATIC
 
 ADD_LIBRARY (Cometa::cometa ALIAS cometa)
 
+IF (COMETA_BUILD_SHARED)
+  GET_TARGET_PROPERTY (cometa_sources cometa SOURCES)
+  ADD_LIBRARY (cometa-shared SHARED ${cometa_sources})
+  ADD_LIBRARY (Cometa::cometa_shared ALIAS cometa-shared)
+
+  SET_TARGET_PROPERTIES (cometa-shared PROPERTIES
+    OUTPUT_NAME                 cometa
+    ARCHIVE_OUTPUT_NAME         cometa-shared
+    EXPORT_NAME                 cometa_shared
+    VERSION                     ${PROJECT_VERSION}
+    SOVERSION                   ${PROJECT_VERSION_MAJOR}
+    WINDOWS_EXPORT_ALL_SYMBOLS ON
+  )
+
+  IF (APPLE)
+    SET_TARGET_PROPERTIES (cometa-shared PROPERTIES INSTALL_NAME_DIR "@rpath")
+  ENDIF ()
+ENDIF ()
+
+SET (COMETA_HAS_CURL OFF)
+SET (COMETA_HAS_WINHTTP OFF)
+
+IF (COMETA_BUILD_CURL_TRANSPORT)
+  FIND_PACKAGE (CURL QUIET)
+
+  IF (CURL_FOUND)
+    ADD_LIBRARY (cometa-curl STATIC lib/src/Providers/CurlHttpTransport.cpp)
+    ADD_LIBRARY (Cometa::curl ALIAS cometa-curl)
+
+    TARGET_COMPILE_FEATURES (cometa-curl PUBLIC cxx_std_17)
+    TARGET_INCLUDE_DIRECTORIES (cometa-curl
+      PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    )
+    TARGET_LINK_LIBRARIES (cometa-curl PUBLIC Cometa::cometa CURL::libcurl)
+
+    SET_TARGET_PROPERTIES (cometa-curl PROPERTIES
+      CXX_EXTENSIONS            OFF
+      EXPORT_NAME               curl
+      POSITION_INDEPENDENT_CODE ON
+    )
+
+    IF (MSVC)
+      TARGET_COMPILE_OPTIONS (cometa-curl PRIVATE /W4 /WX)
+    ELSE ()
+      TARGET_COMPILE_OPTIONS (cometa-curl PRIVATE -Wall -Wextra -Wpedantic -Werror)
+    ENDIF ()
+
+    INSTALL (TARGETS cometa-curl EXPORT CometaCurlTargets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+    IF (COMETA_BUILD_SHARED)
+      ADD_LIBRARY (cometa-curl-shared SHARED lib/src/Providers/CurlHttpTransport.cpp)
+      ADD_LIBRARY (Cometa::curl_shared ALIAS cometa-curl-shared)
+
+      TARGET_COMPILE_FEATURES (cometa-curl-shared PUBLIC cxx_std_17)
+      TARGET_INCLUDE_DIRECTORIES (cometa-curl-shared
+        PUBLIC
+          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/include>
+          $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+      )
+      TARGET_LINK_LIBRARIES (cometa-curl-shared PUBLIC Cometa::cometa_shared CURL::libcurl)
+
+      SET_TARGET_PROPERTIES (cometa-curl-shared PROPERTIES
+        CXX_EXTENSIONS            OFF
+        OUTPUT_NAME               cometa-curl
+        ARCHIVE_OUTPUT_NAME       cometa-curl-shared
+        EXPORT_NAME               curl_shared
+        VERSION                   ${PROJECT_VERSION}
+        SOVERSION                 ${PROJECT_VERSION_MAJOR}
+        WINDOWS_EXPORT_ALL_SYMBOLS ON
+      )
+
+      IF (UNIX AND NOT APPLE)
+        SET_TARGET_PROPERTIES (cometa-curl-shared PROPERTIES INSTALL_RPATH "$ORIGIN")
+      ENDIF ()
+
+      IF (APPLE)
+        SET_TARGET_PROPERTIES (cometa-curl-shared PROPERTIES
+          INSTALL_NAME_DIR "@rpath"
+          INSTALL_RPATH     "@loader_path"
+        )
+      ENDIF ()
+
+      IF (MSVC)
+        TARGET_COMPILE_OPTIONS (cometa-curl-shared PRIVATE /W4 /WX)
+      ELSE ()
+        TARGET_COMPILE_OPTIONS (cometa-curl-shared PRIVATE -Wall -Wextra -Wpedantic -Werror)
+      ENDIF ()
+
+      INSTALL (TARGETS cometa-curl-shared EXPORT CometaCurlTargets
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+      )
+    ENDIF ()
+
+    SET (COMETA_HAS_CURL ON)
+  ENDIF ()
+ENDIF ()
+
+IF (WIN32 AND COMETA_BUILD_WINHTTP_TRANSPORT)
+  ADD_LIBRARY (cometa-winhttp STATIC lib/src/Providers/WinHttpTransport.cpp)
+  ADD_LIBRARY (Cometa::winhttp ALIAS cometa-winhttp)
+
+  TARGET_COMPILE_FEATURES (cometa-winhttp PUBLIC cxx_std_17)
+  TARGET_INCLUDE_DIRECTORIES (cometa-winhttp
+    PUBLIC
+      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/include>
+      $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+  )
+  TARGET_LINK_LIBRARIES (cometa-winhttp PUBLIC Cometa::cometa winhttp)
+  SET_TARGET_PROPERTIES (cometa-winhttp PROPERTIES
+    CXX_EXTENSIONS OFF
+    EXPORT_NAME    winhttp
+  )
+  IF (MSVC)
+    TARGET_COMPILE_OPTIONS (cometa-winhttp PRIVATE /W4 /WX)
+  ELSE ()
+    TARGET_COMPILE_OPTIONS (cometa-winhttp PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  ENDIF ()
+  INSTALL (TARGETS cometa-winhttp EXPORT CometaWinHttpTargets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+  IF (COMETA_BUILD_SHARED)
+    ADD_LIBRARY (cometa-winhttp-shared SHARED lib/src/Providers/WinHttpTransport.cpp)
+    ADD_LIBRARY (Cometa::winhttp_shared ALIAS cometa-winhttp-shared)
+
+    TARGET_COMPILE_FEATURES (cometa-winhttp-shared PUBLIC cxx_std_17)
+    TARGET_INCLUDE_DIRECTORIES (cometa-winhttp-shared
+      PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    )
+    TARGET_LINK_LIBRARIES (cometa-winhttp-shared PUBLIC Cometa::cometa_shared winhttp)
+    SET_TARGET_PROPERTIES (cometa-winhttp-shared PROPERTIES
+      CXX_EXTENSIONS            OFF
+      OUTPUT_NAME               cometa-winhttp
+      ARCHIVE_OUTPUT_NAME       cometa-winhttp-shared
+      EXPORT_NAME               winhttp_shared
+      VERSION                   ${PROJECT_VERSION}
+      SOVERSION                 ${PROJECT_VERSION_MAJOR}
+      WINDOWS_EXPORT_ALL_SYMBOLS ON
+    )
+    IF (MSVC)
+      TARGET_COMPILE_OPTIONS (cometa-winhttp-shared PRIVATE /W4 /WX)
+    ELSE ()
+      TARGET_COMPILE_OPTIONS (cometa-winhttp-shared PRIVATE -Wall -Wextra -Wpedantic -Werror)
+    ENDIF ()
+    INSTALL (TARGETS cometa-winhttp-shared EXPORT CometaWinHttpTargets
+      ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
+  ENDIF ()
+
+  SET (COMETA_HAS_WINHTTP ON)
+ENDIF ()
+
+IF (COMETA_BUILD_EXAMPLES)
+  ADD_EXECUTABLE (bip39_example examples/bip39_example.cpp)
+  TARGET_LINK_LIBRARIES (bip39_example PRIVATE Cometa::cometa)
+
+  ADD_EXECUTABLE (secure_key_handler_example examples/secure_key_handler_example.cpp)
+  TARGET_LINK_LIBRARIES (secure_key_handler_example PRIVATE Cometa::cometa)
+
+  ADD_EXECUTABLE (sub_transaction_batch_example examples/sub_transaction_batch_example.cpp)
+  TARGET_LINK_LIBRARIES (sub_transaction_batch_example PRIVATE Cometa::cometa)
+
+  ADD_EXECUTABLE (plutus_v4_guarded_sub_transaction_example examples/plutus_v4_guarded_sub_transaction_example.cpp)
+  TARGET_LINK_LIBRARIES (plutus_v4_guarded_sub_transaction_example PRIVATE Cometa::cometa)
+
+  IF (TARGET Cometa::curl OR TARGET Cometa::winhttp)
+    ADD_LIBRARY (cometa-example-support STATIC examples/Support/NetworkExample.cpp)
+
+    IF (TARGET Cometa::winhttp)
+      TARGET_LINK_LIBRARIES (cometa-example-support PUBLIC Cometa::winhttp)
+    ELSE ()
+      TARGET_LINK_LIBRARIES (cometa-example-support PUBLIC Cometa::curl)
+    ENDIF ()
+
+    TARGET_COMPILE_FEATURES (cometa-example-support PUBLIC cxx_std_17)
+
+    ADD_EXECUTABLE (send_lovelace_example examples/send_lovelace_example.cpp)
+    TARGET_LINK_LIBRARIES (send_lovelace_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (donate_to_treasury_example examples/donate_to_treasury_example.cpp)
+    TARGET_LINK_LIBRARIES (donate_to_treasury_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (provider_example examples/provider_example.cpp)
+    TARGET_LINK_LIBRARIES (provider_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (spend_from_native_script_example examples/spend_from_native_script_example.cpp)
+    TARGET_LINK_LIBRARIES (spend_from_native_script_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (reward_account_pubkey_example examples/reward_account_pubkey_example.cpp)
+    TARGET_LINK_LIBRARIES (reward_account_pubkey_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (mint_burn_native_script_example examples/mint_burn_native_script_example.cpp)
+    TARGET_LINK_LIBRARIES (mint_burn_native_script_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (drep_pubkey_example examples/drep_pubkey_example.cpp)
+    TARGET_LINK_LIBRARIES (drep_pubkey_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (spend_from_validator_example examples/spend_from_validator_example.cpp)
+    TARGET_LINK_LIBRARIES (spend_from_validator_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (propose_treasury_withdrawal_example examples/propose_treasury_withdrawal_example.cpp)
+    TARGET_LINK_LIBRARIES (propose_treasury_withdrawal_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (vote_for_proposal_pubkey_example examples/vote_for_proposal_pubkey_example.cpp)
+    TARGET_LINK_LIBRARIES (vote_for_proposal_pubkey_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (vote_for_proposal_script_example examples/vote_for_proposal_script_example.cpp)
+    TARGET_LINK_LIBRARIES (vote_for_proposal_script_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (reward_account_script_example examples/reward_account_script_example.cpp)
+    TARGET_LINK_LIBRARIES (reward_account_script_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (mint_burn_plutus_script_example examples/mint_burn_plutus_script_example.cpp)
+    TARGET_LINK_LIBRARIES (mint_burn_plutus_script_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (drep_script_example examples/drep_script_example.cpp)
+    TARGET_LINK_LIBRARIES (drep_script_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (deferred_redeemer_self_index_example examples/deferred_redeemer_self_index_example.cpp)
+    TARGET_LINK_LIBRARIES (deferred_redeemer_self_index_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (deferred_redeemer_batch_example examples/deferred_redeemer_batch_example.cpp)
+    TARGET_LINK_LIBRARIES (deferred_redeemer_batch_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (deferred_redeemer_withdraw_zero_example examples/deferred_redeemer_withdraw_zero_example.cpp)
+    TARGET_LINK_LIBRARIES (deferred_redeemer_withdraw_zero_example PRIVATE cometa-example-support)
+  ENDIF ()
+ENDIF ()
+
 TARGET_COMPILE_FEATURES (cometa PUBLIC cxx_std_17)
+
+IF (COMETA_BUILD_SHARED)
+  TARGET_COMPILE_FEATURES (cometa-shared PUBLIC cxx_std_17)
+ENDIF ()
 
 TARGET_INCLUDE_DIRECTORIES (cometa
   PUBLIC
@@ -209,11 +464,25 @@ TARGET_INCLUDE_DIRECTORIES (cometa
     "${cardano_source}/lib/include"
 )
 
+IF (COMETA_BUILD_SHARED)
+  TARGET_INCLUDE_DIRECTORIES (cometa-shared
+    PUBLIC
+      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/include>
+      $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    PRIVATE
+      "${cardano_source}/lib/include"
+  )
+ENDIF ()
+
 TARGET_LINK_LIBRARIES (cometa
   PRIVATE
     $<BUILD_INTERFACE:cometa_cardano>
     $<INSTALL_INTERFACE:Cometa::cardano>
 )
+
+IF (COMETA_BUILD_SHARED)
+  TARGET_LINK_LIBRARIES (cometa-shared PRIVATE cometa_cardano)
+ENDIF ()
 
 SET_TARGET_PROPERTIES (cometa
   PROPERTIES
@@ -221,10 +490,20 @@ SET_TARGET_PROPERTIES (cometa
     POSITION_INDEPENDENT_CODE ON
 )
 
+IF (COMETA_BUILD_SHARED)
+  SET_TARGET_PROPERTIES (cometa-shared PROPERTIES CXX_EXTENSIONS OFF)
+ENDIF ()
+
 IF (MSVC)
   TARGET_COMPILE_OPTIONS (cometa PRIVATE /W4 /WX)
+  IF (COMETA_BUILD_SHARED)
+    TARGET_COMPILE_OPTIONS (cometa-shared PRIVATE /W4 /WX)
+  ENDIF ()
 ELSE ()
   TARGET_COMPILE_OPTIONS (cometa PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  IF (COMETA_BUILD_SHARED)
+    TARGET_COMPILE_OPTIONS (cometa-shared PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  ENDIF ()
 ENDIF ()
 
 # Unit tests.
@@ -419,6 +698,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Crypto/Bip32PublicKeyTest.cpp
     lib/tests/Crypto/Bip32PrivateKeyTest.cpp
     lib/tests/Crypto/PrimitiveConformanceTest.cpp
+    lib/tests/CborConformanceTest.cpp
     lib/tests/Crypto/Blake2bHashSizeTest.cpp
     lib/tests/Crypto/Blake2bHashSetTest.cpp
     lib/tests/Crypto/Blake2bHashTest.cpp
@@ -441,6 +721,15 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
     lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp
     lib/tests/KeyHandlers/SoftwareSecureKeyHandlerTest.cpp
+    lib/tests/Providers/ProviderAdapterTest.cpp
+    lib/tests/Providers/BlockfrostProviderTest.cpp
+    lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp
+    lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp
+    lib/tests/TransactionBuilder/TransactionBuilderTest.cpp
+    lib/tests/TransactionBuilder/BuilderConformanceTest.cpp
+    lib/tests/TransactionBuilder/LifecycleConformanceTest.cpp
+    lib/tests/TransactionBuilder/SubTransactionBuilderTest.cpp
+    lib/tests/TransactionBuilder/DeferredRedeemerAdapterTest.cpp
     lib/tests/Transaction/SubTransactionSetTest.cpp
     lib/tests/ValueContractTest.cpp
   )
@@ -476,6 +765,14 @@ INSTALL (
   EXPORT  CometaTargets
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
+
+IF (COMETA_BUILD_SHARED)
+  INSTALL (TARGETS cometa-shared EXPORT CometaTargets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  )
+ENDIF ()
 
 INSTALL (
   DIRECTORY   lib/include/
@@ -516,6 +813,22 @@ INSTALL (
   NAMESPACE   Cometa::
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Cometa
 )
+
+IF (COMETA_HAS_CURL)
+  INSTALL (
+    EXPORT      CometaCurlTargets
+    NAMESPACE   Cometa::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Cometa
+  )
+ENDIF ()
+
+IF (COMETA_HAS_WINHTTP)
+  INSTALL (
+    EXPORT      CometaWinHttpTargets
+    NAMESPACE   Cometa::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Cometa
+  )
+ENDIF ()
 
 CONFIGURE_PACKAGE_CONFIG_FILE (
   cmake/CometaConfig.cmake.in

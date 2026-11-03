@@ -1,0 +1,237 @@
+/**
+ * @file CurlHttpTransport.cpp
+ *
+ * @brief libcurl HTTP transport.
+ *
+ * @author angel.castillo
+ * @date   Nov 03, 2026
+ *
+ * Copyright 2026 Biglup Labs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* INCLUDES ******************************************************************/
+
+#include <Cometa/Providers/CurlHttpTransport.h>
+
+#include <curl/curl.h>
+
+#include <exception>
+#include <limits>
+#include <memory>
+#include <mutex>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+/* USINGS ********************************************************************/
+
+using namespace Cometa;
+
+/* INTERNAL IMPLEMENTATION ***************************************************/
+
+namespace
+{
+/** @brief Maximum accepted response size. */
+constexpr std::size_t MAX_RESPONSE_BYTES = 16U * 1024U * 1024U;
+
+/** @brief Response destination and a C++ callback failure. */
+struct ResponseBuffer
+{
+    /** @brief Received bytes. */
+    std::vector<std::uint8_t>* bytes;
+
+    /** @brief Failure captured before returning through libcurl. */
+    std::exception_ptr error;
+};
+
+/** @brief Appends a bounded libcurl response chunk. @param contents The bytes. @param size Element size. @param count Element count. @param context Response buffer. @return Consumed bytes. */
+std::size_t
+appendResponse(char* contents, std::size_t size, std::size_t count, void* context)
+{
+  ResponseBuffer* response = static_cast<ResponseBuffer*>(context);
+
+  if (size != 0 && count > std::numeric_limits<std::size_t>::max() / size)
+  {
+    return 0;
+  }
+
+  const std::size_t length = size * count;
+
+  if (length > MAX_RESPONSE_BYTES - response->bytes->size())
+  {
+    return 0;
+  }
+
+  try
+  {
+    response->bytes->insert(response->bytes->end(), contents, contents + length);
+    return length;
+  }
+  catch (...)
+  {
+    response->error = std::current_exception();
+    return 0;
+  }
+}
+
+/** @brief Deleter for a curl easy handle. */
+struct CurlDeleter
+{
+    /** @brief Releases the handle. @param handle The handle. */
+    void
+    operator()(CURL* handle) const
+    {
+      curl_easy_cleanup(handle);
+    }
+};
+
+/** @brief Owns an HTTP header list. */
+class CurlHeaders
+{
+  public:
+
+    /** @brief Creates an empty header list. */
+    CurlHeaders() = default;
+
+    /** @brief Releases the list. */
+    ~CurlHeaders()
+    {
+      curl_slist_free_all(m_headers);
+    }
+
+  public:
+
+    /** @brief Appends a header. @param line The header line. */
+    void
+    append(const std::string& line)
+    {
+      curl_slist* const next = curl_slist_append(m_headers, line.c_str());
+
+      if (next == nullptr)
+      {
+        throw std::bad_alloc();
+      }
+
+      m_headers = next;
+    }
+
+    /** @brief Gets the borrowed list. @return The header list. */
+    curl_slist*
+    get() const
+    {
+      return m_headers;
+    }
+
+  public:
+
+    /** @brief Header lists cannot be copied. */
+    CurlHeaders(const CurlHeaders&) = delete;
+
+    /** @brief Header lists cannot be assigned. */
+    CurlHeaders& operator=(const CurlHeaders&) = delete;
+
+  private:
+
+    /** @brief Current list head. */
+    curl_slist* m_headers = nullptr;
+};
+
+/** @brief Initializes libcurl once for the process. */
+void
+initializeCurl()
+{
+  static std::once_flag flag;
+  std::call_once(flag, []()
+                 {
+                   if (curl_global_init(CURL_GLOBAL_DEFAULT) != CURLE_OK)
+                   {
+                     throw std::runtime_error("Could not initialize libcurl");
+                   } });
+}
+} // namespace
+
+/* IMPLEMENTATION ************************************************************/
+
+HttpResponse
+CurlHttpTransport::execute(const HttpRequest& request) const
+{
+  if (request.method != "GET" && request.method != "POST")
+  {
+    throw std::invalid_argument("Unsupported HTTP method");
+  }
+
+  if (request.url.compare(0, 8, "https://") != 0)
+  {
+    throw std::invalid_argument("HTTPS is required");
+  }
+
+  initializeCurl();
+
+  const std::unique_ptr<CURL, CurlDeleter> handle(curl_easy_init());
+
+  if (!handle)
+  {
+    throw std::runtime_error("Could not create a libcurl request");
+  }
+
+  CurlHeaders headers;
+
+  for (const std::pair<std::string, std::string>& header: request.headers)
+  {
+    const std::string line = header.first + ": " + header.second;
+    headers.append(line);
+  }
+
+  HttpResponse   response { 0, {} };
+  ResponseBuffer buffer { &response.body, nullptr };
+  curl_easy_setopt(handle.get(), CURLOPT_URL, request.url.c_str());
+  curl_easy_setopt(handle.get(), CURLOPT_HTTPHEADER, headers.get());
+  curl_easy_setopt(handle.get(), CURLOPT_WRITEFUNCTION, &appendResponse);
+  curl_easy_setopt(handle.get(), CURLOPT_WRITEDATA, &buffer);
+  curl_easy_setopt(handle.get(), CURLOPT_CONNECTTIMEOUT_MS, 10000L);
+  curl_easy_setopt(handle.get(), CURLOPT_TIMEOUT_MS, 30000L);
+  curl_easy_setopt(handle.get(), CURLOPT_NOSIGNAL, 1L);
+  curl_easy_setopt(handle.get(), CURLOPT_FOLLOWLOCATION, 0L);
+  curl_easy_setopt(handle.get(), CURLOPT_SSL_VERIFYPEER, 1L);
+  curl_easy_setopt(handle.get(), CURLOPT_SSL_VERIFYHOST, 2L);
+
+  if (request.method == "POST")
+  {
+    if (request.body.size() > static_cast<std::size_t>(std::numeric_limits<curl_off_t>::max()))
+    {
+      throw std::out_of_range("HTTP request body is too large");
+    }
+
+    curl_easy_setopt(handle.get(), CURLOPT_POST, 1L);
+    const char* body = request.body.empty() ? "" : reinterpret_cast<const char*>(request.body.data());
+    curl_easy_setopt(handle.get(), CURLOPT_POSTFIELDS, body);
+    curl_easy_setopt(handle.get(), CURLOPT_POSTFIELDSIZE_LARGE, static_cast<curl_off_t>(request.body.size()));
+  }
+
+  const CURLcode status = curl_easy_perform(handle.get());
+
+  if (buffer.error)
+  {
+    std::rethrow_exception(buffer.error);
+  }
+
+  if (status != CURLE_OK)
+  {
+    throw std::runtime_error(std::string("Blockfrost request failed: ") + curl_easy_strerror(status));
+  }
+
+  curl_easy_getinfo(handle.get(), CURLINFO_RESPONSE_CODE, &response.status);
+  return response;
+}

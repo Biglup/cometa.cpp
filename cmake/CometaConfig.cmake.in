@@ -14,4 +14,47 @@ IF (NOT TARGET Cometa::cardano)
 ENDIF ()
 
 INCLUDE ("${CMAKE_CURRENT_LIST_DIR}/CometaTargets.cmake")
+
+SET (Cometa_curl_FOUND FALSE)
+SET (Cometa_http_FOUND FALSE)
+
+IF (@COMETA_HAS_CURL@)
+  FIND_PACKAGE (CURL QUIET)
+
+  IF (CURL_FOUND)
+    INCLUDE ("${CMAKE_CURRENT_LIST_DIR}/CometaCurlTargets.cmake")
+    SET (Cometa_curl_FOUND TRUE)
+
+    IF (NOT WIN32 OR NOT @COMETA_HAS_WINHTTP@)
+      IF (NOT TARGET Cometa::http)
+        ADD_LIBRARY (Cometa::http INTERFACE IMPORTED)
+        SET_PROPERTY (TARGET Cometa::http PROPERTY INTERFACE_LINK_LIBRARIES Cometa::curl)
+      ENDIF ()
+
+      IF (TARGET Cometa::curl_shared AND NOT TARGET Cometa::http_shared)
+        ADD_LIBRARY (Cometa::http_shared INTERFACE IMPORTED)
+        SET_PROPERTY (TARGET Cometa::http_shared PROPERTY INTERFACE_LINK_LIBRARIES Cometa::curl_shared)
+      ENDIF ()
+
+      SET (Cometa_http_FOUND TRUE)
+    ENDIF ()
+  ENDIF ()
+ENDIF ()
+
+IF (@COMETA_HAS_WINHTTP@ AND WIN32)
+  INCLUDE ("${CMAKE_CURRENT_LIST_DIR}/CometaWinHttpTargets.cmake")
+
+  IF (NOT TARGET Cometa::http)
+    ADD_LIBRARY (Cometa::http INTERFACE IMPORTED)
+    SET_PROPERTY (TARGET Cometa::http PROPERTY INTERFACE_LINK_LIBRARIES Cometa::winhttp)
+  ENDIF ()
+
+  IF (TARGET Cometa::winhttp_shared AND NOT TARGET Cometa::http_shared)
+    ADD_LIBRARY (Cometa::http_shared INTERFACE IMPORTED)
+    SET_PROPERTY (TARGET Cometa::http_shared PROPERTY INTERFACE_LINK_LIBRARIES Cometa::winhttp_shared)
+  ENDIF ()
+
+  SET (Cometa_http_FOUND TRUE)
+ENDIF ()
+
 CHECK_REQUIRED_COMPONENTS (Cometa)
