@@ -36,11 +36,13 @@
 #include <cardano/assets/asset_name.h>
 #include <cardano/auxiliary_data/metadatum.h>
 #include <cardano/certs/certificate.h>
+#include <cardano/common/anchor.h>
 #include <cardano/common/credential.h>
 #include <cardano/common/datum.h>
 #include <cardano/common/governance_action_id.h>
 #include <cardano/common/utxo.h>
 #include <cardano/common/utxo_list.h>
+#include <cardano/common/withdrawal_map.h>
 #include <cardano/crypto/blake2b_hash.h>
 #include <cardano/plutus_data/plutus_data.h>
 #include <cardano/scripts/script.h>
@@ -559,6 +561,40 @@ TransactionBuilder::voteWithDeferredRedeemer(
   m_deferredRedeemers.push_back(std::move(context));
   cardano_tx_builder_vote_with_deferred_redeemer(
     checked(), nativeVoter.get(), nativeAction.get(), nativeVote.get(), &invokeDeferredRedeemer, m_deferredRedeemers.back().get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::proposeInfo(const RewardAddress& refundAddress, const Anchor& anchor)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(refundAddress));
+  CardanoObject<cardano_anchor_t, cardano_anchor_unref>                 nativeAnchor(
+    decodeCbor<cardano_anchor_t, cardano_anchor_unref>(anchor.toCbor(), cardano_anchor_from_cbor));
+  cardano_tx_builder_propose_info(checked(), nativeAddress.get(), nativeAnchor.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::proposeTreasuryWithdrawals(
+  const RewardAddress& refundAddress,
+  const Anchor&        anchor,
+  const WithdrawalMap& withdrawals,
+  const Blake2bHash&   policyHash)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(refundAddress));
+  CardanoObject<cardano_anchor_t, cardano_anchor_unref>                 nativeAnchor(
+    decodeCbor<cardano_anchor_t, cardano_anchor_unref>(anchor.toCbor(), cardano_anchor_from_cbor));
+  CardanoObject<cardano_withdrawal_map_t, cardano_withdrawal_map_unref> nativeWithdrawals(
+    decodeCbor<cardano_withdrawal_map_t, cardano_withdrawal_map_unref>(
+      withdrawals.toCbor(), cardano_withdrawal_map_from_cbor));
+
+  const std::vector<std::uint8_t>                                   bytes       = policyHash.toBytes();
+  cardano_blake2b_hash_t*                                           policyValue = nullptr;
+  const cardano_error_t                                             status      = cardano_blake2b_hash_from_bytes(bytes.data(), bytes.size(), &policyValue);
+  CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> nativePolicy(policyValue);
+  checkCardanoError(status, "TransactionBuilder treasury policy");
+  cardano_tx_builder_propose_treasury_withdrawals(
+    checked(), nativeAddress.get(), nativeAnchor.get(), nativeWithdrawals.get(), nativePolicy.get());
   return *this;
 }
 

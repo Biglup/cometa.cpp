@@ -213,6 +213,45 @@ TEST(TransactionBuilder, AddsGovernanceVote)
   EXPECT_EQ(transaction.body().votingProcedures()->get(voter, action), choice);
 }
 
+TEST(TransactionBuilder, ProposesInformationAndTreasuryWithdrawal)
+{
+  // Arrange
+  ProtocolParameters parameters = sampleParameters();
+  parameters.setProtocolVersion(ProtocolVersion(12, 0));
+  parameters.setGovernanceActionDeposit(1000000);
+  CostModels models;
+  models.insert(CostModel(PlutusLanguageVersion::V4, std::vector<std::int64_t>(179, 0)));
+  parameters.setCostModels(models);
+  const Address       address = sampleAddress();
+  const Credential    credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 4)));
+  const RewardAddress reward(NetworkId::Testnet, credential);
+  const Anchor        anchor("https://example.com/proposal.json", Blake2bHash(std::vector<std::uint8_t>(32, 5)));
+  WithdrawalMap       withdrawals;
+  withdrawals.set(reward, 2000000);
+  const Utxo available(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(10000000)));
+  const Utxo collateral(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 3)), 0),
+    TransactionOutput(address, Value(5000000)));
+  const Script       policy(PlutusV4Script::fromHex("450100002499"));
+  TransactionBuilder builder(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.setChangeAddress(address)
+    .setCollateralChangeAddress(address)
+    .setUtxos({ available })
+    .setCollateralUtxos({ collateral })
+    .addScript(policy)
+    .proposeInfo(reward, anchor)
+    .proposeTreasuryWithdrawals(reward, anchor, withdrawals, policy.hash());
+
+  // Act
+  const Transaction transaction = builder.build();
+
+  // Assert
+  ASSERT_TRUE(transaction.body().proposalProcedures().has_value());
+  EXPECT_EQ(transaction.body().proposalProcedures()->size(), 2U);
+}
+
 TEST(TransactionBuilder, MintsNativeToken)
 {
   // Arrange

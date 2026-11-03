@@ -30,11 +30,13 @@
 #include <Cometa/Assets/AssetId.h>
 #include <Cometa/AuxiliaryData/Metadatum.h>
 #include <Cometa/Certificates/Certificate.h>
+#include <Cometa/Common/Anchor.h>
 #include <Cometa/Common/Credential.h>
 #include <Cometa/Common/Datum.h>
 #include <Cometa/Common/GovernanceActionId.h>
 #include <Cometa/Common/NetworkId.h>
 #include <Cometa/Common/UtxoList.h>
+#include <Cometa/Common/WithdrawalMap.h>
 #include <Cometa/Crypto/Blake2bHash.h>
 #include <Cometa/PlutusData/PlutusData.h>
 #include <Cometa/ProtocolParams/ProtocolParameters.h>
@@ -222,6 +224,16 @@ class TransactionBuilder
       const GovernanceActionId& action,
       const VotingProcedure&    vote,
       DeferredRedeemer          callback);
+
+    /** @brief Proposes an informational governance action. @param refundAddress The deposit refund account. @param anchor The metadata anchor. @return This builder. */
+    TransactionBuilder& proposeInfo(const RewardAddress& refundAddress, const Anchor& anchor);
+
+    /** @brief Proposes a treasury withdrawal. @param refundAddress The deposit refund account. @param anchor The metadata anchor. @param withdrawals The recipient amounts. @param policyHash The guardrails script hash. @return This builder. */
+    TransactionBuilder& proposeTreasuryWithdrawals(
+      const RewardAddress& refundAddress,
+      const Anchor&        anchor,
+      const WithdrawalMap& withdrawals,
+      const Blake2bHash&   policyHash);
 
     /**
      * @brief Mints or burns a native asset.
