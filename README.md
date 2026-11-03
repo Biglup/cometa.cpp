@@ -8,7 +8,7 @@
 
 <div align="center">
 
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE) [![Post-Integration](https://github.com/Biglup/cometa.cpp/actions/workflows/ci.yml/badge.svg)](https://github.com/Biglup/cometa.cpp/actions/workflows/ci.yml) [![Documentation Status](https://app.readthedocs.org/projects/cometacpp/badge/?version=latest)](https://cometacpp.readthedocs.io/en/latest/) [![Twitter Follow](https://img.shields.io/twitter/follow/BiglupLabs?style=social)](https://x.com/BiglupLabs)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE) [![Post-Integration](https://github.com/Biglup/cometa.cpp/actions/workflows/ci.yml/badge.svg)](https://github.com/Biglup/cometa.cpp/actions/workflows/ci.yml) [![Documentation Status](https://img.shields.io/readthedocs/cometacpp/latest)](https://cometacpp.readthedocs.io/en/latest/) [![Twitter Follow](https://img.shields.io/twitter/follow/BiglupLabs?style=social)](https://x.com/BiglupLabs)
 
 </div>
 
