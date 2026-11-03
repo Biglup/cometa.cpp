@@ -285,6 +285,12 @@ IF (COMETA_BUILD_EXAMPLES)
 
     ADD_EXECUTABLE (propose_treasury_withdrawal_example examples/propose_treasury_withdrawal_example.cpp)
     TARGET_LINK_LIBRARIES (propose_treasury_withdrawal_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (vote_for_proposal_pubkey_example examples/vote_for_proposal_pubkey_example.cpp)
+    TARGET_LINK_LIBRARIES (vote_for_proposal_pubkey_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (vote_for_proposal_script_example examples/vote_for_proposal_script_example.cpp)
+    TARGET_LINK_LIBRARIES (vote_for_proposal_script_example PRIVATE cometa-example-support)
   ENDIF ()
 ENDIF ()
 

@@ -33,12 +33,14 @@
 #include <Cometa/Providers/CurlHttpTransport.h>
 #include <Cometa/SlotConfig.h>
 
+#include <algorithm>
 #include <chrono>
 #include <cstdlib>
 #include <iostream>
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <thread>
 #include <vector>
 
 /* USINGS ********************************************************************/
@@ -143,4 +145,39 @@ CometaExamples::signAndSubmit(
   }
 
   std::cout << "Confirmed transaction: " << id.toHex() << '\n';
+
+  const Address payment   = paymentAddress(signer);
+  bool          hasChange = false;
+
+  const TransactionOutputList outputs = transaction.body().outputs();
+
+  for (std::size_t index = 0; index < outputs.size(); ++index)
+  {
+    if (outputs.at(index).address() == payment)
+    {
+      hasChange = true;
+      break;
+    }
+  }
+
+  if (hasChange)
+  {
+    const std::chrono::steady_clock::time_point deadline =
+      std::chrono::steady_clock::now() + std::chrono::seconds(30);
+
+    while (std::chrono::steady_clock::now() < deadline)
+    {
+      const UtxoList available = provider.getUnspentOutputs(payment);
+
+      if (std::any_of(available.begin(), available.end(), [&id](const Utxo& output)
+                      { return output.input().id() == id; }))
+      {
+        return;
+      }
+
+      std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+
+    throw std::runtime_error("Confirmed change output is not available from Blockfrost");
+  }
 }
