@@ -214,6 +214,9 @@ ADD_LIBRARY (Cometa::cometa ALIAS cometa)
 IF (COMETA_BUILD_EXAMPLES)
   ADD_EXECUTABLE (bip39_example examples/bip39_example.cpp)
   TARGET_LINK_LIBRARIES (bip39_example PRIVATE Cometa::cometa)
+
+  ADD_EXECUTABLE (secure_key_handler_example examples/secure_key_handler_example.cpp)
+  TARGET_LINK_LIBRARIES (secure_key_handler_example PRIVATE Cometa::cometa)
 ENDIF ()
 
 TARGET_COMPILE_FEATURES (cometa PUBLIC cxx_std_17)
