@@ -49,12 +49,14 @@ main()
 {
   try
   {
-    const Cometa::BlockfrostProvider provider  = CometaExamples::preprodProvider();
-    const Cometa::Address            payment   = Cometa::Address::fromString(PAYMENT_ADDRESS);
-    const Cometa::RewardAddress      reward    = Cometa::RewardAddress::fromBech32(REWARD_ADDRESS);
-    const Cometa::UtxoList           outputs   = provider.getUnspentOutputs(payment);
-    const std::uint64_t              available = provider.getRewardsAvailable(reward);
-    Cometa::Value                    balance(0);
+    const Cometa::BlockfrostProvider provider = CometaExamples::preprodProvider();
+    const Cometa::Address            payment  = Cometa::Address::fromString(PAYMENT_ADDRESS);
+    const Cometa::RewardAddress      reward   = Cometa::RewardAddress::fromBech32(REWARD_ADDRESS);
+
+    const Cometa::UtxoList outputs   = provider.getUnspentOutputs(payment);
+    const std::uint64_t    available = provider.getRewardsAvailable(reward);
+
+    Cometa::Value balance(0);
 
     for (const Cometa::Utxo& output: outputs)
     {
@@ -64,6 +66,7 @@ main()
     std::cout << "Available lovelace: " << balance.coin() << '\n';
     std::cout << "Withdrawable rewards: " << available << '\n';
     std::cout << "Total lovelace: " << static_cast<std::uint64_t>(balance.coin()) + available << '\n';
+
     return 0;
   }
   catch (const std::exception& error)

@@ -49,35 +49,43 @@ main()
     const Cometa::SecureKeyHandler   signer         = CometaExamples::sampleSigner();
     const Cometa::BlockfrostProvider provider       = CometaExamples::preprodProvider();
     const Cometa::Address            paymentAddress = CometaExamples::paymentAddress(signer);
-    const Cometa::ProtocolParameters parameters     = provider.getParameters();
-    const Cometa::NativeScript       nativeScript   = Cometa::NativeScript::fromJson(ALWAYS_SUCCEEDS_NATIVE_SCRIPT);
-    const Cometa::Script             script(nativeScript);
-    const Cometa::Credential         scriptCredential(Cometa::CredentialType::ScriptHash, script.hash());
-    const Cometa::Address            scriptAddress =
+
+    const Cometa::ProtocolParameters parameters = provider.getParameters();
+
+    const Cometa::NativeScript nativeScript = Cometa::NativeScript::fromJson(ALWAYS_SUCCEEDS_NATIVE_SCRIPT);
+
+    const Cometa::Script     script(nativeScript);
+    const Cometa::Credential scriptCredential(Cometa::CredentialType::ScriptHash, script.hash());
+    const Cometa::Address    scriptAddress =
       Cometa::EnterpriseAddress(Cometa::NetworkId::Testnet, scriptCredential).toAddress();
 
     Cometa::TransactionBuilder funding(parameters, Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
+
     funding.setUtxos(provider.getUnspentOutputs(paymentAddress))
       .setChangeAddress(paymentAddress)
       .setInvalidAfter(CometaExamples::expirySlot())
-      .sendLovelace(scriptAddress, 2000000);
+      .sendLovelace(scriptAddress, 2'000'000);
 
     Cometa::Transaction fundingTransaction = funding.build();
+
     CometaExamples::signAndSubmit(signer, provider, fundingTransaction);
 
     const Cometa::Utxo scriptOutput(
       Cometa::TransactionInput(fundingTransaction.id(), 0), fundingTransaction.body().outputs().at(0));
 
     Cometa::TransactionBuilder spending(parameters, Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
+
     spending.setUtxos(provider.getUnspentOutputs(paymentAddress))
       .setChangeAddress(paymentAddress)
       .setInvalidAfter(CometaExamples::expirySlot())
       .addScript(script)
-      .sendLovelace(paymentAddress, 1000000)
+      .sendLovelace(paymentAddress, 1'000'000)
       .addInput(scriptOutput);
 
     Cometa::Transaction spendingTransaction = spending.build();
+
     CometaExamples::signAndSubmit(signer, provider, spendingTransaction);
+
     return 0;
   }
   catch (const std::exception& error)

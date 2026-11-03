@@ -1,0 +1,7 @@
+Cip1852
+========
+
+``#include <Cometa/KeyHandlers/Cip1852.h>``
+
+.. doxygennamespace:: Cometa::Cip1852
+   :members:

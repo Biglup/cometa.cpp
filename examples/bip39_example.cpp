@@ -82,11 +82,13 @@ main()
     const Cometa::Bip32PublicKey   account    = handler.accountPublicKey(Cometa::AccountDerivationPath {});
     const Cometa::Ed25519PublicKey paymentKey = account.derive({ 0, 0 }).toEd25519();
     const Cometa::Ed25519PublicKey stakeKey   = account.derive({ 2, 0 }).toEd25519();
-    const Cometa::Credential       payment(Cometa::CredentialType::KeyHash, paymentKey.hash());
-    const Cometa::Credential       stake(Cometa::CredentialType::KeyHash, stakeKey.hash());
-    const Cometa::Address          address = Cometa::BaseAddress(Cometa::NetworkId::Testnet, payment, stake).toAddress();
+
+    const Cometa::Credential payment(Cometa::CredentialType::KeyHash, paymentKey.hash());
+    const Cometa::Credential stake(Cometa::CredentialType::KeyHash, stakeKey.hash());
+    const Cometa::Address    address = Cometa::BaseAddress(Cometa::NetworkId::Testnet, payment, stake).toAddress();
 
     std::cout << "First address: " << address.toString() << '\n';
+
     return 0;
   }
   catch (const std::exception& error)

@@ -59,13 +59,14 @@ main()
 {
   try
   {
-    const Cometa::SecureKeyHandler    signer         = CometaExamples::sampleSigner();
-    const Cometa::BlockfrostProvider  provider       = CometaExamples::preprodProvider();
-    const Cometa::Address             payment        = CometaExamples::paymentAddress(signer);
-    const Cometa::RewardAddress       reward         = Cometa::RewardAddress::fromBech32(STAKE_ADDRESS);
-    const Cometa::ProtocolParameters  parameters     = provider.getParameters();
-    const Cometa::SlotConfig          slots          = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod);
-    const Cometa::UtxoList            paymentOutputs = provider.getUnspentOutputs(payment);
+    const Cometa::SecureKeyHandler   signer         = CometaExamples::sampleSigner();
+    const Cometa::BlockfrostProvider provider       = CometaExamples::preprodProvider();
+    const Cometa::Address            payment        = CometaExamples::paymentAddress(signer);
+    const Cometa::RewardAddress      reward         = Cometa::RewardAddress::fromBech32(STAKE_ADDRESS);
+    const Cometa::ProtocolParameters parameters     = provider.getParameters();
+    const Cometa::SlotConfig         slots          = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod);
+    const Cometa::UtxoList           paymentOutputs = provider.getUnspentOutputs(payment);
+
     const Cometa::TransactionInputSet referenceInputs { Cometa::TransactionInput::fromHex(REFERENCE_SCRIPT_TX, 0) };
     const Cometa::UtxoList            resolved = provider.resolveUnspentOutputs(referenceInputs);
 
@@ -86,6 +87,7 @@ main()
     withdrawals.set(reward, 1000000000000ULL);
 
     Cometa::TransactionBuilder builder(parameters, slots);
+
     builder.setUtxos(paymentOutputs)
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
@@ -99,7 +101,9 @@ main()
         policy);
 
     Cometa::Transaction transaction = builder.build();
+
     CometaExamples::signAndSubmit(signer, provider, transaction);
+
     return 0;
   }
   catch (const std::exception& error)

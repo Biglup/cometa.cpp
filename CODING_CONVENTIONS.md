@@ -183,6 +183,19 @@ Sphinx; update documentation snippets and API mappings when the interface change
 Public documentation describes how to use the library. Private comments document
 implementation contracts without exposing them in the published reference.
 
+### Generated documentation organization
+
+Follow cardano-c’s documentation structure, adapted to the C++ API. Keep the
+landing page focused on an overview, features, integration, and license. Keep
+installation and build configuration in Getting Started. Group API pages under
+`doc/src/sections/api` by Cardano domain, with a short introduction, usage guide,
+and separate reference pages for public headers. Document classes, enums,
+callbacks, aliases, and free functions through Breathe directives. Put ownership
+and extension-point guidance in the relevant C++ guides; do not copy C reference
+counting instructions into C++ usage examples. Keep coverage and implementation
+planning in the development documentation. Build with warnings treated as errors
+and check the rendered navigation when adding or moving pages.
+
 ## CMake
 
 Use uppercase command names and a space before `(`, including user-defined CMake
@@ -237,6 +250,26 @@ Use lowercase Conventional Commit messages, such as `docs(style): clarify code
 organization`. Use the configured maintainer identity and signing key for commits;
 verify the signature before pushing. Do not silently substitute an agent identity
 or create unsigned commits when signing is required.
+
+## Examples and README
+
+Keep runnable examples focused on one flow. Separate network setup, domain
+values, each builder, signing, and output with blank lines. Group related
+declarations so formatter alignment does not span unrelated steps. Preserve
+compiled script bytes when splitting long hexadecimal literals across adjacent
+C++ string literals. Use fenced Markdown code blocks with the appropriate
+language tag (`cpp`, `cmake`, or `bash`) in the README, and link to the runnable
+source when a short snippet omits setup.
+Leave a blank line between constructing a transaction builder and its first
+configuration call. Use C++ digit separators for lovelace and other long
+decimal quantities so examples are easy to scan.
+
+Keep the README example-led: a short introduction, installation, practical API
+examples, and links to the full documentation. Avoid repeating setup explanations
+around each snippet or including build internals and exhaustive API catalogs.
+Use Cometa.py as a reference for the direct, usage-focused presentation and
+README header: centered logo, a separate badge row, and navigation links between
+horizontal rules.
 
 ## Implementation PRs
 

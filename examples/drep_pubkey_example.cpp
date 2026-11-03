@@ -53,14 +53,16 @@ main()
 {
   try
   {
-    const Cometa::SecureKeyHandler   signer     = CometaExamples::sampleSigner();
-    const Cometa::BlockfrostProvider provider   = CometaExamples::preprodProvider();
-    const Cometa::Address            payment    = CometaExamples::paymentAddress(signer);
-    const Cometa::RewardAddress      reward     = Cometa::RewardAddress::fromBech32(REWARD_ADDRESS);
+    const Cometa::SecureKeyHandler   signer   = CometaExamples::sampleSigner();
+    const Cometa::BlockfrostProvider provider = CometaExamples::preprodProvider();
+    const Cometa::Address            payment  = CometaExamples::paymentAddress(signer);
+    const Cometa::RewardAddress      reward   = Cometa::RewardAddress::fromBech32(REWARD_ADDRESS);
+
     const Cometa::ProtocolParameters parameters = provider.getParameters();
     const Cometa::SlotConfig         slots      = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod);
-    const Cometa::Bip32PublicKey     account    = signer.accountPublicKey(Cometa::AccountDerivationPath {});
-    const Cometa::Credential         credential(
+
+    const Cometa::Bip32PublicKey account = signer.accountPublicKey(Cometa::AccountDerivationPath {});
+    const Cometa::Credential     credential(
       Cometa::CredentialType::KeyHash, account.derive({ 3, 0 }).toEd25519().hash());
     const Cometa::DRep   drep(credential);
     const Cometa::Anchor anchor(ANCHOR_URL, Cometa::Blake2bHash::fromHex(ANCHOR_HASH));
@@ -73,38 +75,51 @@ main()
     const std::vector<Cometa::DerivationPath> drepSigners { Cometa::DerivationPath {}, drepPath };
 
     Cometa::TransactionBuilder registration(parameters, slots);
+
     registration.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
       .registerDRep(drep, anchor);
+
     Cometa::Transaction registrationTransaction = registration.build();
+
     CometaExamples::signAndSubmit(signer, provider, registrationTransaction, drepSigners);
 
     Cometa::TransactionBuilder delegation(parameters, slots);
+
     delegation.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
       .registerRewardAddress(reward)
       .delegateVotingPower(reward, drep);
+
     Cometa::Transaction delegationTransaction = delegation.build();
+
     CometaExamples::signAndSubmit(signer, provider, delegationTransaction, stakeSigners);
 
     Cometa::TransactionBuilder rewardDeregistration(parameters, slots);
+
     rewardDeregistration.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
       .withdrawRewards(reward, 0)
       .deregisterRewardAddress(reward);
+
     Cometa::Transaction rewardDeregistrationTransaction = rewardDeregistration.build();
+
     CometaExamples::signAndSubmit(signer, provider, rewardDeregistrationTransaction, stakeSigners);
 
     Cometa::TransactionBuilder drepDeregistration(parameters, slots);
+
     drepDeregistration.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
       .deregisterDRep(drep);
+
     Cometa::Transaction drepDeregistrationTransaction = drepDeregistration.build();
+
     CometaExamples::signAndSubmit(signer, provider, drepDeregistrationTransaction, drepSigners);
+
     return 0;
   }
   catch (const std::exception& error)

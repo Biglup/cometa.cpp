@@ -114,5 +114,5 @@ failures reported as such throw ``std::bad_alloc``. Unit tests verify credential
 and error code values against cardano-c.
 
 Tests cover encodings, known hash digests, independent copies, moves, allocation
-failures, and cleanup. Transaction conformance fixtures will apply when transaction
-types are implemented.
+failures, and cleanup. The shared transaction conformance fixtures check CBOR, hashes, and inspection
+output.

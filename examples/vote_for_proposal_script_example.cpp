@@ -63,11 +63,12 @@ main(int argc, char** argv)
   {
     const Cometa::GovernanceActionId action(
       Cometa::Blake2bHash::fromHex(argv[1]), argc == 3 ? std::stoull(argv[2]) : 0);
-    const Cometa::SecureKeyHandler    signer     = CometaExamples::sampleSigner();
-    const Cometa::BlockfrostProvider  provider   = CometaExamples::preprodProvider();
-    const Cometa::Address             payment    = CometaExamples::paymentAddress(signer);
-    const Cometa::ProtocolParameters  parameters = provider.getParameters();
-    const Cometa::SlotConfig          slots      = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod);
+    const Cometa::SecureKeyHandler   signer     = CometaExamples::sampleSigner();
+    const Cometa::BlockfrostProvider provider   = CometaExamples::preprodProvider();
+    const Cometa::Address            payment    = CometaExamples::paymentAddress(signer);
+    const Cometa::ProtocolParameters parameters = provider.getParameters();
+    const Cometa::SlotConfig         slots      = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod);
+
     const Cometa::TransactionInputSet referenceInputs { Cometa::TransactionInput::fromHex(REFERENCE_SCRIPT_TX, 0) };
     const Cometa::UtxoList            resolved = provider.resolveUnspentOutputs(referenceInputs);
 
@@ -83,8 +84,10 @@ main(int argc, char** argv)
     const Cometa::Anchor     anchor(ANCHOR_URL, Cometa::Blake2bHash::fromHex(ANCHOR_HASH));
     const Cometa::PlutusData redeemer = Cometa::PlutusData::fromCbor("d87980");
 
-    const Cometa::UtxoList     registrationOutputs = provider.getUnspentOutputs(payment);
+    const Cometa::UtxoList registrationOutputs = provider.getUnspentOutputs(payment);
+
     Cometa::TransactionBuilder registration(parameters, slots);
+
     registration.setUtxos(registrationOutputs)
       .setCollateralUtxos(registrationOutputs)
       .setCollateralChangeAddress(payment)
@@ -92,11 +95,15 @@ main(int argc, char** argv)
       .setInvalidAfter(CometaExamples::expirySlot())
       .addScript(script)
       .registerDRep(drep, anchor, redeemer);
+
     Cometa::Transaction registrationTransaction = registration.build();
+
     CometaExamples::signAndSubmit(signer, provider, registrationTransaction);
 
-    const Cometa::UtxoList     votingOutputs = provider.getUnspentOutputs(payment);
+    const Cometa::UtxoList votingOutputs = provider.getUnspentOutputs(payment);
+
     Cometa::TransactionBuilder voting(parameters, slots);
+
     voting.setUtxos(votingOutputs)
       .setCollateralUtxos(votingOutputs)
       .setCollateralChangeAddress(payment)
@@ -104,11 +111,15 @@ main(int argc, char** argv)
       .setInvalidAfter(CometaExamples::expirySlot())
       .addScript(script)
       .vote(voter, action, Cometa::VotingProcedure(Cometa::Vote::Yes), redeemer);
+
     Cometa::Transaction votingTransaction = voting.build();
+
     CometaExamples::signAndSubmit(signer, provider, votingTransaction);
 
-    const Cometa::UtxoList     deregistrationOutputs = provider.getUnspentOutputs(payment);
+    const Cometa::UtxoList deregistrationOutputs = provider.getUnspentOutputs(payment);
+
     Cometa::TransactionBuilder deregistration(parameters, slots);
+
     deregistration.setUtxos(deregistrationOutputs)
       .setCollateralUtxos(deregistrationOutputs)
       .setCollateralChangeAddress(payment)
@@ -116,8 +127,11 @@ main(int argc, char** argv)
       .setInvalidAfter(CometaExamples::expirySlot())
       .addScript(script)
       .deregisterDRep(drep, redeemer);
+
     Cometa::Transaction deregistrationTransaction = deregistration.build();
+
     CometaExamples::signAndSubmit(signer, provider, deregistrationTransaction);
+
     return 0;
   }
   catch (const std::exception& error)

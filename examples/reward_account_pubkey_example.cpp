@@ -55,6 +55,7 @@ main()
     const Cometa::Address            payment  = CometaExamples::paymentAddress(signer);
     const Cometa::RewardAddress      reward   = Cometa::RewardAddress::fromBech32(REWARD_ADDRESS);
     const Cometa::Blake2bHash        pool(Cometa::decodeBech32(POOL_ID).bytes);
+
     const Cometa::ProtocolParameters parameters = provider.getParameters();
     const Cometa::SlotConfig         slots      = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod);
     Cometa::DerivationPath           stakePath;
@@ -62,6 +63,7 @@ main()
     const std::vector<Cometa::DerivationPath> signingPaths { Cometa::DerivationPath {}, stakePath };
 
     Cometa::TransactionBuilder registration(parameters, slots);
+
     registration.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
@@ -70,9 +72,11 @@ main()
       .delegateVotingPower(reward, Cometa::DRep(Cometa::DRepType::Abstain));
 
     Cometa::Transaction registrationTransaction = registration.build();
+
     CometaExamples::signAndSubmit(signer, provider, registrationTransaction, signingPaths);
 
     Cometa::TransactionBuilder deregistration(parameters, slots);
+
     deregistration.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
@@ -80,7 +84,9 @@ main()
       .deregisterRewardAddress(reward);
 
     Cometa::Transaction deregistrationTransaction = deregistration.build();
+
     CometaExamples::signAndSubmit(signer, provider, deregistrationTransaction, signingPaths);
+
     return 0;
   }
   catch (const std::exception& error)
