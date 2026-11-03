@@ -1,7 +1,7 @@
 /**
  * @file Credential.h
  *
- * @brief Declaration of the Credential value type.
+ * @brief A key hash or script hash that identifies an authorization requirement.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -43,7 +43,10 @@ struct cardano_credential_t;
 namespace Cometa
 {
 /**
- * @brief Identifies a key or script authorized to perform an action.
+ * @brief A key hash or script hash that identifies an authorization requirement.
+ *
+ * The 28-byte hash identifies who must authorize an action; the credential itself is not a signature
+ * or script. Its role is determined by its use in an address, certificate, voter, or guard.
  */
 class Credential
 {

@@ -1,7 +1,7 @@
 /**
  * @file RandomImproveCoinSelector.h
  *
- * @brief Random-improve coin selection strategy.
+ * @brief Selects UTxOs with the random-improve strategy.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -34,7 +34,12 @@
 
 namespace Cometa
 {
-/** @brief Selects inputs using the random-improve strategy. */
+/**
+ * @brief Selects UTxOs with the random-improve strategy.
+ *
+ * The strategy first covers required amounts, then improves the selection toward its target. A
+ * supplied seed makes selection reproducible for the same request.
+ */
 class RandomImproveCoinSelector final : public CoinSelector
 {
   public:
@@ -57,7 +62,10 @@ class RandomImproveCoinSelector final : public CoinSelector
 
   public:
 
-    /** @brief Gets the strategy name. @return The name. */
+    /**
+     * @brief Gets the strategy name.
+     * @return The name.
+     */
     std::string name() const override;
 
     /**

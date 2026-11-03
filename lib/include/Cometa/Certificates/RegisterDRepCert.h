@@ -1,7 +1,7 @@
 /**
  * @file RegisterDRepCert.h
  *
- * @brief DRep registration certificates.
+ * @brief Registers a DRep credential with a deposit and optional metadata anchor.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -43,7 +43,10 @@ struct cardano_register_drep_cert_t;
 namespace Cometa
 {
 /**
- * @brief A DRep registration certificate.
+ * @brief Registers a DRep credential with a deposit and optional metadata anchor.
+ *
+ * The deposit is in lovelace. The anchor describes the representative; authorization comes from the
+ * DRep's key or script credential.
  */
 class RegisterDRepCert
 {

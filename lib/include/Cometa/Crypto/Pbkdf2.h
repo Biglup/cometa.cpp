@@ -1,7 +1,7 @@
 /**
  * @file Pbkdf2.h
  *
- * @brief PBKDF2 HMAC-SHA512 key derivation.
+ * @brief Password-based key derivation using PBKDF2-HMAC-SHA512.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026

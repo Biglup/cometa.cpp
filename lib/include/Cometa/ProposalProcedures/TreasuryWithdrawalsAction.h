@@ -1,7 +1,7 @@
 /**
  * @file TreasuryWithdrawalsAction.h
  *
- * @brief Treasury withdrawal governance action.
+ * @brief A governance action proposing payments from the treasury to reward accounts.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,12 @@ struct cardano_treasury_withdrawals_action_t;
 
 namespace Cometa
 {
-/** @brief Treasury withdrawals and optional policy hash. */
+/**
+ * @brief A governance action proposing payments from the treasury to reward accounts.
+ *
+ * The withdrawal map supplies recipients and lovelace amounts. These payments depend on enactment,
+ * unlike ordinary transaction reward withdrawals.
+ */
 class TreasuryWithdrawalsAction
 {
   public:

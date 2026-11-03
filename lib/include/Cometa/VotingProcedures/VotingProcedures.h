@@ -1,7 +1,7 @@
 /**
  * @file VotingProcedures.h
  *
- * @brief Governance votes grouped by voter and action.
+ * @brief Governance votes grouped by voter and proposal identifier.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -50,7 +50,12 @@ struct cardano_voting_procedures_t;
 
 namespace Cometa
 {
-/** @brief Governance votes grouped by voter and action identifier. */
+/**
+ * @brief Governance votes grouped by voter and proposal identifier.
+ *
+ * Each voter/action pair has one voting procedure. The transaction must provide the authorization
+ * required by each voter's role and credential.
+ */
 class VotingProcedures
 {
   public:
@@ -233,82 +238,88 @@ class VotingProcedures
 
   public:
 
-    /** @brief Gets the number of entries. @return The entry count. */
+    /**
+     * @brief Gets the number of entries.
+     * @return The entry count.
+     */
     std::size_t size() const;
 
-    /** @brief Copies all entries. @return Independent entries. */
+    /**
+     * @brief Copies all entries.
+     * @return Independent entries.
+     */
     std::vector<std::pair<std::pair<Voter, GovernanceActionId>, VotingProcedure>> entries() const;
 
   public:
 
     /**
-     * @brief Gets the begin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     iterator begin();
 
     /**
-     * @brief Gets the begin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     const_iterator begin() const;
 
     /**
-     * @brief Gets the end iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     iterator end();
 
     /**
-     * @brief Gets the end iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     const_iterator end() const;
 
     /**
-     * @brief Gets the rbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     reverse_iterator rbegin();
 
     /**
-     * @brief Gets the rbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator rbegin() const;
 
     /**
-     * @brief Gets the rend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     reverse_iterator rend();
 
     /**
-     * @brief Gets the rend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator rend() const;
 
     /**
-     * @brief Gets the cbegin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     const_iterator cbegin() const;
 
     /**
-     * @brief Gets the cend iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     const_iterator cend() const;
 
     /**
-     * @brief Gets the crbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator crbegin() const;
 
     /**
-     * @brief Gets the crend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator crend() const;

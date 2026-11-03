@@ -1,7 +1,7 @@
 /**
  * @file JsonWriter.h
  *
- * @brief JSON writer.
+ * @brief Builds a JSON document using typed value and container operations.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -46,7 +46,12 @@ namespace Cometa
 {
 class JsonValue;
 
-/** @brief Builds one JSON document with checked write operations. */
+/**
+ * @brief Builds a JSON document using typed value and container operations.
+ *
+ * Write property names inside objects and values inside arrays. Numeric and string encodings are
+ * distinct; select the form expected by the consuming schema.
+ */
 class JsonWriter
 {
   public:

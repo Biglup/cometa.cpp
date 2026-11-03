@@ -1,7 +1,7 @@
 /**
  * @file ScriptAll.h
  *
- * @brief Requires every child script to be satisfied.
+ * @brief A native script requiring every child requirement to be satisfied.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,12 @@ struct cardano_script_all_t;
 
 namespace Cometa
 {
-/** @brief Requires every child script to be satisfied. */
+/**
+ * @brief A native script requiring every child requirement to be satisfied.
+ *
+ * Combine signature and time constraints to express joint authorization. The transaction must supply
+ * the witnesses and validity interval required by all children.
+ */
 class ScriptAll
 {
   public:

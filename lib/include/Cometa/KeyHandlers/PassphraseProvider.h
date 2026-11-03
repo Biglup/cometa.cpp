@@ -33,6 +33,12 @@
 
 namespace Cometa
 {
-/** @brief Supplies a passphrase when encrypted software keys are used. */
+/**
+ * @brief Supplies password bytes for an encrypted software signing operation.
+ *
+ * Return the passphrase used to create or restore the handler. The function can be called repeatedly;
+ * capture any application state with a lifetime that covers use of the handler. Password bytes are
+ * not text-normalized by this interface.
+ */
 using PassphraseProvider = std::function<std::vector<std::uint8_t>()>;
 } // namespace Cometa

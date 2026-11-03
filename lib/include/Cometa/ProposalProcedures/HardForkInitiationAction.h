@@ -1,7 +1,7 @@
 /**
  * @file HardForkInitiationAction.h
  *
- * @brief Hard fork initiation governance action.
+ * @brief A governance action proposing a protocol-version transition.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,12 @@ struct cardano_hard_fork_initiation_action_t;
 
 namespace Cometa
 {
-/** @brief Governance action that expresses a protocol hard fork. */
+/**
+ * @brief A governance action proposing a protocol-version transition.
+ *
+ * The requested ProtocolVersion identifies the upgrade. Constructing or submitting the action does not
+ * itself change the active network protocol.
+ */
 class HardForkInitiationAction
 {
   public:

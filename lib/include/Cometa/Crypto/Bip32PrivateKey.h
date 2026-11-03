@@ -1,7 +1,7 @@
 /**
  * @file Bip32PrivateKey.h
  *
- * @brief Bip32PrivateKey operations.
+ * @brief An extended Ed25519 private key for hierarchical wallet derivation.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -42,7 +42,12 @@ struct cardano_bip32_private_key_t;
 
 namespace Cometa
 {
-/** @brief A 96-byte extended Ed25519 private key with a chain code. */
+/**
+ * @brief An extended Ed25519 private key for hierarchical wallet derivation.
+ *
+ * It contains signing material and a chain code. Derive account and role keys using a path; hardened
+ * child derivation requires private key material. Exported bytes are sensitive.
+ */
 class Bip32PrivateKey
 {
   public:

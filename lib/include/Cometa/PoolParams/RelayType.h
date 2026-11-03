@@ -31,7 +31,11 @@
 
 namespace Cometa
 {
-/** @brief Identifies the kind of pool relay. */
+/**
+ * @brief Identifies how a stake pool relay endpoint is advertised.
+ *
+ * Use the matching Relay accessor for IP addresses, a hostname, or a DNS SRV record.
+ */
 enum class RelayType
 {
   /** @brief A single host identified by IP addresses. */

@@ -1,7 +1,7 @@
 /**
  * @file DerivationPath.h
  *
- * @brief BIP32 path to a Cardano key.
+ * @brief The purpose, coin type, account, role, and index of a wallet key.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -34,7 +34,12 @@
 
 namespace Cometa
 {
-/** @brief The five segments of a Cardano wallet key path. */
+/**
+ * @brief The purpose, coin type, account, role, and index of a wallet key.
+ *
+ * CIP-1852 uses role and index to separate payment and staking keys within an account. The path
+ * identifies a key; it contains no key material.
+ */
 struct DerivationPath
 {
     /** @brief Wallet purpose before hardening. */

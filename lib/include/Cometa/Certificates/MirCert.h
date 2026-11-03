@@ -1,7 +1,7 @@
 /**
  * @file MirCert.h
  *
- * @brief Historical MIR certificate variants.
+ * @brief A historical move-instantaneous-rewards certificate.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -43,7 +43,10 @@ struct cardano_mir_cert_t;
 namespace Cometa
 {
 /**
- * @brief A historical instantaneous rewards certificate.
+ * @brief A historical move-instantaneous-rewards certificate.
+ *
+ * Contains either a transfer between accounting pots or a distribution to staking credentials. Use it
+ * to inspect historical transactions; applicability depends on the ledger era.
  */
 class MirCert
 {

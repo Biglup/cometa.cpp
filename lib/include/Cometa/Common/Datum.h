@@ -1,7 +1,7 @@
 /**
  * @file Datum.h
  *
- * @brief Declaration of the Datum value type.
+ * @brief The datum attached to a transaction output, as a hash or inline PlutusData.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -45,7 +45,12 @@ namespace Cometa
 
 /* CLASS DECLARATION *********************************************************/
 
-/** @brief An output datum hash or inline Plutus data. */
+/**
+ * @brief The datum attached to a transaction output, as a hash or inline PlutusData.
+ *
+ * A hash commits to data that must be supplied separately when required by a validator. An inline
+ * datum carries that data in the output. Use std::nullopt on TransactionOutput for no datum.
+ */
 class Datum
 {
   public:

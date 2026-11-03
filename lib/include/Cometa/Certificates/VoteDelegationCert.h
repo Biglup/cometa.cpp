@@ -1,7 +1,7 @@
 /**
  * @file VoteDelegationCert.h
  *
- * @brief Vote delegation certificates.
+ * @brief Delegates a staking credential's voting power to a DRep choice.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,10 @@ struct cardano_vote_delegation_cert_t;
 namespace Cometa
 {
 /**
- * @brief A vote delegation certificate.
+ * @brief Delegates a staking credential's voting power to a DRep choice.
+ *
+ * The delegate may be a key or script representative, always-abstain, or always-no-confidence. Pool
+ * delegation is a separate choice.
  */
 class VoteDelegationCert
 {

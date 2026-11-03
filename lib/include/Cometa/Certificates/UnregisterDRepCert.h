@@ -1,7 +1,7 @@
 /**
  * @file UnregisterDRepCert.h
  *
- * @brief DRep unregistration certificates.
+ * @brief Deregisters a DRep credential and specifies its deposit refund.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,10 @@ struct cardano_unregister_drep_cert_t;
 namespace Cometa
 {
 /**
- * @brief A DRep unregistration certificate.
+ * @brief Deregisters a DRep credential and specifies its deposit refund.
+ *
+ * The refund is in lovelace and must agree with ledger state. Deregistration ends the credential's
+ * active representative registration.
  */
 class UnregisterDRepCert
 {

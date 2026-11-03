@@ -42,7 +42,13 @@ struct cardano_plutus_v3_script_t;
 
 namespace Cometa
 {
-/** @brief A compiled Plutus V3 script. */
+/**
+ * @brief A compiled validator or minting policy for the Plutus V3 ledger language.
+ *
+ * The language version determines the available script context and participates in the script hash.
+ * Construct from compiled bytes or parse the CBOR wrapper with fromCbor(). Apply parameters before
+ * computing the address or policy ID.
+ */
 class PlutusV3Script
 {
   public:
@@ -136,6 +142,11 @@ class PlutusV3Script
 
     /**
      * @brief Applies parameters to the compiled program in list order.
+     *
+     * Arguments must match the compiled program's expected parameter order and schema. Applying parameters
+     * produces a different program and can change its script hash; derive addresses and policy IDs from
+     * the returned script.
+     *
      *
      * @param parameters The data arguments; an empty list canonicalizes the program.
      *

@@ -1,7 +1,7 @@
 /**
  * @file BlockfrostProvider.h
  *
- * @brief Blockfrost network provider.
+ * @brief A Provider implementation using the Blockfrost API for one Cardano network.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -37,12 +37,23 @@
 
 namespace Cometa
 {
-/** @brief Reads Cardano network data and submits transactions through Blockfrost. */
+/**
+ * @brief A Provider implementation using the Blockfrost API for one Cardano network.
+ *
+ * Supply a project ID for the selected network and an HttpTransport. Queries reflect the service's
+ * indexed chain state; submission returns a transaction ID before confirmation.
+ */
 class BlockfrostProvider final : public Provider
 {
   public:
 
-    /** @brief Creates a provider. @param network The Cardano network. @param projectId The Blockfrost project ID. @param transport The HTTP transport. */
+    /**
+     * @brief Creates a provider.
+     * @param network The Cardano network.
+     * @param projectId The Blockfrost project ID.
+     * @param transport The HTTP transport.
+     * @throws std::invalid_argument The project ID is empty or contains a newline, the transport is null, or the network is unsupported.
+     */
     BlockfrostProvider(NetworkMagic network, std::string projectId, std::shared_ptr<HttpTransport> transport);
 
   public:
@@ -65,7 +76,11 @@ class BlockfrostProvider final : public Provider
     /** @copydoc Provider::getUnspentOutputsWithAsset */
     UtxoList getUnspentOutputsWithAsset(const Address& address, const AssetId& asset) const override;
 
-    /** @copydoc Provider::getUnspentOutputByNft */
+    /**
+     * @copydoc Provider::getUnspentOutputByNft
+     * @throws std::invalid_argument The asset is lovelace.
+     * @throws std::runtime_error The asset is not held as one NFT or its output cannot be found.
+     */
     Utxo getUnspentOutputByNft(const AssetId& asset) const override;
 
     /** @copydoc Provider::resolveUnspentOutputs */
@@ -74,37 +89,73 @@ class BlockfrostProvider final : public Provider
     /** @copydoc Provider::resolveDatum */
     PlutusData resolveDatum(const Blake2bHash& hash) const override;
 
-    /** @copydoc Provider::confirmTransaction */
+    /**
+     * @copydoc Provider::confirmTransaction
+     * @throws std::invalid_argument The timeout is negative.
+     */
     bool confirmTransaction(const Blake2bHash& id, std::chrono::milliseconds timeout) const override;
 
     /** @copydoc Provider::submitTransaction */
     Blake2bHash submitTransaction(const Transaction& transaction) const override;
 
-    /** @copydoc Provider::evaluateTransaction */
+    /**
+     * @copydoc Provider::evaluateTransaction
+     * @throws std::invalid_argument An additional UTxO contains an inline datum.
+     * @throws std::runtime_error The service rejects evaluation or returns an unsupported result.
+     */
     RedeemerList evaluateTransaction(const Transaction& transaction, const UtxoList& additionalUtxos) const override;
 
   private:
 
-    /** @brief Makes an absolute endpoint URL. @param path The API path. @return The URL. */
+    /**
+     * @brief Makes an absolute endpoint URL.
+     * @param path The API path.
+     * @return The URL.
+     */
     std::string url(const std::string& path) const;
 
-    /** @brief Executes an authenticated request. @param method The HTTP method. @param path The API path. @param body Request bytes. @param contentType The body media type. @return The response. */
+    /**
+     * @brief Executes an authenticated request.
+     * @param method The HTTP method.
+     * @param path The API path.
+     * @param body Request bytes.
+     * @param contentType The body media type.
+     * @return The response.
+     */
     HttpResponse request(
       const std::string&               method,
       const std::string&               path,
       const std::vector<std::uint8_t>& body        = {},
       const std::string&               contentType = {}) const;
 
-    /** @brief Parses a successful JSON response. @param response The response. @return The JSON value. */
+    /**
+     * @brief Parses a successful JSON response.
+     * @param response The response.
+     * @return The JSON value.
+     */
     JsonValue parseJson(const HttpResponse& response) const;
 
-    /** @brief Loads all pages of address outputs. @param path The initial path. @return The outputs. */
+    /**
+     * @brief Loads all pages of address outputs.
+     * @param path The initial path.
+     * @return The outputs.
+     */
     UtxoList loadUtxos(const std::string& path) const;
 
-    /** @brief Loads a script by hash. @param hash The script hash. @return The script. */
+    /**
+     * @brief Loads a script by hash.
+     * @param hash The script hash.
+     * @return The script.
+     */
     Script loadScript(const std::string& hash) const;
 
-    /** @brief Parses an output and resolves its reference script. @param object The Blockfrost output. @param id The transaction ID. @param index The output index. @return The output. */
+    /**
+     * @brief Parses an output and resolves its reference script.
+     * @param object The Blockfrost output.
+     * @param id The transaction ID.
+     * @param index The output index.
+     * @return The output.
+     */
     Utxo parseUtxo(const JsonValue& object, const Blake2bHash& id, std::uint64_t index) const;
 
   private:

@@ -1,7 +1,7 @@
 /**
  * @file AuxiliaryData.h
  *
- * @brief Metadata and scripts attached to a transaction.
+ * @brief Transaction metadata and auxiliary scripts committed to by the transaction body.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -48,7 +48,12 @@ struct cardano_auxiliary_data_t;
 
 namespace Cometa
 {
-/** @brief Metadata and scripts attached to a transaction. */
+/**
+ * @brief Transaction metadata and auxiliary scripts committed to by the transaction body.
+ *
+ * The body's auxiliary-data hash binds these contents to the signed transaction. Auxiliary scripts are
+ * distinct from the witness scripts used to authorize spending or minting.
+ */
 class AuxiliaryData
 {
   public:

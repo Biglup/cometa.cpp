@@ -1,7 +1,7 @@
 /**
  * @file TransactionMetadata.h
  *
- * @brief Transaction metadata indexed by unsigned labels.
+ * @brief Transaction metadata indexed by unsigned 64-bit labels.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -47,7 +47,12 @@ struct cardano_transaction_metadata_t;
 
 namespace Cometa
 {
-/** @brief Transaction metadata indexed by unsigned labels. */
+/**
+ * @brief Transaction metadata indexed by unsigned 64-bit labels.
+ *
+ * Labels distinguish application schemas within the same transaction. Each label maps to one
+ * Metadatum, which can hold a nested structure. Attach the result through AuxiliaryData.
+ */
 class TransactionMetadata
 {
   public:
@@ -287,73 +292,73 @@ class TransactionMetadata
   public:
 
     /**
-     * @brief Gets the begin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     iterator begin();
 
     /**
-     * @brief Gets the begin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     const_iterator begin() const;
 
     /**
-     * @brief Gets the end iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     iterator end();
 
     /**
-     * @brief Gets the end iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     const_iterator end() const;
 
     /**
-     * @brief Gets the rbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     reverse_iterator rbegin();
 
     /**
-     * @brief Gets the rbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator rbegin() const;
 
     /**
-     * @brief Gets the rend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     reverse_iterator rend();
 
     /**
-     * @brief Gets the rend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator rend() const;
 
     /**
-     * @brief Gets the cbegin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     const_iterator cbegin() const;
 
     /**
-     * @brief Gets the cend iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     const_iterator cend() const;
 
     /**
-     * @brief Gets the crbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator crbegin() const;
 
     /**
-     * @brief Gets the crend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator crend() const;

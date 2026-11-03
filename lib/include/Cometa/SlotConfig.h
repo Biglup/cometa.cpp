@@ -1,7 +1,7 @@
 /**
  * @file SlotConfig.h
  *
- * @brief Slot and Unix-time conversion parameters.
+ * @brief Converts between ledger slot numbers and Unix time using a reference point.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -34,7 +34,10 @@
 namespace Cometa
 {
 /**
- * @brief Defines a slot timeline starting at a reference slot and time.
+ * @brief Converts between ledger slot numbers and Unix time using a reference point.
+ *
+ * The slot length and reference time must match the target network timeline. Use it when translating
+ * application deadlines into transaction validity bounds.
  */
 struct SlotConfig
 {

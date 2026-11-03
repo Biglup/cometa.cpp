@@ -1,7 +1,7 @@
 /**
  * @file StakeDeregistrationCert.h
  *
- * @brief Legacy stake deregistration certificates.
+ * @brief Deregisters a staking credential using the legacy certificate form.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,10 @@ struct cardano_stake_deregistration_cert_t;
 namespace Cometa
 {
 /**
- * @brief A legacy stake deregistration certificate.
+ * @brief Deregisters a staking credential using the legacy certificate form.
+ *
+ * The certificate does not carry an explicit refund amount. Use UnregistrationCert for the deposit-
+ * bearing form.
  */
 class StakeDeregistrationCert
 {

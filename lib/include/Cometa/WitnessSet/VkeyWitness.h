@@ -1,7 +1,7 @@
 /**
  * @file VkeyWitness.h
  *
- * @brief Verification-key transaction witness.
+ * @brief An Ed25519 verification key and signature authorizing a transaction body.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,12 @@ struct cardano_vkey_witness_t;
 
 namespace Cometa
 {
-/** @brief A verification key and its transaction signature. */
+/**
+ * @brief An Ed25519 verification key and signature authorizing a transaction body.
+ *
+ * The signature is over the body hash. Collect witnesses from the required keys and apply them only to
+ * the body they signed.
+ */
 class VkeyWitness
 {
   public:

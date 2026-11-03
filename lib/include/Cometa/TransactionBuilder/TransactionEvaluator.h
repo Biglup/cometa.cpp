@@ -1,7 +1,7 @@
 /**
  * @file TransactionEvaluator.h
  *
- * @brief Transaction execution budget interface.
+ * @brief Estimates Plutus execution budgets for the transaction's redeemers.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -35,7 +35,13 @@
 
 namespace Cometa
 {
-/** @brief Calculates script execution budgets for a transaction. */
+/**
+ * @brief Estimates Plutus execution budgets for the transaction's redeemers.
+ *
+ * Implement this interface for a custom evaluator and inject it through
+ * TransactionBuilder::setTransactionEvaluator(). Evaluation is not transaction submission or a
+ * complete ledger-validity check.
+ */
 class TransactionEvaluator
 {
   public:
@@ -45,11 +51,18 @@ class TransactionEvaluator
 
   public:
 
-    /** @brief Gets the evaluator name. @return The name. */
+    /**
+     * @brief Gets the evaluator name.
+     * @return The name.
+     */
     virtual std::string name() const = 0;
 
     /**
      * @brief Evaluates script execution budgets.
+     *
+     * Return budgets keyed by each redeemer's original purpose and index. A successful evaluation does not
+     * verify every ledger rule or guarantee that submission will succeed.
+     *
      * @param transaction The transaction to evaluate.
      * @param additionalUtxos Outputs needed to resolve inputs.
      * @return Redeemers with execution budgets.

@@ -1,7 +1,7 @@
 /**
  * @file SubTransaction.h
  *
- * @brief A Dijkstra sub-transaction and its witnesses.
+ * @brief A Dijkstra transaction intent with its own body, witnesses, and optional auxiliary data.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -45,7 +45,12 @@ struct cardano_sub_transaction_t;
 
 namespace Cometa
 {
-/** @brief A sub-transaction body, witnesses, and optional auxiliary data. */
+/**
+ * @brief A Dijkstra transaction intent with its own body, witnesses, and optional auxiliary data.
+ *
+ * Sign the intent independently, then include it in a top-level transaction for submission. Top-level
+ * guards express authorization required from that enclosing transaction.
+ */
 class SubTransaction
 {
   public:
@@ -123,6 +128,10 @@ class SubTransaction
 
     /**
      * @brief Replaces or clears auxiliary data.
+     *
+     * The body's auxiliary-data hash must match these contents. Finalize the data and its commitment
+     * before collecting signatures.
+     *
      * @param value The data to copy, or no value to clear it.
      */
     void setAuxiliaryData(const std::optional<AuxiliaryData>& value);

@@ -36,10 +36,12 @@
 namespace Cometa
 {
 /**
- * @brief Produces a redeemer from the final draft layout and resolved inputs.
+ * @brief Produces Plutus redeemer data from a balanced transaction draft and resolved inputs.
  *
- * The function may run on every balancing iteration. It must return the same
- * result for the same arguments and avoid side effects.
+ * The Transaction argument is the current draft, and the UtxoList supplies resolved input values. Use
+ * the draft's lookup methods for ledger indices instead of assuming insertion order. The callback may
+ * run on every balancing iteration; it must be deterministic and avoid side effects. References passed
+ * to the callback are valid only for that invocation.
  */
 using DeferredRedeemer = std::function<PlutusData(const Transaction&, const UtxoList&)>;
 } // namespace Cometa

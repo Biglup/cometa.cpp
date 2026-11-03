@@ -1,7 +1,7 @@
 /**
  * @file JsonValue.h
  *
- * @brief JSON value.
+ * @brief A parsed JSON value that preserves exact decimal number tokens.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -44,7 +44,12 @@ struct cardano_json_object_t;
 
 namespace Cometa
 {
-/** @brief A parsed JSON value with exact decimal number tokens. */
+/**
+ * @brief A parsed JSON value that preserves exact decimal number tokens.
+ *
+ * Use exact numeric text or integer accessors when handling amounts that exceed floating-point
+ * precision. Inspect the value kind before accessing its contents.
+ */
 class JsonValue
 {
   public:

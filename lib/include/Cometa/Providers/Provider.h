@@ -1,7 +1,7 @@
 /**
  * @file Provider.h
  *
- * @brief Blockchain data and transaction submission interface.
+ * @brief Queries network state, evaluates transactions, and submits signed transactions.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -45,7 +45,12 @@
 
 namespace Cometa
 {
-/** @brief Supplies network data and submits transactions. */
+/**
+ * @brief Queries network state, evaluates transactions, and submits signed transactions.
+ *
+ * Implement this interface to use another data source or node service. Submission and confirmation are
+ * separate operations; successful submission does not establish inclusion in a block.
+ */
 class Provider
 {
   public:
@@ -55,16 +60,34 @@ class Provider
 
   public:
 
-    /** @brief Gets the provider name. @return The name. */
+    /**
+     * @brief Gets the provider name.
+     * @return The name.
+     */
     virtual std::string name() const = 0;
 
-    /** @brief Gets the connected network. @return The network magic. */
+    /**
+     * @brief Gets the connected network.
+     * @return The network magic.
+     */
     virtual NetworkMagic networkMagic() const = 0;
 
-    /** @brief Gets current protocol parameters. @return The parameters. */
+    /**
+     * @brief Gets current protocol parameters.
+     *
+     * Use the result to configure builders and evaluators for this network. Refresh the snapshot when
+     * protocol parameters change.
+     *
+     * @return The parameters.
+     */
     virtual ProtocolParameters getParameters() const = 0;
 
-    /** @brief Gets all unspent outputs at an address.
+    /**
+     * @brief Gets all unspent outputs at an address.
+     *
+     * The result is a snapshot. Another transaction may spend an output after this query; querying does
+     * not reserve it.
+     *
      * @param address The address to query.
      * @return The unspent outputs.
      */
@@ -83,7 +106,12 @@ class Provider
      */
     virtual UtxoList getUnspentOutputsWithAsset(const Address& address, const AssetId& asset) const = 0;
 
-    /** @brief Gets an output containing an NFT.
+    /**
+     * @brief Gets an output containing an NFT.
+     *
+     * This operation assumes the asset identifies a unique unspent output. It does not establish the
+     * minting policy's non-fungibility guarantees.
+     *
      * @param asset The NFT to find.
      * @return The matching output.
      */
@@ -101,20 +129,35 @@ class Provider
      */
     virtual PlutusData resolveDatum(const Blake2bHash& hash) const = 0;
 
-    /** @brief Waits for a transaction to be confirmed.
+    /**
+     * @brief Waits for a transaction to be confirmed.
+     *
+     * Confirmation means the provider has observed the transaction on-chain. It is not a configurable
+     * settlement-depth guarantee, and chain reorganizations remain possible.
+     *
      * @param id The transaction ID.
      * @param timeout The maximum wait.
      * @return True when confirmed within the timeout.
      */
     virtual bool confirmTransaction(const Blake2bHash& id, std::chrono::milliseconds timeout) const = 0;
 
-    /** @brief Submits a signed transaction.
+    /**
+     * @brief Submits a signed transaction.
+     *
+     * The transaction must already contain its required signatures. Use confirmTransaction() separately to
+     * wait for the provider to observe inclusion.
+     *
      * @param transaction The transaction to submit.
      * @return The submitted transaction ID.
      */
     virtual Blake2bHash submitTransaction(const Transaction& transaction) const = 0;
 
-    /** @brief Evaluates script execution budgets.
+    /**
+     * @brief Evaluates script execution budgets.
+     *
+     * Estimates Plutus budgets without submitting the transaction. Additional UTxOs supply input data not
+     * yet available from the provider, such as outputs of pending transactions.
+     *
      * @param transaction The transaction to evaluate.
      * @param additionalUtxos Additional resolved outputs.
      * @return Redeemers with execution budgets.

@@ -1,7 +1,7 @@
 /**
  * @file LargeFirstCoinSelector.h
  *
- * @brief Largest-first coin selection strategy.
+ * @brief Selects larger UTxOs first to cover a transaction's target value.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -31,12 +31,20 @@
 
 namespace Cometa
 {
-/** @brief Selects larger outputs first to cover a target value. */
+/**
+ * @brief Selects larger UTxOs first to cover a transaction's target value.
+ *
+ * Use it when preferring a straightforward selection that tends to reduce input count. Selection still
+ * accounts for individual assets and change requirements.
+ */
 class LargeFirstCoinSelector final : public CoinSelector
 {
   public:
 
-    /** @brief Gets the strategy name. @return The name. */
+    /**
+     * @brief Gets the strategy name.
+     * @return The name.
+     */
     std::string name() const override;
 
     /**

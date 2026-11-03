@@ -1,7 +1,7 @@
 /**
  * @file Bip32KeyCallbacks.h
  *
- * @brief C++ operations supplied by a BIP32 key handler.
+ * @brief Signing and public-key operations supplied by a hierarchical wallet signer.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -40,7 +40,12 @@
 
 namespace Cometa
 {
-/** @brief Operations delegated to a BIP32 signer. */
+/**
+ * @brief Signing and public-key operations supplied by a hierarchical wallet signer.
+ *
+ * The requested derivation paths identify the signing keys. Callbacks return witnesses for the
+ * supplied body; the application remains responsible for approving the transaction being signed.
+ */
 struct Bip32KeyCallbacks
 {
     /** @brief Signs a top-level transaction for the requested key paths. */
@@ -52,7 +57,12 @@ struct Bip32KeyCallbacks
     /** @brief Gets the extended public key at an account path. */
     std::function<Bip32PublicKey(const AccountDerivationPath&)> accountPublicKey;
 
-    /** @brief Serializes the handler state, when supported. */
+    /**
+     * @brief Exports handler-specific state when serialization is supported.
+     *
+     * This callback is optional. The callback implementation defines the returned format and whether
+     * it contains sensitive information; a custom handler's bytes are not automatically encrypted.
+     */
     std::function<std::vector<std::uint8_t>()> serialize;
 };
 } // namespace Cometa

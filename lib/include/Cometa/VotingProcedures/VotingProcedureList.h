@@ -33,6 +33,8 @@
 
 namespace Cometa
 {
-/** @brief An ordered sequence of independent VotingProcedure values. */
+/**
+ * @brief Governance voting choices and optional metadata anchors in application order.
+ */
 using VotingProcedureList = std::vector<VotingProcedure>;
 } // namespace Cometa

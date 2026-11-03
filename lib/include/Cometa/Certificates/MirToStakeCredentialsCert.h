@@ -1,7 +1,7 @@
 /**
  * @file MirToStakeCredentialsCert.h
  *
- * @brief Historical instantaneous rewards to stake credentials.
+ * @brief A historical allocation of instantaneous rewards to staking credentials.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -44,7 +44,10 @@ struct cardano_mir_to_stake_creds_cert_t;
 namespace Cometa
 {
 /**
- * @brief A historical reward distribution from reserves or treasury.
+ * @brief A historical allocation of instantaneous rewards to staking credentials.
+ *
+ * The source is the reserves or treasury pot. Entries describe reward adjustments for credentials, not
+ * transaction outputs.
  */
 class MirToStakeCredentialsCert
 {

@@ -27,7 +27,12 @@
 
 namespace Cometa
 {
-/** @brief Identifies a ledger Plutus language version. */
+/**
+ * @brief Identifies a ledger Plutus language and script-context version.
+ *
+ * Use the version supported by the target network and the compiled program. This is distinct from the
+ * compiler release version.
+ */
 enum class PlutusLanguageVersion
 {
   /** @brief Plutus V1. */

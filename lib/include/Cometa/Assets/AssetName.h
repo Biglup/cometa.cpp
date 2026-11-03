@@ -1,7 +1,7 @@
 /**
  * @file AssetName.h
  *
- * @brief Declaration of the AssetName value type.
+ * @brief The binary name of a native token, up to 32 bytes.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -40,7 +40,10 @@ struct cardano_asset_name_t;
 namespace Cometa
 {
 /**
- * @brief Represents an asset name of up to 32 bytes.
+ * @brief The binary name of a native token, up to 32 bytes.
+ *
+ * Names are scoped to a minting policy and may be empty or contain non-text bytes. Use toHex() for an
+ * unambiguous display; toString() does not validate UTF-8.
  */
 class AssetName
 {

@@ -1,7 +1,7 @@
 /**
  * @file Cip8.h
  *
- * @brief CIP-8 message signatures.
+ * @brief Application message signatures bound to a Cardano address or key hash.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -48,6 +48,11 @@ struct Cip8Signature
 
 /**
  * @brief Signs a message bound to a Cardano address.
+ *
+ * Use CIP-8 for application-level proofs such as signing a login challenge. It produces a COSE message
+ * signature, not a transaction witness. The verifier must check the signature and the intended address
+ * or key-hash binding.
+ *
  * @param message The bytes to sign.
  * @param address The address to bind to the signature.
  * @param key The Ed25519 signing key.
@@ -57,6 +62,11 @@ Cip8Signature signCip8(const std::vector<std::uint8_t>& message, const Address& 
 
 /**
  * @brief Signs a message bound to a key hash.
+ *
+ * Use CIP-8 for application-level proofs such as signing a login challenge. It produces a COSE message
+ * signature, not a transaction witness. The verifier must check the signature and the intended address
+ * or key-hash binding.
+ *
  * @param message The bytes to sign.
  * @param keyHash The key hash to bind to the signature.
  * @param key The Ed25519 signing key.

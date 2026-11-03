@@ -1,7 +1,7 @@
 /**
  * @file CoinSelector.h
  *
- * @brief Coin selection strategy interface.
+ * @brief Selects UTxOs that cover a target value and produces change outputs.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -34,7 +34,12 @@
 
 namespace Cometa
 {
-/** @brief Selects inputs and calculates change for a target value. */
+/**
+ * @brief Selects UTxOs that cover a target value and produces change outputs.
+ *
+ * Implement this interface to customize wallet selection policy. Preserve required preselected inputs
+ * and account for every asset, including minimum lovelace for change outputs.
+ */
 class CoinSelector
 {
   public:
@@ -44,7 +49,10 @@ class CoinSelector
 
   public:
 
-    /** @brief Gets the strategy name. @return The name. */
+    /**
+     * @brief Gets the strategy name.
+     * @return The name.
+     */
     virtual std::string name() const = 0;
 
     /**

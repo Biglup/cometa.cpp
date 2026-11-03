@@ -27,13 +27,17 @@
 
 namespace Cometa
 {
-/** @brief Identifies a historical MIR accounting pot. */
+/**
+ * @brief Identifies the source accounting pot of a historical MIR transfer.
+ *
+ * The reserves and treasury are ledger accounting pots, not UTxO addresses.
+ */
 enum class MirPotType
 {
-  /** @brief Reserve. */
+  /** @brief The monetary reserves. */
   Reserve = 0,
 
-  /** @brief Treasury. */
+  /** @brief The treasury balance. */
   Treasury = 1
 };
 } // namespace Cometa

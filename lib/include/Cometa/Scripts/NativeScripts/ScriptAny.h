@@ -1,7 +1,7 @@
 /**
  * @file ScriptAny.h
  *
- * @brief Requires at least one child script to be satisfied.
+ * @brief A native script requiring at least one child requirement to be satisfied.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,12 @@ struct cardano_script_any_t;
 
 namespace Cometa
 {
-/** @brief Requires at least one child script to be satisfied. */
+/**
+ * @brief A native script requiring at least one child requirement to be satisfied.
+ *
+ * Use it for alternative authorization paths. Satisfying one path does not remove any unrelated
+ * transaction authorization requirements.
+ */
 class ScriptAny
 {
   public:

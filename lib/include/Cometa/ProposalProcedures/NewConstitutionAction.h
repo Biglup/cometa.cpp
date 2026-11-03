@@ -1,7 +1,7 @@
 /**
  * @file NewConstitutionAction.h
  *
- * @brief New constitution governance action.
+ * @brief A governance action proposing a replacement constitution.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,12 @@ struct cardano_new_constitution_action_t;
 
 namespace Cometa
 {
-/** @brief Governance action that expresses a new constitution. */
+/**
+ * @brief A governance action proposing a replacement constitution.
+ *
+ * Carries the new Constitution and an optional predecessor identifier. Submission creates a proposal;
+ * adoption depends on governance approval.
+ */
 class NewConstitutionAction
 {
   public:

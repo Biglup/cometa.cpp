@@ -1,7 +1,7 @@
 /**
  * @file WinHttpTransport.h
  *
- * @brief Windows HTTPS transport.
+ * @brief An HTTP transport using Windows HTTP services for provider requests.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -31,7 +31,12 @@
 
 namespace Cometa
 {
-/** @brief Sends HTTPS requests with the Windows HTTP service. */
+/**
+ * @brief An HTTP transport using Windows HTTP services for provider requests.
+ *
+ * Use it with BlockfrostProvider on Windows. Request timeouts bound individual HTTP operations rather
+ * than transaction confirmation time.
+ */
 class WinHttpTransport final : public HttpTransport
 {
   public:

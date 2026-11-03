@@ -31,7 +31,12 @@
 
 namespace Cometa
 {
-/** @brief Identifies a governance action. */
+/**
+ * @brief Identifies the ledger change requested by a governance proposal.
+ *
+ * The action category determines its voting and enactment rules. An informational action collects
+ * votes without enacting a ledger change.
+ */
 enum class GovernanceActionType
 {
   /** @brief Changes protocol parameters. */

@@ -1,7 +1,7 @@
 /**
  * @file Base58.h
  *
- * @brief Base58 encoding and decoding.
+ * @brief Base58 conversion for binary payloads such as legacy address encodings.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026

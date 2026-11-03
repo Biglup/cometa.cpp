@@ -1,7 +1,7 @@
 /**
  * @file ScriptPubkey.h
  *
- * @brief Requires a signature from a payment key.
+ * @brief A native script requiring a signature from the identified key.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -40,7 +40,12 @@ struct cardano_script_pubkey_t;
 
 namespace Cometa
 {
-/** @brief Requires a signature from a payment key. */
+/**
+ * @brief A native script requiring a signature from the identified key.
+ *
+ * The 28-byte key hash identifies the verification key whose transaction witness is required. The
+ * script contains the hash, not a public key or signature.
+ */
 class ScriptPubkey
 {
   public:

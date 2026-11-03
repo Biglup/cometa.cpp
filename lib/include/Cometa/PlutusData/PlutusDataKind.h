@@ -27,7 +27,12 @@
 
 namespace Cometa
 {
-/** @brief Identifies a Plutus data variant. */
+/**
+ * @brief Identifies the data form of a validator datum, redeemer, or parameter.
+ *
+ * Constructor alternatives, lists, maps, integers, and byte strings follow the validator's expected
+ * schema.
+ */
 enum class PlutusDataKind
 {
   /** @brief Constructor alternative and fields. */

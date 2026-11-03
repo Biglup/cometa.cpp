@@ -1,7 +1,7 @@
 /**
  * @file CertificateSet.h
  *
- * @brief Ledger certificate collections.
+ * @brief Ledger certificates in transaction order.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -46,7 +46,10 @@ struct cardano_certificate_set_t;
 namespace Cometa
 {
 /**
- * @brief A collection of ledger certificates in insertion order.
+ * @brief Ledger certificates in transaction order.
+ *
+ * Order can affect ledger processing and certificate redeemer indices. Constructing the collection
+ * does not apply certificates or validate them against current chain state.
  */
 class CertificateSet
 {
@@ -147,7 +150,10 @@ class CertificateSet
      */
     std::size_t size() const;
 
-    /** @brief Tests whether there are no elements. @return Whether the collection is empty. */
+    /**
+     * @brief Tests whether there are no elements.
+     * @return Whether the collection is empty.
+     */
     bool empty() const;
 
     /**
@@ -214,40 +220,76 @@ class CertificateSet
 
   public:
 
-    /** @brief Gets the begin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the first element.
+     * @return The iterator.
+     */
     iterator begin();
 
-    /** @brief Gets the end iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the past-the-end position.
+     * @return The iterator.
+     */
     iterator end();
 
-    /** @brief Gets the begin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the first element.
+     * @return The iterator.
+     */
     const_iterator begin() const;
 
-    /** @brief Gets the end iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the past-the-end position.
+     * @return The iterator.
+     */
     const_iterator end() const;
 
-    /** @brief Gets the cbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the first element.
+     * @return The iterator.
+     */
     const_iterator cbegin() const;
 
-    /** @brief Gets the cend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the past-the-end position.
+     * @return The iterator.
+     */
     const_iterator cend() const;
 
-    /** @brief Gets the rbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the last element in reverse traversal.
+     * @return The iterator.
+     */
     reverse_iterator rbegin();
 
-    /** @brief Gets the rend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
+     * @return The iterator.
+     */
     reverse_iterator rend();
 
-    /** @brief Gets the rbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the last element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator rbegin() const;
 
-    /** @brief Gets the rend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator rend() const;
 
-    /** @brief Gets the crbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the last element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator crbegin() const;
 
-    /** @brief Gets the crend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator crend() const;
 
     /**

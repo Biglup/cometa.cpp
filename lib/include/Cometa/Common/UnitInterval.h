@@ -41,7 +41,7 @@ namespace Cometa
 /**
  * @brief An unsigned rational number encoded with CBOR tag 30.
  *
- * The stored numerator and denominator are preserved without reduction. Equality
+ * The numerator and denominator are preserved without reduction. Equality
  * compares both components. Zero denominators can be represented but cannot be
  * converted to floating point. Values are not restricted to the range [0, 1].
  */
@@ -87,7 +87,7 @@ class UnitInterval
      *
      * @return The decoded value.
      *
-     * @throws std::invalid_argument Input is empty, hex is invalid, or trailing bytes remain.
+     * @throws std::invalid_argument Input is empty or trailing bytes remain.
      * @throws Error The CBOR input is invalid.
      */
     static UnitInterval fromCbor(const std::vector<std::uint8_t>& cbor);

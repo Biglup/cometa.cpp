@@ -1,7 +1,7 @@
 /**
  * @file NativeTransactionEvaluator.h
  *
- * @brief Local transaction execution budget evaluator.
+ * @brief Evaluates Plutus scripts locally using the supplied network context.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -35,7 +35,12 @@
 
 namespace Cometa
 {
-/** @brief Evaluates Plutus scripts locally. */
+/**
+ * @brief Evaluates Plutus scripts locally using the supplied network context.
+ *
+ * Provide the network's slot timeline, cost models, protocol version, and resolved inputs. No provider
+ * is queried to fill missing UTxO data.
+ */
 class NativeTransactionEvaluator final : public TransactionEvaluator
 {
   public:
@@ -63,11 +68,18 @@ class NativeTransactionEvaluator final : public TransactionEvaluator
 
   public:
 
-    /** @brief Gets the evaluator name. @return The name. */
+    /**
+     * @brief Gets the evaluator name.
+     * @return The name.
+     */
     std::string name() const override;
 
     /**
      * @brief Evaluates script execution budgets locally.
+     *
+     * Return budgets keyed by each redeemer's original purpose and index. A successful evaluation does not
+     * verify every ledger rule or guarantee that submission will succeed.
+     *
      * @param transaction The transaction to evaluate.
      * @param additionalUtxos Outputs needed to resolve inputs.
      * @return Redeemers with execution budgets.

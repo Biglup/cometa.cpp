@@ -32,7 +32,11 @@
 
 namespace Cometa
 {
-/** @brief CBOR reader state. */
+/**
+ * @brief Identifies the next CBOR item or container boundary.
+ *
+ * CborReader::peekState() reports this value without advancing the reader.
+ */
 enum class CborReaderState : std::uint32_t
 {
   /** @brief Indicates the undefined state. */
@@ -74,7 +78,7 @@ enum class CborReaderState : std::uint32_t
   /** @brief Indicates the end of a map (major type 5). */
   EndMap = 12U,
 
-  /** @brief Indicates that the next CBOR data item is a semantic reader_state (major type 6). */
+  /** @brief Indicates that the next CBOR data item is a semantic tag (major type 6). */
   Tag = 13U,
 
   /** @brief Indicates that the next CBOR data item is a simple value (major type 7). */

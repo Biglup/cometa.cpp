@@ -1,7 +1,7 @@
 /**
  * @file Voter.h
  *
- * @brief Governance voter credentials.
+ * @brief A governance voter identified by its role and credential.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,12 @@ struct cardano_voter_t;
 
 namespace Cometa
 {
-/** @brief A governance voter identified by a credential. */
+/**
+ * @brief A governance voter identified by its role and credential.
+ *
+ * Committee, DRep, and stake pool roles have different authorization and eligibility rules. The same
+ * hash in a different role does not identify the same voter.
+ */
 class Voter
 {
   public:

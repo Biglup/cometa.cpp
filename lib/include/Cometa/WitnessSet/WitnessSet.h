@@ -1,7 +1,7 @@
 /**
  * @file WitnessSet.h
  *
- * @brief Transaction witnesses for every supported script language.
+ * @brief The signatures, scripts, datums, and redeemers supplied for transaction validation.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -50,7 +50,12 @@ struct cardano_witness_set_t;
 
 namespace Cometa
 {
-/** @brief A transaction's signatures, scripts, data, and redeemers. */
+/**
+ * @brief The signatures, scripts, datums, and redeemers supplied for transaction validation.
+ *
+ * Key witnesses authorize keys; scripts and their data authorize script-controlled actions. Required
+ * contents depend on the transaction body and the resolved inputs.
+ */
 class WitnessSet
 {
   public:

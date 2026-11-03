@@ -32,6 +32,8 @@
 
 namespace Cometa
 {
-/** @brief An ordered sequence of metadata label values, with standard vector operations. */
+/**
+ * @brief Unsigned metadata labels in application order. Labels identify application schemas in TransactionMetadata.
+ */
 using MetadatumLabelList = std::vector<std::uint64_t>;
 } // namespace Cometa

@@ -1,7 +1,7 @@
 /**
  * @file Ed25519PrivateKey.h
  *
- * @brief Ed25519PrivateKey operations.
+ * @brief A normal or extended Ed25519 key used to sign messages and transaction hashes.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -42,7 +42,12 @@ struct cardano_ed25519_private_key_t;
 
 namespace Cometa
 {
-/** @brief A normal or extended Ed25519 signing key. */
+/**
+ * @brief A normal or extended Ed25519 key used to sign messages and transaction hashes.
+ *
+ * Normal keys are represented by 32-byte seeds; extended signing keys use 64 bytes. Neither form
+ * includes a BIP32 chain code. Exported key bytes are sensitive.
+ */
 class Ed25519PrivateKey
 {
   public:

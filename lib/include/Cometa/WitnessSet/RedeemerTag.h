@@ -31,7 +31,12 @@
 
 namespace Cometa
 {
-/** @brief Script purposes for redeemers. */
+/**
+ * @brief Identifies the transaction purpose of a Plutus invocation.
+ *
+ * Together with the redeemer index, this selects the spending input, minting policy, certificate,
+ * withdrawal, voter, proposal, or guard being validated.
+ */
 enum class RedeemerTag
 {
   /** @brief Spending a script-locked output. */

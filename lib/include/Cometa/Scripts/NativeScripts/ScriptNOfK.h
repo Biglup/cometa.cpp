@@ -1,7 +1,7 @@
 /**
  * @file ScriptNOfK.h
  *
- * @brief Requires a specified number of child scripts to be satisfied.
+ * @brief A native script requiring at least a specified number of child requirements.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,12 @@ struct cardano_script_n_of_k_t;
 
 namespace Cometa
 {
-/** @brief Requires a specified number of child scripts to be satisfied. */
+/**
+ * @brief A native script requiring at least a specified number of child requirements.
+ *
+ * Use it for threshold authorization, such as two of three signatures. The children can themselves be
+ * composite scripts.
+ */
 class ScriptNOfK
 {
   public:

@@ -1,7 +1,7 @@
 /**
  * @file TransactionOutputList.h
  *
- * @brief An ordered sequence of transaction outputs.
+ * @brief Transaction outputs in their ledger order.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -45,7 +45,12 @@ struct cardano_transaction_output_list_t;
 
 namespace Cometa
 {
-/** @brief An ordered sequence of transaction outputs. */
+/**
+ * @brief Transaction outputs in their ledger order.
+ *
+ * An output's zero-based position becomes its TransactionInput index after submission. Reordering
+ * outputs can also change validator expectations and deferred redeemers.
+ */
 class TransactionOutputList
 {
   public:
@@ -246,40 +251,76 @@ class TransactionOutputList
 
   public:
 
-    /** @brief Gets the begin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the first element.
+     * @return The iterator.
+     */
     iterator begin();
 
-    /** @brief Gets the end iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the past-the-end position.
+     * @return The iterator.
+     */
     iterator end();
 
-    /** @brief Gets the begin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the first element.
+     * @return The iterator.
+     */
     const_iterator begin() const;
 
-    /** @brief Gets the end iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the past-the-end position.
+     * @return The iterator.
+     */
     const_iterator end() const;
 
-    /** @brief Gets the cbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the first element.
+     * @return The iterator.
+     */
     const_iterator cbegin() const;
 
-    /** @brief Gets the cend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the past-the-end position.
+     * @return The iterator.
+     */
     const_iterator cend() const;
 
-    /** @brief Gets the rbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the last element in reverse traversal.
+     * @return The iterator.
+     */
     reverse_iterator rbegin();
 
-    /** @brief Gets the rend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
+     * @return The iterator.
+     */
     reverse_iterator rend();
 
-    /** @brief Gets the rbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the last element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator rbegin() const;
 
-    /** @brief Gets the rend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator rend() const;
 
-    /** @brief Gets the crbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the last element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator crbegin() const;
 
-    /** @brief Gets the crend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator crend() const;
 
     /**

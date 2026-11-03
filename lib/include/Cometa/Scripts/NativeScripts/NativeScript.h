@@ -1,7 +1,7 @@
 /**
  * @file NativeScript.h
  *
- * @brief A signature, timelock, guard, or composite native script.
+ * @brief A signature, validity-interval, guard, or composite authorization rule.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -49,7 +49,12 @@ class ScriptAll;
 class ScriptAny;
 class ScriptNOfK;
 
-/** @brief A signature, timelock, guard, or composite native script. */
+/**
+ * @brief A signature, validity-interval, guard, or composite authorization rule.
+ *
+ * Native scripts express ledger-checked conditions without Plutus redeemers or execution budgets. The
+ * script hash can identify a spending credential or minting policy.
+ */
 class NativeScript
 {
   public:

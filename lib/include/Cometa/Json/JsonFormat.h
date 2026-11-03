@@ -27,7 +27,11 @@
 
 namespace Cometa
 {
-/** @brief JSON format. */
+/**
+ * @brief Selects compact or indented JSON output.
+ *
+ * Formatting changes whitespace, not the document's value types or numeric tokens.
+ */
 enum class JsonFormat
 {
   /** @brief Compact format. */

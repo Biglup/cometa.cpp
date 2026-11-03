@@ -1,7 +1,7 @@
 /**
  * @file ParameterChangeAction.h
  *
- * @brief Protocol parameter change governance action.
+ * @brief A governance action proposing selected protocol parameter changes.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -43,7 +43,12 @@ struct cardano_parameter_change_action_t;
 
 namespace Cometa
 {
-/** @brief Governance action that expresses a protocol parameter change. */
+/**
+ * @brief A governance action proposing selected protocol parameter changes.
+ *
+ * Only fields present in ProtocolParamUpdate are proposed for change. The optional policy hash
+ * identifies the guardrails script governing the action.
+ */
 class ParameterChangeAction
 {
   public:

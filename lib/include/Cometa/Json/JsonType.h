@@ -27,7 +27,11 @@
 
 namespace Cometa
 {
-/** @brief JSON type. */
+/**
+ * @brief Identifies the value kind of a parsed JSON item.
+ *
+ * Inspect this discriminator before accessing an object, array, string, number, boolean, or null.
+ */
 enum class JsonType
 {
   /** @brief Object type. */

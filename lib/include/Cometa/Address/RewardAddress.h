@@ -1,7 +1,7 @@
 /**
  * @file RewardAddress.h
  *
- * @brief RewardAddress operations.
+ * @brief A reward account identified by a staking credential and network.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -45,7 +45,10 @@ namespace Cometa
 class Address;
 
 /**
- * @brief A reward address.
+ * @brief A reward account identified by a staking credential and network.
+ *
+ * Use this address for reward withdrawals, delegation, and governance deposit refunds. It does not
+ * identify a UTxO payment destination.
  */
 class RewardAddress
 {

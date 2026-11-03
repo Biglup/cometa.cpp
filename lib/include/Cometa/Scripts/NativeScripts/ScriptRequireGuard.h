@@ -1,7 +1,7 @@
 /**
  * @file ScriptRequireGuard.h
  *
- * @brief Requires a top-level guard credential.
+ * @brief A Dijkstra native script requiring a top-level guard credential.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -40,7 +40,12 @@ struct cardano_script_require_guard_t;
 
 namespace Cometa
 {
-/** @brief Requires a top-level guard credential. */
+/**
+ * @brief A Dijkstra native script requiring a top-level guard credential.
+ *
+ * The credential identifies the key or script authorization that the enclosing transaction must
+ * provide. Adding the requirement does not supply its signature or script witness.
+ */
 class ScriptRequireGuard
 {
   public:

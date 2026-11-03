@@ -1,7 +1,7 @@
 /**
  * @file HttpTransport.h
  *
- * @brief HTTP requests used by network providers.
+ * @brief The HTTP request boundary used by network providers.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -65,7 +65,12 @@ struct HttpResponse
 
 namespace Cometa
 {
-/** @brief Executes HTTP requests for a network provider. */
+/**
+ * @brief The HTTP request boundary used by network providers.
+ *
+ * Implement this interface to integrate an application's HTTP stack. Return the response status and
+ * body so the provider can interpret API errors.
+ */
 class HttpTransport
 {
   public:
@@ -75,7 +80,11 @@ class HttpTransport
 
   public:
 
-    /** @brief Executes a request. @param request The request. @return The response. */
+    /**
+     * @brief Executes a request.
+     * @param request The request.
+     * @return The response.
+     */
     virtual HttpResponse execute(const HttpRequest& request) const = 0;
 };
 } // namespace Cometa

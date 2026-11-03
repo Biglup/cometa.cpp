@@ -1,7 +1,7 @@
 /**
  * @file TransactionInput.h
  *
- * @brief A reference to a transaction output.
+ * @brief Identifies an output by its creating transaction ID and zero-based output index.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -40,7 +40,12 @@ struct cardano_transaction_input_t;
 
 namespace Cometa
 {
-/** @brief A reference to a transaction output. */
+/**
+ * @brief Identifies an output by its creating transaction ID and zero-based output index.
+ *
+ * The reference contains no address, value, or datum. Use Utxo when those resolved output details are
+ * needed for balancing or script evaluation.
+ */
 class TransactionInput
 {
   public:
@@ -105,9 +110,9 @@ class TransactionInput
   public:
 
     /**
-     * @brief Gets the transaction ID.
+     * @brief Gets the creating transaction identifier.
      *
-     * @return An independent value.
+     * @return The 32-byte transaction body hash.
      */
     Blake2bHash id() const;
 
@@ -119,9 +124,9 @@ class TransactionInput
     void setId(const Blake2bHash& value);
 
     /**
-     * @brief Gets the output index.
+     * @brief Gets the referenced output position.
      *
-     * @return The output index.
+     * @return The zero-based output index in the creating transaction.
      */
     std::uint64_t index() const;
 

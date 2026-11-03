@@ -33,6 +33,8 @@
 
 namespace Cometa
 {
-/** @brief An ordered sequence of AssetId values, with standard vector operations. */
+/**
+ * @brief Asset identifiers in application order. Quantities are held separately in AssetIdMap or Value.
+ */
 using AssetIdList = std::vector<AssetId>;
 } // namespace Cometa

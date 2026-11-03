@@ -32,7 +32,12 @@
 
 namespace Cometa
 {
-/** @brief CBOR simple value. */
+/**
+ * @brief Identifies CBOR boolean, null, and undefined simple values.
+ *
+ * These values belong to CBOR major type 7 and are distinct from integers with the same numeric
+ * arguments.
+ */
 enum class CborSimpleValue : std::uint32_t
 {
   /** @brief Represents the value 'false'. */

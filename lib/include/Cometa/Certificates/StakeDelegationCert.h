@@ -1,7 +1,7 @@
 /**
  * @file StakeDelegationCert.h
  *
- * @brief Stake delegation certificates.
+ * @brief Delegates a staking credential's stake to a stake pool.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,10 @@ struct cardano_stake_delegation_cert_t;
 namespace Cometa
 {
 /**
- * @brief A stake delegation certificate.
+ * @brief Delegates a staking credential's stake to a stake pool.
+ *
+ * Delegation selects a pool for staking participation; it does not transfer ownership of the
+ * credential's funds. The target is the pool operator's key hash.
  */
 class StakeDelegationCert
 {

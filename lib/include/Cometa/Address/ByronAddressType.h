@@ -32,7 +32,9 @@
 namespace Cometa
 {
 /**
- * @brief Byron spending credential variants.
+ * @brief Identifies the spending mechanism of a Byron address.
+ *
+ * These variants describe legacy bootstrap addresses rather than Shelley credential types.
  */
 enum class ByronAddressType : std::uint8_t
 {

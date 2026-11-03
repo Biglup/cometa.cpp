@@ -1,7 +1,7 @@
 /**
  * @file BaseAddress.h
  *
- * @brief BaseAddress operations.
+ * @brief A payment address that associates its funds with a staking credential.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -45,7 +45,29 @@ namespace Cometa
 class Address;
 
 /**
- * @brief A base address.
+ * @brief A payment address that associates its funds with a staking credential.
+ *
+ * The payment credential controls spending; the staking credential identifies the stake used for
+ * delegation and rewards. Either credential can identify a key or a script.
+ *
+ * @par Example
+ * @code{.cpp}
+ * #include <Cometa/Cometa.h>
+ *
+ * Cometa::Address
+ * receivingAddress(
+ *   const Cometa::Ed25519PublicKey& paymentKey,
+ *   const Cometa::Ed25519PublicKey& stakeKey)
+ * {
+ *   const Cometa::Credential payment(
+ *     Cometa::CredentialType::KeyHash, paymentKey.hash());
+ *   const Cometa::Credential stake(
+ *     Cometa::CredentialType::KeyHash, stakeKey.hash());
+ *
+ *   return Cometa::BaseAddress(
+ *     Cometa::NetworkId::Testnet, payment, stake);
+ * }
+ * @endcode
  */
 class BaseAddress
 {

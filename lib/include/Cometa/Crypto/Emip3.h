@@ -1,7 +1,7 @@
 /**
  * @file Emip3.h
  *
- * @brief EMIP-003 password encryption.
+ * @brief Authenticated password encryption for wallet data using EMIP-003.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026

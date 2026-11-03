@@ -1,7 +1,7 @@
 /**
  * @file ProposalProcedure.h
  *
- * @brief Governance proposal procedures.
+ * @brief A governance action together with its deposit, refund account, and metadata.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -49,7 +49,12 @@ struct cardano_proposal_procedure_t;
 
 namespace Cometa
 {
-/** @brief A governance proposal, deposit, reward address, and anchor. */
+/**
+ * @brief A governance action together with its deposit, refund account, and metadata.
+ *
+ * The deposit is in lovelace. The reward address receives the deposit refund under the ledger's
+ * governance rules; it is distinct from any treasury-withdrawal recipients.
+ */
 class ProposalProcedure
 {
   public:

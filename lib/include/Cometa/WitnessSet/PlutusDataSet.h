@@ -46,7 +46,10 @@ struct cardano_plutus_data_set_t;
 namespace Cometa
 {
 /**
- * @brief A collection of ledger Plutus data values in insertion order.
+ * @brief Plutus datums supplied in a transaction witness set.
+ *
+ * These values satisfy datum-hash commitments needed by scripts. Inline output datums and redeemer
+ * data have separate locations in the transaction.
  */
 class PlutusDataSet
 {
@@ -226,49 +229,49 @@ class PlutusDataSet
   public:
 
     /**
-     * @brief Gets the begin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     const_iterator begin() const;
 
     /**
-     * @brief Gets the end iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     const_iterator end() const;
 
     /**
-     * @brief Gets the cbegin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     const_iterator cbegin() const;
 
     /**
-     * @brief Gets the cend iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     const_iterator cend() const;
 
     /**
-     * @brief Gets the rbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator rbegin() const;
 
     /**
-     * @brief Gets the rend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator rend() const;
 
     /**
-     * @brief Gets the crbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator crbegin() const;
 
     /**
-     * @brief Gets the crend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator crend() const;

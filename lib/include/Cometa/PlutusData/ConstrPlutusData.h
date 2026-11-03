@@ -1,7 +1,7 @@
 /**
  * @file ConstrPlutusData.h
  *
- * @brief Declaration of the ConstrPlutusData value type.
+ * @brief A constructor alternative and its ordered Plutus data fields.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -42,7 +42,12 @@ namespace Cometa
 
 /* CLASS DECLARATION *********************************************************/
 
-/** @brief A Plutus constructor alternative and its fields. */
+/**
+ * @brief A constructor alternative and its ordered Plutus data fields.
+ *
+ * The alternative selects a case in a validator's data schema. Field order and types must match that
+ * schema; this type does not interpret their application meaning.
+ */
 class ConstrPlutusData
 {
   public:

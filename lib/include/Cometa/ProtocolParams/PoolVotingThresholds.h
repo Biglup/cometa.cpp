@@ -1,7 +1,7 @@
 /**
  * @file PoolVotingThresholds.h
  *
- * @brief Governance voting thresholds.
+ * @brief Stake-weighted pool approval thresholds for governance action categories.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -40,18 +40,23 @@ struct cardano_pool_voting_thresholds_t;
 
 namespace Cometa
 {
-/** @brief Rational voting thresholds for stake pools. */
+/**
+ * @brief Stake-weighted pool approval thresholds for governance action categories.
+ *
+ * These thresholds apply to stake pool operator votes, not DRep votes. The applicable category depends
+ * on the governance action.
+ */
 class PoolVotingThresholds
 {
   public:
 
     /**
      * @brief Creates voting thresholds in ledger order.
-     * @param motionNoConfidence The motionNoConfidence threshold.
-     * @param committeeNormal The committeeNormal threshold.
-     * @param committeeNoConfidence The committeeNoConfidence threshold.
-     * @param hardForkInitiation The hardForkInitiation threshold.
-     * @param securityRelevantParam The securityRelevantParam threshold.
+     * @param motionNoConfidence The approval fraction required for a motion of no confidence in the committee.
+     * @param committeeNormal The approval fraction required for a committee update while the committee is in a normal state.
+     * @param committeeNoConfidence The approval fraction required for a committee update following a no-confidence state.
+     * @param hardForkInitiation The approval fraction required for a protocol-version upgrade.
+     * @param securityRelevantParam The approval fraction required for changes to security-relevant protocol parameters.
      */
     PoolVotingThresholds(
       const UnitInterval& motionNoConfidence,
@@ -94,62 +99,62 @@ class PoolVotingThresholds
   public:
 
     /**
-     * @brief Gets the motionNoConfidence threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for a motion of no confidence in the committee.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval motionNoConfidence() const;
 
     /**
-     * @brief Sets the motionNoConfidence threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for a motion of no confidence in the committee.
+     * @param value The required stake-weighted approval fraction.
      */
     void setMotionNoConfidence(const UnitInterval& value);
 
     /**
-     * @brief Gets the committeeNormal threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for a committee update while the committee is in a normal state.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval committeeNormal() const;
 
     /**
-     * @brief Sets the committeeNormal threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for a committee update while the committee is in a normal state.
+     * @param value The required stake-weighted approval fraction.
      */
     void setCommitteeNormal(const UnitInterval& value);
 
     /**
-     * @brief Gets the committeeNoConfidence threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for a committee update following a no-confidence state.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval committeeNoConfidence() const;
 
     /**
-     * @brief Sets the committeeNoConfidence threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for a committee update following a no-confidence state.
+     * @param value The required stake-weighted approval fraction.
      */
     void setCommitteeNoConfidence(const UnitInterval& value);
 
     /**
-     * @brief Gets the hardForkInitiation threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for a protocol-version upgrade.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval hardForkInitiation() const;
 
     /**
-     * @brief Sets the hardForkInitiation threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for a protocol-version upgrade.
+     * @param value The required stake-weighted approval fraction.
      */
     void setHardForkInitiation(const UnitInterval& value);
 
     /**
-     * @brief Gets the securityRelevantParam threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for changes to security-relevant protocol parameters.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval securityRelevantParam() const;
 
     /**
-     * @brief Sets the securityRelevantParam threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for changes to security-relevant protocol parameters.
+     * @param value The required stake-weighted approval fraction.
      */
     void setSecurityRelevantParam(const UnitInterval& value);
 

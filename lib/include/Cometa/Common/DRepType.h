@@ -27,7 +27,11 @@
 
 namespace Cometa
 {
-/** @brief Identifies a delegated representative choice. */
+/**
+ * @brief Identifies an individual representative or predefined governance delegate.
+ *
+ * Special delegation choices have no individual key or script hash.
+ */
 enum class DRepType
 {
   /** @brief A key hash represents the DRep. */

@@ -1,7 +1,7 @@
 /**
  * @file ProposedParamUpdates.h
  *
- * @brief Protocol parameter proposals by genesis delegate.
+ * @brief Historical protocol parameter proposals indexed by genesis delegate key hash.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -44,7 +44,12 @@ struct cardano_proposed_param_updates_t;
 
 namespace Cometa
 {
-/** @brief Protocol parameter proposals keyed by genesis delegate hash. */
+/**
+ * @brief Historical protocol parameter proposals indexed by genesis delegate key hash.
+ *
+ * Used by the legacy Update mechanism. Contemporary governance proposals use ParameterChangeAction and
+ * ProposalProcedure.
+ */
 class ProposedParamUpdates
 {
   public:

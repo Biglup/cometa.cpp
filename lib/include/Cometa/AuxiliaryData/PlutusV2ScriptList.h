@@ -45,7 +45,12 @@ struct cardano_plutus_v2_script_list_t;
 
 namespace Cometa
 {
-/** @brief An ordered sequence of auxiliary Plutus scripts. */
+/**
+ * @brief Plutus V2 scripts carried as transaction auxiliary data.
+ *
+ * These scripts are auxiliary attachments, not the witnesses that authorize script execution. Their
+ * sequence contributes to the auxiliary-data hash.
+ */
 class PlutusV2ScriptList
 {
   public:
@@ -246,40 +251,76 @@ class PlutusV2ScriptList
 
   public:
 
-    /** @brief Gets the begin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the first element.
+     * @return The iterator.
+     */
     iterator begin();
 
-    /** @brief Gets the end iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the past-the-end position.
+     * @return The iterator.
+     */
     iterator end();
 
-    /** @brief Gets the begin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the first element.
+     * @return The iterator.
+     */
     const_iterator begin() const;
 
-    /** @brief Gets the end iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the past-the-end position.
+     * @return The iterator.
+     */
     const_iterator end() const;
 
-    /** @brief Gets the cbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the first element.
+     * @return The iterator.
+     */
     const_iterator cbegin() const;
 
-    /** @brief Gets the cend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the past-the-end position.
+     * @return The iterator.
+     */
     const_iterator cend() const;
 
-    /** @brief Gets the rbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the last element in reverse traversal.
+     * @return The iterator.
+     */
     reverse_iterator rbegin();
 
-    /** @brief Gets the rend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
+     * @return The iterator.
+     */
     reverse_iterator rend();
 
-    /** @brief Gets the rbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the last element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator rbegin() const;
 
-    /** @brief Gets the rend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator rend() const;
 
-    /** @brief Gets the crbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the last element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator crbegin() const;
 
-    /** @brief Gets the crend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator crend() const;
 
     /**

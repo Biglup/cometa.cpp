@@ -27,7 +27,12 @@
 
 namespace Cometa
 {
-/** @brief Target amount selected by random-improve. */
+/**
+ * @brief Selects the target amount used by random-improve coin selection.
+ *
+ * The strategy controls how much surplus the improvement phase seeks after covering the requested
+ * value.
+ */
 enum class SelectionStrategy
 {
   /** @brief Selects just enough to cover the target. */

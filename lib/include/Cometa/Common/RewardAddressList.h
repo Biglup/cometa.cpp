@@ -33,6 +33,8 @@
 
 namespace Cometa
 {
-/** @brief An ordered sequence of RewardAddress values, with standard vector operations. */
+/**
+ * @brief Reward accounts in application order. These identify staking balances rather than UTxO destinations.
+ */
 using RewardAddressList = std::vector<RewardAddress>;
 } // namespace Cometa

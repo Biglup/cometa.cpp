@@ -31,7 +31,12 @@
 
 namespace Cometa
 {
-/** @brief Governance voter discriminators. */
+/**
+ * @brief Identifies the governance role and authorization kind of a voter.
+ *
+ * Committee voters use hot credentials; DReps use their registered credentials; pool voters use
+ * operator keys.
+ */
 enum class VoterType
 {
   /** @brief Committee member identified by a key hash. */
@@ -40,10 +45,10 @@ enum class VoterType
   /** @brief Committee member identified by a script hash. */
   ConstitutionalCommitteeScriptHash = 1,
 
-  /** @brief Delegation representative identified by a key hash. */
+  /** @brief Delegated representative identified by a key hash. */
   DRepKeyHash = 2,
 
-  /** @brief Delegation representative identified by a script hash. */
+  /** @brief Delegated representative identified by a script hash. */
   DRepScriptHash = 3,
 
   /** @brief Stake pool identified by a key hash. */

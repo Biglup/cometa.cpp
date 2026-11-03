@@ -1,7 +1,7 @@
 /**
  * @file CborReader.h
  *
- * @brief Streaming CBOR reader.
+ * @brief Reads CBOR values sequentially while tracking nested containers.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -46,9 +46,10 @@ struct cardano_cbor_reader_t;
 namespace Cometa
 {
 /**
- * @brief Streaming CBOR reader.
+ * @brief Reads CBOR values sequentially while tracking nested containers.
  *
- * Operations report malformed input or encoding failures through Error.
+ * Use peekState() to inspect the next item and typed read operations to consume it. Container
+ * boundaries and trailing bytes must be handled when parsing a complete application value.
  */
 class CborReader
 {
@@ -89,13 +90,13 @@ class CborReader
 
     /**
      * @brief Inspects the next item without consuming it.
-     * @return The current state or remaining byte count.
+     * @return The next item kind, container boundary, or finished state.
      */
     CborReaderState peekState() const;
 
     /**
      * @brief Gets the number of unread bytes.
-     * @return The current state or remaining byte count.
+     * @return The byte count from the current position to the end of the input.
      */
     std::size_t bytesRemaining() const;
 
@@ -157,38 +158,38 @@ class CborReader
     void readNull();
 
     /**
-     * @brief Starts reading a container.
-     * @return The item or pair count; std::nullopt for an indefinite container.
+     * @brief Reads an array header and enters its elements.
+     * @return The element count, or std::nullopt for an indefinite-length array.
      */
     std::optional<std::uint64_t> readStartArray();
 
     /**
-     * @brief Starts reading a container.
-     * @return The item or pair count; std::nullopt for an indefinite container.
+     * @brief Reads a map header and enters its key-value pairs.
+     * @return The pair count, or std::nullopt for an indefinite-length map.
      */
     std::optional<std::uint64_t> readStartMap();
 
     /**
      * @brief Copies the unread bytes without advancing.
-     * @return An independent copy of the bytes or text.
+     * @return The remaining encoded CBOR bytes.
      */
     std::vector<std::uint8_t> remainderBytes() const;
 
     /**
      * @brief Reads one complete value as encoded CBOR.
-     * @return An independent copy of the bytes or text.
+     * @return The encoded item, including its header and any nested values.
      */
     std::vector<std::uint8_t> readEncodedValue();
 
     /**
      * @brief Reads a definite or indefinite byte string.
-     * @return An independent copy of the bytes or text.
+     * @return The decoded byte-string payload, without CBOR headers.
      */
     std::vector<std::uint8_t> readBytes();
 
     /**
-     * @brief Reads a definite or indefinite text string, preserving embedded nulls.
-     * @return An independent copy of the bytes or text.
+     * @brief Reads a definite or indefinite text string.
+     * @return The decoded text bytes, preserving embedded NUL characters.
      */
     std::string readText();
 

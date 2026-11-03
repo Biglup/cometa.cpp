@@ -1,7 +1,7 @@
 /**
  * @file BlsKey.h
  *
- * @brief A BLS public key and proof of possession.
+ * @brief A BLS public key and proof of possession for a stake pool.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -38,7 +38,12 @@ struct cardano_bls_key_t;
 
 namespace Cometa
 {
-/** @brief A BLS public key and proof of possession. */
+/**
+ * @brief A BLS public key and proof of possession for a stake pool.
+ *
+ * The proof associates the pool with possession of the corresponding secret key. Parsing and
+ * construction check representation requirements; they do not verify the proof cryptographically.
+ */
 class BlsKey
 {
   public:

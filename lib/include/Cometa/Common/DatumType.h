@@ -27,7 +27,12 @@
 
 namespace Cometa
 {
-/** @brief Identifies a hash datum or inline datum. */
+/**
+ * @brief Distinguishes an output datum hash from inline validator data.
+ *
+ * A hash requires the data to be obtained separately when needed; inline data is carried by the
+ * output.
+ */
 enum class DatumType
 {
   /** @brief A 32-byte datum hash. */

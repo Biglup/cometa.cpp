@@ -1,7 +1,7 @@
 /**
  * @file Certificate.h
  *
- * @brief Ledger certificate value variants.
+ * @brief A staking, pool, delegation, committee, or DRep ledger certificate.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -60,7 +60,10 @@ struct cardano_certificate_t;
 namespace Cometa
 {
 /**
- * @brief A ledger certificate containing one typed certificate value.
+ * @brief A staking, pool, delegation, committee, or DRep ledger certificate.
+ *
+ * A certificate requests a ledger state change when included in a valid transaction. Its kind
+ * determines the required authorization and any deposit or refund.
  */
 class Certificate
 {

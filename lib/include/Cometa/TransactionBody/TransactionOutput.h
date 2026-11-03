@@ -1,7 +1,7 @@
 /**
  * @file TransactionOutput.h
  *
- * @brief An address, value, and optional output data.
+ * @brief A payment destination and value, with optional datum and reference script.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -44,7 +44,12 @@ struct cardano_transaction_output_t;
 
 namespace Cometa
 {
-/** @brief An address, value, and optional output data. */
+/**
+ * @brief A payment destination and value, with optional datum and reference script.
+ *
+ * A datum supplies validator data. A reference script makes script bytes available to later
+ * transactions that reference the output; it is not automatically executed when the output is created.
+ */
 class TransactionOutput
 {
   public:

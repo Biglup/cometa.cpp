@@ -1,7 +1,7 @@
 /**
  * @file Update.h
  *
- * @brief Protocol parameter update proposal for an epoch.
+ * @brief A historical collection of protocol parameter proposals for a target epoch.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -40,7 +40,12 @@ struct cardano_update_t;
 
 namespace Cometa
 {
-/** @brief Protocol parameter proposals scheduled for an epoch. */
+/**
+ * @brief A historical collection of protocol parameter proposals for a target epoch.
+ *
+ * This is the legacy update mechanism. Use a governance ParameterChangeAction when constructing a
+ * governance-era parameter proposal.
+ */
 class Update
 {
   public:

@@ -27,7 +27,11 @@
 
 namespace Cometa
 {
-/** @brief Identifies a metadata variant. */
+/**
+ * @brief Identifies the value form stored by Metadatum.
+ *
+ * Inspect the kind before using an accessor for a list, map, integer, bytes, or text.
+ */
 enum class MetadatumKind
 {
   /** @brief Ordered key-value pairs. */

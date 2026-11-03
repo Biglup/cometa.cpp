@@ -1,7 +1,7 @@
 /**
  * @file Ipv6.h
  *
- * @brief An IPv6 address in network byte order.
+ * @brief An IPv6 address used to describe a stake pool relay.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -38,7 +38,12 @@ struct cardano_ipv6_t;
 
 namespace Cometa
 {
-/** @brief An IPv6 address in network byte order. */
+/**
+ * @brief An IPv6 address used to describe a stake pool relay.
+ *
+ * The sixteen bytes are in network order. Use fromString() with the supported textual form, or
+ * construct from bytes when handling externally parsed addresses.
+ */
 class Ipv6
 {
   public:

@@ -27,13 +27,17 @@
 
 namespace Cometa
 {
-/** @brief Identifies a historical MIR certificate variant. */
+/**
+ * @brief Identifies the destination of a historical instantaneous-rewards transfer.
+ *
+ * A transfer either moves funds between pots or assigns reward adjustments to staking credentials.
+ */
 enum class MirCertType
 {
-  /** @brief ToPot. */
+  /** @brief Transfer to the other accounting pot. */
   ToPot = 0,
 
-  /** @brief ToStakeCredentials. */
+  /** @brief Reward adjustments assigned to staking credentials. */
   ToStakeCredentials = 1
 };
 } // namespace Cometa

@@ -1,7 +1,7 @@
 /**
  * @file PoolRetirementCert.h
  *
- * @brief Pool retirement certificates.
+ * @brief Schedules a stake pool's retirement at an epoch.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,10 @@ struct cardano_pool_retirement_cert_t;
 namespace Cometa
 {
 /**
- * @brief A pool retirement certificate.
+ * @brief Schedules a stake pool's retirement at an epoch.
+ *
+ * The pool is identified by its operator key hash. The ledger determines the permitted retirement
+ * window and deposit refund when retirement takes effect.
  */
 class PoolRetirementCert
 {

@@ -1,7 +1,7 @@
 /**
  * @file VoteRegistrationDelegationCert.h
  *
- * @brief Vote registration and delegation certificates.
+ * @brief Registers a staking credential and assigns its voting delegate.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,10 @@ struct cardano_vote_registration_delegation_cert_t;
 namespace Cometa
 {
 /**
- * @brief A vote registration and delegation certificate.
+ * @brief Registers a staking credential and assigns its voting delegate.
+ *
+ * Includes a deposit in lovelace and a DRep choice. Pool delegation is not included in this
+ * certificate.
  */
 class VoteRegistrationDelegationCert
 {

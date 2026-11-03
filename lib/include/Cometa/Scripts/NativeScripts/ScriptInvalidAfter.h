@@ -1,7 +1,7 @@
 /**
  * @file ScriptInvalidAfter.h
  *
- * @brief Requires the validity interval to end at or before a slot.
+ * @brief A native script requiring the transaction's validity interval to end at or before a slot.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -38,7 +38,12 @@ struct cardano_script_invalid_after_t;
 
 namespace Cometa
 {
-/** @brief Requires the validity interval to end at or before a slot. */
+/**
+ * @brief A native script requiring the transaction's validity interval to end at or before a slot.
+ *
+ * The slot is the exclusive upper validity bound. This rule constrains the declared interval, so the
+ * transaction must also provide the corresponding validity limit.
+ */
 class ScriptInvalidAfter
 {
   public:
