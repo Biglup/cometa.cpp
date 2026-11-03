@@ -1,7 +1,7 @@
 /**
  * @file Address.h
  *
- * @brief Address operations.
+ * @brief A Cardano payment or reward address, including Shelley and Byron formats.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -48,7 +48,11 @@ struct cardano_address_t;
 namespace Cometa
 {
 /**
- * @brief A Cardano address.
+ * @brief A Cardano payment or reward address, including Shelley and Byron formats.
+ *
+ * Use fromString() for Bech32 or Base58 text. Inspect type() before extracting a specific address
+ * form. A reward address identifies a staking account rather than a destination for transaction
+ * outputs.
  */
 class Address
 {
@@ -61,7 +65,7 @@ class Address
     Address(const BaseAddress& address);
 
     /**
-     * @brief Initializes an independent copy of a EnterpriseAddress.
+     * @brief Initializes an independent copy of an EnterpriseAddress.
      * @param address The address to copy.
      */
     Address(const EnterpriseAddress& address);

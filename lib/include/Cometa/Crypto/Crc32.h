@@ -1,7 +1,7 @@
 /**
  * @file Crc32.h
  *
- * @brief CRC32 checksums.
+ * @brief CRC32 checksums for detecting accidental corruption of encoded data.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026

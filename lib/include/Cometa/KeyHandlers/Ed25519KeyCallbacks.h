@@ -1,7 +1,7 @@
 /**
  * @file Ed25519KeyCallbacks.h
  *
- * @brief C++ operations supplied by an Ed25519 key handler.
+ * @brief Signing and public-key operations supplied by a single-key signer.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -38,7 +38,12 @@
 
 namespace Cometa
 {
-/** @brief Operations delegated to an Ed25519 signer. */
+/**
+ * @brief Signing and public-key operations supplied by a single-key signer.
+ *
+ * Callbacks return witnesses for the supplied transaction or sub-transaction. Returning a witness does
+ * not attach it to the transaction or submit it.
+ */
 struct Ed25519KeyCallbacks
 {
     /** @brief Signs a top-level transaction. */
@@ -50,7 +55,12 @@ struct Ed25519KeyCallbacks
     /** @brief Gets the handler's public key. */
     std::function<Ed25519PublicKey()> publicKey;
 
-    /** @brief Serializes the handler state, when supported. */
+    /**
+     * @brief Exports handler-specific state when serialization is supported.
+     *
+     * This callback is optional. The callback implementation defines the returned format and whether
+     * it contains sensitive information; a custom handler's bytes are not automatically encrypted.
+     */
     std::function<std::vector<std::uint8_t>()> serialize;
 };
 } // namespace Cometa

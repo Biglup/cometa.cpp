@@ -1,7 +1,7 @@
 /**
  * @file ExUnits.h
  *
- * @brief Execution budget for a Plutus script.
+ * @brief A Plutus execution budget measured in memory units and execution steps.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -39,7 +39,10 @@ struct cardano_ex_units_t;
 namespace Cometa
 {
 /**
- * @brief Execution budget for a Plutus script.
+ * @brief A Plutus execution budget measured in memory units and execution steps.
+ *
+ * These are ledger accounting units, not bytes or elapsed time. The prices in ExUnitPrices determine
+ * its execution-fee contribution; TransactionEvaluator estimates budgets for redeemers.
  */
 class ExUnits
 {
@@ -83,7 +86,7 @@ class ExUnits
      *
      * @return The decoded value.
      *
-     * @throws std::invalid_argument Input is empty, hex is invalid, or trailing bytes remain.
+     * @throws std::invalid_argument Input is empty or trailing bytes remain.
      * @throws Error The CBOR input is invalid.
      */
     static ExUnits fromCbor(const std::vector<std::uint8_t>& cbor);
@@ -103,9 +106,9 @@ class ExUnits
   public:
 
     /**
-     * @brief Gets the memory units.
+     * @brief Gets the Plutus memory budget.
      *
-     * @return Memory units.
+     * @return The number of ledger memory units, not a byte count.
      */
     std::uint64_t memory() const;
 
@@ -117,14 +120,14 @@ class ExUnits
     void setMemory(std::uint64_t memory);
 
     /**
-     * @brief Gets the cPU execution steps.
+     * @brief Gets the Plutus execution-step budget.
      *
-     * @return CPU execution steps.
+     * @return The number of abstract execution steps, not processor cycles.
      */
     std::uint64_t cpuSteps() const;
 
     /**
-     * @brief Replaces the cPU execution steps.
+     * @brief Replaces the CPU execution steps.
      *
      * @param cpuSteps CPU execution steps.
      */

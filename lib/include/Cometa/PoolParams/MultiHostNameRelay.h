@@ -1,7 +1,7 @@
 /**
  * @file MultiHostNameRelay.h
  *
- * @brief A pool relay resolved through a DNS SRV name.
+ * @brief A stake pool relay advertised through a DNS SRV record.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -39,7 +39,12 @@ struct cardano_multi_host_name_relay_t;
 
 namespace Cometa
 {
-/** @brief A pool relay resolved through a DNS SRV name. */
+/**
+ * @brief A stake pool relay advertised through a DNS SRV record.
+ *
+ * The record supplies service endpoints and their ports, so this form has no separate port field. Use
+ * SingleHostNameRelay for a single hostname and optional port.
+ */
 class MultiHostNameRelay
 {
   public:

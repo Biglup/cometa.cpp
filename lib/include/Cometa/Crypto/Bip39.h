@@ -1,7 +1,7 @@
 /**
  * @file Bip39.h
  *
- * @brief English BIP39 mnemonic conversion.
+ * @brief English mnemonic encoding and checksum validation for wallet entropy.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026

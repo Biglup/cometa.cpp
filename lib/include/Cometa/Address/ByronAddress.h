@@ -1,7 +1,7 @@
 /**
  * @file ByronAddress.h
  *
- * @brief ByronAddress operations.
+ * @brief A legacy payment address encoded as Base58 text.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -47,7 +47,10 @@ namespace Cometa
 class Address;
 
 /**
- * @brief A byron address.
+ * @brief A legacy payment address encoded as Base58 text.
+ *
+ * The address root commits to the spending data and attributes. Spending a Byron output requires a
+ * BootstrapWitness rather than a Shelley verification-key witness alone.
  */
 class ByronAddress
 {

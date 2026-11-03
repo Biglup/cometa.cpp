@@ -1,7 +1,7 @@
 /**
  * @file Bip32PublicKey.h
  *
- * @brief Bip32PublicKey operations.
+ * @brief An extended Ed25519 public key with a chain code for public child derivation.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -42,7 +42,12 @@ struct cardano_bip32_public_key_t;
 
 namespace Cometa
 {
-/** @brief An extended Ed25519 public key with a 32-byte chain code. */
+/**
+ * @brief An extended Ed25519 public key with a chain code for public child derivation.
+ *
+ * Use it for watch-only address derivation along non-hardened paths. For a payment or staking
+ * credential, hash toEd25519() rather than the extended key including its chain code.
+ */
 class Bip32PublicKey
 {
   public:

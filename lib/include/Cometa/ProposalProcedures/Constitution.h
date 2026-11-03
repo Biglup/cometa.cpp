@@ -1,7 +1,7 @@
 /**
  * @file Constitution.h
  *
- * @brief Constitution content.
+ * @brief The governance constitution's metadata anchor and optional guardrails script hash.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,12 @@ struct cardano_constitution_t;
 
 namespace Cometa
 {
-/** @brief Constitution anchor and optional script hash. */
+/**
+ * @brief The governance constitution's metadata anchor and optional guardrails script hash.
+ *
+ * The anchor commits to the off-chain constitution. The optional script constrains applicable
+ * governance actions; it is a script hash, not the script bytes.
+ */
 class Constitution
 {
   public:

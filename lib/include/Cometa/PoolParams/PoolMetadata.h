@@ -1,7 +1,7 @@
 /**
  * @file PoolMetadata.h
  *
- * @brief A pool metadata URL and content hash.
+ * @brief A URL and content hash for a stake pool's off-chain metadata.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -40,7 +40,12 @@ struct cardano_pool_metadata_t;
 
 namespace Cometa
 {
-/** @brief A pool metadata URL and content hash. */
+/**
+ * @brief A URL and content hash for a stake pool's off-chain metadata.
+ *
+ * The hash commits to the fetched document. This value describes the reference; it does not download
+ * or validate the metadata document.
+ */
 class PoolMetadata
 {
   public:

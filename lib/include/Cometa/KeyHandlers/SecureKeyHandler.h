@@ -1,7 +1,7 @@
 /**
  * @file SecureKeyHandler.h
  *
- * @brief A signer that can be passed to native transaction operations.
+ * @brief A signing service for BIP32-derived or Ed25519 keys.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -45,24 +45,31 @@ struct cardano_secure_key_handler_t;
 
 namespace Cometa
 {
-/** @brief A BIP32 or Ed25519 signer with automatic lifetime management. */
+/**
+ * @brief A signing service for BIP32-derived or Ed25519 keys.
+ *
+ * Use software handlers for encrypted local keys or callbacks for an external signer. Signing produces
+ * witnesses; it does not submit a transaction or attach those witnesses automatically.
+ */
 class SecureKeyHandler
 {
   public:
 
     /**
      * @brief Creates a BIP32 signer from C++ operations.
-     * @param name A short, nonempty handler name.
+     * @param name A handler name of 1 to 255 bytes, without embedded NUL characters.
      * @param callbacks The required signing and public-key operations.
      * @return The handler.
+     * @throws std::invalid_argument A required signing or public-key callback is missing, or the handler name is invalid.
      */
     static SecureKeyHandler bip32(std::string_view name, Bip32KeyCallbacks callbacks);
 
     /**
      * @brief Creates an Ed25519 signer from C++ operations.
-     * @param name A short, nonempty handler name.
+     * @param name A handler name of 1 to 255 bytes, without embedded NUL characters.
      * @param callbacks The required signing and public-key operations.
      * @return The handler.
+     * @throws std::invalid_argument A required signing or public-key callback is missing, or the handler name is invalid.
      */
     static SecureKeyHandler ed25519(std::string_view name, Ed25519KeyCallbacks callbacks);
 

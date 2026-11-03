@@ -1,7 +1,7 @@
 /**
  * @file Ed25519Signature.h
  *
- * @brief Ed25519Signature operations.
+ * @brief A detached 64-byte Ed25519 signature.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -39,7 +39,12 @@ struct cardano_ed25519_signature_t;
 
 namespace Cometa
 {
-/** @brief A 64-byte Ed25519 signature. */
+/**
+ * @brief A detached 64-byte Ed25519 signature.
+ *
+ * The signature does not contain the signed message or verification key. Use
+ * Ed25519PublicKey::verify() with both to check authenticity.
+ */
 class Ed25519Signature
 {
   public:

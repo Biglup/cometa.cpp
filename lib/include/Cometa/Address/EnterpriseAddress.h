@@ -1,7 +1,7 @@
 /**
  * @file EnterpriseAddress.h
  *
- * @brief EnterpriseAddress operations.
+ * @brief A payment address without a staking credential.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -45,7 +45,10 @@ namespace Cometa
 class Address;
 
 /**
- * @brief A enterprise address.
+ * @brief A payment address without a staking credential.
+ *
+ * Funds at this address can be spent by its payment credential but do not contribute stake through the
+ * address. Use BaseAddress when the funds should participate in staking.
  */
 class EnterpriseAddress
 {

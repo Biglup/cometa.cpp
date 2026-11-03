@@ -1,7 +1,7 @@
 /**
  * @file Committee.h
  *
- * @brief Constitutional committee membership and quorum.
+ * @brief Constitutional committee members, their expiry epochs, and the voting quorum.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -43,7 +43,12 @@ struct cardano_committee_t;
 
 namespace Cometa
 {
-/** @brief A constitutional committee and its voting quorum. */
+/**
+ * @brief Constitutional committee members, their expiry epochs, and the voting quorum.
+ *
+ * Membership is identified by cold credentials. The quorum is the required fraction for committee
+ * decisions; individual members vote through authorized hot credentials.
+ */
 class Committee
 {
   public:

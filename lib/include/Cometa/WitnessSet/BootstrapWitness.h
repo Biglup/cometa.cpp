@@ -1,7 +1,7 @@
 /**
  * @file BootstrapWitness.h
  *
- * @brief Verification-key transaction witness.
+ * @brief A Byron spending witness containing a verification key, signature, chain code, and address attributes.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,12 @@ struct cardano_bootstrap_witness_t;
 
 namespace Cometa
 {
-/** @brief A bootstrap verification key, signature, chain code, and attributes. */
+/**
+ * @brief A Byron spending witness containing a verification key, signature, chain code, and address attributes.
+ *
+ * The additional chain code and attributes are needed to reconstruct the legacy address identity. Use
+ * VkeyWitness for ordinary Shelley key witnesses.
+ */
 class BootstrapWitness
 {
   public:

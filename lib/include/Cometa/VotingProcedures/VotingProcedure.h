@@ -1,7 +1,7 @@
 /**
  * @file VotingProcedure.h
  *
- * @brief Governance vote and optional metadata anchor.
+ * @brief A governance voting choice with an optional metadata anchor.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,12 @@ struct cardano_voting_procedure_t;
 
 namespace Cometa
 {
-/** @brief A governance vote with optional metadata. */
+/**
+ * @brief A governance voting choice with an optional metadata anchor.
+ *
+ * The anchor can explain the vote. VotingProcedures supplies the voter and GovernanceActionId to which
+ * the choice applies.
+ */
 class VotingProcedure
 {
   public:

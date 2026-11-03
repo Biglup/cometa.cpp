@@ -1,7 +1,7 @@
 /**
  * @file ExUnitPrices.h
  *
- * @brief Prices for Plutus execution units.
+ * @brief The lovelace prices of Plutus memory units and execution steps.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -40,7 +40,12 @@ struct cardano_ex_unit_prices_t;
 
 namespace Cometa
 {
-/** @brief Rational prices for Plutus memory units and CPU steps. */
+/**
+ * @brief The lovelace prices of Plutus memory units and execution steps.
+ *
+ * Prices are rational values. Apply them to ExUnits to determine the execution-fee contribution, in
+ * addition to the transaction's other fee components.
+ */
 class ExUnitPrices
 {
   public:

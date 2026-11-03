@@ -33,6 +33,8 @@
 
 namespace Cometa
 {
-/** @brief An ordered sequence of AssetName values, with standard vector operations. */
+/**
+ * @brief Binary asset names in application order. A name is only unique within its minting policy.
+ */
 using AssetNameList = std::vector<AssetName>;
 } // namespace Cometa

@@ -1,7 +1,7 @@
 /**
  * @file Value.h
  *
- * @brief Lovelace and native-token quantities.
+ * @brief An amount of lovelace and a bundle of native-token quantities.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -43,7 +43,10 @@ struct cardano_value_t;
 namespace Cometa
 {
 /**
- * @brief Lovelace and signed token quantities for transfers and arithmetic.
+ * @brief An amount of lovelace and a bundle of native-token quantities.
+ *
+ * One ada is 1,000,000 lovelace. Signed token quantities support value arithmetic and mint/burn
+ * accounting; a spendable output must meet ledger quantity and minimum-lovelace rules.
  */
 class Value
 {

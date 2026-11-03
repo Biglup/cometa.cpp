@@ -1,7 +1,7 @@
 /**
  * @file Ed25519PublicKey.h
  *
- * @brief Ed25519PublicKey operations.
+ * @brief A 32-byte Ed25519 key used to verify signatures.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -42,7 +42,12 @@ struct cardano_ed25519_public_key_t;
 
 namespace Cometa
 {
-/** @brief A 32-byte Ed25519 verification key. */
+/**
+ * @brief A 32-byte Ed25519 key used to verify signatures.
+ *
+ * hash() produces the 28-byte key hash used by credentials. Verification checks the signature against
+ * the exact message bytes supplied by the caller.
+ */
 class Ed25519PublicKey
 {
   public:

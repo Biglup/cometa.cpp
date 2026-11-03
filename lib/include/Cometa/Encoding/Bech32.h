@@ -1,7 +1,7 @@
 /**
  * @file Bech32.h
  *
- * @brief Bech32 encoding and decoding for Cardano values.
+ * @brief Checksummed Bech32 encoding for Cardano addresses and keys.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026

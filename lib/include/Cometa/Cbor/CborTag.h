@@ -32,7 +32,12 @@
 
 namespace Cometa
 {
-/** @brief CBOR tag. */
+/**
+ * @brief Identifies the semantic interpretation applied to the following CBOR item.
+ *
+ * A tag annotates a value; it does not replace that value. For example, bignum tags precede byte
+ * strings containing integer magnitudes.
+ */
 enum class CborTag : std::uint32_t
 {
   /** @brief Tag value for RFC3339 date/time strings. */

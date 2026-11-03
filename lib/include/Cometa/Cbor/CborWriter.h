@@ -1,7 +1,7 @@
 /**
  * @file CborWriter.h
  *
- * @brief Streaming CBOR writer.
+ * @brief Encodes CBOR values and container boundaries into a byte sequence.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -46,9 +46,10 @@ struct cardano_cbor_writer_t;
 namespace Cometa
 {
 /**
- * @brief Streaming CBOR writer.
+ * @brief Encodes CBOR values and container boundaries into a byte sequence.
  *
- * Operations report malformed input or encoding failures through Error.
+ * Use matching array or map start/end operations. writeEncoded() appends already encoded CBOR,
+ * whereas byte-string operations encode their input as bytes.
  */
 class CborWriter
 {

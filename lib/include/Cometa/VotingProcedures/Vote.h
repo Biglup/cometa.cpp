@@ -31,7 +31,11 @@
 
 namespace Cometa
 {
-/** @brief Voting choices. */
+/**
+ * @brief Records support, opposition, or abstention for a governance proposal.
+ *
+ * The vote is associated with a voter and action through VotingProcedures.
+ */
 enum class Vote
 {
   /** @brief Opposes a governance action. */

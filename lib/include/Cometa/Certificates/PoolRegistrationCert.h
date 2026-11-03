@@ -1,7 +1,7 @@
 /**
  * @file PoolRegistrationCert.h
  *
- * @brief Legacy pool registration certificates.
+ * @brief Registers a stake pool or updates its parameters.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,10 @@ struct cardano_pool_registration_cert_t;
 namespace Cometa
 {
 /**
- * @brief A pool registration certificate.
+ * @brief Registers a stake pool or updates its parameters.
+ *
+ * Carries PoolParams, including operator and VRF hashes, reward terms, owners, and relays. Whether a
+ * deposit is required depends on the pool's ledger registration state.
  */
 class PoolRegistrationCert
 {

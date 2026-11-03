@@ -1,7 +1,7 @@
 /**
  * @file NoConfidenceAction.h
  *
- * @brief No-confidence governance action.
+ * @brief A governance action proposing no confidence in the constitutional committee.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,12 @@ struct cardano_no_confidence_action_t;
 
 namespace Cometa
 {
-/** @brief Governance action that expresses no confidence in the committee. */
+/**
+ * @brief A governance action proposing no confidence in the constitutional committee.
+ *
+ * The optional previous action links the proposal to its governance lineage. ProposalProcedure
+ * supplies the deposit, refund account, and metadata.
+ */
 class NoConfidenceAction
 {
   public:

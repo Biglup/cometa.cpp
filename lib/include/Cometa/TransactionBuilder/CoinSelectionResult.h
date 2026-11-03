@@ -1,7 +1,7 @@
 /**
  * @file CoinSelectionResult.h
  *
- * @brief Outputs from a coin selection strategy.
+ * @brief The chosen inputs, unused inputs, and resulting change of a selection.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -32,7 +32,12 @@
 
 namespace Cometa
 {
-/** @brief Selected outputs, unselected outputs, and change. */
+/**
+ * @brief The chosen inputs, unused inputs, and resulting change of a selection.
+ *
+ * Selected and remaining inputs describe the partition of available funds. Change returns surplus
+ * assets to the requested change address.
+ */
 struct CoinSelectionResult
 {
     /** @brief Outputs chosen to cover the requested value. */

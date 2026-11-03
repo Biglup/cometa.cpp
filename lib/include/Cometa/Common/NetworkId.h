@@ -32,7 +32,10 @@
 namespace Cometa
 {
 /**
- * @brief Network identifier encoded in a Shelley address.
+ * @brief Identifies mainnet or a test network in Shelley addresses.
+ *
+ * Preview and preprod share the testnet identifier. Use NetworkMagic when selecting a particular
+ * network service or slot configuration.
  */
 enum class NetworkId : std::uint8_t
 {

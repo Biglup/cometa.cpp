@@ -1,7 +1,7 @@
 /**
  * @file AuthCommitteeHotCert.h
  *
- * @brief Committee hot-key authorization certificates.
+ * @brief Authorizes a hot credential to vote for a constitutional committee member.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,10 @@ struct cardano_auth_committee_hot_cert_t;
 namespace Cometa
 {
 /**
- * @brief A committee hot-key authorization certificate.
+ * @brief Authorizes a hot credential to vote for a constitutional committee member.
+ *
+ * The cold credential identifies the member; the hot credential authorizes its routine voting. A
+ * transaction carrying this certificate must satisfy the cold credential's authorization.
  */
 class AuthCommitteeHotCert
 {

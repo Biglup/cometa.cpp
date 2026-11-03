@@ -1,7 +1,7 @@
 /**
  * @file UnregistrationCert.h
  *
- * @brief Unregistration certificates.
+ * @brief Deregisters a staking credential with an explicit deposit refund.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,10 @@ struct cardano_unregistration_cert_t;
 namespace Cometa
 {
 /**
- * @brief A unregistration certificate.
+ * @brief Deregisters a staking credential with an explicit deposit refund.
+ *
+ * The refund is in lovelace. Ledger validation checks registration and reward-account state before
+ * accepting the deregistration.
  */
 class UnregistrationCert
 {

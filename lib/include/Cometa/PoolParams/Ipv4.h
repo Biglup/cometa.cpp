@@ -1,7 +1,7 @@
 /**
  * @file Ipv4.h
  *
- * @brief An IPv4 address in network byte order.
+ * @brief An IPv4 address used to describe a stake pool relay.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -38,7 +38,12 @@ struct cardano_ipv4_t;
 
 namespace Cometa
 {
-/** @brief An IPv4 address in network byte order. */
+/**
+ * @brief An IPv4 address used to describe a stake pool relay.
+ *
+ * The four bytes are in network order. This value supports address encoding and formatting; it
+ * performs no network I/O.
+ */
 class Ipv4
 {
   public:

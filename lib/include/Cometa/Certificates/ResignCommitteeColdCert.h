@@ -1,7 +1,7 @@
 /**
  * @file ResignCommitteeColdCert.h
  *
- * @brief Committee cold-key resignation certificates.
+ * @brief Records a constitutional committee member's resignation.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -43,7 +43,10 @@ struct cardano_resign_committee_cold_cert_t;
 namespace Cometa
 {
 /**
- * @brief A committee cold-key resignation certificate.
+ * @brief Records a constitutional committee member's resignation.
+ *
+ * The cold credential identifies the resigning member. An optional anchor can reference metadata
+ * explaining the resignation.
  */
 class ResignCommitteeColdCert
 {

@@ -32,7 +32,10 @@
 namespace Cometa
 {
 /**
- * @brief Address formats encoded by the header nibble.
+ * @brief Identifies an address format and its credential kinds.
+ *
+ * Use Address::type() to choose the matching address accessor. Payment and reward addresses have
+ * different ledger roles.
  */
 enum class AddressType : std::uint8_t
 {

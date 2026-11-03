@@ -1,7 +1,7 @@
 /**
  * @file Transaction.h
  *
- * @brief A top-level transaction and its witnesses.
+ * @brief A complete transaction containing its body, witnesses, validity flag, and optional auxiliary data.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -61,7 +61,12 @@ struct cardano_transaction_t;
 
 namespace Cometa
 {
-/** @brief A transaction body, witnesses, and optional auxiliary data. */
+/**
+ * @brief A complete transaction containing its body, witnesses, validity flag, and optional auxiliary data.
+ *
+ * The transaction ID is the body hash. Add signatures after finalizing the body; changing body fields
+ * invalidates existing signatures. Serialization alone does not establish ledger validity.
+ */
 class Transaction
 {
   public:
@@ -115,6 +120,9 @@ class Transaction
 
     /**
      * @brief Replaces the transaction body.
+     *
+     * Replacing the body changes the signing payload. Existing witnesses are not automatically re-signed.
+     *
      * @param value The body to copy.
      */
     void setBody(const TransactionBody& value);
@@ -139,30 +147,42 @@ class Transaction
 
     /**
      * @brief Replaces or clears auxiliary data.
+     *
+     * The body's auxiliary-data hash must match these contents. Finalize the data and its commitment
+     * before collecting signatures.
+     *
      * @param value The data to copy, or no value to clear it.
      */
     void setAuxiliaryData(const std::optional<AuxiliaryData>& value);
 
     /**
      * @brief Gets the transaction identifier.
-     * @return The 32-byte identifier.
+     * @return The 32-byte BLAKE2b hash of the body, excluding witnesses.
      */
     Blake2bHash id() const;
 
     /**
      * @brief Adds verification-key witnesses.
+     *
+     * Applies collected key witnesses without changing the transaction body. The signatures must have been
+     * produced for this body hash.
+     *
      * @param witnesses The witnesses to copy.
      */
     void applyVkeyWitnesses(const VkeyWitnessSet& witnesses);
 
     /**
-     * @brief Reports whether the transaction is valid.
-     * @return True when the transaction is marked valid.
+     * @brief Reads the declared phase-two script-validation outcome.
+     * @return True when the transaction declares script success; this method does not evaluate scripts.
      */
     bool isValid() const;
 
     /**
      * @brief Changes the validity flag.
+     *
+     * Declares the expected script outcome for ledger processing. It does not execute scripts or validate
+     * the transaction. A false outcome affects collateral processing under the applicable ledger rules.
+     *
      * @param value The new validity flag.
      */
     void setValid(bool value);
@@ -183,14 +203,14 @@ class Transaction
     /**
      * @brief Finds the input position in ledger order.
      * @param input The input to find.
-     * @return The position, when found.
+     * @return The zero-based position, or std::nullopt when no matching component exists.
      */
     std::optional<std::uint64_t> findInputIndex(const TransactionInput& input) const;
 
     /**
      * @brief Finds the reference input position in ledger order.
      * @param input The reference input to find.
-     * @return The position, when found.
+     * @return The zero-based position, or std::nullopt when no matching component exists.
      */
     std::optional<std::uint64_t> findReferenceInputIndex(const TransactionInput& input) const;
 
@@ -198,35 +218,35 @@ class Transaction
      * @brief Finds the output position in ledger order.
      * @param address The output address.
      * @param minLovelace Minimum lovelace to match.
-     * @return The position, when found.
+     * @return The zero-based position, or std::nullopt when no matching component exists.
      */
     std::optional<std::uint64_t> findOutputIndex(const Address& address, std::uint64_t minLovelace) const;
 
     /**
      * @brief Finds the minting policy position in ledger order.
      * @param policyId The minting policy hash.
-     * @return The position, when found.
+     * @return The zero-based position, or std::nullopt when no matching component exists.
      */
     std::optional<std::uint64_t> findMintPolicyIndex(const Blake2bHash& policyId) const;
 
     /**
      * @brief Finds the withdrawal position in ledger order.
      * @param address The reward address.
-     * @return The position, when found.
+     * @return The zero-based position, or std::nullopt when no matching component exists.
      */
     std::optional<std::uint64_t> findWithdrawalIndex(const RewardAddress& address) const;
 
     /**
      * @brief Finds the certificate position in ledger order.
      * @param certificate The certificate to find.
-     * @return The position, when found.
+     * @return The zero-based position, or std::nullopt when no matching component exists.
      */
     std::optional<std::uint64_t> findCertificateIndex(const Certificate& certificate) const;
 
     /**
      * @brief Finds the vote position in ledger order.
      * @param voter The voter to find.
-     * @return The position, when found.
+     * @return The zero-based position, or std::nullopt when no matching component exists.
      */
     std::optional<std::uint64_t> findVoteIndex(const Voter& voter) const;
 
@@ -234,7 +254,7 @@ class Transaction
      * @brief Finds the redeemer position in ledger order.
      * @param tag The redeemer purpose.
      * @param purposeIndex The index within that purpose.
-     * @return The position, when found.
+     * @return The zero-based position, or std::nullopt when no matching component exists.
      */
     std::optional<std::uint64_t> findRedeemerIndex(RedeemerTag tag, std::uint64_t purposeIndex) const;
 

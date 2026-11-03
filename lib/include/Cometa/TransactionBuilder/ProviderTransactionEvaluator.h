@@ -1,7 +1,7 @@
 /**
  * @file ProviderTransactionEvaluator.h
  *
- * @brief Provider-backed transaction execution budget evaluator.
+ * @brief Estimates Plutus execution budgets through a Provider.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -34,7 +34,12 @@
 
 namespace Cometa
 {
-/** @brief Evaluates transactions through a network provider. */
+/**
+ * @brief Estimates Plutus execution budgets through a Provider.
+ *
+ * Use it when evaluation should be delegated to the connected service. The provider must support the
+ * transaction's script versions and protocol features.
+ */
 class ProviderTransactionEvaluator final : public TransactionEvaluator
 {
   public:
@@ -47,11 +52,18 @@ class ProviderTransactionEvaluator final : public TransactionEvaluator
 
   public:
 
-    /** @brief Gets the evaluator name. @return The name. */
+    /**
+     * @brief Gets the evaluator name.
+     * @return The name.
+     */
     std::string name() const override;
 
     /**
      * @brief Evaluates script execution budgets through the provider.
+     *
+     * Return budgets keyed by each redeemer's original purpose and index. A successful evaluation does not
+     * verify every ledger rule or guarantee that submission will succeed.
+     *
      * @param transaction The transaction to evaluate.
      * @param additionalUtxos Outputs needed to resolve inputs.
      * @return Redeemers with execution budgets.

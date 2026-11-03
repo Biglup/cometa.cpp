@@ -1,7 +1,7 @@
 /**
  * @file StakeVoteRegistrationDelegationCert.h
  *
- * @brief Stake and vote registration delegation certificates.
+ * @brief Registers a staking credential and assigns its pool and voting delegates.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -43,7 +43,9 @@ struct cardano_stake_vote_registration_delegation_cert_t;
 namespace Cometa
 {
 /**
- * @brief A combined stake and vote registration delegation certificate.
+ * @brief Registers a staking credential and assigns its pool and voting delegates.
+ *
+ * Combines the deposit, pool operator key hash, and DRep choice in one ledger certificate.
  */
 class StakeVoteRegistrationDelegationCert
 {

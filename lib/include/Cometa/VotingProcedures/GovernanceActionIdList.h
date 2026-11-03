@@ -33,6 +33,8 @@
 
 namespace Cometa
 {
-/** @brief An ordered sequence of independent GovernanceActionId values. */
+/**
+ * @brief Governance proposal identifiers in application order. Each combines a transaction ID and proposal index.
+ */
 using GovernanceActionIdList = std::vector<GovernanceActionId>;
 } // namespace Cometa

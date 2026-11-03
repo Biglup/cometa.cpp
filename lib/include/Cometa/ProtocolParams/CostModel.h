@@ -1,7 +1,7 @@
 /**
  * @file CostModel.h
  *
- * @brief Plutus operation costs.
+ * @brief The ordered execution-cost coefficients for one Plutus language version.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,12 @@ struct cardano_cost_model_t;
 
 namespace Cometa
 {
-/** @brief Indexed operation costs for a Plutus language. */
+/**
+ * @brief The ordered execution-cost coefficients for one Plutus language version.
+ *
+ * Coefficient positions are defined by that language's cost model. A model with the wrong version or
+ * coefficient layout cannot provide valid script budgeting.
+ */
 class CostModel
 {
   public:

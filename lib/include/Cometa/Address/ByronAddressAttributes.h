@@ -1,7 +1,7 @@
 /**
  * @file ByronAddressAttributes.h
  *
- * @brief ByronAddressAttributes value.
+ * @brief Optional derivation information and network magic carried by a Byron address.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -34,7 +34,10 @@
 namespace Cometa
 {
 /**
- * @brief Optional Byron address metadata.
+ * @brief Optional derivation information and network magic carried by a Byron address.
+ *
+ * The derivation path payload is encoded address data, not a sequence of wallet key indices. Network
+ * magic distinguishes Byron networks when present.
  */
 struct ByronAddressAttributes
 {

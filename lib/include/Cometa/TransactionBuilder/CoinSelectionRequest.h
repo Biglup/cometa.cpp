@@ -1,7 +1,7 @@
 /**
  * @file CoinSelectionRequest.h
  *
- * @brief Inputs to a coin selection strategy.
+ * @brief The available funds, required inputs, and target value for coin selection.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -35,7 +35,12 @@
 
 namespace Cometa
 {
-/** @brief Values and outputs to cover with selected unspent outputs. */
+/**
+ * @brief The available funds, required inputs, and target value for coin selection.
+ *
+ * The selector must cover the target while respecting preselected inputs. Protocol parameters and the
+ * change address are used when constructing valid change outputs.
+ */
 struct CoinSelectionRequest
 {
     /**

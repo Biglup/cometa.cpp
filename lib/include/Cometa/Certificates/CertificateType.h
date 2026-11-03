@@ -31,64 +31,69 @@
 
 namespace Cometa
 {
-/** @brief Identifies the kind of ledger certificate. */
+/**
+ * @brief Identifies the ledger action carried by a Certificate.
+ *
+ * Use it to choose the corresponding typed accessor. Certificate forms have different authorization,
+ * deposit, and era requirements.
+ */
 enum class CertificateType
 {
-  /** @brief StakeRegistration certificate. */
+  /** @brief Registers a staking credential using the legacy form. */
   StakeRegistration = 0,
 
-  /** @brief StakeDeregistration certificate. */
+  /** @brief Deregisters a staking credential using the legacy form. */
   StakeDeregistration = 1,
 
-  /** @brief StakeDelegation certificate. */
+  /** @brief Delegates stake to a pool. */
   StakeDelegation = 2,
 
-  /** @brief PoolRegistration certificate. */
+  /** @brief Registers a pool or updates its parameters. */
   PoolRegistration = 3,
 
-  /** @brief PoolRetirement certificate. */
+  /** @brief Schedules a pool retirement. */
   PoolRetirement = 4,
 
-  /** @brief GenesisKeyDelegation certificate. */
+  /** @brief Changes a historical genesis delegation. */
   GenesisKeyDelegation = 5,
 
-  /** @brief MoveInstantaneousRewards certificate. */
+  /** @brief Allocates historical instantaneous rewards. */
   MoveInstantaneousRewards = 6,
 
-  /** @brief Registration certificate. */
+  /** @brief Registers a staking credential with a deposit. */
   Registration = 7,
 
-  /** @brief Unregistration certificate. */
+  /** @brief Deregisters a staking credential with a refund. */
   Unregistration = 8,
 
-  /** @brief VoteDelegation certificate. */
+  /** @brief Assigns a governance voting delegate. */
   VoteDelegation = 9,
 
-  /** @brief StakeVoteDelegation certificate. */
+  /** @brief Assigns pool and voting delegates. */
   StakeVoteDelegation = 10,
 
-  /** @brief StakeRegistrationDelegation certificate. */
+  /** @brief Registers a credential and assigns its pool. */
   StakeRegistrationDelegation = 11,
 
-  /** @brief VoteRegistrationDelegation certificate. */
+  /** @brief Registers a credential and assigns its voting delegate. */
   VoteRegistrationDelegation = 12,
 
-  /** @brief StakeVoteRegistrationDelegation certificate. */
+  /** @brief Registers a credential and assigns both delegates. */
   StakeVoteRegistrationDelegation = 13,
 
-  /** @brief AuthorizeCommitteeHot certificate. */
+  /** @brief Authorizes a committee member's voting credential. */
   AuthorizeCommitteeHot = 14,
 
-  /** @brief ResignCommitteeCold certificate. */
+  /** @brief Resigns from the constitutional committee. */
   ResignCommitteeCold = 15,
 
-  /** @brief DRepRegistration certificate. */
+  /** @brief Registers a DRep with a deposit. */
   DRepRegistration = 16,
 
-  /** @brief DRepUnregistration certificate. */
+  /** @brief Deregisters a DRep with a refund. */
   DRepUnregistration = 17,
 
-  /** @brief UpdateDRep certificate. */
+  /** @brief Updates a DRep metadata anchor. */
   UpdateDRep = 18
 };
 } // namespace Cometa

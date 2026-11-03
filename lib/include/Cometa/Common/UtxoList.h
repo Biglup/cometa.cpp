@@ -33,6 +33,8 @@
 
 namespace Cometa
 {
-/** @brief An ordered sequence of Utxo values, with standard vector operations. */
+/**
+ * @brief Resolved transaction outputs in application order. Use them as selection candidates or evaluation inputs.
+ */
 using UtxoList = std::vector<Utxo>;
 } // namespace Cometa

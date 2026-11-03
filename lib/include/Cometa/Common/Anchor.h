@@ -1,7 +1,7 @@
 /**
  * @file Anchor.h
  *
- * @brief A URL and the hash of its governance metadata.
+ * @brief A URL and content hash identifying off-chain governance metadata.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,10 @@ struct cardano_anchor_t;
 namespace Cometa
 {
 /**
- * @brief A URL and the hash of its governance metadata.
+ * @brief A URL and content hash identifying off-chain governance metadata.
+ *
+ * The URL locates the document; the hash commits to its contents. Constructing an anchor does not
+ * fetch the document or verify that the URL serves the expected content.
  */
 class Anchor
 {
@@ -87,7 +90,7 @@ class Anchor
      *
      * @return The decoded value.
      *
-     * @throws std::invalid_argument Input is empty, hex is invalid, or trailing bytes remain.
+     * @throws std::invalid_argument Input is empty or trailing bytes remain.
      * @throws Error The CBOR input is invalid.
      */
     static Anchor fromCbor(const std::vector<std::uint8_t>& cbor);

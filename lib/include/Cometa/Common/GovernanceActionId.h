@@ -1,7 +1,7 @@
 /**
  * @file GovernanceActionId.h
  *
- * @brief A transaction hash and governance action index.
+ * @brief Identifies a governance proposal by transaction ID and proposal index.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,10 @@ struct cardano_governance_action_id_t;
 namespace Cometa
 {
 /**
- * @brief A transaction hash and governance action index.
+ * @brief Identifies a governance proposal by transaction ID and proposal index.
+ *
+ * The index is zero-based within the submitting transaction's proposal procedures. Votes and successor
+ * actions use this identifier to refer to the proposal.
  */
 class GovernanceActionId
 {
@@ -87,7 +90,7 @@ class GovernanceActionId
      *
      * @return The decoded value.
      *
-     * @throws std::invalid_argument Input is empty, hex is invalid, or trailing bytes remain.
+     * @throws std::invalid_argument Input is empty or trailing bytes remain.
      * @throws Error The CBOR input is invalid.
      */
     static GovernanceActionId fromCbor(const std::vector<std::uint8_t>& cbor);
@@ -134,9 +137,9 @@ class GovernanceActionId
     void setHash(const Blake2bHash& hash);
 
     /**
-     * @brief Gets the action index.
+     * @brief Gets the proposal index within its submitting transaction.
      *
-     * @return The index in the transaction.
+     * @return The zero-based proposal procedure index.
      */
     std::uint64_t index() const;
 

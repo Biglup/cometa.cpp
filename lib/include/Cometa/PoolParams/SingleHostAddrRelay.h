@@ -1,7 +1,7 @@
 /**
  * @file SingleHostAddrRelay.h
  *
- * @brief A pool relay with optional IP addresses and port.
+ * @brief A stake pool relay identified by an IP address and optional port.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,12 @@ struct cardano_single_host_addr_relay_t;
 
 namespace Cometa
 {
-/** @brief A pool relay with optional IP addresses and port. */
+/**
+ * @brief A stake pool relay identified by an IP address and optional port.
+ *
+ * IPv4 and IPv6 are independently optional. The relay advertises a network endpoint; constructing this
+ * value does not connect to it.
+ */
 class SingleHostAddrRelay
 {
   public:

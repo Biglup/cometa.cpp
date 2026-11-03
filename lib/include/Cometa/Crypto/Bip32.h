@@ -1,7 +1,7 @@
 /**
  * @file Bip32.h
  *
- * @brief BIP32 derivation indices.
+ * @brief Hardened derivation indices for hierarchical Cardano wallet keys.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026

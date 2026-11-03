@@ -32,7 +32,12 @@
 
 namespace Cometa
 {
-/** @brief CBOR major type. */
+/**
+ * @brief Identifies the structural category of a CBOR data item.
+ *
+ * The major type distinguishes integers, byte/text strings, containers, semantic tags, and simple
+ * values.
+ */
 enum class CborMajorType : std::uint32_t
 {
   /** @brief An unsigned integer. */

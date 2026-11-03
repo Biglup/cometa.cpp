@@ -1,7 +1,7 @@
 /**
  * @file DRepVotingThresholds.h
  *
- * @brief Governance voting thresholds.
+ * @brief Stake-weighted DRep approval thresholds for governance action categories.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -40,23 +40,28 @@ struct cardano_drep_voting_thresholds_t;
 
 namespace Cometa
 {
-/** @brief Rational voting thresholds for DReps. */
+/**
+ * @brief Stake-weighted DRep approval thresholds for governance action categories.
+ *
+ * Each rational value describes the required approval fraction for its category. Committee and pool
+ * voting thresholds are separate governance requirements.
+ */
 class DRepVotingThresholds
 {
   public:
 
     /**
      * @brief Creates voting thresholds in ledger order.
-     * @param motionNoConfidence The motionNoConfidence threshold.
-     * @param committeeNormal The committeeNormal threshold.
-     * @param committeeNoConfidence The committeeNoConfidence threshold.
-     * @param updateConstitution The updateConstitution threshold.
-     * @param hardForkInitiation The hardForkInitiation threshold.
-     * @param ppNetworkGroup The ppNetworkGroup threshold.
-     * @param ppEconomicGroup The ppEconomicGroup threshold.
-     * @param ppTechnicalGroup The ppTechnicalGroup threshold.
-     * @param ppGovernanceGroup The ppGovernanceGroup threshold.
-     * @param treasuryWithdrawal The treasuryWithdrawal threshold.
+     * @param motionNoConfidence The approval fraction required for a motion of no confidence in the committee.
+     * @param committeeNormal The approval fraction required for a committee update while the committee is in a normal state.
+     * @param committeeNoConfidence The approval fraction required for a committee update following a no-confidence state.
+     * @param updateConstitution The approval fraction required for a new constitution.
+     * @param hardForkInitiation The approval fraction required for a protocol-version upgrade.
+     * @param ppNetworkGroup The approval fraction required for changes to network protocol parameters.
+     * @param ppEconomicGroup The approval fraction required for changes to economic protocol parameters.
+     * @param ppTechnicalGroup The approval fraction required for changes to technical protocol parameters.
+     * @param ppGovernanceGroup The approval fraction required for changes to governance protocol parameters.
+     * @param treasuryWithdrawal The approval fraction required for treasury withdrawals.
      */
     DRepVotingThresholds(
       const UnitInterval& motionNoConfidence,
@@ -104,122 +109,122 @@ class DRepVotingThresholds
   public:
 
     /**
-     * @brief Gets the motionNoConfidence threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for a motion of no confidence in the committee.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval motionNoConfidence() const;
 
     /**
-     * @brief Sets the motionNoConfidence threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for a motion of no confidence in the committee.
+     * @param value The required stake-weighted approval fraction.
      */
     void setMotionNoConfidence(const UnitInterval& value);
 
     /**
-     * @brief Gets the committeeNormal threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for a committee update while the committee is in a normal state.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval committeeNormal() const;
 
     /**
-     * @brief Sets the committeeNormal threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for a committee update while the committee is in a normal state.
+     * @param value The required stake-weighted approval fraction.
      */
     void setCommitteeNormal(const UnitInterval& value);
 
     /**
-     * @brief Gets the committeeNoConfidence threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for a committee update following a no-confidence state.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval committeeNoConfidence() const;
 
     /**
-     * @brief Sets the committeeNoConfidence threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for a committee update following a no-confidence state.
+     * @param value The required stake-weighted approval fraction.
      */
     void setCommitteeNoConfidence(const UnitInterval& value);
 
     /**
-     * @brief Gets the updateConstitution threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for a new constitution.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval updateConstitution() const;
 
     /**
-     * @brief Sets the updateConstitution threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for a new constitution.
+     * @param value The required stake-weighted approval fraction.
      */
     void setUpdateConstitution(const UnitInterval& value);
 
     /**
-     * @brief Gets the hardForkInitiation threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for a protocol-version upgrade.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval hardForkInitiation() const;
 
     /**
-     * @brief Sets the hardForkInitiation threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for a protocol-version upgrade.
+     * @param value The required stake-weighted approval fraction.
      */
     void setHardForkInitiation(const UnitInterval& value);
 
     /**
-     * @brief Gets the ppNetworkGroup threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for changes to network protocol parameters.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval ppNetworkGroup() const;
 
     /**
-     * @brief Sets the ppNetworkGroup threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for changes to network protocol parameters.
+     * @param value The required stake-weighted approval fraction.
      */
     void setPpNetworkGroup(const UnitInterval& value);
 
     /**
-     * @brief Gets the ppEconomicGroup threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for changes to economic protocol parameters.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval ppEconomicGroup() const;
 
     /**
-     * @brief Sets the ppEconomicGroup threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for changes to economic protocol parameters.
+     * @param value The required stake-weighted approval fraction.
      */
     void setPpEconomicGroup(const UnitInterval& value);
 
     /**
-     * @brief Gets the ppTechnicalGroup threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for changes to technical protocol parameters.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval ppTechnicalGroup() const;
 
     /**
-     * @brief Sets the ppTechnicalGroup threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for changes to technical protocol parameters.
+     * @param value The required stake-weighted approval fraction.
      */
     void setPpTechnicalGroup(const UnitInterval& value);
 
     /**
-     * @brief Gets the ppGovernanceGroup threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for changes to governance protocol parameters.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval ppGovernanceGroup() const;
 
     /**
-     * @brief Sets the ppGovernanceGroup threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for changes to governance protocol parameters.
+     * @param value The required stake-weighted approval fraction.
      */
     void setPpGovernanceGroup(const UnitInterval& value);
 
     /**
-     * @brief Gets the treasuryWithdrawal threshold.
-     * @return The threshold.
+     * @brief Gets the approval threshold for treasury withdrawals.
+     * @return The required stake-weighted approval fraction.
      */
     UnitInterval treasuryWithdrawal() const;
 
     /**
-     * @brief Sets the treasuryWithdrawal threshold.
-     * @param value The new threshold.
+     * @brief Sets the approval threshold for treasury withdrawals.
+     * @param value The required stake-weighted approval fraction.
      */
     void setTreasuryWithdrawal(const UnitInterval& value);
 

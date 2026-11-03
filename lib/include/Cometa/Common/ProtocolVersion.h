@@ -1,7 +1,7 @@
 /**
  * @file ProtocolVersion.h
  *
- * @brief Major and minor Cardano protocol version.
+ * @brief The major and minor versions of the ledger protocol.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -39,7 +39,10 @@ struct cardano_protocol_version_t;
 namespace Cometa
 {
 /**
- * @brief Major and minor Cardano protocol version.
+ * @brief The major and minor versions of the ledger protocol.
+ *
+ * The major version selects protocol-era behavior. Use network protocol parameters when building
+ * transactions; a library's supported types alone do not establish network support.
  */
 class ProtocolVersion
 {
@@ -85,7 +88,7 @@ class ProtocolVersion
      *
      * @return The decoded value.
      *
-     * @throws std::invalid_argument Input is empty, hex is invalid, or trailing bytes remain.
+     * @throws std::invalid_argument Input is empty or trailing bytes remain.
      * @throws Error The CBOR input is invalid.
      */
     static ProtocolVersion fromCbor(const std::vector<std::uint8_t>& cbor);

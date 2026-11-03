@@ -1,7 +1,7 @@
 /**
  * @file TransactionBody.h
  *
- * @brief Top-level transaction body values.
+ * @brief The signed ledger instructions of a top-level transaction.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -57,7 +57,13 @@ struct cardano_transaction_body_t;
 
 namespace Cometa
 {
-/** @brief Fields of a top-level transaction. */
+/**
+ * @brief The signed ledger instructions of a top-level transaction.
+ *
+ * Contains inputs, outputs, fees, validity limits, and optional staking, governance, and Dijkstra
+ * fields. Witnesses are separate. Changing the body changes its hash and invalidates existing
+ * transaction signatures.
+ */
 class TransactionBody
 {
   public:
@@ -105,302 +111,302 @@ class TransactionBody
   public:
 
     /**
-     * @brief Gets the inputs field.
-     * @return An independent value.
+     * @brief Gets the outputs consumed by the transaction.
+     * @return The input references, without their resolved output data.
      */
     TransactionInputSet inputs() const;
 
     /**
-     * @brief Replaces the inputs field.
-     * @param value The value to copy.
+     * @brief Sets the outputs consumed by the transaction.
+     * @param value The input references, without their resolved output data.
      */
     void setInputs(const TransactionInputSet& value);
 
     /**
-     * @brief Gets the outputs field.
-     * @return An independent value.
+     * @brief Gets the outputs created by the transaction.
+     * @return The outputs in ledger order.
      */
     TransactionOutputList outputs() const;
 
     /**
-     * @brief Replaces the outputs field.
-     * @param value The value to copy.
+     * @brief Sets the outputs created by the transaction.
+     * @param value The outputs in ledger order.
      */
     void setOutputs(const TransactionOutputList& value);
 
     /**
-     * @brief Gets the certificates field.
-     * @return An independent value, when present.
+     * @brief Gets the staking, pool, and governance certificates.
+     * @return The certificates in transaction order; std::nullopt if the field is absent.
      */
     std::optional<CertificateSet> certificates() const;
 
     /**
-     * @brief Replaces or clears the certificates field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the staking, pool, and governance certificates.
+     * @param value The certificates in transaction order. Use std::nullopt to remove the field.
      */
     void setCertificates(const std::optional<CertificateSet>& value);
 
     /**
-     * @brief Gets the withdrawals field.
-     * @return An independent value, when present.
+     * @brief Gets the reward-account withdrawals.
+     * @return Reward accounts and withdrawal amounts in lovelace; std::nullopt if the field is absent.
      */
     std::optional<WithdrawalMap> withdrawals() const;
 
     /**
-     * @brief Replaces or clears the withdrawals field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the reward-account withdrawals.
+     * @param value Reward accounts and withdrawal amounts in lovelace. Use std::nullopt to remove the field.
      */
     void setWithdrawals(const std::optional<WithdrawalMap>& value);
 
     /**
-     * @brief Gets the auxDataHash field.
-     * @return An independent value, when present.
+     * @brief Gets the auxiliary-data commitment.
+     * @return The 32-byte hash binding metadata and auxiliary scripts to the body; std::nullopt if the field is absent.
      */
     std::optional<Blake2bHash> auxDataHash() const;
 
     /**
-     * @brief Replaces or clears the auxDataHash field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the auxiliary-data commitment.
+     * @param value The 32-byte hash binding metadata and auxiliary scripts to the body. Use std::nullopt to remove the field.
      */
     void setAuxDataHash(const std::optional<Blake2bHash>& value);
 
     /**
-     * @brief Gets the mint field.
-     * @return An independent value, when present.
+     * @brief Gets the native-token mint and burn quantities.
+     * @return Policy-grouped token quantities; positive values mint and negative values burn; std::nullopt if the field is absent.
      */
     std::optional<MultiAsset> mint() const;
 
     /**
-     * @brief Replaces or clears the mint field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the native-token mint and burn quantities.
+     * @param value Policy-grouped token quantities; positive values mint and negative values burn. Use std::nullopt to remove the field.
      */
     void setMint(const std::optional<MultiAsset>& value);
 
     /**
-     * @brief Gets the scriptDataHash field.
-     * @return An independent value, when present.
+     * @brief Gets the script-data commitment.
+     * @return The hash committing to redeemers, datums, and the required language views; std::nullopt if the field is absent.
      */
     std::optional<Blake2bHash> scriptDataHash() const;
 
     /**
-     * @brief Replaces or clears the scriptDataHash field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the script-data commitment.
+     * @param value The hash committing to redeemers, datums, and the required language views. Use std::nullopt to remove the field.
      */
     void setScriptDataHash(const std::optional<Blake2bHash>& value);
 
     /**
-     * @brief Gets the guards field.
-     * @return An independent value, when present.
+     * @brief Gets the Dijkstra authorization guards.
+     * @return The guard credentials in redeemer-index order; std::nullopt if the field is absent.
      */
     std::optional<GuardSet> guards() const;
 
     /**
-     * @brief Replaces or clears the guards field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the Dijkstra authorization guards.
+     * @param value The guard credentials in redeemer-index order. Use std::nullopt to remove the field.
      */
     void setGuards(const std::optional<GuardSet>& value);
 
     /**
-     * @brief Gets the referenceInputs field.
-     * @return An independent value, when present.
+     * @brief Gets the outputs read without being spent.
+     * @return The references that make output data and reference scripts available; std::nullopt if the field is absent.
      */
     std::optional<TransactionInputSet> referenceInputs() const;
 
     /**
-     * @brief Replaces or clears the referenceInputs field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the outputs read without being spent.
+     * @param value The references that make output data and reference scripts available. Use std::nullopt to remove the field.
      */
     void setReferenceInputs(const std::optional<TransactionInputSet>& value);
 
     /**
-     * @brief Gets the votingProcedures field.
-     * @return An independent value, when present.
+     * @brief Gets the governance votes.
+     * @return The votes grouped by voter and governance action; std::nullopt if the field is absent.
      */
     std::optional<VotingProcedures> votingProcedures() const;
 
     /**
-     * @brief Replaces or clears the votingProcedures field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the governance votes.
+     * @param value The votes grouped by voter and governance action. Use std::nullopt to remove the field.
      */
     void setVotingProcedures(const std::optional<VotingProcedures>& value);
 
     /**
-     * @brief Gets the proposalProcedures field.
-     * @return An independent value, when present.
+     * @brief Gets the governance proposals.
+     * @return The proposals in action-index order; std::nullopt if the field is absent.
      */
     std::optional<ProposalProcedureSet> proposalProcedures() const;
 
     /**
-     * @brief Replaces or clears the proposalProcedures field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the governance proposals.
+     * @param value The proposals in action-index order. Use std::nullopt to remove the field.
      */
     void setProposalProcedures(const std::optional<ProposalProcedureSet>& value);
 
     /**
-     * @brief Gets the requiredTopLevelGuards field.
-     * @return An independent value, when present.
+     * @brief Gets the required top-level authorizations.
+     * @return Guard credentials and their optional associated data; std::nullopt if the field is absent.
      */
     std::optional<RequiredGuardsMap> requiredTopLevelGuards() const;
 
     /**
-     * @brief Replaces or clears the requiredTopLevelGuards field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the required top-level authorizations.
+     * @param value Guard credentials and their optional associated data. Use std::nullopt to remove the field.
      */
     void setRequiredTopLevelGuards(const std::optional<RequiredGuardsMap>& value);
 
     /**
-     * @brief Gets the directDeposits field.
-     * @return An independent value, when present.
+     * @brief Gets the direct reward-account deposits.
+     * @return Reward accounts and deposit amounts in lovelace; std::nullopt if the field is absent.
      */
     std::optional<DirectDepositMap> directDeposits() const;
 
     /**
-     * @brief Replaces or clears the directDeposits field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the direct reward-account deposits.
+     * @param value Reward accounts and deposit amounts in lovelace. Use std::nullopt to remove the field.
      */
     void setDirectDeposits(const std::optional<DirectDepositMap>& value);
 
     /**
-     * @brief Gets the accountBalanceIntervals field.
-     * @return An independent value, when present.
+     * @brief Gets the required account balance intervals.
+     * @return Reward accounts and their permitted balances in lovelace; std::nullopt if the field is absent.
      */
     std::optional<AccountBalanceIntervalsMap> accountBalanceIntervals() const;
 
     /**
-     * @brief Replaces or clears the accountBalanceIntervals field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the required account balance intervals.
+     * @param value Reward accounts and their permitted balances in lovelace. Use std::nullopt to remove the field.
      */
     void setAccountBalanceIntervals(const std::optional<AccountBalanceIntervalsMap>& value);
 
     /**
-     * @brief Gets the invalidAfter field.
-     * @return The value, when present.
+     * @brief Gets the exclusive upper validity slot.
+     * @return The first slot at which the transaction is no longer valid; std::nullopt if the field is absent.
      */
     std::optional<std::uint64_t> invalidAfter() const;
 
     /**
-     * @brief Sets or clears the invalidAfter field.
-     * @param value The value to set, or no value to clear it.
+     * @brief Sets the exclusive upper validity slot.
+     * @param value The first slot at which the transaction is no longer valid. Use std::nullopt to remove the field.
      */
     void setInvalidAfter(std::optional<std::uint64_t> value);
 
     /**
-     * @brief Gets the invalidBefore field.
-     * @return The value, when present.
+     * @brief Gets the inclusive lower validity slot.
+     * @return The earliest slot at which the transaction may be valid; std::nullopt if the field is absent.
      */
     std::optional<std::uint64_t> invalidBefore() const;
 
     /**
-     * @brief Sets or clears the invalidBefore field.
-     * @param value The value to set, or no value to clear it.
+     * @brief Sets the inclusive lower validity slot.
+     * @param value The earliest slot at which the transaction may be valid. Use std::nullopt to remove the field.
      */
     void setInvalidBefore(std::optional<std::uint64_t> value);
 
     /**
-     * @brief Gets the networkId field.
-     * @return The value, when present.
+     * @brief Gets the explicitly declared address network.
+     * @return The mainnet or testnet identifier; this is not network magic; std::nullopt if the field is absent.
      */
     std::optional<NetworkId> networkId() const;
 
     /**
-     * @brief Sets or clears the networkId field.
-     * @param value The value to set, or no value to clear it.
+     * @brief Sets the explicitly declared address network.
+     * @param value The mainnet or testnet identifier; this is not network magic. Use std::nullopt to remove the field.
      */
     void setNetworkId(std::optional<NetworkId> value);
 
     /**
-     * @brief Gets the treasuryValue field.
-     * @return The value, when present.
+     * @brief Gets the declared current treasury value.
+     * @return The treasury amount in lovelace against which the ledger checks the transaction; std::nullopt if the field is absent.
      */
     std::optional<std::uint64_t> treasuryValue() const;
 
     /**
-     * @brief Sets or clears the treasuryValue field.
-     * @param value The value to set, or no value to clear it.
+     * @brief Sets the declared current treasury value.
+     * @param value The treasury amount in lovelace against which the ledger checks the transaction. Use std::nullopt to remove the field.
      */
     void setTreasuryValue(std::optional<std::uint64_t> value);
 
     /**
-     * @brief Gets the donation field.
-     * @return The value, when present.
+     * @brief Gets the treasury donation.
+     * @return The amount donated to the treasury in lovelace; std::nullopt if the field is absent.
      */
     std::optional<std::uint64_t> donation() const;
 
     /**
-     * @brief Sets or clears the donation field.
-     * @param value The value to set, or no value to clear it.
+     * @brief Sets the treasury donation.
+     * @param value The amount donated to the treasury in lovelace. Use std::nullopt to remove the field.
      */
     void setDonation(std::optional<std::uint64_t> value);
 
     /**
-     * @brief Gets the update field.
-     * @return An independent value, when present.
+     * @brief Gets the legacy protocol parameter update.
+     * @return The historical epoch-based update proposal; std::nullopt if the field is absent.
      */
     std::optional<Update> update() const;
 
     /**
-     * @brief Replaces or clears the update field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the legacy protocol parameter update.
+     * @param value The historical epoch-based update proposal. Use std::nullopt to remove the field.
      */
     void setUpdate(const std::optional<Update>& value);
 
     /**
-     * @brief Gets the collateral field.
-     * @return An independent value, when present.
+     * @brief Gets the collateral input references.
+     * @return The inputs available to cover script failure; std::nullopt if the field is absent.
      */
     std::optional<TransactionInputSet> collateral() const;
 
     /**
-     * @brief Replaces or clears the collateral field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the collateral input references.
+     * @param value The inputs available to cover script failure. Use std::nullopt to remove the field.
      */
     void setCollateral(const std::optional<TransactionInputSet>& value);
 
     /**
-     * @brief Gets the required signers field.
-     * @return An independent value, when present.
+     * @brief Gets the required verification-key hashes.
+     * @return The keys whose signatures must be supplied with the transaction; std::nullopt if the field is absent.
      */
     std::optional<Blake2bHashSet> requiredSigners() const;
 
     /**
-     * @brief Replaces or clears the required signers field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the required verification-key hashes.
+     * @param value The keys whose signatures must be supplied with the transaction. Use std::nullopt to remove the field.
      */
     void setRequiredSigners(const std::optional<Blake2bHashSet>& value);
 
     /**
-     * @brief Gets the collateral return field.
-     * @return An independent value, when present.
+     * @brief Gets the collateral return output.
+     * @return The output returning collateral value beyond the total collateral charged; std::nullopt if the field is absent.
      */
     std::optional<TransactionOutput> collateralReturn() const;
 
     /**
-     * @brief Replaces or clears the collateral return field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the collateral return output.
+     * @param value The output returning collateral value beyond the total collateral charged. Use std::nullopt to remove the field.
      */
     void setCollateralReturn(const std::optional<TransactionOutput>& value);
 
     /**
-     * @brief Gets the sub transactions field.
-     * @return An independent value, when present.
+     * @brief Gets the Dijkstra sub-transaction batch.
+     * @return The signed intents in batch order; std::nullopt if the field is absent.
      */
     std::optional<SubTransactionSet> subTransactions() const;
 
     /**
-     * @brief Replaces or clears the sub transactions field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the Dijkstra sub-transaction batch.
+     * @param value The signed intents in batch order. Use std::nullopt to remove the field.
      */
     void setSubTransactions(const std::optional<SubTransactionSet>& value);
 
     /**
-     * @brief Gets the starting account balance intervals field.
-     * @return An independent value, when present.
+     * @brief Gets the initial account balance constraints.
+     * @return The account balances required at the start of the top-level transaction; std::nullopt if the field is absent.
      */
     std::optional<AccountBalanceIntervalsMap> startingAccountBalanceIntervals() const;
 
     /**
-     * @brief Replaces or clears the starting account balance intervals field.
-     * @param value The value to copy, or no value to clear the field.
+     * @brief Sets the initial account balance constraints.
+     * @param value The account balances required at the start of the top-level transaction. Use std::nullopt to remove the field.
      */
     void setStartingAccountBalanceIntervals(const std::optional<AccountBalanceIntervalsMap>& value);
 
@@ -411,20 +417,20 @@ class TransactionBody
     std::uint64_t fee() const;
 
     /**
-     * @brief Replaces the transaction fee.
+     * @brief Sets the transaction fee.
      * @param value The fee in lovelace.
      */
     void setFee(std::uint64_t value);
 
     /**
-     * @brief Gets total collateral.
-     * @return The lovelace amount, when present.
+     * @brief Gets the total collateral charged on script failure.
+     * @return The collateral amount in lovelace; std::nullopt if the field is absent.
      */
     std::optional<std::uint64_t> totalCollateral() const;
 
     /**
-     * @brief Replaces or clears total collateral.
-     * @param value The lovelace amount, or no value to clear the field.
+     * @brief Sets the total collateral charged on script failure.
+     * @param value The collateral amount in lovelace. Use std::nullopt to remove the field.
      */
     void setTotalCollateral(std::optional<std::uint64_t> value);
 
@@ -435,8 +441,8 @@ class TransactionBody
     bool hasTaggedSets() const;
 
     /**
-     * @brief Computes the transaction body hash.
-     * @return The 32-byte hash.
+     * @brief Computes the transaction body identifier.
+     * @return The 32-byte BLAKE2b hash of the serialized body.
      */
     Blake2bHash hash() const;
 

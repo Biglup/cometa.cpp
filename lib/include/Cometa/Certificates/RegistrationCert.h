@@ -1,7 +1,7 @@
 /**
  * @file RegistrationCert.h
  *
- * @brief Registration certificates.
+ * @brief Registers a staking credential with an explicit deposit.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,10 @@ struct cardano_registration_cert_t;
 namespace Cometa
 {
 /**
- * @brief A registration certificate.
+ * @brief Registers a staking credential with an explicit deposit.
+ *
+ * The deposit is in lovelace and must match the applicable protocol parameters. Registration enables
+ * the credential's reward account and delegation state.
  */
 class RegistrationCert
 {

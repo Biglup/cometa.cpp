@@ -1,7 +1,7 @@
 /**
  * @file PlutusMap.h
  *
- * @brief Declaration of the PlutusMap value type.
+ * @brief An ordered sequence of Plutus data key-value pairs that retains duplicate keys.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -47,7 +47,12 @@ namespace Cometa
 
 /* CLASS DECLARATION *********************************************************/
 
-/** @brief An ordered sequence of Plutus key-value pairs; duplicate keys are retained. */
+/**
+ * @brief An ordered sequence of Plutus data key-value pairs that retains duplicate keys.
+ *
+ * Keys and values can be any PlutusData form. The validator determines whether key uniqueness or a
+ * particular ordering is required.
+ */
 class PlutusMap
 {
   public:
@@ -289,40 +294,76 @@ class PlutusMap
 
   public:
 
-    /** @brief Gets the begin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the first element.
+     * @return The iterator.
+     */
     iterator begin();
 
-    /** @brief Gets the end iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the past-the-end position.
+     * @return The iterator.
+     */
     iterator end();
 
-    /** @brief Gets the begin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the first element.
+     * @return The iterator.
+     */
     const_iterator begin() const;
 
-    /** @brief Gets the end iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the past-the-end position.
+     * @return The iterator.
+     */
     const_iterator end() const;
 
-    /** @brief Gets the cbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the first element.
+     * @return The iterator.
+     */
     const_iterator cbegin() const;
 
-    /** @brief Gets the cend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the past-the-end position.
+     * @return The iterator.
+     */
     const_iterator cend() const;
 
-    /** @brief Gets the rbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the last element in reverse traversal.
+     * @return The iterator.
+     */
     reverse_iterator rbegin();
 
-    /** @brief Gets the rend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
+     * @return The iterator.
+     */
     reverse_iterator rend();
 
-    /** @brief Gets the rbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the last element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator rbegin() const;
 
-    /** @brief Gets the rend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator rend() const;
 
-    /** @brief Gets the crbegin iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the last element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator crbegin() const;
 
-    /** @brief Gets the crend iterator. @return The iterator. */
+    /**
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
+     * @return The iterator.
+     */
     const_reverse_iterator crend() const;
 
     /**

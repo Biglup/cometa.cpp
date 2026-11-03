@@ -31,28 +31,32 @@
 
 namespace Cometa
 {
-/** @brief Identifies a native script requirement. */
+/**
+ * @brief Identifies a ledger-checked native authorization condition.
+ *
+ * The condition may require a signature, time bound, guard, or combination of child scripts.
+ */
 enum class NativeScriptType
 {
-  /** @brief Pubkey requirement. */
+  /** @brief Requires a key signature. */
   RequirePubkey = 0,
 
-  /** @brief All requirement. */
+  /** @brief Requires all child conditions. */
   RequireAllOf = 1,
 
-  /** @brief Any requirement. */
+  /** @brief Requires at least one child condition. */
   RequireAnyOf = 2,
 
-  /** @brief NOfK requirement. */
+  /** @brief Requires a threshold number of child conditions. */
   RequireNOfK = 3,
 
-  /** @brief InvalidBefore requirement. */
+  /** @brief Constrains the inclusive lower validity slot. */
   InvalidBefore = 4,
 
-  /** @brief InvalidAfter requirement. */
+  /** @brief Constrains the exclusive upper validity slot. */
   InvalidAfter = 5,
 
-  /** @brief RequireGuard requirement. */
+  /** @brief Requires a top-level Dijkstra guard. */
   RequireGuard = 6
 };
 } // namespace Cometa
@@ -62,7 +66,7 @@ enum class NativeScriptType
 namespace Cometa
 {
 /**
- * @brief Gets the native script type name.
+ * @brief Gets the script type name.
  *
  * @param value The script discriminator.
  *

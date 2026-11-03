@@ -1,7 +1,7 @@
 /**
  * @file Script.h
  *
- * @brief A native or Plutus script with its ledger language.
+ * @brief A native or Plutus script together with its ledger language.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -45,7 +45,12 @@ struct cardano_script_t;
 
 namespace Cometa
 {
-/** @brief A native or Plutus script with its ledger language. */
+/**
+ * @brief A native or Plutus script together with its ledger language.
+ *
+ * The language participates in script identity and determines validation behavior. Concrete script
+ * forms convert to this type; inspect language() before extracting a specific form.
+ */
 class Script
 {
   public:

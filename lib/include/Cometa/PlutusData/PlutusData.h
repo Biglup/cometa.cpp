@@ -1,7 +1,7 @@
 /**
  * @file PlutusData.h
  *
- * @brief Declaration of the PlutusData value type.
+ * @brief A Plutus integer, byte string, list, map, or constructor value.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -46,7 +46,12 @@ class ConstrPlutusData;
 
 /* CLASS DECLARATION *********************************************************/
 
-/** @brief A Plutus constructor, map, list, integer, or byte string. */
+/**
+ * @brief A Plutus integer, byte string, list, map, or constructor value.
+ *
+ * Use it for validator datums, redeemers, and script parameters. The validator defines the expected
+ * structure; a valid PlutusData value does not by itself satisfy that schema.
+ */
 class PlutusData
 {
   public:

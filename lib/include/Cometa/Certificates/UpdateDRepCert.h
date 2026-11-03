@@ -1,7 +1,7 @@
 /**
  * @file UpdateDRepCert.h
  *
- * @brief DRep metadata update certificates.
+ * @brief Updates a registered DRep's metadata anchor.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -43,7 +43,10 @@ struct cardano_update_drep_cert_t;
 namespace Cometa
 {
 /**
- * @brief A DRep metadata update certificate.
+ * @brief Updates a registered DRep's metadata anchor.
+ *
+ * An absent anchor removes the metadata reference. This certificate identifies the existing DRep
+ * credential rather than registering a new representative.
  */
 class UpdateDRepCert
 {

@@ -34,7 +34,10 @@
 namespace Cometa
 {
 /**
- * @brief Network magic for a named Cardano network.
+ * @brief Identifies a named network independently of its address network ID.
+ *
+ * Use the same network for the provider, protocol parameters, and slot configuration. Different test
+ * networks share NetworkId::Testnet.
  */
 enum class NetworkMagic : std::uint32_t
 {

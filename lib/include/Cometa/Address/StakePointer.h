@@ -1,7 +1,7 @@
 /**
  * @file StakePointer.h
  *
- * @brief StakePointer value.
+ * @brief The location of a stake registration certificate in the chain.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -32,7 +32,10 @@
 namespace Cometa
 {
 /**
- * @brief The registration location referenced by a pointer address.
+ * @brief The location of a stake registration certificate in the chain.
+ *
+ * All three components identify one registration: the slot, the transaction within its block, and the
+ * certificate within that transaction.
  */
 struct StakePointer
 {

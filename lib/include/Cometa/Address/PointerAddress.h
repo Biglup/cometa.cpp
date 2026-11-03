@@ -1,7 +1,7 @@
 /**
  * @file PointerAddress.h
  *
- * @brief PointerAddress operations.
+ * @brief A payment address whose staking reference points to a registration certificate.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -46,7 +46,10 @@ namespace Cometa
 class Address;
 
 /**
- * @brief A pointer address.
+ * @brief A payment address whose staking reference points to a registration certificate.
+ *
+ * The pointer identifies the registration by slot, transaction index, and certificate index. The
+ * payment credential independently controls spending.
  */
 class PointerAddress
 {

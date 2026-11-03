@@ -1,7 +1,7 @@
 /**
  * @file CurlHttpTransport.h
  *
- * @brief libcurl HTTP transport.
+ * @brief An HTTP transport using libcurl for provider requests.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -31,7 +31,12 @@
 
 namespace Cometa
 {
-/** @brief Sends HTTPS requests with libcurl. */
+/**
+ * @brief An HTTP transport using libcurl for provider requests.
+ *
+ * Use it with BlockfrostProvider when libcurl is available. Request timeouts bound individual HTTP
+ * operations rather than transaction confirmation time.
+ */
 class CurlHttpTransport final : public HttpTransport
 {
   public:

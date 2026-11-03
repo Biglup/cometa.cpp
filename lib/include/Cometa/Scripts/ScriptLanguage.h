@@ -27,7 +27,12 @@
 
 namespace Cometa
 {
-/** @brief Identifies a native or Plutus script language. */
+/**
+ * @brief Distinguishes native scripts from the supported Plutus languages.
+ *
+ * The language is part of script hashing and determines whether execution budgets and redeemers are
+ * needed.
+ */
 enum class ScriptLanguage
 {
   /** @brief Native scripts. */

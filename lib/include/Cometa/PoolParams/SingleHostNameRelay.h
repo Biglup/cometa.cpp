@@ -1,7 +1,7 @@
 /**
  * @file SingleHostNameRelay.h
  *
- * @brief A pool relay identified by a DNS name and optional port.
+ * @brief A stake pool relay identified by a DNS hostname and optional port.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -39,7 +39,12 @@ struct cardano_single_host_name_relay_t;
 
 namespace Cometa
 {
-/** @brief A pool relay identified by a DNS name and optional port. */
+/**
+ * @brief A stake pool relay identified by a DNS hostname and optional port.
+ *
+ * Use a hostname rather than a URL. DNS resolution and connectivity are outside this value's
+ * responsibilities.
+ */
 class SingleHostNameRelay
 {
   public:

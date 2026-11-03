@@ -1,7 +1,7 @@
 /**
  * @file Blake2bHash.h
  *
- * @brief Declaration of the Blake2bHash value type.
+ * @brief A BLAKE2b digest used to identify Cardano keys, scripts, data, and transactions.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -42,7 +42,10 @@ struct cardano_blake2b_hash_t;
 namespace Cometa
 {
 /**
- * @brief Represents a BLAKE2b hash.
+ * @brief A BLAKE2b digest used to identify Cardano keys, scripts, data, and transactions.
+ *
+ * Digest length depends on the role: key and script hashes commonly use 28 bytes, while transaction
+ * IDs and datum hashes use 32 bytes. Choose the length required by the consuming API.
  */
 class Blake2bHash
 {

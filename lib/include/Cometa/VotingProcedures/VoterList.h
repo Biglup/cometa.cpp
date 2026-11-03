@@ -33,6 +33,8 @@
 
 namespace Cometa
 {
-/** @brief An ordered sequence of independent Voter values. */
+/**
+ * @brief Governance voters in application order. Each voter combines an authorization credential with a role.
+ */
 using VoterList = std::vector<Voter>;
 } // namespace Cometa

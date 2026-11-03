@@ -1,7 +1,7 @@
 /**
  * @file AssetId.h
  *
- * @brief Asset identifiers for lovelace and native tokens.
+ * @brief Identifies lovelace or a native token by its minting policy and asset name.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,12 @@ struct cardano_asset_id_t;
 
 namespace Cometa
 {
-/** @brief Identifies lovelace or a token by its policy ID and asset name. */
+/**
+ * @brief Identifies lovelace or a native token by its minting policy and asset name.
+ *
+ * A token's identity is the pair of policy ID and name; the same name under another policy is a
+ * different asset. Quantities are stored separately in Value or MultiAsset.
+ */
 class AssetId
 {
   public:

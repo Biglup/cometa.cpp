@@ -1,7 +1,7 @@
 /**
  * @file Metadatum.h
  *
- * @brief Declaration of the Metadatum value type.
+ * @brief A transaction metadata integer, byte string, text string, list, or map.
  *
  * @author angel.castillo
  * @date   Nov 01, 2026
@@ -47,7 +47,12 @@ class JsonWriter;
 
 /* CLASS DECLARATION *********************************************************/
 
-/** @brief A metadata map, list, integer, byte string, or text string. */
+/**
+ * @brief A transaction metadata integer, byte string, text string, list, or map.
+ *
+ * Metadata is public application data attached to a transaction. It is distinct from PlutusData used
+ * by validators. Ledger metadata text and byte strings are limited to 64 bytes per value.
+ */
 class Metadatum
 {
   public:

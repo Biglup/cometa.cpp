@@ -1,7 +1,7 @@
 /**
  * @file AccountDerivationPath.h
  *
- * @brief BIP32 path to a Cardano account.
+ * @brief The purpose, coin type, and account portion of a wallet derivation path.
  *
  * @author angel.castillo
  * @date   Nov 03, 2026
@@ -33,7 +33,12 @@
 
 namespace Cometa
 {
-/** @brief The purpose, coin type, and account segments of a Cardano path. */
+/**
+ * @brief The purpose, coin type, and account portion of a wallet derivation path.
+ *
+ * Use it to request an extended account public key. DerivationPath adds the role and address index
+ * needed to identify an individual wallet key.
+ */
 struct AccountDerivationPath
 {
     /** @brief Wallet purpose before hardening. */

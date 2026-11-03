@@ -1,7 +1,7 @@
 /**
  * @file AssetIdMap.h
  *
- * @brief Signed asset quantities keyed by AssetId.
+ * @brief Signed quantities indexed by complete asset identifiers.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -48,7 +48,10 @@ struct cardano_asset_id_map_t;
 namespace Cometa
 {
 /**
- * @brief A map of AssetId keys to signed 64-bit quantities.
+ * @brief Signed quantities indexed by complete asset identifiers.
+ *
+ * Use this flat representation when processing lovelace and tokens together. Value::fromAssetMap()
+ * converts it to a transaction value.
  */
 class AssetIdMap
 {
@@ -277,73 +280,73 @@ class AssetIdMap
   public:
 
     /**
-     * @brief Gets the begin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     iterator begin();
 
     /**
-     * @brief Gets the begin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     const_iterator begin() const;
 
     /**
-     * @brief Gets the end iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     iterator end();
 
     /**
-     * @brief Gets the end iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     const_iterator end() const;
 
     /**
-     * @brief Gets the rbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     reverse_iterator rbegin();
 
     /**
-     * @brief Gets the rbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator rbegin() const;
 
     /**
-     * @brief Gets the rend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     reverse_iterator rend();
 
     /**
-     * @brief Gets the rend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator rend() const;
 
     /**
-     * @brief Gets the cbegin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     const_iterator cbegin() const;
 
     /**
-     * @brief Gets the cend iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     const_iterator cend() const;
 
     /**
-     * @brief Gets the crbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator crbegin() const;
 
     /**
-     * @brief Gets the crend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator crend() const;

@@ -1,7 +1,7 @@
 /**
  * @file InfoAction.h
  *
- * @brief Informational governance action.
+ * @brief A governance proposal used to collect votes without enacting a ledger change.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -38,7 +38,12 @@ struct cardano_info_action_t;
 
 namespace Cometa
 {
-/** @brief Governance action that records information on chain. */
+/**
+ * @brief A governance proposal used to collect votes without enacting a ledger change.
+ *
+ * Wrap it in ProposalProcedure with a deposit, refund account, and metadata anchor. The metadata
+ * explains the subject of the vote.
+ */
 class InfoAction
 {
   public:

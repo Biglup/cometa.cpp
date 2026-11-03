@@ -1,7 +1,7 @@
 /**
  * @file CostModels.h
  *
- * @brief Plutus cost models indexed by language.
+ * @brief Execution-cost models indexed by Plutus language identifier.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -46,7 +46,12 @@ struct cardano_costmdls_t;
 
 namespace Cometa
 {
-/** @brief Cost models indexed by Plutus language ID. */
+/**
+ * @brief Execution-cost models indexed by Plutus language identifier.
+ *
+ * A transaction can use several Plutus versions, each with its own model. languageViews() provides the
+ * encoding used when constructing the script-data hash.
+ */
 class CostModels
 {
   public:
@@ -245,82 +250,88 @@ class CostModels
 
   public:
 
-    /** @brief Gets the number of entries. @return The entry count. */
+    /**
+     * @brief Gets the number of entries.
+     * @return The entry count.
+     */
     std::size_t size() const;
 
-    /** @brief Copies all entries. @return Independent entries. */
+    /**
+     * @brief Copies all entries.
+     * @return Independent entries.
+     */
     std::vector<std::pair<std::uint8_t, CostModel>> entries() const;
 
   public:
 
     /**
-     * @brief Gets the begin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     iterator begin();
 
     /**
-     * @brief Gets the begin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     const_iterator begin() const;
 
     /**
-     * @brief Gets the end iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     iterator end();
 
     /**
-     * @brief Gets the end iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     const_iterator end() const;
 
     /**
-     * @brief Gets the rbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     reverse_iterator rbegin();
 
     /**
-     * @brief Gets the rbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator rbegin() const;
 
     /**
-     * @brief Gets the rend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     reverse_iterator rend();
 
     /**
-     * @brief Gets the rend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator rend() const;
 
     /**
-     * @brief Gets the cbegin iterator.
+     * @brief Returns an iterator to the first element.
      * @return The iterator.
      */
     const_iterator cbegin() const;
 
     /**
-     * @brief Gets the cend iterator.
+     * @brief Returns an iterator to the past-the-end position.
      * @return The iterator.
      */
     const_iterator cend() const;
 
     /**
-     * @brief Gets the crbegin iterator.
+     * @brief Returns an iterator to the last element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator crbegin() const;
 
     /**
-     * @brief Gets the crend iterator.
+     * @brief Returns an iterator to the position before the first element in reverse traversal.
      * @return The iterator.
      */
     const_reverse_iterator crend() const;
@@ -534,6 +545,10 @@ class CostModels
 
 /* PROTOTYPES ****************************************************************/
 
-/** @brief Exchanges collections. @param lhs The first collection. @param rhs The second collection. */
+/**
+ * @brief Exchanges collections.
+ * @param lhs The first collection.
+ * @param rhs The second collection.
+ */
 void swap(CostModels& lhs, CostModels& rhs) noexcept;
 } // namespace Cometa

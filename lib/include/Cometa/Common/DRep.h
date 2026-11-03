@@ -1,7 +1,7 @@
 /**
  * @file DRep.h
  *
- * @brief Delegated representative value.
+ * @brief A governance voting delegate or a predefined delegation choice.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -43,7 +43,10 @@ struct cardano_drep_t;
 namespace Cometa
 {
 /**
- * @brief A delegated representative or a predefined voting choice.
+ * @brief A governance voting delegate or a predefined delegation choice.
+ *
+ * Key and script delegates identify registered representatives. Always-abstain and always-no-
+ * confidence are special choices without an individual representative credential.
  */
 class DRep
 {

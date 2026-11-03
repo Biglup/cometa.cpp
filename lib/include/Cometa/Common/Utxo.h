@@ -1,7 +1,7 @@
 /**
  * @file Utxo.h
  *
- * @brief An unspent transaction output and its reference.
+ * @brief A transaction output together with the input reference that identifies it.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,12 @@ struct cardano_utxo_t;
 
 namespace Cometa
 {
-/** @brief An unspent transaction output and its reference. */
+/**
+ * @brief A transaction output together with the input reference that identifies it.
+ *
+ * The output supplies the address, value, datum, and reference script needed for balancing and
+ * evaluation. The reference identifies the transaction and output index to spend or read.
+ */
 class Utxo
 {
   public:

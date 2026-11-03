@@ -33,6 +33,8 @@
 
 namespace Cometa
 {
-/** @brief An ordered sequence of policy hashes, with standard vector operations. */
+/**
+ * @brief Minting-policy script hashes in application order. Each policy ID is a 28-byte hash.
+ */
 using PolicyIdList = std::vector<Blake2bHash>;
 } // namespace Cometa

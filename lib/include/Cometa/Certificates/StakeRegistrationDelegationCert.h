@@ -1,7 +1,7 @@
 /**
  * @file StakeRegistrationDelegationCert.h
  *
- * @brief Stake registration and delegation certificates.
+ * @brief Registers a staking credential and delegates it to a pool in one certificate.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,10 @@ struct cardano_stake_registration_delegation_cert_t;
 namespace Cometa
 {
 /**
- * @brief A stake registration and delegation certificate.
+ * @brief Registers a staking credential and delegates it to a pool in one certificate.
+ *
+ * Includes the registration deposit in lovelace. Use this form when the credential is not yet
+ * registered and pool delegation is required immediately.
  */
 class StakeRegistrationDelegationCert
 {

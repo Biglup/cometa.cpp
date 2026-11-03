@@ -1,7 +1,7 @@
 /**
  * @file PoolParams.h
  *
- * @brief Stake pool registration parameters.
+ * @brief The operational, reward, and ownership settings of a stake pool.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -49,7 +49,10 @@ struct cardano_pool_params_t;
 namespace Cometa
 {
 /**
- * @brief Stake pool registration parameters.
+ * @brief The operational, reward, and ownership settings of a stake pool.
+ *
+ * Used by PoolRegistrationCert to register or update a pool. Pledge and fixed cost are in lovelace;
+ * margin is the pool's fractional share of the remaining rewards.
  */
 class PoolParams
 {
@@ -112,114 +115,114 @@ class PoolParams
   public:
 
     /**
-     * @brief Gets the operator key hash.
+     * @brief Gets the stake pool operator identity.
      *
-     * @return An independent value.
+     * @return The 28-byte cold verification-key hash.
      */
     Blake2bHash operatorKeyHash() const;
 
     /**
      * @brief Replaces the operator key hash.
      *
-     * @param value The new 28-byte operator key hash to copy.
+     * @param value The 28-byte cold verification-key hash to use.
      */
     void setOperatorKeyHash(const Blake2bHash& value);
 
     /**
-     * @brief Gets the VRF key hash.
+     * @brief Gets the pool's verifiable random function key hash.
      *
-     * @return An independent value.
+     * @return The 32-byte VRF verification-key hash.
      */
     Blake2bHash vrfKeyHash() const;
 
     /**
      * @brief Replaces the VRF key hash.
      *
-     * @param value The new 32-byte VRF key hash to copy.
+     * @param value The 32-byte VRF verification-key hash to use.
      */
     void setVrfKeyHash(const Blake2bHash& value);
 
     /**
-     * @brief Gets the pledge amount.
+     * @brief Gets the pool owners' declared pledge.
      *
-     * @return The amount.
+     * @return The pledged amount in lovelace.
      */
     std::uint64_t pledge() const;
 
     /**
      * @brief Replaces the pledge amount.
      *
-     * @param value The new pledge amount to copy.
+     * @param value The pledged amount in lovelace to use.
      */
     void setPledge(std::uint64_t value);
 
     /**
-     * @brief Gets the pool cost.
+     * @brief Gets the pool's fixed reward cost per epoch.
      *
-     * @return The amount.
+     * @return The fixed cost in lovelace.
      */
     std::uint64_t cost() const;
 
     /**
      * @brief Replaces the pool cost.
      *
-     * @param value The new pool cost to copy.
+     * @param value The fixed cost in lovelace to use.
      */
     void setCost(std::uint64_t value);
 
     /**
-     * @brief Gets the pool margin.
+     * @brief Gets the pool's proportional reward margin.
      *
-     * @return An independent value.
+     * @return The fraction of rewards retained after the fixed cost.
      */
     UnitInterval margin() const;
 
     /**
      * @brief Replaces the pool margin.
      *
-     * @param value The new pool margin to copy.
+     * @param value The fraction of rewards retained after the fixed cost to use.
      */
     void setMargin(const UnitInterval& value);
 
     /**
-     * @brief Gets the reward address.
+     * @brief Gets the account receiving pool operator rewards.
      *
-     * @return An independent value.
+     * @return The pool reward address.
      */
     RewardAddress rewardAccount() const;
 
     /**
      * @brief Replaces the reward address.
      *
-     * @param value The new reward address to copy.
+     * @param value The pool reward address to use.
      */
     void setRewardAccount(const RewardAddress& value);
 
     /**
-     * @brief Gets the owner key hashes.
+     * @brief Gets the pool owner identities.
      *
-     * @return An independent value.
+     * @return The owners' staking key hashes.
      */
     PoolOwners owners() const;
 
     /**
      * @brief Replaces the owner key hashes.
      *
-     * @param value The new owner key hashes to copy.
+     * @param value The owners' staking key hashes to use.
      */
     void setOwners(const PoolOwners& value);
 
     /**
-     * @brief Gets the relay list.
+     * @brief Gets the advertised pool relay endpoints.
      *
-     * @return An independent value.
+     * @return The relay sequence.
      */
     Relays relays() const;
 
     /**
      * @brief Replaces the relay list.
      *
-     * @param value The new relay list to copy.
+     * @param value The relay sequence to use.
      */
     void setRelays(const Relays& value);
 

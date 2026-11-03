@@ -1,7 +1,7 @@
 /**
  * @file ScriptInvalidBefore.h
  *
- * @brief Requires the validity interval to start at or after a slot.
+ * @brief A native script requiring the transaction's validity interval to start at or after a slot.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -38,7 +38,12 @@ struct cardano_script_invalid_before_t;
 
 namespace Cometa
 {
-/** @brief Requires the validity interval to start at or after a slot. */
+/**
+ * @brief A native script requiring the transaction's validity interval to start at or after a slot.
+ *
+ * The slot is an inclusive lower bound. This rule constrains the interval declared by the transaction;
+ * it does not read a wall-clock timestamp.
+ */
 class ScriptInvalidBefore
 {
   public:

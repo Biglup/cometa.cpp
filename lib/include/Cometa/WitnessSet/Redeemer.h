@@ -1,7 +1,7 @@
 /**
  * @file Redeemer.h
  *
- * @brief Script redeemer data and execution budget.
+ * @brief A Plutus invocation identified by purpose and index, with data and an execution budget.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,12 @@ struct cardano_redeemer_t;
 
 namespace Cometa
 {
-/** @brief A script purpose, index, data value, and execution budget. */
+/**
+ * @brief A Plutus invocation identified by purpose and index, with data and an execution budget.
+ *
+ * The purpose selects a transaction component, and the index identifies it in ledger order.
+ * Rebalancing can change indices; DeferredRedeemer supports data that depends on the final layout.
+ */
 class Redeemer
 {
   public:

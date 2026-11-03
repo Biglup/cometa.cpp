@@ -214,6 +214,18 @@ void setHash(const Blake2bHash& hash);
   copied. Do not claim validation or exception guarantees that the code does not provide.
 - Keep implementation contracts in private/internal comments. These are checked
   by `check_docs` but excluded from the published API reference.
+- Type summaries should define the Cardano concept and explain when to use it. Add a
+  short distinction from related concepts when that prevents misuse, such as a
+  reward address versus a payment address, or a datum versus metadata.
+- Member descriptions must state the observable contract: units, inclusive or
+  exclusive bounds, index ordering, absent values, and meaningful failure cases.
+  Do not replace these with a restatement of the member name or "the current value".
+- Separate construction, serialization, evaluation, signing, submission, and
+  confirmation. Do not imply that completing one guarantees ledger acceptance.
+- Use short, compilable examples for workflows that need them. Keep examples in
+  `@code{.cpp}` blocks with logical spacing and relevant includes; avoid repeating
+  the same boilerplate on every getter. Put each parameter and return tag on its
+  own line. Link related types instead of repeating their complete explanation.
 - Keep documentation concise and specific. The [Microsoft writing style guide](https://learn.microsoft.com/en-us/style-guide/)
   is a useful reference for clear engineering documentation.
 

@@ -27,7 +27,11 @@
 
 namespace Cometa
 {
-/** @brief JSON context. */
+/**
+ * @brief Identifies the container currently being written by JsonWriter.
+ *
+ * Object contexts require property names before values; array contexts contain values without names.
+ */
 enum class JsonContext
 {
   /** @brief Root context. */

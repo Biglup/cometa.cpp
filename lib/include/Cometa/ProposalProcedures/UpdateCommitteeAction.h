@@ -1,7 +1,7 @@
 /**
  * @file UpdateCommitteeAction.h
  *
- * @brief Constitutional committee update action.
+ * @brief A governance action proposing committee membership and quorum changes.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -44,7 +44,12 @@ struct cardano_update_committee_action_t;
 
 namespace Cometa
 {
-/** @brief Committee member changes and a new quorum threshold. */
+/**
+ * @brief A governance action proposing committee membership and quorum changes.
+ *
+ * Removals identify cold credentials; additions pair cold credentials with expiry epochs. The quorum
+ * specifies the proposed voting threshold.
+ */
 class UpdateCommitteeAction
 {
   public:

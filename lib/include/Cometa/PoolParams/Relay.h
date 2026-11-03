@@ -1,7 +1,7 @@
 /**
  * @file Relay.h
  *
- * @brief A pool relay address or DNS-name variant.
+ * @brief A stake pool relay using an IP address, hostname, or DNS SRV record.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -44,7 +44,12 @@ struct cardano_relay_t;
 
 namespace Cometa
 {
-/** @brief A pool relay address or DNS-name variant. */
+/**
+ * @brief A stake pool relay using an IP address, hostname, or DNS SRV record.
+ *
+ * Inspect type() before extracting a particular relay form. PoolParams uses Relays to advertise the
+ * pool's relay endpoints.
+ */
 class Relay
 {
   public:

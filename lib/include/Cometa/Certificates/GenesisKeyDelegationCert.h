@@ -1,7 +1,7 @@
 /**
  * @file GenesisKeyDelegationCert.h
  *
- * @brief Historical genesis key delegation certificates.
+ * @brief A historical reassignment of a genesis key's delegation and VRF key.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -42,7 +42,10 @@ struct cardano_genesis_key_delegation_cert_t;
 namespace Cometa
 {
 /**
- * @brief A historical genesis key delegation certificate.
+ * @brief A historical reassignment of a genesis key's delegation and VRF key.
+ *
+ * This certificate belongs to the legacy genesis delegation mechanism. Its presence in the API
+ * supports historical data and does not imply acceptance in every era.
  */
 class GenesisKeyDelegationCert
 {

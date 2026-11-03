@@ -1,7 +1,7 @@
 /**
  * @file MirToPotCert.h
  *
- * @brief Historical MIR certificate values.
+ * @brief A historical transfer between the reserves and treasury accounting pots.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,9 @@ struct cardano_mir_to_pot_cert_t;
 namespace Cometa
 {
 /**
- * @brief A historical transfer between reserve and treasury accounting pots.
+ * @brief A historical transfer between the reserves and treasury accounting pots.
+ *
+ * The selected pot is the source; the other pot receives the amount. Amounts are in lovelace.
  */
 class MirToPotCert
 {

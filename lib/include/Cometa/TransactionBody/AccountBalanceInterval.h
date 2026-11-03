@@ -1,7 +1,7 @@
 /**
  * @file AccountBalanceInterval.h
  *
- * @brief Dijkstra account balance requirement.
+ * @brief An exact reward-account balance or a range with inclusive lower and exclusive upper bounds.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -39,7 +39,12 @@ struct cardano_account_balance_interval_t;
 
 namespace Cometa
 {
-/** @brief An exact account balance or an inclusive-to-exclusive range. */
+/**
+ * @brief An exact reward-account balance or a range with inclusive lower and exclusive upper bounds.
+ *
+ * Amounts are in lovelace. An absent range endpoint leaves that side unbounded. Dijkstra transactions
+ * use these constraints to state required account balances.
+ */
 class AccountBalanceInterval
 {
   public:

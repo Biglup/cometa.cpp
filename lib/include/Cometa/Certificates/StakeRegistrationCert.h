@@ -1,7 +1,7 @@
 /**
  * @file StakeRegistrationCert.h
  *
- * @brief Legacy stake registration certificates.
+ * @brief Registers a staking credential using the legacy certificate form.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -41,7 +41,10 @@ struct cardano_stake_registration_cert_t;
 namespace Cometa
 {
 /**
- * @brief A legacy stake registration certificate.
+ * @brief Registers a staking credential using the legacy certificate form.
+ *
+ * The certificate does not carry an explicit deposit amount. Use RegistrationCert when the transaction
+ * requires the deposit-bearing form.
  */
 class StakeRegistrationCert
 {
