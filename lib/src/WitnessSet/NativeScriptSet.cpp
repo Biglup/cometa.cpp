@@ -58,6 +58,8 @@ NativeScriptSet::NativeScriptSet(const NativeScriptSet& other)
 
 NativeScriptSet::NativeScriptSet(NativeScriptSet&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_materialized(std::exchange(other.m_materialized, false))
 {
 }
 
@@ -97,6 +99,7 @@ NativeScriptSet::add(const NativeScript& value)
 
   const NativeScript copy(value);
   checkCardanoError(cardano_native_script_set_add(checked(), copy.checked()), "NativeScriptSet add");
+  invalidateElements();
 }
 
 NativeScript
@@ -144,6 +147,8 @@ void
 NativeScriptSet::swap(NativeScriptSet& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  std::swap(m_materialized, other.m_materialized);
 }
 
 NativeScriptSet&
@@ -163,7 +168,9 @@ NativeScriptSet::operator=(NativeScriptSet&& other) noexcept
   if (this != &other)
   {
     cardano_native_script_set_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value        = std::exchange(other.m_value, nullptr);
+    m_elements     = std::move(other.m_elements);
+    m_materialized = std::exchange(other.m_materialized, false);
   }
   return *this;
 }
@@ -178,6 +185,189 @@ bool
 NativeScriptSet::operator!=(const NativeScriptSet& other) const
 {
   return !(*this == other);
+}
+
+NativeScriptSet::const_iterator
+NativeScriptSet::begin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+NativeScriptSet::const_iterator
+NativeScriptSet::end() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+NativeScriptSet::const_iterator
+NativeScriptSet::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+NativeScriptSet::const_iterator
+NativeScriptSet::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+NativeScriptSet::const_reverse_iterator
+NativeScriptSet::rbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+NativeScriptSet::const_reverse_iterator
+NativeScriptSet::rend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+NativeScriptSet::const_reverse_iterator
+NativeScriptSet::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+NativeScriptSet::const_reverse_iterator
+NativeScriptSet::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+NativeScriptSet::iterator
+NativeScriptSet::find(const value_type& value) const
+{
+  materialize();
+
+  for (iterator position = m_elements.cbegin(); position != m_elements.cend(); ++position)
+  {
+    if (sameKey(*position, value))
+    {
+      return position;
+    }
+  }
+
+  return m_elements.cend();
+}
+
+NativeScriptSet::size_type
+NativeScriptSet::count(const value_type& value) const
+{
+  return find(value) == end() ? 0U : 1U;
+}
+
+bool
+NativeScriptSet::empty() const
+{
+  return size() == 0;
+}
+
+bool
+NativeScriptSet::contains(const value_type& value) const
+{
+  return find(value) != end();
+}
+
+std::pair<NativeScriptSet::iterator, bool>
+NativeScriptSet::insert(const value_type& value)
+{
+  const iterator found = find(value);
+
+  if (found != end())
+  {
+    return { found, false };
+  }
+
+  NativeScriptSet replacement(*this);
+  replacement.add(value);
+  const iterator inserted = replacement.find(value);
+  swap(replacement);
+
+  return { inserted, true };
+}
+
+NativeScriptSet::iterator
+NativeScriptSet::insert(const_iterator hint, const value_type& value)
+{
+  (void)hint;
+
+  return insert(value).first;
+}
+
+void
+NativeScriptSet::clear()
+{
+  NativeScriptSet replacement;
+  replacement.setUseTag(useTag());
+
+  swap(replacement);
+}
+
+NativeScriptSet::iterator
+NativeScriptSet::erase(const_iterator position)
+{
+  return erase(position, std::next(position));
+}
+
+NativeScriptSet::iterator
+NativeScriptSet::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  const size_type start  = static_cast<size_type>(std::distance(cbegin(), first));
+  const size_type finish = static_cast<size_type>(std::distance(cbegin(), last));
+
+  if (start == finish)
+  {
+    return first;
+  }
+
+  NativeScriptSet replacement;
+  replacement.setUseTag(useTag());
+
+  for (size_type index = 0; index < m_elements.size(); ++index)
+  {
+    if (index < start || index >= finish)
+    {
+      replacement.add(m_elements[index]);
+    }
+  }
+
+  const iterator next = std::next(replacement.cbegin(), static_cast<difference_type>(start));
+  swap(replacement);
+
+  return next;
+}
+
+NativeScriptSet::size_type
+NativeScriptSet::erase(const value_type& value)
+{
+  const iterator position = find(value);
+
+  if (position == end())
+  {
+    return 0;
+  }
+
+  erase(position);
+
+  return 1;
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/
@@ -195,6 +385,40 @@ NativeScriptSet::checked() const
     throw std::logic_error("Cannot observe a moved-from NativeScriptSet");
   }
   return m_value;
+}
+
+void
+NativeScriptSet::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  std::vector<value_type> elements;
+  const size_type         elementCount = size();
+  elements.reserve(elementCount);
+
+  for (size_type index = 0; index < elementCount; ++index)
+  {
+    elements.push_back(at(index));
+  }
+
+  m_elements.swap(elements);
+  m_materialized = true;
+}
+
+void
+NativeScriptSet::invalidateElements() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+}
+
+bool
+NativeScriptSet::sameKey(const value_type& left, const value_type& right)
+{
+  return left.hash() == right.hash();
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/

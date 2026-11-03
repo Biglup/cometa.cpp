@@ -81,6 +81,10 @@ MultiAsset::MultiAsset(const MultiAsset& other)
 
 MultiAsset::MultiAsset(MultiAsset&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_encoding(std::move(other.m_encoding))
+, m_materialized(std::exchange(other.m_materialized, false))
+, m_mutableAccess(std::exchange(other.m_mutableAccess, false))
 {
 }
 
@@ -129,6 +133,11 @@ MultiAsset::fromCbor(std::string_view cborHex)
 std::size_t
 MultiAsset::policyCount() const
 {
+  if (m_materialized)
+  {
+    return m_elements.size();
+  }
+
   return cardano_multi_asset_get_policy_count(checked());
 }
 
@@ -161,6 +170,7 @@ MultiAsset::setAssets(const Blake2bHash& policyId, const AssetNameMap& assets)
   const AssetNameMap assetsCopy(assets);
 
   checkCardanoError(cardano_multi_asset_insert_assets(checked(), policyCopy.checked(), assetsCopy.checked()), "MultiAsset setAssets");
+  invalidateElements();
 }
 
 std::optional<std::int64_t>
@@ -202,6 +212,7 @@ MultiAsset::set(const Blake2bHash& policyId, const AssetName& name, std::int64_t
 
   checkCardanoError(cardano_multi_asset_set(copy.checked(), policyCopy.checked(), nameCopy.checked(), amount), "MultiAsset set");
   swap(copy);
+  invalidateElements();
 }
 
 void
@@ -213,6 +224,7 @@ MultiAsset::set(const AssetId& id, std::int64_t amount)
   }
 
   set(*id.policyId(), *id.assetName(), amount);
+  invalidateElements();
 }
 
 PolicyIdList
@@ -224,10 +236,10 @@ MultiAsset::policies() const
 
   checkCardanoError(status, "MultiAsset policies");
   PolicyIdList      result;
-  const std::size_t count = cardano_policy_id_list_get_length(owner.get());
-  result.reserve(count);
+  const std::size_t elementCount = cardano_policy_id_list_get_length(owner.get());
+  result.reserve(elementCount);
 
-  for (std::size_t i = 0; i < count; ++i)
+  for (std::size_t i = 0; i < elementCount; ++i)
   {
     cardano_blake2b_hash_t*                                           hash      = nullptr;
     const cardano_error_t                                             getResult = cardano_policy_id_list_get(owner.get(), i, &hash);
@@ -325,6 +337,10 @@ void
 MultiAsset::swap(MultiAsset& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  m_encoding.swap(other.m_encoding);
+  std::swap(m_materialized, other.m_materialized);
+  std::swap(m_mutableAccess, other.m_mutableAccess);
 }
 
 MultiAsset&
@@ -345,7 +361,11 @@ MultiAsset::operator=(MultiAsset&& other) noexcept
   if (this != &other)
   {
     cardano_multi_asset_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value         = std::exchange(other.m_value, nullptr);
+    m_elements      = std::move(other.m_elements);
+    m_encoding      = std::move(other.m_encoding);
+    m_materialized  = std::exchange(other.m_materialized, false);
+    m_mutableAccess = std::exchange(other.m_mutableAccess, false);
   }
 
   return *this;
@@ -429,6 +449,245 @@ MultiAsset::operator!=(const MultiAsset& other) const
   return !(*this == other);
 }
 
+MultiAsset::iterator
+MultiAsset::begin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.begin();
+}
+
+MultiAsset::const_iterator
+MultiAsset::begin() const
+{
+  materialize();
+
+  return m_elements.begin();
+}
+
+MultiAsset::iterator
+MultiAsset::end()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.end();
+}
+
+MultiAsset::const_iterator
+MultiAsset::end() const
+{
+  materialize();
+
+  return m_elements.end();
+}
+
+MultiAsset::reverse_iterator
+MultiAsset::rbegin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rbegin();
+}
+
+MultiAsset::const_reverse_iterator
+MultiAsset::rbegin() const
+{
+  materialize();
+
+  return m_elements.rbegin();
+}
+
+MultiAsset::reverse_iterator
+MultiAsset::rend()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rend();
+}
+
+MultiAsset::const_reverse_iterator
+MultiAsset::rend() const
+{
+  materialize();
+
+  return m_elements.rend();
+}
+
+MultiAsset::const_iterator
+MultiAsset::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+MultiAsset::const_iterator
+MultiAsset::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+MultiAsset::const_reverse_iterator
+MultiAsset::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+MultiAsset::const_reverse_iterator
+MultiAsset::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+MultiAsset::iterator
+MultiAsset::find(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.find(key);
+}
+
+MultiAsset::const_iterator
+MultiAsset::find(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.find(key);
+}
+
+MultiAsset::size_type
+MultiAsset::count(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.count(key);
+}
+
+bool
+MultiAsset::contains(const key_type& key) const
+{
+  return count(key) != 0;
+}
+
+MultiAsset::mapped_type&
+MultiAsset::at(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.at(key);
+}
+
+const MultiAsset::mapped_type&
+MultiAsset::at(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.at(key);
+}
+
+std::pair<MultiAsset::iterator, bool>
+MultiAsset::insert(const value_type& value)
+{
+  materialize();
+  const iterator existing = m_elements.find(value.first);
+
+  if (existing != m_elements.end())
+  {
+    m_mutableAccess = true;
+    return { existing, false };
+  }
+
+  MultiAsset validation;
+  validation.setAssets(value.first, value.second);
+  m_mutableAccess = true;
+
+  return m_elements.insert(value);
+}
+
+MultiAsset::iterator
+MultiAsset::insert(const_iterator position, const value_type& value)
+{
+  (void)position;
+
+  return insert(value).first;
+}
+
+std::pair<MultiAsset::iterator, bool>
+MultiAsset::insert_or_assign(const key_type& key, const mapped_type& value)
+{
+  materialize();
+  MultiAsset validation;
+  validation.setAssets(key, value);
+  m_mutableAccess = true;
+
+  return m_elements.insert_or_assign(key, value);
+}
+
+MultiAsset::mapped_type&
+MultiAsset::operator[](const key_type& key)
+{
+  return try_emplace(key).first->second;
+}
+
+MultiAsset::iterator
+MultiAsset::erase(const_iterator position)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(position);
+}
+
+MultiAsset::iterator
+MultiAsset::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(first, last);
+}
+
+MultiAsset::size_type
+MultiAsset::erase(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(key);
+}
+
+void
+MultiAsset::clear()
+{
+  materialize();
+  m_elements.clear();
+  m_mutableAccess = true;
+}
+
+MultiAsset::size_type
+MultiAsset::size() const
+{
+  return policyCount();
+}
+
+bool
+MultiAsset::empty() const
+{
+  return size() == 0;
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 MultiAsset::MultiAsset(cardano_multi_asset_t* value) noexcept
@@ -444,7 +703,96 @@ MultiAsset::checked() const
     throw std::logic_error("Cannot observe a moved-from MultiAsset");
   }
 
+  synchronize();
+
   return m_value;
+}
+
+void
+MultiAsset::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  const std::vector<std::pair<key_type, mapped_type>> entriesCopy = entries();
+  std::map<key_type, mapped_type, key_compare>        elements(compareKeys);
+
+  for (const std::pair<key_type, mapped_type>& entry: entriesCopy)
+  {
+    elements.emplace(entry.first, entry.second);
+  }
+
+  m_elements.swap(elements);
+
+  try
+  {
+    std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+    m_encoding.swap(encoding);
+    m_materialized = true;
+  }
+  catch (...)
+  {
+    m_elements.clear();
+    throw;
+  }
+}
+
+void
+MultiAsset::synchronize() const
+{
+  if (!m_materialized || !m_mutableAccess)
+  {
+    return;
+  }
+
+  std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+
+  if (encoding == m_encoding)
+  {
+    return;
+  }
+
+  MultiAsset replacement;
+
+  for (const value_type& entry: m_elements)
+  {
+    replacement.setAssets(entry.first, entry.second);
+  }
+
+  std::swap(m_value, replacement.m_value);
+  m_encoding.swap(encoding);
+}
+
+void
+MultiAsset::invalidateElements()
+{
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+}
+
+std::vector<std::vector<std::uint8_t>>
+MultiAsset::encodeElements() const
+{
+  std::vector<std::vector<std::uint8_t>> encoding;
+  encoding.reserve(m_elements.size() * 2);
+
+  for (const value_type& entry: m_elements)
+  {
+    encoding.push_back(entry.first.toCbor());
+    encoding.push_back(entry.second.toCbor());
+  }
+
+  return encoding;
+}
+
+bool
+MultiAsset::compareKeys(const key_type& left, const key_type& right)
+{
+  return left < right;
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/

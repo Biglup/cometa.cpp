@@ -143,6 +143,24 @@ requiring callers to interpret integers or include C headers. Keep each enum in
 its own header. Verify C/C++ enum mappings in unit tests, rather than scattering
 mapping `static_assert` declarations through library implementation files.
 
+## Collection interfaces
+
+Keep named domain collections and give them standard C++17 iterator interfaces.
+Use standard names such as `value_type`, `const_iterator`, `push_back`, and
+`insert_or_assign` for these operations. Existing domain operations retain their
+camelCase names. Match nearby collection headers and tests before extending them.
+
+Iterators must return actual element references, with no allocation or cloning on
+dereference. Sequences permit mutable elements; maps protect their keys while
+allowing mapped values to change. Sets protect element identity. Preserve domain
+ordering, duplicate handling, tags, and unchanged CBOR on reads. Do not replace an
+ordered, duplicate-preserving map with a unique-key map.
+
+Document iterator invalidation and meaningful complexity differences from standard
+containers. Edits through references must reach serialization and parent setters,
+including edits made after a previous serialization. Copies remain independent.
+Validate algorithms, allocation-failure recovery, and cleanup in unit tests.
+
 ## Documentation
 
 Follow the structured Doxygen pattern used by the headers:

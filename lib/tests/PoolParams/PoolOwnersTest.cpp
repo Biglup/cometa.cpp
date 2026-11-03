@@ -42,9 +42,9 @@ TEST(PoolOwners, InsertsUniqueSortedOwnerHashes)
   CborReader        expected("d9010282581c" + std::string(56, '0') + "581c" + std::string(56, '1'));
 
   // Act
-  const bool insertedSecond = owners.insert(second);
-  const bool insertedFirst  = owners.insert(first);
-  const bool duplicate      = owners.insert(first);
+  const bool insertedSecond = owners.insert(second).second;
+  const bool insertedFirst  = owners.insert(first).second;
+  const bool duplicate      = owners.insert(first).second;
 
   // Assert
   EXPECT_TRUE(insertedSecond);

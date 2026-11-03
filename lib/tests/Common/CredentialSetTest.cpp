@@ -46,9 +46,9 @@ TEST(CredentialSet, InsertsUniqueValuesInSortedOrder)
   CredentialSet    values;
 
   // Act
-  const bool insertedSecond = values.insert(second);
-  const bool insertedFirst  = values.insert(first);
-  const bool duplicate      = values.insert(first);
+  const bool insertedSecond = values.insert(second).second;
+  const bool insertedFirst  = values.insert(first).second;
+  const bool duplicate      = values.insert(first).second;
 
   // Assert
   EXPECT_TRUE(insertedFirst);

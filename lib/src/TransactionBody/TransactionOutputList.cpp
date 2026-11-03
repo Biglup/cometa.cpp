@@ -31,6 +31,10 @@
 #include <cardano/transaction_body/transaction_output.h>
 #include <cardano/transaction_body/transaction_output_list.h>
 
+#include <algorithm>
+#include <functional>
+#include <iterator>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -72,6 +76,10 @@ TransactionOutputList::TransactionOutputList(const TransactionOutputList& other)
 
 TransactionOutputList::TransactionOutputList(TransactionOutputList&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_encoding(std::move(other.m_encoding))
+, m_materialized(std::exchange(other.m_materialized, false))
+, m_mutableAccess(std::exchange(other.m_mutableAccess, false))
 {
 }
 
@@ -99,6 +107,11 @@ TransactionOutputList::fromCbor(std::string_view cborHex)
 std::size_t
 TransactionOutputList::size() const
 {
+  if (m_materialized)
+  {
+    return m_elements.size();
+  }
+
   return cardano_transaction_output_list_get_length(checked());
 }
 
@@ -108,29 +121,15 @@ TransactionOutputList::empty() const
   return size() == 0U;
 }
 
-TransactionOutput
-TransactionOutputList::at(std::size_t index) const
-{
-  if (index >= size())
-  {
-    throw std::out_of_range("TransactionOutputList index");
-  }
-
-  cardano_transaction_output_t* value  = nullptr;
-  const cardano_error_t         result = cardano_transaction_output_list_get(checked(), index, &value);
-
-  CardanoObject<cardano_transaction_output_t, cardano_transaction_output_unref> owner(value);
-
-  checkCardanoError(result, "TransactionOutputList at");
-
-  const TransactionOutput output(*owner.release());
-
-  return TransactionOutput(output);
-}
-
 void
 TransactionOutputList::pushBack(const TransactionOutput& output)
 {
+  if (m_materialized)
+  {
+    push_back(output);
+    return;
+  }
+
   TransactionOutput copy(output);
 
   checkCardanoError(cardano_transaction_output_list_add(checked(), copy.checked()), "TransactionOutputList pushBack");
@@ -168,6 +167,10 @@ void
 TransactionOutputList::swap(TransactionOutputList& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  m_encoding.swap(other.m_encoding);
+  std::swap(m_materialized, other.m_materialized);
+  std::swap(m_mutableAccess, other.m_mutableAccess);
 }
 
 TransactionOutputList&
@@ -189,7 +192,11 @@ TransactionOutputList::operator=(TransactionOutputList&& other) noexcept
   if (this != &other)
   {
     cardano_transaction_output_list_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value         = std::exchange(other.m_value, nullptr);
+    m_elements      = std::move(other.m_elements);
+    m_encoding      = std::move(other.m_encoding);
+    m_materialized  = std::exchange(other.m_materialized, false);
+    m_mutableAccess = std::exchange(other.m_mutableAccess, false);
   }
 
   return *this;
@@ -207,6 +214,264 @@ TransactionOutputList::operator!=(const TransactionOutputList& other) const
   return !(*this == other);
 }
 
+TransactionOutputList::const_reference
+TransactionOutputList::at(std::size_t index) const
+{
+  materialize();
+
+  return m_elements.at(index);
+}
+
+TransactionOutputList::iterator
+TransactionOutputList::begin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.begin();
+}
+
+TransactionOutputList::iterator
+TransactionOutputList::end()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.end();
+}
+
+TransactionOutputList::const_iterator
+TransactionOutputList::begin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+TransactionOutputList::const_iterator
+TransactionOutputList::end() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+TransactionOutputList::const_iterator
+TransactionOutputList::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+TransactionOutputList::const_iterator
+TransactionOutputList::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+TransactionOutputList::reverse_iterator
+TransactionOutputList::rbegin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rbegin();
+}
+
+TransactionOutputList::reverse_iterator
+TransactionOutputList::rend()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rend();
+}
+
+TransactionOutputList::const_reverse_iterator
+TransactionOutputList::rbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+TransactionOutputList::const_reverse_iterator
+TransactionOutputList::rend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+TransactionOutputList::const_reverse_iterator
+TransactionOutputList::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+TransactionOutputList::const_reverse_iterator
+TransactionOutputList::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+TransactionOutputList::reference
+TransactionOutputList::at(size_type index)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.at(index);
+}
+
+TransactionOutputList::reference
+TransactionOutputList::operator[](size_type index)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.operator[](index);
+}
+
+TransactionOutputList::const_reference
+TransactionOutputList::operator[](size_type index) const
+{
+  materialize();
+
+  return m_elements.operator[](index);
+}
+
+TransactionOutputList::reference
+TransactionOutputList::front()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.front();
+}
+
+TransactionOutputList::const_reference
+TransactionOutputList::front() const
+{
+  materialize();
+
+  return m_elements.front();
+}
+
+TransactionOutputList::reference
+TransactionOutputList::back()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.back();
+}
+
+TransactionOutputList::const_reference
+TransactionOutputList::back() const
+{
+  materialize();
+
+  return m_elements.back();
+}
+
+void
+TransactionOutputList::push_back(const value_type& value)
+{
+  materialize();
+  m_elements.push_back(value);
+  m_mutableAccess = true;
+}
+
+void
+TransactionOutputList::push_back(value_type&& value)
+{
+  materialize();
+  m_elements.push_back(std::move(value));
+  m_mutableAccess = true;
+}
+
+void
+TransactionOutputList::pop_back()
+{
+  materialize();
+  m_elements.pop_back();
+  m_mutableAccess = true;
+}
+
+void
+TransactionOutputList::clear()
+{
+  materialize();
+  m_elements.clear();
+  m_mutableAccess = true;
+}
+
+void
+TransactionOutputList::reserve(size_type count)
+{
+  materialize();
+  m_elements.reserve(count);
+}
+
+TransactionOutputList::size_type
+TransactionOutputList::capacity() const
+{
+  materialize();
+
+  return m_elements.capacity();
+}
+
+void
+TransactionOutputList::shrink_to_fit()
+{
+  materialize();
+  m_elements.shrink_to_fit();
+}
+
+TransactionOutputList::iterator
+TransactionOutputList::insert(const_iterator position, const value_type& value)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.insert(position, value);
+}
+
+TransactionOutputList::iterator
+TransactionOutputList::insert(const_iterator position, value_type&& value)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.insert(position, std::move(value));
+}
+
+TransactionOutputList::iterator
+TransactionOutputList::erase(const_iterator position)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(position);
+}
+
+TransactionOutputList::iterator
+TransactionOutputList::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(first, last);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 TransactionOutputList::TransactionOutputList(cardano_transaction_output_list_t& value) noexcept
@@ -222,6 +487,8 @@ TransactionOutputList::checked() const
     throw std::logic_error("Cannot observe a moved-from TransactionOutputList");
   }
 
+  synchronize();
+
   return m_value;
 }
 
@@ -234,6 +501,84 @@ TransactionOutputList::validate() const
   {
     at(index).validate();
   }
+}
+
+void
+TransactionOutputList::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  const size_type                        count = size();
+  std::vector<value_type>                elements;
+  std::vector<std::vector<std::uint8_t>> encoding;
+  elements.reserve(count);
+  encoding.reserve(count);
+
+  for (size_type index = 0; index < count; ++index)
+  {
+    elements.push_back(copyElement(index));
+    encoding.push_back(elements.back().toCbor());
+  }
+
+  m_elements.swap(elements);
+  m_encoding.swap(encoding);
+  m_materialized = true;
+}
+
+void
+TransactionOutputList::synchronize() const
+{
+  if (!m_materialized || !m_mutableAccess)
+  {
+    return;
+  }
+
+  std::vector<std::vector<std::uint8_t>> encoding;
+  encoding.reserve(m_elements.size());
+
+  std::transform(
+    m_elements.cbegin(),
+    m_elements.cend(),
+    std::back_inserter(encoding),
+    std::mem_fn(&value_type::toCbor));
+
+  if (encoding == m_encoding)
+  {
+    return;
+  }
+
+  TransactionOutputList replacement;
+
+  for (const value_type& value: m_elements)
+  {
+    replacement.pushBack(value);
+  }
+
+  std::swap(m_value, replacement.m_value);
+  m_encoding.swap(encoding);
+}
+
+TransactionOutput
+TransactionOutputList::copyElement(std::size_t index) const
+{
+  if (index >= size())
+  {
+    throw std::out_of_range("TransactionOutputList index");
+  }
+
+  cardano_transaction_output_t* value  = nullptr;
+  const cardano_error_t         result = cardano_transaction_output_list_get(checked(), index, &value);
+
+  CardanoObject<cardano_transaction_output_t, cardano_transaction_output_unref> owner(value);
+
+  checkCardanoError(result, "TransactionOutputList at");
+
+  const TransactionOutput output(*owner.release());
+
+  return TransactionOutput(output);
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/

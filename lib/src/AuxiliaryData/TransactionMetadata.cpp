@@ -62,6 +62,10 @@ TransactionMetadata::TransactionMetadata(const TransactionMetadata& other)
 
 TransactionMetadata::TransactionMetadata(TransactionMetadata&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_encoding(std::move(other.m_encoding))
+, m_materialized(std::exchange(other.m_materialized, false))
+, m_mutableAccess(std::exchange(other.m_mutableAccess, false))
 {
 }
 
@@ -89,6 +93,11 @@ TransactionMetadata::fromCbor(std::string_view cborHex)
 std::size_t
 TransactionMetadata::size() const
 {
+  if (m_materialized)
+  {
+    return m_elements.size();
+  }
+
   return cardano_transaction_metadata_get_length(checked());
 }
 
@@ -118,19 +127,6 @@ TransactionMetadata::get(std::uint64_t label) const
   return Metadatum(data);
 }
 
-Metadatum
-TransactionMetadata::at(std::uint64_t label) const
-{
-  const std::optional<Metadatum> value = get(label);
-
-  if (!value)
-  {
-    throw std::out_of_range("Metadata label not found");
-  }
-
-  return *value;
-}
-
 void
 TransactionMetadata::set(std::uint64_t label, const Metadatum& value)
 {
@@ -152,6 +148,7 @@ TransactionMetadata::set(std::uint64_t label, const Metadatum& value)
   }
 
   checkCardanoError(cardano_transaction_metadata_insert(checked(), label, copy.checked()), "TransactionMetadata set");
+  invalidateElements();
 }
 
 std::pair<std::uint64_t, Metadatum>
@@ -179,10 +176,10 @@ MetadatumLabelList
 TransactionMetadata::keys() const
 {
   MetadatumLabelList result;
-  const std::size_t  count = size();
-  result.reserve(count);
+  const std::size_t  elementCount = size();
+  result.reserve(elementCount);
 
-  for (std::size_t index = 0U; index < count; ++index)
+  for (std::size_t index = 0U; index < elementCount; ++index)
   {
     std::uint64_t label = 0U;
     checkCardanoError(cardano_transaction_metadata_get_key_at(checked(), index, &label), "TransactionMetadata keys");
@@ -196,10 +193,10 @@ std::vector<Metadatum>
 TransactionMetadata::values() const
 {
   std::vector<Metadatum> result;
-  const std::size_t      count = size();
-  result.reserve(count);
+  const std::size_t      elementCount = size();
+  result.reserve(elementCount);
 
-  for (std::size_t index = 0U; index < count; ++index)
+  for (std::size_t index = 0U; index < elementCount; ++index)
   {
     result.push_back(entryAt(index).second);
   }
@@ -211,10 +208,10 @@ std::vector<std::pair<std::uint64_t, Metadatum>>
 TransactionMetadata::entries() const
 {
   std::vector<std::pair<std::uint64_t, Metadatum>> result;
-  const std::size_t                                count = size();
-  result.reserve(count);
+  const std::size_t                                elementCount = size();
+  result.reserve(elementCount);
 
-  for (std::size_t index = 0U; index < count; ++index)
+  for (std::size_t index = 0U; index < elementCount; ++index)
   {
     result.push_back(entryAt(index));
   }
@@ -238,6 +235,10 @@ void
 TransactionMetadata::swap(TransactionMetadata& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  m_encoding.swap(other.m_encoding);
+  std::swap(m_materialized, other.m_materialized);
+  std::swap(m_mutableAccess, other.m_mutableAccess);
 }
 
 TransactionMetadata&
@@ -259,7 +260,11 @@ TransactionMetadata::operator=(TransactionMetadata&& other) noexcept
   if (this != &other)
   {
     cardano_transaction_metadata_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value         = std::exchange(other.m_value, nullptr);
+    m_elements      = std::move(other.m_elements);
+    m_encoding      = std::move(other.m_encoding);
+    m_materialized  = std::exchange(other.m_materialized, false);
+    m_mutableAccess = std::exchange(other.m_mutableAccess, false);
   }
 
   return *this;
@@ -277,6 +282,227 @@ TransactionMetadata::operator!=(const TransactionMetadata& other) const
   return !(*this == other);
 }
 
+TransactionMetadata::iterator
+TransactionMetadata::begin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.begin();
+}
+
+TransactionMetadata::const_iterator
+TransactionMetadata::begin() const
+{
+  materialize();
+
+  return m_elements.begin();
+}
+
+TransactionMetadata::iterator
+TransactionMetadata::end()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.end();
+}
+
+TransactionMetadata::const_iterator
+TransactionMetadata::end() const
+{
+  materialize();
+
+  return m_elements.end();
+}
+
+TransactionMetadata::reverse_iterator
+TransactionMetadata::rbegin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rbegin();
+}
+
+TransactionMetadata::const_reverse_iterator
+TransactionMetadata::rbegin() const
+{
+  materialize();
+
+  return m_elements.rbegin();
+}
+
+TransactionMetadata::reverse_iterator
+TransactionMetadata::rend()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rend();
+}
+
+TransactionMetadata::const_reverse_iterator
+TransactionMetadata::rend() const
+{
+  materialize();
+
+  return m_elements.rend();
+}
+
+TransactionMetadata::const_iterator
+TransactionMetadata::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+TransactionMetadata::const_iterator
+TransactionMetadata::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+TransactionMetadata::const_reverse_iterator
+TransactionMetadata::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+TransactionMetadata::const_reverse_iterator
+TransactionMetadata::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+TransactionMetadata::iterator
+TransactionMetadata::find(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.find(key);
+}
+
+TransactionMetadata::const_iterator
+TransactionMetadata::find(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.find(key);
+}
+
+TransactionMetadata::size_type
+TransactionMetadata::count(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.count(key);
+}
+
+bool
+TransactionMetadata::contains(const key_type& key) const
+{
+  return count(key) != 0;
+}
+
+TransactionMetadata::mapped_type&
+TransactionMetadata::at(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.at(key);
+}
+
+const TransactionMetadata::mapped_type&
+TransactionMetadata::at(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.at(key);
+}
+
+std::pair<TransactionMetadata::iterator, bool>
+TransactionMetadata::insert(const value_type& value)
+{
+  materialize();
+  const iterator existing = m_elements.find(value.first);
+
+  if (existing != m_elements.end())
+  {
+    m_mutableAccess = true;
+    return { existing, false };
+  }
+
+  TransactionMetadata validation;
+  validation.set(value.first, value.second);
+  m_mutableAccess = true;
+
+  return m_elements.insert(value);
+}
+
+TransactionMetadata::iterator
+TransactionMetadata::insert(const_iterator position, const value_type& value)
+{
+  (void)position;
+
+  return insert(value).first;
+}
+
+std::pair<TransactionMetadata::iterator, bool>
+TransactionMetadata::insert_or_assign(const key_type& key, const mapped_type& value)
+{
+  materialize();
+  TransactionMetadata validation;
+  validation.set(key, value);
+  m_mutableAccess = true;
+
+  return m_elements.insert_or_assign(key, value);
+}
+
+TransactionMetadata::iterator
+TransactionMetadata::erase(const_iterator position)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(position);
+}
+
+TransactionMetadata::iterator
+TransactionMetadata::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(first, last);
+}
+
+TransactionMetadata::size_type
+TransactionMetadata::erase(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(key);
+}
+
+void
+TransactionMetadata::clear()
+{
+  materialize();
+  m_elements.clear();
+  m_mutableAccess = true;
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 TransactionMetadata::TransactionMetadata(cardano_transaction_metadata_t& value) noexcept
@@ -291,6 +517,8 @@ TransactionMetadata::checked() const
   {
     throw std::logic_error("Cannot observe a moved-from TransactionMetadata");
   }
+
+  synchronize();
 
   return m_value;
 }
@@ -307,6 +535,94 @@ TransactionMetadata::validate() const
       throw std::invalid_argument("Duplicate metadata label");
     }
   }
+}
+
+void
+TransactionMetadata::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  const std::vector<std::pair<key_type, mapped_type>> entriesCopy = entries();
+  std::map<key_type, mapped_type, key_compare>        elements(compareKeys);
+
+  for (const std::pair<key_type, mapped_type>& entry: entriesCopy)
+  {
+    elements.emplace(entry.first, entry.second);
+  }
+
+  m_elements.swap(elements);
+
+  try
+  {
+    std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+    m_encoding.swap(encoding);
+    m_materialized = true;
+  }
+  catch (...)
+  {
+    m_elements.clear();
+    throw;
+  }
+}
+
+void
+TransactionMetadata::synchronize() const
+{
+  if (!m_materialized || !m_mutableAccess)
+  {
+    return;
+  }
+
+  std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+
+  if (encoding == m_encoding)
+  {
+    return;
+  }
+
+  TransactionMetadata replacement;
+
+  for (const value_type& entry: m_elements)
+  {
+    replacement.set(entry.first, entry.second);
+  }
+
+  std::swap(m_value, replacement.m_value);
+  m_encoding.swap(encoding);
+}
+
+void
+TransactionMetadata::invalidateElements()
+{
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+}
+
+std::vector<std::vector<std::uint8_t>>
+TransactionMetadata::encodeElements() const
+{
+  std::vector<std::vector<std::uint8_t>> encoding;
+  encoding.reserve(m_elements.size() * 2);
+
+  for (const value_type& entry: m_elements)
+  {
+    const std::string first = std::to_string(entry.first);
+    encoding.emplace_back(first.begin(), first.end());
+    encoding.push_back(entry.second.toCbor());
+  }
+
+  return encoding;
+}
+
+bool
+TransactionMetadata::compareKeys(const key_type& left, const key_type& right)
+{
+  return left < right;
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/

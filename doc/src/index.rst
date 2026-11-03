@@ -62,6 +62,7 @@ Cometa.cpp is licensed under the
    getting_started
    design
    error_handling
+   collections
 
 .. toctree::
    :hidden:

@@ -85,3 +85,27 @@ TEST(VkeyWitnessSet, ReplacesMatchingKeyAndAppliesIndependently)
   EXPECT_THROW(set.at(1), std::out_of_range);
   EXPECT_EQ(VkeyWitnessSet::fromCbor(set.toCbor()), set);
 }
+
+TEST(VkeyWitnessSet, StandardInsertRetainsExistingSignature)
+{
+  // Arrange
+  const Ed25519PublicKey key(std::vector<std::uint8_t>(32, 1));
+  const VkeyWitness      first(key, Ed25519Signature(std::vector<std::uint8_t>(64, 2)));
+  const VkeyWitness      replacement(key, Ed25519Signature(std::vector<std::uint8_t>(64, 3)));
+  VkeyWitnessSet         witnesses;
+  witnesses.add(first);
+
+  // Act
+  const std::pair<VkeyWitnessSet::iterator, bool> result = witnesses.insert(replacement);
+
+  // Assert
+  EXPECT_FALSE(result.second);
+  EXPECT_EQ(*result.first, first);
+  EXPECT_EQ(witnesses.size(), 1U);
+
+  // Act
+  witnesses.add(replacement);
+
+  // Assert
+  EXPECT_EQ(*witnesses.begin(), replacement);
+}

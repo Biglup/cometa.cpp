@@ -12,7 +12,7 @@ copies, so changing a returned credential does not alter membership.
 
    Cometa::CredentialSet credentials { paymentCredential };
 
-   const bool inserted = credentials.insert(stakeCredential);
+   const bool inserted = credentials.insert(stakeCredential).second;
 
    const std::vector<Cometa::Credential> snapshot = credentials.values();
    const std::vector<std::uint8_t>       cbor     = credentials.toCbor();

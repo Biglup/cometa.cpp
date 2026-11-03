@@ -58,6 +58,10 @@ CostModels::CostModels(const CostModels& other)
 
 CostModels::CostModels(CostModels&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_encoding(std::move(other.m_encoding))
+, m_materialized(std::exchange(other.m_materialized, false))
+, m_mutableAccess(std::exchange(other.m_mutableAccess, false))
 {
 }
 
@@ -83,12 +87,19 @@ CostModels::insert(const CostModel& model)
 {
   const CostModel copy(model);
   checkCardanoError(cardano_costmdls_insert(checked(), copy.checked()), "CostModels insert");
+  invalidateElements();
 }
 
 bool
 CostModels::contains(PlutusLanguageVersion language) const
 {
   return cardano_costmdls_has(checked(), static_cast<cardano_plutus_language_version_t>(language));
+}
+
+bool
+CostModels::contains(std::uint8_t languageId) const
+{
+  return count(languageId) != 0;
 }
 
 std::optional<CostModel>
@@ -151,6 +162,10 @@ void
 CostModels::swap(CostModels& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  m_encoding.swap(other.m_encoding);
+  std::swap(m_materialized, other.m_materialized);
+  std::swap(m_mutableAccess, other.m_mutableAccess);
 }
 
 CostModels&
@@ -170,7 +185,11 @@ CostModels::operator=(CostModels&& other) noexcept
   if (this != &other)
   {
     cardano_costmdls_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value         = std::exchange(other.m_value, nullptr);
+    m_elements      = std::move(other.m_elements);
+    m_encoding      = std::move(other.m_encoding);
+    m_materialized  = std::exchange(other.m_materialized, false);
+    m_mutableAccess = std::exchange(other.m_mutableAccess, false);
   }
   return *this;
 }
@@ -187,6 +206,255 @@ CostModels::operator!=(const CostModels& other) const
   return !(*this == other);
 }
 
+std::size_t
+CostModels::size() const
+{
+  if (m_materialized)
+  {
+    return m_elements.size();
+  }
+
+  return entries().size();
+}
+
+std::vector<std::pair<std::uint8_t, CostModel>>
+CostModels::entries() const
+{
+  std::vector<std::pair<std::uint8_t, CostModel>> result;
+  for (std::uint16_t language = 0; language <= 255; ++language)
+  {
+    const std::optional<CostModel> model = get(static_cast<std::uint8_t>(language));
+
+    if (model)
+    {
+      result.emplace_back(static_cast<std::uint8_t>(language), *model);
+    }
+  }
+
+  return result;
+}
+
+CostModels::iterator
+CostModels::begin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.begin();
+}
+
+CostModels::const_iterator
+CostModels::begin() const
+{
+  materialize();
+
+  return m_elements.begin();
+}
+
+CostModels::iterator
+CostModels::end()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.end();
+}
+
+CostModels::const_iterator
+CostModels::end() const
+{
+  materialize();
+
+  return m_elements.end();
+}
+
+CostModels::reverse_iterator
+CostModels::rbegin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rbegin();
+}
+
+CostModels::const_reverse_iterator
+CostModels::rbegin() const
+{
+  materialize();
+
+  return m_elements.rbegin();
+}
+
+CostModels::reverse_iterator
+CostModels::rend()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rend();
+}
+
+CostModels::const_reverse_iterator
+CostModels::rend() const
+{
+  materialize();
+
+  return m_elements.rend();
+}
+
+CostModels::const_iterator
+CostModels::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+CostModels::const_iterator
+CostModels::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+CostModels::const_reverse_iterator
+CostModels::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+CostModels::const_reverse_iterator
+CostModels::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+CostModels::iterator
+CostModels::find(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.find(key);
+}
+
+CostModels::const_iterator
+CostModels::find(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.find(key);
+}
+
+CostModels::size_type
+CostModels::count(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.count(key);
+}
+
+CostModels::mapped_type&
+CostModels::at(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.at(key);
+}
+
+const CostModels::mapped_type&
+CostModels::at(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.at(key);
+}
+
+std::pair<CostModels::iterator, bool>
+CostModels::insert(const value_type& value)
+{
+  materialize();
+  const iterator existing = m_elements.find(value.first);
+
+  if (existing != m_elements.end())
+  {
+    m_mutableAccess = true;
+    return { existing, false };
+  }
+
+  CostModels validation;
+  validation.putEntry(value.first, value.second);
+  m_mutableAccess = true;
+
+  return m_elements.insert(value);
+}
+
+CostModels::iterator
+CostModels::insert(const_iterator position, const value_type& value)
+{
+  (void)position;
+
+  return insert(value).first;
+}
+
+std::pair<CostModels::iterator, bool>
+CostModels::insert_or_assign(const key_type& key, const mapped_type& value)
+{
+  materialize();
+  CostModels validation;
+  validation.putEntry(key, value);
+  m_mutableAccess = true;
+
+  return m_elements.insert_or_assign(key, value);
+}
+
+CostModels::iterator
+CostModels::erase(const_iterator position)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(position);
+}
+
+CostModels::iterator
+CostModels::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(first, last);
+}
+
+CostModels::size_type
+CostModels::erase(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(key);
+}
+
+void
+CostModels::clear()
+{
+  materialize();
+  m_elements.clear();
+  m_mutableAccess = true;
+}
+
+bool
+CostModels::empty() const
+{
+  return size() == 0;
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 CostModels::CostModels(cardano_costmdls_t* value) noexcept
@@ -201,7 +469,108 @@ CostModels::checked() const
   {
     throw std::logic_error("Cannot observe a moved-from CostModels");
   }
+  synchronize();
+
   return m_value;
+}
+
+void
+CostModels::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  const std::vector<std::pair<key_type, mapped_type>> entriesCopy = entries();
+  std::map<key_type, mapped_type, key_compare>        elements(compareKeys);
+
+  for (const std::pair<key_type, mapped_type>& entry: entriesCopy)
+  {
+    elements.emplace(entry.first, entry.second);
+  }
+
+  m_elements.swap(elements);
+
+  try
+  {
+    std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+    m_encoding.swap(encoding);
+    m_materialized = true;
+  }
+  catch (...)
+  {
+    m_elements.clear();
+    throw;
+  }
+}
+
+void
+CostModels::synchronize() const
+{
+  if (!m_materialized || !m_mutableAccess)
+  {
+    return;
+  }
+
+  std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+
+  if (encoding == m_encoding)
+  {
+    return;
+  }
+
+  CostModels replacement;
+
+  for (const value_type& entry: m_elements)
+  {
+    replacement.putEntry(entry.first, entry.second);
+  }
+
+  std::swap(m_value, replacement.m_value);
+  m_encoding.swap(encoding);
+}
+
+void
+CostModels::invalidateElements()
+{
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+}
+
+std::vector<std::vector<std::uint8_t>>
+CostModels::encodeElements() const
+{
+  std::vector<std::vector<std::uint8_t>> encoding;
+  encoding.reserve(m_elements.size() * 2);
+
+  for (const value_type& entry: m_elements)
+  {
+    const std::string first = std::to_string(entry.first);
+    encoding.emplace_back(first.begin(), first.end());
+    encoding.push_back(entry.second.toCbor());
+  }
+
+  return encoding;
+}
+
+bool
+CostModels::compareKeys(const key_type& left, const key_type& right)
+{
+  return left < right;
+}
+
+void
+CostModels::putEntry(const std::uint8_t& key, const CostModel& value)
+{
+  if (key != value.languageId())
+  {
+    throw std::invalid_argument("Cost model language does not match the key");
+  }
+
+  insert(value);
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/
