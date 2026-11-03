@@ -48,7 +48,7 @@ TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::Cometa)
 
 ## Transaction examples
 
-The snippets below assume you have protocol parameters, a slot configuration, spendable UTxOs, and the addresses or script values used in each example. Each starts with a fresh builder. The linked files contain complete, runnable flows.
+The snippets below assume you have protocol parameters, a slot configuration, spendable UTxOs, and the addresses or script values used in each example. Transaction snippets start with a fresh builder; callback and extension snippets modify an existing one. The linked files contain complete, runnable flows.
 
 ### Multiple payments
 
@@ -84,7 +84,7 @@ Cometa::Transaction transaction = builder
 
 `asset` identifies a token under `policyScript`. See the [mint and burn example](examples/mint_burn_native_script_example.cpp) for policy construction, metadata, signing, and burning.
 
-### Treasury donation and governance
+### Treasury donation
 
 ```cpp
 Cometa::TransactionBuilder builder(parameters, slots);
@@ -96,7 +96,21 @@ Cometa::Transaction transaction = builder
   .build();
 ```
 
-For voting, add `builder.vote(voter, actionId, Cometa::VotingProcedure(Cometa::Vote::Yes))` before `build()`. See the [treasury donation](examples/donate_to_treasury_example.cpp), [DRep registration](examples/drep_pubkey_example.cpp), [proposal](examples/propose_treasury_withdrawal_example.cpp), and [voting](examples/vote_for_proposal_pubkey_example.cpp) examples.
+See the [treasury donation example](examples/donate_to_treasury_example.cpp).
+
+### Governance vote
+
+```cpp
+Cometa::TransactionBuilder builder(parameters, slots);
+
+Cometa::Transaction transaction = builder
+  .setUtxos(utxos)
+  .setChangeAddress(sender)
+  .vote(voter, actionId, Cometa::VotingProcedure(Cometa::Vote::Yes))
+  .build();
+```
+
+See the [DRep registration](examples/drep_pubkey_example.cpp), [proposal](examples/propose_treasury_withdrawal_example.cpp), and [voting](examples/vote_for_proposal_pubkey_example.cpp) examples for the required credentials and witnesses.
 
 ### Direct deposit
 
@@ -160,7 +174,7 @@ builder.addInputWithDeferredRedeemer(
   });
 ```
 
-The callback may run more than once while the builder balances, so it must be deterministic and avoid side effects. See the [self-index](examples/deferred_redeemer_self_index_example.cpp), [input/output pairing](examples/deferred_redeemer_batch_example.cpp), and [zero-withdrawal](examples/deferred_redeemer_withdraw_zero_example.cpp) examples.
+The callback may run more than once while the builder balances, so it must be deterministic and avoid side effects. Return the Plutus data shape expected by your validator. See the [self-index](examples/deferred_redeemer_self_index_example.cpp), [input/output pairing](examples/deferred_redeemer_batch_example.cpp), and [zero-withdrawal](examples/deferred_redeemer_withdraw_zero_example.cpp) examples.
 
 ## Extension points
 
