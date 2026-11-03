@@ -439,6 +439,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Crypto/Bip32PublicKeyTest.cpp
     lib/tests/Crypto/Bip32PrivateKeyTest.cpp
     lib/tests/Crypto/PrimitiveConformanceTest.cpp
+    lib/tests/CborConformanceTest.cpp
     lib/tests/Crypto/Blake2bHashSizeTest.cpp
     lib/tests/Crypto/Blake2bHashSetTest.cpp
     lib/tests/Crypto/Blake2bHashTest.cpp
