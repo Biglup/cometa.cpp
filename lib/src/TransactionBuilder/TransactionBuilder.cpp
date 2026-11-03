@@ -27,11 +27,13 @@
 
 #include "../CardanoInterop.h"
 #include "CoinSelectorAdapter.h"
+#include "DeferredRedeemerAdapter.h"
 #include "TransactionEvaluatorAdapter.h"
 
 #include <cardano/address/address.h>
 #include <cardano/address/reward_address.h>
 #include <cardano/assets/asset_id.h>
+#include <cardano/assets/asset_name.h>
 #include <cardano/auxiliary_data/metadatum.h>
 #include <cardano/common/credential.h>
 #include <cardano/common/datum.h>
@@ -156,6 +158,7 @@ TransactionBuilder::TransactionBuilder(TransactionBuilder&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
 , m_coinSelector(std::move(other.m_coinSelector))
 , m_evaluator(std::move(other.m_evaluator))
+, m_deferredRedeemers(std::move(other.m_deferredRedeemers))
 {
 }
 
@@ -307,6 +310,28 @@ TransactionBuilder::addInput(
 }
 
 TransactionBuilder&
+TransactionBuilder::addInputWithDeferredRedeemer(
+  const Utxo&                      utxo,
+  DeferredRedeemer                 callback,
+  const std::optional<PlutusData>& datum)
+{
+  if (!callback)
+  {
+    throw std::invalid_argument("Deferred redeemer callback is required");
+  }
+
+  CardanoObject<cardano_utxo_t, cardano_utxo_unref> nativeUtxo(
+    decodeCbor<cardano_utxo_t, cardano_utxo_unref>(utxo.toCbor(), cardano_utxo_from_cbor));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeDatum(copyPlutusData(datum));
+
+  std::unique_ptr<DeferredRedeemerContext> context(new DeferredRedeemerContext { std::move(callback), nullptr });
+  m_deferredRedeemers.push_back(std::move(context));
+  cardano_tx_builder_add_input_with_deferred_redeemer(
+    checked(), nativeUtxo.get(), &invokeDeferredRedeemer, m_deferredRedeemers.back().get(), nativeDatum.get());
+  return *this;
+}
+
+TransactionBuilder&
 TransactionBuilder::addOutput(const TransactionOutput& output)
 {
   CardanoObject<cardano_transaction_output_t, cardano_transaction_output_unref> native(
@@ -438,6 +463,33 @@ TransactionBuilder::mintToken(
 }
 
 TransactionBuilder&
+TransactionBuilder::mintTokenWithDeferredRedeemer(const AssetId& asset, std::int64_t amount, DeferredRedeemer callback)
+{
+  if (asset.isLovelace() || !callback)
+  {
+    throw std::invalid_argument("Minting requires a native asset and a deferred redeemer callback");
+  }
+
+  const std::vector<std::uint8_t>                                   policyBytes  = asset.policyId()->toBytes();
+  cardano_blake2b_hash_t*                                           policyValue  = nullptr;
+  const cardano_error_t                                             policyStatus = cardano_blake2b_hash_from_bytes(policyBytes.data(), policyBytes.size(), &policyValue);
+  CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> nativePolicy(policyValue);
+  checkCardanoError(policyStatus, "TransactionBuilder policy");
+
+  const std::vector<std::uint8_t>                               nameBytes  = asset.assetName()->toBytes();
+  cardano_asset_name_t*                                         nameValue  = nullptr;
+  const cardano_error_t                                         nameStatus = cardano_asset_name_from_bytes(byteData(nameBytes), nameBytes.size(), &nameValue);
+  CardanoObject<cardano_asset_name_t, cardano_asset_name_unref> nativeName(nameValue);
+  checkCardanoError(nameStatus, "TransactionBuilder asset name");
+
+  std::unique_ptr<DeferredRedeemerContext> context(new DeferredRedeemerContext { std::move(callback), nullptr });
+  m_deferredRedeemers.push_back(std::move(context));
+  cardano_tx_builder_mint_token_with_deferred_redeemer(
+    checked(), nativePolicy.get(), nativeName.get(), amount, &invokeDeferredRedeemer, m_deferredRedeemers.back().get());
+  return *this;
+}
+
+TransactionBuilder&
 TransactionBuilder::padSignerCount(std::size_t count)
 {
   cardano_tx_builder_pad_signer_count(checked(), count);
@@ -447,12 +499,25 @@ TransactionBuilder::padSignerCount(std::size_t count)
 Transaction
 TransactionBuilder::build()
 {
+  for (const std::unique_ptr<DeferredRedeemerContext>& context: m_deferredRedeemers)
+  {
+    context->error = nullptr;
+  }
+
   cardano_transaction_t*                                          value  = nullptr;
   const cardano_error_t                                           status = cardano_tx_builder_build(checked(), &value);
   CardanoObject<cardano_transaction_t, cardano_transaction_unref> owner(value);
 
   if (status != CARDANO_SUCCESS)
   {
+    for (const std::unique_ptr<DeferredRedeemerContext>& context: m_deferredRedeemers)
+    {
+      if (context->error)
+      {
+        std::rethrow_exception(context->error);
+      }
+    }
+
     const std::string message = std::string("TransactionBuilder build: ") + cardano_tx_builder_get_last_error(checked());
     throw Error(static_cast<ErrorCode>(status), message.c_str());
   }
@@ -466,9 +531,10 @@ TransactionBuilder::operator=(TransactionBuilder&& other) noexcept
   if (this != &other)
   {
     cardano_tx_builder_unref(&m_value);
-    m_value        = std::exchange(other.m_value, nullptr);
-    m_coinSelector = std::move(other.m_coinSelector);
-    m_evaluator    = std::move(other.m_evaluator);
+    m_value             = std::exchange(other.m_value, nullptr);
+    m_coinSelector      = std::move(other.m_coinSelector);
+    m_evaluator         = std::move(other.m_evaluator);
+    m_deferredRedeemers = std::move(other.m_deferredRedeemers);
   }
 
   return *this;

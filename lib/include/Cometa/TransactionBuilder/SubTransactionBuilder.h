@@ -35,13 +35,21 @@
 #include <Cometa/Transaction/SubTransaction.h>
 #include <Cometa/TransactionBody/TransactionOutput.h>
 #include <Cometa/TransactionBody/Value.h>
+#include <Cometa/TransactionBuilder/DeferredRedeemer.h>
 
 #include <cstdint>
+#include <memory>
 #include <optional>
+#include <vector>
 
 /* FORWARD DECLARATIONS ******************************************************/
 
 struct cardano_sub_tx_builder_t;
+
+namespace Cometa
+{
+struct DeferredRedeemerContext;
+} // namespace Cometa
 
 /* CLASS DECLARATION *********************************************************/
 
@@ -83,6 +91,12 @@ class SubTransactionBuilder
       const Utxo&                      utxo,
       const std::optional<PlutusData>& redeemer = std::nullopt,
       const std::optional<PlutusData>& datum    = std::nullopt);
+
+    /** @brief Adds an input with a redeemer produced from the final layout. @param utxo The output to spend. @param callback The deterministic producer. @param datum The datum, when needed. @return This builder. */
+    SubTransactionBuilder& addInputWithDeferredRedeemer(
+      const Utxo&                      utxo,
+      DeferredRedeemer                 callback,
+      const std::optional<PlutusData>& datum = std::nullopt);
 
     /** @brief Adds an output. @param output The output to add. @return This builder. */
     SubTransactionBuilder& addOutput(const TransactionOutput& output);
@@ -129,5 +143,8 @@ class SubTransactionBuilder
 
     /** @brief Owned native builder. */
     cardano_sub_tx_builder_t* m_value;
+
+    /** @brief Retained redeemer callbacks and their failure state. */
+    std::vector<std::unique_ptr<DeferredRedeemerContext>> m_deferredRedeemers;
 };
 } // namespace Cometa

@@ -57,8 +57,8 @@ cardano_credential_t,opaque object,lib/include/cardano/common/credential.h,P01a.
 cardano_credential_type_t,enum,lib/include/cardano/common/credential_type.h,P01a.1,implemented,CredentialType,lib/tests/Common/CredentialTest.cpp
 cardano_datum_t,opaque object,lib/include/cardano/common/datum.h,P05,implemented,Cometa::Datum,lib/tests/Common/DatumTest.cpp
 cardano_datum_type_t,enum,lib/include/cardano/common/datum_type.h,P05,implemented,Cometa::DatumType,lib/tests/Common/DatumTypeTest.cpp
-cardano_deferred_redeemer_fn_t,callback,lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,P23,planned,,
-cardano_deferred_redeemer_list_t,opaque object,lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,P23,planned,,
+cardano_deferred_redeemer_fn_t,callback,lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,P23,implemented,Cometa::DeferredRedeemer,lib/tests/TransactionBuilder/DeferredRedeemerAdapterTest.cpp
+cardano_deferred_redeemer_list_t,opaque object,lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,P23,internal,Native balancing state,lib/tests/TransactionBuilder/DeferredRedeemerAdapterTest.cpp
 cardano_derivation_path_t,struct,lib/include/cardano/key_handlers/derivation_path.h,P18,implemented,Cometa::DerivationPath,lib/tests/KeyHandlers/DerivationPathTest.cpp
 cardano_direct_deposit_map_t,opaque object,lib/include/cardano/transaction_body/direct_deposit_map.h,P16,implemented,Cometa::DirectDepositMap,lib/tests/TransactionBody/DirectDepositMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_drep_t,opaque object,lib/include/cardano/common/drep.h,P11,implemented,Cometa::DRep,lib/tests/Common/DRepTest.cpp; lib/tests/ValueContractTest.cpp

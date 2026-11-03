@@ -146,6 +146,22 @@ TEST(TransactionBuilder, ReportsBuildFailure)
   EXPECT_THROW(builder.build(), Error);
 }
 
+TEST(TransactionBuilder, RejectsMissingDeferredRedeemerCallback)
+{
+  // Arrange
+  const Address address = sampleAddress();
+  const Utxo    available(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(10000000)));
+  const AssetId      asset(Blake2bHash(std::vector<std::uint8_t>(28, 3)), AssetName(std::vector<std::uint8_t> { 'T' }));
+  TransactionBuilder builder(sampleParameters(), SlotConfig::forNetwork(NetworkMagic::Preprod));
+
+  // Act
+  // Assert
+  EXPECT_THROW(builder.addInputWithDeferredRedeemer(available, DeferredRedeemer()), std::invalid_argument);
+  EXPECT_THROW(builder.mintTokenWithDeferredRedeemer(asset, 1, DeferredRedeemer()), std::invalid_argument);
+}
+
 TEST(TransactionBuilder, MintsNativeToken)
 {
   // Arrange

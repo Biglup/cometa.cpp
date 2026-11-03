@@ -26,6 +26,7 @@
 #include <Cometa/TransactionBuilder/SubTransactionBuilder.h>
 
 #include "../CardanoInterop.h"
+#include "DeferredRedeemerAdapter.h"
 
 #include <cardano/address/address.h>
 #include <cardano/common/credential.h>
@@ -94,6 +95,7 @@ SubTransactionBuilder::SubTransactionBuilder(const ProtocolParameters& parameter
 
 SubTransactionBuilder::SubTransactionBuilder(SubTransactionBuilder&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_deferredRedeemers(std::move(other.m_deferredRedeemers))
 {
 }
 
@@ -135,6 +137,28 @@ SubTransactionBuilder::addInput(
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeDatum(copyPlutusData(datum));
 
   cardano_sub_tx_builder_add_input(checked(), nativeUtxo.get(), nativeRedeemer.get(), nativeDatum.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::addInputWithDeferredRedeemer(
+  const Utxo&                      utxo,
+  DeferredRedeemer                 callback,
+  const std::optional<PlutusData>& datum)
+{
+  if (!callback)
+  {
+    throw std::invalid_argument("Deferred redeemer callback is required");
+  }
+
+  CardanoObject<cardano_utxo_t, cardano_utxo_unref> nativeUtxo(
+    decodeCbor<cardano_utxo_t, cardano_utxo_unref>(utxo.toCbor(), cardano_utxo_from_cbor));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeDatum(copyPlutusData(datum));
+
+  std::unique_ptr<DeferredRedeemerContext> context(new DeferredRedeemerContext { std::move(callback), nullptr });
+  m_deferredRedeemers.push_back(std::move(context));
+  cardano_sub_tx_builder_add_input_with_deferred_redeemer(
+    checked(), nativeUtxo.get(), &invokeDeferredRedeemer, m_deferredRedeemers.back().get(), nativeDatum.get());
   return *this;
 }
 
@@ -190,12 +214,25 @@ SubTransactionBuilder::requireTopLevelGuard(
 SubTransaction
 SubTransactionBuilder::build()
 {
+  for (const std::unique_ptr<DeferredRedeemerContext>& context: m_deferredRedeemers)
+  {
+    context->error = nullptr;
+  }
+
   cardano_sub_transaction_t*                                              value  = nullptr;
   const cardano_error_t                                                   status = cardano_sub_tx_builder_build(checked(), &value);
   CardanoObject<cardano_sub_transaction_t, cardano_sub_transaction_unref> owner(value);
 
   if (status != CARDANO_SUCCESS)
   {
+    for (const std::unique_ptr<DeferredRedeemerContext>& context: m_deferredRedeemers)
+    {
+      if (context->error)
+      {
+        std::rethrow_exception(context->error);
+      }
+    }
+
     const std::string message = std::string("SubTransactionBuilder build: ") + cardano_sub_tx_builder_get_last_error(checked());
     throw Error(static_cast<ErrorCode>(status), message.c_str());
   }
@@ -209,7 +246,8 @@ SubTransactionBuilder::operator=(SubTransactionBuilder&& other) noexcept
   if (this != &other)
   {
     cardano_sub_tx_builder_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value             = std::exchange(other.m_value, nullptr);
+    m_deferredRedeemers = std::move(other.m_deferredRedeemers);
   }
 
   return *this;

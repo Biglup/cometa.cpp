@@ -202,6 +202,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/TransactionBuilder/ProviderTransactionEvaluator.cpp
   lib/src/TransactionBuilder/TransactionBuilder.cpp
   lib/src/TransactionBuilder/SubTransactionBuilder.cpp
+  lib/src/TransactionBuilder/DeferredRedeemerAdapter.cpp
   lib/src/Transaction/SubTransactionSet.cpp
   lib/src/Common/CredentialSet.cpp
   lib/src/Common/Credential.cpp
@@ -456,6 +457,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp
     lib/tests/TransactionBuilder/TransactionBuilderTest.cpp
     lib/tests/TransactionBuilder/SubTransactionBuilderTest.cpp
+    lib/tests/TransactionBuilder/DeferredRedeemerAdapterTest.cpp
     lib/tests/Transaction/SubTransactionSetTest.cpp
     lib/tests/ValueContractTest.cpp
   )

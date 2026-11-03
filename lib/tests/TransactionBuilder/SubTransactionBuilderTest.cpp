@@ -113,3 +113,17 @@ TEST(SubTransactionBuilder, RejectsSecondBuild)
   EXPECT_EQ(transaction.body().inputs().size(), 1U);
   EXPECT_THROW(builder.build(), Error);
 }
+
+TEST(SubTransactionBuilder, RejectsMissingDeferredRedeemerCallback)
+{
+  // Arrange
+  const Address address = sampleAddress();
+  const Utxo    party(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(5000000)));
+  SubTransactionBuilder builder(sampleParameters(), SlotConfig::forNetwork(NetworkMagic::Preprod));
+
+  // Act
+  // Assert
+  EXPECT_THROW(builder.addInputWithDeferredRedeemer(party, DeferredRedeemer()), std::invalid_argument);
+}

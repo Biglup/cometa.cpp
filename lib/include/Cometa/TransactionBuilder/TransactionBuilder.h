@@ -44,16 +44,23 @@
 #include <Cometa/TransactionBody/TransactionOutput.h>
 #include <Cometa/TransactionBody/Value.h>
 #include <Cometa/TransactionBuilder/CoinSelector.h>
+#include <Cometa/TransactionBuilder/DeferredRedeemer.h>
 #include <Cometa/TransactionBuilder/TransactionEvaluator.h>
 
 #include <cstddef>
 #include <cstdint>
 #include <memory>
 #include <optional>
+#include <vector>
 
 /* FORWARD DECLARATIONS ******************************************************/
 
 struct cardano_tx_builder_t;
+
+namespace Cometa
+{
+struct DeferredRedeemerContext;
+} // namespace Cometa
 
 /* CLASS DECLARATION *********************************************************/
 
@@ -136,6 +143,12 @@ class TransactionBuilder
       const std::optional<PlutusData>& redeemer = std::nullopt,
       const std::optional<PlutusData>& datum    = std::nullopt);
 
+    /** @brief Adds an input with a redeemer produced after balancing. @param utxo The output to spend. @param callback The deterministic producer. @param datum The datum, when needed. @return This builder. */
+    TransactionBuilder& addInputWithDeferredRedeemer(
+      const Utxo&                      utxo,
+      DeferredRedeemer                 callback,
+      const std::optional<PlutusData>& datum = std::nullopt);
+
     /** @brief Adds an output. @param output The output to add. @return This builder. */
     TransactionBuilder& addOutput(const TransactionOutput& output);
 
@@ -181,6 +194,9 @@ class TransactionBuilder
       std::int64_t                     amount,
       const std::optional<PlutusData>& redeemer = std::nullopt);
 
+    /** @brief Mints an asset with a redeemer produced after balancing. @param asset The asset. @param amount The signed quantity. @param callback The deterministic producer. @return This builder. */
+    TransactionBuilder& mintTokenWithDeferredRedeemer(const AssetId& asset, std::int64_t amount, DeferredRedeemer callback);
+
     /** @brief Reserves witness space for signing keys. @param count The number of keys. @return This builder. */
     TransactionBuilder& padSignerCount(std::size_t count);
 
@@ -213,5 +229,8 @@ class TransactionBuilder
 
     /** @brief Retained execution evaluator, when configured. */
     std::shared_ptr<TransactionEvaluator> m_evaluator;
+
+    /** @brief Retained redeemer callbacks and their failure state. */
+    std::vector<std::unique_ptr<DeferredRedeemerContext>> m_deferredRedeemers;
 };
 } // namespace Cometa
