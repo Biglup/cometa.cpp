@@ -567,6 +567,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp
     lib/tests/TransactionBuilder/TransactionBuilderTest.cpp
     lib/tests/TransactionBuilder/BuilderConformanceTest.cpp
+    lib/tests/TransactionBuilder/LifecycleConformanceTest.cpp
     lib/tests/TransactionBuilder/SubTransactionBuilderTest.cpp
     lib/tests/TransactionBuilder/DeferredRedeemerAdapterTest.cpp
     lib/tests/Transaction/SubTransactionSetTest.cpp
