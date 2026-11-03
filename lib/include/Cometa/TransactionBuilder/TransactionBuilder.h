@@ -26,6 +26,7 @@
 /* INCLUDES ******************************************************************/
 
 #include <Cometa/Address/Address.h>
+#include <Cometa/Address/RewardAddress.h>
 #include <Cometa/Assets/AssetId.h>
 #include <Cometa/AuxiliaryData/Metadatum.h>
 #include <Cometa/Common/Credential.h>
@@ -37,7 +38,9 @@
 #include <Cometa/ProtocolParams/ProtocolParameters.h>
 #include <Cometa/Scripts/Script.h>
 #include <Cometa/SlotConfig.h>
+#include <Cometa/Transaction/SubTransaction.h>
 #include <Cometa/Transaction/Transaction.h>
+#include <Cometa/TransactionBody/AccountBalanceInterval.h>
 #include <Cometa/TransactionBody/TransactionOutput.h>
 #include <Cometa/TransactionBody/Value.h>
 #include <Cometa/TransactionBuilder/CoinSelector.h>
@@ -153,6 +156,18 @@ class TransactionBuilder
 
     /** @brief Adds transaction metadata. @param tag The metadata label. @param value The metadata value. @return This builder. */
     TransactionBuilder& setMetadata(std::uint64_t tag, const Metadatum& value);
+
+    /** @brief Adds a direct reward-account deposit. @param address The reward account. @param lovelace The amount. @return This builder. */
+    TransactionBuilder& addDirectDeposit(const RewardAddress& address, std::uint64_t lovelace);
+
+    /** @brief Adds an account balance bound. @param address The reward account. @param interval The allowed balance. @return This builder. */
+    TransactionBuilder& addAccountBalanceInterval(const RewardAddress& address, const AccountBalanceInterval& interval);
+
+    /** @brief Adds a starting account balance bound. @param address The reward account. @param interval The starting balance. @return This builder. */
+    TransactionBuilder& addStartingAccountBalanceInterval(const RewardAddress& address, const AccountBalanceInterval& interval);
+
+    /** @brief Adds a signed sub-transaction. @param transaction The sub-transaction. @param resolvedUtxos Its resolved inputs. @return This builder. */
+    TransactionBuilder& addSubTransaction(const SubTransaction& transaction, const UtxoList& resolvedUtxos);
 
     /**
      * @brief Mints or burns a native asset.

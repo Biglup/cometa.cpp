@@ -30,6 +30,7 @@
 #include "TransactionEvaluatorAdapter.h"
 
 #include <cardano/address/address.h>
+#include <cardano/address/reward_address.h>
 #include <cardano/assets/asset_id.h>
 #include <cardano/auxiliary_data/metadatum.h>
 #include <cardano/common/credential.h>
@@ -40,7 +41,9 @@
 #include <cardano/plutus_data/plutus_data.h>
 #include <cardano/scripts/script.h>
 #include <cardano/slot_config.h>
+#include <cardano/transaction/sub_transaction.h>
 #include <cardano/transaction/transaction.h>
+#include <cardano/transaction_body/account_balance_interval.h>
 #include <cardano/transaction_body/transaction_output.h>
 #include <cardano/transaction_body/value.h>
 #include <cardano/transaction_builder/coin_selection/coin_selector.h>
@@ -70,6 +73,22 @@ copyAddress(const Address& address)
   const cardano_error_t                                   status = cardano_address_from_bytes(bytes.data(), bytes.size(), &value);
   CardanoObject<cardano_address_t, cardano_address_unref> owner(value);
   checkCardanoError(status, "TransactionBuilder address");
+  return owner.release();
+}
+
+/**
+ * @brief Copies a reward address to native storage.
+ * @param address The address to copy.
+ * @return An owned native reward address.
+ */
+cardano_reward_address_t*
+copyRewardAddress(const RewardAddress& address)
+{
+  const std::vector<std::uint8_t>                                       bytes  = address.toBytes();
+  cardano_reward_address_t*                                             value  = nullptr;
+  const cardano_error_t                                                 status = cardano_reward_address_from_bytes(bytes.data(), bytes.size(), &value);
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> owner(value);
+  checkCardanoError(status, "TransactionBuilder reward address");
   return owner.release();
 }
 
@@ -352,6 +371,47 @@ TransactionBuilder::setMetadata(std::uint64_t tag, const Metadatum& value)
   CardanoObject<cardano_metadatum_t, cardano_metadatum_unref> native(
     decodeCbor<cardano_metadatum_t, cardano_metadatum_unref>(value.toCbor(), cardano_metadatum_from_cbor));
   cardano_tx_builder_set_metadata(checked(), tag, native.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::addDirectDeposit(const RewardAddress& address, std::uint64_t lovelace)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> native(copyRewardAddress(address));
+  cardano_tx_builder_add_direct_deposit(checked(), native.get(), lovelace);
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::addAccountBalanceInterval(const RewardAddress& address, const AccountBalanceInterval& interval)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref>                     nativeAddress(copyRewardAddress(address));
+  CardanoObject<cardano_account_balance_interval_t, cardano_account_balance_interval_unref> nativeInterval(
+    decodeCbor<cardano_account_balance_interval_t, cardano_account_balance_interval_unref>(
+      interval.toCbor(), cardano_account_balance_interval_from_cbor));
+  cardano_tx_builder_add_account_balance_interval(checked(), nativeAddress.get(), nativeInterval.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::addStartingAccountBalanceInterval(const RewardAddress& address, const AccountBalanceInterval& interval)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref>                     nativeAddress(copyRewardAddress(address));
+  CardanoObject<cardano_account_balance_interval_t, cardano_account_balance_interval_unref> nativeInterval(
+    decodeCbor<cardano_account_balance_interval_t, cardano_account_balance_interval_unref>(
+      interval.toCbor(), cardano_account_balance_interval_from_cbor));
+  cardano_tx_builder_add_starting_account_balance_interval(checked(), nativeAddress.get(), nativeInterval.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::addSubTransaction(const SubTransaction& transaction, const UtxoList& resolvedUtxos)
+{
+  CardanoObject<cardano_sub_transaction_t, cardano_sub_transaction_unref> nativeTransaction(
+    decodeCbor<cardano_sub_transaction_t, cardano_sub_transaction_unref>(
+      transaction.toCbor(), cardano_sub_transaction_from_cbor));
+  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeUtxos(copyUtxos(resolvedUtxos));
+  cardano_tx_builder_add_sub_transaction(checked(), nativeTransaction.get(), nativeUtxos.get());
   return *this;
 }
 

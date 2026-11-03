@@ -202,3 +202,57 @@ TEST(TransactionBuilder, LocksScriptOutputWithDatumAndMetadata)
   EXPECT_TRUE(transaction.auxiliaryData().has_value());
   ASSERT_TRUE(transaction.auxiliaryData()->metadata().has_value());
 }
+
+TEST(TransactionBuilder, BuildsDirectDepositAndBalanceBounds)
+{
+  // Arrange
+  ProtocolParameters parameters = sampleParameters();
+  parameters.setProtocolVersion(ProtocolVersion(12, 0));
+  const Address       address = sampleAddress();
+  const Credential    credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  const RewardAddress reward(NetworkId::Testnet, credential);
+  const Utxo          available(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(10000000)));
+  TransactionBuilder builder(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.setChangeAddress(address)
+    .setUtxos({ available })
+    .addDirectDeposit(reward, 2000000)
+    .addAccountBalanceInterval(reward, AccountBalanceInterval(0, 10000000))
+    .addStartingAccountBalanceInterval(reward, AccountBalanceInterval(0, 10000000));
+
+  // Act
+  const Transaction transaction = builder.build();
+
+  // Assert
+  EXPECT_TRUE(transaction.body().directDeposits().has_value());
+  EXPECT_TRUE(transaction.body().accountBalanceIntervals().has_value());
+  EXPECT_TRUE(transaction.body().startingAccountBalanceIntervals().has_value());
+}
+
+TEST(TransactionBuilder, IncludesSubTransaction)
+{
+  // Arrange
+  ProtocolParameters parameters = sampleParameters();
+  parameters.setProtocolVersion(ProtocolVersion(12, 0));
+  const Address address = sampleAddress();
+  const Utxo    funding(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(10000000)));
+  const Utxo party(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 3)), 0),
+    TransactionOutput(address, Value(5000000)));
+  const SubTransactionBody subBody(
+    TransactionInputSet({ party.input() }),
+    TransactionOutputList({ TransactionOutput(address, Value(5000000)) }));
+  const SubTransaction subTransaction(subBody, WitnessSet());
+  TransactionBuilder   builder(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.setChangeAddress(address).setUtxos({ funding }).addSubTransaction(subTransaction, { party });
+
+  // Act
+  const Transaction transaction = builder.build();
+
+  // Assert
+  ASSERT_TRUE(transaction.body().subTransactions().has_value());
+  EXPECT_EQ(transaction.body().subTransactions()->size(), 1U);
+}
