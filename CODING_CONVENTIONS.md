@@ -251,6 +251,13 @@ Leave a blank line between constructing a transaction builder and its first
 configuration call. Use C++ digit separators for lovelace and other long
 decimal quantities so examples are easy to scan.
 
+Keep the README example-led: a short introduction, installation, practical API
+examples, and links to the full documentation. Avoid repeating setup explanations
+around each snippet or including build internals and exhaustive API catalogs.
+Use Cometa.py as a reference for the direct, usage-focused presentation and
+README header: centered logo, a separate badge row, and navigation links between
+horizontal rules.
+
 ## Implementation PRs
 
 Stack successive implementation PRs on the preceding branch rather than waiting
