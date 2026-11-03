@@ -40,11 +40,11 @@ The project key is supplied at runtime.
 Distribution
 ------------
 
-Each platform ZIP contains the C++ headers, static Cometa archive, static
-cardano-c archive, licenses, and a relocatable CMake package. Keeping the
-archives separate preserves normal linker behavior. The optional curl target
-contains Cometa's transport code as a static archive and links to the platform's
-libcurl installation; libcurl and its transitive dependencies are not bundled.
+Each platform ZIP contains the C++ headers, static and shared Cometa libraries,
+the static cardano-c archive, licenses, and a relocatable CMake package. The
+shared Cometa library includes cardano-c. The optional curl transport is
+available in both link modes. It uses the platform's libcurl installation;
+libcurl and its transitive dependencies are not bundled.
 
 The CI and release matrix covers Linux x64/ARM64, macOS x64/ARM64, and Windows
 x64 with MSVC. The cardano-c source revision is pinned in

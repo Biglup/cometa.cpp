@@ -11,6 +11,7 @@ INCLUDE (CMakePackageConfigHelpers)
 OPTION (COMETA_BUILD_TESTS "Build unit tests" ON)
 OPTION (COMETA_BUILD_DOCS "Build documentation" OFF)
 OPTION (COMETA_BUILD_EXAMPLES "Build C++ examples" ON)
+OPTION (COMETA_BUILD_SHARED "Build shared Cometa libraries" ON)
 OPTION (COMETA_BUILD_CURL_TRANSPORT "Build the libcurl HTTP transport when available" ON)
 SET (COMETA_CARDANO_SOURCE_DIR "" CACHE PATH "Local cardano-c checkout with deep-clone APIs")
 
@@ -213,6 +214,25 @@ ADD_LIBRARY (cometa STATIC
 
 ADD_LIBRARY (Cometa::cometa ALIAS cometa)
 
+IF (COMETA_BUILD_SHARED)
+  GET_TARGET_PROPERTY (cometa_sources cometa SOURCES)
+  ADD_LIBRARY (cometa-shared SHARED ${cometa_sources})
+  ADD_LIBRARY (Cometa::cometa_shared ALIAS cometa-shared)
+
+  SET_TARGET_PROPERTIES (cometa-shared PROPERTIES
+    OUTPUT_NAME                 cometa
+    ARCHIVE_OUTPUT_NAME         cometa-shared
+    EXPORT_NAME                 cometa_shared
+    VERSION                     ${PROJECT_VERSION}
+    SOVERSION                   ${PROJECT_VERSION_MAJOR}
+    WINDOWS_EXPORT_ALL_SYMBOLS ON
+  )
+
+  IF (APPLE)
+    SET_TARGET_PROPERTIES (cometa-shared PROPERTIES INSTALL_NAME_DIR "@rpath")
+  ENDIF ()
+ENDIF ()
+
 SET (COMETA_HAS_CURL OFF)
 
 IF (COMETA_BUILD_CURL_TRANSPORT)
@@ -242,7 +262,54 @@ IF (COMETA_BUILD_CURL_TRANSPORT)
       TARGET_COMPILE_OPTIONS (cometa-curl PRIVATE -Wall -Wextra -Wpedantic -Werror)
     ENDIF ()
 
-    INSTALL (TARGETS cometa-curl EXPORT CometaTargets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    INSTALL (TARGETS cometa-curl EXPORT CometaCurlTargets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+    IF (COMETA_BUILD_SHARED)
+      ADD_LIBRARY (cometa-curl-shared SHARED lib/src/Providers/CurlHttpTransport.cpp)
+      ADD_LIBRARY (Cometa::curl_shared ALIAS cometa-curl-shared)
+
+      TARGET_COMPILE_FEATURES (cometa-curl-shared PUBLIC cxx_std_17)
+      TARGET_INCLUDE_DIRECTORIES (cometa-curl-shared
+        PUBLIC
+          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/include>
+          $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+      )
+      TARGET_LINK_LIBRARIES (cometa-curl-shared PUBLIC Cometa::cometa_shared CURL::libcurl)
+
+      SET_TARGET_PROPERTIES (cometa-curl-shared PROPERTIES
+        CXX_EXTENSIONS            OFF
+        OUTPUT_NAME               cometa-curl
+        ARCHIVE_OUTPUT_NAME       cometa-curl-shared
+        EXPORT_NAME               curl_shared
+        VERSION                   ${PROJECT_VERSION}
+        SOVERSION                 ${PROJECT_VERSION_MAJOR}
+        WINDOWS_EXPORT_ALL_SYMBOLS ON
+      )
+
+      IF (UNIX AND NOT APPLE)
+        SET_TARGET_PROPERTIES (cometa-curl-shared PROPERTIES INSTALL_RPATH "$ORIGIN")
+      ENDIF ()
+
+      IF (APPLE)
+        SET_TARGET_PROPERTIES (cometa-curl-shared PROPERTIES
+          INSTALL_NAME_DIR "@rpath"
+          INSTALL_RPATH     "@loader_path"
+        )
+      ENDIF ()
+
+      IF (MSVC)
+        TARGET_COMPILE_OPTIONS (cometa-curl-shared PRIVATE /W4 /WX)
+      ELSE ()
+        TARGET_COMPILE_OPTIONS (cometa-curl-shared PRIVATE -Wall -Wextra -Wpedantic -Werror)
+      ENDIF ()
+
+      INSTALL (TARGETS cometa-curl-shared EXPORT CometaCurlTargets
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+      )
+    ENDIF ()
+
     SET (COMETA_HAS_CURL ON)
   ENDIF ()
 ENDIF ()
@@ -320,6 +387,10 @@ ENDIF ()
 
 TARGET_COMPILE_FEATURES (cometa PUBLIC cxx_std_17)
 
+IF (COMETA_BUILD_SHARED)
+  TARGET_COMPILE_FEATURES (cometa-shared PUBLIC cxx_std_17)
+ENDIF ()
+
 TARGET_INCLUDE_DIRECTORIES (cometa
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/include>
@@ -328,11 +399,25 @@ TARGET_INCLUDE_DIRECTORIES (cometa
     "${cardano_source}/lib/include"
 )
 
+IF (COMETA_BUILD_SHARED)
+  TARGET_INCLUDE_DIRECTORIES (cometa-shared
+    PUBLIC
+      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/include>
+      $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    PRIVATE
+      "${cardano_source}/lib/include"
+  )
+ENDIF ()
+
 TARGET_LINK_LIBRARIES (cometa
   PRIVATE
     $<BUILD_INTERFACE:cometa_cardano>
     $<INSTALL_INTERFACE:Cometa::cardano>
 )
+
+IF (COMETA_BUILD_SHARED)
+  TARGET_LINK_LIBRARIES (cometa-shared PRIVATE cometa_cardano)
+ENDIF ()
 
 SET_TARGET_PROPERTIES (cometa
   PROPERTIES
@@ -340,10 +425,20 @@ SET_TARGET_PROPERTIES (cometa
     POSITION_INDEPENDENT_CODE ON
 )
 
+IF (COMETA_BUILD_SHARED)
+  SET_TARGET_PROPERTIES (cometa-shared PROPERTIES CXX_EXTENSIONS OFF)
+ENDIF ()
+
 IF (MSVC)
   TARGET_COMPILE_OPTIONS (cometa PRIVATE /W4 /WX)
+  IF (COMETA_BUILD_SHARED)
+    TARGET_COMPILE_OPTIONS (cometa-shared PRIVATE /W4 /WX)
+  ENDIF ()
 ELSE ()
   TARGET_COMPILE_OPTIONS (cometa PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  IF (COMETA_BUILD_SHARED)
+    TARGET_COMPILE_OPTIONS (cometa-shared PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  ENDIF ()
 ENDIF ()
 
 # Unit tests.
@@ -606,6 +701,14 @@ INSTALL (
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
+IF (COMETA_BUILD_SHARED)
+  INSTALL (TARGETS cometa-shared EXPORT CometaTargets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  )
+ENDIF ()
+
 INSTALL (
   DIRECTORY   lib/include/
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
@@ -645,6 +748,14 @@ INSTALL (
   NAMESPACE   Cometa::
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Cometa
 )
+
+IF (COMETA_HAS_CURL)
+  INSTALL (
+    EXPORT      CometaCurlTargets
+    NAMESPACE   Cometa::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Cometa
+  )
+ENDIF ()
 
 CONFIGURE_PACKAGE_CONFIG_FILE (
   cmake/CometaConfig.cmake.in

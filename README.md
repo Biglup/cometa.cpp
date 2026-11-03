@@ -26,7 +26,8 @@
 Cometa.cpp is a C++17 Cardano library built on cardano-c. Values use ordinary
 copy and move semantics, and their native resources are released automatically.
 It includes transactions, scripts, certificates, governance values, transaction
-builders, signing, and a Blockfrost provider.
+builders, signing, and a Blockfrost provider. Release ZIPs provide static and
+shared libraries for each supported platform.
 
 ```cpp
 #include <Cometa/Cometa.h>
@@ -92,6 +93,7 @@ The build fetches a pinned cardano-c commit with the deep-clone APIs; a local
 checkout can be selected with `-DCOMETA_CARDANO_SOURCE_DIR=/path/to/cardano-c`.
 The optional Blockfrost HTTP transport uses libcurl. Set
 `-DCOMETA_BUILD_CURL_TRANSPORT=OFF` when supplying your own `HttpTransport`.
+Set `-DCOMETA_BUILD_SHARED=OFF` when only static libraries are needed.
 
 ## Installation
 
@@ -99,20 +101,46 @@ The optional Blockfrost HTTP transport uses libcurl. Set
 cmake --install build --prefix /path/to/cometa
 ```
 
-Set `CMAKE_PREFIX_PATH` to that prefix and link the exported CMake target:
+Set `CMAKE_PREFIX_PATH` to that prefix and link the desired CMake target:
 
 ```cmake
-FIND_PACKAGE (Cometa CONFIG REQUIRED)
-TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::curl)
+FIND_PACKAGE (Cometa CONFIG REQUIRED COMPONENTS curl)
+TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::curl_shared)
 ```
 
-Link `Cometa::cometa` instead when providing another HTTP transport or when
-network access is unnecessary.
+| Target | Link mode | Network transport |
+| --- | --- | --- |
+| `Cometa::cometa` | Static | Your own, or none |
+| `Cometa::cometa_shared` | Shared | Your own, or none |
+| `Cometa::curl` | Static Cometa | libcurl |
+| `Cometa::curl_shared` | Shared Cometa | libcurl |
+
+Omit `COMPONENTS curl` when using a core target. The curl targets require a
+libcurl development package at build time and its runtime library when that
+libcurl installation is shared. The shared Cometa library contains its own
+cardano-c code; the static target links the included cardano-c archive.
+
+On Windows, copy the Cometa DLLs beside your executable. CMake can copy its
+runtime DLL dependencies after building:
+
+```cmake
+IF (WIN32)
+  ADD_CUSTOM_COMMAND (TARGET my_application POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+      $<TARGET_RUNTIME_DLLS:my_application>
+      $<TARGET_FILE_DIR:my_application>
+    COMMAND_EXPAND_LISTS
+  )
+ENDIF ()
+```
+
+For installed Linux and macOS applications, configure the application's
+runtime search path to the directory containing the Cometa shared libraries.
 
 Release workflows produce platform-specific ZIP packages with headers, static
-libraries, licenses, and CMake configuration. Applications using `Cometa::curl`
-also need libcurl and its platform dependencies at link time. No C++ binary
-releases exist yet.
+and shared libraries, licenses, and CMake configuration. They are validated on
+Linux x64/ARM64, macOS x64/ARM64, and Windows x64. No C++ binary releases exist
+yet.
 
 ## Examples
 

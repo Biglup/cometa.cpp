@@ -16,19 +16,33 @@ To use a local checkout, set ``COMETA_CARDANO_SOURCE_DIR`` instead.
    cmake --install build --prefix /path/to/cometa
 
 Pass ``-DCOMETA_BUILD_TESTS=OFF`` if GoogleTest is not installed. Tests
-are excluded from the installed package.
+are excluded from the installed package. Pass ``-DCOMETA_BUILD_SHARED=OFF``
+for a static-only build.
 
 Consuming an installed package
 ------------------------------
 
-Set ``CMAKE_PREFIX_PATH`` to the extracted ZIP or installation prefix. Use the
-CMake target to link both static archives and the platform libraries correctly.
-The package does not require a cardano-c shared library at runtime.
+Set ``CMAKE_PREFIX_PATH`` to the extracted ZIP or installation prefix.
+``Cometa::cometa`` links the static archives; ``Cometa::cometa_shared`` links the
+shared Cometa library. The shared library includes its own cardano-c code.
 
 .. code-block:: cmake
 
    FIND_PACKAGE (Cometa CONFIG REQUIRED)
-   TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::cometa)
+   TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::cometa_shared)
+
+Use ``Cometa::cometa`` for static linking. When using libcurl, request the curl
+component and link ``Cometa::curl`` (static Cometa) or
+``Cometa::curl_shared`` (shared Cometa)::
+
+   FIND_PACKAGE (Cometa CONFIG REQUIRED COMPONENTS curl)
+   TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::curl_shared)
+
+The curl component needs a libcurl development package. Core targets do not
+require it. On Windows, place the Cometa DLLs beside the executable. On Linux
+and macOS, set the installed executable's runtime search path to the directory
+containing the shared libraries. CMake's ``$<TARGET_RUNTIME_DLLS:...>`` can
+copy the Windows DLLs after a build.
 
 Use an archive built for your compiler, standard library, architecture, and runtime.
 MSVC packages use the default dynamic C/C++ runtime; native cardano-c code is static.
@@ -37,8 +51,8 @@ A ZIP is not a universal binary compatible with every C++ ABI.
 Using Blockfrost
 ----------------
 
-When libcurl is available at build time, Cometa also installs
-``Cometa::curl``. Supply a project ID for the selected network and pass the
+When libcurl is available at build time, Cometa also installs curl transport
+targets. Supply a project ID for the selected network and pass the
 transport to ``BlockfrostProvider``:
 
 .. code-block:: cpp
@@ -64,7 +78,7 @@ transport to ``BlockfrostProvider``:
 
    Cometa::ProtocolParameters parameters = provider.getParameters();
 
-Link ``Cometa::curl`` along with ``Cometa::cometa``. The project ID is sent in
+Link the curl target for the chosen link mode. The project ID is sent in
 the Blockfrost ``project_id`` header. Set it at runtime and keep it out of
 source files and release archives. For a different HTTP stack, implement
 ``HttpTransport`` and pass it to the same provider.
