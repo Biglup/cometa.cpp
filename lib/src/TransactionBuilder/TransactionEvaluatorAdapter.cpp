@@ -139,8 +139,11 @@ evaluate(
 {
   try
   {
+    cardano_transaction_ref(transaction);
+    CardanoObject<cardano_transaction_t, cardano_transaction_unref> transactionOwner(transaction);
+
     const EvaluatorContext* context        = static_cast<const EvaluatorContext*>(implementation->context);
-    const Transaction       cppTransaction = Transaction::fromCbor(encodeCbor(transaction, cardano_transaction_to_cbor));
+    const Transaction       cppTransaction = Transaction::fromCbor(encodeCbor(transactionOwner.get(), cardano_transaction_to_cbor));
     const RedeemerList      result         = context->evaluator->evaluate(cppTransaction, copyUtxos(additionalUtxos));
 
     *redeemers = decodeCbor<cardano_redeemer_list_t, cardano_redeemer_list_unref>(
