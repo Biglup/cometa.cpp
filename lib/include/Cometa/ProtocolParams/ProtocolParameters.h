@@ -791,6 +791,9 @@ class ProtocolParameters
     /** @brief Allows transaction builders to retain protocol parameters. */
     friend class TransactionBuilder;
 
+    /** @brief Allows sub-transaction builders to retain protocol parameters. */
+    friend class SubTransactionBuilder;
+
     /**
      * @brief Gets the stored parameters.
      * @return The borrowed parameters.
