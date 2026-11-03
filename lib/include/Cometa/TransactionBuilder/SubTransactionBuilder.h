@@ -30,8 +30,10 @@
 #include <Cometa/Assets/AssetId.h>
 #include <Cometa/AuxiliaryData/Metadatum.h>
 #include <Cometa/Certificates/Certificate.h>
+#include <Cometa/Common/Anchor.h>
 #include <Cometa/Common/Credential.h>
 #include <Cometa/Common/Datum.h>
+#include <Cometa/Common/DRep.h>
 #include <Cometa/Common/GovernanceActionId.h>
 #include <Cometa/Common/NetworkId.h>
 #include <Cometa/Common/Utxo.h>
@@ -173,6 +175,45 @@ class SubTransactionBuilder
 
     /** @brief Adds a certificate with a redeemer produced after balancing. @param certificate The certificate. @param callback The deterministic producer. @return This builder. */
     SubTransactionBuilder& addCertificateWithDeferredRedeemer(const Certificate& certificate, DeferredRedeemer callback);
+
+    /** @brief Registers a reward account. @param address The reward account. @param redeemer The script redeemer, when needed. @return This builder. */
+    SubTransactionBuilder& registerRewardAddress(
+      const RewardAddress&             address,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Deregisters a reward account. @param address The reward account. @param redeemer The script redeemer, when needed. @return This builder. */
+    SubTransactionBuilder& deregisterRewardAddress(
+      const RewardAddress&             address,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Delegates stake to a pool. @param address The reward account. @param poolId The pool key hash. @param redeemer The script redeemer, when needed. @return This builder. */
+    SubTransactionBuilder& delegateStake(
+      const RewardAddress&             address,
+      const Blake2bHash&               poolId,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Delegates voting power. @param address The reward account. @param drep The representative. @param redeemer The script redeemer, when needed. @return This builder. */
+    SubTransactionBuilder& delegateVotingPower(
+      const RewardAddress&             address,
+      const DRep&                      drep,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Registers a DRep. @param drep The representative. @param anchor The optional metadata. @param redeemer The script redeemer, when needed. @return This builder. */
+    SubTransactionBuilder& registerDRep(
+      const DRep&                      drep,
+      const std::optional<Anchor>&     anchor   = std::nullopt,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Updates a DRep. @param drep The representative. @param anchor The optional metadata. @param redeemer The script redeemer, when needed. @return This builder. */
+    SubTransactionBuilder& updateDRep(
+      const DRep&                      drep,
+      const std::optional<Anchor>&     anchor   = std::nullopt,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Deregisters a DRep. @param drep The representative. @param redeemer The script redeemer, when needed. @return This builder. */
+    SubTransactionBuilder& deregisterDRep(
+      const DRep&                      drep,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
 
     /** @brief Casts a governance vote. @param voter The voter. @param action The governance action. @param vote The choice and metadata. @param redeemer The script redeemer, when needed. @return This builder. */
     SubTransactionBuilder& vote(

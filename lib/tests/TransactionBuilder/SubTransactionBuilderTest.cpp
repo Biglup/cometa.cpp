@@ -271,3 +271,31 @@ TEST(SubTransactionBuilder, AddsCertificateAndVote)
   ASSERT_TRUE(transaction.body().votingProcedures().has_value());
   EXPECT_EQ(transaction.body().votingProcedures()->get(voter, action), choice);
 }
+
+TEST(SubTransactionBuilder, RegistersAndDelegatesStakeAndDRep)
+{
+  // Arrange
+  ProtocolParameters parameters = sampleParameters();
+  parameters.setKeyDeposit(2000000);
+  parameters.setDrepDeposit(2000000);
+  const Address       address = sampleAddress();
+  const Credential    credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 4)));
+  const RewardAddress reward(NetworkId::Testnet, credential);
+  const DRep          drep(credential);
+  const Utxo          party(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(10000000)));
+  SubTransactionBuilder builder(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.addInput(party)
+    .registerRewardAddress(reward)
+    .delegateStake(reward, Blake2bHash(std::vector<std::uint8_t>(28, 6)))
+    .registerDRep(drep)
+    .delegateVotingPower(reward, drep);
+
+  // Act
+  const SubTransaction transaction = builder.build();
+
+  // Assert
+  ASSERT_TRUE(transaction.body().certificates().has_value());
+  EXPECT_EQ(transaction.body().certificates()->size(), 4U);
+}
