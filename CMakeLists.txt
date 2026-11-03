@@ -197,6 +197,9 @@ ADD_LIBRARY (cometa STATIC
   lib/src/TransactionBuilder/CoinSelectorAdapter.cpp
   lib/src/TransactionBuilder/LargeFirstCoinSelector.cpp
   lib/src/TransactionBuilder/RandomImproveCoinSelector.cpp
+  lib/src/TransactionBuilder/TransactionEvaluatorAdapter.cpp
+  lib/src/TransactionBuilder/NativeTransactionEvaluator.cpp
+  lib/src/TransactionBuilder/ProviderTransactionEvaluator.cpp
   lib/src/Transaction/SubTransactionSet.cpp
   lib/src/Common/CredentialSet.cpp
   lib/src/Common/Credential.cpp
@@ -448,6 +451,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/KeyHandlers/SoftwareSecureKeyHandlerTest.cpp
     lib/tests/Providers/ProviderAdapterTest.cpp
     lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp
+    lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp
     lib/tests/Transaction/SubTransactionSetTest.cpp
     lib/tests/ValueContractTest.cpp
   )

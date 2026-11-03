@@ -24,6 +24,7 @@
 /* INCLUDES ******************************************************************/
 
 #include <Cometa/Cometa.h>
+#include <Cometa/TransactionBuilder/ProviderTransactionEvaluator.h>
 
 #include "../../src/CardanoInterop.h"
 #include "../../src/Providers/ProviderAdapter.h"
@@ -356,4 +357,19 @@ TEST(ProviderAdapter, DispatchesConfirmationSubmissionAndEvaluation)
   EXPECT_TRUE(confirmed);
   EXPECT_EQ(Blake2bHash(std::vector<std::uint8_t>(cardano_blake2b_hash_get_data(submittedOwner.get()), cardano_blake2b_hash_get_data(submittedOwner.get()) + cardano_blake2b_hash_get_bytes_size(submittedOwner.get()))), transaction.id());
   EXPECT_EQ(cardano_redeemer_list_get_length(redeemerOwner.get()), 0U);
+}
+
+TEST(ProviderAdapter, EvaluatesThroughProviderStrategy)
+{
+  // Arrange
+  const std::shared_ptr<TestProvider> provider = std::make_shared<TestProvider>();
+  const ProviderTransactionEvaluator  evaluator(provider);
+  const Transaction                   transaction(TransactionBody(TransactionInputSet(), TransactionOutputList(), 10), WitnessSet());
+
+  // Act
+  const RedeemerList result = evaluator.evaluate(transaction, {});
+
+  // Assert
+  EXPECT_EQ(evaluator.name(), "test-provider");
+  EXPECT_EQ(result.size(), 0U);
 }

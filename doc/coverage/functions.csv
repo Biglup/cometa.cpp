@@ -2840,17 +2840,17 @@ cardano_large_first_coin_selector_new,lib/include/cardano/transaction_builder/co
 cardano_random_improve_coin_selector_new,lib/include/cardano/transaction_builder/coin_selection/random_improve_coin_selector.h,P20,implemented,Cometa::RandomImproveCoinSelector,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp,
 cardano_random_improve_coin_selector_new_with_seed,lib/include/cardano/transaction_builder/coin_selection/random_improve_coin_selector.h,P20,implemented,Cometa::RandomImproveCoinSelector,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp,
 cardano_random_improve_coin_selector_new_with_options,lib/include/cardano/transaction_builder/coin_selection/random_improve_coin_selector.h,P20,implemented,Cometa::RandomImproveCoinSelector,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp,
-cardano_tx_evaluator_new_native,lib/include/cardano/transaction_builder/evaluation/native_tx_evaluator.h,P21,planned,,,API and ownership mapping pending.
-cardano_tx_evaluator_new_native_sub_transaction,lib/include/cardano/transaction_builder/evaluation/native_tx_evaluator.h,P21,planned,,,API and ownership mapping pending.
-cardano_tx_evaluator_from_provider,lib/include/cardano/transaction_builder/evaluation/provider_tx_evaluator.h,P21,planned,,,API and ownership mapping pending.
-cardano_tx_evaluator_new,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,planned,,,API and ownership mapping pending.
-cardano_tx_evaluator_get_name,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,planned,,,API and ownership mapping pending.
-cardano_tx_evaluator_evaluate,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,planned,,,API and ownership mapping pending.
-cardano_tx_evaluator_unref,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,planned,,,API and ownership mapping pending.
-cardano_tx_evaluator_ref,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,planned,,,API and ownership mapping pending.
-cardano_tx_evaluator_refcount,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,planned,,,API and ownership mapping pending.
-cardano_tx_evaluator_set_last_error,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,planned,,,API and ownership mapping pending.
-cardano_tx_evaluator_get_last_error,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,planned,,,API and ownership mapping pending.
+cardano_tx_evaluator_new_native,lib/include/cardano/transaction_builder/evaluation/native_tx_evaluator.h,P21,implemented,Cometa::NativeTransactionEvaluator,lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp,Local evaluator with optional sub-transaction index.
+cardano_tx_evaluator_new_native_sub_transaction,lib/include/cardano/transaction_builder/evaluation/native_tx_evaluator.h,P21,implemented,Cometa::NativeTransactionEvaluator,lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp,Local evaluator with optional sub-transaction index.
+cardano_tx_evaluator_from_provider,lib/include/cardano/transaction_builder/evaluation/provider_tx_evaluator.h,P21,implemented,Cometa::ProviderTransactionEvaluator,lib/tests/Providers/ProviderAdapterTest.cpp,Delegates to Provider::evaluateTransaction.
+cardano_tx_evaluator_new,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,internal,Cometa::createTransactionEvaluatorAdapter,lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp,Private callback bridge retains C++ evaluator.
+cardano_tx_evaluator_get_name,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,implemented,Cometa::TransactionEvaluator::name,lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp,Name is a C++ string.
+cardano_tx_evaluator_evaluate,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,implemented,Cometa::TransactionEvaluator::evaluate,lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp,Evaluation budgets and errors cross the native boundary.
+cardano_tx_evaluator_unref,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,internal,C++ ownership,lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp,Reference counts are hidden from callers.
+cardano_tx_evaluator_ref,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,internal,C++ ownership,lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp,Reference counts are hidden from callers.
+cardano_tx_evaluator_refcount,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,internal,C++ ownership,lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp,Reference counts are hidden from callers.
+cardano_tx_evaluator_set_last_error,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,internal,C++ exception translation,lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp,Native errors are translated at the callback boundary.
+cardano_tx_evaluator_get_last_error,lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,P21,internal,C++ exception translation,lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp,Native errors are translated at the callback boundary.
 cardano_compute_transaction_fee,lib/include/cardano/transaction_builder/fee.h,P22,planned,,,API and ownership mapping pending.
 cardano_compute_min_ada_required,lib/include/cardano/transaction_builder/fee.h,P22,planned,,,API and ownership mapping pending.
 cardano_compute_min_script_fee,lib/include/cardano/transaction_builder/fee.h,P22,planned,,,API and ownership mapping pending.
