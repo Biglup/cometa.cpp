@@ -254,6 +254,12 @@ IF (COMETA_BUILD_EXAMPLES)
   ADD_EXECUTABLE (secure_key_handler_example examples/secure_key_handler_example.cpp)
   TARGET_LINK_LIBRARIES (secure_key_handler_example PRIVATE Cometa::cometa)
 
+  ADD_EXECUTABLE (sub_transaction_batch_example examples/sub_transaction_batch_example.cpp)
+  TARGET_LINK_LIBRARIES (sub_transaction_batch_example PRIVATE Cometa::cometa)
+
+  ADD_EXECUTABLE (plutus_v4_guarded_sub_transaction_example examples/plutus_v4_guarded_sub_transaction_example.cpp)
+  TARGET_LINK_LIBRARIES (plutus_v4_guarded_sub_transaction_example PRIVATE Cometa::cometa)
+
   IF (TARGET Cometa::curl)
     ADD_LIBRARY (cometa-example-support STATIC examples/Support/NetworkExample.cpp)
     TARGET_LINK_LIBRARIES (cometa-example-support PUBLIC Cometa::curl)
@@ -291,6 +297,24 @@ IF (COMETA_BUILD_EXAMPLES)
 
     ADD_EXECUTABLE (vote_for_proposal_script_example examples/vote_for_proposal_script_example.cpp)
     TARGET_LINK_LIBRARIES (vote_for_proposal_script_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (reward_account_script_example examples/reward_account_script_example.cpp)
+    TARGET_LINK_LIBRARIES (reward_account_script_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (mint_burn_plutus_script_example examples/mint_burn_plutus_script_example.cpp)
+    TARGET_LINK_LIBRARIES (mint_burn_plutus_script_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (drep_script_example examples/drep_script_example.cpp)
+    TARGET_LINK_LIBRARIES (drep_script_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (deferred_redeemer_self_index_example examples/deferred_redeemer_self_index_example.cpp)
+    TARGET_LINK_LIBRARIES (deferred_redeemer_self_index_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (deferred_redeemer_batch_example examples/deferred_redeemer_batch_example.cpp)
+    TARGET_LINK_LIBRARIES (deferred_redeemer_batch_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (deferred_redeemer_withdraw_zero_example examples/deferred_redeemer_withdraw_zero_example.cpp)
+    TARGET_LINK_LIBRARIES (deferred_redeemer_withdraw_zero_example PRIVATE cometa-example-support)
   ENDIF ()
 ENDIF ()
 
