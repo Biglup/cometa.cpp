@@ -54,14 +54,12 @@ class Relay
      *
      * @param relay The relay to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Relay(const SingleHostAddrRelay& relay);
 
     /**
      * @brief Initializes a value by moving its SingleHostAddrRelay alternative.
      * @param relay The alternative to move.
      */
-    // cppcheck-suppress noExplicitConstructor
     Relay(SingleHostAddrRelay&& relay);
 
     /**
@@ -69,14 +67,12 @@ class Relay
      *
      * @param relay The relay to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Relay(const SingleHostNameRelay& relay);
 
     /**
      * @brief Initializes a value by moving its SingleHostNameRelay alternative.
      * @param relay The alternative to move.
      */
-    // cppcheck-suppress noExplicitConstructor
     Relay(SingleHostNameRelay&& relay);
 
     /**
@@ -84,14 +80,12 @@ class Relay
      *
      * @param relay The relay to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Relay(const MultiHostNameRelay& relay);
 
     /**
      * @brief Initializes a value by moving its MultiHostNameRelay alternative.
      * @param relay The alternative to move.
      */
-    // cppcheck-suppress noExplicitConstructor
     Relay(MultiHostNameRelay&& relay);
 
     /**

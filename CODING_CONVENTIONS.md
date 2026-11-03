@@ -151,9 +151,10 @@ Provide direct leaf-to-root constructors for supported multilevel relationships;
 C++ does not chain two user-defined implicit conversions. Keep strings, bytes,
 numbers, semantic role selection, and general-to-specific extraction explicit.
 Do not introduce catch-all conversion templates or duplicate a constructor with a
-conversion operator for the same pair of types. Annotate each intentional
-converting constructor with `// cppcheck-suppress noExplicitConstructor`; keep
-this check enabled globally and use `--inline-suppr` when running cppcheck.
+conversion operator for the same pair of types. Disable Cppcheck's
+`noExplicitConstructor` rule globally with `--suppress=noExplicitConstructor`;
+do not add per-constructor suppression comments. Unit tests must verify which
+conversions are implicit and which remain explicit.
 
 Lvalue conversions must produce independent values. Provide rvalue overloads where
 they avoid deep copies, and preserve the source if construction fails before the

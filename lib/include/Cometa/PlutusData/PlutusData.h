@@ -77,14 +77,12 @@ class PlutusData
      *
      * @param data The value to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     PlutusData(const PlutusList& data);
 
     /**
      * @brief Initializes a value by moving its PlutusList alternative.
      * @param data The alternative to move.
      */
-    // cppcheck-suppress noExplicitConstructor
     PlutusData(PlutusList&& data);
 
     /**
@@ -92,14 +90,12 @@ class PlutusData
      *
      * @param data The value to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     PlutusData(const PlutusMap& data);
 
     /**
      * @brief Initializes a value by moving its PlutusMap alternative.
      * @param data The alternative to move.
      */
-    // cppcheck-suppress noExplicitConstructor
     PlutusData(PlutusMap&& data);
 
     /**
@@ -107,14 +103,12 @@ class PlutusData
      *
      * @param data The value to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     PlutusData(const ConstrPlutusData& data);
 
     /**
      * @brief Initializes a value by moving its ConstrPlutusData alternative.
      * @param data The alternative to move.
      */
-    // cppcheck-suppress noExplicitConstructor
     PlutusData(ConstrPlutusData&& data);
 
     /**

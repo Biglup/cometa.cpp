@@ -54,49 +54,42 @@ class Script
      * @brief Initializes an independent ScriptPubkey alternative.
      * @param value The alternative to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(const ScriptPubkey& value);
 
     /**
      * @brief Initializes an independent ScriptAll alternative.
      * @param value The alternative to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(const ScriptAll& value);
 
     /**
      * @brief Initializes an independent ScriptAny alternative.
      * @param value The alternative to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(const ScriptAny& value);
 
     /**
      * @brief Initializes an independent ScriptNOfK alternative.
      * @param value The alternative to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(const ScriptNOfK& value);
 
     /**
      * @brief Initializes an independent ScriptInvalidBefore alternative.
      * @param value The alternative to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(const ScriptInvalidBefore& value);
 
     /**
      * @brief Initializes an independent ScriptInvalidAfter alternative.
      * @param value The alternative to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(const ScriptInvalidAfter& value);
 
     /**
      * @brief Initializes an independent ScriptRequireGuard alternative.
      * @param value The alternative to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(const ScriptRequireGuard& value);
 
     /**
@@ -104,14 +97,12 @@ class Script
      *
      * @param script The script to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(const NativeScript& script);
 
     /**
      * @brief Initializes a value by moving its NativeScript alternative.
      * @param script The alternative to move.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(NativeScript&& script);
 
     /**
@@ -119,14 +110,12 @@ class Script
      *
      * @param script The script to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(const PlutusV1Script& script);
 
     /**
      * @brief Initializes a value by moving its PlutusV1Script alternative.
      * @param script The alternative to move.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(PlutusV1Script&& script);
 
     /**
@@ -134,14 +123,12 @@ class Script
      *
      * @param script The script to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(const PlutusV2Script& script);
 
     /**
      * @brief Initializes a value by moving its PlutusV2Script alternative.
      * @param script The alternative to move.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(PlutusV2Script&& script);
 
     /**
@@ -149,14 +136,12 @@ class Script
      *
      * @param script The script to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(const PlutusV3Script& script);
 
     /**
      * @brief Initializes a value by moving its PlutusV3Script alternative.
      * @param script The alternative to move.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(PlutusV3Script&& script);
 
     /**
@@ -164,14 +149,12 @@ class Script
      *
      * @param script The script to copy.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(const PlutusV4Script& script);
 
     /**
      * @brief Initializes a value by moving its PlutusV4Script alternative.
      * @param script The alternative to move.
      */
-    // cppcheck-suppress noExplicitConstructor
     Script(PlutusV4Script&& script);
 
     /**
