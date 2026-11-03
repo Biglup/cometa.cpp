@@ -6,8 +6,8 @@ Governance votes
 
 ``Vote`` and ``VoterType`` identify governance choices and voter credentials::
 
-   const Cometa::Vote choice = Cometa::Vote::Yes;
-   const Cometa::VoterType voter = Cometa::VoterType::DRepKeyHash;
+   const Cometa::Vote      choice = Cometa::Vote::Yes;
+   const Cometa::VoterType voter  = Cometa::VoterType::DRepKeyHash;
 
 ``Voter`` combines a voter kind with its credential::
 

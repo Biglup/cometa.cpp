@@ -19,7 +19,8 @@ certificate when that ledger form is required.
 .. code-block:: cpp
 
    Cometa::StakeRegistrationCert cert(stakeCredential);
-   const std::vector<std::uint8_t> cbor = cert.toCbor();
+
+   const std::vector<std::uint8_t>     cbor = cert.toCbor();
    const Cometa::StakeRegistrationCert restored =
      Cometa::StakeRegistrationCert::fromCbor(cbor);
 
@@ -38,7 +39,7 @@ values. The two forms encode with distinct CBOR certificate tags.
 
 .. code-block:: cpp
 
-   Cometa::RegistrationCert registration(stakeCredential, 2'000'000);
+   Cometa::RegistrationCert   registration(stakeCredential, 2'000'000);
    Cometa::UnregistrationCert unregistration(stakeCredential, 2'000'000);
 
 Stake delegation
@@ -50,6 +51,7 @@ hash. It copies both components and provides CBOR and inspection JSON.
 .. code-block:: cpp
 
    Cometa::StakeDelegationCert delegation(stakeCredential, poolKeyHash);
+
    const Cometa::StakeDelegationCert restored =
      Cometa::StakeDelegationCert::fromCbor(delegation.toCbor());
 
@@ -63,6 +65,7 @@ getter returns an independent value, which can be changed and supplied to
 .. code-block:: cpp
 
    Cometa::PoolRegistrationCert registration(params);
+
    const Cometa::PoolRegistrationCert restored =
      Cometa::PoolRegistrationCert::fromCbor(registration.toCbor());
 
@@ -86,7 +89,9 @@ independent credential and pool hash values.
 .. code-block:: cpp
 
    Cometa::StakeRegistrationDelegationCert cert(
-     stakeCredential, poolKeyHash, 2'000'000);
+     stakeCredential,
+     poolKeyHash,
+     2'000'000);
 
 Genesis key delegation
 ----------------------

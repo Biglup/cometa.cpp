@@ -1,7 +1,7 @@
 Getting Started
 ===============
 
-Install Cometa.cpp, link it to your application, and construct your first Cardano values.
+Install Cometa.cpp, link it to your application, and start building transactions.
 
 Building and installing from source
 -----------------------------------
@@ -88,41 +88,6 @@ Use an archive built for your compiler, standard library, architecture, and runt
 MSVC packages use the default dynamic C/C++ runtime; native cardano-c code is static.
 A ZIP is not a universal binary compatible with every C++ ABI.
 
-Using values
-------------
-
-.. code-block:: cpp
-
-   #include <Cometa/Cometa.h>
-
-   #include <iostream>
-   #include <string>
-   #include <vector>
-
-   int
-   main()
-   {
-     const Cometa::Blake2bHash hash = Cometa::Blake2bHash::fromHex(std::string(56, '0'));
-     const Cometa::Credential original(Cometa::CredentialType::KeyHash, hash);
-
-     Cometa::Credential copy = original;
-     copy.setType(Cometa::CredentialType::ScriptHash);
-
-     const std::vector<std::uint8_t> encoded = copy.toCbor();
-     const Cometa::Credential decoded = Cometa::Credential::fromCbor(encoded);
-
-     std::cout << decoded.toJson() << '\n';
-     return 0;
-   }
-
-Changing ``copy`` leaves ``original`` unchanged.
-
-CBOR accepts byte vectors or hexadecimal strings through ``fromCbor``.
-For example, ``AssetName::fromCbor("46436f6d657461")`` decodes the name Cometa.
-Hexadecimal strings contain bytes, without a ``0x``
-prefix. Asset names can contain arbitrary bytes, including embedded NULs; use
-``toBytes`` for binary data and ``fromString`` for UTF-8 input.
-
 Next steps
 ----------
 
@@ -130,4 +95,3 @@ Next steps
 * :doc:`sections/api/providers/usage` — connect to Blockfrost.
 * :doc:`design` — C++ values, ownership, and extension points.
 * :doc:`error_handling` — handle operation errors.
-* :doc:`development` — run tests and build the documentation.

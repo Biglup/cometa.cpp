@@ -10,7 +10,9 @@ Signatures and public keys are ordinary copyable values.
 .. code-block:: cpp
 
    const Cometa::Ed25519PrivateKey key = Cometa::Ed25519PrivateKey::fromNormalHex(seedHex);
+
    const Cometa::Ed25519Signature signature = key.sign(message);
+
    const bool valid = key.publicKey().verify(signature, message);
 
 ``Bip32PrivateKey`` supports hardened and non-hardened derivation. Public keys
@@ -19,10 +21,12 @@ support only non-hardened derivation. An empty path returns a copy of the key.
 .. code-block:: cpp
 
    const Cometa::Bip32PrivateKey root = Cometa::Bip32PrivateKey::fromBip39Entropy(entropy);
-   const Cometa::Bip32PrivateKey account = root.derive({
-     Cometa::hardenIndex(1852), Cometa::hardenIndex(1815), Cometa::hardenIndex(0) });
-   const Cometa::Ed25519PrivateKey paymentKey = account.derive({ 0, 0 }).toEd25519();
-   const Cometa::Blake2bHash credentialHash = paymentKey.publicKey().hash();
+
+   const Cometa::Bip32PrivateKey account = root.derive(
+     { Cometa::hardenIndex(1852), Cometa::hardenIndex(1815), Cometa::hardenIndex(0) });
+
+   const Cometa::Ed25519PrivateKey paymentKey     = account.derive({ 0, 0 }).toEd25519();
+   const Cometa::Blake2bHash       credentialHash = paymentKey.publicKey().hash();
 
 ``Bip32PublicKey::hash`` hashes the extended key including its chain code.
 For a credential hash, convert to an Ed25519 public key before hashing.
@@ -42,8 +46,9 @@ converting words back to entropy.
 
 .. code-block:: cpp
 
-   const std::vector<std::string> words = Cometa::entropyToMnemonic(entropy);
+   const std::vector<std::string>  words     = Cometa::entropyToMnemonic(entropy);
    const std::vector<std::uint8_t> recovered = Cometa::mnemonicToEntropy(words);
+
    const Cometa::Bip32PrivateKey root = Cometa::Bip32PrivateKey::fromBip39Entropy(recovered);
 
 EMIP-003 encryption includes a random salt, nonce, and authentication tag in its

@@ -47,7 +47,8 @@ can cover the change. Update this guide when an agreed convention changes.
 ## Expressions and control flow
 
 Use explicit types instead of `auto` in implementations, tests, and documentation
-snippets. Use named functions and direct calls instead of lambdas. Do not add a
+snippets. Use named functions and direct calls instead of lambdas. Standard-library
+customization points retain their required names, such as `make_error_code`. Do not add a
 `Detail` namespace or factory adapters that obscure a straightforward C call.
 Avoid generic machinery when a few explicit statements make the operation clearer.
 
@@ -193,7 +194,7 @@ and separate reference pages for public headers. Document classes, enums,
 callbacks, aliases, and free functions through Breathe directives. Put ownership
 and extension-point guidance in the relevant C++ guides; do not copy C reference
 counting instructions into C++ usage examples. Keep coverage and implementation
-planning in the development documentation. Build with warnings treated as errors
+planning in repository records, outside the published documentation. Build with warnings treated as errors
 and check the rendered navigation when adding or moving pages.
 
 ## CMake
@@ -269,7 +270,8 @@ examples, and links to the full documentation. Avoid repeating setup explanation
 around each snippet or including build internals and exhaustive API catalogs.
 Use Cometa.py as a reference for the direct, usage-focused presentation and
 README header: centered logo, a separate badge row, and navigation links between
-horizontal rules.
+horizontal rules. Apply the same logical grouping and formatting to generated
+documentation snippets: separate setup, configuration, signing, and output.
 
 ## Implementation PRs
 

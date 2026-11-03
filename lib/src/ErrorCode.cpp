@@ -74,4 +74,10 @@ makeErrorCode(ErrorCode code) noexcept
 
   return { static_cast<int>(code), CATEGORY };
 }
+
+std::error_code
+make_error_code(ErrorCode code) noexcept
+{
+  return makeErrorCode(code);
+}
 } // namespace Cometa

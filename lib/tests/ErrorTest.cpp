@@ -69,8 +69,44 @@ TEST(Error, DecoderUsesDocumentedCodes)
   }
   catch (const Error& error)
   {
-    EXPECT_EQ(error.code(), makeErrorCode(ErrorCode::Decoding));
+    EXPECT_EQ(error.code(), ErrorCode::Decoding);
   }
+}
+
+TEST(ErrorCode, ConvertsToStandardErrorCode)
+{
+  // Act
+  const std::error_code code = ErrorCode::Decoding;
+
+  // Assert
+  EXPECT_EQ(code, makeErrorCode(ErrorCode::Decoding));
+  EXPECT_STREQ(code.category().name(), "Cometa");
+}
+
+TEST(ErrorCode, ComparesDirectlyInBothDirections)
+{
+  // Arrange
+  const Error error(ErrorCode::Decoding, "fromCbor");
+
+  // Act & Assert
+  EXPECT_TRUE(error.code() == ErrorCode::Decoding);
+  EXPECT_TRUE(ErrorCode::Decoding == error.code());
+  EXPECT_FALSE(error.code() != ErrorCode::Decoding);
+  EXPECT_FALSE(ErrorCode::Decoding != error.code());
+  EXPECT_TRUE(error.code() != ErrorCode::Encoding);
+  EXPECT_TRUE(ErrorCode::Encoding != error.code());
+}
+
+TEST(ErrorCode, DistinguishesOtherErrorCategories)
+{
+  // Arrange
+  const std::error_code code(static_cast<int>(ErrorCode::Decoding), std::generic_category());
+
+  // Act & Assert
+  EXPECT_FALSE(code == ErrorCode::Decoding);
+  EXPECT_FALSE(ErrorCode::Decoding == code);
+  EXPECT_TRUE(code != ErrorCode::Decoding);
+  EXPECT_TRUE(ErrorCode::Decoding != code);
 }
 
 TEST(ErrorCode, MatchesCardanoStatuses)

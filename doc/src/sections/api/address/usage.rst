@@ -10,10 +10,14 @@ to a constructor and returned by getters are independent values.
 .. code-block:: cpp
 
    const Cometa::BaseAddress paymentAddress(
-     Cometa::NetworkId::Testnet, paymentCredential, stakeCredential);
+     Cometa::NetworkId::Testnet,
+     paymentCredential,
+     stakeCredential);
+
    const std::string text = paymentAddress.toString();
-   const Cometa::Address parsed = Cometa::Address::fromString(text);
-   const std::optional<Cometa::BaseAddress> base = parsed.asBase();
+
+   const Cometa::Address                    parsed = Cometa::Address::fromString(text);
+   const std::optional<Cometa::BaseAddress> base   = parsed.asBase();
 
 ``Address`` accepts Bech32 Shelley addresses and Base58 Byron addresses.
 ``asBase``, ``asEnterprise``, ``asPointer``, ``asReward``, and ``asByron`` return

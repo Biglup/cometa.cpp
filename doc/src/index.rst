@@ -47,7 +47,7 @@ Examples and contributions
 The `examples directory <https://github.com/Biglup/cometa.cpp/tree/main/examples>`_
 contains complete transaction flows. See the
 `contributing guide <https://github.com/Biglup/cometa.cpp/blob/main/CONTRIBUTING.md>`_
-for development conventions and :doc:`development` for tests and documentation builds.
+for development conventions.
 
 License
 ~~~~~~~
@@ -62,7 +62,6 @@ Cometa.cpp is licensed under the
    getting_started
    design
    error_handling
-   development
 
 .. toctree::
    :hidden:

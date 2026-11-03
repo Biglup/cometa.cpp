@@ -6,3 +6,5 @@ ErrorCode
 .. doxygenenum:: Cometa::ErrorCode
 
 .. doxygenfunction:: Cometa::makeErrorCode
+
+.. doxygenfunction:: Cometa::make_error_code

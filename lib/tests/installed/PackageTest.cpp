@@ -50,6 +50,13 @@ main()
   }
 #endif
 
+  const Cometa::Error decodingError(Cometa::ErrorCode::Decoding, "fromCbor");
+
+  if (decodingError.code() != Cometa::ErrorCode::Decoding || Cometa::ErrorCode::Encoding == decodingError.code())
+  {
+    return 1;
+  }
+
   const Cometa::AssetName name = Cometa::AssetName::fromCbor("46436f6d657461");
 
   const Cometa::ExUnits         budget = Cometa::ExUnits::fromCbor("820102");

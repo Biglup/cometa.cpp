@@ -11,9 +11,11 @@ copies, so changing a returned credential does not alter membership.
 .. code-block:: cpp
 
    Cometa::CredentialSet credentials { paymentCredential };
+
    const bool inserted = credentials.insert(stakeCredential);
+
    const std::vector<Cometa::Credential> snapshot = credentials.values();
-   const std::vector<std::uint8_t> cbor = credentials.toCbor();
+   const std::vector<std::uint8_t>       cbor     = credentials.toCbor();
 
 Parsing accepts tagged or untagged arrays and rejects duplicate elements.
 Encoding always writes a sorted definite-length array with CBOR set tag 258.
@@ -61,5 +63,7 @@ and optional anchor.
 ``Certificate`` variant. Accessors return independent values::
 
    Cometa::CertificateSet certificates;
+
    certificates.add(Cometa::Certificate(registration));
+
    const Cometa::Certificate first = certificates.at(0);

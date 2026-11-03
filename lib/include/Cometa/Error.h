@@ -36,7 +36,7 @@ namespace Cometa
 /**
  * @brief Reports an operation failure.
  *
- * Compare code() with makeErrorCode(ErrorCode) to identify the failure.
+ * Compare code() directly with ErrorCode to identify the failure.
  */
 class Error : public std::system_error
 {

@@ -10,10 +10,12 @@ guard credential. Key hashes must contain 28 bytes.
 
 .. code-block:: cpp
 
-   const Cometa::Blake2bHash keyHash = publicKey.hash();
+   const Cometa::Blake2bHash  keyHash = publicKey.hash();
    const Cometa::ScriptPubkey signature(keyHash);
+
    const Cometa::ScriptInvalidBefore startsAt(1000);
-   const Cometa::ScriptInvalidAfter endsAt(2000);
+   const Cometa::ScriptInvalidAfter  endsAt(2000);
+
    const Cometa::ScriptRequireGuard guard(
      Cometa::Credential(Cometa::CredentialType::KeyHash, keyHash));
 
@@ -40,8 +42,9 @@ that describes an unsatisfiable requirement rather than an invalid value.
      Cometa::NativeScript(Cometa::ScriptPubkey(publicKey.hash())),
      Cometa::NativeScript(Cometa::ScriptInvalidBefore(1000))
    };
+
    const Cometa::NativeScript policy { Cometa::ScriptAll(requirements) };
-   const Cometa::Blake2bHash policyId = policy.hash();
+   const Cometa::Blake2bHash  policyId = policy.hash();
 
 ``type()`` identifies the variant. Accessors such as ``asAll()`` return
 independent requirements and throw ``Error`` for a different variant. Change a
@@ -70,11 +73,13 @@ bytes, while ``toCbor`` adds that outer bytestring.
 
    const Cometa::PlutusV4Script script =
      Cometa::PlutusV4Script::fromHex("450100002499");
+
    Cometa::PlutusList parameters;
+
    parameters.pushBack(Cometa::PlutusData(std::int64_t { 42 }));
 
-   const Cometa::PlutusV4Script applied = script.applyParameters(parameters);
-   const Cometa::Blake2bHash scriptHash = applied.hash();
+   const Cometa::PlutusV4Script applied    = script.applyParameters(parameters);
+   const Cometa::Blake2bHash    scriptHash = applied.hash();
 
 ``applyParameters`` requires a CBOR-wrapped Flat program, applies arguments in
 list order, and returns a new script. An empty list canonicalizes the program.
@@ -100,7 +105,7 @@ An accessor for a different language throws ``Error``.
    if (script.language() == Cometa::ScriptLanguage::PlutusV4)
    {
      const Cometa::PlutusV4Script validator = script.asPlutusV4();
-     const std::string bytes = validator.toHex();
+     const std::string            bytes     = validator.toHex();
    }
 
 Constructors and accessors copy values. Replacing a returned script does not

@@ -13,14 +13,22 @@ destroyed.
 .. code-block:: cpp
 
    Cometa::Bip32KeyCallbacks callbacks;
-   callbacks.signTransaction = signTransaction;
+
+   callbacks.signTransaction    = signTransaction;
    callbacks.signSubTransaction = signSubTransaction;
-   callbacks.accountPublicKey = accountPublicKey;
+   callbacks.accountPublicKey   = accountPublicKey;
 
    const Cometa::SecureKeyHandler signer =
      Cometa::SecureKeyHandler::bip32("hardware-wallet", callbacks);
+
    const Cometa::DerivationPath paymentPath {
-     1852, 1815, 0, Cometa::DerivationRole::External, 0 };
+     1852,
+     1815,
+     0,
+     Cometa::DerivationRole::External,
+     0
+   };
+
    const Cometa::VkeyWitnessSet witnesses =
      signer.signTransaction(transaction, { paymentPath });
 
@@ -40,6 +48,7 @@ same signing operations and can be serialized for encrypted storage.
 
    const Cometa::SecureKeyHandler signer =
      Cometa::SecureKeyHandler::softwareBip32(entropy, passphrase, getPassphrase);
+
    const Cometa::SecureKeyHandler restored =
      Cometa::SecureKeyHandler::deserializeSoftware(signer.serialize(), getPassphrase);
 

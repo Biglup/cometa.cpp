@@ -12,7 +12,7 @@ Use ``ErrorCode`` to identify the failure:
    }
    catch (const Cometa::Error& error)
    {
-     if (error.code() == Cometa::makeErrorCode(Cometa::ErrorCode::Decoding))
+     if (error.code() == Cometa::ErrorCode::Decoding)
      {
        // Handle invalid CBOR.
      }
