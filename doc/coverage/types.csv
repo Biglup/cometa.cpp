@@ -44,7 +44,7 @@ cardano_certificate_t,opaque object,lib/include/cardano/certs/certificate.h,P10,
 cardano_coin_select_func_t,callback,lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,P20,implemented,Cometa::CoinSelector::select,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp
 cardano_coin_selection_request_t,struct,lib/include/cardano/transaction_builder/coin_selection/coin_selection_request.h,P20,implemented,Cometa::CoinSelectionRequest,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp
 cardano_coin_selector_impl_t,struct,lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,P20,internal,Private native adapter,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp
-cardano_coin_selector_t,opaque object,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,planned,,
+cardano_coin_selector_t,opaque object,lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,P20,implemented,Cometa::CoinSelector,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp
 cardano_committee_members_map_t,opaque object,lib/include/cardano/proposal_procedures/committee_members_map.h,P13,implemented,Cometa::CommitteeMembersMap,lib/tests/ProposalProcedures/CommitteeMembersMapTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_committee_t,opaque object,lib/include/cardano/proposal_procedures/committee.h,P13,implemented,Cometa::Committee,lib/tests/ProposalProcedures/CommitteeTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_confirm_transaction_func_t,callback,lib/include/cardano/providers/provider_impl.h,P19,implemented,Cometa::Provider::confirmTransaction,lib/tests/Providers/ProviderAdapterTest.cpp
@@ -181,7 +181,7 @@ cardano_script_t,opaque object,lib/include/cardano/scripts/script.h,P06.4,implem
 cardano_secure_key_handler_impl_t,struct,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,internal,,
 cardano_secure_key_handler_t,opaque object,lib/include/cardano/key_handlers/secure_key_handler.h,P18,implemented,Cometa::SecureKeyHandler,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp; lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
 cardano_secure_key_handler_type_t,enum,lib/include/cardano/key_handlers/secure_key_handler_type.h,P18,implemented,Cometa::SecureKeyHandlerType,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp; lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
-cardano_selection_strategy_t,enum,lib/include/cardano/transaction_builder/coin_selection/coin_selection_strategy.h,P20,planned,,
+cardano_selection_strategy_t,enum,lib/include/cardano/transaction_builder/coin_selection/coin_selection_strategy.h,P20,implemented,Cometa::SelectionStrategy,lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp
 cardano_serialize_secure_key_handler_func_t,callback,lib/include/cardano/key_handlers/secure_key_handler_impl.h,P18,implemented,Cometa::Bip32KeyCallbacks::serialize; Cometa::Ed25519KeyCallbacks::serialize,lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp; lib/tests/KeyHandlers/SecureKeyHandlerTypeTest.cpp
 cardano_single_host_addr_relay_t,opaque object,lib/include/cardano/pool_params/single_host_addr_relay.h,P09,implemented,Cometa::SingleHostAddrRelay,lib/tests/PoolParams/SingleHostAddrRelayTest.cpp; lib/tests/ValueContractTest.cpp
 cardano_single_host_name_relay_t,opaque object,lib/include/cardano/pool_params/single_host_name_relay.h,P09,implemented,Cometa::SingleHostNameRelay,lib/tests/PoolParams/SingleHostNameRelayTest.cpp; lib/tests/ValueContractTest.cpp

@@ -43,4 +43,12 @@ namespace Cometa
  * @return An owned native selector.
  */
 cardano_coin_selector_t* createCoinSelectorAdapter(std::shared_ptr<CoinSelector> selector);
+
+/**
+ * @brief Runs a native selection strategy with C++ request and result values.
+ * @param selector The borrowed native strategy.
+ * @param request The selection request.
+ * @return Independent C++ selection results.
+ */
+CoinSelectionResult selectWithNative(cardano_coin_selector_t* selector, const CoinSelectionRequest& request);
 } // namespace Cometa

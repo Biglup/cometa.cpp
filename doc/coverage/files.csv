@@ -192,12 +192,12 @@ lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,publi
 lib/include/cardano/transaction_builder/balancing/implicit_coin.h,public header,P22,planned,idiomatic C++ API
 lib/include/cardano/transaction_builder/balancing/input_to_redeemer_map.h,public header,P22,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
 lib/include/cardano/transaction_builder/balancing/transaction_balancing.h,public header,P22,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/coin_selection/coin_selection_request.h,public header,P20,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/coin_selection/coin_selection_strategy.h,public header,P20,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,public header,P20,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,public header,P20,planned,internal ABI/ownership support; no raw C wrapper API
-lib/include/cardano/transaction_builder/coin_selection/large_first_coin_selector.h,public header,P20,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/coin_selection/random_improve_coin_selector.h,public header,P20,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/coin_selection/coin_selection_request.h,public header,P20,implemented,Idiomatic C++ coin selection strategy.
+lib/include/cardano/transaction_builder/coin_selection/coin_selection_strategy.h,public header,P20,implemented,Idiomatic C++ coin selection strategy.
+lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,public header,P20,implemented,Idiomatic C++ coin selection strategy.
+lib/include/cardano/transaction_builder/coin_selection/coin_selector_impl.h,public header,P20,internal,Private native callback bridge.
+lib/include/cardano/transaction_builder/coin_selection/large_first_coin_selector.h,public header,P20,implemented,Idiomatic C++ coin selection strategy.
+lib/include/cardano/transaction_builder/coin_selection/random_improve_coin_selector.h,public header,P20,implemented,Idiomatic C++ coin selection strategy.
 lib/include/cardano/transaction_builder/evaluation/native_tx_evaluator.h,public header,P21,planned,idiomatic C++ API
 lib/include/cardano/transaction_builder/evaluation/provider_tx_evaluator.h,public header,P21,planned,idiomatic C++ API
 lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,public header,P21,planned,idiomatic C++ API

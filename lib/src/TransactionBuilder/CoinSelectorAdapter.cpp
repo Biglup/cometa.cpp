@@ -174,6 +174,62 @@ class CoinSelectorAdapter
   public:
 
     /**
+     * @brief Runs a native strategy with C++ request and result values.
+     * @param selector The borrowed native strategy.
+     * @param request The selection request.
+     * @return Independent C++ selection results.
+     */
+    static CoinSelectionResult
+    selectWithNative(cardano_coin_selector_t* selector, const CoinSelectionRequest& request)
+    {
+      CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref>                             available(copyUtxos(request.available));
+      CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref>                             preselected(copyUtxos(request.preselected));
+      CardanoObject<cardano_transaction_output_list_t, cardano_transaction_output_list_unref> outputs(
+        copyOutputs(request.outputsToCover));
+
+      const std::vector<std::uint8_t>                     targetBytes = request.target.toCbor();
+      CardanoObject<cardano_value_t, cardano_value_unref> target(
+        decodeCbor<cardano_value_t, cardano_value_unref>(targetBytes, cardano_value_from_cbor));
+
+      const std::vector<std::uint8_t>                         addressBytes  = request.changeAddress.toBytes();
+      cardano_address_t*                                      addressValue  = nullptr;
+      const cardano_error_t                                   addressStatus = cardano_address_from_bytes(addressBytes.data(), addressBytes.size(), &addressValue);
+      CardanoObject<cardano_address_t, cardano_address_unref> address(addressValue);
+      checkCardanoError(addressStatus, "CoinSelector change address");
+
+      cardano_protocol_parameters_t*                                                  parametersValue = nullptr;
+      const cardano_error_t                                                           parameterStatus = cardano_protocol_parameters_deep_clone(request.parameters.checked(), &parametersValue);
+      CardanoObject<cardano_protocol_parameters_t, cardano_protocol_parameters_unref> parameters(parametersValue);
+      checkCardanoError(parameterStatus, "CoinSelector parameters");
+
+      cardano_coin_selection_request_t nativeRequest {};
+      nativeRequest.pre_selected_utxo = preselected.get();
+      nativeRequest.available_utxo    = available.get();
+      nativeRequest.target            = target.get();
+      nativeRequest.outputs_to_cover  = outputs.get();
+      nativeRequest.change_address    = address.get();
+      nativeRequest.protocol_params   = parameters.get();
+
+      cardano_utxo_list_t*               selectedValue  = nullptr;
+      cardano_utxo_list_t*               remainingValue = nullptr;
+      cardano_transaction_output_list_t* changeValue    = nullptr;
+      const cardano_error_t              status         = cardano_coin_selector_select(
+        selector, &nativeRequest, &selectedValue, &remainingValue, &changeValue);
+
+      CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref>                             selected(selectedValue);
+      CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref>                             remaining(remainingValue);
+      CardanoObject<cardano_transaction_output_list_t, cardano_transaction_output_list_unref> change(changeValue);
+
+      checkCardanoError(status, "CoinSelector select");
+
+      CoinSelectionResult result;
+      result.selected  = copyUtxos(selected.get());
+      result.remaining = copyUtxos(remaining.get());
+      result.change    = copyOutputs(change.get());
+      return result;
+    }
+
+    /**
      * @brief Runs a C++ strategy for a native request.
      * @param implementation The native strategy.
      * @param request The selection request.
@@ -271,5 +327,16 @@ createCoinSelectorAdapter(std::shared_ptr<CoinSelector> selector)
   }
 
   return value;
+}
+
+CoinSelectionResult
+selectWithNative(cardano_coin_selector_t* selector, const CoinSelectionRequest& request)
+{
+  if (!selector)
+  {
+    throw std::invalid_argument("Native CoinSelector is required");
+  }
+
+  return CoinSelectorAdapter::selectWithNative(selector, request);
 }
 } // namespace Cometa

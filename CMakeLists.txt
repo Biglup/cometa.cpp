@@ -195,6 +195,8 @@ ADD_LIBRARY (cometa STATIC
   lib/src/Providers/ProviderAdapter.cpp
   lib/src/TransactionBuilder/CoinSelectionRequest.cpp
   lib/src/TransactionBuilder/CoinSelectorAdapter.cpp
+  lib/src/TransactionBuilder/LargeFirstCoinSelector.cpp
+  lib/src/TransactionBuilder/RandomImproveCoinSelector.cpp
   lib/src/Transaction/SubTransactionSet.cpp
   lib/src/Common/CredentialSet.cpp
   lib/src/Common/Credential.cpp

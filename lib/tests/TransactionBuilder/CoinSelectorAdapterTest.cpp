@@ -25,6 +25,8 @@
 
 #include <Cometa/Cometa.h>
 #include <Cometa/TransactionBuilder/CoinSelector.h>
+#include <Cometa/TransactionBuilder/LargeFirstCoinSelector.h>
+#include <Cometa/TransactionBuilder/RandomImproveCoinSelector.h>
 
 #include "../../src/CardanoInterop.h"
 #include "../../src/TransactionBuilder/CoinSelectorAdapter.h"
@@ -160,6 +162,14 @@ TEST(CoinSelectorAdapter, DispatchesAndCopiesSelection)
   EXPECT_EQ(cardano_utxo_list_get_length(remainingOwner.get()), 0U);
   EXPECT_EQ(cardano_transaction_output_list_get_length(changeOwner.get()), 1U);
 
+  ProtocolParameters cppParameters;
+  cppParameters.setMinFeeA(44);
+  const CoinSelectionRequest cppRequest({ utxo }, Value(1000000), address, cppParameters);
+  const CoinSelectionResult  cppResult = selectWithNative(selector.get(), cppRequest);
+  EXPECT_EQ(cppResult.selected.size(), 1U);
+  EXPECT_EQ(cppResult.remaining.size(), 0U);
+  EXPECT_EQ(cppResult.change.size(), 1U);
+
   // Arrange
   strategy->fail = true;
   selected       = nullptr;
@@ -175,4 +185,40 @@ TEST(CoinSelectorAdapter, DispatchesAndCopiesSelection)
   EXPECT_EQ(selected, nullptr);
   EXPECT_EQ(remaining, nullptr);
   EXPECT_EQ(change, nullptr);
+}
+
+TEST(CoinSelectorAdapter, BuiltInStrategiesSelectAndBalance)
+{
+  // Arrange
+  ProtocolParameters parameters;
+  parameters.setAdaPerUtxoByte(4310);
+  const Address address = sampleAddress();
+  const Utxo    utxo(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(5000000)));
+  const CoinSelectionRequest      request({ utxo }, Value(2000000), address, parameters);
+  const LargeFirstCoinSelector    largeFirst;
+  const RandomImproveCoinSelector randomImprove(42);
+  const RandomImproveCoinSelector minimal(42, SelectionStrategy::Minimal);
+
+  // Act
+  const CoinSelectionResult largeResult   = largeFirst.select(request);
+  const CoinSelectionResult randomResult  = randomImprove.select(request);
+  const CoinSelectionResult minimalResult = minimal.select(request);
+
+  // Assert
+  EXPECT_EQ(largeFirst.name(), "large-first");
+  EXPECT_EQ(randomImprove.name(), "random-improve");
+  ASSERT_EQ(largeResult.selected.size(), 1U);
+  ASSERT_EQ(randomResult.selected.size(), 1U);
+  ASSERT_EQ(minimalResult.selected.size(), 1U);
+  EXPECT_EQ(largeResult.remaining.size(), 0U);
+  EXPECT_EQ(randomResult.remaining.size(), 0U);
+  ASSERT_EQ(largeResult.change.size(), 1U);
+  ASSERT_EQ(randomResult.change.size(), 1U);
+  ASSERT_EQ(minimalResult.change.size(), 1U);
+  EXPECT_EQ(largeResult.change.at(0).amount().coin(), 3000000);
+  EXPECT_EQ(randomResult.change.at(0).amount().coin(), 3000000);
+  EXPECT_EQ(minimalResult.change.at(0).amount().coin(), 3000000);
+  EXPECT_THROW(RandomImproveCoinSelector(42, static_cast<SelectionStrategy>(99)), std::invalid_argument);
 }
