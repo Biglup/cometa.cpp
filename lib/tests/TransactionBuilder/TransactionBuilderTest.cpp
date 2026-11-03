@@ -160,6 +160,33 @@ TEST(TransactionBuilder, RejectsMissingDeferredRedeemerCallback)
   // Assert
   EXPECT_THROW(builder.addInputWithDeferredRedeemer(available, DeferredRedeemer()), std::invalid_argument);
   EXPECT_THROW(builder.mintTokenWithDeferredRedeemer(asset, 1, DeferredRedeemer()), std::invalid_argument);
+  const RewardAddress reward(NetworkId::Testnet, Credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1))));
+  const Certificate   certificate(StakeRegistrationCert(reward.credential()));
+  EXPECT_THROW(builder.withdrawRewardsWithDeferredRedeemer(reward, 0, DeferredRedeemer()), std::invalid_argument);
+  EXPECT_THROW(builder.addCertificateWithDeferredRedeemer(certificate, DeferredRedeemer()), std::invalid_argument);
+}
+
+TEST(TransactionBuilder, AddsStakeRegistrationCertificate)
+{
+  // Arrange
+  ProtocolParameters parameters = sampleParameters();
+  parameters.setKeyDeposit(2000000);
+  const Address    address = sampleAddress();
+  const Credential stakeCredential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 4)));
+  const Utxo       available(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(10000000)));
+  TransactionBuilder builder(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.setChangeAddress(address)
+    .setUtxos({ available })
+    .addCertificate(Certificate(StakeRegistrationCert(stakeCredential)));
+
+  // Act
+  const Transaction transaction = builder.build();
+
+  // Assert
+  ASSERT_TRUE(transaction.body().certificates().has_value());
+  EXPECT_EQ(transaction.body().certificates()->size(), 1U);
 }
 
 TEST(TransactionBuilder, MintsNativeToken)

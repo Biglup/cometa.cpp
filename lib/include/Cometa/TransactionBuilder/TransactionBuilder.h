@@ -29,6 +29,7 @@
 #include <Cometa/Address/RewardAddress.h>
 #include <Cometa/Assets/AssetId.h>
 #include <Cometa/AuxiliaryData/Metadatum.h>
+#include <Cometa/Certificates/Certificate.h>
 #include <Cometa/Common/Credential.h>
 #include <Cometa/Common/Datum.h>
 #include <Cometa/Common/NetworkId.h>
@@ -161,6 +162,9 @@ class TransactionBuilder
     /** @brief Adds a Dijkstra guard. @param guard The guard credential. @return This builder. */
     TransactionBuilder& addGuard(const Credential& guard);
 
+    /** @brief Adds a script guard with its redeemer. @param guard The guard credential. @param redeemer The guard redeemer. @return This builder. */
+    TransactionBuilder& addGuard(const Credential& guard, const PlutusData& redeemer);
+
     /** @brief Adds a datum to the witness set. @param datum The datum. @return This builder. */
     TransactionBuilder& addDatum(const PlutusData& datum);
 
@@ -181,6 +185,26 @@ class TransactionBuilder
 
     /** @brief Adds a signed sub-transaction. @param transaction The sub-transaction. @param resolvedUtxos Its resolved inputs. @return This builder. */
     TransactionBuilder& addSubTransaction(const SubTransaction& transaction, const UtxoList& resolvedUtxos);
+
+    /** @brief Withdraws rewards from a reward account. @param address The reward account. @param lovelace The withdrawal amount. @param redeemer The script redeemer, when needed. @return This builder. */
+    TransactionBuilder& withdrawRewards(
+      const RewardAddress&             address,
+      std::int64_t                     lovelace,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Withdraws rewards with a redeemer produced after balancing. @param address The reward account. @param lovelace The withdrawal amount. @param callback The deterministic producer. @return This builder. */
+    TransactionBuilder& withdrawRewardsWithDeferredRedeemer(
+      const RewardAddress& address,
+      std::int64_t         lovelace,
+      DeferredRedeemer     callback);
+
+    /** @brief Adds a certificate. @param certificate The certificate. @param redeemer The script redeemer, when needed. @return This builder. */
+    TransactionBuilder& addCertificate(
+      const Certificate&               certificate,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Adds a certificate with a redeemer produced after balancing. @param certificate The certificate. @param callback The deterministic producer. @return This builder. */
+    TransactionBuilder& addCertificateWithDeferredRedeemer(const Certificate& certificate, DeferredRedeemer callback);
 
     /**
      * @brief Mints or burns a native asset.

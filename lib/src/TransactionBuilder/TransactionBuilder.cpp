@@ -35,6 +35,7 @@
 #include <cardano/assets/asset_id.h>
 #include <cardano/assets/asset_name.h>
 #include <cardano/auxiliary_data/metadatum.h>
+#include <cardano/certs/certificate.h>
 #include <cardano/common/credential.h>
 #include <cardano/common/datum.h>
 #include <cardano/common/utxo.h>
@@ -373,6 +374,17 @@ TransactionBuilder::addGuard(const Credential& guard)
 }
 
 TransactionBuilder&
+TransactionBuilder::addGuard(const Credential& guard, const PlutusData& redeemer)
+{
+  CardanoObject<cardano_credential_t, cardano_credential_unref> nativeGuard(
+    decodeCbor<cardano_credential_t, cardano_credential_unref>(guard.toCbor(), cardano_credential_from_cbor));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeRedeemer(
+    decodeCbor<cardano_plutus_data_t, cardano_plutus_data_unref>(redeemer.toCbor(), cardano_plutus_data_from_cbor));
+  cardano_tx_builder_add_guard_with_redeemer(checked(), nativeGuard.get(), nativeRedeemer.get());
+  return *this;
+}
+
+TransactionBuilder&
 TransactionBuilder::addDatum(const PlutusData& datum)
 {
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> native(
@@ -437,6 +449,66 @@ TransactionBuilder::addSubTransaction(const SubTransaction& transaction, const U
       transaction.toCbor(), cardano_sub_transaction_from_cbor));
   CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeUtxos(copyUtxos(resolvedUtxos));
   cardano_tx_builder_add_sub_transaction(checked(), nativeTransaction.get(), nativeUtxos.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::withdrawRewards(
+  const RewardAddress&             address,
+  std::int64_t                     lovelace,
+  const std::optional<PlutusData>& redeemer)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(address));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref>       nativeRedeemer(copyPlutusData(redeemer));
+  cardano_tx_builder_withdraw_rewards(checked(), nativeAddress.get(), lovelace, nativeRedeemer.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::withdrawRewardsWithDeferredRedeemer(
+  const RewardAddress& address,
+  std::int64_t         lovelace,
+  DeferredRedeemer     callback)
+{
+  if (!callback)
+  {
+    throw std::invalid_argument("Deferred redeemer callback is required");
+  }
+
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(address));
+  std::unique_ptr<DeferredRedeemerContext>                              context(new DeferredRedeemerContext { std::move(callback), nullptr });
+  m_deferredRedeemers.push_back(std::move(context));
+  cardano_tx_builder_withdraw_rewards_with_deferred_redeemer(
+    checked(), nativeAddress.get(), lovelace, &invokeDeferredRedeemer, m_deferredRedeemers.back().get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::addCertificate(
+  const Certificate&               certificate,
+  const std::optional<PlutusData>& redeemer)
+{
+  CardanoObject<cardano_certificate_t, cardano_certificate_unref> nativeCertificate(
+    decodeCbor<cardano_certificate_t, cardano_certificate_unref>(certificate.toCbor(), cardano_certificate_from_cbor));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeRedeemer(copyPlutusData(redeemer));
+  cardano_tx_builder_add_certificate(checked(), nativeCertificate.get(), nativeRedeemer.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::addCertificateWithDeferredRedeemer(const Certificate& certificate, DeferredRedeemer callback)
+{
+  if (!callback)
+  {
+    throw std::invalid_argument("Deferred redeemer callback is required");
+  }
+
+  CardanoObject<cardano_certificate_t, cardano_certificate_unref> nativeCertificate(
+    decodeCbor<cardano_certificate_t, cardano_certificate_unref>(certificate.toCbor(), cardano_certificate_from_cbor));
+  std::unique_ptr<DeferredRedeemerContext> context(new DeferredRedeemerContext { std::move(callback), nullptr });
+  m_deferredRedeemers.push_back(std::move(context));
+  cardano_tx_builder_add_certificate_with_deferred_redeemer(
+    checked(), nativeCertificate.get(), &invokeDeferredRedeemer, m_deferredRedeemers.back().get());
   return *this;
 }
 
