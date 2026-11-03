@@ -27,7 +27,9 @@
 
 #include <Cometa/Address/Address.h>
 #include <Cometa/Assets/AssetId.h>
+#include <Cometa/AuxiliaryData/Metadatum.h>
 #include <Cometa/Common/Credential.h>
+#include <Cometa/Common/Datum.h>
 #include <Cometa/Common/NetworkId.h>
 #include <Cometa/Common/UtxoList.h>
 #include <Cometa/Crypto/Blake2bHash.h>
@@ -113,6 +115,12 @@ class TransactionBuilder
     /** @brief Adds a multi-asset payment. @param address The recipient. @param value The amount. @return This builder. */
     TransactionBuilder& sendValue(const Address& address, const Value& value);
 
+    /** @brief Locks lovelace with a datum. @param address The script address. @param lovelace The amount. @param datum The output datum. @return This builder. */
+    TransactionBuilder& lockLovelace(const Address& address, std::uint64_t lovelace, const Datum& datum);
+
+    /** @brief Locks a value with a datum. @param address The script address. @param value The amount. @param datum The output datum. @return This builder. */
+    TransactionBuilder& lockValue(const Address& address, const Value& value, const Datum& datum);
+
     /**
      * @brief Adds a spendable input.
      * @param utxo The output to spend.
@@ -142,6 +150,9 @@ class TransactionBuilder
 
     /** @brief Adds a native or Plutus script. @param script The script. @return This builder. */
     TransactionBuilder& addScript(const Script& script);
+
+    /** @brief Adds transaction metadata. @param tag The metadata label. @param value The metadata value. @return This builder. */
+    TransactionBuilder& setMetadata(std::uint64_t tag, const Metadatum& value);
 
     /**
      * @brief Mints or burns a native asset.

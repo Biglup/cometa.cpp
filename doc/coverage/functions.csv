@@ -2964,14 +2964,14 @@ cardano_tx_builder_send_lovelace,lib/include/cardano/transaction_builder/transac
 cardano_tx_builder_send_lovelace_ex,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
 cardano_tx_builder_send_value,lib/include/cardano/transaction_builder/transaction_builder.h,P22,implemented,Cometa::TransactionBuilder::sendValue,lib/tests/TransactionBuilder/TransactionBuilderTest.cpp,C++ values and scoped native ownership.
 cardano_tx_builder_send_value_ex,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
-cardano_tx_builder_lock_lovelace,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
+cardano_tx_builder_lock_lovelace,lib/include/cardano/transaction_builder/transaction_builder.h,P22,implemented,Cometa::TransactionBuilder::lockLovelace,lib/tests/TransactionBuilder/TransactionBuilderTest.cpp,C++ values and scoped native ownership.
 cardano_tx_builder_lock_lovelace_ex,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
-cardano_tx_builder_lock_value,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
+cardano_tx_builder_lock_value,lib/include/cardano/transaction_builder/transaction_builder.h,P22,implemented,Cometa::TransactionBuilder::lockValue,lib/tests/TransactionBuilder/TransactionBuilderTest.cpp,C++ values and scoped native ownership.
 cardano_tx_builder_lock_value_ex,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
 cardano_tx_builder_add_input,lib/include/cardano/transaction_builder/transaction_builder.h,P22,implemented,Cometa::TransactionBuilder::addInput,lib/tests/TransactionBuilder/TransactionBuilderTest.cpp,C++ values and scoped native ownership.
 cardano_tx_builder_add_input_with_deferred_redeemer,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
 cardano_tx_builder_add_output,lib/include/cardano/transaction_builder/transaction_builder.h,P22,implemented,Cometa::TransactionBuilder::addOutput,lib/tests/TransactionBuilder/TransactionBuilderTest.cpp,C++ values and scoped native ownership.
-cardano_tx_builder_set_metadata,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
+cardano_tx_builder_set_metadata,lib/include/cardano/transaction_builder/transaction_builder.h,P22,implemented,Cometa::TransactionBuilder::setMetadata,lib/tests/TransactionBuilder/TransactionBuilderTest.cpp,C++ values and scoped native ownership.
 cardano_tx_builder_set_metadata_ex,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
 cardano_tx_builder_mint_token,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.
 cardano_tx_builder_mint_token_with_deferred_redeemer,lib/include/cardano/transaction_builder/transaction_builder.h,P22,planned,,,API and ownership mapping pending.

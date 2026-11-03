@@ -176,3 +176,29 @@ TEST(TransactionBuilder, MintsNativeToken)
   ASSERT_TRUE(transaction.witnessSet().nativeScripts().has_value());
   EXPECT_EQ(transaction.witnessSet().nativeScripts()->size(), 1U);
 }
+
+TEST(TransactionBuilder, LocksScriptOutputWithDatumAndMetadata)
+{
+  // Arrange
+  const Address    address = sampleAddress();
+  const Credential scriptCredential(
+    CredentialType::ScriptHash, Blake2bHash(std::vector<std::uint8_t>(28, 3)));
+  const Address scriptAddress = EnterpriseAddress(NetworkId::Testnet, scriptCredential).toAddress();
+  const Utxo    available(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(10000000)));
+  TransactionBuilder builder(sampleParameters(), SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.setChangeAddress(address)
+    .setUtxos({ available })
+    .lockLovelace(scriptAddress, 2000000, Datum(PlutusData(42)))
+    .setMetadata(674, Metadatum("test"));
+
+  // Act
+  const Transaction transaction = builder.build();
+
+  // Assert
+  ASSERT_EQ(transaction.body().outputs().size(), 2U);
+  EXPECT_EQ(transaction.body().outputs().at(0).address(), scriptAddress);
+  EXPECT_TRUE(transaction.auxiliaryData().has_value());
+  ASSERT_TRUE(transaction.auxiliaryData()->metadata().has_value());
+}

@@ -31,7 +31,9 @@
 
 #include <cardano/address/address.h>
 #include <cardano/assets/asset_id.h>
+#include <cardano/auxiliary_data/metadatum.h>
 #include <cardano/common/credential.h>
+#include <cardano/common/datum.h>
 #include <cardano/common/utxo.h>
 #include <cardano/common/utxo_list.h>
 #include <cardano/crypto/blake2b_hash.h>
@@ -249,6 +251,28 @@ TransactionBuilder::sendValue(const Address& address, const Value& value)
 }
 
 TransactionBuilder&
+TransactionBuilder::lockLovelace(const Address& address, std::uint64_t lovelace, const Datum& datum)
+{
+  CardanoObject<cardano_address_t, cardano_address_unref> nativeAddress(copyAddress(address));
+  CardanoObject<cardano_datum_t, cardano_datum_unref>     nativeDatum(
+    decodeCbor<cardano_datum_t, cardano_datum_unref>(datum.toCbor(), cardano_datum_from_cbor));
+  cardano_tx_builder_lock_lovelace(checked(), nativeAddress.get(), lovelace, nativeDatum.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::lockValue(const Address& address, const Value& value, const Datum& datum)
+{
+  CardanoObject<cardano_address_t, cardano_address_unref> nativeAddress(copyAddress(address));
+  CardanoObject<cardano_value_t, cardano_value_unref>     nativeValue(
+    decodeCbor<cardano_value_t, cardano_value_unref>(value.toCbor(), cardano_value_from_cbor));
+  CardanoObject<cardano_datum_t, cardano_datum_unref> nativeDatum(
+    decodeCbor<cardano_datum_t, cardano_datum_unref>(datum.toCbor(), cardano_datum_from_cbor));
+  cardano_tx_builder_lock_value(checked(), nativeAddress.get(), nativeValue.get(), nativeDatum.get());
+  return *this;
+}
+
+TransactionBuilder&
 TransactionBuilder::addInput(
   const Utxo&                      utxo,
   const std::optional<PlutusData>& redeemer,
@@ -319,6 +343,15 @@ TransactionBuilder::addScript(const Script& script)
   CardanoObject<cardano_script_t, cardano_script_unref> native(
     decodeCbor<cardano_script_t, cardano_script_unref>(script.toCbor(), cardano_script_from_cbor));
   cardano_tx_builder_add_script(checked(), native.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::setMetadata(std::uint64_t tag, const Metadatum& value)
+{
+  CardanoObject<cardano_metadatum_t, cardano_metadatum_unref> native(
+    decodeCbor<cardano_metadatum_t, cardano_metadatum_unref>(value.toCbor(), cardano_metadatum_from_cbor));
+  cardano_tx_builder_set_metadata(checked(), tag, native.get());
   return *this;
 }
 
