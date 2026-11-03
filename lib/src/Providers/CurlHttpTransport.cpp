@@ -27,6 +27,7 @@
 
 #include <curl/curl.h>
 
+#include <exception>
 #include <limits>
 #include <memory>
 #include <mutex>
@@ -45,11 +46,21 @@ namespace
 /** @brief Maximum accepted response size. */
 constexpr std::size_t MAX_RESPONSE_BYTES = 16U * 1024U * 1024U;
 
-/** @brief Appends a bounded libcurl response chunk. @param contents The bytes. @param size Element size. @param count Element count. @param context Response vector. @return Consumed bytes. */
+/** @brief Response destination and a C++ callback failure. */
+struct ResponseBuffer
+{
+    /** @brief Received bytes. */
+    std::vector<std::uint8_t>* bytes;
+
+    /** @brief Failure captured before returning through libcurl. */
+    std::exception_ptr error;
+};
+
+/** @brief Appends a bounded libcurl response chunk. @param contents The bytes. @param size Element size. @param count Element count. @param context Response buffer. @return Consumed bytes. */
 std::size_t
 appendResponse(char* contents, std::size_t size, std::size_t count, void* context)
 {
-  std::vector<std::uint8_t>* response = static_cast<std::vector<std::uint8_t>*>(context);
+  ResponseBuffer* response = static_cast<ResponseBuffer*>(context);
 
   if (size != 0 && count > std::numeric_limits<std::size_t>::max() / size)
   {
@@ -58,13 +69,21 @@ appendResponse(char* contents, std::size_t size, std::size_t count, void* contex
 
   const std::size_t length = size * count;
 
-  if (length > MAX_RESPONSE_BYTES - response->size())
+  if (length > MAX_RESPONSE_BYTES - response->bytes->size())
   {
     return 0;
   }
 
-  response->insert(response->end(), contents, contents + length);
-  return length;
+  try
+  {
+    response->bytes->insert(response->bytes->end(), contents, contents + length);
+    return length;
+  }
+  catch (...)
+  {
+    response->error = std::current_exception();
+    return 0;
+  }
 }
 
 /** @brief Deleter for a curl easy handle. */
@@ -175,11 +194,12 @@ CurlHttpTransport::execute(const HttpRequest& request) const
     headers.append(line);
   }
 
-  HttpResponse response { 0, {} };
+  HttpResponse   response { 0, {} };
+  ResponseBuffer buffer { &response.body, nullptr };
   curl_easy_setopt(handle.get(), CURLOPT_URL, request.url.c_str());
   curl_easy_setopt(handle.get(), CURLOPT_HTTPHEADER, headers.get());
   curl_easy_setopt(handle.get(), CURLOPT_WRITEFUNCTION, &appendResponse);
-  curl_easy_setopt(handle.get(), CURLOPT_WRITEDATA, &response.body);
+  curl_easy_setopt(handle.get(), CURLOPT_WRITEDATA, &buffer);
   curl_easy_setopt(handle.get(), CURLOPT_CONNECTTIMEOUT_MS, 10000L);
   curl_easy_setopt(handle.get(), CURLOPT_TIMEOUT_MS, 30000L);
   curl_easy_setopt(handle.get(), CURLOPT_NOSIGNAL, 1L);
@@ -201,6 +221,11 @@ CurlHttpTransport::execute(const HttpRequest& request) const
   }
 
   const CURLcode status = curl_easy_perform(handle.get());
+
+  if (buffer.error)
+  {
+    std::rethrow_exception(buffer.error);
+  }
 
   if (status != CURLE_OK)
   {
