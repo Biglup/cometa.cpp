@@ -10,6 +10,7 @@ INCLUDE (CMakePackageConfigHelpers)
 # Build options and native dependency.
 OPTION (COMETA_BUILD_TESTS "Build unit tests" ON)
 OPTION (COMETA_BUILD_DOCS "Build documentation" OFF)
+OPTION (COMETA_BUILD_EXAMPLES "Build C++ examples" ON)
 SET (COMETA_CARDANO_SOURCE_DIR "" CACHE PATH "Local cardano-c checkout with deep-clone APIs")
 
 INCLUDE (cmake/Cardano.cmake)
@@ -209,6 +210,11 @@ ADD_LIBRARY (cometa STATIC
 )
 
 ADD_LIBRARY (Cometa::cometa ALIAS cometa)
+
+IF (COMETA_BUILD_EXAMPLES)
+  ADD_EXECUTABLE (bip39_example examples/bip39_example.cpp)
+  TARGET_LINK_LIBRARIES (bip39_example PRIVATE Cometa::cometa)
+ENDIF ()
 
 TARGET_COMPILE_FEATURES (cometa PUBLIC cxx_std_17)
 
