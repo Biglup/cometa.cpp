@@ -198,6 +198,12 @@ ADD_LIBRARY (cometa STATIC
   lib/src/KeyHandlers/SecureKeyHandler.cpp
   lib/src/Providers/ProviderAdapter.cpp
   lib/src/Providers/BlockfrostProvider.cpp
+  lib/src/TransactionBuilder/TransactionUtilityAccess.cpp
+  lib/src/TransactionBuilder/Fee.cpp
+  lib/src/TransactionBuilder/ScriptDataHash.cpp
+  lib/src/TransactionBuilder/Balancing/ImplicitCoin.cpp
+  lib/src/TransactionBuilder/Balancing/TransactionBalanceRequest.cpp
+  lib/src/TransactionBuilder/Balancing/TransactionBalancing.cpp
   lib/src/TransactionBuilder/CoinSelectionRequest.cpp
   lib/src/TransactionBuilder/CoinSelectorAdapter.cpp
   lib/src/TransactionBuilder/LargeFirstCoinSelector.cpp
@@ -725,6 +731,8 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/Providers/BlockfrostProviderTest.cpp
     lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp
     lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp
+    lib/tests/TransactionBuilder/GovernanceBuilderTest.cpp
+    lib/tests/TransactionBuilder/TransactionUtilitiesTest.cpp
     lib/tests/TransactionBuilder/TransactionBuilderTest.cpp
     lib/tests/TransactionBuilder/BuilderConformanceTest.cpp
     lib/tests/TransactionBuilder/LifecycleConformanceTest.cpp

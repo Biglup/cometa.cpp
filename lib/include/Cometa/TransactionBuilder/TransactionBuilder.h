@@ -32,15 +32,21 @@
 #include <Cometa/Certificates/Certificate.h>
 #include <Cometa/Common/Anchor.h>
 #include <Cometa/Common/Credential.h>
+#include <Cometa/Common/CredentialSet.h>
 #include <Cometa/Common/Datum.h>
 #include <Cometa/Common/DRep.h>
 #include <Cometa/Common/GovernanceActionId.h>
 #include <Cometa/Common/NetworkId.h>
+#include <Cometa/Common/ProtocolVersion.h>
+#include <Cometa/Common/UnitInterval.h>
 #include <Cometa/Common/UtxoList.h>
 #include <Cometa/Common/WithdrawalMap.h>
 #include <Cometa/Crypto/Blake2bHash.h>
 #include <Cometa/PlutusData/PlutusData.h>
+#include <Cometa/ProposalProcedures/CommitteeMembersMap.h>
+#include <Cometa/ProposalProcedures/Constitution.h>
 #include <Cometa/ProtocolParams/ProtocolParameters.h>
+#include <Cometa/ProtocolParams/ProtocolParamUpdate.h>
 #include <Cometa/Scripts/Script.h>
 #include <Cometa/SlotConfig.h>
 #include <Cometa/Transaction/SubTransaction.h>
@@ -622,6 +628,90 @@ class TransactionBuilder
      * @return This builder.
      */
     TransactionBuilder& padSignerCount(std::size_t count);
+
+    /**
+     * @brief Proposes selected protocol parameter changes.
+     *
+     * The governance deposit is taken from the configured protocol parameters.
+     * @param refundAddress The reward account receiving the deposit refund.
+     * @param anchor Metadata describing the proposal.
+     * @param update The proposed parameter changes.
+     * @param policyHash The constitution guardrails script hash; add its script to the builder.
+     * @param previousAction The preceding action, or std::nullopt for no predecessor.
+     * @return This builder.
+     */
+    TransactionBuilder& proposeParameterChange(
+      const RewardAddress&                     refundAddress,
+      const Anchor&                            anchor,
+      const ProtocolParamUpdate&               update,
+      const Blake2bHash&                       policyHash,
+      const std::optional<GovernanceActionId>& previousAction = std::nullopt);
+
+    /**
+     * @brief Proposes a ledger protocol-version upgrade.
+     *
+     * The governance deposit is taken from the configured protocol parameters.
+     * @param refundAddress The reward account receiving the deposit refund.
+     * @param anchor Metadata describing the proposal.
+     * @param version The proposed major and minor protocol version.
+     * @param previousAction The preceding action, or std::nullopt for no predecessor.
+     * @return This builder.
+     */
+    TransactionBuilder& proposeHardFork(
+      const RewardAddress&                     refundAddress,
+      const Anchor&                            anchor,
+      const ProtocolVersion&                   version,
+      const std::optional<GovernanceActionId>& previousAction = std::nullopt);
+
+    /**
+     * @brief Proposes no confidence in the constitutional committee.
+     *
+     * The governance deposit is taken from the configured protocol parameters.
+     * @param refundAddress The reward account receiving the deposit refund.
+     * @param anchor Metadata describing the proposal.
+     * @param previousAction The preceding committee action, or std::nullopt when absent.
+     * @return This builder.
+     */
+    TransactionBuilder& proposeNoConfidence(
+      const RewardAddress&                     refundAddress,
+      const Anchor&                            anchor,
+      const std::optional<GovernanceActionId>& previousAction = std::nullopt);
+
+    /**
+     * @brief Proposes committee membership and quorum changes.
+     *
+     * The governance deposit is taken from the configured protocol parameters.
+     * @param refundAddress The reward account receiving the deposit refund.
+     * @param anchor Metadata describing the proposal.
+     * @param removedMembers Cold credentials to remove.
+     * @param addedMembers New cold credentials and their expiry epochs.
+     * @param quorum The proposed voting quorum fraction.
+     * @param previousAction The preceding committee action, or std::nullopt when absent.
+     * @return This builder.
+     */
+    TransactionBuilder& proposeUpdateCommittee(
+      const RewardAddress&                     refundAddress,
+      const Anchor&                            anchor,
+      const CredentialSet&                     removedMembers,
+      const CommitteeMembersMap&               addedMembers,
+      const UnitInterval&                      quorum,
+      const std::optional<GovernanceActionId>& previousAction = std::nullopt);
+
+    /**
+     * @brief Proposes a replacement constitution.
+     *
+     * The governance deposit is taken from the configured protocol parameters.
+     * @param refundAddress The reward account receiving the deposit refund.
+     * @param anchor Metadata describing the proposal.
+     * @param constitution The new constitution anchor and optional guardrails script.
+     * @param previousAction The preceding constitution action, or std::nullopt when absent.
+     * @return This builder.
+     */
+    TransactionBuilder& proposeNewConstitution(
+      const RewardAddress&                     refundAddress,
+      const Anchor&                            anchor,
+      const Constitution&                      constitution,
+      const std::optional<GovernanceActionId>& previousAction = std::nullopt);
 
     /**
      * @brief Builds a balanced transaction ready for signing.

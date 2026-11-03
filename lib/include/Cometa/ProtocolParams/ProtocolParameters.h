@@ -796,6 +796,9 @@ class ProtocolParameters
 
   private:
 
+    /** @brief Allows transaction utilities to read protocol parameters. */
+    friend class TransactionUtilityAccess;
+
     /** @brief Allows the provider bridge to copy parameters into native calls. */
     friend class ProviderAdapter;
 

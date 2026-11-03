@@ -84,10 +84,9 @@ ownership. See :doc:`getting_started` for usage.
 Coverage ledger
 ---------------
 
-The inventory is a planning snapshot from cardano-c commit
-``fd108f6271b4caf3df65907e21ffc5f5ea0bce55``. The build revision is pinned
-separately in ``cmake/Cardano.cmake``. Reconcile this ledger against that revision
-before treating its status columns as a current completeness measure.
+The inventory was reconciled against the pinned cardano-c commit
+``af8780f200bc8a604324fb1a93a974283094022d``. All exported declarations
+in that revision have a mapping; no entries remain planned.
 It contains 231 public headers, 418 implementation files, 235 distinct public
 typedefs, and 3,335 exported function declarations. Tests and vendored dependencies
 are outside the file inventory.
@@ -102,7 +101,7 @@ are outside the file inventory.
 standard containers, or private adapters; it is not a claim that every internal
 C operation has a dedicated C++ test. ``planned`` entries remain unfinished.
 Function rows name the C++ operation and its associated test suite when available.
-Detailed ownership audits remain part of implementing each planned operation.
+The ledger records API availability, not line or branch test coverage.
 
 Passing tests or the shared corpus does not establish complete API coverage.
 

@@ -809,6 +809,20 @@ main()
     return 1;
   }
 
+  const Cometa::Transaction pricedTransaction(transactionBody, Cometa::WitnessSet());
+  const std::size_t         encodedSize = pricedTransaction.toCbor().size();
+  const std::uint64_t       minimumFee  = Cometa::computeMinFeeWithoutScripts(pricedTransaction, 100, 2);
+
+  if (Cometa::serializedTransactionSize(pricedTransaction) != encodedSize || minimumFee != 100 + 2 * (encodedSize - 1))
+  {
+    return 1;
+  }
+
+  if (Cometa::computeScriptDataHash(Cometa::CostModels(), Cometa::RedeemerList(), Cometa::PlutusDataSet()))
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

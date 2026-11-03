@@ -153,7 +153,7 @@ lib/include/cardano/protocol_params/proposed_param_updates.h,public header,P12,i
 lib/include/cardano/protocol_params/protocol_param_update.h,public header,P12,implemented,Optional parameter proposals with distinct ledger-null states and native CBOR fixtures.
 lib/include/cardano/protocol_params/protocol_parameters.h,public header,P12,implemented,Cometa::ProtocolParameters
 lib/include/cardano/protocol_params/update.h,public header,P12,implemented,Cometa::Update
-lib/include/cardano/providers/provider.h,public header,P19,planned,idiomatic C++ API
+lib/include/cardano/providers/provider.h,public header,P19,implemented,Typed C++ equivalent; see function ledger for mappings and tests.
 lib/include/cardano/providers/provider_impl.h,public header,P19,implemented,Cometa::Provider callback adapter
 lib/include/cardano/scripts/native_scripts/native_script.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
 lib/include/cardano/scripts/native_scripts/native_script_list.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
@@ -188,10 +188,10 @@ lib/include/cardano/transaction_body/transaction_input_set.h,public header,P07,i
 lib/include/cardano/transaction_body/transaction_output.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/include/cardano/transaction_body/transaction_output_list.h,public header,P07,implemented,Owned transaction values; optional datum/reference scripts; unsigned withdrawals; standard sequence aliases; shared output encodings.
 lib/include/cardano/transaction_body/value.h,public header,P04.2,implemented,"Signed asset values with checked arithmetic, independent components, and serialization."
-lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,public header,P23,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/transaction_builder/balancing/implicit_coin.h,public header,P22,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/balancing/input_to_redeemer_map.h,public header,P22,planned,domain container with standard C++ iteration/value semantics; audit specialized operations
-lib/include/cardano/transaction_builder/balancing/transaction_balancing.h,public header,P22,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/balancing/deferred_redeemer_list.h,public header,P23,internal,Private builder and balancing bookkeeping; callbacks use DeferredRedeemer.
+lib/include/cardano/transaction_builder/balancing/implicit_coin.h,public header,P22,implemented,Typed C++ equivalent; see function ledger for mappings and tests.
+lib/include/cardano/transaction_builder/balancing/input_to_redeemer_map.h,public header,P22,internal,Private builder and balancing bookkeeping; callbacks use DeferredRedeemer.
+lib/include/cardano/transaction_builder/balancing/transaction_balancing.h,public header,P22,implemented,Typed C++ equivalent; see function ledger for mappings and tests.
 lib/include/cardano/transaction_builder/coin_selection/coin_selection_request.h,public header,P20,implemented,Idiomatic C++ coin selection strategy.
 lib/include/cardano/transaction_builder/coin_selection/coin_selection_strategy.h,public header,P20,implemented,Idiomatic C++ coin selection strategy.
 lib/include/cardano/transaction_builder/coin_selection/coin_selector.h,public header,P20,implemented,Idiomatic C++ coin selection strategy.
@@ -202,10 +202,10 @@ lib/include/cardano/transaction_builder/evaluation/native_tx_evaluator.h,public 
 lib/include/cardano/transaction_builder/evaluation/provider_tx_evaluator.h,public header,P21,implemented,Idiomatic C++ evaluator interface and implementations.
 lib/include/cardano/transaction_builder/evaluation/tx_evaluator.h,public header,P21,implemented,Idiomatic C++ evaluator interface and implementations.
 lib/include/cardano/transaction_builder/evaluation/tx_evaluator_impl.h,public header,P21,internal,Private native callback bridge.
-lib/include/cardano/transaction_builder/fee.h,public header,P22,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/script_data_hash.h,public header,P22,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/sub_transaction_builder.h,public header,P23,planned,idiomatic C++ API
-lib/include/cardano/transaction_builder/transaction_builder.h,public header,P22,planned,idiomatic C++ API
+lib/include/cardano/transaction_builder/fee.h,public header,P22,implemented,Typed C++ equivalent; see function ledger for mappings and tests.
+lib/include/cardano/transaction_builder/script_data_hash.h,public header,P22,implemented,Typed C++ equivalent; see function ledger for mappings and tests.
+lib/include/cardano/transaction_builder/sub_transaction_builder.h,public header,P23,implemented,Typed C++ equivalent; see function ledger for mappings and tests.
+lib/include/cardano/transaction_builder/transaction_builder.h,public header,P22,implemented,Typed C++ equivalent; see function ledger for mappings and tests.
 lib/include/cardano/typedefs.h,public header,P01a.1,internal,"C ABI, ownership, buffers and build metadata; map through C++ values and private support."
 lib/include/cardano/uplc/uplc_apply_params.h,public header,P06.3,implemented,Versioned Plutus scripts; owned bytes; versioned hashes; shared parameter application fixtures and allocation failures.
 lib/include/cardano/voting_procedures/governance_action_id_list.h,public header,P14,implemented,Cometa::GovernanceActionIdList

@@ -253,3 +253,9 @@
 #include <Cometa/WitnessSet/VkeyWitness.h>
 #include <Cometa/WitnessSet/VkeyWitnessSet.h>
 #include <Cometa/WitnessSet/WitnessSet.h>
+
+#include <Cometa/TransactionBuilder/Balancing/ImplicitCoin.h>
+#include <Cometa/TransactionBuilder/Balancing/TransactionBalanceRequest.h>
+#include <Cometa/TransactionBuilder/Balancing/TransactionBalancing.h>
+#include <Cometa/TransactionBuilder/Fee.h>
+#include <Cometa/TransactionBuilder/ScriptDataHash.h>
