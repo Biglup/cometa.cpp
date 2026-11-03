@@ -279,6 +279,9 @@ IF (COMETA_BUILD_EXAMPLES)
 
     ADD_EXECUTABLE (drep_pubkey_example examples/drep_pubkey_example.cpp)
     TARGET_LINK_LIBRARIES (drep_pubkey_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (spend_from_validator_example examples/spend_from_validator_example.cpp)
+    TARGET_LINK_LIBRARIES (spend_from_validator_example PRIVATE cometa-example-support)
   ENDIF ()
 ENDIF ()
 

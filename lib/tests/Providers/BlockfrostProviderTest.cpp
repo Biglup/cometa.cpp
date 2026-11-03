@@ -129,7 +129,7 @@ TEST(BlockfrostProvider, ParsesProtocolParameters)
 {
   // Arrange
   const std::shared_ptr<FakeHttpTransport> transport = std::make_shared<FakeHttpTransport>();
-  transport->expected.push_back({ "GET", "epochs/latest/parameters", 200, R"({"min_fee_a":"44","min_fee_b":"155381","max_tx_size":"16384","max_val_size":"5000","coins_per_utxo_size":"4310","key_deposit":"2000000","pool_deposit":"500000000","protocol_major_ver":"11","protocol_minor_ver":"0","collateral_percent":"150","max_collateral_inputs":"3","max_tx_ex_mem":"14000000","max_tx_ex_steps":"10000000000","price_mem":0.1,"price_step":0.2,"cost_models":{"PlutusV4":[1,2,3]},"gov_action_deposit":"100000000","drep_deposit":"500000000","drep_activity":"20"})" });
+  transport->expected.push_back({ "GET", "epochs/latest/parameters", 200, R"({"min_fee_a":"44","min_fee_b":"155381","max_tx_size":"16384","max_val_size":"5000","coins_per_utxo_size":"4310","key_deposit":"2000000","pool_deposit":"500000000","protocol_major_ver":"11","protocol_minor_ver":"0","collateral_percent":"150","max_collateral_inputs":"3","max_tx_ex_mem":"14000000","max_tx_ex_steps":"10000000000","price_mem":0.1,"price_step":0.2,"cost_models":{"PlutusV4":[1,2,3]},"gov_action_deposit":"100000000","drep_deposit":"500000000","drep_activity":"20","min_fee_ref_script_cost_per_byte":"15"})" });
   const BlockfrostProvider provider(NetworkMagic::Preprod, "test-project-id", transport);
 
   // Act
@@ -140,6 +140,7 @@ TEST(BlockfrostProvider, ParsesProtocolParameters)
   EXPECT_EQ(parameters.maxTxSize(), 16384U);
   EXPECT_EQ(parameters.protocolVersion().major(), 11U);
   EXPECT_TRUE(parameters.costModels().contains(PlutusLanguageVersion::V4));
+  EXPECT_EQ(parameters.refScriptCostPerByte().numerator(), 15U);
   ASSERT_EQ(transport->requests.size(), 1U);
   ASSERT_FALSE(transport->requests.at(0).headers.empty());
   EXPECT_EQ(transport->requests.at(0).headers.at(0).first, "project_id");

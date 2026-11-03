@@ -401,6 +401,11 @@ BlockfrostProvider::getParameters() const
     parameters.setDrepInactivityPeriod(data.at("drep_activity").asUInt());
   }
 
+  if (data.contains("min_fee_ref_script_cost_per_byte"))
+  {
+    parameters.setRefScriptCostPerByte(UnitInterval(data.at("min_fee_ref_script_cost_per_byte").asUInt(), 1));
+  }
+
   return parameters;
 }
 
