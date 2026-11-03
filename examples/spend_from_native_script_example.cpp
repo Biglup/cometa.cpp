@@ -49,11 +49,14 @@ main()
     const Cometa::SecureKeyHandler   signer         = CometaExamples::sampleSigner();
     const Cometa::BlockfrostProvider provider       = CometaExamples::preprodProvider();
     const Cometa::Address            paymentAddress = CometaExamples::paymentAddress(signer);
-    const Cometa::ProtocolParameters parameters     = provider.getParameters();
-    const Cometa::NativeScript       nativeScript   = Cometa::NativeScript::fromJson(ALWAYS_SUCCEEDS_NATIVE_SCRIPT);
-    const Cometa::Script             script(nativeScript);
-    const Cometa::Credential         scriptCredential(Cometa::CredentialType::ScriptHash, script.hash());
-    const Cometa::Address            scriptAddress =
+
+    const Cometa::ProtocolParameters parameters = provider.getParameters();
+
+    const Cometa::NativeScript nativeScript = Cometa::NativeScript::fromJson(ALWAYS_SUCCEEDS_NATIVE_SCRIPT);
+
+    const Cometa::Script     script(nativeScript);
+    const Cometa::Credential scriptCredential(Cometa::CredentialType::ScriptHash, script.hash());
+    const Cometa::Address    scriptAddress =
       Cometa::EnterpriseAddress(Cometa::NetworkId::Testnet, scriptCredential).toAddress();
 
     Cometa::TransactionBuilder funding(parameters, Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
@@ -63,6 +66,7 @@ main()
       .sendLovelace(scriptAddress, 2000000);
 
     Cometa::Transaction fundingTransaction = funding.build();
+
     CometaExamples::signAndSubmit(signer, provider, fundingTransaction);
 
     const Cometa::Utxo scriptOutput(
@@ -77,7 +81,9 @@ main()
       .addInput(scriptOutput);
 
     Cometa::Transaction spendingTransaction = spending.build();
+
     CometaExamples::signAndSubmit(signer, provider, spendingTransaction);
+
     return 0;
   }
   catch (const std::exception& error)

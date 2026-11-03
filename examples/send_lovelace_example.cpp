@@ -46,10 +46,11 @@ main()
 {
   try
   {
-    const Cometa::SecureKeyHandler   signer     = CometaExamples::sampleSigner();
-    const Cometa::BlockfrostProvider provider   = CometaExamples::preprodProvider();
-    const Cometa::Address            sender     = CometaExamples::paymentAddress(signer);
-    const Cometa::UtxoList           utxos      = provider.getUnspentOutputs(sender);
+    const Cometa::SecureKeyHandler   signer   = CometaExamples::sampleSigner();
+    const Cometa::BlockfrostProvider provider = CometaExamples::preprodProvider();
+    const Cometa::Address            sender   = CometaExamples::paymentAddress(signer);
+    const Cometa::UtxoList           utxos    = provider.getUnspentOutputs(sender);
+
     const Cometa::ProtocolParameters parameters = provider.getParameters();
 
     Cometa::TransactionBuilder builder(parameters, Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
@@ -59,7 +60,9 @@ main()
       .sendLovelace(Cometa::Address::fromString(RECEIVING_ADDRESS), 2000000);
 
     Cometa::Transaction transaction = builder.build();
+
     CometaExamples::signAndSubmit(signer, provider, transaction);
+
     return 0;
   }
   catch (const std::exception& error)

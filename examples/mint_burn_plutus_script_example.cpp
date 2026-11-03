@@ -50,11 +50,12 @@ main()
 {
   try
   {
-    const Cometa::SecureKeyHandler    signer     = CometaExamples::sampleSigner();
-    const Cometa::BlockfrostProvider  provider   = CometaExamples::preprodProvider();
-    const Cometa::Address             payment    = CometaExamples::paymentAddress(signer);
-    const Cometa::ProtocolParameters  parameters = provider.getParameters();
-    const Cometa::SlotConfig          slots      = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod);
+    const Cometa::SecureKeyHandler   signer     = CometaExamples::sampleSigner();
+    const Cometa::BlockfrostProvider provider   = CometaExamples::preprodProvider();
+    const Cometa::Address            payment    = CometaExamples::paymentAddress(signer);
+    const Cometa::ProtocolParameters parameters = provider.getParameters();
+    const Cometa::SlotConfig         slots      = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod);
+
     const Cometa::TransactionInputSet referenceInputs { Cometa::TransactionInput::fromHex(REFERENCE_SCRIPT_TX, 0) };
     const Cometa::UtxoList            resolved = provider.resolveUnspentOutputs(referenceInputs);
 
@@ -63,8 +64,9 @@ main()
       throw std::runtime_error("Minting reference script is unavailable");
     }
 
-    const Cometa::Utxo       reference = resolved.at(0);
-    const Cometa::Script     script    = *reference.output().scriptRef();
+    const Cometa::Utxo reference = resolved.at(0);
+
+    const Cometa::Script     script = *reference.output().scriptRef();
     const Cometa::AssetId    onyx(script.hash(), Cometa::AssetName::fromString("PlutusBerryOnyx"));
     const Cometa::AssetId    raspberry(script.hash(), Cometa::AssetName::fromString("PlutusBerryRaspberry"));
     const Cometa::PlutusData redeemer = Cometa::PlutusData::fromCbor("d87980");
@@ -73,7 +75,8 @@ main()
     minted.addAsset(onyx, 1);
     minted.addAsset(raspberry, 1);
 
-    const Cometa::UtxoList     mintOutputs = provider.getUnspentOutputs(payment);
+    const Cometa::UtxoList mintOutputs = provider.getUnspentOutputs(payment);
+
     Cometa::TransactionBuilder mint(parameters, slots);
     mint.setUtxos(mintOutputs)
       .setCollateralUtxos(mintOutputs)
@@ -87,9 +90,11 @@ main()
       .sendValue(payment, minted);
 
     Cometa::Transaction mintTransaction = mint.build();
+
     CometaExamples::signAndSubmit(signer, provider, mintTransaction);
 
-    const Cometa::UtxoList     burnOutputs = provider.getUnspentOutputs(payment);
+    const Cometa::UtxoList burnOutputs = provider.getUnspentOutputs(payment);
+
     Cometa::TransactionBuilder burn(parameters, slots);
     burn.setUtxos(burnOutputs)
       .setCollateralUtxos(burnOutputs)
@@ -100,7 +105,9 @@ main()
       .addReferenceInput(reference);
 
     Cometa::Transaction burnTransaction = burn.build();
+
     CometaExamples::signAndSubmit(signer, provider, burnTransaction);
+
     return 0;
   }
   catch (const std::exception& error)

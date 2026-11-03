@@ -189,7 +189,8 @@ main(int argc, char** argv)
       Cometa::TransactionInput::fromHex(reference.substr(0, separator), index),
       Cometa::TransactionOutput(paymentAddress, Cometa::Value(static_cast<std::int64_t>(lovelace))));
 
-    const Cometa::Script     validator(Cometa::PlutusV4Script::fromHex(ALWAYS_SUCCEEDS_VALIDATOR_V4));
+    const Cometa::Script validator(Cometa::PlutusV4Script::fromHex(ALWAYS_SUCCEEDS_VALIDATOR_V4));
+
     const Cometa::Script     guardScript(Cometa::PlutusV4Script::fromHex(ALWAYS_SUCCEEDS_GUARD_V4));
     const Cometa::Credential guard(Cometa::CredentialType::ScriptHash, guardScript.hash());
     const Cometa::Credential scriptCredential(Cometa::CredentialType::ScriptHash, validator.hash());
@@ -244,6 +245,7 @@ main(int argc, char** argv)
     printRedeemers("Sub transaction", subTransaction.witnessSet());
     printTransaction("Lock transaction id", lockTransaction);
     printTransaction("Spend transaction id", spendTransaction);
+
     return 0;
   }
   catch (const std::exception& error)

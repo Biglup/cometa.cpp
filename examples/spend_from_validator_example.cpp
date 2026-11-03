@@ -47,11 +47,12 @@ main()
 {
   try
   {
-    const Cometa::SecureKeyHandler    signer     = CometaExamples::sampleSigner();
-    const Cometa::BlockfrostProvider  provider   = CometaExamples::preprodProvider();
-    const Cometa::Address             payment    = CometaExamples::paymentAddress(signer);
-    const Cometa::ProtocolParameters  parameters = provider.getParameters();
-    const Cometa::SlotConfig          slots      = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod);
+    const Cometa::SecureKeyHandler   signer     = CometaExamples::sampleSigner();
+    const Cometa::BlockfrostProvider provider   = CometaExamples::preprodProvider();
+    const Cometa::Address            payment    = CometaExamples::paymentAddress(signer);
+    const Cometa::ProtocolParameters parameters = provider.getParameters();
+    const Cometa::SlotConfig         slots      = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod);
+
     const Cometa::TransactionInputSet referenceInputs { Cometa::TransactionInput::fromHex(REFERENCE_SCRIPT_TX, 0) };
     const Cometa::UtxoList            resolved = provider.resolveUnspentOutputs(referenceInputs);
 
@@ -60,8 +61,9 @@ main()
       throw std::runtime_error("Reference script output is unavailable");
     }
 
-    const Cometa::Utxo       reference = resolved.at(0);
-    const Cometa::Script     script    = *reference.output().scriptRef();
+    const Cometa::Utxo reference = resolved.at(0);
+
+    const Cometa::Script     script = *reference.output().scriptRef();
     const Cometa::Credential scriptCredential(Cometa::CredentialType::ScriptHash, script.hash());
     const Cometa::Address    scriptAddress =
       Cometa::EnterpriseAddress(Cometa::NetworkId::Testnet, scriptCredential).toAddress();
@@ -74,6 +76,7 @@ main()
       .lockLovelace(scriptAddress, 2000000, Cometa::Datum(voidData));
 
     Cometa::Transaction fundingTransaction = funding.build();
+
     CometaExamples::signAndSubmit(signer, provider, fundingTransaction);
 
     const Cometa::Utxo scriptOutput(
@@ -91,7 +94,9 @@ main()
       .addInput(scriptOutput, voidData);
 
     Cometa::Transaction spendingTransaction = spending.build();
+
     CometaExamples::signAndSubmit(signer, provider, spendingTransaction);
+
     return 0;
   }
   catch (const std::exception& error)

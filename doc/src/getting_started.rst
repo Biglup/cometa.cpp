@@ -79,7 +79,7 @@ transport to ``BlockfrostProvider``:
 
    Cometa::ProtocolParameters parameters = provider.getParameters();
 
-Link the curl target for the chosen link mode. The project ID is sent in
+Link the HTTP target for the chosen link mode. The project ID is sent in
 the Blockfrost ``project_id`` header. Set it at runtime and keep it out of
 source files and release archives. For a different HTTP stack, implement
 ``HttpTransport`` and pass it to the same provider.

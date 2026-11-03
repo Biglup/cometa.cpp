@@ -64,6 +64,7 @@ main()
     std::cout << "Available lovelace: " << balance.coin() << '\n';
     std::cout << "Withdrawable rewards: " << available << '\n';
     std::cout << "Total lovelace: " << static_cast<std::uint64_t>(balance.coin()) + available << '\n';
+
     return 0;
   }
   catch (const std::exception& error)

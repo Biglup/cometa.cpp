@@ -1,170 +1,121 @@
 <div align="center">
-  <a href="" target="_blank">
-    <img align="center" width="300" src="https://raw.githubusercontent.com/Biglup/cometa.cpp/main/assets/cometa_cpp.png">
-  </a>
+  <img width="300" src="assets/cometa_cpp.png" alt="Cometa.cpp logo">
+
+  <p><strong>Cardano development in modern C++</strong></p>
+
+  <p>
+    <a href="https://github.com/Biglup/cometa.cpp/actions/workflows/ci.yml"><img src="https://github.com/Biglup/cometa.cpp/actions/workflows/ci.yml/badge.svg" alt="Build and tests"></a>
+    <a href="https://cometacpp.readthedocs.io/en/latest/"><img src="https://app.readthedocs.org/projects/cometacpp/badge/?version=latest" alt="Documentation"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="Apache 2.0 license"></a>
+  </p>
+
+  <p>
+    <a href="https://cometacpp.readthedocs.io/en/latest/">Documentation</a> ·
+    <a href="examples/">Examples</a> ·
+    <a href="https://github.com/Biglup/cometa.cpp/releases">Releases</a> ·
+    <a href="https://cometa.dev/">Cometa website</a>
+  </p>
 </div>
 
-<br>
+Cometa.cpp is a C++17 binding for [cardano-c](https://github.com/Biglup/cardano-c). It provides C++ value types for Cardano data, transaction and subtransaction builders, signing, local Plutus evaluation, and a Blockfrost provider. Objects manage their own resources and support ordinary copy and move operations where those operations make sense.
 
-<div align="center">
+## Quick start
 
-![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
-![Post-Integration](https://github.com/Biglup/cometa.cpp/actions/workflows/ci.yml/badge.svg)
-[![Documentation Status](https://app.readthedocs.org/projects/cometacpp/badge/?version=latest)](https://cometacpp.readthedocs.io/en/latest/?badge=latest)
-[![Twitter Follow](https://img.shields.io/twitter/follow/BiglupLabs?style=social)](https://x.com/BiglupLabs)
-
-</div>
-
-<hr>
-
-- [Official Website](https://cometa.dev/)
-- [Installation](#installation)
-- [Documentation](https://cometacpp.readthedocs.io/en/latest/)
-
-<hr>
-
-Cometa.cpp is a C++17 Cardano library built on cardano-c. Values use ordinary
-copy and move semantics, and their native resources are released automatically.
-It includes transactions, scripts, certificates, governance values, transaction
-builders, signing, and a Blockfrost provider. Release ZIPs provide static and
-shared libraries for each supported platform.
+Create a transaction with network parameters and UTxOs from a provider. The builder selects inputs, balances outputs, and calculates the fee:
 
 ```cpp
-#include <Cometa/Cometa.h>
-#include <Cometa/Providers/DefaultHttpTransport.h>
-#include <Cometa/TransactionBuilder/TransactionBuilder.h>
+Cometa::TransactionBuilder builder(
+  parameters,
+  Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
 
-#include <cstdlib>
-#include <memory>
-#include <stdexcept>
+builder.setUtxos(utxos)
+  .setChangeAddress(sender)
+  .sendLovelace(recipient, 2'000'000)
+  .setInvalidAfter(expirySlot);
 
-int
-main()
-{
-  const char* projectId  = std::getenv("BLOCKFROST_API_KEY");
-  const char* signingKey = std::getenv("PAYMENT_PRIVATE_KEY");
-
-  if (projectId == nullptr || signingKey == nullptr)
-  {
-    throw std::runtime_error("Set BLOCKFROST_API_KEY and PAYMENT_PRIVATE_KEY");
-  }
-
-  Cometa::BlockfrostProvider provider(
-    Cometa::NetworkMagic::Preprod,
-    projectId,
-    std::make_shared<Cometa::DefaultHttpTransport>());
-  Cometa::Ed25519PrivateKey key = Cometa::Ed25519PrivateKey::fromNormalHex(signingKey);
-  Cometa::Credential        paymentKey(Cometa::CredentialType::KeyHash, key.publicKey().hash());
-  Cometa::Address           sender =
-    Cometa::EnterpriseAddress(Cometa::NetworkId::Testnet, paymentKey).toAddress();
-
-  Cometa::ProtocolParameters parameters = provider.getParameters();
-  Cometa::UtxoList           available  = provider.getUnspentOutputs(sender);
-
-  Cometa::TransactionBuilder builder(
-    parameters, Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
-  builder.setUtxos(available)
-    .setChangeAddress(sender)
-    .sendLovelace(sender, 2000000);
-
-  Cometa::Transaction    transaction = builder.build();
-  Cometa::VkeyWitnessSet witnesses;
-  witnesses.add(Cometa::VkeyWitness(key.publicKey(), key.sign(transaction.id().toBytes())));
-  transaction.applyVkeyWitnesses(witnesses);
-  provider.submitTransaction(transaction);
-  return 0;
-}
+Cometa::Transaction transaction = builder.build();
+transaction.applyVkeyWitnesses(signer.signTransaction(transaction));
+provider.submitTransaction(transaction);
 ```
 
-The example above sends to the signing address; choose the intended recipient
-in real use. See [send_lovelace_example.cpp](examples/send_lovelace_example.cpp)
-for a complete runnable flow.
+Here, `parameters` and `utxos` come from the provider, `sender` and `recipient` are `Cometa::Address` values, `expirySlot` is a network slot, and `signer` is a `Cometa::SecureKeyHandler`. The [complete payment example](examples/send_lovelace_example.cpp) shows setup, signing, and submission on preprod.
 
-## Building
+## Install
 
-```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build --parallel 2
-ctest --test-dir build --output-on-failure
-```
+Download the ZIP for your operating system and architecture from [GitHub Releases](https://github.com/Biglup/cometa.cpp/releases), then extract it. Packages are built for Linux x64/ARM64, macOS x64/ARM64, and Windows x64. Each includes headers, static and shared libraries, and a CMake package.
 
-Tests require GoogleTest. Use `-DCOMETA_BUILD_TESTS=OFF` to build without it.
-The build fetches a pinned cardano-c commit with the deep-clone APIs; a local
-checkout can be selected with `-DCOMETA_CARDANO_SOURCE_DIR=/path/to/cardano-c`.
-The Blockfrost HTTP transport uses WinHTTP on Windows and libcurl on Linux and
-macOS. Set `-DCOMETA_BUILD_CURL_TRANSPORT=OFF` or
-`-DCOMETA_BUILD_WINHTTP_TRANSPORT=OFF` when supplying your own `HttpTransport`.
-Set `-DCOMETA_BUILD_SHARED=OFF` when only static libraries are needed.
-
-## Installation
-
-```sh
-cmake --install build --prefix /path/to/cometa
-```
-
-Set `CMAKE_PREFIX_PATH` to that prefix and link the desired CMake target:
+Set `CMAKE_PREFIX_PATH` to the extracted package directory. In your application's `CMakeLists.txt`:
 
 ```cmake
 FIND_PACKAGE (Cometa CONFIG REQUIRED COMPONENTS http)
 TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::http_shared)
 ```
 
-| Target | Link mode | Network transport |
+Choose the target that matches your link mode:
+
+| Target | Link mode | Includes HTTP transport |
 | --- | --- | --- |
-| `Cometa::cometa` | Static | Your own, or none |
-| `Cometa::cometa_shared` | Shared | Your own, or none |
-| `Cometa::http` | Static Cometa | WinHTTP on Windows; libcurl elsewhere |
-| `Cometa::http_shared` | Shared Cometa | WinHTTP on Windows; libcurl elsewhere |
+| `Cometa::cometa` | Static | No |
+| `Cometa::cometa_shared` | Shared | No |
+| `Cometa::http` | Static | Yes |
+| `Cometa::http_shared` | Shared | Yes |
 
-Omit `COMPONENTS http` when using a core target. On Linux and macOS, the HTTP
-targets require a libcurl development package at build time and its runtime
-library when that installation is shared. Windows uses the operating system's
-WinHTTP service. The shared Cometa library contains its own cardano-c code; the
-static target links the included cardano-c archive.
+The HTTP targets use WinHTTP on Windows and libcurl on Linux and macOS. Unix consumers need libcurl development files when using those targets. The core targets have no HTTP dependency. For shared linking, place the Cometa DLLs beside your Windows executable or configure the runtime library path on Linux and macOS. See the [installation guide](https://cometacpp.readthedocs.io/en/latest/getting_started.html) for details.
 
-On Windows, copy the Cometa DLLs beside your executable. CMake can copy its
-runtime DLL dependencies after building:
+### Blockfrost
 
-```cmake
-IF (WIN32)
-  ADD_CUSTOM_COMMAND (TARGET my_application POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      $<TARGET_RUNTIME_DLLS:my_application>
-      $<TARGET_FILE_DIR:my_application>
-    COMMAND_EXPAND_LISTS
-  )
-ENDIF ()
+Set `BLOCKFROST_API_KEY` in your environment and pass the platform transport to the provider:
+
+```cpp
+const char* projectId = std::getenv("BLOCKFROST_API_KEY");
+
+if (projectId == nullptr)
+{
+  throw std::runtime_error("Set BLOCKFROST_API_KEY");
+}
+
+Cometa::BlockfrostProvider provider(
+  Cometa::NetworkMagic::Preprod,
+  projectId,
+  std::make_shared<Cometa::DefaultHttpTransport>());
+
+Cometa::ProtocolParameters parameters = provider.getParameters();
 ```
 
-For installed Linux and macOS applications, configure the application's
-runtime search path to the directory containing the Cometa shared libraries.
+This snippet needs `<Cometa/Cometa.h>`, `<Cometa/Providers/DefaultHttpTransport.h>`, `<cstdlib>`, `<memory>`, and `<stdexcept>`. You can also implement `Cometa::HttpTransport` to use another HTTP stack.
 
-Release workflows produce platform-specific ZIP packages with headers, static
-and shared libraries, licenses, and CMake configuration. They are validated on
-Linux x64/ARM64, macOS x64/ARM64, and Windows x64. No C++ binary releases exist
-yet.
+## What you can build
 
-## Examples
+**Conway:** payments, native assets, Plutus scripts, staking, DRep registration, proposals, and voting. The examples include [native minting](examples/mint_burn_native_script_example.cpp), [script spending](examples/spend_from_validator_example.cpp), and [governance voting](examples/vote_for_proposal_pubkey_example.cpp).
 
-The `examples/` directory ports all 21 cardano-c examples. It covers payments,
-staking, minting, governance, deferred redeemers, and subtransactions. Network
-examples use preprod and require `BLOCKFROST_API_KEY` at runtime. They use the
-sample signing key from cardano-c, so use a dedicated test wallet. The Plutus V4
-guarded subtransaction example builds transactions offline from the funding UTxO,
-signing key, and cost model supplied to it. See each source file for its inputs.
+**Dijkstra:** Plutus V4, guards, direct deposits, account balance constraints, and independently signed subtransactions. The [subtransaction batch example](examples/sub_transaction_batch_example.cpp) builds two signed intents and settles them in one transaction. The [Plutus V4 guard example](examples/plutus_v4_guarded_sub_transaction_example.cpp) builds a guarded spend offline. These features require protocol parameters from a network that supports them.
+
+**Deferred redeemers:** calculate redeemer data after the builder has balanced the transaction and fixed input and output ordering. See the [self-index](examples/deferred_redeemer_self_index_example.cpp), [input/output pairing](examples/deferred_redeemer_batch_example.cpp), and [zero-withdrawal](examples/deferred_redeemer_withdraw_zero_example.cpp) examples.
+
+The [examples directory](examples/) contains C++ counterparts of all 21 cardano-c examples. Network examples use preprod and read `BLOCKFROST_API_KEY` at runtime. Use a dedicated test wallet when running examples that submit transactions.
+
+## Build from source
+
+Use CMake 3.22 or newer and a C++17 compiler:
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --parallel 2
+ctest --test-dir build --output-on-failure
+cmake --install build --prefix /path/to/cometa
+```
+
+Tests require GoogleTest. Pass `-DCOMETA_BUILD_TESTS=OFF` if it is unavailable. The build downloads a pinned cardano-c revision; to use a local checkout, pass `-DCOMETA_CARDANO_SOURCE_DIR=/path/to/cardano-c`. Pass `-DCOMETA_BUILD_SHARED=OFF` for a static-only build.
 
 ## Documentation
 
-The Doxygen/Breathe/Sphinx build follows cardano-c's documentation recipe:
+The [C++ guide and API reference](https://cometacpp.readthedocs.io/en/latest/) cover values, builders, providers, errors, and installation. To build them locally:
 
-```sh
+```bash
 python3 -m pip install -r doc/requirements.txt
 cmake -S doc -B build/docs
 cmake --build build/docs --target doc
 ```
-
-Open `build/docs/html/index.html`. Read the Docs configuration is included for
-publishing the same documentation at [cometacpp.readthedocs.io](https://cometacpp.readthedocs.io/).
 
 ## License
 

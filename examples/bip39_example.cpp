@@ -87,6 +87,7 @@ main()
     const Cometa::Address          address = Cometa::BaseAddress(Cometa::NetworkId::Testnet, payment, stake).toAddress();
 
     std::cout << "First address: " << address.toString() << '\n';
+
     return 0;
   }
   catch (const std::exception& error)

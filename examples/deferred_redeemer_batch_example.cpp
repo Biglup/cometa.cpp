@@ -39,7 +39,19 @@
 namespace
 {
 /** @brief Compiled input/output-pairing Plutus V3 validator from the C example. */
-const char* ORDER_PAIRING_VALIDATOR_V3 = "59022c01010029800aba2aba1aba0aab9faab9eaab9dab9a488888896600264653001300800198041804800cdc3a400530080024888966002600460106ea800e2653001300d00198069807000cdc3a40009112cc004c004c030dd500444c8c8cc8966002602a007132323232598009804980a1baa001899192cc004c02cc058dd5000c56600266ebcc068c05cdd5180d180b9baa00300d899b894820225e8c9660026022602e6ea80062900044dd6980d980c1baa001405864b300130113017375400314c103d87a8000899198008009bab301c3019375400444b30010018a6103d87a8000899192cc004cdc8a45000018acc004cdc7a44100001898059980f180e00125eb82298103d87a80004069133004004302000340686eb8c068004c07400501b202c32330010013756600660306ea8c06cc060dd5001112cc004006298103d87a8000899192cc004cdc8a45000018acc004cdc7a44100001898051980e980d80125eb82298103d87a80004065133004004301f00340646eb8c064004c07000501a4528202a8b202a330033758603260346034602c6ea8038dd69800980b1baa01123019301a0018b2026330013758602e60286ea8030dd6980b980a1baa00f3001001222598008014530103d87a80008acc004c024006260086602e603000497ae08cc00400e6032005337009000800a006404c80b0dd2a40011640486eb4c048004dd69809001180900098069baa0088b201618049baa0038b200e180400098019baa0088a4d1365640041";
+const char* ORDER_PAIRING_VALIDATOR_V3 =
+  "59022c01010029800aba2aba1aba0aab9faab9eaab9dab9a488888896600264653001300800198041804800cdc3a4005"
+  "30080024888966002600460106ea800e2653001300d00198069807000cdc3a40009112cc004c004c030dd500444c8c8c"
+  "c8966002602a007132323232598009804980a1baa001899192cc004c02cc058dd5000c56600266ebcc068c05cdd5180d"
+  "180b9baa00300d899b894820225e8c9660026022602e6ea80062900044dd6980d980c1baa001405864b3001301130173"
+  "75400314c103d87a8000899198008009bab301c3019375400444b30010018a6103d87a8000899192cc004cdc8a450000"
+  "18acc004cdc7a44100001898059980f180e00125eb82298103d87a80004069133004004302000340686eb8c068004c07"
+  "400501b202c32330010013756600660306ea8c06cc060dd5001112cc004006298103d87a8000899192cc004cdc8a4500"
+  "0018acc004cdc7a44100001898051980e980d80125eb82298103d87a80004065133004004301f00340646eb8c064004c"
+  "07000501a4528202a8b202a330033758603260346034602c6ea8038dd69800980b1baa01123019301a0018b202633001"
+  "3758602e60286ea8030dd6980b980a1baa00f3001001222598008014530103d87a80008acc004c024006260086602e60"
+  "3000497ae08cc00400e6032005337009000800a006404c80b0dd2a40011640486eb4c048004dd6980900118090009806"
+  "9baa0088b201618049baa0038b200e180400098019baa0088a4d1365640041";
 
 /** @brief Funds one validator output. @param signer The signer. @param provider The network provider. @param parameters Protocol parameters. @param slots The network timeline. @param payment The funding address. @param scriptAddress The validator address. @param datum The inline datum. @return The funded output. */
 Cometa::Utxo
@@ -93,14 +105,16 @@ main()
 {
   try
   {
-    const Cometa::SecureKeyHandler   signer     = CometaExamples::sampleSigner();
-    const Cometa::BlockfrostProvider provider   = CometaExamples::preprodProvider();
-    const Cometa::Address            payment    = CometaExamples::paymentAddress(signer);
+    const Cometa::SecureKeyHandler   signer   = CometaExamples::sampleSigner();
+    const Cometa::BlockfrostProvider provider = CometaExamples::preprodProvider();
+    const Cometa::Address            payment  = CometaExamples::paymentAddress(signer);
+
     const Cometa::ProtocolParameters parameters = provider.getParameters();
     const Cometa::SlotConfig         slots      = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod);
-    const Cometa::Script             script(Cometa::PlutusV3Script::fromHex(ORDER_PAIRING_VALIDATOR_V3));
-    const Cometa::Credential         credential(Cometa::CredentialType::ScriptHash, script.hash());
-    const Cometa::Address            scriptAddress =
+
+    const Cometa::Script     script(Cometa::PlutusV3Script::fromHex(ORDER_PAIRING_VALIDATOR_V3));
+    const Cometa::Credential credential(Cometa::CredentialType::ScriptHash, script.hash());
+    const Cometa::Address    scriptAddress =
       Cometa::EnterpriseAddress(Cometa::NetworkId::Testnet, credential).toAddress();
     const Cometa::PlutusData datum = Cometa::PlutusData::fromCbor("d87980");
 
@@ -131,7 +145,9 @@ main()
         });
 
     Cometa::Transaction transaction = spending.build();
+
     CometaExamples::signAndSubmit(signer, provider, transaction);
+
     return 0;
   }
   catch (const std::exception& error)

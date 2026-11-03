@@ -144,9 +144,22 @@ main()
   try
   {
     const Cometa::ProtocolParameters params = parameters();
-    const Party                      buyer(BUYER_PRIVATE_KEY, "0000000000000000000000000000000000000000000000000000000000000001", 100000000, 0);
-    const Party                      seller(SELLER_PRIVATE_KEY, "0000000000000000000000000000000000000000000000000000000000000002", 10000000, 5000);
-    const Party                      batcher(BATCHER_PRIVATE_KEY, "0000000000000000000000000000000000000000000000000000000000000003", 20000000, 0);
+
+    const Party buyer(
+      BUYER_PRIVATE_KEY,
+      "0000000000000000000000000000000000000000000000000000000000000001",
+      100000000,
+      0);
+    const Party seller(
+      SELLER_PRIVATE_KEY,
+      "0000000000000000000000000000000000000000000000000000000000000002",
+      10000000,
+      5000);
+    const Party batcher(
+      BATCHER_PRIVATE_KEY,
+      "0000000000000000000000000000000000000000000000000000000000000003",
+      20000000,
+      0);
 
     const Cometa::SubTransaction buyerIntent  = buildIntent(params, buyer, batcher, 50000000, 1000);
     const Cometa::SubTransaction sellerIntent = buildIntent(params, seller, batcher, 60000000, 4000);
@@ -168,7 +181,9 @@ main()
 
     Cometa::CborWriter writer;
     writer.writeEncoded(transaction.toCbor());
+
     std::cout << "Transaction CBOR: " << writer.toHex() << '\n';
+
     return 0;
   }
   catch (const std::exception& error)

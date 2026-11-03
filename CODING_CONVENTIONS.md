@@ -238,6 +238,16 @@ organization`. Use the configured maintainer identity and signing key for commit
 verify the signature before pushing. Do not silently substitute an agent identity
 or create unsigned commits when signing is required.
 
+## Examples and README
+
+Keep runnable examples focused on one flow. Separate network setup, domain
+values, each builder, signing, and output with blank lines. Group related
+declarations so formatter alignment does not span unrelated steps. Preserve
+compiled script bytes when splitting long hexadecimal literals across adjacent
+C++ string literals. Use fenced Markdown code blocks with the appropriate
+language tag (`cpp`, `cmake`, or `bash`) in the README, and link to the runnable
+source when a short snippet omits setup.
+
 ## Implementation PRs
 
 Stack successive implementation PRs on the preceding branch rather than waiting
