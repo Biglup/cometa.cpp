@@ -4,19 +4,19 @@ PROJECT (cometa-consumer LANGUAGES CXX)
 FIND_PACKAGE (Cometa CONFIG REQUIRED)
 
 ADD_EXECUTABLE (consumer PackageTest.cpp)
-TARGET_LINK_LIBRARIES (consumer PRIVATE Cometa::cometa)
+TARGET_LINK_LIBRARIES (consumer PRIVATE Cometa::CometaStatic)
 
-IF (TARGET Cometa::http)
-  TARGET_LINK_LIBRARIES (consumer PRIVATE Cometa::http)
+IF (TARGET Cometa::HttpStatic)
+  TARGET_LINK_LIBRARIES (consumer PRIVATE Cometa::HttpStatic)
   TARGET_COMPILE_DEFINITIONS (consumer PRIVATE COMETA_TEST_HTTP_TRANSPORT)
 ENDIF ()
 
 IF (TARGET Cometa::cometa_shared)
   ADD_EXECUTABLE (consumer-shared PackageTest.cpp)
-  TARGET_LINK_LIBRARIES (consumer-shared PRIVATE Cometa::cometa_shared)
+  TARGET_LINK_LIBRARIES (consumer-shared PRIVATE Cometa::Cometa)
 
-  IF (TARGET Cometa::http_shared)
-    TARGET_LINK_LIBRARIES (consumer-shared PRIVATE Cometa::http_shared)
+  IF (TARGET Cometa::Http)
+    TARGET_LINK_LIBRARIES (consumer-shared PRIVATE Cometa::Http)
     TARGET_COMPILE_DEFINITIONS (consumer-shared PRIVATE COMETA_TEST_HTTP_TRANSPORT)
   ENDIF ()
 

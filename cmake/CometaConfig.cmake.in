@@ -15,6 +15,21 @@ ENDIF ()
 
 INCLUDE ("${CMAKE_CURRENT_LIST_DIR}/CometaTargets.cmake")
 
+IF (NOT TARGET Cometa::CometaStatic)
+  ADD_LIBRARY (Cometa::CometaStatic INTERFACE IMPORTED)
+  SET_PROPERTY (TARGET Cometa::CometaStatic PROPERTY INTERFACE_LINK_LIBRARIES Cometa::cometa)
+ENDIF ()
+
+IF (NOT TARGET Cometa::Cometa)
+  ADD_LIBRARY (Cometa::Cometa INTERFACE IMPORTED)
+
+  IF (TARGET Cometa::cometa_shared)
+    SET_PROPERTY (TARGET Cometa::Cometa PROPERTY INTERFACE_LINK_LIBRARIES Cometa::cometa_shared)
+  ELSE ()
+    SET_PROPERTY (TARGET Cometa::Cometa PROPERTY INTERFACE_LINK_LIBRARIES Cometa::cometa)
+  ENDIF ()
+ENDIF ()
+
 SET (Cometa_curl_FOUND FALSE)
 SET (Cometa_http_FOUND FALSE)
 
@@ -55,6 +70,23 @@ IF (@COMETA_HAS_WINHTTP@ AND WIN32)
   ENDIF ()
 
   SET (Cometa_http_FOUND TRUE)
+ENDIF ()
+
+IF (Cometa_http_FOUND)
+  IF (NOT TARGET Cometa::HttpStatic)
+    ADD_LIBRARY (Cometa::HttpStatic INTERFACE IMPORTED)
+    SET_PROPERTY (TARGET Cometa::HttpStatic PROPERTY INTERFACE_LINK_LIBRARIES Cometa::http)
+  ENDIF ()
+
+  IF (NOT TARGET Cometa::Http)
+    ADD_LIBRARY (Cometa::Http INTERFACE IMPORTED)
+
+    IF (TARGET Cometa::http_shared)
+      SET_PROPERTY (TARGET Cometa::Http PROPERTY INTERFACE_LINK_LIBRARIES Cometa::http_shared)
+    ELSE ()
+      SET_PROPERTY (TARGET Cometa::Http PROPERTY INTERFACE_LINK_LIBRARIES Cometa::http)
+    ENDIF ()
+  ENDIF ()
 ENDIF ()
 
 CHECK_REQUIRED_COMPONENTS (Cometa)

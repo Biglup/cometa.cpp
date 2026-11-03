@@ -23,20 +23,20 @@ Consuming an installed package
 ------------------------------
 
 Set ``CMAKE_PREFIX_PATH`` to the extracted ZIP or installation prefix.
-``Cometa::cometa`` links the static archives; ``Cometa::cometa_shared`` links the
-shared Cometa library. The shared library includes its own cardano-c code.
+``Cometa::Cometa`` links the shared library when available; use
+``Cometa::CometaStatic`` to link the static archives. The shared library
+includes its own cardano-c code.
 
 .. code-block:: cmake
 
    FIND_PACKAGE (Cometa CONFIG REQUIRED)
-   TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::cometa_shared)
+   TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::Cometa)
 
-Use ``Cometa::cometa`` for static linking. For the default HTTPS transport,
-request the HTTP component and link ``Cometa::http`` (static Cometa) or
-``Cometa::http_shared`` (shared Cometa)::
+For the default HTTPS transport, request the HTTP component and link
+``Cometa::Http``. Use ``Cometa::HttpStatic`` for static linking::
 
    FIND_PACKAGE (Cometa CONFIG REQUIRED COMPONENTS http)
-   TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::http_shared)
+   TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::Http)
 
 The HTTP component uses WinHTTP on Windows and libcurl on Linux and macOS.
 Unix builds need a libcurl development package. Core targets do not require
