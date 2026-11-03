@@ -1,8 +1,11 @@
 project = "Cometa.cpp"
 author = "Biglup Labs"
+version = "@COMETA_FULL_VERSION@"
+release = version
 copyright = "2026, Biglup Labs"
 extensions = ["breathe", "sphinx_immaterial"]
 html_theme = "sphinx_immaterial"
+html_static_path = ["_static"]
 highlight_language = "cpp"
 exclude_patterns = ["html", "doxygen", "CMakeFiles"]
 breathe_projects = {"Cometa": "@CMAKE_CURRENT_BINARY_DIR@/doxygen/xml"}
@@ -10,5 +13,26 @@ breathe_default_project = "Cometa"
 html_theme_options = {
     "repo_url": "https://github.com/Biglup/cometa.cpp",
     "repo_name": "cometa.cpp",
-    "features": ["navigation.sections", "navigation.top", "search.share"],
+    "edit_uri": "edit/main/doc/src/",
+    "icon": {"repo": "fontawesome/brands/github"},
+    "font": {"text": "Roboto", "code": "Roboto Mono"},
+    "features": [
+        "navigation.sections", "navigation.top", "search.share",
+        "toc.follow", "toc.sticky", "content.tabs.link",
+    ],
+    "palette": [
+        {
+            "media": "(prefers-color-scheme: light)",
+            "scheme": "default", "primary": "black", "accent": "pink",
+            "toggle": {"icon": "material/lightbulb-outline", "name": "Switch to dark mode"},
+        },
+        {
+            "media": "(prefers-color-scheme: dark)",
+            "scheme": "slate", "primary": "black", "accent": "light-blue",
+            "toggle": {"icon": "material/lightbulb", "name": "Switch to light mode"},
+        },
+    ],
+    "toc_title_is_page_title": True,
 }
+
+object_description_options = [("cpp:.*Param", dict(include_in_toc=False))]

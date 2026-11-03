@@ -183,6 +183,19 @@ Sphinx; update documentation snippets and API mappings when the interface change
 Public documentation describes how to use the library. Private comments document
 implementation contracts without exposing them in the published reference.
 
+### Generated documentation organization
+
+Follow cardano-c’s documentation structure, adapted to the C++ API. Keep the
+landing page focused on an overview, features, integration, and license. Keep
+installation and build configuration in Getting Started. Group API pages under
+`doc/src/sections/api` by Cardano domain, with a short introduction, usage guide,
+and separate reference pages for public headers. Document classes, enums,
+callbacks, aliases, and free functions through Breathe directives. Put ownership
+and extension-point guidance in the relevant C++ guides; do not copy C reference
+counting instructions into C++ usage examples. Keep coverage and implementation
+planning in the development documentation. Build with warnings treated as errors
+and check the rendered navigation when adding or moving pages.
+
 ## CMake
 
 Use uppercase command names and a space before `(`, including user-defined CMake

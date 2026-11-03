@@ -5,6 +5,7 @@ PROJECT (cometa-docs LANGUAGES NONE)
 FIND_PACKAGE (Doxygen REQUIRED)
 FIND_PROGRAM (SPHINX_BUILD sphinx-build REQUIRED)
 GET_FILENAME_COMPONENT (COMETA_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
+INCLUDE ("${COMETA_ROOT}/cmake/Version.cmake")
 
 # Generate build-local configuration and copy the documentation sources.
 CONFIGURE_FILE (Doxyfile.in Doxyfile @ONLY)
