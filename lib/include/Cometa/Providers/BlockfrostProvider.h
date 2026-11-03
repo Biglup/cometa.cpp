@@ -101,6 +101,12 @@ class BlockfrostProvider final : public Provider
     /** @brief Loads all pages of address outputs. @param path The initial path. @return The outputs. */
     UtxoList loadUtxos(const std::string& path) const;
 
+    /** @brief Loads a script by hash. @param hash The script hash. @return The script. */
+    Script loadScript(const std::string& hash) const;
+
+    /** @brief Parses an output and resolves its reference script. @param object The Blockfrost output. @param id The transaction ID. @param index The output index. @return The output. */
+    Utxo parseUtxo(const JsonValue& object, const Blake2bHash& id, std::uint64_t index) const;
+
   private:
 
     /** @brief Network magic. */

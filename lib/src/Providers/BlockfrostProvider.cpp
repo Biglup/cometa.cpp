@@ -103,33 +103,6 @@ parseAmount(const JsonValue& amount)
   return Value::fromAssetMap(assets);
 }
 
-/** @brief Parses a Blockfrost output. @param object The output. @param id The transaction ID. @param index The output index. @return The UTxO. */
-Utxo
-parseUtxo(const JsonValue& object, const Blake2bHash& id, std::uint64_t index)
-{
-  TransactionOutput output(
-    Address::fromString(object.at("address").asString()), parseAmount(object.at("amount")));
-
-  if (object.contains("inline_datum") && object.at("inline_datum").type() == JsonType::String)
-  {
-    output.setDatum(Datum(PlutusData::fromCbor(object.at("inline_datum").asString())));
-  }
-  else if (object.contains("data_hash") && object.at("data_hash").type() == JsonType::String)
-  {
-    output.setDatum(Datum(Blake2bHash::fromHex(object.at("data_hash").asString())));
-  }
-
-  return Utxo(TransactionInput(id, index), output);
-}
-
-/** @brief Parses a Blockfrost address-UTxO entry. @param object The entry. @return The UTxO. */
-Utxo
-parseAddressUtxo(const JsonValue& object)
-{
-  return parseUtxo(
-    object, Blake2bHash::fromHex(object.at("tx_hash").asString()), object.at("output_index").asUInt());
-}
-
 /** @brief Converts an optional decimal price to an exact unit interval. @param value The JSON value. @return The interval. */
 UnitInterval
 parsePrice(const JsonValue& value)
@@ -359,9 +332,9 @@ BlockfrostProvider::getParameters() const
     parameters.setExecutionCosts(ExUnitPrices(parsePrice(data.at("price_mem")), parsePrice(data.at("price_step"))));
   }
 
-  if (data.contains("cost_models"))
+  if (data.contains("cost_models_raw") || data.contains("cost_models"))
   {
-    const JsonValue                                     costData = data.at("cost_models");
+    const JsonValue                                     costData = data.contains("cost_models_raw") ? data.at("cost_models_raw") : data.at("cost_models");
     CostModels                                          models;
     const std::pair<const char*, PlutusLanguageVersion> languages[] = {
       { "PlutusV1", PlutusLanguageVersion::V1 },
@@ -377,7 +350,12 @@ BlockfrostProvider::getParameters() const
         continue;
       }
 
-      const JsonValue           values = costData.at(language.first);
+      const JsonValue values = costData.at(language.first);
+
+      if (values.type() != JsonType::Array)
+      {
+        throw std::runtime_error("Blockfrost cost models require cost_models_raw arrays");
+      }
       std::vector<std::int64_t> costs;
       costs.reserve(values.size());
 
@@ -428,7 +406,9 @@ BlockfrostProvider::loadUtxos(const std::string& path) const
 
     for (std::size_t index = 0; index < entries.size(); ++index)
     {
-      result.push_back(parseAddressUtxo(entries.at(index)));
+      const JsonValue entry = entries.at(index);
+      result.push_back(parseUtxo(
+        entry, Blake2bHash::fromHex(entry.at("tx_hash").asString()), entry.at("output_index").asUInt()));
     }
 
     if (entries.size() < 100)
@@ -436,6 +416,73 @@ BlockfrostProvider::loadUtxos(const std::string& path) const
       return result;
     }
   }
+}
+
+Script
+BlockfrostProvider::loadScript(const std::string& hash) const
+{
+  const std::string type = parseJson(request("GET", "scripts/" + hash)).at("type").asString();
+
+  if (type == "timelock")
+  {
+    const JsonValue content = parseJson(request("GET", "scripts/" + hash + "/json")).at("json");
+    return Script(NativeScript::fromJson(content.toJson()));
+  }
+
+  const std::string cbor = parseJson(request("GET", "scripts/" + hash + "/cbor")).at("cbor").asString();
+
+  if (type == "plutusV1")
+  {
+    return Script(PlutusV1Script::fromHex(cbor));
+  }
+
+  if (type == "plutusV2")
+  {
+    return Script(PlutusV2Script::fromHex(cbor));
+  }
+
+  if (type == "plutusV3")
+  {
+    return Script(PlutusV3Script::fromHex(cbor));
+  }
+
+  if (type == "plutusV4")
+  {
+    return Script(PlutusV4Script::fromHex(cbor));
+  }
+
+  throw std::runtime_error("Unsupported Blockfrost script type: " + type);
+}
+
+Utxo
+BlockfrostProvider::parseUtxo(const JsonValue& object, const Blake2bHash& id, std::uint64_t index) const
+{
+  TransactionOutput output(
+    Address::fromString(object.at("address").asString()), parseAmount(object.at("amount")));
+
+  if (object.contains("inline_datum") && object.at("inline_datum").type() == JsonType::String)
+  {
+    output.setDatum(Datum(PlutusData::fromCbor(object.at("inline_datum").asString())));
+  }
+  else if (object.contains("data_hash") && object.at("data_hash").type() == JsonType::String)
+  {
+    output.setDatum(Datum(Blake2bHash::fromHex(object.at("data_hash").asString())));
+  }
+
+  if (object.contains("reference_script_hash") && object.at("reference_script_hash").type() == JsonType::String)
+  {
+    const std::string hash   = object.at("reference_script_hash").asString();
+    const Script      script = loadScript(hash);
+
+    if (script.hash().toHex() != hash)
+    {
+      throw std::runtime_error("Blockfrost reference script hash mismatch");
+    }
+
+    output.setScriptRef(script);
+  }
+
+  return Utxo(TransactionInput(id, index), output);
 }
 
 UtxoList

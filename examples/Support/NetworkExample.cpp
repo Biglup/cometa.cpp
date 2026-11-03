@@ -122,7 +122,17 @@ CometaExamples::signAndSubmit(
   const BlockfrostProvider& provider,
   Transaction&              transaction)
 {
-  transaction.applyVkeyWitnesses(signer.signTransaction(transaction, { DerivationPath {} }));
+  signAndSubmit(signer, provider, transaction, { DerivationPath {} });
+}
+
+void
+CometaExamples::signAndSubmit(
+  const SecureKeyHandler&            signer,
+  const BlockfrostProvider&          provider,
+  Transaction&                       transaction,
+  const std::vector<DerivationPath>& paths)
+{
+  transaction.applyVkeyWitnesses(signer.signTransaction(transaction, paths));
 
   const Blake2bHash id = provider.submitTransaction(transaction);
   std::cout << "Submitted transaction: " << id.toHex() << '\n';

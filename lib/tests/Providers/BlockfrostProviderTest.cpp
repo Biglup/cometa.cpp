@@ -146,6 +146,20 @@ TEST(BlockfrostProvider, ParsesProtocolParameters)
   EXPECT_EQ(transport->requests.at(0).headers.at(0).second, "test-project-id");
 }
 
+TEST(BlockfrostProvider, PrefersOrderedRawCostModels)
+{
+  // Arrange
+  const std::shared_ptr<FakeHttpTransport> transport = std::make_shared<FakeHttpTransport>();
+  transport->expected.push_back({ "GET", "epochs/latest/parameters", 200, R"({"min_fee_a":44,"min_fee_b":155381,"max_tx_size":16384,"max_val_size":"5000","coins_per_utxo_size":"4310","key_deposit":"2000000","pool_deposit":"500000000","protocol_major_ver":11,"protocol_minor_ver":0,"cost_models":{"PlutusV3":{"addInteger-cpu-arguments-intercept":100788}},"cost_models_raw":{"PlutusV3":[100788,420]}})" });
+  const BlockfrostProvider provider(NetworkMagic::Preprod, "test-project-id", transport);
+
+  // Act
+  const ProtocolParameters parameters = provider.getParameters();
+
+  // Assert
+  EXPECT_TRUE(parameters.costModels().contains(PlutusLanguageVersion::V3));
+}
+
 TEST(BlockfrostProvider, ReadsUtxosAndRewards)
 {
   // Arrange
@@ -217,6 +231,29 @@ TEST(BlockfrostProvider, ResolvesOutputAndDatum)
   ASSERT_EQ(outputs.size(), 1U);
   EXPECT_EQ(outputs.at(0).output().amount().coin(), 3000000);
   EXPECT_EQ(datum.toJson(), R"({"tag":"integer","value":"0"})");
+}
+
+TEST(BlockfrostProvider, ResolvesNativeReferenceScript)
+{
+  // Arrange
+  const NativeScript                       nativeScript = NativeScript::fromJson(R"({"type":"after","slot":5})");
+  const Script                             script(nativeScript);
+  const std::string                        hash      = script.hash().toHex();
+  const std::string                        address   = sampleAddress().toString();
+  const std::shared_ptr<FakeHttpTransport> transport = std::make_shared<FakeHttpTransport>();
+  transport->expected.push_back({ "GET", "addresses/" + address + "/utxos?count=100&page=1", 200, "[{\"tx_hash\":\"" + std::string(64, '1') + "\",\"output_index\":0,\"address\":\"" + address + "\",\"amount\":[{\"unit\":\"lovelace\",\"quantity\":\"3000000\"}],\"reference_script_hash\":\"" + hash + "\"}]" });
+  transport->expected.push_back({ "GET", "scripts/" + hash, 200, R"({"type":"timelock"})" });
+  transport->expected.push_back({ "GET", "scripts/" + hash + "/json", 200, R"({"json":{"type":"after","slot":5}})" });
+  const BlockfrostProvider provider(NetworkMagic::Preprod, "test-project-id", transport);
+
+  // Act
+  const UtxoList outputs = provider.getUnspentOutputs(sampleAddress());
+
+  // Assert
+  ASSERT_EQ(outputs.size(), 1U);
+  ASSERT_TRUE(outputs.at(0).output().scriptRef().has_value());
+  EXPECT_EQ(outputs.at(0).output().scriptRef()->hash(), script.hash());
+  EXPECT_EQ(transport->requests.size(), 3U);
 }
 
 TEST(BlockfrostProvider, SubmitsAndEvaluatesSerializedTransaction)

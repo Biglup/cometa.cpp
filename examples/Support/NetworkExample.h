@@ -26,11 +26,13 @@
 /* INCLUDES ******************************************************************/
 
 #include <Cometa/Address/Address.h>
+#include <Cometa/KeyHandlers/DerivationPath.h>
 #include <Cometa/KeyHandlers/SecureKeyHandler.h>
 #include <Cometa/Providers/BlockfrostProvider.h>
 #include <Cometa/Transaction/Transaction.h>
 
 #include <cstdint>
+#include <vector>
 
 /* PROTOTYPES ****************************************************************/
 
@@ -53,4 +55,11 @@ void signAndSubmit(
   const Cometa::SecureKeyHandler&   signer,
   const Cometa::BlockfrostProvider& provider,
   Cometa::Transaction&              transaction);
+
+/** @brief Signs with selected paths, submits, and awaits confirmation. @param signer The signer. @param provider The provider. @param transaction The transaction. @param paths The signing paths. */
+void signAndSubmit(
+  const Cometa::SecureKeyHandler&            signer,
+  const Cometa::BlockfrostProvider&          provider,
+  Cometa::Transaction&                       transaction,
+  const std::vector<Cometa::DerivationPath>& paths);
 } // namespace CometaExamples

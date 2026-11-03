@@ -264,6 +264,15 @@ IF (COMETA_BUILD_EXAMPLES)
 
     ADD_EXECUTABLE (donate_to_treasury_example examples/donate_to_treasury_example.cpp)
     TARGET_LINK_LIBRARIES (donate_to_treasury_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (provider_example examples/provider_example.cpp)
+    TARGET_LINK_LIBRARIES (provider_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (spend_from_native_script_example examples/spend_from_native_script_example.cpp)
+    TARGET_LINK_LIBRARIES (spend_from_native_script_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (reward_account_pubkey_example examples/reward_account_pubkey_example.cpp)
+    TARGET_LINK_LIBRARIES (reward_account_pubkey_example PRIVATE cometa-example-support)
   ENDIF ()
 ENDIF ()
 
