@@ -29,9 +29,15 @@
 #include "DeferredRedeemerAdapter.h"
 
 #include <cardano/address/address.h>
+#include <cardano/address/reward_address.h>
+#include <cardano/assets/asset_id.h>
+#include <cardano/auxiliary_data/metadatum.h>
 #include <cardano/common/credential.h>
+#include <cardano/common/datum.h>
 #include <cardano/common/utxo.h>
+#include <cardano/crypto/blake2b_hash.h>
 #include <cardano/plutus_data/plutus_data.h>
+#include <cardano/scripts/script.h>
 #include <cardano/slot_config.h>
 #include <cardano/transaction/sub_transaction.h>
 #include <cardano/transaction_body/transaction_output.h>
@@ -173,6 +179,15 @@ SubTransactionBuilder::addOutput(const TransactionOutput& output)
 }
 
 SubTransactionBuilder&
+SubTransactionBuilder::addReferenceInput(const Utxo& utxo)
+{
+  CardanoObject<cardano_utxo_t, cardano_utxo_unref> native(
+    decodeCbor<cardano_utxo_t, cardano_utxo_unref>(utxo.toCbor(), cardano_utxo_from_cbor));
+  cardano_sub_tx_builder_add_reference_input(checked(), native.get());
+  return *this;
+}
+
+SubTransactionBuilder&
 SubTransactionBuilder::sendLovelace(const Address& address, std::uint64_t lovelace)
 {
   CardanoObject<cardano_address_t, cardano_address_unref> native(copyAddress(address));
@@ -187,6 +202,103 @@ SubTransactionBuilder::sendValue(const Address& address, const Value& value)
   CardanoObject<cardano_value_t, cardano_value_unref>     nativeValue(
     decodeCbor<cardano_value_t, cardano_value_unref>(value.toCbor(), cardano_value_from_cbor));
   cardano_sub_tx_builder_send_value(checked(), nativeAddress.get(), nativeValue.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::lockLovelace(const Address& address, std::uint64_t lovelace, const Datum& datum)
+{
+  CardanoObject<cardano_address_t, cardano_address_unref> nativeAddress(copyAddress(address));
+  CardanoObject<cardano_datum_t, cardano_datum_unref>     nativeDatum(
+    decodeCbor<cardano_datum_t, cardano_datum_unref>(datum.toCbor(), cardano_datum_from_cbor));
+  cardano_sub_tx_builder_lock_lovelace(checked(), nativeAddress.get(), lovelace, nativeDatum.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::lockValue(const Address& address, const Value& value, const Datum& datum)
+{
+  CardanoObject<cardano_address_t, cardano_address_unref> nativeAddress(copyAddress(address));
+  CardanoObject<cardano_value_t, cardano_value_unref>     nativeValue(
+    decodeCbor<cardano_value_t, cardano_value_unref>(value.toCbor(), cardano_value_from_cbor));
+  CardanoObject<cardano_datum_t, cardano_datum_unref> nativeDatum(
+    decodeCbor<cardano_datum_t, cardano_datum_unref>(datum.toCbor(), cardano_datum_from_cbor));
+  cardano_sub_tx_builder_lock_value(checked(), nativeAddress.get(), nativeValue.get(), nativeDatum.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::mintToken(
+  const AssetId&                   asset,
+  std::int64_t                     amount,
+  const std::optional<PlutusData>& redeemer)
+{
+  if (asset.isLovelace())
+  {
+    throw std::invalid_argument("Cannot mint lovelace");
+  }
+
+  const std::vector<std::uint8_t>                           bytes  = asset.toBytes();
+  cardano_asset_id_t*                                       value  = nullptr;
+  const cardano_error_t                                     status = cardano_asset_id_from_bytes(bytes.data(), bytes.size(), &value);
+  CardanoObject<cardano_asset_id_t, cardano_asset_id_unref> nativeAsset(value);
+  checkCardanoError(status, "SubTransactionBuilder asset");
+
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeRedeemer(copyPlutusData(redeemer));
+  cardano_sub_tx_builder_mint_token_with_id(checked(), nativeAsset.get(), amount, nativeRedeemer.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::addSigner(const Blake2bHash& keyHash)
+{
+  const std::vector<std::uint8_t>                                   bytes  = keyHash.toBytes();
+  cardano_blake2b_hash_t*                                           value  = nullptr;
+  const cardano_error_t                                             status = cardano_blake2b_hash_from_bytes(bytes.data(), bytes.size(), &value);
+  CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> native(value);
+  checkCardanoError(status, "SubTransactionBuilder signer");
+
+  cardano_sub_tx_builder_add_signer(checked(), native.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::addDatum(const PlutusData& datum)
+{
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> native(
+    decodeCbor<cardano_plutus_data_t, cardano_plutus_data_unref>(datum.toCbor(), cardano_plutus_data_from_cbor));
+  cardano_sub_tx_builder_add_datum(checked(), native.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::addScript(const Script& script)
+{
+  CardanoObject<cardano_script_t, cardano_script_unref> native(
+    decodeCbor<cardano_script_t, cardano_script_unref>(script.toCbor(), cardano_script_from_cbor));
+  cardano_sub_tx_builder_add_script(checked(), native.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::setMetadata(std::uint64_t tag, const Metadatum& value)
+{
+  CardanoObject<cardano_metadatum_t, cardano_metadatum_unref> native(
+    decodeCbor<cardano_metadatum_t, cardano_metadatum_unref>(value.toCbor(), cardano_metadatum_from_cbor));
+  cardano_sub_tx_builder_set_metadata(checked(), tag, native.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::addDirectDeposit(const RewardAddress& address, std::uint64_t lovelace)
+{
+  const std::vector<std::uint8_t>                                       bytes  = address.toBytes();
+  cardano_reward_address_t*                                             value  = nullptr;
+  const cardano_error_t                                                 status = cardano_reward_address_from_bytes(bytes.data(), bytes.size(), &value);
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> native(value);
+  checkCardanoError(status, "SubTransactionBuilder reward address");
+
+  cardano_sub_tx_builder_add_direct_deposit(checked(), native.get(), lovelace);
   return *this;
 }
 

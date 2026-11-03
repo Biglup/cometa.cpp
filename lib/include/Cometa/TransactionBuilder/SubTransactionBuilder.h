@@ -26,11 +26,17 @@
 /* INCLUDES ******************************************************************/
 
 #include <Cometa/Address/Address.h>
+#include <Cometa/Address/RewardAddress.h>
+#include <Cometa/Assets/AssetId.h>
+#include <Cometa/AuxiliaryData/Metadatum.h>
 #include <Cometa/Common/Credential.h>
+#include <Cometa/Common/Datum.h>
 #include <Cometa/Common/NetworkId.h>
 #include <Cometa/Common/Utxo.h>
+#include <Cometa/Crypto/Blake2bHash.h>
 #include <Cometa/PlutusData/PlutusData.h>
 #include <Cometa/ProtocolParams/ProtocolParameters.h>
+#include <Cometa/Scripts/Script.h>
 #include <Cometa/SlotConfig.h>
 #include <Cometa/Transaction/SubTransaction.h>
 #include <Cometa/TransactionBody/TransactionOutput.h>
@@ -101,11 +107,41 @@ class SubTransactionBuilder
     /** @brief Adds an output. @param output The output to add. @return This builder. */
     SubTransactionBuilder& addOutput(const TransactionOutput& output);
 
+    /** @brief Adds a reference input. @param utxo The referenced output. @return This builder. */
+    SubTransactionBuilder& addReferenceInput(const Utxo& utxo);
+
     /** @brief Adds a payment in lovelace. @param address The recipient. @param lovelace The amount. @return This builder. */
     SubTransactionBuilder& sendLovelace(const Address& address, std::uint64_t lovelace);
 
     /** @brief Adds a multi-asset payment. @param address The recipient. @param value The amount. @return This builder. */
     SubTransactionBuilder& sendValue(const Address& address, const Value& value);
+
+    /** @brief Locks lovelace with a datum. @param address The script address. @param lovelace The amount. @param datum The output datum. @return This builder. */
+    SubTransactionBuilder& lockLovelace(const Address& address, std::uint64_t lovelace, const Datum& datum);
+
+    /** @brief Locks a value with a datum. @param address The script address. @param value The amount. @param datum The output datum. @return This builder. */
+    SubTransactionBuilder& lockValue(const Address& address, const Value& value, const Datum& datum);
+
+    /** @brief Mints or burns an asset. @param asset The asset identifier. @param amount The signed quantity. @param redeemer The script redeemer, when needed. @return This builder. */
+    SubTransactionBuilder& mintToken(
+      const AssetId&                   asset,
+      std::int64_t                     amount,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Adds a required signer. @param keyHash The signer key hash. @return This builder. */
+    SubTransactionBuilder& addSigner(const Blake2bHash& keyHash);
+
+    /** @brief Adds a datum to the witness set. @param datum The datum. @return This builder. */
+    SubTransactionBuilder& addDatum(const PlutusData& datum);
+
+    /** @brief Adds a native or Plutus script. @param script The script. @return This builder. */
+    SubTransactionBuilder& addScript(const Script& script);
+
+    /** @brief Adds transaction metadata. @param tag The metadata label. @param value The metadata value. @return This builder. */
+    SubTransactionBuilder& setMetadata(std::uint64_t tag, const Metadatum& value);
+
+    /** @brief Adds a direct reward-account deposit. @param address The reward account. @param lovelace The amount. @return This builder. */
+    SubTransactionBuilder& addDirectDeposit(const RewardAddress& address, std::uint64_t lovelace);
 
     /** @brief Adds a guard. @param guard The required credential. @return This builder. */
     SubTransactionBuilder& addGuard(const Credential& guard);

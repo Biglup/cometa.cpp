@@ -127,3 +127,60 @@ TEST(SubTransactionBuilder, RejectsMissingDeferredRedeemerCallback)
   // Assert
   EXPECT_THROW(builder.addInputWithDeferredRedeemer(party, DeferredRedeemer()), std::invalid_argument);
 }
+
+TEST(SubTransactionBuilder, BuildsMintWithReferenceAndDirectDeposit)
+{
+  // Arrange
+  const Address       address = sampleAddress();
+  const Credential    credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1)));
+  const RewardAddress reward(NetworkId::Testnet, credential);
+  const Utxo          party(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(5000000)));
+  const Utxo reference(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 3)), 0),
+    TransactionOutput(address, Value(2000000)));
+  const Blake2bHash  keyHash(std::vector<std::uint8_t>(28, 1));
+  const NativeScript nativeScript { ScriptPubkey(keyHash) };
+  const AssetId      asset(nativeScript.hash(), AssetName(std::vector<std::uint8_t> { 'T' }));
+  Value              outputValue(2000000);
+  outputValue.addAsset(asset, 1);
+  SubTransactionBuilder builder(sampleParameters(), SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.addInput(party)
+    .addReferenceInput(reference)
+    .addScript(Script(nativeScript))
+    .addSigner(keyHash)
+    .mintToken(asset, 1)
+    .sendValue(address, outputValue)
+    .addDirectDeposit(reward, 1000000)
+    .setMetadata(674, Metadatum("test"));
+
+  // Act
+  const SubTransaction transaction = builder.build();
+
+  // Assert
+  EXPECT_TRUE(transaction.body().mint().has_value());
+  EXPECT_TRUE(transaction.body().referenceInputs().has_value());
+  EXPECT_TRUE(transaction.body().directDeposits().has_value());
+}
+
+TEST(SubTransactionBuilder, LocksOutputWithDatum)
+{
+  // Arrange
+  const Address    address = sampleAddress();
+  const Credential scriptCredential(
+    CredentialType::ScriptHash, Blake2bHash(std::vector<std::uint8_t>(28, 3)));
+  const Address scriptAddress = EnterpriseAddress(NetworkId::Testnet, scriptCredential).toAddress();
+  const Utxo    party(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(5000000)));
+  SubTransactionBuilder builder(sampleParameters(), SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.addInput(party).lockLovelace(scriptAddress, 2000000, Datum(PlutusData(42)));
+
+  // Act
+  const SubTransaction transaction = builder.build();
+
+  // Assert
+  ASSERT_EQ(transaction.body().outputs().size(), 1U);
+  EXPECT_EQ(transaction.body().outputs().at(0).address(), scriptAddress);
+}
