@@ -189,6 +189,60 @@ TEST(TransactionBuilder, AddsStakeRegistrationCertificate)
   EXPECT_EQ(transaction.body().certificates()->size(), 1U);
 }
 
+TEST(TransactionBuilder, RegistersAndDelegatesStake)
+{
+  // Arrange
+  ProtocolParameters parameters = sampleParameters();
+  parameters.setKeyDeposit(2000000);
+  const Address       address = sampleAddress();
+  const Credential    credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 4)));
+  const RewardAddress reward(NetworkId::Testnet, credential);
+  const Utxo          available(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(10000000)));
+  TransactionBuilder builder(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.setChangeAddress(address)
+    .setUtxos({ available })
+    .registerRewardAddress(reward)
+    .delegateStake(reward, Blake2bHash(std::vector<std::uint8_t>(28, 6)));
+
+  // Act
+  const Transaction transaction = builder.build();
+
+  // Assert
+  ASSERT_TRUE(transaction.body().certificates().has_value());
+  EXPECT_EQ(transaction.body().certificates()->size(), 2U);
+}
+
+TEST(TransactionBuilder, RegistersDRepAndDelegatesVotingPower)
+{
+  // Arrange
+  ProtocolParameters parameters = sampleParameters();
+  parameters.setProtocolVersion(ProtocolVersion(11, 0));
+  parameters.setKeyDeposit(2000000);
+  parameters.setDrepDeposit(2000000);
+  const Address       address = sampleAddress();
+  const Credential    credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 4)));
+  const RewardAddress reward(NetworkId::Testnet, credential);
+  const DRep          drep(credential);
+  const Utxo          available(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(10000000)));
+  TransactionBuilder builder(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.setChangeAddress(address)
+    .setUtxos({ available })
+    .registerRewardAddress(reward)
+    .registerDRep(drep)
+    .delegateVotingPower(reward, drep);
+
+  // Act
+  const Transaction transaction = builder.build();
+
+  // Assert
+  ASSERT_TRUE(transaction.body().certificates().has_value());
+  EXPECT_EQ(transaction.body().certificates()->size(), 3U);
+}
+
 TEST(TransactionBuilder, AddsGovernanceVote)
 {
   // Arrange

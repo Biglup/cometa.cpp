@@ -39,6 +39,7 @@
 #include <cardano/common/anchor.h>
 #include <cardano/common/credential.h>
 #include <cardano/common/datum.h>
+#include <cardano/common/drep.h>
 #include <cardano/common/governance_action_id.h>
 #include <cardano/common/utxo.h>
 #include <cardano/common/utxo_list.h>
@@ -98,6 +99,30 @@ copyRewardAddress(const RewardAddress& address)
   CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> owner(value);
   checkCardanoError(status, "TransactionBuilder reward address");
   return owner.release();
+}
+
+/** @brief Copies a hash to native storage. @param hash The hash. @return An owned native hash. */
+cardano_blake2b_hash_t*
+copyHash(const Blake2bHash& hash)
+{
+  const std::vector<std::uint8_t>                                   bytes  = hash.toBytes();
+  cardano_blake2b_hash_t*                                           value  = nullptr;
+  const cardano_error_t                                             status = cardano_blake2b_hash_from_bytes(bytes.data(), bytes.size(), &value);
+  CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
+  checkCardanoError(status, "TransactionBuilder hash");
+  return owner.release();
+}
+
+/** @brief Copies an optional anchor. @param anchor The metadata anchor. @return An owned native anchor or null. */
+cardano_anchor_t*
+copyAnchor(const std::optional<Anchor>& anchor)
+{
+  if (!anchor)
+  {
+    return nullptr;
+  }
+
+  return decodeCbor<cardano_anchor_t, cardano_anchor_unref>(anchor->toCbor(), cardano_anchor_from_cbor);
 }
 
 /**
@@ -514,6 +539,95 @@ TransactionBuilder::addCertificateWithDeferredRedeemer(const Certificate& certif
   m_deferredRedeemers.push_back(std::move(context));
   cardano_tx_builder_add_certificate_with_deferred_redeemer(
     checked(), nativeCertificate.get(), &invokeDeferredRedeemer, m_deferredRedeemers.back().get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::registerRewardAddress(
+  const RewardAddress&             address,
+  const std::optional<PlutusData>& redeemer)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(address));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref>       nativeRedeemer(copyPlutusData(redeemer));
+  cardano_tx_builder_register_reward_address(checked(), nativeAddress.get(), nativeRedeemer.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::deregisterRewardAddress(
+  const RewardAddress&             address,
+  const std::optional<PlutusData>& redeemer)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(address));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref>       nativeRedeemer(copyPlutusData(redeemer));
+  cardano_tx_builder_deregister_reward_address(checked(), nativeAddress.get(), nativeRedeemer.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::delegateStake(
+  const RewardAddress&             address,
+  const Blake2bHash&               poolId,
+  const std::optional<PlutusData>& redeemer)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(address));
+  CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>     nativePool(copyHash(poolId));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref>       nativeRedeemer(copyPlutusData(redeemer));
+  cardano_tx_builder_delegate_stake(checked(), nativeAddress.get(), nativePool.get(), nativeRedeemer.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::delegateVotingPower(
+  const RewardAddress&             address,
+  const DRep&                      drep,
+  const std::optional<PlutusData>& redeemer)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(address));
+  CardanoObject<cardano_drep_t, cardano_drep_unref>                     nativeDRep(
+    decodeCbor<cardano_drep_t, cardano_drep_unref>(drep.toCbor(), cardano_drep_from_cbor));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeRedeemer(copyPlutusData(redeemer));
+  cardano_tx_builder_delegate_voting_power(checked(), nativeAddress.get(), nativeDRep.get(), nativeRedeemer.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::registerDRep(
+  const DRep&                      drep,
+  const std::optional<Anchor>&     anchor,
+  const std::optional<PlutusData>& redeemer)
+{
+  CardanoObject<cardano_drep_t, cardano_drep_unref> nativeDRep(
+    decodeCbor<cardano_drep_t, cardano_drep_unref>(drep.toCbor(), cardano_drep_from_cbor));
+  CardanoObject<cardano_anchor_t, cardano_anchor_unref>           nativeAnchor(copyAnchor(anchor));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeRedeemer(copyPlutusData(redeemer));
+  cardano_tx_builder_register_drep(checked(), nativeDRep.get(), nativeAnchor.get(), nativeRedeemer.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::updateDRep(
+  const DRep&                      drep,
+  const std::optional<Anchor>&     anchor,
+  const std::optional<PlutusData>& redeemer)
+{
+  CardanoObject<cardano_drep_t, cardano_drep_unref> nativeDRep(
+    decodeCbor<cardano_drep_t, cardano_drep_unref>(drep.toCbor(), cardano_drep_from_cbor));
+  CardanoObject<cardano_anchor_t, cardano_anchor_unref>           nativeAnchor(copyAnchor(anchor));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeRedeemer(copyPlutusData(redeemer));
+  cardano_tx_builder_update_drep(checked(), nativeDRep.get(), nativeAnchor.get(), nativeRedeemer.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::deregisterDRep(
+  const DRep&                      drep,
+  const std::optional<PlutusData>& redeemer)
+{
+  CardanoObject<cardano_drep_t, cardano_drep_unref> nativeDRep(
+    decodeCbor<cardano_drep_t, cardano_drep_unref>(drep.toCbor(), cardano_drep_from_cbor));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeRedeemer(copyPlutusData(redeemer));
+  cardano_tx_builder_deregister_drep(checked(), nativeDRep.get(), nativeRedeemer.get());
   return *this;
 }
 
