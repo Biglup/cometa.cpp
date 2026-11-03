@@ -145,3 +145,34 @@ TEST(TransactionBuilder, ReportsBuildFailure)
   // Assert
   EXPECT_THROW(builder.build(), Error);
 }
+
+TEST(TransactionBuilder, MintsNativeToken)
+{
+  // Arrange
+  const Address address = sampleAddress();
+  const Utxo    available(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(10000000)));
+  const Blake2bHash  keyHash(std::vector<std::uint8_t>(28, 1));
+  const NativeScript nativeScript { ScriptPubkey(keyHash) };
+  const Script       script(nativeScript);
+  const AssetId      asset(nativeScript.hash(), AssetName(std::vector<std::uint8_t> { 'T' }));
+  Value              outputValue(2000000);
+  outputValue.addAsset(asset, 1);
+
+  TransactionBuilder builder(sampleParameters(), SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.setChangeAddress(address)
+    .setUtxos({ available })
+    .addScript(script)
+    .addSigner(keyHash)
+    .mintToken(asset, 1)
+    .sendValue(address, outputValue);
+
+  // Act
+  const Transaction transaction = builder.build();
+
+  // Assert
+  EXPECT_TRUE(transaction.body().mint().has_value());
+  ASSERT_TRUE(transaction.witnessSet().nativeScripts().has_value());
+  EXPECT_EQ(transaction.witnessSet().nativeScripts()->size(), 1U);
+}

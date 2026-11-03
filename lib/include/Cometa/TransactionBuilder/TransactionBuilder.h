@@ -26,10 +26,14 @@
 /* INCLUDES ******************************************************************/
 
 #include <Cometa/Address/Address.h>
+#include <Cometa/Assets/AssetId.h>
+#include <Cometa/Common/Credential.h>
 #include <Cometa/Common/NetworkId.h>
 #include <Cometa/Common/UtxoList.h>
+#include <Cometa/Crypto/Blake2bHash.h>
 #include <Cometa/PlutusData/PlutusData.h>
 #include <Cometa/ProtocolParams/ProtocolParameters.h>
+#include <Cometa/Scripts/Script.h>
 #include <Cometa/SlotConfig.h>
 #include <Cometa/Transaction/Transaction.h>
 #include <Cometa/TransactionBody/TransactionOutput.h>
@@ -37,6 +41,7 @@
 #include <Cometa/TransactionBuilder/CoinSelector.h>
 #include <Cometa/TransactionBuilder/TransactionEvaluator.h>
 
+#include <cstddef>
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -81,6 +86,9 @@ class TransactionBuilder
     /** @brief Sets the address for change outputs. @param address The change address. @return This builder. */
     TransactionBuilder& setChangeAddress(const Address& address);
 
+    /** @brief Sets the collateral change address. @param address The change address. @return This builder. */
+    TransactionBuilder& setCollateralChangeAddress(const Address& address);
+
     /** @brief Sets spendable outputs for coin selection. @param utxos The outputs. @return This builder. */
     TransactionBuilder& setUtxos(const UtxoList& utxos);
 
@@ -95,6 +103,9 @@ class TransactionBuilder
 
     /** @brief Sets the minimum fee. @param lovelace The minimum lovelace. @return This builder. */
     TransactionBuilder& setMinimumFee(std::uint64_t lovelace);
+
+    /** @brief Sets a treasury donation. @param lovelace The donation. @return This builder. */
+    TransactionBuilder& setDonation(std::uint64_t lovelace);
 
     /** @brief Adds a payment in lovelace. @param address The recipient. @param lovelace The amount. @return This builder. */
     TransactionBuilder& sendLovelace(const Address& address, std::uint64_t lovelace);
@@ -116,6 +127,36 @@ class TransactionBuilder
 
     /** @brief Adds an output. @param output The output to add. @return This builder. */
     TransactionBuilder& addOutput(const TransactionOutput& output);
+
+    /** @brief Adds a reference input. @param utxo The referenced output. @return This builder. */
+    TransactionBuilder& addReferenceInput(const Utxo& utxo);
+
+    /** @brief Adds a required signer. @param keyHash The payment key hash. @return This builder. */
+    TransactionBuilder& addSigner(const Blake2bHash& keyHash);
+
+    /** @brief Adds a Dijkstra guard. @param guard The guard credential. @return This builder. */
+    TransactionBuilder& addGuard(const Credential& guard);
+
+    /** @brief Adds a datum to the witness set. @param datum The datum. @return This builder. */
+    TransactionBuilder& addDatum(const PlutusData& datum);
+
+    /** @brief Adds a native or Plutus script. @param script The script. @return This builder. */
+    TransactionBuilder& addScript(const Script& script);
+
+    /**
+     * @brief Mints or burns a native asset.
+     * @param asset The asset identifier.
+     * @param amount Positive to mint, negative to burn.
+     * @param redeemer The script redeemer, when needed.
+     * @return This builder.
+     */
+    TransactionBuilder& mintToken(
+      const AssetId&                   asset,
+      std::int64_t                     amount,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Reserves witness space for signing keys. @param count The number of keys. @return This builder. */
+    TransactionBuilder& padSignerCount(std::size_t count);
 
     /** @brief Balances and builds the transaction. @return The transaction. */
     Transaction build();

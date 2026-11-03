@@ -30,9 +30,13 @@
 #include "TransactionEvaluatorAdapter.h"
 
 #include <cardano/address/address.h>
+#include <cardano/assets/asset_id.h>
+#include <cardano/common/credential.h>
 #include <cardano/common/utxo.h>
 #include <cardano/common/utxo_list.h>
+#include <cardano/crypto/blake2b_hash.h>
 #include <cardano/plutus_data/plutus_data.h>
+#include <cardano/scripts/script.h>
 #include <cardano/slot_config.h>
 #include <cardano/transaction/transaction.h>
 #include <cardano/transaction_body/transaction_output.h>
@@ -175,6 +179,14 @@ TransactionBuilder::setChangeAddress(const Address& address)
 }
 
 TransactionBuilder&
+TransactionBuilder::setCollateralChangeAddress(const Address& address)
+{
+  CardanoObject<cardano_address_t, cardano_address_unref> native(copyAddress(address));
+  cardano_tx_builder_set_collateral_change_address(checked(), native.get());
+  return *this;
+}
+
+TransactionBuilder&
 TransactionBuilder::setUtxos(const UtxoList& utxos)
 {
   CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> native(copyUtxos(utxos));
@@ -208,6 +220,13 @@ TransactionBuilder&
 TransactionBuilder::setMinimumFee(std::uint64_t lovelace)
 {
   cardano_tx_builder_set_minimum_fee(checked(), lovelace);
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::setDonation(std::uint64_t lovelace)
+{
+  cardano_tx_builder_set_donation(checked(), lovelace);
   return *this;
 }
 
@@ -251,6 +270,84 @@ TransactionBuilder::addOutput(const TransactionOutput& output)
     decodeCbor<cardano_transaction_output_t, cardano_transaction_output_unref>(
       output.toCbor(), cardano_transaction_output_from_cbor));
   cardano_tx_builder_add_output(checked(), native.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::addReferenceInput(const Utxo& utxo)
+{
+  CardanoObject<cardano_utxo_t, cardano_utxo_unref> native(
+    decodeCbor<cardano_utxo_t, cardano_utxo_unref>(utxo.toCbor(), cardano_utxo_from_cbor));
+  cardano_tx_builder_add_reference_input(checked(), native.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::addSigner(const Blake2bHash& keyHash)
+{
+  const std::vector<std::uint8_t>                                   bytes  = keyHash.toBytes();
+  cardano_blake2b_hash_t*                                           value  = nullptr;
+  const cardano_error_t                                             status = cardano_blake2b_hash_from_bytes(bytes.data(), bytes.size(), &value);
+  CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> native(value);
+  checkCardanoError(status, "TransactionBuilder signer");
+
+  cardano_tx_builder_add_signer(checked(), native.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::addGuard(const Credential& guard)
+{
+  CardanoObject<cardano_credential_t, cardano_credential_unref> native(
+    decodeCbor<cardano_credential_t, cardano_credential_unref>(guard.toCbor(), cardano_credential_from_cbor));
+  cardano_tx_builder_add_guard(checked(), native.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::addDatum(const PlutusData& datum)
+{
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> native(
+    decodeCbor<cardano_plutus_data_t, cardano_plutus_data_unref>(datum.toCbor(), cardano_plutus_data_from_cbor));
+  cardano_tx_builder_add_datum(checked(), native.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::addScript(const Script& script)
+{
+  CardanoObject<cardano_script_t, cardano_script_unref> native(
+    decodeCbor<cardano_script_t, cardano_script_unref>(script.toCbor(), cardano_script_from_cbor));
+  cardano_tx_builder_add_script(checked(), native.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::mintToken(
+  const AssetId&                   asset,
+  std::int64_t                     amount,
+  const std::optional<PlutusData>& redeemer)
+{
+  if (asset.isLovelace())
+  {
+    throw std::invalid_argument("Cannot mint lovelace");
+  }
+
+  const std::vector<std::uint8_t>                           bytes  = asset.toBytes();
+  cardano_asset_id_t*                                       value  = nullptr;
+  const cardano_error_t                                     status = cardano_asset_id_from_bytes(bytes.data(), bytes.size(), &value);
+  CardanoObject<cardano_asset_id_t, cardano_asset_id_unref> nativeAsset(value);
+  checkCardanoError(status, "TransactionBuilder asset");
+
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeRedeemer(copyPlutusData(redeemer));
+  cardano_tx_builder_mint_token_with_id(checked(), nativeAsset.get(), amount, nativeRedeemer.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::padSignerCount(std::size_t count)
+{
+  cardano_tx_builder_pad_signer_count(checked(), count);
   return *this;
 }
 
