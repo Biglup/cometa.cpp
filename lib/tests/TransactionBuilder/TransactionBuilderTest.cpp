@@ -244,6 +244,47 @@ TEST(TransactionBuilder, MintsNativeToken)
   EXPECT_EQ(transaction.witnessSet().nativeScripts()->size(), 1U);
 }
 
+TEST(TransactionBuilder, InvokesDeferredMintRedeemer)
+{
+  // Arrange
+  ProtocolParameters parameters = sampleParameters();
+  parameters.setProtocolVersion(ProtocolVersion(12, 0));
+  CostModels models;
+  models.insert(CostModel(PlutusLanguageVersion::V4, std::vector<std::int64_t>(179, 0)));
+  parameters.setCostModels(models);
+  const Address address = sampleAddress();
+  const Utxo    funding(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(10000000)));
+  const Utxo collateral(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 3)), 0),
+    TransactionOutput(address, Value(5000000)));
+  const AssetId asset = AssetId::fromHex("1fd0190f1816f66a28208ce5836f64f54d99bdc2a088fee8e14547edaa");
+  const Script  script(PlutusV4Script::fromHex("450100002499"));
+  Value         outputValue(2000000);
+  outputValue.addAsset(asset, 1);
+  std::size_t        calls = 0;
+  TransactionBuilder builder(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.setChangeAddress(address)
+    .setCollateralChangeAddress(address)
+    .setUtxos({ funding })
+    .setCollateralUtxos({ collateral })
+    .addScript(script)
+    .mintTokenWithDeferredRedeemer(
+      asset, 1, [&calls](const Transaction&, const UtxoList&)
+      {
+        ++calls;
+        return PlutusData(0); })
+    .sendValue(address, outputValue);
+
+  // Act
+  const Transaction transaction = builder.build();
+
+  // Assert
+  EXPECT_GT(calls, 0U);
+  EXPECT_TRUE(transaction.body().mint().has_value());
+}
+
 TEST(TransactionBuilder, LocksScriptOutputWithDatumAndMetadata)
 {
   // Arrange

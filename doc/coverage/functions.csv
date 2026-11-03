@@ -2885,7 +2885,7 @@ cardano_sub_tx_builder_lock_value_ex,lib/include/cardano/transaction_builder/sub
 cardano_sub_tx_builder_set_metadata,lib/include/cardano/transaction_builder/sub_transaction_builder.h,P23,implemented,Cometa::SubTransactionBuilder::setMetadata,lib/tests/TransactionBuilder/SubTransactionBuilderTest.cpp,C++ values and scoped native ownership.
 cardano_sub_tx_builder_set_metadata_ex,lib/include/cardano/transaction_builder/sub_transaction_builder.h,P23,planned,,,API and ownership mapping pending.
 cardano_sub_tx_builder_mint_token,lib/include/cardano/transaction_builder/sub_transaction_builder.h,P23,planned,,,API and ownership mapping pending.
-cardano_sub_tx_builder_mint_token_with_deferred_redeemer,lib/include/cardano/transaction_builder/sub_transaction_builder.h,P23,planned,,,API and ownership mapping pending.
+cardano_sub_tx_builder_mint_token_with_deferred_redeemer,lib/include/cardano/transaction_builder/sub_transaction_builder.h,P23,implemented,Cometa::SubTransactionBuilder::mintTokenWithDeferredRedeemer,lib/tests/TransactionBuilder/SubTransactionBuilderTest.cpp,C++ callback receives independent draft and input values.
 cardano_sub_tx_builder_mint_token_ex,lib/include/cardano/transaction_builder/sub_transaction_builder.h,P23,planned,,,API and ownership mapping pending.
 cardano_sub_tx_builder_mint_token_with_id,lib/include/cardano/transaction_builder/sub_transaction_builder.h,P23,implemented,Cometa::SubTransactionBuilder::mintToken,lib/tests/TransactionBuilder/SubTransactionBuilderTest.cpp,C++ values and scoped native ownership.
 cardano_sub_tx_builder_mint_token_with_id_ex,lib/include/cardano/transaction_builder/sub_transaction_builder.h,P23,planned,,,API and ownership mapping pending.

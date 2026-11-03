@@ -31,6 +31,7 @@
 #include <cardano/address/address.h>
 #include <cardano/address/reward_address.h>
 #include <cardano/assets/asset_id.h>
+#include <cardano/assets/asset_name.h>
 #include <cardano/auxiliary_data/metadatum.h>
 #include <cardano/certs/certificate.h>
 #include <cardano/common/credential.h>
@@ -263,6 +264,33 @@ SubTransactionBuilder::mintToken(
 
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeRedeemer(copyPlutusData(redeemer));
   cardano_sub_tx_builder_mint_token_with_id(checked(), nativeAsset.get(), amount, nativeRedeemer.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::mintTokenWithDeferredRedeemer(const AssetId& asset, std::int64_t amount, DeferredRedeemer callback)
+{
+  if (asset.isLovelace() || !callback)
+  {
+    throw std::invalid_argument("Minting requires a native asset and a deferred redeemer callback");
+  }
+
+  const std::vector<std::uint8_t>                                   policyBytes  = asset.policyId()->toBytes();
+  cardano_blake2b_hash_t*                                           policyValue  = nullptr;
+  const cardano_error_t                                             policyStatus = cardano_blake2b_hash_from_bytes(policyBytes.data(), policyBytes.size(), &policyValue);
+  CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> nativePolicy(policyValue);
+  checkCardanoError(policyStatus, "SubTransactionBuilder policy");
+
+  const std::vector<std::uint8_t>                               nameBytes  = asset.assetName()->toBytes();
+  cardano_asset_name_t*                                         nameValue  = nullptr;
+  const cardano_error_t                                         nameStatus = cardano_asset_name_from_bytes(byteData(nameBytes), nameBytes.size(), &nameValue);
+  CardanoObject<cardano_asset_name_t, cardano_asset_name_unref> nativeName(nameValue);
+  checkCardanoError(nameStatus, "SubTransactionBuilder asset name");
+
+  std::unique_ptr<DeferredRedeemerContext> context(new DeferredRedeemerContext { std::move(callback), nullptr });
+  m_deferredRedeemers.push_back(std::move(context));
+  cardano_sub_tx_builder_mint_token_with_deferred_redeemer(
+    checked(), nativePolicy.get(), nativeName.get(), amount, &invokeDeferredRedeemer, m_deferredRedeemers.back().get());
   return *this;
 }
 

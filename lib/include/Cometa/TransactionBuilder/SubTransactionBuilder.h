@@ -133,6 +133,9 @@ class SubTransactionBuilder
       std::int64_t                     amount,
       const std::optional<PlutusData>& redeemer = std::nullopt);
 
+    /** @brief Mints an asset with a redeemer produced after balancing. @param asset The asset. @param amount The signed quantity. @param callback The deterministic producer. @return This builder. */
+    SubTransactionBuilder& mintTokenWithDeferredRedeemer(const AssetId& asset, std::int64_t amount, DeferredRedeemer callback);
+
     /** @brief Adds a required signer. @param keyHash The signer key hash. @return This builder. */
     SubTransactionBuilder& addSigner(const Blake2bHash& keyHash);
 

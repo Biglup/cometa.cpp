@@ -29,6 +29,8 @@
 
 #include <gtest/gtest.h>
 
+#include <stdexcept>
+
 /* USINGS ********************************************************************/
 
 using namespace Cometa;
@@ -134,6 +136,53 @@ TEST(SubTransactionBuilder, RejectsMissingDeferredRedeemerCallback)
   EXPECT_THROW(builder.withdrawRewardsWithDeferredRedeemer(reward, 0, DeferredRedeemer()), std::invalid_argument);
   EXPECT_THROW(builder.addCertificateWithDeferredRedeemer(certificate, DeferredRedeemer()), std::invalid_argument);
   EXPECT_THROW(builder.voteWithDeferredRedeemer(voter, action, choice, DeferredRedeemer()), std::invalid_argument);
+  const AssetId asset = AssetId::fromHex("1fd0190f1816f66a28208ce5836f64f54d99bdc2a088fee8e14547edaa");
+  EXPECT_THROW(builder.mintTokenWithDeferredRedeemer(asset, 1, DeferredRedeemer()), std::invalid_argument);
+}
+
+TEST(SubTransactionBuilder, InvokesDeferredMintRedeemer)
+{
+  // Arrange
+  const AssetId asset = AssetId::fromHex("1fd0190f1816f66a28208ce5836f64f54d99bdc2a088fee8e14547edaa");
+  const Script  script(PlutusV4Script::fromHex("450100002499"));
+  ASSERT_EQ(script.hash(), asset.policyId());
+  ProtocolParameters parameters = sampleParameters();
+  CostModels         models;
+  models.insert(CostModel(PlutusLanguageVersion::V4, std::vector<std::int64_t>(179, 0)));
+  parameters.setCostModels(models);
+  std::size_t           calls = 0;
+  SubTransactionBuilder builder(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.addScript(script).mintTokenWithDeferredRedeemer(
+    asset, 1, [&calls](const Transaction&, const UtxoList&)
+    {
+      ++calls;
+      return PlutusData(0); });
+
+  // Act
+  const SubTransaction transaction = builder.build();
+
+  // Assert
+  EXPECT_GT(calls, 0U);
+  EXPECT_TRUE(transaction.body().mint().has_value());
+}
+
+TEST(SubTransactionBuilder, PropagatesDeferredRedeemerFailure)
+{
+  // Arrange
+  const AssetId      asset = AssetId::fromHex("1fd0190f1816f66a28208ce5836f64f54d99bdc2a088fee8e14547edaa");
+  const Script       script(PlutusV4Script::fromHex("450100002499"));
+  ProtocolParameters parameters = sampleParameters();
+  CostModels         models;
+  models.insert(CostModel(PlutusLanguageVersion::V4, std::vector<std::int64_t>(179, 0)));
+  parameters.setCostModels(models);
+  SubTransactionBuilder builder(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.addScript(script).mintTokenWithDeferredRedeemer(
+    asset, 1, [](const Transaction&, const UtxoList&) -> PlutusData
+    { throw std::runtime_error("redeemer failed"); });
+
+  // Act
+  // Assert
+  EXPECT_THROW(builder.build(), std::runtime_error);
 }
 
 TEST(SubTransactionBuilder, BuildsMintWithReferenceAndDirectDeposit)
