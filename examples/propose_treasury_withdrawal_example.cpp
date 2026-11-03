@@ -87,6 +87,7 @@ main()
     withdrawals.set(reward, 1000000000000ULL);
 
     Cometa::TransactionBuilder builder(parameters, slots);
+
     builder.setUtxos(paymentOutputs)
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())

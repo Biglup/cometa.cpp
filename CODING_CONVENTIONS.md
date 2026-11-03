@@ -247,6 +247,9 @@ compiled script bytes when splitting long hexadecimal literals across adjacent
 C++ string literals. Use fenced Markdown code blocks with the appropriate
 language tag (`cpp`, `cmake`, or `bash`) in the README, and link to the runnable
 source when a short snippet omits setup.
+Leave a blank line between constructing a transaction builder and its first
+configuration call. Use C++ digit separators for lovelace and other long
+decimal quantities so examples are easy to scan.
 
 ## Implementation PRs
 

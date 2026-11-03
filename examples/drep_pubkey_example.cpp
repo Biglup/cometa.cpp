@@ -75,6 +75,7 @@ main()
     const std::vector<Cometa::DerivationPath> drepSigners { Cometa::DerivationPath {}, drepPath };
 
     Cometa::TransactionBuilder registration(parameters, slots);
+
     registration.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
@@ -85,6 +86,7 @@ main()
     CometaExamples::signAndSubmit(signer, provider, registrationTransaction, drepSigners);
 
     Cometa::TransactionBuilder delegation(parameters, slots);
+
     delegation.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
@@ -96,6 +98,7 @@ main()
     CometaExamples::signAndSubmit(signer, provider, delegationTransaction, stakeSigners);
 
     Cometa::TransactionBuilder rewardDeregistration(parameters, slots);
+
     rewardDeregistration.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
@@ -107,6 +110,7 @@ main()
     CometaExamples::signAndSubmit(signer, provider, rewardDeregistrationTransaction, stakeSigners);
 
     Cometa::TransactionBuilder drepDeregistration(parameters, slots);
+
     drepDeregistration.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())

@@ -78,6 +78,7 @@ main(int argc, char** argv)
     const std::vector<Cometa::DerivationPath> signingPaths { Cometa::DerivationPath {}, drepPath };
 
     Cometa::TransactionBuilder registration(parameters, slots);
+
     registration.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
@@ -88,6 +89,7 @@ main(int argc, char** argv)
     CometaExamples::signAndSubmit(signer, provider, registrationTransaction, signingPaths);
 
     Cometa::TransactionBuilder voting(parameters, slots);
+
     voting.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
@@ -98,6 +100,7 @@ main(int argc, char** argv)
     CometaExamples::signAndSubmit(signer, provider, votingTransaction, signingPaths);
 
     Cometa::TransactionBuilder deregistration(parameters, slots);
+
     deregistration.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())

@@ -100,7 +100,7 @@ parameters(const std::vector<std::int64_t>& costs)
   result.setExecutionCosts(Cometa::ExUnitPrices(
     Cometa::UnitInterval::fromDouble(0.0577), Cometa::UnitInterval::fromDouble(0.0000721)));
   result.setRefScriptCostPerByte(Cometa::UnitInterval(15, 1));
-  result.setMaxTxExUnits(Cometa::ExUnits(14000000, 10000000000));
+  result.setMaxTxExUnits(Cometa::ExUnits(14'000'000, 10'000'000'000));
   result.setCollateralPercentage(150);
   result.setMaxCollateralInputs(3);
   result.setProtocolVersion(Cometa::ProtocolVersion(12, 0));
@@ -183,16 +183,17 @@ main(int argc, char** argv)
     const Cometa::Credential        paymentCredential(Cometa::CredentialType::KeyHash, key.publicKey().hash());
     const Cometa::Address           paymentAddress =
       Cometa::EnterpriseAddress(Cometa::NetworkId::Testnet, paymentCredential).toAddress();
+
     const Cometa::ProtocolParameters params = parameters(parseCostModel(costModelText));
     const Cometa::SlotConfig         slots  = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod);
     const Cometa::Utxo               fundingUtxo(
       Cometa::TransactionInput::fromHex(reference.substr(0, separator), index),
       Cometa::TransactionOutput(paymentAddress, Cometa::Value(static_cast<std::int64_t>(lovelace))));
 
-    const Cometa::Script validator(Cometa::PlutusV4Script::fromHex(ALWAYS_SUCCEEDS_VALIDATOR_V4));
-
+    const Cometa::Script     validator(Cometa::PlutusV4Script::fromHex(ALWAYS_SUCCEEDS_VALIDATOR_V4));
     const Cometa::Script     guardScript(Cometa::PlutusV4Script::fromHex(ALWAYS_SUCCEEDS_GUARD_V4));
     const Cometa::Credential guard(Cometa::CredentialType::ScriptHash, guardScript.hash());
+
     const Cometa::Credential scriptCredential(Cometa::CredentialType::ScriptHash, validator.hash());
     const Cometa::Address    scriptAddress =
       Cometa::EnterpriseAddress(Cometa::NetworkId::Testnet, scriptCredential).toAddress();
@@ -202,10 +203,11 @@ main(int argc, char** argv)
     std::cout << "Validator address: " << scriptAddress.toString() << '\n';
 
     Cometa::TransactionBuilder lock(params, slots);
+
     lock.setUtxos(Cometa::UtxoList { fundingUtxo })
       .setChangeAddress(paymentAddress)
-      .lockLovelace(scriptAddress, 5000000, Cometa::Datum(voidData))
-      .sendLovelace(paymentAddress, 5000000);
+      .lockLovelace(scriptAddress, 5'000'000, Cometa::Datum(voidData))
+      .sendLovelace(paymentAddress, 5'000'000);
 
     Cometa::Transaction lockTransaction = lock.build();
     lockTransaction.applyVkeyWitnesses(signId(key, lockTransaction.id()));
@@ -221,8 +223,9 @@ main(int argc, char** argv)
     }
 
     Cometa::SubTransactionBuilder sub(params, slots);
+
     sub.addInput(subUtxo)
-      .sendLovelace(paymentAddress, 5000000)
+      .sendLovelace(paymentAddress, 5'000'000)
       .addScript(guardScript)
       .addGuard(guard, voidData);
 
@@ -230,6 +233,7 @@ main(int argc, char** argv)
     subTransaction.applyVkeyWitnesses(signId(key, subTransaction.id()));
 
     Cometa::TransactionBuilder spend(params, slots);
+
     spend.setUtxos(changeUtxos)
       .setCollateralUtxos(changeUtxos)
       .setCollateralChangeAddress(paymentAddress)

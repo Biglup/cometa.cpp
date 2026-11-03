@@ -65,10 +65,11 @@ fundScript(
   const Cometa::PlutusData&         datum)
 {
   Cometa::TransactionBuilder builder(parameters, slots);
+
   builder.setUtxos(provider.getUnspentOutputs(payment))
     .setChangeAddress(payment)
     .setInvalidAfter(CometaExamples::expirySlot())
-    .lockLovelace(scriptAddress, 2000000, Cometa::Datum(datum));
+    .lockLovelace(scriptAddress, 2'000'000, Cometa::Datum(datum));
 
   Cometa::Transaction transaction = builder.build();
   CometaExamples::signAndSubmit(signer, provider, transaction);
@@ -123,25 +124,26 @@ main()
     const Cometa::UtxoList paymentOutputs = provider.getUnspentOutputs(payment);
 
     Cometa::TransactionBuilder spending(parameters, slots);
+
     spending.setUtxos(paymentOutputs)
       .setCollateralUtxos(paymentOutputs)
       .setCollateralChangeAddress(payment)
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
       .addScript(script)
-      .sendLovelace(payment, 1200000)
-      .sendLovelace(payment, 1500000)
+      .sendLovelace(payment, 1'200'000)
+      .sendLovelace(payment, 1'500'000)
       .addInputWithDeferredRedeemer(
         inputA,
         [input = inputA.input(), payment](const Cometa::Transaction& draft, const Cometa::UtxoList&)
         {
-          return pairingRedeemer(input, payment, 1200000, draft);
+          return pairingRedeemer(input, payment, 1'200'000, draft);
         })
       .addInputWithDeferredRedeemer(
         inputB,
         [input = inputB.input(), payment](const Cometa::Transaction& draft, const Cometa::UtxoList&)
         {
-          return pairingRedeemer(input, payment, 1500000, draft);
+          return pairingRedeemer(input, payment, 1'500'000, draft);
         });
 
     Cometa::Transaction transaction = spending.build();

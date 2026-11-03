@@ -84,6 +84,7 @@ main()
     const Cometa::UtxoList registrationOutputs = provider.getUnspentOutputs(payment);
 
     Cometa::TransactionBuilder registration(parameters, slots);
+
     registration.setUtxos(registrationOutputs)
       .setCollateralUtxos(registrationOutputs)
       .setCollateralChangeAddress(payment)
@@ -97,6 +98,7 @@ main()
     CometaExamples::signAndSubmit(signer, provider, registrationTransaction);
 
     Cometa::TransactionBuilder delegation(parameters, slots);
+
     delegation.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
@@ -108,6 +110,7 @@ main()
     CometaExamples::signAndSubmit(signer, provider, delegationTransaction, stakeSigners);
 
     Cometa::TransactionBuilder rewardDeregistration(parameters, slots);
+
     rewardDeregistration.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
@@ -121,6 +124,7 @@ main()
     const Cometa::UtxoList deregistrationOutputs = provider.getUnspentOutputs(payment);
 
     Cometa::TransactionBuilder deregistration(parameters, slots);
+
     deregistration.setUtxos(deregistrationOutputs)
       .setCollateralUtxos(deregistrationOutputs)
       .setCollateralChangeAddress(payment)

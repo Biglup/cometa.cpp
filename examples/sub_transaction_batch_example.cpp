@@ -126,6 +126,7 @@ buildIntent(
   std::int64_t                      tokens)
 {
   Cometa::SubTransactionBuilder builder(params, Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
+
   builder.addInput(party.utxo)
     .sendValue(party.address, makeValue(lovelace, tokens))
     .requireTopLevelGuard(batcher.credential);
@@ -148,23 +149,24 @@ main()
     const Party buyer(
       BUYER_PRIVATE_KEY,
       "0000000000000000000000000000000000000000000000000000000000000001",
-      100000000,
+      100'000'000,
       0);
     const Party seller(
       SELLER_PRIVATE_KEY,
       "0000000000000000000000000000000000000000000000000000000000000002",
-      10000000,
+      10'000'000,
       5000);
     const Party batcher(
       BATCHER_PRIVATE_KEY,
       "0000000000000000000000000000000000000000000000000000000000000003",
-      20000000,
+      20'000'000,
       0);
 
-    const Cometa::SubTransaction buyerIntent  = buildIntent(params, buyer, batcher, 50000000, 1000);
-    const Cometa::SubTransaction sellerIntent = buildIntent(params, seller, batcher, 60000000, 4000);
+    const Cometa::SubTransaction buyerIntent  = buildIntent(params, buyer, batcher, 50'000'000, 1000);
+    const Cometa::SubTransaction sellerIntent = buildIntent(params, seller, batcher, 60'000'000, 4000);
 
     Cometa::TransactionBuilder builder(params, Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
+
     builder.setUtxos(batcher.utxos)
       .setChangeAddress(batcher.address)
       .addSubTransaction(buyerIntent, buyer.utxos)

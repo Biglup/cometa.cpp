@@ -69,10 +69,11 @@ main()
     const Cometa::PlutusData voidData = Cometa::PlutusData::fromCbor("d87980");
 
     Cometa::TransactionBuilder funding(parameters, slots);
+
     funding.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
-      .lockLovelace(scriptAddress, 2000000, Cometa::Datum(voidData));
+      .lockLovelace(scriptAddress, 2'000'000, Cometa::Datum(voidData));
 
     Cometa::Transaction fundingTransaction = funding.build();
 
@@ -84,13 +85,14 @@ main()
     const Cometa::TransactionInput scriptInput    = scriptOutput.input();
 
     Cometa::TransactionBuilder spending(parameters, slots);
+
     spending.setUtxos(paymentOutputs)
       .setCollateralUtxos(paymentOutputs)
       .setCollateralChangeAddress(payment)
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
       .addScript(script)
-      .sendLovelace(payment, 1000000)
+      .sendLovelace(payment, 1'000'000)
       .addInputWithDeferredRedeemer(
         scriptOutput,
         [scriptInput](const Cometa::Transaction& draft, const Cometa::UtxoList&)

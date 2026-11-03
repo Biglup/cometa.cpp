@@ -62,11 +62,12 @@ main()
     const Cometa::AssetId    raspberry(script.hash(), Cometa::AssetName::fromString("BerryRaspberry"));
     const Cometa::SlotConfig slots = Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod);
 
-    Cometa::Value minted(2000000);
+    Cometa::Value minted(2'000'000);
     minted.addAsset(onyx, 1);
     minted.addAsset(raspberry, 1);
 
     Cometa::TransactionBuilder mint(parameters, slots);
+
     mint.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())
@@ -81,6 +82,7 @@ main()
     CometaExamples::signAndSubmit(signer, provider, mintTransaction);
 
     Cometa::TransactionBuilder burn(parameters, slots);
+
     burn.setUtxos(provider.getUnspentOutputs(payment))
       .setChangeAddress(payment)
       .setInvalidAfter(CometaExamples::expirySlot())

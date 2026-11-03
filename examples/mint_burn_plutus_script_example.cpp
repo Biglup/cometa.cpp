@@ -71,13 +71,14 @@ main()
     const Cometa::AssetId    raspberry(script.hash(), Cometa::AssetName::fromString("PlutusBerryRaspberry"));
     const Cometa::PlutusData redeemer = Cometa::PlutusData::fromCbor("d87980");
 
-    Cometa::Value minted(2000000);
+    Cometa::Value minted(2'000'000);
     minted.addAsset(onyx, 1);
     minted.addAsset(raspberry, 1);
 
     const Cometa::UtxoList mintOutputs = provider.getUnspentOutputs(payment);
 
     Cometa::TransactionBuilder mint(parameters, slots);
+
     mint.setUtxos(mintOutputs)
       .setCollateralUtxos(mintOutputs)
       .setCollateralChangeAddress(payment)
@@ -96,6 +97,7 @@ main()
     const Cometa::UtxoList burnOutputs = provider.getUnspentOutputs(payment);
 
     Cometa::TransactionBuilder burn(parameters, slots);
+
     burn.setUtxos(burnOutputs)
       .setCollateralUtxos(burnOutputs)
       .setCollateralChangeAddress(payment)

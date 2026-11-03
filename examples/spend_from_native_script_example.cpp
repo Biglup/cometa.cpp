@@ -60,10 +60,11 @@ main()
       Cometa::EnterpriseAddress(Cometa::NetworkId::Testnet, scriptCredential).toAddress();
 
     Cometa::TransactionBuilder funding(parameters, Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
+
     funding.setUtxos(provider.getUnspentOutputs(paymentAddress))
       .setChangeAddress(paymentAddress)
       .setInvalidAfter(CometaExamples::expirySlot())
-      .sendLovelace(scriptAddress, 2000000);
+      .sendLovelace(scriptAddress, 2'000'000);
 
     Cometa::Transaction fundingTransaction = funding.build();
 
@@ -73,11 +74,12 @@ main()
       Cometa::TransactionInput(fundingTransaction.id(), 0), fundingTransaction.body().outputs().at(0));
 
     Cometa::TransactionBuilder spending(parameters, Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
+
     spending.setUtxos(provider.getUnspentOutputs(paymentAddress))
       .setChangeAddress(paymentAddress)
       .setInvalidAfter(CometaExamples::expirySlot())
       .addScript(script)
-      .sendLovelace(paymentAddress, 1000000)
+      .sendLovelace(paymentAddress, 1'000'000)
       .addInput(scriptOutput);
 
     Cometa::Transaction spendingTransaction = spending.build();

@@ -112,6 +112,7 @@ main()
     const Cometa::UtxoList registrationOutputs = provider.getUnspentOutputs(payment);
 
     Cometa::TransactionBuilder registration(parameters, slots);
+
     registration.setUtxos(registrationOutputs)
       .setCollateralUtxos(registrationOutputs)
       .setCollateralChangeAddress(payment)
@@ -128,6 +129,7 @@ main()
     const Cometa::UtxoList withdrawalOutputs = provider.getUnspentOutputs(payment);
 
     Cometa::TransactionBuilder withdrawal(parameters, slots);
+
     withdrawal.setUtxos(withdrawalOutputs)
       .setCollateralUtxos(withdrawalOutputs)
       .setCollateralChangeAddress(payment)

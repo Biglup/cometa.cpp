@@ -54,10 +54,11 @@ main()
     const Cometa::ProtocolParameters parameters = provider.getParameters();
 
     Cometa::TransactionBuilder builder(parameters, Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
+
     builder.setUtxos(utxos)
       .setChangeAddress(sender)
       .setInvalidAfter(CometaExamples::expirySlot())
-      .sendLovelace(Cometa::Address::fromString(RECEIVING_ADDRESS), 2000000);
+      .sendLovelace(Cometa::Address::fromString(RECEIVING_ADDRESS), 2'000'000);
 
     Cometa::Transaction transaction = builder.build();
 
