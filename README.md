@@ -178,9 +178,13 @@ The callback can run more than once, so it must be deterministic and free of sid
 The builder uses random-improve coin selection and the native Plutus evaluator by default. Both can be replaced without modifying the library:
 
 ```cpp
-builder.setCoinSelector(std::make_shared<Cometa::LargeFirstCoinSelector>());
-builder.setTransactionEvaluator(
-  std::make_shared<Cometa::ProviderTransactionEvaluator>(networkProvider));
+const std::shared_ptr<Cometa::CoinSelector> selector =
+  std::make_shared<Cometa::LargeFirstCoinSelector>();
+builder.setCoinSelector(selector);
+
+const std::shared_ptr<Cometa::TransactionEvaluator> evaluator =
+  std::make_shared<Cometa::ProviderTransactionEvaluator>(networkProvider);
+builder.setTransactionEvaluator(evaluator);
 ```
 
 `networkProvider` is a `std::shared_ptr<Cometa::Provider>`. Implement `CoinSelector::name()` and `CoinSelector::select()` for a custom coin selection strategy, or `TransactionEvaluator::name()` and `TransactionEvaluator::evaluate()` for a custom execution budget source. Network backends implement `Provider`; alternate HTTP clients implement `HttpTransport`. These are ordinary C++ interfaces held by `std::shared_ptr` while the builder uses them.
