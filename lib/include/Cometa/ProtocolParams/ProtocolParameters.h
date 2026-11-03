@@ -788,6 +788,9 @@ class ProtocolParameters
     /** @brief Allows the coin selection bridge to copy parameters into native calls. */
     friend class CoinSelectorAdapter;
 
+    /** @brief Allows transaction builders to retain protocol parameters. */
+    friend class TransactionBuilder;
+
     /**
      * @brief Gets the stored parameters.
      * @return The borrowed parameters.
