@@ -32,6 +32,7 @@
 #include <Cometa/Certificates/Certificate.h>
 #include <Cometa/Common/Credential.h>
 #include <Cometa/Common/Datum.h>
+#include <Cometa/Common/GovernanceActionId.h>
 #include <Cometa/Common/NetworkId.h>
 #include <Cometa/Common/UtxoList.h>
 #include <Cometa/Crypto/Blake2bHash.h>
@@ -47,6 +48,8 @@
 #include <Cometa/TransactionBuilder/CoinSelector.h>
 #include <Cometa/TransactionBuilder/DeferredRedeemer.h>
 #include <Cometa/TransactionBuilder/TransactionEvaluator.h>
+#include <Cometa/VotingProcedures/Voter.h>
+#include <Cometa/VotingProcedures/VotingProcedure.h>
 
 #include <cstddef>
 #include <cstdint>
@@ -205,6 +208,20 @@ class TransactionBuilder
 
     /** @brief Adds a certificate with a redeemer produced after balancing. @param certificate The certificate. @param callback The deterministic producer. @return This builder. */
     TransactionBuilder& addCertificateWithDeferredRedeemer(const Certificate& certificate, DeferredRedeemer callback);
+
+    /** @brief Casts a governance vote. @param voter The voter. @param action The governance action. @param vote The choice and metadata. @param redeemer The script redeemer, when needed. @return This builder. */
+    TransactionBuilder& vote(
+      const Voter&                     voter,
+      const GovernanceActionId&        action,
+      const VotingProcedure&           vote,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Casts a vote with a redeemer produced after balancing. @param voter The voter. @param action The governance action. @param vote The choice and metadata. @param callback The deterministic producer. @return This builder. */
+    TransactionBuilder& voteWithDeferredRedeemer(
+      const Voter&              voter,
+      const GovernanceActionId& action,
+      const VotingProcedure&    vote,
+      DeferredRedeemer          callback);
 
     /**
      * @brief Mints or burns a native asset.

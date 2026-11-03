@@ -189,6 +189,30 @@ TEST(TransactionBuilder, AddsStakeRegistrationCertificate)
   EXPECT_EQ(transaction.body().certificates()->size(), 1U);
 }
 
+TEST(TransactionBuilder, AddsGovernanceVote)
+{
+  // Arrange
+  ProtocolParameters parameters = sampleParameters();
+  parameters.setProtocolVersion(ProtocolVersion(11, 0));
+  const Address address = sampleAddress();
+  const Utxo    available(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(10000000)));
+  const Credential         credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 4)));
+  const Voter              voter(VoterType::DRepKeyHash, credential);
+  const GovernanceActionId action(Blake2bHash(std::vector<std::uint8_t>(32, 5)), 0);
+  const VotingProcedure    choice(Vote::Yes);
+  TransactionBuilder       builder(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.setChangeAddress(address).setUtxos({ available }).vote(voter, action, choice);
+
+  // Act
+  const Transaction transaction = builder.build();
+
+  // Assert
+  ASSERT_TRUE(transaction.body().votingProcedures().has_value());
+  EXPECT_EQ(transaction.body().votingProcedures()->get(voter, action), choice);
+}
+
 TEST(TransactionBuilder, MintsNativeToken)
 {
   // Arrange

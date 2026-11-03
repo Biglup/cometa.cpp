@@ -38,6 +38,7 @@
 #include <cardano/certs/certificate.h>
 #include <cardano/common/credential.h>
 #include <cardano/common/datum.h>
+#include <cardano/common/governance_action_id.h>
 #include <cardano/common/utxo.h>
 #include <cardano/common/utxo_list.h>
 #include <cardano/crypto/blake2b_hash.h>
@@ -52,6 +53,8 @@
 #include <cardano/transaction_builder/coin_selection/coin_selector.h>
 #include <cardano/transaction_builder/evaluation/tx_evaluator.h>
 #include <cardano/transaction_builder/transaction_builder.h>
+#include <cardano/voting_procedures/voter.h>
+#include <cardano/voting_procedures/voting_procedure.h>
 
 #include <stdexcept>
 #include <string>
@@ -509,6 +512,53 @@ TransactionBuilder::addCertificateWithDeferredRedeemer(const Certificate& certif
   m_deferredRedeemers.push_back(std::move(context));
   cardano_tx_builder_add_certificate_with_deferred_redeemer(
     checked(), nativeCertificate.get(), &invokeDeferredRedeemer, m_deferredRedeemers.back().get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::vote(
+  const Voter&                     voter,
+  const GovernanceActionId&        action,
+  const VotingProcedure&           vote,
+  const std::optional<PlutusData>& redeemer)
+{
+  CardanoObject<cardano_voter_t, cardano_voter_unref> nativeVoter(
+    decodeCbor<cardano_voter_t, cardano_voter_unref>(voter.toCbor(), cardano_voter_from_cbor));
+  CardanoObject<cardano_governance_action_id_t, cardano_governance_action_id_unref> nativeAction(
+    decodeCbor<cardano_governance_action_id_t, cardano_governance_action_id_unref>(
+      action.toCbor(), cardano_governance_action_id_from_cbor));
+  CardanoObject<cardano_voting_procedure_t, cardano_voting_procedure_unref> nativeVote(
+    decodeCbor<cardano_voting_procedure_t, cardano_voting_procedure_unref>(
+      vote.toCbor(), cardano_voting_procedure_from_cbor));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeRedeemer(copyPlutusData(redeemer));
+  cardano_tx_builder_vote(checked(), nativeVoter.get(), nativeAction.get(), nativeVote.get(), nativeRedeemer.get());
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::voteWithDeferredRedeemer(
+  const Voter&              voter,
+  const GovernanceActionId& action,
+  const VotingProcedure&    vote,
+  DeferredRedeemer          callback)
+{
+  if (!callback)
+  {
+    throw std::invalid_argument("Deferred redeemer callback is required");
+  }
+
+  CardanoObject<cardano_voter_t, cardano_voter_unref> nativeVoter(
+    decodeCbor<cardano_voter_t, cardano_voter_unref>(voter.toCbor(), cardano_voter_from_cbor));
+  CardanoObject<cardano_governance_action_id_t, cardano_governance_action_id_unref> nativeAction(
+    decodeCbor<cardano_governance_action_id_t, cardano_governance_action_id_unref>(
+      action.toCbor(), cardano_governance_action_id_from_cbor));
+  CardanoObject<cardano_voting_procedure_t, cardano_voting_procedure_unref> nativeVote(
+    decodeCbor<cardano_voting_procedure_t, cardano_voting_procedure_unref>(
+      vote.toCbor(), cardano_voting_procedure_from_cbor));
+  std::unique_ptr<DeferredRedeemerContext> context(new DeferredRedeemerContext { std::move(callback), nullptr });
+  m_deferredRedeemers.push_back(std::move(context));
+  cardano_tx_builder_vote_with_deferred_redeemer(
+    checked(), nativeVoter.get(), nativeAction.get(), nativeVote.get(), &invokeDeferredRedeemer, m_deferredRedeemers.back().get());
   return *this;
 }
 
