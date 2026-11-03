@@ -193,6 +193,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/KeyHandlers/DerivationPath.cpp
   lib/src/KeyHandlers/SecureKeyHandler.cpp
   lib/src/Providers/ProviderAdapter.cpp
+  lib/src/TransactionBuilder/CoinSelectionRequest.cpp
   lib/src/Transaction/SubTransactionSet.cpp
   lib/src/Common/CredentialSet.cpp
   lib/src/Common/Credential.cpp
