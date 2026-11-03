@@ -78,15 +78,55 @@ struct CurlDeleter
     }
 };
 
-/** @brief Deleter for a curl header list. */
-struct HeaderDeleter
+/** @brief Owns an HTTP header list. */
+class CurlHeaders
 {
-    /** @brief Releases the list. @param headers The list. */
-    void
-    operator()(curl_slist* headers) const
+  public:
+
+    /** @brief Creates an empty header list. */
+    CurlHeaders() = default;
+
+    /** @brief Releases the list. */
+    ~CurlHeaders()
     {
-      curl_slist_free_all(headers);
+      curl_slist_free_all(m_headers);
     }
+
+  public:
+
+    /** @brief Appends a header. @param line The header line. */
+    void
+    append(const std::string& line)
+    {
+      curl_slist* const next = curl_slist_append(m_headers, line.c_str());
+
+      if (next == nullptr)
+      {
+        throw std::bad_alloc();
+      }
+
+      m_headers = next;
+    }
+
+    /** @brief Gets the borrowed list. @return The header list. */
+    curl_slist*
+    get() const
+    {
+      return m_headers;
+    }
+
+  public:
+
+    /** @brief Header lists cannot be copied. */
+    CurlHeaders(const CurlHeaders&) = delete;
+
+    /** @brief Header lists cannot be assigned. */
+    CurlHeaders& operator=(const CurlHeaders&) = delete;
+
+  private:
+
+    /** @brief Current list head. */
+    curl_slist* m_headers = nullptr;
 };
 
 /** @brief Initializes libcurl once for the process. */
@@ -127,20 +167,12 @@ CurlHttpTransport::execute(const HttpRequest& request) const
     throw std::runtime_error("Could not create a libcurl request");
   }
 
-  std::unique_ptr<curl_slist, HeaderDeleter> headers;
+  CurlHeaders headers;
 
   for (const std::pair<std::string, std::string>& header: request.headers)
   {
     const std::string line = header.first + ": " + header.second;
-    curl_slist*       next = curl_slist_append(headers.get(), line.c_str());
-
-    if (next == nullptr)
-    {
-      throw std::bad_alloc();
-    }
-
-    headers.release();
-    headers.reset(next);
+    headers.append(line);
   }
 
   HttpResponse response { 0, {} };

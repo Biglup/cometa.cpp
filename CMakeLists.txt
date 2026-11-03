@@ -253,6 +253,18 @@ IF (COMETA_BUILD_EXAMPLES)
 
   ADD_EXECUTABLE (secure_key_handler_example examples/secure_key_handler_example.cpp)
   TARGET_LINK_LIBRARIES (secure_key_handler_example PRIVATE Cometa::cometa)
+
+  IF (TARGET Cometa::curl)
+    ADD_LIBRARY (cometa-example-support STATIC examples/Support/NetworkExample.cpp)
+    TARGET_LINK_LIBRARIES (cometa-example-support PUBLIC Cometa::curl)
+    TARGET_COMPILE_FEATURES (cometa-example-support PUBLIC cxx_std_17)
+
+    ADD_EXECUTABLE (send_lovelace_example examples/send_lovelace_example.cpp)
+    TARGET_LINK_LIBRARIES (send_lovelace_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (donate_to_treasury_example examples/donate_to_treasury_example.cpp)
+    TARGET_LINK_LIBRARIES (donate_to_treasury_example PRIVATE cometa-example-support)
+  ENDIF ()
 ENDIF ()
 
 TARGET_COMPILE_FEATURES (cometa PUBLIC cxx_std_17)
