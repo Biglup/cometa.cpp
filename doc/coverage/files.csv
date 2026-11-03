@@ -154,7 +154,7 @@ lib/include/cardano/protocol_params/protocol_param_update.h,public header,P12,im
 lib/include/cardano/protocol_params/protocol_parameters.h,public header,P12,implemented,Cometa::ProtocolParameters
 lib/include/cardano/protocol_params/update.h,public header,P12,implemented,Cometa::Update
 lib/include/cardano/providers/provider.h,public header,P19,planned,idiomatic C++ API
-lib/include/cardano/providers/provider_impl.h,public header,P19,planned,internal ABI/ownership support; no raw C wrapper API
+lib/include/cardano/providers/provider_impl.h,public header,P19,implemented,Cometa::Provider callback adapter
 lib/include/cardano/scripts/native_scripts/native_script.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
 lib/include/cardano/scripts/native_scripts/native_script_list.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."
 lib/include/cardano/scripts/native_scripts/native_script_type.h,public header,P06.2,implemented,"Composite requirements; independent children; threshold equality; shared native script CBOR, inspection, and hash fixtures."

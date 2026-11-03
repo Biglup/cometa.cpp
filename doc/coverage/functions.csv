@@ -2207,7 +2207,7 @@ cardano_update_refcount,lib/include/cardano/protocol_params/update.h,P12,interna
 cardano_update_set_last_error,lib/include/cardano/protocol_params/update.h,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
 cardano_update_get_last_error,lib/include/cardano/protocol_params/update.h,P12,internal,RAII and exception handling,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
 cardano_update_deep_clone,lib/include/cardano/protocol_params/update.h,P12,implemented,Cometa::Update::copy constructor / assignment,lib/tests/ProtocolParams/UpdateTest.cpp; lib/tests/ValueContractTest.cpp,Epoch proposal CBOR and independent copy contract.
-cardano_provider_new,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
+cardano_provider_new,lib/include/cardano/providers/provider.h,P19,internal,,,Managed by the private Cometa::Provider adapter.
 cardano_provider_get_name,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
 cardano_provider_get_network_magic,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
 cardano_provider_get_parameters,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
@@ -2220,7 +2220,7 @@ cardano_provider_resolve_datum,lib/include/cardano/providers/provider.h,P19,plan
 cardano_provider_confirm_transaction,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
 cardano_provider_submit_transaction,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
 cardano_provider_evaluate_transaction,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
-cardano_provider_unref,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
+cardano_provider_unref,lib/include/cardano/providers/provider.h,P19,internal,,,Managed by the private Cometa::Provider adapter.
 cardano_provider_ref,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
 cardano_provider_refcount,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
 cardano_provider_set_last_error,lib/include/cardano/providers/provider.h,P19,planned,,,API and ownership mapping pending.
