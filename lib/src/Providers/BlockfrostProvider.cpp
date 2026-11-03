@@ -290,7 +290,23 @@ BlockfrostProvider::parseJson(const HttpResponse& response) const
 {
   if (response.status != 200)
   {
-    throw std::runtime_error("Blockfrost HTTP " + std::to_string(response.status));
+    std::string message = "Blockfrost HTTP " + std::to_string(response.status);
+
+    try
+    {
+      const JsonValue error = JsonValue::parse(bodyText(response));
+
+      if (error.contains("message") && error.at("message").type() == JsonType::String)
+      {
+        message += ": " + error.at("message").asString();
+      }
+    }
+    catch (const std::exception&)
+    {
+      // Keep the HTTP status when the response is not a Blockfrost JSON error.
+    }
+
+    throw std::runtime_error(message);
   }
 
   return JsonValue::parse(bodyText(response));

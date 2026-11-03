@@ -273,6 +273,12 @@ IF (COMETA_BUILD_EXAMPLES)
 
     ADD_EXECUTABLE (reward_account_pubkey_example examples/reward_account_pubkey_example.cpp)
     TARGET_LINK_LIBRARIES (reward_account_pubkey_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (mint_burn_native_script_example examples/mint_burn_native_script_example.cpp)
+    TARGET_LINK_LIBRARIES (mint_burn_native_script_example PRIVATE cometa-example-support)
+
+    ADD_EXECUTABLE (drep_pubkey_example examples/drep_pubkey_example.cpp)
+    TARGET_LINK_LIBRARIES (drep_pubkey_example PRIVATE cometa-example-support)
   ENDIF ()
 ENDIF ()
 
