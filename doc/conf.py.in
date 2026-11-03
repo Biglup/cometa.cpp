@@ -7,7 +7,9 @@ extensions = ["breathe", "sphinx_immaterial"]
 html_theme = "sphinx_immaterial"
 html_static_path = ["_static"]
 highlight_language = "cpp"
-exclude_patterns = ["html", "doxygen", "CMakeFiles"]
+exclude_patterns = [
+    "html", "doxygen", "CMakeFiles", "coverage.rst", "implementation_plan.rst",
+]
 breathe_projects = {"Cometa": "@CMAKE_CURRENT_BINARY_DIR@/doxygen/xml"}
 breathe_default_project = "Cometa"
 html_theme_options = {

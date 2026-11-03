@@ -219,3 +219,22 @@ TEST(MultiAsset, SupportsMoveSwapAndAssignment)
   EXPECT_NE(copy, moved);
   EXPECT_EQ(moved.policyCount(), 0U);
 }
+
+TEST(MultiAsset, NestedMappedEditsReachSerialization)
+{
+  // Arrange
+  const Blake2bHash policy = Blake2bHash::fromHex(std::string(56, '1'));
+  const AssetName   name   = AssetName::fromString("Cometa");
+  MultiAsset        assets;
+  assets.setAssets(policy, AssetNameMap { { name, 1 } });
+  AssetNameMap& amounts = assets.begin()->second;
+
+  // Act
+  amounts[name] = 2;
+  assets.toCbor();
+  amounts[name]            = 3;
+  const MultiAsset decoded = MultiAsset::fromCbor(assets.toCbor());
+
+  // Assert
+  EXPECT_EQ(decoded.get(policy, name), 3);
+}

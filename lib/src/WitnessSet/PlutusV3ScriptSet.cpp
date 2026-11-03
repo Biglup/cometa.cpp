@@ -58,6 +58,8 @@ PlutusV3ScriptSet::PlutusV3ScriptSet(const PlutusV3ScriptSet& other)
 
 PlutusV3ScriptSet::PlutusV3ScriptSet(PlutusV3ScriptSet&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_materialized(std::exchange(other.m_materialized, false))
 {
 }
 
@@ -97,6 +99,7 @@ PlutusV3ScriptSet::add(const PlutusV3Script& value)
 
   const PlutusV3Script copy(value);
   checkCardanoError(cardano_plutus_v3_script_set_add(checked(), copy.checked()), "PlutusV3ScriptSet add");
+  invalidateElements();
 }
 
 PlutusV3Script
@@ -144,6 +147,8 @@ void
 PlutusV3ScriptSet::swap(PlutusV3ScriptSet& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  std::swap(m_materialized, other.m_materialized);
 }
 
 PlutusV3ScriptSet&
@@ -163,7 +168,9 @@ PlutusV3ScriptSet::operator=(PlutusV3ScriptSet&& other) noexcept
   if (this != &other)
   {
     cardano_plutus_v3_script_set_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value        = std::exchange(other.m_value, nullptr);
+    m_elements     = std::move(other.m_elements);
+    m_materialized = std::exchange(other.m_materialized, false);
   }
   return *this;
 }
@@ -178,6 +185,189 @@ bool
 PlutusV3ScriptSet::operator!=(const PlutusV3ScriptSet& other) const
 {
   return !(*this == other);
+}
+
+PlutusV3ScriptSet::const_iterator
+PlutusV3ScriptSet::begin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+PlutusV3ScriptSet::const_iterator
+PlutusV3ScriptSet::end() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+PlutusV3ScriptSet::const_iterator
+PlutusV3ScriptSet::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+PlutusV3ScriptSet::const_iterator
+PlutusV3ScriptSet::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+PlutusV3ScriptSet::const_reverse_iterator
+PlutusV3ScriptSet::rbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+PlutusV3ScriptSet::const_reverse_iterator
+PlutusV3ScriptSet::rend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+PlutusV3ScriptSet::const_reverse_iterator
+PlutusV3ScriptSet::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+PlutusV3ScriptSet::const_reverse_iterator
+PlutusV3ScriptSet::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+PlutusV3ScriptSet::iterator
+PlutusV3ScriptSet::find(const value_type& value) const
+{
+  materialize();
+
+  for (iterator position = m_elements.cbegin(); position != m_elements.cend(); ++position)
+  {
+    if (sameKey(*position, value))
+    {
+      return position;
+    }
+  }
+
+  return m_elements.cend();
+}
+
+PlutusV3ScriptSet::size_type
+PlutusV3ScriptSet::count(const value_type& value) const
+{
+  return find(value) == end() ? 0U : 1U;
+}
+
+bool
+PlutusV3ScriptSet::empty() const
+{
+  return size() == 0;
+}
+
+bool
+PlutusV3ScriptSet::contains(const value_type& value) const
+{
+  return find(value) != end();
+}
+
+std::pair<PlutusV3ScriptSet::iterator, bool>
+PlutusV3ScriptSet::insert(const value_type& value)
+{
+  const iterator found = find(value);
+
+  if (found != end())
+  {
+    return { found, false };
+  }
+
+  PlutusV3ScriptSet replacement(*this);
+  replacement.add(value);
+  const iterator inserted = replacement.find(value);
+  swap(replacement);
+
+  return { inserted, true };
+}
+
+PlutusV3ScriptSet::iterator
+PlutusV3ScriptSet::insert(const_iterator hint, const value_type& value)
+{
+  (void)hint;
+
+  return insert(value).first;
+}
+
+void
+PlutusV3ScriptSet::clear()
+{
+  PlutusV3ScriptSet replacement;
+  replacement.setUseTag(useTag());
+
+  swap(replacement);
+}
+
+PlutusV3ScriptSet::iterator
+PlutusV3ScriptSet::erase(const_iterator position)
+{
+  return erase(position, std::next(position));
+}
+
+PlutusV3ScriptSet::iterator
+PlutusV3ScriptSet::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  const size_type start  = static_cast<size_type>(std::distance(cbegin(), first));
+  const size_type finish = static_cast<size_type>(std::distance(cbegin(), last));
+
+  if (start == finish)
+  {
+    return first;
+  }
+
+  PlutusV3ScriptSet replacement;
+  replacement.setUseTag(useTag());
+
+  for (size_type index = 0; index < m_elements.size(); ++index)
+  {
+    if (index < start || index >= finish)
+    {
+      replacement.add(m_elements[index]);
+    }
+  }
+
+  const iterator next = std::next(replacement.cbegin(), static_cast<difference_type>(start));
+  swap(replacement);
+
+  return next;
+}
+
+PlutusV3ScriptSet::size_type
+PlutusV3ScriptSet::erase(const value_type& value)
+{
+  const iterator position = find(value);
+
+  if (position == end())
+  {
+    return 0;
+  }
+
+  erase(position);
+
+  return 1;
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/
@@ -195,6 +385,40 @@ PlutusV3ScriptSet::checked() const
     throw std::logic_error("Cannot observe a moved-from PlutusV3ScriptSet");
   }
   return m_value;
+}
+
+void
+PlutusV3ScriptSet::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  std::vector<value_type> elements;
+  const size_type         elementCount = size();
+  elements.reserve(elementCount);
+
+  for (size_type index = 0; index < elementCount; ++index)
+  {
+    elements.push_back(at(index));
+  }
+
+  m_elements.swap(elements);
+  m_materialized = true;
+}
+
+void
+PlutusV3ScriptSet::invalidateElements() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+}
+
+bool
+PlutusV3ScriptSet::sameKey(const value_type& left, const value_type& right)
+{
+  return left.hash() == right.hash();
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/

@@ -26,6 +26,7 @@
 /* INCLUDES ******************************************************************/
 
 #include <system_error>
+#include <type_traits>
 
 /* DEFINITIONS ***************************************************************/
 
@@ -233,4 +234,24 @@ namespace Cometa
  * @return The status in the Cometa error category.
  */
 std::error_code makeErrorCode(ErrorCode code) noexcept;
+
+/**
+ * @brief Creates a standard error code for a Cometa status.
+ *
+ * @param code The operation status.
+ *
+ * @return The status in the Cometa error category.
+ */
+std::error_code make_error_code(ErrorCode code) noexcept;
 } // namespace Cometa
+
+/* TYPE TRAITS ***************************************************************/
+
+namespace std
+{
+/** @brief Enables implicit conversion of Cometa error codes to std::error_code. */
+template<>
+struct is_error_code_enum<Cometa::ErrorCode> : true_type
+{
+};
+} // namespace std

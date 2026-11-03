@@ -10,10 +10,11 @@ For example, with an existing ``provider``, ``sender``, ``recipient``, and
 ``signer``::
 
    const Cometa::ProtocolParameters parameters = provider.getParameters();
-   const Cometa::UtxoList available = provider.getUnspentOutputs(sender);
+   const Cometa::UtxoList           available  = provider.getUnspentOutputs(sender);
 
    Cometa::TransactionBuilder builder(
-     parameters, Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
+     parameters,
+     Cometa::SlotConfig::forNetwork(Cometa::NetworkMagic::Preprod));
 
    builder.setUtxos(available)
      .setChangeAddress(sender)
@@ -21,6 +22,7 @@ For example, with an existing ``provider``, ``sender``, ``recipient``, and
 
    Cometa::Transaction transaction = builder.build();
    transaction.applyVkeyWitnesses(signer.signTransaction(transaction));
+
    provider.submitTransaction(transaction);
 
 Use the network's slot configuration and protocol parameters. An application
@@ -37,6 +39,7 @@ another service is supplied. Implement ``CoinSelector`` or
 shared service during construction and building::
 
    builder.setCoinSelector(std::make_shared<Cometa::LargeFirstCoinSelector>());
+
    builder.setTransactionEvaluator(
      std::make_shared<Cometa::ProviderTransactionEvaluator>(providerPtr));
 

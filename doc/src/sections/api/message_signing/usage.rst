@@ -12,5 +12,6 @@ Cardano wallet message-signing interfaces.
 
    const Cometa::Cip8Signature signedMessage =
      Cometa::signCip8(message, address, signingKey);
+
    const std::vector<std::uint8_t>& coseSign1 = signedMessage.coseSign1;
-   const std::vector<std::uint8_t>& coseKey = signedMessage.coseKey;
+   const std::vector<std::uint8_t>& coseKey   = signedMessage.coseKey;

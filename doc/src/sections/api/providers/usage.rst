@@ -26,8 +26,11 @@ transport to ``BlockfrostProvider``:
 
    std::shared_ptr<Cometa::HttpTransport> http =
      std::make_shared<Cometa::DefaultHttpTransport>();
+
    Cometa::BlockfrostProvider provider(
-     Cometa::NetworkMagic::Preprod, projectId, http);
+     Cometa::NetworkMagic::Preprod,
+     projectId,
+     http);
 
    Cometa::ProtocolParameters parameters = provider.getParameters();
 

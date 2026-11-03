@@ -62,6 +62,10 @@ VotingProcedures::VotingProcedures(const VotingProcedures& other)
 
 VotingProcedures::VotingProcedures(VotingProcedures&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_encoding(std::move(other.m_encoding))
+, m_materialized(std::exchange(other.m_materialized, false))
+, m_mutableAccess(std::exchange(other.m_mutableAccess, false))
 {
 }
 
@@ -98,6 +102,7 @@ VotingProcedures::insert(const Voter& voter, const GovernanceActionId& actionId,
   const VotingProcedure    procedureCopy(procedure);
 
   checkCardanoError(cardano_voting_procedures_insert(checked(), voterCopy.checked(), idCopy.checked(), procedureCopy.checked()), "VotingProcedures insert");
+  invalidateElements();
 }
 
 std::optional<VotingProcedure>
@@ -189,6 +194,10 @@ void
 VotingProcedures::swap(VotingProcedures& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  m_encoding.swap(other.m_encoding);
+  std::swap(m_materialized, other.m_materialized);
+  std::swap(m_mutableAccess, other.m_mutableAccess);
 }
 
 VotingProcedures&
@@ -208,7 +217,11 @@ VotingProcedures::operator=(VotingProcedures&& other) noexcept
   if (this != &other)
   {
     cardano_voting_procedures_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value         = std::exchange(other.m_value, nullptr);
+    m_elements      = std::move(other.m_elements);
+    m_encoding      = std::move(other.m_encoding);
+    m_materialized  = std::exchange(other.m_materialized, false);
+    m_mutableAccess = std::exchange(other.m_mutableAccess, false);
   }
   return *this;
 }
@@ -225,6 +238,261 @@ VotingProcedures::operator!=(const VotingProcedures& other) const
   return !(*this == other);
 }
 
+std::size_t
+VotingProcedures::size() const
+{
+  if (m_materialized)
+  {
+    return m_elements.size();
+  }
+
+  return entries().size();
+}
+
+std::vector<std::pair<std::pair<Voter, GovernanceActionId>, VotingProcedure>>
+VotingProcedures::entries() const
+{
+  std::vector<std::pair<std::pair<Voter, GovernanceActionId>, VotingProcedure>> result;
+  for (const Voter& voter: voters())
+  {
+    for (const GovernanceActionId& action: actionIds(voter))
+    {
+      const VotingProcedure procedure = get(voter, action).value();
+
+      result.emplace_back(std::make_pair(voter, action), procedure);
+    }
+  }
+
+  return result;
+}
+
+VotingProcedures::iterator
+VotingProcedures::begin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.begin();
+}
+
+VotingProcedures::const_iterator
+VotingProcedures::begin() const
+{
+  materialize();
+
+  return m_elements.begin();
+}
+
+VotingProcedures::iterator
+VotingProcedures::end()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.end();
+}
+
+VotingProcedures::const_iterator
+VotingProcedures::end() const
+{
+  materialize();
+
+  return m_elements.end();
+}
+
+VotingProcedures::reverse_iterator
+VotingProcedures::rbegin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rbegin();
+}
+
+VotingProcedures::const_reverse_iterator
+VotingProcedures::rbegin() const
+{
+  materialize();
+
+  return m_elements.rbegin();
+}
+
+VotingProcedures::reverse_iterator
+VotingProcedures::rend()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rend();
+}
+
+VotingProcedures::const_reverse_iterator
+VotingProcedures::rend() const
+{
+  materialize();
+
+  return m_elements.rend();
+}
+
+VotingProcedures::const_iterator
+VotingProcedures::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+VotingProcedures::const_iterator
+VotingProcedures::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+VotingProcedures::const_reverse_iterator
+VotingProcedures::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+VotingProcedures::const_reverse_iterator
+VotingProcedures::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+VotingProcedures::iterator
+VotingProcedures::find(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.find(key);
+}
+
+VotingProcedures::const_iterator
+VotingProcedures::find(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.find(key);
+}
+
+VotingProcedures::size_type
+VotingProcedures::count(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.count(key);
+}
+
+bool
+VotingProcedures::contains(const key_type& key) const
+{
+  return count(key) != 0;
+}
+
+VotingProcedures::mapped_type&
+VotingProcedures::at(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.at(key);
+}
+
+const VotingProcedures::mapped_type&
+VotingProcedures::at(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.at(key);
+}
+
+std::pair<VotingProcedures::iterator, bool>
+VotingProcedures::insert(const value_type& value)
+{
+  materialize();
+  const iterator existing = m_elements.find(value.first);
+
+  if (existing != m_elements.end())
+  {
+    m_mutableAccess = true;
+    return { existing, false };
+  }
+
+  VotingProcedures validation;
+  validation.putEntry(value.first, value.second);
+  m_mutableAccess = true;
+
+  return m_elements.insert(value);
+}
+
+VotingProcedures::iterator
+VotingProcedures::insert(const_iterator position, const value_type& value)
+{
+  (void)position;
+
+  return insert(value).first;
+}
+
+std::pair<VotingProcedures::iterator, bool>
+VotingProcedures::insert_or_assign(const key_type& key, const mapped_type& value)
+{
+  materialize();
+  VotingProcedures validation;
+  validation.putEntry(key, value);
+  m_mutableAccess = true;
+
+  return m_elements.insert_or_assign(key, value);
+}
+
+VotingProcedures::iterator
+VotingProcedures::erase(const_iterator position)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(position);
+}
+
+VotingProcedures::iterator
+VotingProcedures::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(first, last);
+}
+
+VotingProcedures::size_type
+VotingProcedures::erase(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(key);
+}
+
+void
+VotingProcedures::clear()
+{
+  materialize();
+  m_elements.clear();
+  m_mutableAccess = true;
+}
+
+bool
+VotingProcedures::empty() const
+{
+  return size() == 0;
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 VotingProcedures::VotingProcedures(cardano_voting_procedures_t* value) noexcept
@@ -239,7 +507,103 @@ VotingProcedures::checked() const
   {
     throw std::logic_error("Cannot observe a moved-from VotingProcedures");
   }
+  synchronize();
+
   return m_value;
+}
+
+void
+VotingProcedures::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  const std::vector<std::pair<key_type, mapped_type>> entriesCopy = entries();
+  std::map<key_type, mapped_type, key_compare>        elements(compareKeys);
+
+  for (const std::pair<key_type, mapped_type>& entry: entriesCopy)
+  {
+    elements.emplace(entry.first, entry.second);
+  }
+
+  m_elements.swap(elements);
+
+  try
+  {
+    std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+    m_encoding.swap(encoding);
+    m_materialized = true;
+  }
+  catch (...)
+  {
+    m_elements.clear();
+    throw;
+  }
+}
+
+void
+VotingProcedures::synchronize() const
+{
+  if (!m_materialized || !m_mutableAccess)
+  {
+    return;
+  }
+
+  std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+
+  if (encoding == m_encoding)
+  {
+    return;
+  }
+
+  VotingProcedures replacement;
+
+  for (const value_type& entry: m_elements)
+  {
+    replacement.putEntry(entry.first, entry.second);
+  }
+
+  std::swap(m_value, replacement.m_value);
+  m_encoding.swap(encoding);
+}
+
+void
+VotingProcedures::invalidateElements()
+{
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+}
+
+std::vector<std::vector<std::uint8_t>>
+VotingProcedures::encodeElements() const
+{
+  std::vector<std::vector<std::uint8_t>> encoding;
+  encoding.reserve(m_elements.size() * 2);
+
+  for (const value_type& entry: m_elements)
+  {
+    encoding.push_back(entry.first.first.toCbor());
+    encoding.push_back(entry.first.second.toCbor());
+    encoding.push_back(entry.second.toCbor());
+  }
+
+  return encoding;
+}
+
+bool
+VotingProcedures::compareKeys(const key_type& left, const key_type& right)
+{
+  return left.first < right.first || (!(right.first < left.first) && left.second.toCbor() < right.second.toCbor());
+}
+
+void
+VotingProcedures::putEntry(const std::pair<Voter, GovernanceActionId>& key, const VotingProcedure& value)
+{
+  insert(key.first, key.second, value);
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/

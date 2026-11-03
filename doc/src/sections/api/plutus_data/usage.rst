@@ -10,12 +10,15 @@ fields. ``BigInt`` represents integers outside the machine integer range.
 .. code-block:: cpp
 
    Cometa::PlutusList fields;
+
    fields.pushBack(Cometa::PlutusData(42));
    fields.pushBack(Cometa::PlutusData::fromHex("aabb"));
 
    const Cometa::ConstrPlutusData constructor(0, fields);
-   const Cometa::PlutusData data(constructor);
+   const Cometa::PlutusData       data(constructor);
+
    const Cometa::Datum datum(data);
+
    const Cometa::Blake2bHash datumHash = datum.hash();
 
 ``PlutusMap`` retains insertion order and duplicate keys. ``insert`` appends a

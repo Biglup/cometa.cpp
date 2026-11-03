@@ -12,7 +12,6 @@ CONFIGURE_FILE (Doxyfile.in Doxyfile @ONLY)
 CONFIGURE_FILE (Doxyfile.check.in Doxyfile.check @ONLY)
 CONFIGURE_FILE (conf.py.in conf.py @ONLY)
 FILE (COPY src/ DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
-FILE (COPY coverage/ DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/coverage")
 
 ADD_CUSTOM_TARGET (check_docs
   COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.check"

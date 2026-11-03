@@ -11,16 +11,22 @@ that remain usable after their parent is replaced or destroyed.
 
    const Cometa::JsonValue value = Cometa::JsonValue::parse(
      R"({"name":"Cometa","amount":18446744073709551616})");
-   const std::string name = value.at("name").asString();
+
+   const std::string name   = value.at("name").asString();
    const std::string amount = value.at("amount").toJson();
 
    Cometa::JsonWriter writer;
+
    writer.writeStartObject();
+
    writer.writePropertyName("name");
    writer.writeString(name);
+
    writer.writePropertyName("amount");
    writer.writeValue(value.at("amount"));
+
    writer.writeEndObject();
+
    const std::string json = writer.toString();
 
 Parsed number tokens retain their decimal spelling, including precision and

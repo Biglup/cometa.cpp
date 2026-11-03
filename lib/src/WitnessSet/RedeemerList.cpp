@@ -58,6 +58,8 @@ RedeemerList::RedeemerList(const RedeemerList& other)
 
 RedeemerList::RedeemerList(RedeemerList&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_materialized(std::exchange(other.m_materialized, false))
 {
 }
 
@@ -100,6 +102,7 @@ RedeemerList::add(const Redeemer& value)
   const Redeemer copy(value);
   checkCardanoError(cardano_redeemer_list_add(checked(), copy.checked()), "RedeemerList add");
   cardano_redeemer_list_clear_cbor_cache(checked());
+  invalidateElements();
 }
 
 Redeemer
@@ -124,6 +127,7 @@ RedeemerList::setExUnits(RedeemerTag tag, std::uint64_t index, const ExUnits& va
 {
   checkCardanoError(cardano_redeemer_list_set_ex_units(checked(), static_cast<cardano_redeemer_tag_t>(tag), index, value.memory(), value.cpuSteps()), "RedeemerList setExUnits");
   cardano_redeemer_list_clear_cbor_cache(checked());
+  invalidateElements();
 }
 
 std::vector<std::uint8_t>
@@ -142,6 +146,8 @@ void
 RedeemerList::swap(RedeemerList& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  std::swap(m_materialized, other.m_materialized);
 }
 
 RedeemerList&
@@ -161,7 +167,9 @@ RedeemerList::operator=(RedeemerList&& other) noexcept
   if (this != &other)
   {
     cardano_redeemer_list_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value        = std::exchange(other.m_value, nullptr);
+    m_elements     = std::move(other.m_elements);
+    m_materialized = std::exchange(other.m_materialized, false);
   }
   return *this;
 }
@@ -176,6 +184,187 @@ bool
 RedeemerList::operator!=(const RedeemerList& other) const
 {
   return !(*this == other);
+}
+
+RedeemerList::const_iterator
+RedeemerList::begin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+RedeemerList::const_iterator
+RedeemerList::end() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+RedeemerList::const_iterator
+RedeemerList::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+RedeemerList::const_iterator
+RedeemerList::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+RedeemerList::const_reverse_iterator
+RedeemerList::rbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+RedeemerList::const_reverse_iterator
+RedeemerList::rend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+RedeemerList::const_reverse_iterator
+RedeemerList::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+RedeemerList::const_reverse_iterator
+RedeemerList::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+RedeemerList::iterator
+RedeemerList::find(const value_type& value) const
+{
+  materialize();
+
+  for (iterator position = m_elements.cbegin(); position != m_elements.cend(); ++position)
+  {
+    if (sameKey(*position, value))
+    {
+      return position;
+    }
+  }
+
+  return m_elements.cend();
+}
+
+RedeemerList::size_type
+RedeemerList::count(const value_type& value) const
+{
+  return find(value) == end() ? 0U : 1U;
+}
+
+bool
+RedeemerList::empty() const
+{
+  return size() == 0;
+}
+
+bool
+RedeemerList::contains(const value_type& value) const
+{
+  return find(value) != end();
+}
+
+std::pair<RedeemerList::iterator, bool>
+RedeemerList::insert(const value_type& value)
+{
+  const iterator found = find(value);
+
+  if (found != end())
+  {
+    return { found, false };
+  }
+
+  RedeemerList replacement(*this);
+  replacement.add(value);
+  const iterator inserted = replacement.find(value);
+  swap(replacement);
+
+  return { inserted, true };
+}
+
+RedeemerList::iterator
+RedeemerList::insert(const_iterator hint, const value_type& value)
+{
+  (void)hint;
+
+  return insert(value).first;
+}
+
+void
+RedeemerList::clear()
+{
+  RedeemerList replacement;
+
+  swap(replacement);
+}
+
+RedeemerList::iterator
+RedeemerList::erase(const_iterator position)
+{
+  return erase(position, std::next(position));
+}
+
+RedeemerList::iterator
+RedeemerList::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  const size_type start  = static_cast<size_type>(std::distance(cbegin(), first));
+  const size_type finish = static_cast<size_type>(std::distance(cbegin(), last));
+
+  if (start == finish)
+  {
+    return first;
+  }
+
+  RedeemerList replacement;
+
+  for (size_type index = 0; index < m_elements.size(); ++index)
+  {
+    if (index < start || index >= finish)
+    {
+      replacement.add(m_elements[index]);
+    }
+  }
+
+  const iterator next = std::next(replacement.cbegin(), static_cast<difference_type>(start));
+  swap(replacement);
+
+  return next;
+}
+
+RedeemerList::size_type
+RedeemerList::erase(const value_type& value)
+{
+  const iterator position = find(value);
+
+  if (position == end())
+  {
+    return 0;
+  }
+
+  erase(position);
+
+  return 1;
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/
@@ -193,6 +382,40 @@ RedeemerList::checked() const
     throw std::logic_error("Cannot observe a moved-from RedeemerList");
   }
   return m_value;
+}
+
+void
+RedeemerList::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  std::vector<value_type> elements;
+  const size_type         elementCount = size();
+  elements.reserve(elementCount);
+
+  for (size_type index = 0; index < elementCount; ++index)
+  {
+    elements.push_back(at(index));
+  }
+
+  m_elements.swap(elements);
+  m_materialized = true;
+}
+
+void
+RedeemerList::invalidateElements() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+}
+
+bool
+RedeemerList::sameKey(const value_type& left, const value_type& right)
+{
+  return left.tag() == right.tag() && left.index() == right.index();
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/

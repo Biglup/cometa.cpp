@@ -29,6 +29,8 @@
 #include <Cometa/Providers/DefaultHttpTransport.h>
 #endif
 
+#include <algorithm>
+#include <iterator>
 #include <stdexcept>
 #include <string>
 
@@ -49,6 +51,13 @@ main()
   {
   }
 #endif
+
+  const Cometa::Error decodingError(Cometa::ErrorCode::Decoding, "fromCbor");
+
+  if (decodingError.code() != Cometa::ErrorCode::Decoding || Cometa::ErrorCode::Encoding == decodingError.code())
+  {
+    return 1;
+  }
 
   const Cometa::AssetName name = Cometa::AssetName::fromCbor("46436f6d657461");
 
@@ -765,6 +774,22 @@ main()
 
   const Cometa::SubTransactionSet subTransactions = Cometa::SubTransactionSet::fromCbor("d901028183a200d90102800180a0f6");
   if (subTransactions.size() != 1 || !subTransactions.findById(subTransactions.at(0).id()).has_value())
+  {
+    return 1;
+  }
+
+  const Cometa::PlutusList original { Cometa::PlutusData(1), Cometa::PlutusData(2) };
+  Cometa::PlutusList       copied(original.begin(), original.end());
+  std::reverse(copied.begin(), copied.end());
+
+  Cometa::AssetNameMap amounts;
+  amounts.try_emplace(name, 1);
+  amounts.begin()->second = 2;
+
+  Cometa::Blake2bHashSet rangeHashes;
+  rangeHashes.insert(Cometa::Blake2bHash::fromHex("00"));
+
+  if (copied.front() != Cometa::PlutusData(2) || amounts.at(name) != 2 || std::distance(rangeHashes.begin(), rangeHashes.end()) != 1)
   {
     return 1;
   }

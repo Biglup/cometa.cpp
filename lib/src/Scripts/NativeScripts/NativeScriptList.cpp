@@ -32,6 +32,10 @@
 #include <cardano/scripts/native_scripts/native_script.h>
 #include <cardano/scripts/native_scripts/native_script_list.h>
 
+#include <algorithm>
+#include <functional>
+#include <iterator>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -73,6 +77,10 @@ NativeScriptList::NativeScriptList(const NativeScriptList& other)
 
 NativeScriptList::NativeScriptList(NativeScriptList&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_encoding(std::move(other.m_encoding))
+, m_materialized(std::exchange(other.m_materialized, false))
+, m_mutableAccess(std::exchange(other.m_mutableAccess, false))
 {
 }
 
@@ -119,6 +127,11 @@ NativeScriptList::fromJson(std::string_view json)
 std::size_t
 NativeScriptList::size() const
 {
+  if (m_materialized)
+  {
+    return m_elements.size();
+  }
+
   return cardano_native_script_list_get_length(checked());
 }
 
@@ -128,29 +141,15 @@ NativeScriptList::empty() const
   return size() == 0U;
 }
 
-NativeScript
-NativeScriptList::at(std::size_t index) const
-{
-  if (index >= size())
-  {
-    throw std::out_of_range("NativeScriptList index");
-  }
-
-  cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_list_get(checked(), index, &value);
-
-  CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
-
-  checkCardanoError(result, "NativeScriptList at");
-
-  const NativeScript script(*owner.release());
-
-  return NativeScript(script);
-}
-
 void
 NativeScriptList::pushBack(const NativeScript& script)
 {
+  if (m_materialized)
+  {
+    push_back(script);
+    return;
+  }
+
   NativeScript copy(script);
 
   checkCardanoError(cardano_native_script_list_add(checked(), copy.checked()), "NativeScriptList pushBack");
@@ -187,6 +186,15 @@ NativeScriptList::toJson() const
 void
 NativeScriptList::normalizeEncoding()
 {
+  if (m_materialized)
+  {
+    for (value_type& value: m_elements)
+    {
+      value.normalizeEncoding();
+    }
+    m_mutableAccess = true;
+  }
+
   cardano_native_script_list_clear_cbor_cache(checked());
 }
 
@@ -194,6 +202,10 @@ void
 NativeScriptList::swap(NativeScriptList& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  m_encoding.swap(other.m_encoding);
+  std::swap(m_materialized, other.m_materialized);
+  std::swap(m_mutableAccess, other.m_mutableAccess);
 }
 
 NativeScriptList&
@@ -215,7 +227,11 @@ NativeScriptList::operator=(NativeScriptList&& other) noexcept
   if (this != &other)
   {
     cardano_native_script_list_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value         = std::exchange(other.m_value, nullptr);
+    m_elements      = std::move(other.m_elements);
+    m_encoding      = std::move(other.m_encoding);
+    m_materialized  = std::exchange(other.m_materialized, false);
+    m_mutableAccess = std::exchange(other.m_mutableAccess, false);
   }
 
   return *this;
@@ -233,6 +249,264 @@ NativeScriptList::operator!=(const NativeScriptList& other) const
   return !(*this == other);
 }
 
+NativeScriptList::const_reference
+NativeScriptList::at(std::size_t index) const
+{
+  materialize();
+
+  return m_elements.at(index);
+}
+
+NativeScriptList::iterator
+NativeScriptList::begin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.begin();
+}
+
+NativeScriptList::iterator
+NativeScriptList::end()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.end();
+}
+
+NativeScriptList::const_iterator
+NativeScriptList::begin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+NativeScriptList::const_iterator
+NativeScriptList::end() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+NativeScriptList::const_iterator
+NativeScriptList::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+NativeScriptList::const_iterator
+NativeScriptList::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+NativeScriptList::reverse_iterator
+NativeScriptList::rbegin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rbegin();
+}
+
+NativeScriptList::reverse_iterator
+NativeScriptList::rend()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rend();
+}
+
+NativeScriptList::const_reverse_iterator
+NativeScriptList::rbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+NativeScriptList::const_reverse_iterator
+NativeScriptList::rend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+NativeScriptList::const_reverse_iterator
+NativeScriptList::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+NativeScriptList::const_reverse_iterator
+NativeScriptList::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+NativeScriptList::reference
+NativeScriptList::at(size_type index)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.at(index);
+}
+
+NativeScriptList::reference
+NativeScriptList::operator[](size_type index)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.operator[](index);
+}
+
+NativeScriptList::const_reference
+NativeScriptList::operator[](size_type index) const
+{
+  materialize();
+
+  return m_elements.operator[](index);
+}
+
+NativeScriptList::reference
+NativeScriptList::front()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.front();
+}
+
+NativeScriptList::const_reference
+NativeScriptList::front() const
+{
+  materialize();
+
+  return m_elements.front();
+}
+
+NativeScriptList::reference
+NativeScriptList::back()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.back();
+}
+
+NativeScriptList::const_reference
+NativeScriptList::back() const
+{
+  materialize();
+
+  return m_elements.back();
+}
+
+void
+NativeScriptList::push_back(const value_type& value)
+{
+  materialize();
+  m_elements.push_back(value);
+  m_mutableAccess = true;
+}
+
+void
+NativeScriptList::push_back(value_type&& value)
+{
+  materialize();
+  m_elements.push_back(std::move(value));
+  m_mutableAccess = true;
+}
+
+void
+NativeScriptList::pop_back()
+{
+  materialize();
+  m_elements.pop_back();
+  m_mutableAccess = true;
+}
+
+void
+NativeScriptList::clear()
+{
+  materialize();
+  m_elements.clear();
+  m_mutableAccess = true;
+}
+
+void
+NativeScriptList::reserve(size_type count)
+{
+  materialize();
+  m_elements.reserve(count);
+}
+
+NativeScriptList::size_type
+NativeScriptList::capacity() const
+{
+  materialize();
+
+  return m_elements.capacity();
+}
+
+void
+NativeScriptList::shrink_to_fit()
+{
+  materialize();
+  m_elements.shrink_to_fit();
+}
+
+NativeScriptList::iterator
+NativeScriptList::insert(const_iterator position, const value_type& value)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.insert(position, value);
+}
+
+NativeScriptList::iterator
+NativeScriptList::insert(const_iterator position, value_type&& value)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.insert(position, std::move(value));
+}
+
+NativeScriptList::iterator
+NativeScriptList::erase(const_iterator position)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(position);
+}
+
+NativeScriptList::iterator
+NativeScriptList::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(first, last);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 NativeScriptList::NativeScriptList(cardano_native_script_list_t& value) noexcept
@@ -248,6 +522,8 @@ NativeScriptList::checked() const
     throw std::logic_error("Cannot observe a moved-from NativeScriptList");
   }
 
+  synchronize();
+
   return m_value;
 }
 
@@ -260,6 +536,87 @@ NativeScriptList::validate() const
   {
     at(index).validate();
   }
+}
+
+void
+NativeScriptList::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  const size_type                        count = size();
+  std::vector<value_type>                elements;
+  std::vector<std::vector<std::uint8_t>> encoding;
+  elements.reserve(count);
+  encoding.reserve(count);
+
+  for (size_type index = 0; index < count; ++index)
+  {
+    elements.push_back(copyElement(index));
+    encoding.push_back(elements.back().toCbor());
+  }
+
+  m_elements.swap(elements);
+  m_encoding.swap(encoding);
+  m_materialized = true;
+}
+
+void
+NativeScriptList::synchronize() const
+{
+  if (!m_materialized || !m_mutableAccess)
+  {
+    return;
+  }
+
+  std::vector<std::vector<std::uint8_t>> encoding;
+  encoding.reserve(m_elements.size());
+
+  std::transform(
+    m_elements.cbegin(),
+    m_elements.cend(),
+    std::back_inserter(encoding),
+    std::mem_fn(&value_type::toCbor));
+
+  if (encoding == m_encoding)
+  {
+    return;
+  }
+
+  const std::vector<std::uint8_t> previous    = encodeCbor(m_value, cardano_native_script_list_to_cbor);
+  NativeScriptList                replacement = !previous.empty() && previous.front() == 0x9f
+                   ? NativeScriptList::fromCbor("9fff")
+                   : NativeScriptList();
+
+  for (const value_type& value: m_elements)
+  {
+    replacement.pushBack(value);
+  }
+
+  std::swap(m_value, replacement.m_value);
+  m_encoding.swap(encoding);
+}
+
+NativeScript
+NativeScriptList::copyElement(std::size_t index) const
+{
+  if (index >= size())
+  {
+    throw std::out_of_range("NativeScriptList index");
+  }
+
+  cardano_native_script_t* value  = nullptr;
+  const cardano_error_t    result = cardano_native_script_list_get(checked(), index, &value);
+
+  CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
+
+  checkCardanoError(result, "NativeScriptList at");
+
+  const NativeScript script(*owner.release());
+
+  return NativeScript(script);
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/

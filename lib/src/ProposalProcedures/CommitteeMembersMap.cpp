@@ -59,6 +59,10 @@ CommitteeMembersMap::CommitteeMembersMap(const CommitteeMembersMap& other)
 
 CommitteeMembersMap::CommitteeMembersMap(CommitteeMembersMap&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_encoding(std::move(other.m_encoding))
+, m_materialized(std::exchange(other.m_materialized, false))
+, m_mutableAccess(std::exchange(other.m_mutableAccess, false))
 {
 }
 
@@ -82,6 +86,11 @@ CommitteeMembersMap::fromCbor(std::string_view cborHex)
 std::size_t
 CommitteeMembersMap::size() const
 {
+  if (m_materialized)
+  {
+    return m_elements.size();
+  }
+
   return cardano_committee_members_map_get_length(checked());
 }
 
@@ -90,6 +99,7 @@ CommitteeMembersMap::insert(const Credential& credential, std::uint64_t epoch)
 {
   const Credential copy(credential);
   checkCardanoError(cardano_committee_members_map_insert(checked(), copy.checked(), epoch), "CommitteeMembersMap insert");
+  invalidateElements();
 }
 
 std::optional<std::uint64_t>
@@ -182,6 +192,10 @@ void
 CommitteeMembersMap::swap(CommitteeMembersMap& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  m_encoding.swap(other.m_encoding);
+  std::swap(m_materialized, other.m_materialized);
+  std::swap(m_mutableAccess, other.m_mutableAccess);
 }
 
 CommitteeMembersMap&
@@ -201,7 +215,11 @@ CommitteeMembersMap::operator=(CommitteeMembersMap&& other) noexcept
   if (this != &other)
   {
     cardano_committee_members_map_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value         = std::exchange(other.m_value, nullptr);
+    m_elements      = std::move(other.m_elements);
+    m_encoding      = std::move(other.m_encoding);
+    m_materialized  = std::exchange(other.m_materialized, false);
+    m_mutableAccess = std::exchange(other.m_mutableAccess, false);
   }
   return *this;
 }
@@ -218,6 +236,239 @@ CommitteeMembersMap::operator!=(const CommitteeMembersMap& other) const
   return !(*this == other);
 }
 
+CommitteeMembersMap::iterator
+CommitteeMembersMap::begin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.begin();
+}
+
+CommitteeMembersMap::const_iterator
+CommitteeMembersMap::begin() const
+{
+  materialize();
+
+  return m_elements.begin();
+}
+
+CommitteeMembersMap::iterator
+CommitteeMembersMap::end()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.end();
+}
+
+CommitteeMembersMap::const_iterator
+CommitteeMembersMap::end() const
+{
+  materialize();
+
+  return m_elements.end();
+}
+
+CommitteeMembersMap::reverse_iterator
+CommitteeMembersMap::rbegin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rbegin();
+}
+
+CommitteeMembersMap::const_reverse_iterator
+CommitteeMembersMap::rbegin() const
+{
+  materialize();
+
+  return m_elements.rbegin();
+}
+
+CommitteeMembersMap::reverse_iterator
+CommitteeMembersMap::rend()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rend();
+}
+
+CommitteeMembersMap::const_reverse_iterator
+CommitteeMembersMap::rend() const
+{
+  materialize();
+
+  return m_elements.rend();
+}
+
+CommitteeMembersMap::const_iterator
+CommitteeMembersMap::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+CommitteeMembersMap::const_iterator
+CommitteeMembersMap::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+CommitteeMembersMap::const_reverse_iterator
+CommitteeMembersMap::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+CommitteeMembersMap::const_reverse_iterator
+CommitteeMembersMap::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+CommitteeMembersMap::iterator
+CommitteeMembersMap::find(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.find(key);
+}
+
+CommitteeMembersMap::const_iterator
+CommitteeMembersMap::find(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.find(key);
+}
+
+CommitteeMembersMap::size_type
+CommitteeMembersMap::count(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.count(key);
+}
+
+bool
+CommitteeMembersMap::contains(const key_type& key) const
+{
+  return count(key) != 0;
+}
+
+CommitteeMembersMap::mapped_type&
+CommitteeMembersMap::at(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.at(key);
+}
+
+const CommitteeMembersMap::mapped_type&
+CommitteeMembersMap::at(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.at(key);
+}
+
+std::pair<CommitteeMembersMap::iterator, bool>
+CommitteeMembersMap::insert(const value_type& value)
+{
+  materialize();
+  const iterator existing = m_elements.find(value.first);
+
+  if (existing != m_elements.end())
+  {
+    m_mutableAccess = true;
+    return { existing, false };
+  }
+
+  CommitteeMembersMap validation;
+  validation.insert(value.first, value.second);
+  m_mutableAccess = true;
+
+  return m_elements.insert(value);
+}
+
+CommitteeMembersMap::iterator
+CommitteeMembersMap::insert(const_iterator position, const value_type& value)
+{
+  (void)position;
+
+  return insert(value).first;
+}
+
+std::pair<CommitteeMembersMap::iterator, bool>
+CommitteeMembersMap::insert_or_assign(const key_type& key, const mapped_type& value)
+{
+  materialize();
+  CommitteeMembersMap validation;
+  validation.insert(key, value);
+  m_mutableAccess = true;
+
+  return m_elements.insert_or_assign(key, value);
+}
+
+CommitteeMembersMap::mapped_type&
+CommitteeMembersMap::operator[](const key_type& key)
+{
+  return try_emplace(key).first->second;
+}
+
+CommitteeMembersMap::iterator
+CommitteeMembersMap::erase(const_iterator position)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(position);
+}
+
+CommitteeMembersMap::iterator
+CommitteeMembersMap::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(first, last);
+}
+
+CommitteeMembersMap::size_type
+CommitteeMembersMap::erase(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(key);
+}
+
+void
+CommitteeMembersMap::clear()
+{
+  materialize();
+  m_elements.clear();
+  m_mutableAccess = true;
+}
+
+bool
+CommitteeMembersMap::empty() const
+{
+  return size() == 0;
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 CommitteeMembersMap::CommitteeMembersMap(cardano_committee_members_map_t* value) noexcept
@@ -232,7 +483,102 @@ CommitteeMembersMap::checked() const
   {
     throw std::logic_error("Cannot observe a moved-from CommitteeMembersMap");
   }
+  synchronize();
+
   return m_value;
+}
+
+void
+CommitteeMembersMap::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  std::vector<std::pair<key_type, mapped_type>> entriesCopy;
+
+  for (size_type index = 0; index < size(); ++index)
+  {
+    entriesCopy.push_back(at(index));
+  }
+  std::map<key_type, mapped_type, key_compare> elements(compareKeys);
+
+  for (const std::pair<key_type, mapped_type>& entry: entriesCopy)
+  {
+    elements.emplace(entry.first, entry.second);
+  }
+
+  m_elements.swap(elements);
+
+  try
+  {
+    std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+    m_encoding.swap(encoding);
+    m_materialized = true;
+  }
+  catch (...)
+  {
+    m_elements.clear();
+    throw;
+  }
+}
+
+void
+CommitteeMembersMap::synchronize() const
+{
+  if (!m_materialized || !m_mutableAccess)
+  {
+    return;
+  }
+
+  std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+
+  if (encoding == m_encoding)
+  {
+    return;
+  }
+
+  CommitteeMembersMap replacement;
+
+  for (const value_type& entry: m_elements)
+  {
+    replacement.insert(entry.first, entry.second);
+  }
+
+  std::swap(m_value, replacement.m_value);
+  m_encoding.swap(encoding);
+}
+
+void
+CommitteeMembersMap::invalidateElements()
+{
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+}
+
+std::vector<std::vector<std::uint8_t>>
+CommitteeMembersMap::encodeElements() const
+{
+  std::vector<std::vector<std::uint8_t>> encoding;
+  encoding.reserve(m_elements.size() * 2);
+
+  for (const value_type& entry: m_elements)
+  {
+    encoding.push_back(entry.first.toCbor());
+    const std::string second = std::to_string(entry.second);
+    encoding.emplace_back(second.begin(), second.end());
+  }
+
+  return encoding;
+}
+
+bool
+CommitteeMembersMap::compareKeys(const key_type& left, const key_type& right)
+{
+  return left < right;
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/

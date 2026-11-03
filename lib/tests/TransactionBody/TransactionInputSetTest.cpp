@@ -56,7 +56,7 @@ TEST(TransactionInputSet, SortsDeduplicatesAndCopiesInputs)
   EXPECT_TRUE(values.wasTagged());
   EXPECT_TRUE(values.contains(first));
   EXPECT_FALSE(values.contains(second));
-  EXPECT_FALSE(values.insert(first));
+  EXPECT_FALSE(values.insert(first).second);
   EXPECT_EQ(values.at(0).index(), 5U);
   EXPECT_EQ(values.at(1).index(), 8U);
   EXPECT_EQ(returned.index(), 10U);

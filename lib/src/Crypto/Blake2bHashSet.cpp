@@ -68,6 +68,8 @@ Blake2bHashSet::Blake2bHashSet(const Blake2bHashSet& other)
 
 Blake2bHashSet::Blake2bHashSet(Blake2bHashSet&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_materialized(std::exchange(other.m_materialized, false))
 {
 }
 
@@ -121,9 +123,9 @@ Blake2bHashSet::empty() const
 bool
 Blake2bHashSet::contains(const Blake2bHash& value) const
 {
-  const std::size_t count = size();
+  const std::size_t elementCount = size();
 
-  for (std::size_t i = 0; i < count; ++i)
+  for (std::size_t i = 0; i < elementCount; ++i)
   {
     cardano_blake2b_hash_t*                                           element = nullptr;
     const cardano_error_t                                             status  = cardano_blake2b_hash_set_get(checked(), i, &element);
@@ -138,20 +140,6 @@ Blake2bHashSet::contains(const Blake2bHash& value) const
   }
 
   return false;
-}
-
-bool
-Blake2bHashSet::insert(const Blake2bHash& value)
-{
-  if (contains(value))
-  {
-    return false;
-  }
-
-  const Blake2bHash copy(value);
-
-  checkCardanoError(cardano_blake2b_hash_set_add(checked(), copy.checked()), "Blake2bHashSet insert");
-  return true;
 }
 
 Blake2bHash
@@ -176,10 +164,10 @@ std::vector<Blake2bHash>
 Blake2bHashSet::values() const
 {
   std::vector<Blake2bHash> result;
-  const std::size_t        count = size();
-  result.reserve(count);
+  const std::size_t        elementCount = size();
+  result.reserve(elementCount);
 
-  for (std::size_t i = 0; i < count; ++i)
+  for (std::size_t i = 0; i < elementCount; ++i)
   {
     result.push_back(at(i));
   }
@@ -203,6 +191,8 @@ void
 Blake2bHashSet::swap(Blake2bHashSet& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  std::swap(m_materialized, other.m_materialized);
 }
 
 Blake2bHashSet&
@@ -223,7 +213,9 @@ Blake2bHashSet::operator=(Blake2bHashSet&& other) noexcept
   if (this != &other)
   {
     cardano_blake2b_hash_set_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value        = std::exchange(other.m_value, nullptr);
+    m_elements     = std::move(other.m_elements);
+    m_materialized = std::exchange(other.m_materialized, false);
   }
 
   return *this;
@@ -232,14 +224,14 @@ Blake2bHashSet::operator=(Blake2bHashSet&& other) noexcept
 bool
 Blake2bHashSet::operator==(const Blake2bHashSet& other) const
 {
-  const std::size_t count = size();
+  const std::size_t elementCount = size();
 
-  if (count != other.size())
+  if (elementCount != other.size())
   {
     return false;
   }
 
-  for (std::size_t i = 0; i < count; ++i)
+  for (std::size_t i = 0; i < elementCount; ++i)
   {
     cardano_blake2b_hash_t*                                           left       = nullptr;
     const cardano_error_t                                             leftStatus = cardano_blake2b_hash_set_get(checked(), i, &left);
@@ -268,6 +260,175 @@ Blake2bHashSet::operator!=(const Blake2bHashSet& other) const
   return !(*this == other);
 }
 
+Blake2bHashSet::const_iterator
+Blake2bHashSet::begin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+Blake2bHashSet::const_iterator
+Blake2bHashSet::end() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+Blake2bHashSet::const_iterator
+Blake2bHashSet::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+Blake2bHashSet::const_iterator
+Blake2bHashSet::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+Blake2bHashSet::const_reverse_iterator
+Blake2bHashSet::rbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+Blake2bHashSet::const_reverse_iterator
+Blake2bHashSet::rend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+Blake2bHashSet::const_reverse_iterator
+Blake2bHashSet::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+Blake2bHashSet::const_reverse_iterator
+Blake2bHashSet::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+Blake2bHashSet::iterator
+Blake2bHashSet::find(const value_type& value) const
+{
+  materialize();
+
+  for (iterator position = m_elements.cbegin(); position != m_elements.cend(); ++position)
+  {
+    if (sameKey(*position, value))
+    {
+      return position;
+    }
+  }
+
+  return m_elements.cend();
+}
+
+Blake2bHashSet::size_type
+Blake2bHashSet::count(const value_type& value) const
+{
+  return find(value) == end() ? 0U : 1U;
+}
+
+std::pair<Blake2bHashSet::iterator, bool>
+Blake2bHashSet::insert(const value_type& value)
+{
+  const iterator found = find(value);
+
+  if (found != end())
+  {
+    return { found, false };
+  }
+
+  Blake2bHashSet replacement(*this);
+  replacement.insertValue(value);
+  const iterator inserted = replacement.find(value);
+  swap(replacement);
+
+  return { inserted, true };
+}
+
+Blake2bHashSet::iterator
+Blake2bHashSet::insert(const_iterator hint, const value_type& value)
+{
+  (void)hint;
+
+  return insert(value).first;
+}
+
+void
+Blake2bHashSet::clear()
+{
+  Blake2bHashSet replacement;
+
+  swap(replacement);
+}
+
+Blake2bHashSet::iterator
+Blake2bHashSet::erase(const_iterator position)
+{
+  return erase(position, std::next(position));
+}
+
+Blake2bHashSet::iterator
+Blake2bHashSet::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  const size_type start  = static_cast<size_type>(std::distance(cbegin(), first));
+  const size_type finish = static_cast<size_type>(std::distance(cbegin(), last));
+
+  if (start == finish)
+  {
+    return first;
+  }
+
+  Blake2bHashSet replacement;
+
+  for (size_type index = 0; index < m_elements.size(); ++index)
+  {
+    if (index < start || index >= finish)
+    {
+      replacement.insertValue(m_elements[index]);
+    }
+  }
+
+  const iterator next = std::next(replacement.cbegin(), static_cast<difference_type>(start));
+  swap(replacement);
+
+  return next;
+}
+
+Blake2bHashSet::size_type
+Blake2bHashSet::erase(const value_type& value)
+{
+  const iterator position = find(value);
+
+  if (position == end())
+  {
+    return 0;
+  }
+
+  erase(position);
+
+  return 1;
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 Blake2bHashSet::Blake2bHashSet(cardano_blake2b_hash_set_t* value) noexcept
@@ -284,6 +445,56 @@ Blake2bHashSet::checked() const
   }
 
   return m_value;
+}
+
+void
+Blake2bHashSet::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  std::vector<value_type> elements;
+  const size_type         elementCount = size();
+  elements.reserve(elementCount);
+
+  for (size_type index = 0; index < elementCount; ++index)
+  {
+    elements.push_back(at(index));
+  }
+
+  m_elements.swap(elements);
+  m_materialized = true;
+}
+
+void
+Blake2bHashSet::invalidateElements() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+}
+
+bool
+Blake2bHashSet::sameKey(const value_type& left, const value_type& right)
+{
+  return left == right;
+}
+
+bool
+Blake2bHashSet::insertValue(const Blake2bHash& value)
+{
+  if (contains(value))
+  {
+    return false;
+  }
+
+  const Blake2bHash copy(value);
+
+  checkCardanoError(cardano_blake2b_hash_set_add(checked(), copy.checked()), "Blake2bHashSet insert");
+  invalidateElements();
+
+  return true;
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/

@@ -91,3 +91,25 @@ TEST(TransactionOutputList, RejectsMalformedCborAndTrailingBytes)
   EXPECT_THROW(TransactionOutputList::fromCbor("xz"), std::invalid_argument);
   EXPECT_THROW(TransactionOutputList::fromCbor("f5"), Error);
 }
+
+TEST(TransactionOutputList, IteratorEditsReachParentsAndSurviveSerialization)
+{
+  // Arrange
+  const TransactionOutput     output(Address::fromString("addr_test1vqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxrcya6"), Value(10));
+  TransactionOutputList       outputs { output };
+  TransactionOutput&          element = *outputs.begin();
+  const TransactionOutputList copy(outputs);
+
+  // Act
+  element.setAmount(Value(20));
+  outputs.toCbor();
+  element.setAmount(Value(30));
+  TransactionBody body(TransactionInputSet(), outputs, 0);
+  element.setAmount(Value(40));
+
+  // Assert
+  EXPECT_EQ(TransactionOutputList::fromCbor(outputs.toCbor()).front().amount().coin(), 40);
+  EXPECT_EQ(body.outputs().front().amount().coin(), 30);
+  EXPECT_EQ(copy.front().amount().coin(), 10);
+  EXPECT_EQ(std::addressof(outputs.front()), std::addressof(element));
+}

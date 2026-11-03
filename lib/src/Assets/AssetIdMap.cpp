@@ -67,6 +67,10 @@ AssetIdMap::AssetIdMap(const AssetIdMap& other)
 
 AssetIdMap::AssetIdMap(AssetIdMap&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_encoding(std::move(other.m_encoding))
+, m_materialized(std::exchange(other.m_materialized, false))
+, m_mutableAccess(std::exchange(other.m_mutableAccess, false))
 {
 }
 
@@ -78,6 +82,11 @@ AssetIdMap::~AssetIdMap()
 std::size_t
 AssetIdMap::size() const
 {
+  if (m_materialized)
+  {
+    return m_elements.size();
+  }
+
   return cardano_asset_id_map_get_length(checked());
 }
 
@@ -102,35 +111,23 @@ AssetIdMap::get(const AssetId& key) const
   return amount;
 }
 
-std::int64_t
-AssetIdMap::at(const AssetId& key) const
-{
-  const std::optional<std::int64_t> result = get(key);
-
-  if (!result)
-  {
-    throw std::out_of_range("Asset key is absent");
-  }
-
-  return *result;
-}
-
 void
 AssetIdMap::set(const AssetId& key, std::int64_t amount)
 {
   const AssetId copy(key);
 
   checkCardanoError(cardano_asset_id_map_insert(checked(), copy.checked(), amount), "AssetIdMap set");
+  invalidateElements();
 }
 
 AssetIdList
 AssetIdMap::keys() const
 {
   AssetIdList       result;
-  const std::size_t count = size();
-  result.reserve(count);
+  const std::size_t elementCount = size();
+  result.reserve(elementCount);
 
-  for (std::size_t i = 0; i < count; ++i)
+  for (std::size_t i = 0; i < elementCount; ++i)
   {
     cardano_asset_id_t*                                       key    = nullptr;
     const cardano_error_t                                     status = cardano_asset_id_map_get_key_at(checked(), i, &key);
@@ -148,10 +145,10 @@ std::vector<std::pair<AssetId, std::int64_t>>
 AssetIdMap::entries() const
 {
   std::vector<std::pair<AssetId, std::int64_t>> result;
-  const std::size_t                             count = size();
-  result.reserve(count);
+  const std::size_t                             elementCount = size();
+  result.reserve(elementCount);
 
-  for (std::size_t i = 0; i < count; ++i)
+  for (std::size_t i = 0; i < elementCount; ++i)
   {
     cardano_asset_id_t*                                       key    = nullptr;
     std::int64_t                                              amount = 0;
@@ -170,6 +167,10 @@ void
 AssetIdMap::swap(AssetIdMap& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  m_encoding.swap(other.m_encoding);
+  std::swap(m_materialized, other.m_materialized);
+  std::swap(m_mutableAccess, other.m_mutableAccess);
 }
 
 AssetIdMap&
@@ -190,7 +191,11 @@ AssetIdMap::operator=(AssetIdMap&& other) noexcept
   if (this != &other)
   {
     cardano_asset_id_map_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value         = std::exchange(other.m_value, nullptr);
+    m_elements      = std::move(other.m_elements);
+    m_encoding      = std::move(other.m_encoding);
+    m_materialized  = std::exchange(other.m_materialized, false);
+    m_mutableAccess = std::exchange(other.m_mutableAccess, false);
   }
 
   return *this;
@@ -264,6 +269,233 @@ AssetIdMap::operator!=(const AssetIdMap& other) const
   return !(*this == other);
 }
 
+AssetIdMap::iterator
+AssetIdMap::begin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.begin();
+}
+
+AssetIdMap::const_iterator
+AssetIdMap::begin() const
+{
+  materialize();
+
+  return m_elements.begin();
+}
+
+AssetIdMap::iterator
+AssetIdMap::end()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.end();
+}
+
+AssetIdMap::const_iterator
+AssetIdMap::end() const
+{
+  materialize();
+
+  return m_elements.end();
+}
+
+AssetIdMap::reverse_iterator
+AssetIdMap::rbegin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rbegin();
+}
+
+AssetIdMap::const_reverse_iterator
+AssetIdMap::rbegin() const
+{
+  materialize();
+
+  return m_elements.rbegin();
+}
+
+AssetIdMap::reverse_iterator
+AssetIdMap::rend()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rend();
+}
+
+AssetIdMap::const_reverse_iterator
+AssetIdMap::rend() const
+{
+  materialize();
+
+  return m_elements.rend();
+}
+
+AssetIdMap::const_iterator
+AssetIdMap::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+AssetIdMap::const_iterator
+AssetIdMap::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+AssetIdMap::const_reverse_iterator
+AssetIdMap::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+AssetIdMap::const_reverse_iterator
+AssetIdMap::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+AssetIdMap::iterator
+AssetIdMap::find(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.find(key);
+}
+
+AssetIdMap::const_iterator
+AssetIdMap::find(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.find(key);
+}
+
+AssetIdMap::size_type
+AssetIdMap::count(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.count(key);
+}
+
+bool
+AssetIdMap::contains(const key_type& key) const
+{
+  return count(key) != 0;
+}
+
+AssetIdMap::mapped_type&
+AssetIdMap::at(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.at(key);
+}
+
+const AssetIdMap::mapped_type&
+AssetIdMap::at(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.at(key);
+}
+
+std::pair<AssetIdMap::iterator, bool>
+AssetIdMap::insert(const value_type& value)
+{
+  materialize();
+  const iterator existing = m_elements.find(value.first);
+
+  if (existing != m_elements.end())
+  {
+    m_mutableAccess = true;
+    return { existing, false };
+  }
+
+  AssetIdMap validation;
+  validation.set(value.first, value.second);
+  m_mutableAccess = true;
+
+  return m_elements.insert(value);
+}
+
+AssetIdMap::iterator
+AssetIdMap::insert(const_iterator position, const value_type& value)
+{
+  (void)position;
+
+  return insert(value).first;
+}
+
+std::pair<AssetIdMap::iterator, bool>
+AssetIdMap::insert_or_assign(const key_type& key, const mapped_type& value)
+{
+  materialize();
+  AssetIdMap validation;
+  validation.set(key, value);
+  m_mutableAccess = true;
+
+  return m_elements.insert_or_assign(key, value);
+}
+
+AssetIdMap::mapped_type&
+AssetIdMap::operator[](const key_type& key)
+{
+  return try_emplace(key).first->second;
+}
+
+AssetIdMap::iterator
+AssetIdMap::erase(const_iterator position)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(position);
+}
+
+AssetIdMap::iterator
+AssetIdMap::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(first, last);
+}
+
+AssetIdMap::size_type
+AssetIdMap::erase(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(key);
+}
+
+void
+AssetIdMap::clear()
+{
+  materialize();
+  m_elements.clear();
+  m_mutableAccess = true;
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 AssetIdMap::AssetIdMap(cardano_asset_id_map_t* value) noexcept
@@ -279,7 +511,97 @@ AssetIdMap::checked() const
     throw std::logic_error("Cannot observe a moved-from AssetIdMap");
   }
 
+  synchronize();
+
   return m_value;
+}
+
+void
+AssetIdMap::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  const std::vector<std::pair<key_type, mapped_type>> entriesCopy = entries();
+  std::map<key_type, mapped_type, key_compare>        elements(compareKeys);
+
+  for (const std::pair<key_type, mapped_type>& entry: entriesCopy)
+  {
+    elements.emplace(entry.first, entry.second);
+  }
+
+  m_elements.swap(elements);
+
+  try
+  {
+    std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+    m_encoding.swap(encoding);
+    m_materialized = true;
+  }
+  catch (...)
+  {
+    m_elements.clear();
+    throw;
+  }
+}
+
+void
+AssetIdMap::synchronize() const
+{
+  if (!m_materialized || !m_mutableAccess)
+  {
+    return;
+  }
+
+  std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+
+  if (encoding == m_encoding)
+  {
+    return;
+  }
+
+  AssetIdMap replacement;
+
+  for (const value_type& entry: m_elements)
+  {
+    replacement.set(entry.first, entry.second);
+  }
+
+  std::swap(m_value, replacement.m_value);
+  m_encoding.swap(encoding);
+}
+
+void
+AssetIdMap::invalidateElements()
+{
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+}
+
+std::vector<std::vector<std::uint8_t>>
+AssetIdMap::encodeElements() const
+{
+  std::vector<std::vector<std::uint8_t>> encoding;
+  encoding.reserve(m_elements.size() * 2);
+
+  for (const value_type& entry: m_elements)
+  {
+    encoding.push_back(entry.first.toBytes());
+    const std::string second = std::to_string(entry.second);
+    encoding.emplace_back(second.begin(), second.end());
+  }
+
+  return encoding;
+}
+
+bool
+AssetIdMap::compareKeys(const key_type& left, const key_type& right)
+{
+  return left < right;
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/

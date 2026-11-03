@@ -157,3 +157,24 @@ TEST(AssetIdMap, CopiesMovesAndSwapsIndependentMaps)
   EXPECT_EQ(copy.at(key), 2);
   EXPECT_NE(copy, source);
 }
+
+TEST(AssetIdMap, StandardIteratorsExposeMutableAmounts)
+{
+  // Arrange
+  const AssetId lovelace = AssetId::lovelace();
+  AssetIdMap    amounts;
+  amounts.try_emplace(lovelace, 1);
+  std::int64_t& amount = amounts.begin()->second;
+
+  // Act
+  amount = 2;
+  const AssetIdMap copy(amounts.begin(), amounts.end());
+  amount = 3;
+
+  // Assert
+  EXPECT_EQ(amounts.get(lovelace), 3);
+  EXPECT_EQ(copy.at(lovelace), 2);
+  EXPECT_FALSE(amounts.insert(*copy.begin()).second);
+  EXPECT_EQ(amounts.erase(lovelace), 1U);
+  EXPECT_TRUE(amounts.empty());
+}

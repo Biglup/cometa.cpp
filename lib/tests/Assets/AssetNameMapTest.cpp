@@ -199,3 +199,26 @@ TEST(AssetNameMap, AcceptsSignedLimitsAndIndefiniteMaps)
   EXPECT_EQ(limits.at(AssetName::fromHex("00")), std::numeric_limits<std::int64_t>::min());
   EXPECT_EQ(AssetNameMap::fromCbor(limits.toCbor()), limits);
 }
+
+TEST(AssetNameMap, MutableValuesReachEncodingAndPreserveReferences)
+{
+  // Arrange
+  const AssetName    key = AssetName::fromString("Cometa");
+  AssetNameMap       values { { key, 7 } };
+  std::int64_t&      amount = values.begin()->second;
+  const AssetNameMap copy(values);
+
+  // Act
+  amount = 9;
+  values.toCbor();
+  values.try_emplace(AssetName::fromString("Other"), 1);
+  amount                     = 11;
+  const AssetNameMap decoded = AssetNameMap::fromCbor(values.toCbor());
+
+  // Assert
+  EXPECT_EQ(decoded.at(key), 11);
+  EXPECT_EQ(copy.at(key), 7);
+  EXPECT_EQ(std::addressof(amount), std::addressof(values.at(key)));
+  EXPECT_FALSE(values.insert_or_assign(key, 15).second);
+  EXPECT_EQ(values.at(key), 15);
+}

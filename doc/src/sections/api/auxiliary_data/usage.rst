@@ -13,8 +13,11 @@ to obtain a standard vector of independent script values.
 
    const Cometa::PlutusV4Script script =
      Cometa::PlutusV4Script::fromHex("450100002499");
+
    Cometa::PlutusV4ScriptList scripts { script };
+
    scripts.pushBack(script);
+
    const std::vector<std::uint8_t> cbor = scripts.toCbor();
 
 ``fromCbor`` accepts bytes or hexadecimal text and rejects trailing input.
@@ -33,11 +36,14 @@ Constructors and getters provide independent values.
 .. code-block:: cpp
 
    Cometa::MetadatumMap fields;
+
    fields.insert(Cometa::Metadatum("name"), Cometa::Metadatum("Cometa"));
    fields.insert(Cometa::Metadatum("count"), Cometa::Metadatum(std::int64_t { 42 }));
+
    const Cometa::Metadatum metadata(fields);
-   const std::vector<std::uint8_t> cbor = metadata.toCbor();
-   const std::string plainJson = metadata.toPlainJson();
+
+   const std::vector<std::uint8_t> cbor      = metadata.toCbor();
+   const std::string               plainJson = metadata.toPlainJson();
 
 ``fromPlainJson`` accepts JSON integers, strings, arrays, and objects. Integer
 precision is retained; null, booleans, fractions, and exponents are rejected.
@@ -64,14 +70,17 @@ is a standard vector of unsigned 64-bit labels.
 .. code-block:: cpp
 
    Cometa::TransactionMetadata metadata;
-   metadata.set(674, Cometa::Metadatum::fromPlainJson(
-     R"({"msg":["Hello from Cometa"]})"));
+
+   metadata.set(674, Cometa::Metadatum::fromPlainJson(R"({"msg":["Hello from Cometa"]})"));
 
    Cometa::AuxiliaryData auxiliary;
+
    auxiliary.setMetadata(metadata);
    auxiliary.setPlutusV4Scripts(Cometa::PlutusV4ScriptList {
      Cometa::PlutusV4Script::fromHex("450100002499") });
+
    const Cometa::Blake2bHash hash = auxiliary.hash();
+
    const std::vector<std::uint8_t> cbor = auxiliary.toCbor();
 
 ``AuxiliaryData`` can contain metadata, native scripts, and Plutus V1 through V4

@@ -131,3 +131,27 @@ TEST(PlutusMap, MutationUpdatesEncodingWithoutChangingCopies)
   EXPECT_EQ(original.toCbor(), (std::vector<std::uint8_t> { 0xa1, 0x18, 1, 0x18, 2 }));
   EXPECT_EQ(value.toCbor(), (std::vector<std::uint8_t> { 2 }));
 }
+
+TEST(PlutusMap, IteratorsPreserveDuplicateKeysAndPermitEntryEdits)
+{
+  // Arrange
+  PlutusMap                       values   = PlutusMap::fromCbor("a201020103");
+  const std::vector<std::uint8_t> original = values.toCbor();
+  PlutusMap::iterator             first    = values.begin();
+
+  // Act & Assert
+  EXPECT_EQ(values.toCbor(), original);
+  ASSERT_EQ(std::distance(values.begin(), values.end()), 2);
+  EXPECT_EQ(first->first, std::next(first)->first);
+
+  // Act
+  first->second = PlutusData(4);
+  values.toCbor();
+  first->second           = PlutusData(5);
+  const PlutusMap decoded = PlutusMap::fromCbor(values.toCbor());
+
+  // Assert
+  EXPECT_EQ(decoded.size(), 2U);
+  EXPECT_EQ(decoded.front().second, PlutusData(5));
+  EXPECT_EQ(decoded.back().second, PlutusData(3));
+}

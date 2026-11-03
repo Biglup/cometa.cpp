@@ -48,6 +48,7 @@ TEST(CostModels, MatchesNativeCborMap)
   ASSERT_TRUE(models.get(PlutusLanguageVersion::V1).has_value());
   EXPECT_EQ(models.get(PlutusLanguageVersion::V1)->costs(), v1.costs());
   EXPECT_TRUE(models.contains(PlutusLanguageVersion::V1));
+  EXPECT_TRUE(models.contains(std::uint8_t(0)));
   EXPECT_FALSE(models.contains(PlutusLanguageVersion::V2));
   EXPECT_FALSE(models.get(PlutusLanguageVersion::V2).has_value());
   EXPECT_EQ(CostModels::fromCbor("a10083010203"), models);
@@ -75,4 +76,25 @@ TEST(CostModels, KeepsUnknownLanguagesAndCopiesIndependent)
   EXPECT_EQ(models.get(4)->cost(0), 1);
   EXPECT_EQ(retrieved->cost(0), 9);
   EXPECT_TRUE(models.get(PlutusLanguageVersion::V1).has_value());
+}
+
+TEST(CostModels, RejectsMismatchedLanguageAfterMappedAssignment)
+{
+  // Arrange
+  CostModels models;
+  models.insert(CostModel(PlutusLanguageVersion::V1, std::vector<std::int64_t>(166, 1)));
+  CostModels::mapped_type& model = models.begin()->second;
+  const CostModel          original(model);
+
+  // Act
+  model = CostModel(PlutusLanguageVersion::V2, std::vector<std::int64_t>(175, 2));
+
+  // Assert
+  EXPECT_THROW(models.toCbor(), std::invalid_argument);
+
+  // Act
+  model = original;
+
+  // Assert
+  EXPECT_EQ(CostModels::fromCbor(models.toCbor()), models);
 }

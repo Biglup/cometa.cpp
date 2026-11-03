@@ -62,6 +62,10 @@ WithdrawalMap::WithdrawalMap(const WithdrawalMap& other)
 
 WithdrawalMap::WithdrawalMap(WithdrawalMap&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_encoding(std::move(other.m_encoding))
+, m_materialized(std::exchange(other.m_materialized, false))
+, m_mutableAccess(std::exchange(other.m_mutableAccess, false))
 {
 }
 
@@ -96,6 +100,11 @@ WithdrawalMap::fromCbor(std::string_view cborHex)
 std::size_t
 WithdrawalMap::size() const
 {
+  if (m_materialized)
+  {
+    return m_elements.size();
+  }
+
   return cardano_withdrawal_map_get_length(checked());
 }
 
@@ -121,19 +130,6 @@ WithdrawalMap::get(const RewardAddress& key) const
   return amount;
 }
 
-std::uint64_t
-WithdrawalMap::at(const RewardAddress& key) const
-{
-  const std::optional<std::uint64_t> amount = get(key);
-
-  if (!amount)
-  {
-    throw std::out_of_range("Withdrawal address not found");
-  }
-
-  return *amount;
-}
-
 void
 WithdrawalMap::set(const RewardAddress& key, std::uint64_t amount)
 {
@@ -155,12 +151,14 @@ WithdrawalMap::set(const RewardAddress& key, std::uint64_t amount)
   RewardAddress copy(key);
 
   checkCardanoError(cardano_withdrawal_map_insert(checked(), copy.checked(), amount), "WithdrawalMap set");
+  invalidateElements();
 }
 
 void
 WithdrawalMap::set(std::string_view rewardAddress, std::uint64_t amount)
 {
   set(RewardAddress::fromBech32(rewardAddress), amount);
+  invalidateElements();
 }
 
 std::pair<RewardAddress, std::uint64_t>
@@ -188,10 +186,10 @@ RewardAddressList
 WithdrawalMap::keys() const
 {
   RewardAddressList result;
-  const std::size_t count = size();
-  result.reserve(count);
+  const std::size_t elementCount = size();
+  result.reserve(elementCount);
 
-  for (std::size_t index = 0U; index < count; ++index)
+  for (std::size_t index = 0U; index < elementCount; ++index)
   {
     result.push_back(entryAt(index).first);
   }
@@ -203,10 +201,10 @@ std::vector<std::pair<RewardAddress, std::uint64_t>>
 WithdrawalMap::entries() const
 {
   std::vector<std::pair<RewardAddress, std::uint64_t>> result;
-  const std::size_t                                    count = size();
-  result.reserve(count);
+  const std::size_t                                    elementCount = size();
+  result.reserve(elementCount);
 
-  for (std::size_t index = 0U; index < count; ++index)
+  for (std::size_t index = 0U; index < elementCount; ++index)
   {
     result.push_back(entryAt(index));
   }
@@ -230,6 +228,10 @@ void
 WithdrawalMap::swap(WithdrawalMap& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  m_encoding.swap(other.m_encoding);
+  std::swap(m_materialized, other.m_materialized);
+  std::swap(m_mutableAccess, other.m_mutableAccess);
 }
 
 WithdrawalMap&
@@ -251,7 +253,11 @@ WithdrawalMap::operator=(WithdrawalMap&& other) noexcept
   if (this != &other)
   {
     cardano_withdrawal_map_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value         = std::exchange(other.m_value, nullptr);
+    m_elements      = std::move(other.m_elements);
+    m_encoding      = std::move(other.m_encoding);
+    m_materialized  = std::exchange(other.m_materialized, false);
+    m_mutableAccess = std::exchange(other.m_mutableAccess, false);
   }
 
   return *this;
@@ -269,6 +275,233 @@ WithdrawalMap::operator!=(const WithdrawalMap& other) const
   return !(*this == other);
 }
 
+WithdrawalMap::iterator
+WithdrawalMap::begin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.begin();
+}
+
+WithdrawalMap::const_iterator
+WithdrawalMap::begin() const
+{
+  materialize();
+
+  return m_elements.begin();
+}
+
+WithdrawalMap::iterator
+WithdrawalMap::end()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.end();
+}
+
+WithdrawalMap::const_iterator
+WithdrawalMap::end() const
+{
+  materialize();
+
+  return m_elements.end();
+}
+
+WithdrawalMap::reverse_iterator
+WithdrawalMap::rbegin()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rbegin();
+}
+
+WithdrawalMap::const_reverse_iterator
+WithdrawalMap::rbegin() const
+{
+  materialize();
+
+  return m_elements.rbegin();
+}
+
+WithdrawalMap::reverse_iterator
+WithdrawalMap::rend()
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.rend();
+}
+
+WithdrawalMap::const_reverse_iterator
+WithdrawalMap::rend() const
+{
+  materialize();
+
+  return m_elements.rend();
+}
+
+WithdrawalMap::const_iterator
+WithdrawalMap::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+WithdrawalMap::const_iterator
+WithdrawalMap::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+WithdrawalMap::const_reverse_iterator
+WithdrawalMap::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+WithdrawalMap::const_reverse_iterator
+WithdrawalMap::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+WithdrawalMap::iterator
+WithdrawalMap::find(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.find(key);
+}
+
+WithdrawalMap::const_iterator
+WithdrawalMap::find(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.find(key);
+}
+
+WithdrawalMap::size_type
+WithdrawalMap::count(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.count(key);
+}
+
+bool
+WithdrawalMap::contains(const key_type& key) const
+{
+  return count(key) != 0;
+}
+
+WithdrawalMap::mapped_type&
+WithdrawalMap::at(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.at(key);
+}
+
+const WithdrawalMap::mapped_type&
+WithdrawalMap::at(const key_type& key) const
+{
+  materialize();
+
+  return m_elements.at(key);
+}
+
+std::pair<WithdrawalMap::iterator, bool>
+WithdrawalMap::insert(const value_type& value)
+{
+  materialize();
+  const iterator existing = m_elements.find(value.first);
+
+  if (existing != m_elements.end())
+  {
+    m_mutableAccess = true;
+    return { existing, false };
+  }
+
+  WithdrawalMap validation;
+  validation.set(value.first, value.second);
+  m_mutableAccess = true;
+
+  return m_elements.insert(value);
+}
+
+WithdrawalMap::iterator
+WithdrawalMap::insert(const_iterator position, const value_type& value)
+{
+  (void)position;
+
+  return insert(value).first;
+}
+
+std::pair<WithdrawalMap::iterator, bool>
+WithdrawalMap::insert_or_assign(const key_type& key, const mapped_type& value)
+{
+  materialize();
+  WithdrawalMap validation;
+  validation.set(key, value);
+  m_mutableAccess = true;
+
+  return m_elements.insert_or_assign(key, value);
+}
+
+WithdrawalMap::mapped_type&
+WithdrawalMap::operator[](const key_type& key)
+{
+  return try_emplace(key).first->second;
+}
+
+WithdrawalMap::iterator
+WithdrawalMap::erase(const_iterator position)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(position);
+}
+
+WithdrawalMap::iterator
+WithdrawalMap::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(first, last);
+}
+
+WithdrawalMap::size_type
+WithdrawalMap::erase(const key_type& key)
+{
+  materialize();
+  m_mutableAccess = true;
+
+  return m_elements.erase(key);
+}
+
+void
+WithdrawalMap::clear()
+{
+  materialize();
+  m_elements.clear();
+  m_mutableAccess = true;
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 WithdrawalMap::WithdrawalMap(cardano_withdrawal_map_t& value) noexcept
@@ -284,7 +517,97 @@ WithdrawalMap::checked() const
     throw std::logic_error("Cannot observe a moved-from WithdrawalMap");
   }
 
+  synchronize();
+
   return m_value;
+}
+
+void
+WithdrawalMap::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  const std::vector<std::pair<key_type, mapped_type>> entriesCopy = entries();
+  std::map<key_type, mapped_type, key_compare>        elements(compareKeys);
+
+  for (const std::pair<key_type, mapped_type>& entry: entriesCopy)
+  {
+    elements.emplace(entry.first, entry.second);
+  }
+
+  m_elements.swap(elements);
+
+  try
+  {
+    std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+    m_encoding.swap(encoding);
+    m_materialized = true;
+  }
+  catch (...)
+  {
+    m_elements.clear();
+    throw;
+  }
+}
+
+void
+WithdrawalMap::synchronize() const
+{
+  if (!m_materialized || !m_mutableAccess)
+  {
+    return;
+  }
+
+  std::vector<std::vector<std::uint8_t>> encoding = encodeElements();
+
+  if (encoding == m_encoding)
+  {
+    return;
+  }
+
+  WithdrawalMap replacement;
+
+  for (const value_type& entry: m_elements)
+  {
+    replacement.set(entry.first, entry.second);
+  }
+
+  std::swap(m_value, replacement.m_value);
+  m_encoding.swap(encoding);
+}
+
+void
+WithdrawalMap::invalidateElements()
+{
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+}
+
+std::vector<std::vector<std::uint8_t>>
+WithdrawalMap::encodeElements() const
+{
+  std::vector<std::vector<std::uint8_t>> encoding;
+  encoding.reserve(m_elements.size() * 2);
+
+  for (const value_type& entry: m_elements)
+  {
+    encoding.push_back(entry.first.toBytes());
+    const std::string second = std::to_string(entry.second);
+    encoding.emplace_back(second.begin(), second.end());
+  }
+
+  return encoding;
+}
+
+bool
+WithdrawalMap::compareKeys(const key_type& left, const key_type& right)
+{
+  return left.toBytes() < right.toBytes();
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/

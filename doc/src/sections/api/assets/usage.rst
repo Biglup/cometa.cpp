@@ -12,8 +12,9 @@ asset name remains a native token.
 
 .. code-block:: cpp
 
-   const Cometa::AssetId token(policyId, Cometa::AssetName::fromString("Cometa"));
+   const Cometa::AssetId     token(policyId, Cometa::AssetName::fromString("Cometa"));
    const Cometa::AssetIdList assets { Cometa::AssetId::lovelace(), token };
+
    const std::optional<Cometa::Blake2bHash> policy = token.policyId();
 
 ``AssetIdList``, ``AssetNameList``, and ``PolicyIdList`` are named ``std::vector``
@@ -31,13 +32,17 @@ flat identifier-to-quantity view. Getters return independent values.
 .. code-block:: cpp
 
    const Cometa::AssetName name = Cometa::AssetName::fromString("Cometa");
+
    Cometa::MultiAsset tokens;
+
    tokens.set(policyId, name, 10);
 
    Cometa::Value payment(2'000'000, tokens);
+
    payment.addAsset(policyId, name, 5);
-   const std::vector<std::uint8_t> cbor = payment.toCbor();
-   const Cometa::Value decoded = Cometa::Value::fromCbor(cbor);
+
+   const std::vector<std::uint8_t> cbor    = payment.toCbor();
+   const Cometa::Value             decoded = Cometa::Value::fromCbor(cbor);
 
 ``get`` returns ``std::nullopt`` for an absent asset. Map ``at`` throws
 ``std::out_of_range`` instead. ``set`` retains zero amounts; addition and

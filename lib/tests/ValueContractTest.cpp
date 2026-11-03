@@ -29,7 +29,9 @@
 
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <cstdlib>
+#include <iterator>
 #include <limits>
 #include <type_traits>
 #include <utility>
@@ -1040,6 +1042,69 @@ sampleValue<Transaction>()
 {
   return Transaction(TransactionBody(TransactionInputSet(), TransactionOutputList(), 0), WitnessSet());
 }
+
+template<>
+Blake2bHashSet
+sampleValue<Blake2bHashSet>()
+{
+  return Blake2bHashSet { keyHash() };
+}
+
+template<>
+CredentialSet
+sampleValue<CredentialSet>()
+{
+  return CredentialSet { Credential(CredentialType::KeyHash, keyHash()) };
+}
+
+template<>
+AssetNameMap
+sampleValue<AssetNameMap>()
+{
+  return AssetNameMap { { AssetName::fromString("Cometa"), 7 } };
+}
+
+template<>
+MultiAsset
+sampleValue<MultiAsset>()
+{
+  MultiAsset result;
+  result.setAssets(keyHash(), sampleValue<AssetNameMap>());
+
+  return result;
+}
+
+template<class T>
+class CollectionContract : public testing::Test
+{
+};
+
+using CollectionContractTypes = testing::Types<TransactionOutputList, NativeScriptList, Relays, PlutusList, MetadatumList, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, CertificateSet, ProposalProcedureSet, PlutusMap, MetadatumMap, Blake2bHashSet, CredentialSet, TransactionInputSet, PoolOwners, GuardSet, SubTransactionSet, VkeyWitnessSet, BootstrapWitnessSet, NativeScriptSet, PlutusDataSet, RedeemerList, PlutusV1ScriptSet, PlutusV2ScriptSet, PlutusV3ScriptSet, PlutusV4ScriptSet, AssetNameMap, WithdrawalMap, DirectDepositMap, AccountBalanceIntervalsMap, RequiredGuardsMap, CommitteeMembersMap, MultiAsset, TransactionMetadata, VotingProcedures, CostModels>;
+TYPED_TEST_SUITE(CollectionContract, CollectionContractTypes);
+
+template<class T>
+class SequenceContract : public testing::Test
+{
+};
+
+using SequenceContractTypes = testing::Types<TransactionOutputList, NativeScriptList, Relays, PlutusList, MetadatumList, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, CertificateSet, ProposalProcedureSet, PlutusMap, MetadatumMap>;
+TYPED_TEST_SUITE(SequenceContract, SequenceContractTypes);
+
+template<class T>
+class SetContract : public testing::Test
+{
+};
+
+using SetContractTypes = testing::Types<Blake2bHashSet, CredentialSet, TransactionInputSet, PoolOwners, GuardSet, SubTransactionSet, VkeyWitnessSet, BootstrapWitnessSet, NativeScriptSet, PlutusDataSet, RedeemerList, PlutusV1ScriptSet, PlutusV2ScriptSet, PlutusV3ScriptSet, PlutusV4ScriptSet>;
+TYPED_TEST_SUITE(SetContract, SetContractTypes);
+
+template<class T>
+class MapContract : public testing::Test
+{
+};
+
+using MapContractTypes = testing::Types<AssetNameMap, WithdrawalMap, DirectDepositMap, AccountBalanceIntervalsMap, RequiredGuardsMap, CommitteeMembersMap, MultiAsset, TransactionMetadata, VotingProcedures, CostModels>;
+TYPED_TEST_SUITE(MapContract, MapContractTypes);
 
 using ValueTypes = testing::Types<Transaction, TransactionBody, SubTransactionSet, SubTransaction, SubTransactionBody, RequiredGuardsMap, GuardSet, DirectDepositMap, AccountBalanceIntervalsMap, AccountBalanceInterval, WitnessSet, PlutusV1ScriptSet, PlutusV2ScriptSet, PlutusV3ScriptSet, PlutusV4ScriptSet, PlutusDataSet, NativeScriptSet, BootstrapWitnessSet, BootstrapWitness, VkeyWitnessSet, VkeyWitness, RedeemerList, Redeemer, VotingProcedures, VotingProcedure, Voter, ProposalProcedureSet, ProposalProcedure, UpdateCommitteeAction, Committee, CommitteeMembersMap, TreasuryWithdrawalsAction, NewConstitutionAction, Constitution, ParameterChangeAction, HardForkInitiationAction, NoConfidenceAction, InfoAction, Update, ProposedParamUpdates, ProtocolParamUpdate, DRepVotingThresholds, PoolVotingThresholds, CostModels, CostModel, ExUnitPrices, CertificateSet, Certificate, ResignCommitteeColdCert, AuthCommitteeHotCert, UpdateDRepCert, RegisterDRepCert, UnregisterDRepCert, StakeVoteRegistrationDelegationCert, VoteRegistrationDelegationCert, StakeVoteDelegationCert, VoteDelegationCert, DRep, MirCert, MirToStakeCredentialsCert, MirToPotCert, GenesisKeyDelegationCert, StakeRegistrationDelegationCert, PoolRetirementCert, PoolRegistrationCert, StakeDelegationCert, RegistrationCert, UnregistrationCert, StakeDeregistrationCert, StakeRegistrationCert, PoolParams, PoolOwners, SingleHostAddrRelay, SingleHostNameRelay, MultiHostNameRelay, Relay, Relays, Ipv4, Ipv6, BlsKey, PoolMetadata, TransactionMetadata, AuxiliaryData, Metadatum, MetadatumList, MetadatumMap, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
@@ -3569,7 +3634,7 @@ TEST(Blake2bHashSet, FailedInsertionPreservesElements)
   {
     Blake2bHashSet    destination(source);
     AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
-    EXPECT_TRUE(destination.insert(second));
+    EXPECT_TRUE(destination.insert(second).second);
     allocations = allocationIndex;
   }
 
@@ -3746,7 +3811,7 @@ TEST(CredentialSet, FailedInsertionPreservesElements)
   {
     CredentialSet     destination(source);
     AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
-    EXPECT_TRUE(destination.insert(second));
+    EXPECT_TRUE(destination.insert(second).second);
     allocations = allocationIndex;
   }
 
@@ -6117,4 +6182,313 @@ TEST(SingleHostNameRelay, FailedPortAllocationPreservesAbsentPort)
   }
   EXPECT_FALSE(value.port());
   EXPECT_EQ(value, original);
+}
+
+TYPED_TEST(CollectionContract, ReadOnlyAlgorithmsPreserveEncoding)
+{
+  // Arrange
+  TypeParam                       collection = sampleValue<TypeParam>();
+  const std::vector<std::uint8_t> encoding   = collection.toCbor();
+  const TypeParam&                view       = collection;
+
+  // Act
+  const std::vector<typename TypeParam::value_type> copied(view.begin(), view.end());
+  const std::ptrdiff_t                              distance = std::distance(view.cbegin(), view.cend());
+
+  // Assert
+  EXPECT_EQ(distance, static_cast<std::ptrdiff_t>(collection.size()));
+  EXPECT_TRUE(std::equal(view.begin(), view.end(), copied.begin(), copied.end()));
+  EXPECT_TRUE(std::equal(view.rbegin(), view.rend(), copied.rbegin(), copied.rend()));
+  EXPECT_EQ(collection.toCbor(), encoding);
+  EXPECT_EQ(std::addressof(*view.begin()), std::addressof(*view.cbegin()));
+}
+
+TYPED_TEST(CollectionContract, IterationDoesNotAllocatePerDereference)
+{
+  // Arrange
+  const TypeParam                          collection = sampleValue<TypeParam>();
+  typename TypeParam::const_iterator       position   = collection.cbegin();
+  const typename TypeParam::const_iterator end        = collection.cend();
+  std::size_t                              visited    = 0;
+
+  // Act
+  {
+    AllocationFailure fail(0, true);
+
+    for (; position != end; ++position)
+    {
+      EXPECT_NE(std::addressof(*position), nullptr);
+      ++visited;
+    }
+
+    EXPECT_EQ(allocationIndex, 0U);
+  }
+
+  // Assert
+  EXPECT_EQ(visited, collection.size());
+}
+
+TYPED_TEST(CollectionContract, MaterializedCopiesMovesAndClearsRemainIndependent)
+{
+  // Arrange
+  TypeParam                       original = sampleValue<TypeParam>();
+  const std::vector<std::uint8_t> encoding = original.toCbor();
+  original.begin();
+  TypeParam copied(original);
+  copied.begin();
+
+  // Act
+  TypeParam moved(std::move(copied));
+  moved.clear();
+  TypeParam assigned;
+  assigned = std::move(moved);
+
+  // Assert
+  EXPECT_TRUE(assigned.empty());
+  EXPECT_EQ(assigned.begin(), assigned.end());
+  EXPECT_EQ(original.toCbor(), encoding);
+}
+
+TYPED_TEST(CollectionContract, MaterializationReleasesPartialStateOnFailure)
+{
+  // Arrange
+  const TypeParam                 original    = sampleValue<TypeParam>();
+  const std::vector<std::uint8_t> encoding    = original.toCbor();
+  std::size_t                     allocations = 0;
+
+  {
+    const TypeParam   collection(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    collection.begin();
+    allocations = allocationIndex;
+  }
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    const TypeParam collection(original);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(collection.begin(), std::exception) << index;
+    }
+
+    EXPECT_EQ(collection.toCbor(), encoding);
+    EXPECT_EQ(std::distance(collection.begin(), collection.end()), static_cast<std::ptrdiff_t>(collection.size()));
+  }
+}
+
+TYPED_TEST(SequenceContract, SupportsBackInsertionAndMutableAlgorithms)
+{
+  // Arrange
+  const TypeParam                                   source = sampleValue<TypeParam>();
+  const std::vector<typename TypeParam::value_type> expected(source.begin(), source.end());
+  TypeParam                                         destination;
+
+  // Act
+  std::copy(source.begin(), source.end(), std::back_inserter(destination));
+  std::reverse(destination.begin(), destination.end());
+  const TypeParam decoded = TypeParam::fromCbor(destination.toCbor());
+
+  // Assert
+  EXPECT_TRUE(std::equal(decoded.begin(), decoded.end(), expected.rbegin(), expected.rend()));
+  EXPECT_TRUE(std::equal(source.begin(), source.end(), expected.begin(), expected.end()));
+}
+
+TYPED_TEST(SequenceContract, ReferencesSurviveSerializationAndTrackLaterEdits)
+{
+  // Arrange
+  TypeParam                            collection = sampleValue<TypeParam>();
+  const typename TypeParam::value_type value      = *collection.begin();
+  collection.push_back(value);
+  typename TypeParam::reference         first   = collection.front();
+  const typename TypeParam::value_type* address = std::addressof(first);
+  collection.toCbor();
+
+  // Act
+  first = collection.back();
+  collection.toCbor();
+
+  // Assert
+  EXPECT_EQ(address, std::addressof(collection.front()));
+  EXPECT_EQ(TypeParam::fromCbor(collection.toCbor()).front(), value);
+}
+
+TYPED_TEST(SequenceContract, SupportsRangeInsertionErasureAndCapacity)
+{
+  // Arrange
+  const TypeParam source = sampleValue<TypeParam>();
+  TypeParam       collection;
+  collection.reserve(source.size() * 2);
+
+  // Act
+  collection.insert(collection.cend(), source.begin(), source.end());
+  collection.emplace_back(source.front());
+  collection.pop_back();
+  collection.erase(collection.cbegin());
+  collection.assign(source.begin(), source.end());
+  collection.shrink_to_fit();
+
+  // Assert
+  EXPECT_GE(collection.capacity(), collection.size());
+  EXPECT_TRUE(std::equal(collection.begin(), collection.end(), source.begin(), source.end()));
+  EXPECT_EQ(collection[0], source.at(0));
+  EXPECT_THROW(collection.at(collection.size()), std::out_of_range);
+}
+
+TYPED_TEST(SetContract, SupportsStandardInsertionAndProtectedElements)
+{
+  // Arrange
+  const TypeParam source = sampleValue<TypeParam>();
+  TypeParam       collection;
+
+  // Act
+  std::copy(source.begin(), source.end(), std::inserter(collection, collection.end()));
+  const std::pair<typename TypeParam::iterator, bool> duplicate = collection.insert(*source.begin());
+
+  // Assert
+  EXPECT_TRUE((std::is_const<typename std::remove_reference<typename std::iterator_traits<typename TypeParam::iterator>::reference>::type>::value));
+  EXPECT_FALSE(duplicate.second);
+  EXPECT_EQ(collection.count(*source.begin()), 1U);
+  EXPECT_NE(duplicate.first, collection.end());
+  EXPECT_EQ(collection.size(), source.size());
+  EXPECT_EQ(collection.erase(*source.begin()), 1U);
+  EXPECT_EQ(collection.count(*source.begin()), 0U);
+}
+
+TYPED_TEST(MapContract, StandardInsertionProtectsKeysAndPreservesReferences)
+{
+  // Arrange
+  const TypeParam source = sampleValue<TypeParam>();
+  TypeParam       collection;
+
+  // Act
+  std::copy(source.begin(), source.end(), std::inserter(collection, collection.end()));
+  const std::pair<typename TypeParam::iterator, bool> duplicate = collection.insert(*source.begin());
+  typename TypeParam::mapped_type&                    value     = duplicate.first->second;
+  const typename TypeParam::mapped_type*              address   = std::addressof(value);
+  collection.toCbor();
+
+  // Assert
+  EXPECT_TRUE((std::is_const<typename TypeParam::value_type::first_type>::value));
+  EXPECT_FALSE(duplicate.second);
+  EXPECT_EQ(address, std::addressof(collection.at(duplicate.first->first)));
+  EXPECT_EQ(value, source.begin()->second);
+  EXPECT_EQ(collection.erase(source.begin()->first), 1U);
+  EXPECT_EQ(collection.count(source.begin()->first), 0U);
+}
+
+TYPED_TEST(SetContract, FailedInsertionPreservesCollection)
+{
+  // Arrange
+  const TypeParam                      source      = sampleValue<TypeParam>();
+  const typename TypeParam::value_type value       = *source.begin();
+  std::size_t                          allocations = 0;
+
+  {
+    TypeParam         collection;
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    collection.insert(value);
+    allocations = allocationIndex;
+  }
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    TypeParam collection;
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(collection.insert(value), std::exception) << index;
+    }
+
+    EXPECT_TRUE(collection.empty());
+    EXPECT_EQ(collection.begin(), collection.end());
+  }
+}
+
+TYPED_TEST(SequenceContract, FailedSerializationRetainsEditedElements)
+{
+  // Arrange
+  const TypeParam source      = sampleValue<TypeParam>();
+  std::size_t     allocations = 0;
+
+  {
+    TypeParam collection(source);
+    collection.push_back(source.front());
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    collection.toCbor();
+    allocations = allocationIndex;
+  }
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    TypeParam collection(source);
+    collection.push_back(source.front());
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(collection.toCbor(), std::exception) << index;
+    }
+
+    EXPECT_EQ(collection.size(), source.size() + 1);
+    EXPECT_EQ(TypeParam::fromCbor(collection.toCbor()).size(), collection.size());
+    EXPECT_EQ(collection.back(), source.front());
+  }
+}
+
+TYPED_TEST(CollectionContract, ConstructsFromIteratorPairs)
+{
+  // Arrange
+  const TypeParam source = sampleValue<TypeParam>();
+
+  // Act
+  const TypeParam copy(source.begin(), source.end());
+
+  // Assert
+  EXPECT_TRUE(std::equal(copy.begin(), copy.end(), source.begin(), source.end()));
+}
+
+TYPED_TEST(MapContract, FailedInsertionReleasesTemporaryEntries)
+{
+  // Arrange
+  const TypeParam                      source      = sampleValue<TypeParam>();
+  const typename TypeParam::value_type entry       = *source.begin();
+  std::size_t                          allocations = 0;
+
+  {
+    TypeParam         collection;
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    collection.insert(entry);
+    allocations = allocationIndex;
+  }
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    TypeParam collection;
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW(collection.insert(entry), std::exception) << index;
+    }
+
+    EXPECT_TRUE(collection.empty());
+    EXPECT_EQ(collection.begin(), collection.end());
+  }
+}
+
+TYPED_TEST(CollectionContract, ConstructsFromInitializerLists)
+{
+  // Arrange
+  const TypeParam source = sampleValue<TypeParam>();
+
+  // Act
+  const TypeParam collection { *source.begin() };
+
+  // Assert
+  EXPECT_EQ(collection.size(), 1U);
+  EXPECT_EQ(*collection.begin(), *source.begin());
+  EXPECT_FALSE((std::is_constructible<TypeParam, int, int>::value));
 }

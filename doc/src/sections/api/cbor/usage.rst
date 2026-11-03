@@ -10,14 +10,17 @@ independently; a copied writer has its own encoded bytes.
 .. code-block:: cpp
 
    Cometa::CborWriter writer;
+
    writer.writeStartArray(2);
    writer.writeUInt(42);
    writer.writeText("Cometa");
 
    Cometa::CborReader reader(writer.toBytes());
-   const std::optional<std::uint64_t> count = reader.readStartArray();
-   const std::uint64_t number = reader.readUInt();
-   const std::string label = reader.readText();
+
+   const std::optional<std::uint64_t> count  = reader.readStartArray();
+   const std::uint64_t                number = reader.readUInt();
+   const std::string                  label  = reader.readText();
+
    reader.readEndArray();
 
 Pass ``std::nullopt`` to write an indefinite array or map and finish it with

@@ -11,15 +11,20 @@ and output index. ``TransactionOutput`` contains an address and ``Value``;
 .. code-block:: cpp
 
    const Cometa::TransactionInput input = Cometa::TransactionInput::fromHex(
-     "0101010101010101010101010101010101010101010101010101010101010101", 5);
+     "0101010101010101010101010101010101010101010101010101010101010101",
+     5);
+
    const Cometa::Address address = Cometa::Address::fromString(
      "addr_test1vqg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygxrcya6");
+
    Cometa::TransactionOutput output(address, Cometa::Value(2'000'000));
+
    output.setDatum(Cometa::Datum(Cometa::PlutusData(std::int64_t { 42 })));
    output.setScriptRef(Cometa::Script(
      Cometa::PlutusV4Script::fromHex("450100002499")));
 
    const Cometa::Utxo utxo(input, output);
+
    output.setDatum(std::nullopt);
 
 ``datum()`` and ``scriptRef()`` return ``std::optional`` values. Set either field

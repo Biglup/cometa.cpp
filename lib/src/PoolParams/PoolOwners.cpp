@@ -68,6 +68,8 @@ PoolOwners::PoolOwners(const PoolOwners& other)
 
 PoolOwners::PoolOwners(PoolOwners&& other) noexcept
 : m_value(std::exchange(other.m_value, nullptr))
+, m_elements(std::move(other.m_elements))
+, m_materialized(std::exchange(other.m_materialized, false))
 {
 }
 
@@ -127,9 +129,9 @@ bool
 PoolOwners::contains(const Blake2bHash& value) const
 {
   validateHash(value);
-  const std::size_t count = size();
+  const std::size_t elementCount = size();
 
-  for (std::size_t i = 0; i < count; ++i)
+  for (std::size_t i = 0; i < elementCount; ++i)
   {
     cardano_blake2b_hash_t*                                           element = nullptr;
     const cardano_error_t                                             status  = cardano_pool_owners_get(checked(), i, &element);
@@ -144,21 +146,6 @@ PoolOwners::contains(const Blake2bHash& value) const
   }
 
   return false;
-}
-
-bool
-PoolOwners::insert(const Blake2bHash& value)
-{
-  validateHash(value);
-  if (contains(value))
-  {
-    return false;
-  }
-
-  const Blake2bHash copy(value);
-
-  checkCardanoError(cardano_pool_owners_add(checked(), copy.checked()), "PoolOwners insert");
-  return true;
 }
 
 Blake2bHash
@@ -183,10 +170,10 @@ std::vector<Blake2bHash>
 PoolOwners::values() const
 {
   std::vector<Blake2bHash> result;
-  const std::size_t        count = size();
-  result.reserve(count);
+  const std::size_t        elementCount = size();
+  result.reserve(elementCount);
 
-  for (std::size_t i = 0; i < count; ++i)
+  for (std::size_t i = 0; i < elementCount; ++i)
   {
     result.push_back(at(i));
   }
@@ -210,6 +197,8 @@ void
 PoolOwners::swap(PoolOwners& other) noexcept
 {
   std::swap(m_value, other.m_value);
+  m_elements.swap(other.m_elements);
+  std::swap(m_materialized, other.m_materialized);
 }
 
 PoolOwners&
@@ -230,7 +219,9 @@ PoolOwners::operator=(PoolOwners&& other) noexcept
   if (this != &other)
   {
     cardano_pool_owners_unref(&m_value);
-    m_value = std::exchange(other.m_value, nullptr);
+    m_value        = std::exchange(other.m_value, nullptr);
+    m_elements     = std::move(other.m_elements);
+    m_materialized = std::exchange(other.m_materialized, false);
   }
 
   return *this;
@@ -239,14 +230,14 @@ PoolOwners::operator=(PoolOwners&& other) noexcept
 bool
 PoolOwners::operator==(const PoolOwners& other) const
 {
-  const std::size_t count = size();
+  const std::size_t elementCount = size();
 
-  if (count != other.size())
+  if (elementCount != other.size())
   {
     return false;
   }
 
-  for (std::size_t i = 0; i < count; ++i)
+  for (std::size_t i = 0; i < elementCount; ++i)
   {
     cardano_blake2b_hash_t*                                           left       = nullptr;
     const cardano_error_t                                             leftStatus = cardano_pool_owners_get(checked(), i, &left);
@@ -275,6 +266,175 @@ PoolOwners::operator!=(const PoolOwners& other) const
   return !(*this == other);
 }
 
+PoolOwners::const_iterator
+PoolOwners::begin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+PoolOwners::const_iterator
+PoolOwners::end() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+PoolOwners::const_iterator
+PoolOwners::cbegin() const
+{
+  materialize();
+
+  return m_elements.cbegin();
+}
+
+PoolOwners::const_iterator
+PoolOwners::cend() const
+{
+  materialize();
+
+  return m_elements.cend();
+}
+
+PoolOwners::const_reverse_iterator
+PoolOwners::rbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+PoolOwners::const_reverse_iterator
+PoolOwners::rend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+PoolOwners::const_reverse_iterator
+PoolOwners::crbegin() const
+{
+  materialize();
+
+  return m_elements.crbegin();
+}
+
+PoolOwners::const_reverse_iterator
+PoolOwners::crend() const
+{
+  materialize();
+
+  return m_elements.crend();
+}
+
+PoolOwners::iterator
+PoolOwners::find(const value_type& value) const
+{
+  materialize();
+
+  for (iterator position = m_elements.cbegin(); position != m_elements.cend(); ++position)
+  {
+    if (sameKey(*position, value))
+    {
+      return position;
+    }
+  }
+
+  return m_elements.cend();
+}
+
+PoolOwners::size_type
+PoolOwners::count(const value_type& value) const
+{
+  return find(value) == end() ? 0U : 1U;
+}
+
+std::pair<PoolOwners::iterator, bool>
+PoolOwners::insert(const value_type& value)
+{
+  const iterator found = find(value);
+
+  if (found != end())
+  {
+    return { found, false };
+  }
+
+  PoolOwners replacement(*this);
+  replacement.insertValue(value);
+  const iterator inserted = replacement.find(value);
+  swap(replacement);
+
+  return { inserted, true };
+}
+
+PoolOwners::iterator
+PoolOwners::insert(const_iterator hint, const value_type& value)
+{
+  (void)hint;
+
+  return insert(value).first;
+}
+
+void
+PoolOwners::clear()
+{
+  PoolOwners replacement;
+
+  swap(replacement);
+}
+
+PoolOwners::iterator
+PoolOwners::erase(const_iterator position)
+{
+  return erase(position, std::next(position));
+}
+
+PoolOwners::iterator
+PoolOwners::erase(const_iterator first, const_iterator last)
+{
+  materialize();
+  const size_type start  = static_cast<size_type>(std::distance(cbegin(), first));
+  const size_type finish = static_cast<size_type>(std::distance(cbegin(), last));
+
+  if (start == finish)
+  {
+    return first;
+  }
+
+  PoolOwners replacement;
+
+  for (size_type index = 0; index < m_elements.size(); ++index)
+  {
+    if (index < start || index >= finish)
+    {
+      replacement.insertValue(m_elements[index]);
+    }
+  }
+
+  const iterator next = std::next(replacement.cbegin(), static_cast<difference_type>(start));
+  swap(replacement);
+
+  return next;
+}
+
+PoolOwners::size_type
+PoolOwners::erase(const value_type& value)
+{
+  const iterator position = find(value);
+
+  if (position == end())
+  {
+    return 0;
+  }
+
+  erase(position);
+
+  return 1;
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 PoolOwners::PoolOwners(cardano_pool_owners_t* value) noexcept
@@ -300,6 +460,57 @@ PoolOwners::validateHash(const Blake2bHash& value)
   {
     throw std::invalid_argument("Pool owner key hash must be 28 bytes");
   }
+}
+
+void
+PoolOwners::materialize() const
+{
+  if (m_materialized)
+  {
+    return;
+  }
+
+  std::vector<value_type> elements;
+  const size_type         elementCount = size();
+  elements.reserve(elementCount);
+
+  for (size_type index = 0; index < elementCount; ++index)
+  {
+    elements.push_back(at(index));
+  }
+
+  m_elements.swap(elements);
+  m_materialized = true;
+}
+
+void
+PoolOwners::invalidateElements() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+}
+
+bool
+PoolOwners::sameKey(const value_type& left, const value_type& right)
+{
+  return left == right;
+}
+
+bool
+PoolOwners::insertValue(const Blake2bHash& value)
+{
+  validateHash(value);
+  if (contains(value))
+  {
+    return false;
+  }
+
+  const Blake2bHash copy(value);
+
+  checkCardanoError(cardano_pool_owners_add(checked(), copy.checked()), "PoolOwners insert");
+  invalidateElements();
+
+  return true;
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/
