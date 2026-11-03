@@ -29,8 +29,10 @@
 #include <Cometa/Address/RewardAddress.h>
 #include <Cometa/Assets/AssetId.h>
 #include <Cometa/AuxiliaryData/Metadatum.h>
+#include <Cometa/Certificates/Certificate.h>
 #include <Cometa/Common/Credential.h>
 #include <Cometa/Common/Datum.h>
+#include <Cometa/Common/GovernanceActionId.h>
 #include <Cometa/Common/NetworkId.h>
 #include <Cometa/Common/Utxo.h>
 #include <Cometa/Crypto/Blake2bHash.h>
@@ -39,9 +41,12 @@
 #include <Cometa/Scripts/Script.h>
 #include <Cometa/SlotConfig.h>
 #include <Cometa/Transaction/SubTransaction.h>
+#include <Cometa/TransactionBody/AccountBalanceInterval.h>
 #include <Cometa/TransactionBody/TransactionOutput.h>
 #include <Cometa/TransactionBody/Value.h>
 #include <Cometa/TransactionBuilder/DeferredRedeemer.h>
+#include <Cometa/VotingProcedures/Voter.h>
+#include <Cometa/VotingProcedures/VotingProcedure.h>
 
 #include <cstdint>
 #include <memory>
@@ -143,8 +148,48 @@ class SubTransactionBuilder
     /** @brief Adds a direct reward-account deposit. @param address The reward account. @param lovelace The amount. @return This builder. */
     SubTransactionBuilder& addDirectDeposit(const RewardAddress& address, std::uint64_t lovelace);
 
+    /** @brief Adds an account balance bound. @param address The reward account. @param interval The allowed balance. @return This builder. */
+    SubTransactionBuilder& addAccountBalanceInterval(const RewardAddress& address, const AccountBalanceInterval& interval);
+
+    /** @brief Withdraws rewards from a reward account. @param address The reward account. @param lovelace The withdrawal amount. @param redeemer The script redeemer, when needed. @return This builder. */
+    SubTransactionBuilder& withdrawRewards(
+      const RewardAddress&             address,
+      std::int64_t                     lovelace,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Withdraws rewards with a redeemer produced after balancing. @param address The reward account. @param lovelace The withdrawal amount. @param callback The deterministic producer. @return This builder. */
+    SubTransactionBuilder& withdrawRewardsWithDeferredRedeemer(
+      const RewardAddress& address,
+      std::int64_t         lovelace,
+      DeferredRedeemer     callback);
+
+    /** @brief Adds a certificate. @param certificate The certificate. @param redeemer The script redeemer, when needed. @return This builder. */
+    SubTransactionBuilder& addCertificate(
+      const Certificate&               certificate,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Adds a certificate with a redeemer produced after balancing. @param certificate The certificate. @param callback The deterministic producer. @return This builder. */
+    SubTransactionBuilder& addCertificateWithDeferredRedeemer(const Certificate& certificate, DeferredRedeemer callback);
+
+    /** @brief Casts a governance vote. @param voter The voter. @param action The governance action. @param vote The choice and metadata. @param redeemer The script redeemer, when needed. @return This builder. */
+    SubTransactionBuilder& vote(
+      const Voter&                     voter,
+      const GovernanceActionId&        action,
+      const VotingProcedure&           vote,
+      const std::optional<PlutusData>& redeemer = std::nullopt);
+
+    /** @brief Casts a vote with a redeemer produced after balancing. @param voter The voter. @param action The governance action. @param vote The choice and metadata. @param callback The deterministic producer. @return This builder. */
+    SubTransactionBuilder& voteWithDeferredRedeemer(
+      const Voter&              voter,
+      const GovernanceActionId& action,
+      const VotingProcedure&    vote,
+      DeferredRedeemer          callback);
+
     /** @brief Adds a guard. @param guard The required credential. @return This builder. */
     SubTransactionBuilder& addGuard(const Credential& guard);
+
+    /** @brief Adds a script guard with its redeemer. @param guard The guard credential. @param redeemer The guard redeemer. @return This builder. */
+    SubTransactionBuilder& addGuard(const Credential& guard, const PlutusData& redeemer);
 
     /**
      * @brief Requires a guard in the top-level transaction.

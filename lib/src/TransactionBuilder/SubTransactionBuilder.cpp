@@ -32,17 +32,22 @@
 #include <cardano/address/reward_address.h>
 #include <cardano/assets/asset_id.h>
 #include <cardano/auxiliary_data/metadatum.h>
+#include <cardano/certs/certificate.h>
 #include <cardano/common/credential.h>
 #include <cardano/common/datum.h>
+#include <cardano/common/governance_action_id.h>
 #include <cardano/common/utxo.h>
 #include <cardano/crypto/blake2b_hash.h>
 #include <cardano/plutus_data/plutus_data.h>
 #include <cardano/scripts/script.h>
 #include <cardano/slot_config.h>
 #include <cardano/transaction/sub_transaction.h>
+#include <cardano/transaction_body/account_balance_interval.h>
 #include <cardano/transaction_body/transaction_output.h>
 #include <cardano/transaction_body/value.h>
 #include <cardano/transaction_builder/sub_transaction_builder.h>
+#include <cardano/voting_procedures/voter.h>
+#include <cardano/voting_procedures/voting_procedure.h>
 
 #include <stdexcept>
 #include <string>
@@ -63,6 +68,18 @@ copyAddress(const Address& address)
   const cardano_error_t                                   status = cardano_address_from_bytes(bytes.data(), bytes.size(), &value);
   CardanoObject<cardano_address_t, cardano_address_unref> owner(value);
   checkCardanoError(status, "SubTransactionBuilder address");
+  return owner.release();
+}
+
+/** @brief Copies a reward address. @param address The address. @return An owned native address. */
+cardano_reward_address_t*
+copyRewardAddress(const RewardAddress& address)
+{
+  const std::vector<std::uint8_t>                                       bytes  = address.toBytes();
+  cardano_reward_address_t*                                             value  = nullptr;
+  const cardano_error_t                                                 status = cardano_reward_address_from_bytes(bytes.data(), bytes.size(), &value);
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> owner(value);
+  checkCardanoError(status, "SubTransactionBuilder reward address");
   return owner.release();
 }
 
@@ -292,13 +309,126 @@ SubTransactionBuilder::setMetadata(std::uint64_t tag, const Metadatum& value)
 SubTransactionBuilder&
 SubTransactionBuilder::addDirectDeposit(const RewardAddress& address, std::uint64_t lovelace)
 {
-  const std::vector<std::uint8_t>                                       bytes  = address.toBytes();
-  cardano_reward_address_t*                                             value  = nullptr;
-  const cardano_error_t                                                 status = cardano_reward_address_from_bytes(bytes.data(), bytes.size(), &value);
-  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> native(value);
-  checkCardanoError(status, "SubTransactionBuilder reward address");
-
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> native(copyRewardAddress(address));
   cardano_sub_tx_builder_add_direct_deposit(checked(), native.get(), lovelace);
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::addAccountBalanceInterval(const RewardAddress& address, const AccountBalanceInterval& interval)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref>                     nativeAddress(copyRewardAddress(address));
+  CardanoObject<cardano_account_balance_interval_t, cardano_account_balance_interval_unref> nativeInterval(
+    decodeCbor<cardano_account_balance_interval_t, cardano_account_balance_interval_unref>(
+      interval.toCbor(), cardano_account_balance_interval_from_cbor));
+  cardano_sub_tx_builder_add_account_balance_interval(checked(), nativeAddress.get(), nativeInterval.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::withdrawRewards(
+  const RewardAddress&             address,
+  std::int64_t                     lovelace,
+  const std::optional<PlutusData>& redeemer)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(address));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref>       nativeRedeemer(copyPlutusData(redeemer));
+  cardano_sub_tx_builder_withdraw_rewards(checked(), nativeAddress.get(), lovelace, nativeRedeemer.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::withdrawRewardsWithDeferredRedeemer(
+  const RewardAddress& address,
+  std::int64_t         lovelace,
+  DeferredRedeemer     callback)
+{
+  if (!callback)
+  {
+    throw std::invalid_argument("Deferred redeemer callback is required");
+  }
+
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(address));
+  std::unique_ptr<DeferredRedeemerContext>                              context(new DeferredRedeemerContext { std::move(callback), nullptr });
+  m_deferredRedeemers.push_back(std::move(context));
+  cardano_sub_tx_builder_withdraw_rewards_with_deferred_redeemer(
+    checked(), nativeAddress.get(), lovelace, &invokeDeferredRedeemer, m_deferredRedeemers.back().get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::addCertificate(
+  const Certificate&               certificate,
+  const std::optional<PlutusData>& redeemer)
+{
+  CardanoObject<cardano_certificate_t, cardano_certificate_unref> nativeCertificate(
+    decodeCbor<cardano_certificate_t, cardano_certificate_unref>(certificate.toCbor(), cardano_certificate_from_cbor));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeRedeemer(copyPlutusData(redeemer));
+  cardano_sub_tx_builder_add_certificate(checked(), nativeCertificate.get(), nativeRedeemer.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::addCertificateWithDeferredRedeemer(const Certificate& certificate, DeferredRedeemer callback)
+{
+  if (!callback)
+  {
+    throw std::invalid_argument("Deferred redeemer callback is required");
+  }
+
+  CardanoObject<cardano_certificate_t, cardano_certificate_unref> nativeCertificate(
+    decodeCbor<cardano_certificate_t, cardano_certificate_unref>(certificate.toCbor(), cardano_certificate_from_cbor));
+  std::unique_ptr<DeferredRedeemerContext> context(new DeferredRedeemerContext { std::move(callback), nullptr });
+  m_deferredRedeemers.push_back(std::move(context));
+  cardano_sub_tx_builder_add_certificate_with_deferred_redeemer(
+    checked(), nativeCertificate.get(), &invokeDeferredRedeemer, m_deferredRedeemers.back().get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::vote(
+  const Voter&                     voter,
+  const GovernanceActionId&        action,
+  const VotingProcedure&           vote,
+  const std::optional<PlutusData>& redeemer)
+{
+  CardanoObject<cardano_voter_t, cardano_voter_unref> nativeVoter(
+    decodeCbor<cardano_voter_t, cardano_voter_unref>(voter.toCbor(), cardano_voter_from_cbor));
+  CardanoObject<cardano_governance_action_id_t, cardano_governance_action_id_unref> nativeAction(
+    decodeCbor<cardano_governance_action_id_t, cardano_governance_action_id_unref>(
+      action.toCbor(), cardano_governance_action_id_from_cbor));
+  CardanoObject<cardano_voting_procedure_t, cardano_voting_procedure_unref> nativeVote(
+    decodeCbor<cardano_voting_procedure_t, cardano_voting_procedure_unref>(
+      vote.toCbor(), cardano_voting_procedure_from_cbor));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeRedeemer(copyPlutusData(redeemer));
+  cardano_sub_tx_builder_vote(checked(), nativeVoter.get(), nativeAction.get(), nativeVote.get(), nativeRedeemer.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::voteWithDeferredRedeemer(
+  const Voter&              voter,
+  const GovernanceActionId& action,
+  const VotingProcedure&    vote,
+  DeferredRedeemer          callback)
+{
+  if (!callback)
+  {
+    throw std::invalid_argument("Deferred redeemer callback is required");
+  }
+
+  CardanoObject<cardano_voter_t, cardano_voter_unref> nativeVoter(
+    decodeCbor<cardano_voter_t, cardano_voter_unref>(voter.toCbor(), cardano_voter_from_cbor));
+  CardanoObject<cardano_governance_action_id_t, cardano_governance_action_id_unref> nativeAction(
+    decodeCbor<cardano_governance_action_id_t, cardano_governance_action_id_unref>(
+      action.toCbor(), cardano_governance_action_id_from_cbor));
+  CardanoObject<cardano_voting_procedure_t, cardano_voting_procedure_unref> nativeVote(
+    decodeCbor<cardano_voting_procedure_t, cardano_voting_procedure_unref>(
+      vote.toCbor(), cardano_voting_procedure_from_cbor));
+  std::unique_ptr<DeferredRedeemerContext> context(new DeferredRedeemerContext { std::move(callback), nullptr });
+  m_deferredRedeemers.push_back(std::move(context));
+  cardano_sub_tx_builder_vote_with_deferred_redeemer(
+    checked(), nativeVoter.get(), nativeAction.get(), nativeVote.get(), &invokeDeferredRedeemer, m_deferredRedeemers.back().get());
   return *this;
 }
 
@@ -308,6 +438,17 @@ SubTransactionBuilder::addGuard(const Credential& guard)
   CardanoObject<cardano_credential_t, cardano_credential_unref> native(
     decodeCbor<cardano_credential_t, cardano_credential_unref>(guard.toCbor(), cardano_credential_from_cbor));
   cardano_sub_tx_builder_add_guard(checked(), native.get());
+  return *this;
+}
+
+SubTransactionBuilder&
+SubTransactionBuilder::addGuard(const Credential& guard, const PlutusData& redeemer)
+{
+  CardanoObject<cardano_credential_t, cardano_credential_unref> nativeGuard(
+    decodeCbor<cardano_credential_t, cardano_credential_unref>(guard.toCbor(), cardano_credential_from_cbor));
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> nativeRedeemer(
+    decodeCbor<cardano_plutus_data_t, cardano_plutus_data_unref>(redeemer.toCbor(), cardano_plutus_data_from_cbor));
+  cardano_sub_tx_builder_add_guard_with_redeemer(checked(), nativeGuard.get(), nativeRedeemer.get());
   return *this;
 }
 

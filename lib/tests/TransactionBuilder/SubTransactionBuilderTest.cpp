@@ -126,6 +126,14 @@ TEST(SubTransactionBuilder, RejectsMissingDeferredRedeemerCallback)
   // Act
   // Assert
   EXPECT_THROW(builder.addInputWithDeferredRedeemer(party, DeferredRedeemer()), std::invalid_argument);
+  const RewardAddress      reward(NetworkId::Testnet, Credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 1))));
+  const Certificate        certificate(StakeRegistrationCert(reward.credential()));
+  const Voter              voter(VoterType::DRepKeyHash, reward.credential());
+  const GovernanceActionId action(Blake2bHash(std::vector<std::uint8_t>(32, 5)), 0);
+  const VotingProcedure    choice(Vote::Yes);
+  EXPECT_THROW(builder.withdrawRewardsWithDeferredRedeemer(reward, 0, DeferredRedeemer()), std::invalid_argument);
+  EXPECT_THROW(builder.addCertificateWithDeferredRedeemer(certificate, DeferredRedeemer()), std::invalid_argument);
+  EXPECT_THROW(builder.voteWithDeferredRedeemer(voter, action, choice, DeferredRedeemer()), std::invalid_argument);
 }
 
 TEST(SubTransactionBuilder, BuildsMintWithReferenceAndDirectDeposit)
@@ -183,4 +191,34 @@ TEST(SubTransactionBuilder, LocksOutputWithDatum)
   // Assert
   ASSERT_EQ(transaction.body().outputs().size(), 1U);
   EXPECT_EQ(transaction.body().outputs().at(0).address(), scriptAddress);
+}
+
+TEST(SubTransactionBuilder, AddsCertificateAndVote)
+{
+  // Arrange
+  ProtocolParameters parameters = sampleParameters();
+  parameters.setKeyDeposit(2000000);
+  const Address       address = sampleAddress();
+  const Credential    credential(CredentialType::KeyHash, Blake2bHash(std::vector<std::uint8_t>(28, 4)));
+  const RewardAddress reward(NetworkId::Testnet, credential);
+  const Utxo          party(
+    TransactionInput(Blake2bHash(std::vector<std::uint8_t>(32, 2)), 0),
+    TransactionOutput(address, Value(5000000)));
+  const Voter              voter(VoterType::DRepKeyHash, credential);
+  const GovernanceActionId action(Blake2bHash(std::vector<std::uint8_t>(32, 5)), 0);
+  const VotingProcedure    choice(Vote::Yes);
+  SubTransactionBuilder    builder(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  builder.addInput(party)
+    .addCertificate(Certificate(StakeRegistrationCert(credential)))
+    .vote(voter, action, choice)
+    .addAccountBalanceInterval(reward, AccountBalanceInterval(0, 10000000));
+
+  // Act
+  const SubTransaction transaction = builder.build();
+
+  // Assert
+  ASSERT_TRUE(transaction.body().certificates().has_value());
+  EXPECT_EQ(transaction.body().certificates()->size(), 1U);
+  ASSERT_TRUE(transaction.body().votingProcedures().has_value());
+  EXPECT_EQ(transaction.body().votingProcedures()->get(voter, action), choice);
 }
