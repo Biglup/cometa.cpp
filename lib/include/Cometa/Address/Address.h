@@ -55,6 +55,41 @@ class Address
   public:
 
     /**
+     * @brief Initializes an independent copy of a BaseAddress.
+     * @param address The address to copy.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Address(const BaseAddress& address);
+
+    /**
+     * @brief Initializes an independent copy of a EnterpriseAddress.
+     * @param address The address to copy.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Address(const EnterpriseAddress& address);
+
+    /**
+     * @brief Initializes an independent copy of a PointerAddress.
+     * @param address The address to copy.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Address(const PointerAddress& address);
+
+    /**
+     * @brief Initializes an independent copy of a RewardAddress.
+     * @param address The address to copy.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Address(const RewardAddress& address);
+
+    /**
+     * @brief Initializes an independent copy of a ByronAddress.
+     * @param address The address to copy.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Address(const ByronAddress& address);
+
+    /**
      * @brief Parses address bytes.
      *
      * @param bytes One complete address of the expected type.

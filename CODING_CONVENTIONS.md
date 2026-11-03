@@ -143,6 +143,25 @@ requiring callers to interpret integers or include C headers. Keep each enum in
 its own header. Verify C/C++ enum mappings in unit tests, rather than scattering
 mapping `static_assert` declarations through library implementation files.
 
+### Concrete-to-general conversions
+
+Use non-explicit converting constructors for unambiguous concrete domain
+alternatives: scripts, addresses, certificates, relays, and structured data.
+Provide direct leaf-to-root constructors for supported multilevel relationships;
+C++ does not chain two user-defined implicit conversions. Keep strings, bytes,
+numbers, semantic role selection, and general-to-specific extraction explicit.
+Do not introduce catch-all conversion templates or duplicate a constructor with a
+conversion operator for the same pair of types. Annotate each intentional
+converting constructor with `// cppcheck-suppress noExplicitConstructor`; keep
+this check enabled globally and use `--inline-suppr` when running cppcheck.
+
+Lvalue conversions must produce independent values. Provide rvalue overloads where
+they avoid deep copies, and preserve the source if construction fails before the
+transfer. Do not mark potentially allocating conversions `noexcept`. Test every
+conversion path, overload selection, source independence, and allocation failures.
+Document ambiguous overload sets when both a general and an intermediate type are
+accepted under the same function name.
+
 ## Collection interfaces
 
 Keep named domain collections and give them standard C++17 iterator interfaces.

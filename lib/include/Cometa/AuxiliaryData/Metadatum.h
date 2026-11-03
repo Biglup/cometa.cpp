@@ -78,14 +78,30 @@ class Metadatum
      *
      * @param data The value to copy.
      */
-    explicit Metadatum(const MetadatumList& data);
+    // cppcheck-suppress noExplicitConstructor
+    Metadatum(const MetadatumList& data);
+
+    /**
+     * @brief Initializes a value by moving its MetadatumList alternative.
+     * @param data The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Metadatum(MetadatumList&& data);
 
     /**
      * @brief Initializes a map value.
      *
      * @param data The value to copy.
      */
-    explicit Metadatum(const MetadatumMap& data);
+    // cppcheck-suppress noExplicitConstructor
+    Metadatum(const MetadatumMap& data);
+
+    /**
+     * @brief Initializes a value by moving its MetadatumMap alternative.
+     * @param data The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Metadatum(MetadatumMap&& data);
 
     /**
      * @brief Initializes a text string.

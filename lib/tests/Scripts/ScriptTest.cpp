@@ -29,10 +29,31 @@
 
 #include <fstream>
 #include <iterator>
+#include <type_traits>
 
 /* USINGS ********************************************************************/
 
 using namespace Cometa;
+
+/* INTERNAL IMPLEMENTATION ***************************************************/
+
+namespace
+{
+struct ScriptOverloads
+{
+    int
+    operator()(const NativeScript&) const
+    {
+      return 1;
+    }
+
+    int
+    operator()(const Script&) const
+    {
+      return 2;
+    }
+};
+} // namespace
 
 /* IMPLEMENTATION ************************************************************/
 
@@ -204,4 +225,34 @@ TEST(Script, RejectsSharedInvalidFixtures)
   }
 
   EXPECT_EQ(checked, 2U);
+}
+
+TEST(Script, LeafConversionCopiesIndependentlyAndWorksInCollections)
+{
+  // Arrange
+  ScriptInvalidBefore requirement(100);
+
+  // Act
+  const Script           script = requirement;
+  const NativeScript     native = requirement;
+  const NativeScriptList requirements { requirement, ScriptInvalidAfter(200) };
+  requirement.setSlot(300);
+
+  // Assert
+  EXPECT_EQ(script.asNative().asInvalidBefore().slot(), 100U);
+  EXPECT_EQ(native.asInvalidBefore().slot(), 100U);
+  EXPECT_EQ(requirements.front().asInvalidBefore().slot(), 100U);
+  EXPECT_EQ(requirement.slot(), 300U);
+}
+
+TEST(Script, ExplicitSelectionResolvesOverloadsAtDifferentLevels)
+{
+  // Arrange
+  const ScriptInvalidBefore requirement(100);
+  const ScriptOverloads     inspect;
+
+  // Act & Assert
+  EXPECT_FALSE((std::is_invocable<ScriptOverloads, const ScriptInvalidBefore&>::value));
+  EXPECT_EQ(inspect(NativeScript(requirement)), 1);
+  EXPECT_EQ(inspect(Script(requirement)), 2);
 }

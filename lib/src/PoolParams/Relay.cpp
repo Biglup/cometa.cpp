@@ -32,6 +32,8 @@
 #include <cardano/pool_params/single_host_addr_relay.h>
 #include <cardano/pool_params/single_host_name_relay.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -51,6 +53,21 @@ Relay::Relay(const SingleHostAddrRelay& relay)
   m_value = owner.release();
 }
 
+Relay::Relay(SingleHostAddrRelay&& relay)
+: m_value(nullptr)
+{
+  cardano_relay_t*      value  = nullptr;
+  const cardano_error_t result = cardano_relay_new_single_host_addr(relay.checked(), &value);
+
+  CardanoObject<cardano_relay_t, cardano_relay_unref> owner(value);
+
+  checkCardanoError(result, "Relay");
+
+  m_value = owner.release();
+
+  SingleHostAddrRelay consumed(std::move(relay));
+}
+
 Relay::Relay(const SingleHostNameRelay& relay)
 : m_value(nullptr)
 {
@@ -66,6 +83,21 @@ Relay::Relay(const SingleHostNameRelay& relay)
   m_value = owner.release();
 }
 
+Relay::Relay(SingleHostNameRelay&& relay)
+: m_value(nullptr)
+{
+  cardano_relay_t*      value  = nullptr;
+  const cardano_error_t result = cardano_relay_new_single_host_name(relay.checked(), &value);
+
+  CardanoObject<cardano_relay_t, cardano_relay_unref> owner(value);
+
+  checkCardanoError(result, "Relay");
+
+  m_value = owner.release();
+
+  SingleHostNameRelay consumed(std::move(relay));
+}
+
 Relay::Relay(const MultiHostNameRelay& relay)
 : m_value(nullptr)
 {
@@ -79,6 +111,21 @@ Relay::Relay(const MultiHostNameRelay& relay)
   checkCardanoError(result, "Relay");
 
   m_value = owner.release();
+}
+
+Relay::Relay(MultiHostNameRelay&& relay)
+: m_value(nullptr)
+{
+  cardano_relay_t*      value  = nullptr;
+  const cardano_error_t result = cardano_relay_new_multi_host_name(relay.checked(), &value);
+
+  CardanoObject<cardano_relay_t, cardano_relay_unref> owner(value);
+
+  checkCardanoError(result, "Relay");
+
+  m_value = owner.release();
+
+  MultiHostNameRelay consumed(std::move(relay));
 }
 
 Relay::Relay(const Relay& other)

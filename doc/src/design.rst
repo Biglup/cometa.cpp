@@ -10,9 +10,67 @@ Destructors release native resources; applications do not handle reference count
 or call disposal functions. Builders have move-only lifetimes because a partially
 built transaction has no useful copy operation.
 
-Getters return independent values. A returned transaction body, script, or
-witness remains usable after its parent is destroyed. Mutating an object from
+Domain getters return independent values. A returned transaction body, script, or
+witness remains usable after its parent is destroyed. Collection accessors and
+iterators can return references; see :doc:`collections`. Mutating an object from
 multiple threads requires application-level synchronization.
+
+Concrete and general values
+---------------------------
+
+Functions taking a general domain value accept its concrete forms directly:
+
+.. code-block:: cpp
+
+   Cometa::Blake2bHash
+   scriptHash(const Cometa::Script& script)
+   {
+     return script.hash();
+   }
+
+   const Cometa::ScriptInvalidBefore requirement(1000);
+   const Cometa::Blake2bHash hash = scriptHash(requirement);
+
+Concrete native-script forms convert to both ``NativeScript`` and ``Script``.
+Plutus script versions convert to ``Script``. The same convention applies to
+concrete addresses, certificates, MIR certificates, relays, Plutus lists/maps/
+constructors, and metadata lists/maps. Individual MIR forms also convert directly
+to ``Certificate``.
+
+Conversions work in assignments and collection insertion:
+
+.. code-block:: cpp
+
+   const Cometa::NativeScriptList requirements {
+     Cometa::ScriptInvalidBefore(1000),
+     Cometa::ScriptInvalidAfter(2000)
+   };
+
+   const Cometa::Script policy = Cometa::ScriptAll(requirements);
+
+Converting an lvalue creates an independent copy and can allocate. Move overloads
+are provided for direct alternatives; passing ``std::move(value)`` to one of these
+overloads transfers the value after successful construction. Address conversions
+and direct native-script/MIR leaf-to-root conversions accept rvalues through their
+copying overloads. Converting a value does not make extraction implicit: use the
+appropriate ``asX()`` accessor to obtain a specific form.
+
+Strings, byte vectors, and numbers still require explicit construction or parsing.
+Choosing a datum representation or a DRep role also remains explicit. A governance
+action requires a proposal's deposit, return address, and anchor before it can form
+a ``ProposalProcedure``.
+
+If an application overloads the same function for both ``NativeScript`` and
+``Script``, a native-script leaf can convert to either parameter. Select the desired
+overload explicitly:
+
+.. code-block:: cpp
+
+   void inspect(const Cometa::NativeScript& script);
+   void inspect(const Cometa::Script& script);
+
+   inspect(Cometa::NativeScript(requirement));
+   inspect(Cometa::Script(requirement));
 
 Builders and services
 ---------------------

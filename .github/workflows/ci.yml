@@ -19,7 +19,7 @@ jobs:
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
       - name: Run cppcheck
         run: >-
-          cppcheck --enable=warning,style,performance,portability --std=c++17 --error-exitcode=1
+          cppcheck --inline-suppr --enable=warning,style,performance,portability --std=c++17 --error-exitcode=1
           -Ilib/include -Ibuild/_deps/cardano_source-src/lib/include -Ibuild/_deps/cardano_source-src/lib
           lib/src lib/tests examples
   test:

@@ -59,49 +59,105 @@ class NativeScript
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptPubkey& script);
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(const ScriptPubkey& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptPubkey alternative.
+     * @param script The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(ScriptPubkey&& script);
 
     /**
      * @brief Initializes a copied script requirement.
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptAll& script);
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(const ScriptAll& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptAll alternative.
+     * @param script The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(ScriptAll&& script);
 
     /**
      * @brief Initializes a copied script requirement.
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptAny& script);
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(const ScriptAny& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptAny alternative.
+     * @param script The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(ScriptAny&& script);
 
     /**
      * @brief Initializes a copied script requirement.
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptNOfK& script);
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(const ScriptNOfK& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptNOfK alternative.
+     * @param script The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(ScriptNOfK&& script);
 
     /**
      * @brief Initializes a copied script requirement.
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptInvalidBefore& script);
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(const ScriptInvalidBefore& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptInvalidBefore alternative.
+     * @param script The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(ScriptInvalidBefore&& script);
 
     /**
      * @brief Initializes a copied script requirement.
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptInvalidAfter& script);
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(const ScriptInvalidAfter& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptInvalidAfter alternative.
+     * @param script The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(ScriptInvalidAfter&& script);
 
     /**
      * @brief Initializes a copied script requirement.
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptRequireGuard& script);
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(const ScriptRequireGuard& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptRequireGuard alternative.
+     * @param script The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    NativeScript(ScriptRequireGuard&& script);
 
     /**
      * @brief Initializes an independent copy.

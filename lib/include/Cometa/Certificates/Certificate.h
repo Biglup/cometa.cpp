@@ -67,118 +67,284 @@ class Certificate
   public:
 
     /**
+     * @brief Initializes an independent MirToPotCert alternative.
+     * @param value The alternative to copy.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const MirToPotCert& value);
+
+    /**
+     * @brief Initializes an independent MirToStakeCredentialsCert alternative.
+     * @param value The alternative to copy.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const MirToStakeCredentialsCert& value);
+
+    /**
      * @brief Creates a certificate from AuthCommitteeHotCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const AuthCommitteeHotCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const AuthCommitteeHotCert& value);
+
+    /**
+     * @brief Initializes a value by moving its AuthCommitteeHotCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(AuthCommitteeHotCert&& value);
 
     /**
      * @brief Creates a certificate from GenesisKeyDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const GenesisKeyDelegationCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const GenesisKeyDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its GenesisKeyDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(GenesisKeyDelegationCert&& value);
 
     /**
      * @brief Creates a certificate from MirCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const MirCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const MirCert& value);
+
+    /**
+     * @brief Initializes a value by moving its MirCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(MirCert&& value);
 
     /**
      * @brief Creates a certificate from PoolRegistrationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const PoolRegistrationCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const PoolRegistrationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its PoolRegistrationCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(PoolRegistrationCert&& value);
 
     /**
      * @brief Creates a certificate from PoolRetirementCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const PoolRetirementCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const PoolRetirementCert& value);
+
+    /**
+     * @brief Initializes a value by moving its PoolRetirementCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(PoolRetirementCert&& value);
 
     /**
      * @brief Creates a certificate from RegisterDRepCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const RegisterDRepCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const RegisterDRepCert& value);
+
+    /**
+     * @brief Initializes a value by moving its RegisterDRepCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(RegisterDRepCert&& value);
 
     /**
      * @brief Creates a certificate from RegistrationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const RegistrationCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const RegistrationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its RegistrationCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(RegistrationCert&& value);
 
     /**
      * @brief Creates a certificate from ResignCommitteeColdCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const ResignCommitteeColdCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const ResignCommitteeColdCert& value);
+
+    /**
+     * @brief Initializes a value by moving its ResignCommitteeColdCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(ResignCommitteeColdCert&& value);
 
     /**
      * @brief Creates a certificate from StakeDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const StakeDelegationCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const StakeDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its StakeDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(StakeDelegationCert&& value);
 
     /**
      * @brief Creates a certificate from StakeDeregistrationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const StakeDeregistrationCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const StakeDeregistrationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its StakeDeregistrationCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(StakeDeregistrationCert&& value);
 
     /**
      * @brief Creates a certificate from StakeRegistrationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const StakeRegistrationCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const StakeRegistrationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its StakeRegistrationCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(StakeRegistrationCert&& value);
 
     /**
      * @brief Creates a certificate from StakeRegistrationDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const StakeRegistrationDelegationCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const StakeRegistrationDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its StakeRegistrationDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(StakeRegistrationDelegationCert&& value);
 
     /**
      * @brief Creates a certificate from StakeVoteDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const StakeVoteDelegationCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const StakeVoteDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its StakeVoteDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(StakeVoteDelegationCert&& value);
 
     /**
      * @brief Creates a certificate from StakeVoteRegistrationDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const StakeVoteRegistrationDelegationCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const StakeVoteRegistrationDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its StakeVoteRegistrationDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(StakeVoteRegistrationDelegationCert&& value);
 
     /**
      * @brief Creates a certificate from UnregisterDRepCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const UnregisterDRepCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const UnregisterDRepCert& value);
+
+    /**
+     * @brief Initializes a value by moving its UnregisterDRepCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(UnregisterDRepCert&& value);
 
     /**
      * @brief Creates a certificate from UnregistrationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const UnregistrationCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const UnregistrationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its UnregistrationCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(UnregistrationCert&& value);
 
     /**
      * @brief Creates a certificate from UpdateDRepCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const UpdateDRepCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const UpdateDRepCert& value);
+
+    /**
+     * @brief Initializes a value by moving its UpdateDRepCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(UpdateDRepCert&& value);
 
     /**
      * @brief Creates a certificate from VoteDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const VoteDelegationCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const VoteDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its VoteDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(VoteDelegationCert&& value);
 
     /**
      * @brief Creates a certificate from VoteRegistrationDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const VoteRegistrationDelegationCert& value);
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(const VoteRegistrationDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its VoteRegistrationDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    // cppcheck-suppress noExplicitConstructor
+    Certificate(VoteRegistrationDelegationCert&& value);
 
     /**
      * @brief Copies a certificate.

@@ -1106,6 +1106,190 @@ class MapContract : public testing::Test
 using MapContractTypes = testing::Types<AssetNameMap, WithdrawalMap, DirectDepositMap, AccountBalanceIntervalsMap, RequiredGuardsMap, CommitteeMembersMap, MultiAsset, TransactionMetadata, VotingProcedures, CostModels>;
 TYPED_TEST_SUITE(MapContract, MapContractTypes);
 
+template<>
+BaseAddress
+sampleValue<BaseAddress>()
+{
+  const Credential credential(CredentialType::KeyHash, keyHash());
+
+  return BaseAddress(NetworkId::Testnet, credential, credential);
+}
+
+template<>
+EnterpriseAddress
+sampleValue<EnterpriseAddress>()
+{
+  const Credential credential(CredentialType::KeyHash, keyHash());
+
+  return EnterpriseAddress(NetworkId::Testnet, credential);
+}
+
+template<>
+PointerAddress
+sampleValue<PointerAddress>()
+{
+  const Credential credential(CredentialType::KeyHash, keyHash());
+
+  return PointerAddress(NetworkId::Testnet, credential, { 42, 1, 2 });
+}
+
+template<>
+RewardAddress
+sampleValue<RewardAddress>()
+{
+  const Credential credential(CredentialType::KeyHash, keyHash());
+
+  return RewardAddress(NetworkId::Testnet, credential);
+}
+
+template<>
+ByronAddress
+sampleValue<ByronAddress>()
+{
+  return ByronAddress(keyHash(), {}, ByronAddressType::PublicKey);
+}
+
+template<class Source, class Target, bool ConsumesSource>
+struct ConversionCase
+{
+    using SourceType = Source;
+    using TargetType = Target;
+
+    static constexpr bool MOVES_SOURCE = ConsumesSource;
+
+    static std::vector<std::uint8_t>
+    encode(const Source& value)
+    {
+      if constexpr (std::is_same<Target, Address>::value)
+      {
+        return value.toBytes();
+      }
+      else
+      {
+        return value.toCbor();
+      }
+    }
+};
+
+template<class T>
+class ConversionContract : public testing::Test
+{
+};
+
+template<class Target>
+Target
+acceptConverted(const Target& value)
+{
+  return value;
+}
+
+using ConversionTypes = testing::Types<
+  ConversionCase<NativeScript, Script, true>,
+  ConversionCase<PlutusV1Script, Script, true>,
+  ConversionCase<PlutusV2Script, Script, true>,
+  ConversionCase<PlutusV3Script, Script, true>,
+  ConversionCase<PlutusV4Script, Script, true>,
+  ConversionCase<ScriptPubkey, NativeScript, true>,
+  ConversionCase<ScriptAll, NativeScript, true>,
+  ConversionCase<ScriptAny, NativeScript, true>,
+  ConversionCase<ScriptNOfK, NativeScript, true>,
+  ConversionCase<ScriptInvalidBefore, NativeScript, true>,
+  ConversionCase<ScriptInvalidAfter, NativeScript, true>,
+  ConversionCase<ScriptRequireGuard, NativeScript, true>,
+  ConversionCase<AuthCommitteeHotCert, Certificate, true>,
+  ConversionCase<GenesisKeyDelegationCert, Certificate, true>,
+  ConversionCase<MirCert, Certificate, true>,
+  ConversionCase<PoolRegistrationCert, Certificate, true>,
+  ConversionCase<PoolRetirementCert, Certificate, true>,
+  ConversionCase<RegisterDRepCert, Certificate, true>,
+  ConversionCase<RegistrationCert, Certificate, true>,
+  ConversionCase<ResignCommitteeColdCert, Certificate, true>,
+  ConversionCase<StakeDelegationCert, Certificate, true>,
+  ConversionCase<StakeDeregistrationCert, Certificate, true>,
+  ConversionCase<StakeRegistrationCert, Certificate, true>,
+  ConversionCase<StakeRegistrationDelegationCert, Certificate, true>,
+  ConversionCase<StakeVoteDelegationCert, Certificate, true>,
+  ConversionCase<StakeVoteRegistrationDelegationCert, Certificate, true>,
+  ConversionCase<UnregisterDRepCert, Certificate, true>,
+  ConversionCase<UnregistrationCert, Certificate, true>,
+  ConversionCase<UpdateDRepCert, Certificate, true>,
+  ConversionCase<VoteDelegationCert, Certificate, true>,
+  ConversionCase<VoteRegistrationDelegationCert, Certificate, true>,
+  ConversionCase<MirToPotCert, MirCert, true>,
+  ConversionCase<MirToStakeCredentialsCert, MirCert, true>,
+  ConversionCase<SingleHostAddrRelay, Relay, true>,
+  ConversionCase<SingleHostNameRelay, Relay, true>,
+  ConversionCase<MultiHostNameRelay, Relay, true>,
+  ConversionCase<PlutusList, PlutusData, true>,
+  ConversionCase<PlutusMap, PlutusData, true>,
+  ConversionCase<ConstrPlutusData, PlutusData, true>,
+  ConversionCase<MetadatumList, Metadatum, true>,
+  ConversionCase<MetadatumMap, Metadatum, true>,
+  ConversionCase<ScriptPubkey, Script, false>,
+  ConversionCase<ScriptAll, Script, false>,
+  ConversionCase<ScriptAny, Script, false>,
+  ConversionCase<ScriptNOfK, Script, false>,
+  ConversionCase<ScriptInvalidBefore, Script, false>,
+  ConversionCase<ScriptInvalidAfter, Script, false>,
+  ConversionCase<ScriptRequireGuard, Script, false>,
+  ConversionCase<MirToPotCert, Certificate, false>,
+  ConversionCase<MirToStakeCredentialsCert, Certificate, false>,
+  ConversionCase<BaseAddress, Address, false>,
+  ConversionCase<EnterpriseAddress, Address, false>,
+  ConversionCase<PointerAddress, Address, false>,
+  ConversionCase<RewardAddress, Address, false>,
+  ConversionCase<ByronAddress, Address, false>>;
+TYPED_TEST_SUITE(ConversionContract, ConversionTypes);
+
+template<class T>
+class MoveConversionContract : public testing::Test
+{
+};
+
+using MoveConversionTypes = testing::Types<
+  ConversionCase<NativeScript, Script, true>,
+  ConversionCase<PlutusV1Script, Script, true>,
+  ConversionCase<PlutusV2Script, Script, true>,
+  ConversionCase<PlutusV3Script, Script, true>,
+  ConversionCase<PlutusV4Script, Script, true>,
+  ConversionCase<ScriptPubkey, NativeScript, true>,
+  ConversionCase<ScriptAll, NativeScript, true>,
+  ConversionCase<ScriptAny, NativeScript, true>,
+  ConversionCase<ScriptNOfK, NativeScript, true>,
+  ConversionCase<ScriptInvalidBefore, NativeScript, true>,
+  ConversionCase<ScriptInvalidAfter, NativeScript, true>,
+  ConversionCase<ScriptRequireGuard, NativeScript, true>,
+  ConversionCase<AuthCommitteeHotCert, Certificate, true>,
+  ConversionCase<GenesisKeyDelegationCert, Certificate, true>,
+  ConversionCase<MirCert, Certificate, true>,
+  ConversionCase<PoolRegistrationCert, Certificate, true>,
+  ConversionCase<PoolRetirementCert, Certificate, true>,
+  ConversionCase<RegisterDRepCert, Certificate, true>,
+  ConversionCase<RegistrationCert, Certificate, true>,
+  ConversionCase<ResignCommitteeColdCert, Certificate, true>,
+  ConversionCase<StakeDelegationCert, Certificate, true>,
+  ConversionCase<StakeDeregistrationCert, Certificate, true>,
+  ConversionCase<StakeRegistrationCert, Certificate, true>,
+  ConversionCase<StakeRegistrationDelegationCert, Certificate, true>,
+  ConversionCase<StakeVoteDelegationCert, Certificate, true>,
+  ConversionCase<StakeVoteRegistrationDelegationCert, Certificate, true>,
+  ConversionCase<UnregisterDRepCert, Certificate, true>,
+  ConversionCase<UnregistrationCert, Certificate, true>,
+  ConversionCase<UpdateDRepCert, Certificate, true>,
+  ConversionCase<VoteDelegationCert, Certificate, true>,
+  ConversionCase<VoteRegistrationDelegationCert, Certificate, true>,
+  ConversionCase<MirToPotCert, MirCert, true>,
+  ConversionCase<MirToStakeCredentialsCert, MirCert, true>,
+  ConversionCase<SingleHostAddrRelay, Relay, true>,
+  ConversionCase<SingleHostNameRelay, Relay, true>,
+  ConversionCase<MultiHostNameRelay, Relay, true>,
+  ConversionCase<PlutusList, PlutusData, true>,
+  ConversionCase<PlutusMap, PlutusData, true>,
+  ConversionCase<ConstrPlutusData, PlutusData, true>,
+  ConversionCase<MetadatumList, Metadatum, true>,
+  ConversionCase<MetadatumMap, Metadatum, true>>;
+TYPED_TEST_SUITE(MoveConversionContract, MoveConversionTypes);
+
 using ValueTypes = testing::Types<Transaction, TransactionBody, SubTransactionSet, SubTransaction, SubTransactionBody, RequiredGuardsMap, GuardSet, DirectDepositMap, AccountBalanceIntervalsMap, AccountBalanceInterval, WitnessSet, PlutusV1ScriptSet, PlutusV2ScriptSet, PlutusV3ScriptSet, PlutusV4ScriptSet, PlutusDataSet, NativeScriptSet, BootstrapWitnessSet, BootstrapWitness, VkeyWitnessSet, VkeyWitness, RedeemerList, Redeemer, VotingProcedures, VotingProcedure, Voter, ProposalProcedureSet, ProposalProcedure, UpdateCommitteeAction, Committee, CommitteeMembersMap, TreasuryWithdrawalsAction, NewConstitutionAction, Constitution, ParameterChangeAction, HardForkInitiationAction, NoConfidenceAction, InfoAction, Update, ProposedParamUpdates, ProtocolParamUpdate, DRepVotingThresholds, PoolVotingThresholds, CostModels, CostModel, ExUnitPrices, CertificateSet, Certificate, ResignCommitteeColdCert, AuthCommitteeHotCert, UpdateDRepCert, RegisterDRepCert, UnregisterDRepCert, StakeVoteRegistrationDelegationCert, VoteRegistrationDelegationCert, StakeVoteDelegationCert, VoteDelegationCert, DRep, MirCert, MirToStakeCredentialsCert, MirToPotCert, GenesisKeyDelegationCert, StakeRegistrationDelegationCert, PoolRetirementCert, PoolRegistrationCert, StakeDelegationCert, RegistrationCert, UnregistrationCert, StakeDeregistrationCert, StakeRegistrationCert, PoolParams, PoolOwners, SingleHostAddrRelay, SingleHostNameRelay, MultiHostNameRelay, Relay, Relays, Ipv4, Ipv6, BlsKey, PoolMetadata, TransactionMetadata, AuxiliaryData, Metadatum, MetadatumList, MetadatumMap, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
 } // namespace
@@ -6491,4 +6675,157 @@ TYPED_TEST(CollectionContract, ConstructsFromInitializerLists)
   EXPECT_EQ(collection.size(), 1U);
   EXPECT_EQ(*collection.begin(), *source.begin());
   EXPECT_FALSE((std::is_constructible<TypeParam, int, int>::value));
+}
+
+TYPED_TEST(ConversionContract, SupportsCopyInitializationAndFunctionArguments)
+{
+  // Arrange
+  using Source                           = typename TypeParam::SourceType;
+  using Target                           = typename TypeParam::TargetType;
+  const Source                    source = sampleValue<Source>();
+  const std::vector<std::uint8_t> before = TypeParam::encode(source);
+  const Target                    expected(source);
+
+  // Act
+  const Target              initialized = source;
+  const Target              argument    = acceptConverted<Target>(source);
+  const std::vector<Target> collection { source };
+
+  // Assert
+  EXPECT_TRUE((std::is_convertible<const Source&, Target>::value));
+  EXPECT_TRUE((std::is_convertible<Source&&, Target>::value));
+  EXPECT_FALSE((std::is_convertible<Target, Source>::value));
+  EXPECT_EQ(initialized, expected);
+  EXPECT_EQ(argument, expected);
+  ASSERT_EQ(collection.size(), 1U);
+  EXPECT_EQ(collection.front(), expected);
+  EXPECT_EQ(TypeParam::encode(source), before);
+}
+
+TYPED_TEST(ConversionContract, SupportsRvalueConversion)
+{
+  // Arrange
+  using Source                           = typename TypeParam::SourceType;
+  using Target                           = typename TypeParam::TargetType;
+  Source                          source = sampleValue<Source>();
+  const std::vector<std::uint8_t> before = TypeParam::encode(source);
+  const Target                    expected(source);
+
+  // Act
+  const Target converted = std::move(source);
+
+  // Assert
+  EXPECT_EQ(converted, expected);
+
+  if constexpr (TypeParam::MOVES_SOURCE)
+  {
+    EXPECT_THROW(TypeParam::encode(source), std::logic_error);
+  }
+  else
+  {
+    EXPECT_EQ(TypeParam::encode(source), before);
+  }
+}
+
+TYPED_TEST(ConversionContract, ReleasesPartialCopiesOnAllocationFailure)
+{
+  // Arrange
+  using Source                                = typename TypeParam::SourceType;
+  using Target                                = typename TypeParam::TargetType;
+  const Source                    source      = sampleValue<Source>();
+  const std::vector<std::uint8_t> before      = TypeParam::encode(source);
+  std::size_t                     allocations = 0;
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    const Target      converted = source;
+    allocations                 = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW((Target(source)), std::exception) << index;
+    }
+
+    EXPECT_EQ(TypeParam::encode(source), before);
+  }
+}
+
+TYPED_TEST(ConversionContract, FailedRvalueConversionPreservesSource)
+{
+  // Arrange
+  using Source                                = typename TypeParam::SourceType;
+  using Target                                = typename TypeParam::TargetType;
+  const Source                    original    = sampleValue<Source>();
+  const std::vector<std::uint8_t> before      = TypeParam::encode(original);
+  std::size_t                     allocations = 0;
+
+  {
+    Source            source(original);
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    const Target      converted = std::move(source);
+    allocations                 = allocationIndex;
+  }
+
+  ASSERT_GT(allocations, 0U);
+
+  // Act & Assert
+  for (std::size_t index = 0; index < allocations; ++index)
+  {
+    Source source(original);
+
+    {
+      AllocationFailure fail(index, true);
+      EXPECT_THROW((Target(std::move(source))), std::exception) << index;
+    }
+
+    EXPECT_EQ(TypeParam::encode(source), before);
+  }
+}
+
+TYPED_TEST(MoveConversionContract, MovingDirectAlternativesAvoidsDeepCopyAllocations)
+{
+  // Arrange
+  using Source                = typename TypeParam::SourceType;
+  using Target                = typename TypeParam::TargetType;
+  Source      source          = sampleValue<Source>();
+  std::size_t copyAllocations = 0;
+  std::size_t moveAllocations = 0;
+
+  // Act
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    const Target      converted = source;
+    copyAllocations             = allocationIndex;
+  }
+
+  {
+    AllocationFailure tracker(std::numeric_limits<std::size_t>::max(), true);
+    const Target      converted = std::move(source);
+    moveAllocations             = allocationIndex;
+  }
+
+  // Assert
+  EXPECT_LT(moveAllocations, copyAllocations);
+}
+
+TEST(ConversionContract, ScalarConstructionAndSemanticWrappingRemainExplicit)
+{
+  // Act & Assert
+  EXPECT_FALSE((std::is_convertible<std::vector<std::uint8_t>, Address>::value));
+  EXPECT_FALSE((std::is_convertible<std::string, Address>::value));
+  EXPECT_FALSE((std::is_convertible<int, PlutusData>::value));
+  EXPECT_FALSE((std::is_convertible<BigInt, PlutusData>::value));
+  EXPECT_FALSE((std::is_convertible<std::vector<std::uint8_t>, PlutusData>::value));
+  EXPECT_FALSE((std::is_convertible<int, Metadatum>::value));
+  EXPECT_FALSE((std::is_convertible<std::string, Metadatum>::value));
+  EXPECT_FALSE((std::is_convertible<std::vector<std::uint8_t>, Metadatum>::value));
+  EXPECT_FALSE((std::is_convertible<Credential, DRep>::value));
+  EXPECT_FALSE((std::is_convertible<PlutusData, Datum>::value));
+  EXPECT_FALSE((std::is_convertible<InfoAction, ProposalProcedure>::value));
 }

@@ -34,10 +34,47 @@
 #include <cardano/scripts/plutus_scripts/plutus_v4_script.h>
 #include <cardano/scripts/script.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
 {
+Script::Script(const ScriptPubkey& value)
+: Script(NativeScript(value))
+{
+}
+
+Script::Script(const ScriptAll& value)
+: Script(NativeScript(value))
+{
+}
+
+Script::Script(const ScriptAny& value)
+: Script(NativeScript(value))
+{
+}
+
+Script::Script(const ScriptNOfK& value)
+: Script(NativeScript(value))
+{
+}
+
+Script::Script(const ScriptInvalidBefore& value)
+: Script(NativeScript(value))
+{
+}
+
+Script::Script(const ScriptInvalidAfter& value)
+: Script(NativeScript(value))
+{
+}
+
+Script::Script(const ScriptRequireGuard& value)
+: Script(NativeScript(value))
+{
+}
+
 Script::Script(const NativeScript& script)
 : m_value(nullptr)
 {
@@ -51,6 +88,21 @@ Script::Script(const NativeScript& script)
   checkCardanoError(result, "Script");
 
   m_value = owner.release();
+}
+
+Script::Script(NativeScript&& script)
+: m_value(nullptr)
+{
+  cardano_script_t*     value  = nullptr;
+  const cardano_error_t result = cardano_script_new_native(script.checked(), &value);
+
+  CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
+
+  checkCardanoError(result, "Script");
+
+  m_value = owner.release();
+
+  NativeScript consumed(std::move(script));
 }
 
 Script::Script(const PlutusV1Script& script)
@@ -68,6 +120,21 @@ Script::Script(const PlutusV1Script& script)
   m_value = owner.release();
 }
 
+Script::Script(PlutusV1Script&& script)
+: m_value(nullptr)
+{
+  cardano_script_t*     value  = nullptr;
+  const cardano_error_t result = cardano_script_new_plutus_v1(script.checked(), &value);
+
+  CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
+
+  checkCardanoError(result, "Script");
+
+  m_value = owner.release();
+
+  PlutusV1Script consumed(std::move(script));
+}
+
 Script::Script(const PlutusV2Script& script)
 : m_value(nullptr)
 {
@@ -81,6 +148,21 @@ Script::Script(const PlutusV2Script& script)
   checkCardanoError(result, "Script");
 
   m_value = owner.release();
+}
+
+Script::Script(PlutusV2Script&& script)
+: m_value(nullptr)
+{
+  cardano_script_t*     value  = nullptr;
+  const cardano_error_t result = cardano_script_new_plutus_v2(script.checked(), &value);
+
+  CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
+
+  checkCardanoError(result, "Script");
+
+  m_value = owner.release();
+
+  PlutusV2Script consumed(std::move(script));
 }
 
 Script::Script(const PlutusV3Script& script)
@@ -98,6 +180,21 @@ Script::Script(const PlutusV3Script& script)
   m_value = owner.release();
 }
 
+Script::Script(PlutusV3Script&& script)
+: m_value(nullptr)
+{
+  cardano_script_t*     value  = nullptr;
+  const cardano_error_t result = cardano_script_new_plutus_v3(script.checked(), &value);
+
+  CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
+
+  checkCardanoError(result, "Script");
+
+  m_value = owner.release();
+
+  PlutusV3Script consumed(std::move(script));
+}
+
 Script::Script(const PlutusV4Script& script)
 : m_value(nullptr)
 {
@@ -111,6 +208,21 @@ Script::Script(const PlutusV4Script& script)
   checkCardanoError(result, "Script");
 
   m_value = owner.release();
+}
+
+Script::Script(PlutusV4Script&& script)
+: m_value(nullptr)
+{
+  cardano_script_t*     value  = nullptr;
+  const cardano_error_t result = cardano_script_new_plutus_v4(script.checked(), &value);
+
+  CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
+
+  checkCardanoError(result, "Script");
+
+  m_value = owner.release();
+
+  PlutusV4Script consumed(std::move(script));
 }
 
 Script::Script(const Script& other)

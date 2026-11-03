@@ -794,6 +794,21 @@ main()
     return 1;
   }
 
+  const Cometa::Script           convertedScript = Cometa::ScriptInvalidBefore(100);
+  const Cometa::NativeScriptList convertedRequirements {
+    Cometa::ScriptInvalidBefore(100),
+    Cometa::ScriptInvalidAfter(200)
+  };
+
+  const Cometa::Address convertedAddress = Cometa::EnterpriseAddress(
+    Cometa::NetworkId::Testnet,
+    Cometa::Credential(Cometa::CredentialType::KeyHash, Cometa::Blake2bHash::fromHex(std::string(56, '1'))));
+
+  if (convertedScript.asNative().asInvalidBefore().slot() != 100 || convertedRequirements.size() != 2 || !convertedAddress.asEnterprise())
+  {
+    return 1;
+  }
+
   return name.toString() == "Cometa" && budget.cpuSteps() == 2 && version.major() == 12 &&
       slots.unixTimeFromSlot(0) == 1666656000ULL
     ? 0

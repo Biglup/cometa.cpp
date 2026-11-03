@@ -35,6 +35,8 @@
 #include <cardano/plutus_data/plutus_list.h>
 #include <cardano/plutus_data/plutus_map.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -93,6 +95,21 @@ PlutusData::PlutusData(const PlutusList& data)
   m_value = owner.release();
 }
 
+PlutusData::PlutusData(PlutusList&& data)
+: m_value(nullptr)
+{
+  cardano_plutus_data_t* value  = nullptr;
+  const cardano_error_t  result = cardano_plutus_data_new_list(data.checked(), &value);
+
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
+
+  checkCardanoError(result, "PlutusData");
+
+  m_value = owner.release();
+
+  PlutusList consumed(std::move(data));
+}
+
 PlutusData::PlutusData(const PlutusMap& data)
 : m_value(nullptr)
 {
@@ -108,6 +125,21 @@ PlutusData::PlutusData(const PlutusMap& data)
   m_value = owner.release();
 }
 
+PlutusData::PlutusData(PlutusMap&& data)
+: m_value(nullptr)
+{
+  cardano_plutus_data_t* value  = nullptr;
+  const cardano_error_t  result = cardano_plutus_data_new_map(data.checked(), &value);
+
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
+
+  checkCardanoError(result, "PlutusData");
+
+  m_value = owner.release();
+
+  PlutusMap consumed(std::move(data));
+}
+
 PlutusData::PlutusData(const ConstrPlutusData& data)
 : m_value(nullptr)
 {
@@ -121,6 +153,21 @@ PlutusData::PlutusData(const ConstrPlutusData& data)
   checkCardanoError(result, "PlutusData");
 
   m_value = owner.release();
+}
+
+PlutusData::PlutusData(ConstrPlutusData&& data)
+: m_value(nullptr)
+{
+  cardano_plutus_data_t* value  = nullptr;
+  const cardano_error_t  result = cardano_plutus_data_new_constr(data.checked(), &value);
+
+  CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
+
+  checkCardanoError(result, "PlutusData");
+
+  m_value = owner.release();
+
+  ConstrPlutusData consumed(std::move(data));
 }
 
 PlutusData::PlutusData(const PlutusData& other)

@@ -32,18 +32,18 @@ retains its original encoding until a setter or ``normalizeEncoding`` is used.
 Composite native scripts
 ------------------------
 
-Combine requirements with ``ScriptAll``, ``ScriptAny``, or ``ScriptNOfK`` and
-wrap the result in ``NativeScript``. A threshold may exceed the child count;
+Combine requirements with ``ScriptAll``, ``ScriptAny``, or ``ScriptNOfK``.
+Concrete requirements convert implicitly to ``NativeScript`` and ``Script``. A threshold may exceed the child count;
 that describes an unsatisfiable requirement rather than an invalid value.
 
 .. code-block:: cpp
 
    const Cometa::NativeScriptList requirements {
-     Cometa::NativeScript(Cometa::ScriptPubkey(publicKey.hash())),
-     Cometa::NativeScript(Cometa::ScriptInvalidBefore(1000))
+     Cometa::ScriptPubkey(publicKey.hash()),
+     Cometa::ScriptInvalidBefore(1000)
    };
 
-   const Cometa::NativeScript policy { Cometa::ScriptAll(requirements) };
+   const Cometa::NativeScript policy = Cometa::ScriptAll(requirements);
    const Cometa::Blake2bHash  policyId = policy.hash();
 
 ``type()`` identifies the variant. Accessors such as ``asAll()`` return

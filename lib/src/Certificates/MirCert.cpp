@@ -31,6 +31,8 @@
 #include <cardano/certs/mir_to_pot_cert.h>
 #include <cardano/certs/mir_to_stake_creds_cert.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -47,6 +49,19 @@ MirCert::MirCert(const MirToPotCert& value)
   m_value = owner.release();
 }
 
+MirCert::MirCert(MirToPotCert&& value)
+: m_value(nullptr)
+{
+  cardano_mir_cert_t*                                       native = nullptr;
+  const cardano_error_t                                     status = cardano_mir_cert_new_to_other_pot(value.checked(), &native);
+  CardanoObject<cardano_mir_cert_t, cardano_mir_cert_unref> owner(native);
+
+  checkCardanoError(status, "MirCert pot transfer");
+  m_value = owner.release();
+
+  MirToPotCert consumed(std::move(value));
+}
+
 MirCert::MirCert(const MirToStakeCredentialsCert& value)
 : m_value(nullptr)
 {
@@ -57,6 +72,19 @@ MirCert::MirCert(const MirToStakeCredentialsCert& value)
 
   checkCardanoError(status, "MirCert stake distribution");
   m_value = owner.release();
+}
+
+MirCert::MirCert(MirToStakeCredentialsCert&& value)
+: m_value(nullptr)
+{
+  cardano_mir_cert_t*                                       native = nullptr;
+  const cardano_error_t                                     status = cardano_mir_cert_new_to_stake_creds(value.checked(), &native);
+  CardanoObject<cardano_mir_cert_t, cardano_mir_cert_unref> owner(native);
+
+  checkCardanoError(status, "MirCert stake distribution");
+  m_value = owner.release();
+
+  MirToStakeCredentialsCert consumed(std::move(value));
 }
 
 MirCert::MirCert(const MirCert& other)

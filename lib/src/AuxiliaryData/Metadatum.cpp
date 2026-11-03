@@ -35,6 +35,8 @@
 #include <cardano/auxiliary_data/metadatum_list.h>
 #include <cardano/auxiliary_data/metadatum_map.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -93,6 +95,21 @@ Metadatum::Metadatum(const MetadatumList& data)
   m_value = owner.release();
 }
 
+Metadatum::Metadatum(MetadatumList&& data)
+: m_value(nullptr)
+{
+  cardano_metadatum_t*  value  = nullptr;
+  const cardano_error_t result = cardano_metadatum_new_list(data.checked(), &value);
+
+  CardanoObject<cardano_metadatum_t, cardano_metadatum_unref> owner(value);
+
+  checkCardanoError(result, "Metadatum");
+
+  m_value = owner.release();
+
+  MetadatumList consumed(std::move(data));
+}
+
 Metadatum::Metadatum(const MetadatumMap& data)
 : m_value(nullptr)
 {
@@ -106,6 +123,21 @@ Metadatum::Metadatum(const MetadatumMap& data)
   checkCardanoError(result, "Metadatum");
 
   m_value = owner.release();
+}
+
+Metadatum::Metadatum(MetadatumMap&& data)
+: m_value(nullptr)
+{
+  cardano_metadatum_t*  value  = nullptr;
+  const cardano_error_t result = cardano_metadatum_new_map(data.checked(), &value);
+
+  CardanoObject<cardano_metadatum_t, cardano_metadatum_unref> owner(value);
+
+  checkCardanoError(result, "Metadatum");
+
+  m_value = owner.release();
+
+  MetadatumMap consumed(std::move(data));
 }
 
 Metadatum::Metadatum(std::string_view text)
