@@ -187,3 +187,32 @@ TEST(PlutusData, MatchesSharedNativeSerializationAndInspectionFixtures)
 
   EXPECT_EQ(checked, 13U);
 }
+
+TEST(PlutusData, ImplicitListConversionCopiesMutableElements)
+{
+  // Arrange
+  PlutusList  list { PlutusData(1) };
+  PlutusData& element = list.front();
+
+  // Act
+  const PlutusData converted = list;
+  element                    = PlutusData(2);
+
+  // Assert
+  EXPECT_EQ(converted.asList().front(), PlutusData(1));
+  EXPECT_EQ(list.front(), PlutusData(2));
+}
+
+TEST(PlutusData, MovingAListIncludesIteratorEdits)
+{
+  // Arrange
+  PlutusList list { PlutusData(1) };
+  list.front() = PlutusData(2);
+
+  // Act
+  const PlutusData converted = std::move(list);
+
+  // Assert
+  EXPECT_EQ(converted.asList().front(), PlutusData(2));
+  EXPECT_THROW(list.toCbor(), std::logic_error);
+}

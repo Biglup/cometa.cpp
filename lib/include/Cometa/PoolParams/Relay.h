@@ -54,21 +54,39 @@ class Relay
      *
      * @param relay The relay to copy.
      */
-    explicit Relay(const SingleHostAddrRelay& relay);
+    Relay(const SingleHostAddrRelay& relay);
+
+    /**
+     * @brief Initializes a value by moving its SingleHostAddrRelay alternative.
+     * @param relay The alternative to move.
+     */
+    Relay(SingleHostAddrRelay&& relay);
 
     /**
      * @brief Initializes a copied DNS-name variant.
      *
      * @param relay The relay to copy.
      */
-    explicit Relay(const SingleHostNameRelay& relay);
+    Relay(const SingleHostNameRelay& relay);
+
+    /**
+     * @brief Initializes a value by moving its SingleHostNameRelay alternative.
+     * @param relay The alternative to move.
+     */
+    Relay(SingleHostNameRelay&& relay);
 
     /**
      * @brief Initializes a copied DNS-name variant.
      *
      * @param relay The relay to copy.
      */
-    explicit Relay(const MultiHostNameRelay& relay);
+    Relay(const MultiHostNameRelay& relay);
+
+    /**
+     * @brief Initializes a value by moving its MultiHostNameRelay alternative.
+     * @param relay The alternative to move.
+     */
+    Relay(MultiHostNameRelay&& relay);
 
     /**
      * @brief Initializes an independent copy.

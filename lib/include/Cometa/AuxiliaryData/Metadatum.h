@@ -78,14 +78,26 @@ class Metadatum
      *
      * @param data The value to copy.
      */
-    explicit Metadatum(const MetadatumList& data);
+    Metadatum(const MetadatumList& data);
+
+    /**
+     * @brief Initializes a value by moving its MetadatumList alternative.
+     * @param data The alternative to move.
+     */
+    Metadatum(MetadatumList&& data);
 
     /**
      * @brief Initializes a map value.
      *
      * @param data The value to copy.
      */
-    explicit Metadatum(const MetadatumMap& data);
+    Metadatum(const MetadatumMap& data);
+
+    /**
+     * @brief Initializes a value by moving its MetadatumMap alternative.
+     * @param data The alternative to move.
+     */
+    Metadatum(MetadatumMap&& data);
 
     /**
      * @brief Initializes a text string.

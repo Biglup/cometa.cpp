@@ -67,118 +67,244 @@ class Certificate
   public:
 
     /**
+     * @brief Initializes an independent MirToPotCert alternative.
+     * @param value The alternative to copy.
+     */
+    Certificate(const MirToPotCert& value);
+
+    /**
+     * @brief Initializes an independent MirToStakeCredentialsCert alternative.
+     * @param value The alternative to copy.
+     */
+    Certificate(const MirToStakeCredentialsCert& value);
+
+    /**
      * @brief Creates a certificate from AuthCommitteeHotCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const AuthCommitteeHotCert& value);
+    Certificate(const AuthCommitteeHotCert& value);
+
+    /**
+     * @brief Initializes a value by moving its AuthCommitteeHotCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(AuthCommitteeHotCert&& value);
 
     /**
      * @brief Creates a certificate from GenesisKeyDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const GenesisKeyDelegationCert& value);
+    Certificate(const GenesisKeyDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its GenesisKeyDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(GenesisKeyDelegationCert&& value);
 
     /**
      * @brief Creates a certificate from MirCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const MirCert& value);
+    Certificate(const MirCert& value);
+
+    /**
+     * @brief Initializes a value by moving its MirCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(MirCert&& value);
 
     /**
      * @brief Creates a certificate from PoolRegistrationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const PoolRegistrationCert& value);
+    Certificate(const PoolRegistrationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its PoolRegistrationCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(PoolRegistrationCert&& value);
 
     /**
      * @brief Creates a certificate from PoolRetirementCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const PoolRetirementCert& value);
+    Certificate(const PoolRetirementCert& value);
+
+    /**
+     * @brief Initializes a value by moving its PoolRetirementCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(PoolRetirementCert&& value);
 
     /**
      * @brief Creates a certificate from RegisterDRepCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const RegisterDRepCert& value);
+    Certificate(const RegisterDRepCert& value);
+
+    /**
+     * @brief Initializes a value by moving its RegisterDRepCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(RegisterDRepCert&& value);
 
     /**
      * @brief Creates a certificate from RegistrationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const RegistrationCert& value);
+    Certificate(const RegistrationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its RegistrationCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(RegistrationCert&& value);
 
     /**
      * @brief Creates a certificate from ResignCommitteeColdCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const ResignCommitteeColdCert& value);
+    Certificate(const ResignCommitteeColdCert& value);
+
+    /**
+     * @brief Initializes a value by moving its ResignCommitteeColdCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(ResignCommitteeColdCert&& value);
 
     /**
      * @brief Creates a certificate from StakeDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const StakeDelegationCert& value);
+    Certificate(const StakeDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its StakeDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(StakeDelegationCert&& value);
 
     /**
      * @brief Creates a certificate from StakeDeregistrationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const StakeDeregistrationCert& value);
+    Certificate(const StakeDeregistrationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its StakeDeregistrationCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(StakeDeregistrationCert&& value);
 
     /**
      * @brief Creates a certificate from StakeRegistrationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const StakeRegistrationCert& value);
+    Certificate(const StakeRegistrationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its StakeRegistrationCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(StakeRegistrationCert&& value);
 
     /**
      * @brief Creates a certificate from StakeRegistrationDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const StakeRegistrationDelegationCert& value);
+    Certificate(const StakeRegistrationDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its StakeRegistrationDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(StakeRegistrationDelegationCert&& value);
 
     /**
      * @brief Creates a certificate from StakeVoteDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const StakeVoteDelegationCert& value);
+    Certificate(const StakeVoteDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its StakeVoteDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(StakeVoteDelegationCert&& value);
 
     /**
      * @brief Creates a certificate from StakeVoteRegistrationDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const StakeVoteRegistrationDelegationCert& value);
+    Certificate(const StakeVoteRegistrationDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its StakeVoteRegistrationDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(StakeVoteRegistrationDelegationCert&& value);
 
     /**
      * @brief Creates a certificate from UnregisterDRepCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const UnregisterDRepCert& value);
+    Certificate(const UnregisterDRepCert& value);
+
+    /**
+     * @brief Initializes a value by moving its UnregisterDRepCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(UnregisterDRepCert&& value);
 
     /**
      * @brief Creates a certificate from UnregistrationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const UnregistrationCert& value);
+    Certificate(const UnregistrationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its UnregistrationCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(UnregistrationCert&& value);
 
     /**
      * @brief Creates a certificate from UpdateDRepCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const UpdateDRepCert& value);
+    Certificate(const UpdateDRepCert& value);
+
+    /**
+     * @brief Initializes a value by moving its UpdateDRepCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(UpdateDRepCert&& value);
 
     /**
      * @brief Creates a certificate from VoteDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const VoteDelegationCert& value);
+    Certificate(const VoteDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its VoteDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(VoteDelegationCert&& value);
 
     /**
      * @brief Creates a certificate from VoteRegistrationDelegationCert.
      * @param value The value to copy.
      */
-    explicit Certificate(const VoteRegistrationDelegationCert& value);
+    Certificate(const VoteRegistrationDelegationCert& value);
+
+    /**
+     * @brief Initializes a value by moving its VoteRegistrationDelegationCert alternative.
+     * @param value The alternative to move.
+     */
+    Certificate(VoteRegistrationDelegationCert&& value);
 
     /**
      * @brief Copies a certificate.

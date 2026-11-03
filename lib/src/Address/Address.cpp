@@ -81,6 +81,31 @@ Address::Address(const std::vector<std::uint8_t>& bytes)
 }
 
 /* CLASS IMPLEMENTATION ******************************************************/
+Address::Address(const BaseAddress& address)
+: Address(address.toAddress())
+{
+}
+
+Address::Address(const EnterpriseAddress& address)
+: Address(address.toAddress())
+{
+}
+
+Address::Address(const PointerAddress& address)
+: Address(address.toAddress())
+{
+}
+
+Address::Address(const RewardAddress& address)
+: Address(address.toAddress())
+{
+}
+
+Address::Address(const ByronAddress& address)
+: Address(address.toAddress())
+{
+}
+
 Address::Address(const Address& other)
 : m_value(nullptr)
 {

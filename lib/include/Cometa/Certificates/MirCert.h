@@ -53,13 +53,25 @@ class MirCert
      * @brief Wraps a transfer between reserve and treasury pots.
      * @param value The transfer to copy.
      */
-    explicit MirCert(const MirToPotCert& value);
+    MirCert(const MirToPotCert& value);
+
+    /**
+     * @brief Initializes a value by moving its MirToPotCert alternative.
+     * @param value The alternative to move.
+     */
+    MirCert(MirToPotCert&& value);
 
     /**
      * @brief Wraps rewards to stake credentials.
      * @param value The distribution to copy.
      */
-    explicit MirCert(const MirToStakeCredentialsCert& value);
+    MirCert(const MirToStakeCredentialsCert& value);
+
+    /**
+     * @brief Initializes a value by moving its MirToStakeCredentialsCert alternative.
+     * @param value The alternative to move.
+     */
+    MirCert(MirToStakeCredentialsCert&& value);
 
     /**
      * @brief Copies a certificate.

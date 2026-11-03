@@ -59,49 +59,91 @@ class NativeScript
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptPubkey& script);
+    NativeScript(const ScriptPubkey& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptPubkey alternative.
+     * @param script The alternative to move.
+     */
+    NativeScript(ScriptPubkey&& script);
 
     /**
      * @brief Initializes a copied script requirement.
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptAll& script);
+    NativeScript(const ScriptAll& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptAll alternative.
+     * @param script The alternative to move.
+     */
+    NativeScript(ScriptAll&& script);
 
     /**
      * @brief Initializes a copied script requirement.
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptAny& script);
+    NativeScript(const ScriptAny& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptAny alternative.
+     * @param script The alternative to move.
+     */
+    NativeScript(ScriptAny&& script);
 
     /**
      * @brief Initializes a copied script requirement.
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptNOfK& script);
+    NativeScript(const ScriptNOfK& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptNOfK alternative.
+     * @param script The alternative to move.
+     */
+    NativeScript(ScriptNOfK&& script);
 
     /**
      * @brief Initializes a copied script requirement.
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptInvalidBefore& script);
+    NativeScript(const ScriptInvalidBefore& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptInvalidBefore alternative.
+     * @param script The alternative to move.
+     */
+    NativeScript(ScriptInvalidBefore&& script);
 
     /**
      * @brief Initializes a copied script requirement.
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptInvalidAfter& script);
+    NativeScript(const ScriptInvalidAfter& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptInvalidAfter alternative.
+     * @param script The alternative to move.
+     */
+    NativeScript(ScriptInvalidAfter&& script);
 
     /**
      * @brief Initializes a copied script requirement.
      *
      * @param script The requirement to copy.
      */
-    explicit NativeScript(const ScriptRequireGuard& script);
+    NativeScript(const ScriptRequireGuard& script);
+
+    /**
+     * @brief Initializes a value by moving its ScriptRequireGuard alternative.
+     * @param script The alternative to move.
+     */
+    NativeScript(ScriptRequireGuard&& script);
 
     /**
      * @brief Initializes an independent copy.

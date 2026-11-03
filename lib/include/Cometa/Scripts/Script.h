@@ -51,39 +51,111 @@ class Script
   public:
 
     /**
+     * @brief Initializes an independent ScriptPubkey alternative.
+     * @param value The alternative to copy.
+     */
+    Script(const ScriptPubkey& value);
+
+    /**
+     * @brief Initializes an independent ScriptAll alternative.
+     * @param value The alternative to copy.
+     */
+    Script(const ScriptAll& value);
+
+    /**
+     * @brief Initializes an independent ScriptAny alternative.
+     * @param value The alternative to copy.
+     */
+    Script(const ScriptAny& value);
+
+    /**
+     * @brief Initializes an independent ScriptNOfK alternative.
+     * @param value The alternative to copy.
+     */
+    Script(const ScriptNOfK& value);
+
+    /**
+     * @brief Initializes an independent ScriptInvalidBefore alternative.
+     * @param value The alternative to copy.
+     */
+    Script(const ScriptInvalidBefore& value);
+
+    /**
+     * @brief Initializes an independent ScriptInvalidAfter alternative.
+     * @param value The alternative to copy.
+     */
+    Script(const ScriptInvalidAfter& value);
+
+    /**
+     * @brief Initializes an independent ScriptRequireGuard alternative.
+     * @param value The alternative to copy.
+     */
+    Script(const ScriptRequireGuard& value);
+
+    /**
      * @brief Initializes a copied native script.
      *
      * @param script The script to copy.
      */
-    explicit Script(const NativeScript& script);
+    Script(const NativeScript& script);
+
+    /**
+     * @brief Initializes a value by moving its NativeScript alternative.
+     * @param script The alternative to move.
+     */
+    Script(NativeScript&& script);
 
     /**
      * @brief Initializes a copied Plutus V1 script.
      *
      * @param script The script to copy.
      */
-    explicit Script(const PlutusV1Script& script);
+    Script(const PlutusV1Script& script);
+
+    /**
+     * @brief Initializes a value by moving its PlutusV1Script alternative.
+     * @param script The alternative to move.
+     */
+    Script(PlutusV1Script&& script);
 
     /**
      * @brief Initializes a copied Plutus V2 script.
      *
      * @param script The script to copy.
      */
-    explicit Script(const PlutusV2Script& script);
+    Script(const PlutusV2Script& script);
+
+    /**
+     * @brief Initializes a value by moving its PlutusV2Script alternative.
+     * @param script The alternative to move.
+     */
+    Script(PlutusV2Script&& script);
 
     /**
      * @brief Initializes a copied Plutus V3 script.
      *
      * @param script The script to copy.
      */
-    explicit Script(const PlutusV3Script& script);
+    Script(const PlutusV3Script& script);
+
+    /**
+     * @brief Initializes a value by moving its PlutusV3Script alternative.
+     * @param script The alternative to move.
+     */
+    Script(PlutusV3Script&& script);
 
     /**
      * @brief Initializes a copied Plutus V4 script.
      *
      * @param script The script to copy.
      */
-    explicit Script(const PlutusV4Script& script);
+    Script(const PlutusV4Script& script);
+
+    /**
+     * @brief Initializes a value by moving its PlutusV4Script alternative.
+     * @param script The alternative to move.
+     */
+    Script(PlutusV4Script&& script);
 
     /**
      * @brief Initializes an independent copy.
