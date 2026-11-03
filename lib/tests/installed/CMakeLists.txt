@@ -6,5 +6,10 @@ FIND_PACKAGE (Cometa CONFIG REQUIRED)
 ADD_EXECUTABLE (consumer PackageTest.cpp)
 TARGET_LINK_LIBRARIES (consumer PRIVATE Cometa::cometa)
 
+IF (TARGET Cometa::curl)
+  TARGET_LINK_LIBRARIES (consumer PRIVATE Cometa::curl)
+  TARGET_COMPILE_DEFINITIONS (consumer PRIVATE COMETA_TEST_CURL_TRANSPORT)
+ENDIF ()
+
 ENABLE_TESTING ()
 ADD_TEST (NAME installed-consumer COMMAND consumer)

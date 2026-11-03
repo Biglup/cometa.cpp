@@ -91,6 +91,8 @@
 #include <Cometa/KeyHandlers/SecureKeyHandler.h>
 #include <Cometa/KeyHandlers/SecureKeyHandlerType.h>
 
+#include <Cometa/Providers/BlockfrostProvider.h>
+#include <Cometa/Providers/HttpTransport.h>
 #include <Cometa/Providers/Provider.h>
 
 #include <Cometa/Address/Address.h>

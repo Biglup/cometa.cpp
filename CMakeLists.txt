@@ -11,6 +11,7 @@ INCLUDE (CMakePackageConfigHelpers)
 OPTION (COMETA_BUILD_TESTS "Build unit tests" ON)
 OPTION (COMETA_BUILD_DOCS "Build documentation" OFF)
 OPTION (COMETA_BUILD_EXAMPLES "Build C++ examples" ON)
+OPTION (COMETA_BUILD_CURL_TRANSPORT "Build the libcurl HTTP transport when available" ON)
 SET (COMETA_CARDANO_SOURCE_DIR "" CACHE PATH "Local cardano-c checkout with deep-clone APIs")
 
 INCLUDE (cmake/Cardano.cmake)
@@ -194,6 +195,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/KeyHandlers/DerivationPath.cpp
   lib/src/KeyHandlers/SecureKeyHandler.cpp
   lib/src/Providers/ProviderAdapter.cpp
+  lib/src/Providers/BlockfrostProvider.cpp
   lib/src/TransactionBuilder/CoinSelectionRequest.cpp
   lib/src/TransactionBuilder/CoinSelectorAdapter.cpp
   lib/src/TransactionBuilder/LargeFirstCoinSelector.cpp
@@ -210,6 +212,40 @@ ADD_LIBRARY (cometa STATIC
 )
 
 ADD_LIBRARY (Cometa::cometa ALIAS cometa)
+
+SET (COMETA_HAS_CURL OFF)
+
+IF (COMETA_BUILD_CURL_TRANSPORT)
+  FIND_PACKAGE (CURL QUIET)
+
+  IF (CURL_FOUND)
+    ADD_LIBRARY (cometa-curl STATIC lib/src/Providers/CurlHttpTransport.cpp)
+    ADD_LIBRARY (Cometa::curl ALIAS cometa-curl)
+
+    TARGET_COMPILE_FEATURES (cometa-curl PUBLIC cxx_std_17)
+    TARGET_INCLUDE_DIRECTORIES (cometa-curl
+      PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    )
+    TARGET_LINK_LIBRARIES (cometa-curl PUBLIC Cometa::cometa CURL::libcurl)
+
+    SET_TARGET_PROPERTIES (cometa-curl PROPERTIES
+      CXX_EXTENSIONS            OFF
+      EXPORT_NAME               curl
+      POSITION_INDEPENDENT_CODE ON
+    )
+
+    IF (MSVC)
+      TARGET_COMPILE_OPTIONS (cometa-curl PRIVATE /W4 /WX)
+    ELSE ()
+      TARGET_COMPILE_OPTIONS (cometa-curl PRIVATE -Wall -Wextra -Wpedantic -Werror)
+    ENDIF ()
+
+    INSTALL (TARGETS cometa-curl EXPORT CometaTargets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    SET (COMETA_HAS_CURL ON)
+  ENDIF ()
+ENDIF ()
 
 IF (COMETA_BUILD_EXAMPLES)
   ADD_EXECUTABLE (bip39_example examples/bip39_example.cpp)
@@ -463,6 +499,7 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/KeyHandlers/SecureKeyHandlerTest.cpp
     lib/tests/KeyHandlers/SoftwareSecureKeyHandlerTest.cpp
     lib/tests/Providers/ProviderAdapterTest.cpp
+    lib/tests/Providers/BlockfrostProviderTest.cpp
     lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp
     lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp
     lib/tests/TransactionBuilder/TransactionBuilderTest.cpp

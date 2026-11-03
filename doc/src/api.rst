@@ -232,6 +232,21 @@ API reference
 .. doxygenclass:: Cometa::Provider
    :members:
 
+.. doxygenclass:: Cometa::BlockfrostProvider
+   :members:
+
+.. doxygenclass:: Cometa::HttpTransport
+   :members:
+
+.. doxygenstruct:: Cometa::HttpRequest
+   :members:
+
+.. doxygenstruct:: Cometa::HttpResponse
+   :members:
+
+.. doxygenclass:: Cometa::CurlHttpTransport
+   :members:
+
 .. doxygenstruct:: Cometa::Cip8Signature
    :members:
 

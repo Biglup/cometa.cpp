@@ -1,5 +1,10 @@
 @PACKAGE_INIT@
 
+IF (@COMETA_HAS_CURL@)
+  INCLUDE (CMakeFindDependencyMacro)
+  FIND_DEPENDENCY (CURL)
+ENDIF ()
+
 IF (NOT TARGET Cometa::cardano)
   ADD_LIBRARY (Cometa::cardano STATIC IMPORTED)
 
