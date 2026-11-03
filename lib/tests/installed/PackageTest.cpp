@@ -25,8 +25,8 @@
 
 #include <Cometa/Cometa.h>
 
-#ifdef COMETA_TEST_CURL_TRANSPORT
-#include <Cometa/Providers/CurlHttpTransport.h>
+#ifdef COMETA_TEST_HTTP_TRANSPORT
+#include <Cometa/Providers/DefaultHttpTransport.h>
 #endif
 
 #include <stdexcept>
@@ -37,8 +37,8 @@
 int
 main()
 {
-#ifdef COMETA_TEST_CURL_TRANSPORT
-  const Cometa::CurlHttpTransport transport;
+#ifdef COMETA_TEST_HTTP_TRANSPORT
+  const Cometa::DefaultHttpTransport transport;
 
   try
   {

@@ -31,18 +31,19 @@ shared Cometa library. The shared library includes its own cardano-c code.
    FIND_PACKAGE (Cometa CONFIG REQUIRED)
    TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::cometa_shared)
 
-Use ``Cometa::cometa`` for static linking. When using libcurl, request the curl
-component and link ``Cometa::curl`` (static Cometa) or
-``Cometa::curl_shared`` (shared Cometa)::
+Use ``Cometa::cometa`` for static linking. For the default HTTPS transport,
+request the HTTP component and link ``Cometa::http`` (static Cometa) or
+``Cometa::http_shared`` (shared Cometa)::
 
-   FIND_PACKAGE (Cometa CONFIG REQUIRED COMPONENTS curl)
-   TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::curl_shared)
+   FIND_PACKAGE (Cometa CONFIG REQUIRED COMPONENTS http)
+   TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::http_shared)
 
-The curl component needs a libcurl development package. Core targets do not
-require it. On Windows, place the Cometa DLLs beside the executable. On Linux
-and macOS, set the installed executable's runtime search path to the directory
-containing the shared libraries. CMake's ``$<TARGET_RUNTIME_DLLS:...>`` can
-copy the Windows DLLs after a build.
+The HTTP component uses WinHTTP on Windows and libcurl on Linux and macOS.
+Unix builds need a libcurl development package. Core targets do not require
+an HTTP dependency. On Windows, place the Cometa DLLs beside the executable.
+On Linux and macOS, set the installed executable's runtime search path to the
+directory containing the shared libraries. CMake's
+``$<TARGET_RUNTIME_DLLS:...>`` can copy the Windows DLLs after a build.
 
 Use an archive built for your compiler, standard library, architecture, and runtime.
 MSVC packages use the default dynamic C/C++ runtime; native cardano-c code is static.
@@ -51,14 +52,14 @@ A ZIP is not a universal binary compatible with every C++ ABI.
 Using Blockfrost
 ----------------
 
-When libcurl is available at build time, Cometa also installs curl transport
-targets. Supply a project ID for the selected network and pass the
+The default transport is available when libcurl is found on Unix or WinHTTP is
+enabled on Windows. Supply a project ID for the selected network and pass the
 transport to ``BlockfrostProvider``:
 
 .. code-block:: cpp
 
    #include <Cometa/Providers/BlockfrostProvider.h>
-   #include <Cometa/Providers/CurlHttpTransport.h>
+   #include <Cometa/Providers/DefaultHttpTransport.h>
 
    #include <cstdlib>
    #include <memory>
@@ -72,7 +73,7 @@ transport to ``BlockfrostProvider``:
    }
 
    std::shared_ptr<Cometa::HttpTransport> http =
-     std::make_shared<Cometa::CurlHttpTransport>();
+     std::make_shared<Cometa::DefaultHttpTransport>();
    Cometa::BlockfrostProvider provider(
      Cometa::NetworkMagic::Preprod, projectId, http);
 

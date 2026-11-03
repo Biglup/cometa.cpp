@@ -32,9 +32,10 @@ Network access
 --------------
 
 ``BlockfrostProvider`` implements the ``Provider`` interface. It accepts an
-``HttpTransport``, so applications can use the optional ``CurlHttpTransport`` or
-another HTTP client. The curl transport accepts HTTPS only, verifies certificates
-and hostnames, limits response size, and applies connection and request timeouts.
+``HttpTransport``, so applications can use the supplied platform transport or
+another HTTP client. The supplied transport uses WinHTTP on Windows and
+libcurl on Linux and macOS. It accepts HTTPS only, verifies certificates and
+hostnames, limits response size, and applies connection and request timeouts.
 The project key is supplied at runtime.
 
 Distribution
@@ -42,9 +43,10 @@ Distribution
 
 Each platform ZIP contains the C++ headers, static and shared Cometa libraries,
 the static cardano-c archive, licenses, and a relocatable CMake package. The
-shared Cometa library includes cardano-c. The optional curl transport is
-available in both link modes. It uses the platform's libcurl installation;
-libcurl and its transitive dependencies are not bundled.
+shared Cometa library includes cardano-c. The HTTP transport is available in
+both link modes. Windows uses the system WinHTTP service. Unix packages use
+the platform's libcurl installation; libcurl and its transitive dependencies
+are not bundled.
 
 The CI and release matrix covers Linux x64/ARM64, macOS x64/ARM64, and Windows
 x64 with MSVC. The cardano-c source revision is pinned in

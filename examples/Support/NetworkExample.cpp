@@ -30,7 +30,7 @@
 #include <Cometa/Crypto/Bip32PublicKey.h>
 #include <Cometa/KeyHandlers/AccountDerivationPath.h>
 #include <Cometa/KeyHandlers/DerivationPath.h>
-#include <Cometa/Providers/CurlHttpTransport.h>
+#include <Cometa/Providers/DefaultHttpTransport.h>
 #include <Cometa/SlotConfig.h>
 
 #include <algorithm>
@@ -105,7 +105,7 @@ CometaExamples::preprodProvider()
     throw std::runtime_error("Set BLOCKFROST_API_KEY to a preprod project ID");
   }
 
-  return BlockfrostProvider(NetworkMagic::Preprod, projectId, std::make_shared<CurlHttpTransport>());
+  return BlockfrostProvider(NetworkMagic::Preprod, projectId, std::make_shared<DefaultHttpTransport>());
 }
 
 std::uint64_t

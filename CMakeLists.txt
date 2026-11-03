@@ -13,6 +13,7 @@ OPTION (COMETA_BUILD_DOCS "Build documentation" OFF)
 OPTION (COMETA_BUILD_EXAMPLES "Build C++ examples" ON)
 OPTION (COMETA_BUILD_SHARED "Build shared Cometa libraries" ON)
 OPTION (COMETA_BUILD_CURL_TRANSPORT "Build the libcurl HTTP transport when available" ON)
+OPTION (COMETA_BUILD_WINHTTP_TRANSPORT "Build the Windows HTTP transport" ON)
 SET (COMETA_CARDANO_SOURCE_DIR "" CACHE PATH "Local cardano-c checkout with deep-clone APIs")
 
 INCLUDE (cmake/Cardano.cmake)
@@ -234,6 +235,7 @@ IF (COMETA_BUILD_SHARED)
 ENDIF ()
 
 SET (COMETA_HAS_CURL OFF)
+SET (COMETA_HAS_WINHTTP OFF)
 
 IF (COMETA_BUILD_CURL_TRANSPORT)
   FIND_PACKAGE (CURL QUIET)
@@ -314,6 +316,63 @@ IF (COMETA_BUILD_CURL_TRANSPORT)
   ENDIF ()
 ENDIF ()
 
+IF (WIN32 AND COMETA_BUILD_WINHTTP_TRANSPORT)
+  ADD_LIBRARY (cometa-winhttp STATIC lib/src/Providers/WinHttpTransport.cpp)
+  ADD_LIBRARY (Cometa::winhttp ALIAS cometa-winhttp)
+
+  TARGET_COMPILE_FEATURES (cometa-winhttp PUBLIC cxx_std_17)
+  TARGET_INCLUDE_DIRECTORIES (cometa-winhttp
+    PUBLIC
+      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/include>
+      $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+  )
+  TARGET_LINK_LIBRARIES (cometa-winhttp PUBLIC Cometa::cometa winhttp)
+  SET_TARGET_PROPERTIES (cometa-winhttp PROPERTIES
+    CXX_EXTENSIONS OFF
+    EXPORT_NAME    winhttp
+  )
+  IF (MSVC)
+    TARGET_COMPILE_OPTIONS (cometa-winhttp PRIVATE /W4 /WX)
+  ELSE ()
+    TARGET_COMPILE_OPTIONS (cometa-winhttp PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  ENDIF ()
+  INSTALL (TARGETS cometa-winhttp EXPORT CometaWinHttpTargets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+  IF (COMETA_BUILD_SHARED)
+    ADD_LIBRARY (cometa-winhttp-shared SHARED lib/src/Providers/WinHttpTransport.cpp)
+    ADD_LIBRARY (Cometa::winhttp_shared ALIAS cometa-winhttp-shared)
+
+    TARGET_COMPILE_FEATURES (cometa-winhttp-shared PUBLIC cxx_std_17)
+    TARGET_INCLUDE_DIRECTORIES (cometa-winhttp-shared
+      PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    )
+    TARGET_LINK_LIBRARIES (cometa-winhttp-shared PUBLIC Cometa::cometa_shared winhttp)
+    SET_TARGET_PROPERTIES (cometa-winhttp-shared PROPERTIES
+      CXX_EXTENSIONS            OFF
+      OUTPUT_NAME               cometa-winhttp
+      ARCHIVE_OUTPUT_NAME       cometa-winhttp-shared
+      EXPORT_NAME               winhttp_shared
+      VERSION                   ${PROJECT_VERSION}
+      SOVERSION                 ${PROJECT_VERSION_MAJOR}
+      WINDOWS_EXPORT_ALL_SYMBOLS ON
+    )
+    IF (MSVC)
+      TARGET_COMPILE_OPTIONS (cometa-winhttp-shared PRIVATE /W4 /WX)
+    ELSE ()
+      TARGET_COMPILE_OPTIONS (cometa-winhttp-shared PRIVATE -Wall -Wextra -Wpedantic -Werror)
+    ENDIF ()
+    INSTALL (TARGETS cometa-winhttp-shared EXPORT CometaWinHttpTargets
+      ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
+  ENDIF ()
+
+  SET (COMETA_HAS_WINHTTP ON)
+ENDIF ()
+
 IF (COMETA_BUILD_EXAMPLES)
   ADD_EXECUTABLE (bip39_example examples/bip39_example.cpp)
   TARGET_LINK_LIBRARIES (bip39_example PRIVATE Cometa::cometa)
@@ -327,9 +386,15 @@ IF (COMETA_BUILD_EXAMPLES)
   ADD_EXECUTABLE (plutus_v4_guarded_sub_transaction_example examples/plutus_v4_guarded_sub_transaction_example.cpp)
   TARGET_LINK_LIBRARIES (plutus_v4_guarded_sub_transaction_example PRIVATE Cometa::cometa)
 
-  IF (TARGET Cometa::curl)
+  IF (TARGET Cometa::curl OR TARGET Cometa::winhttp)
     ADD_LIBRARY (cometa-example-support STATIC examples/Support/NetworkExample.cpp)
-    TARGET_LINK_LIBRARIES (cometa-example-support PUBLIC Cometa::curl)
+
+    IF (TARGET Cometa::winhttp)
+      TARGET_LINK_LIBRARIES (cometa-example-support PUBLIC Cometa::winhttp)
+    ELSE ()
+      TARGET_LINK_LIBRARIES (cometa-example-support PUBLIC Cometa::curl)
+    ENDIF ()
+
     TARGET_COMPILE_FEATURES (cometa-example-support PUBLIC cxx_std_17)
 
     ADD_EXECUTABLE (send_lovelace_example examples/send_lovelace_example.cpp)
@@ -752,6 +817,14 @@ INSTALL (
 IF (COMETA_HAS_CURL)
   INSTALL (
     EXPORT      CometaCurlTargets
+    NAMESPACE   Cometa::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Cometa
+  )
+ENDIF ()
+
+IF (COMETA_HAS_WINHTTP)
+  INSTALL (
+    EXPORT      CometaWinHttpTargets
     NAMESPACE   Cometa::
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Cometa
   )

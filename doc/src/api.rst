@@ -247,6 +247,9 @@ API reference
 .. doxygenclass:: Cometa::CurlHttpTransport
    :members:
 
+.. doxygenclass:: Cometa::WinHttpTransport
+   :members:
+
 .. doxygenstruct:: Cometa::Cip8Signature
    :members:
 

@@ -31,7 +31,7 @@ shared libraries for each supported platform.
 
 ```cpp
 #include <Cometa/Cometa.h>
-#include <Cometa/Providers/CurlHttpTransport.h>
+#include <Cometa/Providers/DefaultHttpTransport.h>
 #include <Cometa/TransactionBuilder/TransactionBuilder.h>
 
 #include <cstdlib>
@@ -52,7 +52,7 @@ main()
   Cometa::BlockfrostProvider provider(
     Cometa::NetworkMagic::Preprod,
     projectId,
-    std::make_shared<Cometa::CurlHttpTransport>());
+    std::make_shared<Cometa::DefaultHttpTransport>());
   Cometa::Ed25519PrivateKey key = Cometa::Ed25519PrivateKey::fromNormalHex(signingKey);
   Cometa::Credential        paymentKey(Cometa::CredentialType::KeyHash, key.publicKey().hash());
   Cometa::Address           sender =
@@ -91,8 +91,9 @@ ctest --test-dir build --output-on-failure
 Tests require GoogleTest. Use `-DCOMETA_BUILD_TESTS=OFF` to build without it.
 The build fetches a pinned cardano-c commit with the deep-clone APIs; a local
 checkout can be selected with `-DCOMETA_CARDANO_SOURCE_DIR=/path/to/cardano-c`.
-The optional Blockfrost HTTP transport uses libcurl. Set
-`-DCOMETA_BUILD_CURL_TRANSPORT=OFF` when supplying your own `HttpTransport`.
+The Blockfrost HTTP transport uses WinHTTP on Windows and libcurl on Linux and
+macOS. Set `-DCOMETA_BUILD_CURL_TRANSPORT=OFF` or
+`-DCOMETA_BUILD_WINHTTP_TRANSPORT=OFF` when supplying your own `HttpTransport`.
 Set `-DCOMETA_BUILD_SHARED=OFF` when only static libraries are needed.
 
 ## Installation
@@ -104,21 +105,22 @@ cmake --install build --prefix /path/to/cometa
 Set `CMAKE_PREFIX_PATH` to that prefix and link the desired CMake target:
 
 ```cmake
-FIND_PACKAGE (Cometa CONFIG REQUIRED COMPONENTS curl)
-TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::curl_shared)
+FIND_PACKAGE (Cometa CONFIG REQUIRED COMPONENTS http)
+TARGET_LINK_LIBRARIES (my_application PRIVATE Cometa::http_shared)
 ```
 
 | Target | Link mode | Network transport |
 | --- | --- | --- |
 | `Cometa::cometa` | Static | Your own, or none |
 | `Cometa::cometa_shared` | Shared | Your own, or none |
-| `Cometa::curl` | Static Cometa | libcurl |
-| `Cometa::curl_shared` | Shared Cometa | libcurl |
+| `Cometa::http` | Static Cometa | WinHTTP on Windows; libcurl elsewhere |
+| `Cometa::http_shared` | Shared Cometa | WinHTTP on Windows; libcurl elsewhere |
 
-Omit `COMPONENTS curl` when using a core target. The curl targets require a
-libcurl development package at build time and its runtime library when that
-libcurl installation is shared. The shared Cometa library contains its own
-cardano-c code; the static target links the included cardano-c archive.
+Omit `COMPONENTS http` when using a core target. On Linux and macOS, the HTTP
+targets require a libcurl development package at build time and its runtime
+library when that installation is shared. Windows uses the operating system's
+WinHTTP service. The shared Cometa library contains its own cardano-c code; the
+static target links the included cardano-c archive.
 
 On Windows, copy the Cometa DLLs beside your executable. CMake can copy its
 runtime DLL dependencies after building:
