@@ -127,36 +127,31 @@ balanceTransaction(const TransactionBalanceRequest& request)
   const TransactionInputSet inputs   = request.transaction.body().inputs();
   UtxoList                  selected = request.preselected;
 
-  for (const TransactionInput& input: inputs)
+  TransactionInputSet unresolved = inputs;
+
+  for (const Utxo& utxo: selected)
   {
-    bool found = false;
+    unresolved.erase(utxo.input());
+  }
 
-    for (const Utxo& utxo: selected)
+  for (const Utxo& utxo: request.available)
+  {
+    if (unresolved.empty())
     {
-      if (utxo.input() == input)
-      {
-        found = true;
-        break;
-      }
+      break;
     }
 
-    if (!found)
+    if (unresolved.erase(utxo.input()) == 0)
     {
-      for (const Utxo& utxo: request.available)
-      {
-        if (utxo.input() == input)
-        {
-          selected.push_back(utxo);
-          found = true;
-          break;
-        }
-      }
+      continue;
     }
 
-    if (!found)
-    {
-      throw std::invalid_argument("An initial spending input is not resolved by preselected or available UTxOs");
-    }
+    selected.push_back(utxo);
+  }
+
+  if (!unresolved.empty())
+  {
+    throw std::invalid_argument("An initial spending input is not resolved by preselected or available UTxOs");
   }
 
   CardanoObject<cardano_transaction_t, cardano_transaction_unref> transaction(
