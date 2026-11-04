@@ -150,3 +150,21 @@ TEST(Transaction, PreservesDijkstraSubTransactions)
   EXPECT_EQ(decoded.body().subTransactions(), subTransactions);
   EXPECT_EQ(decoded.id(), transaction.id());
 }
+
+TEST(Transaction, PreservesBlockLayoutWhenDecodedAndCopied)
+{
+  // Arrange
+  const std::string encoded = "84a300d901028001800200a0f6f4";
+  CborReader        reader(encoded);
+
+  // Act
+  const Transaction transaction = Transaction::fromCbor(encoded);
+  const Transaction copy(transaction);
+
+  // Assert
+  EXPECT_FALSE(transaction.isValid());
+  EXPECT_FALSE(copy.isValid());
+  EXPECT_EQ(transaction.toCbor(), reader.readEncodedValue());
+  EXPECT_EQ(copy.toCbor(), transaction.toCbor());
+  EXPECT_EQ(copy.id(), transaction.id());
+}
