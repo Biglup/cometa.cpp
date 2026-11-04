@@ -26,7 +26,6 @@
 #include <Cometa/TransactionBuilder/Balancing/ImplicitCoin.h>
 
 #include "../../CardanoInterop.h"
-#include "../TransactionUtilityAccess.h"
 
 #include <cardano/transaction/sub_transaction.h>
 #include <cardano/transaction/transaction.h>
@@ -43,7 +42,7 @@ computeImplicitCoin(const Transaction& transaction, const ProtocolParameters& pa
     decodeCbor<cardano_transaction_t, cardano_transaction_unref>(transaction.toCbor(), cardano_transaction_from_cbor));
 
   cardano_implicit_coin_t result {};
-  checkCardanoError(cardano_compute_implicit_coin(nativeTransaction.get(), TransactionUtilityAccess::parameters(parameters), &result), "computeImplicitCoin");
+  checkCardanoError(cardano_compute_implicit_coin(nativeTransaction.get(), parameters.checked(), &result), "computeImplicitCoin");
 
   return ImplicitCoin { result.withdrawals, result.deposits, result.reclaim_deposits };
 }
@@ -55,7 +54,7 @@ computeImplicitCoin(const SubTransaction& transaction, const ProtocolParameters&
     decodeCbor<cardano_sub_transaction_t, cardano_sub_transaction_unref>(transaction.toCbor(), cardano_sub_transaction_from_cbor));
 
   cardano_implicit_coin_t result {};
-  checkCardanoError(cardano_compute_sub_transaction_implicit_coin(nativeTransaction.get(), TransactionUtilityAccess::parameters(parameters), &result), "computeImplicitCoin");
+  checkCardanoError(cardano_compute_sub_transaction_implicit_coin(nativeTransaction.get(), parameters.checked(), &result), "computeImplicitCoin");
 
   return ImplicitCoin { result.withdrawals, result.deposits, result.reclaim_deposits };
 }

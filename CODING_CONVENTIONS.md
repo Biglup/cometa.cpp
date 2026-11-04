@@ -138,6 +138,12 @@ the successful result into its destination. Preserve cleanup on partial failures
 and leave the destination unchanged when copy assignment fails. Shared helpers
 should have narrow, descriptive names; keep them in private implementation files.
 
+Grant private access to the specific functions that need it. Do not introduce
+stateless access classes or static-method containers solely to bypass visibility.
+Keep conversion functions private, name the values and conversion direction, and
+make ownership explicit in their internal documentation. Retain classes for domain
+objects, resource ownership, callback state, and other concrete responsibilities.
+
 Use documented `ErrorCode` values and `Error` for operation failures instead of
 requiring callers to interpret integers or include C headers. Keep each enum in
 its own header. Verify C/C++ enum mappings in unit tests, rather than scattering

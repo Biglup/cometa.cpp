@@ -29,8 +29,8 @@
 
 #include "../../CardanoInterop.h"
 #include "../CoinSelectorAdapter.h"
+#include "../TransactionConversions.h"
 #include "../TransactionEvaluatorAdapter.h"
-#include "../TransactionUtilityAccess.h"
 
 #include <cardano/address/address.h>
 #include <cardano/transaction/sub_transaction.h>
@@ -56,15 +56,15 @@ computeTransactionImbalance(const Transaction& transaction, const UtxoList& reso
 {
   CardanoObject<cardano_transaction_t, cardano_transaction_unref> nativeTransaction(
     decodeCbor<cardano_transaction_t, cardano_transaction_unref>(transaction.toCbor(), cardano_transaction_from_cbor));
-  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtilityUtxos(resolvedInputs));
+  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
 
   cardano_value_t*                                    result = nullptr;
-  const cardano_error_t                               status = cardano_compute_transaction_imbalance(nativeTransaction.get(), nativeResolvedInputs.get(), TransactionUtilityAccess::parameters(parameters), &result);
+  const cardano_error_t                               status = cardano_compute_transaction_imbalance(nativeTransaction.get(), nativeResolvedInputs.get(), parameters.checked(), &result);
   CardanoObject<cardano_value_t, cardano_value_unref> owner(result);
 
   checkCardanoError(status, "computeTransactionImbalance");
 
-  return TransactionUtilityAccess::copyValue(owner.get());
+  return copyValueFromNative(owner.get());
 }
 
 Value
@@ -72,15 +72,15 @@ computeSubTransactionImbalance(const SubTransaction& transaction, const UtxoList
 {
   CardanoObject<cardano_sub_transaction_t, cardano_sub_transaction_unref> nativeTransaction(
     decodeCbor<cardano_sub_transaction_t, cardano_sub_transaction_unref>(transaction.toCbor(), cardano_sub_transaction_from_cbor));
-  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtilityUtxos(resolvedInputs));
+  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
 
   cardano_value_t*                                    result = nullptr;
-  const cardano_error_t                               status = cardano_compute_sub_transaction_imbalance(nativeTransaction.get(), nativeResolvedInputs.get(), TransactionUtilityAccess::parameters(parameters), &result);
+  const cardano_error_t                               status = cardano_compute_sub_transaction_imbalance(nativeTransaction.get(), nativeResolvedInputs.get(), parameters.checked(), &result);
   CardanoObject<cardano_value_t, cardano_value_unref> owner(result);
 
   checkCardanoError(status, "computeSubTransactionImbalance");
 
-  return TransactionUtilityAccess::copyValue(owner.get());
+  return copyValueFromNative(owner.get());
 }
 
 Value
@@ -88,15 +88,15 @@ computeTransactionBatchImbalance(const Transaction& transaction, const UtxoList&
 {
   CardanoObject<cardano_transaction_t, cardano_transaction_unref> nativeTransaction(
     decodeCbor<cardano_transaction_t, cardano_transaction_unref>(transaction.toCbor(), cardano_transaction_from_cbor));
-  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtilityUtxos(resolvedInputs));
+  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
 
   cardano_value_t*                                    result = nullptr;
-  const cardano_error_t                               status = cardano_compute_transaction_batch_imbalance(nativeTransaction.get(), nativeResolvedInputs.get(), TransactionUtilityAccess::parameters(parameters), &result);
+  const cardano_error_t                               status = cardano_compute_transaction_batch_imbalance(nativeTransaction.get(), nativeResolvedInputs.get(), parameters.checked(), &result);
   CardanoObject<cardano_value_t, cardano_value_unref> owner(result);
 
   checkCardanoError(status, "computeTransactionBatchImbalance");
 
-  return TransactionUtilityAccess::copyValue(owner.get());
+  return copyValueFromNative(owner.get());
 }
 
 bool
@@ -104,10 +104,10 @@ isTransactionBalanced(const Transaction& transaction, const UtxoList& resolvedIn
 {
   CardanoObject<cardano_transaction_t, cardano_transaction_unref> nativeTransaction(
     decodeCbor<cardano_transaction_t, cardano_transaction_unref>(transaction.toCbor(), cardano_transaction_from_cbor));
-  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtilityUtxos(resolvedInputs));
+  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
 
   bool result {};
-  checkCardanoError(cardano_is_transaction_balanced(nativeTransaction.get(), nativeResolvedInputs.get(), TransactionUtilityAccess::parameters(parameters), &result), "isTransactionBalanced");
+  checkCardanoError(cardano_is_transaction_balanced(nativeTransaction.get(), nativeResolvedInputs.get(), parameters.checked(), &result), "isTransactionBalanced");
 
   return result;
 }
@@ -156,13 +156,13 @@ balanceTransaction(const TransactionBalanceRequest& request)
 
   CardanoObject<cardano_transaction_t, cardano_transaction_unref> transaction(
     decodeCbor<cardano_transaction_t, cardano_transaction_unref>(request.transaction.toCbor(), cardano_transaction_from_cbor));
-  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> preselected(copyUtilityUtxos(selected));
-  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> available(copyUtilityUtxos(request.available));
-  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> references(copyUtilityUtxos(request.referenceInputs));
-  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> collateral(copyUtilityUtxos(request.collateral));
-  CardanoObject<cardano_address_t, cardano_address_unref>     change(copyUtilityAddress(request.changeAddress));
+  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> preselected(copyUtxosToNative(selected));
+  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> available(copyUtxosToNative(request.available));
+  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> references(copyUtxosToNative(request.referenceInputs));
+  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> collateral(copyUtxosToNative(request.collateral));
+  CardanoObject<cardano_address_t, cardano_address_unref>     change(copyAddressToNative(request.changeAddress));
   CardanoObject<cardano_address_t, cardano_address_unref>     collateralChange(
-    copyUtilityAddress(request.collateralChangeAddress ? *request.collateralChangeAddress : request.changeAddress));
+    copyAddressToNative(request.collateralChangeAddress ? *request.collateralChangeAddress : request.changeAddress));
 
   cardano_input_to_redeemer_map_t*                                                    mapValue  = nullptr;
   const cardano_error_t                                                               mapStatus = cardano_input_to_redeemer_map_new(&mapValue);
@@ -225,7 +225,7 @@ balanceTransaction(const TransactionBalanceRequest& request)
   cardano_transaction_clear_cbor_cache(transaction.get());
 
   const cardano_error_t status = cardano_balance_transaction(
-    transaction.get(), request.foreignSignatureCount, TransactionUtilityAccess::parameters(request.parameters), references.get(), preselected.get(), inputRedeemers.get(), available.get(), nativeSelector.get(), change.get(), collateral.get(), collateralChange.get(), nativeEvaluator.get(), nullptr);
+    transaction.get(), request.foreignSignatureCount, request.parameters.checked(), references.get(), preselected.get(), inputRedeemers.get(), available.get(), nativeSelector.get(), change.get(), collateral.get(), collateralChange.get(), nativeEvaluator.get(), nullptr);
 
   checkCardanoError(status, "balanceTransaction");
   cardano_transaction_clear_cbor_cache(transaction.get());

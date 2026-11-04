@@ -198,7 +198,7 @@ ADD_LIBRARY (cometa STATIC
   lib/src/KeyHandlers/SecureKeyHandler.cpp
   lib/src/Providers/ProviderAdapter.cpp
   lib/src/Providers/BlockfrostProvider.cpp
-  lib/src/TransactionBuilder/TransactionUtilityAccess.cpp
+  lib/src/TransactionBuilder/TransactionConversions.cpp
   lib/src/TransactionBuilder/Fee.cpp
   lib/src/TransactionBuilder/ScriptDataHash.cpp
   lib/src/TransactionBuilder/Balancing/ImplicitCoin.cpp

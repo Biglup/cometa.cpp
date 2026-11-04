@@ -28,6 +28,7 @@
 #include <Cometa/Common/ExUnits.h>
 #include <Cometa/Common/ProtocolVersion.h>
 #include <Cometa/Common/UnitInterval.h>
+#include <Cometa/Common/UtxoList.h>
 #include <Cometa/ProtocolParams/CostModels.h>
 #include <Cometa/ProtocolParams/DRepVotingThresholds.h>
 #include <Cometa/ProtocolParams/ExUnitPrices.h>
@@ -45,7 +46,11 @@ struct cardano_protocol_parameters_t;
 
 namespace Cometa
 {
-class ProviderAdapter;
+class Transaction;
+class SubTransaction;
+class Value;
+struct ImplicitCoin;
+struct TransactionBalanceRequest;
 
 /**
  * @brief A snapshot of a network's ledger limits, fees, deposits, and governance settings.
@@ -796,14 +801,38 @@ class ProtocolParameters
 
   private:
 
-    /** @brief Allows transaction utilities to read protocol parameters. */
-    friend class TransactionUtilityAccess;
+    /** @brief Grants computeTransactionFee access to stored protocol parameters. */
+    friend std::uint64_t computeTransactionFee(const Transaction& transaction, const UtxoList& resolvedInputs, const ProtocolParameters& parameters);
 
-    /** @brief Allows the provider bridge to copy parameters into native calls. */
-    friend class ProviderAdapter;
+    /** @brief Grants computeScriptRefFee access to stored protocol parameters. */
+    friend std::uint64_t computeScriptRefFee(const UtxoList& resolvedInputs, const ProtocolParameters& parameters);
 
-    /** @brief Allows the coin selection bridge to copy parameters into native calls. */
-    friend class CoinSelectorAdapter;
+    /** @brief Grants computeImplicitCoin access to stored protocol parameters. */
+    friend ImplicitCoin computeImplicitCoin(const Transaction& transaction, const ProtocolParameters& parameters);
+
+    /** @brief Grants computeImplicitCoin access to stored protocol parameters. */
+    friend ImplicitCoin computeImplicitCoin(const SubTransaction& transaction, const ProtocolParameters& parameters);
+
+    /** @brief Grants computeTransactionImbalance access to stored protocol parameters. */
+    friend Value computeTransactionImbalance(const Transaction& transaction, const UtxoList& resolvedInputs, const ProtocolParameters& parameters);
+
+    /** @brief Grants computeSubTransactionImbalance access to stored protocol parameters. */
+    friend Value computeSubTransactionImbalance(const SubTransaction& transaction, const UtxoList& resolvedInputs, const ProtocolParameters& parameters);
+
+    /** @brief Grants computeTransactionBatchImbalance access to stored protocol parameters. */
+    friend Value computeTransactionBatchImbalance(const Transaction& transaction, const UtxoList& resolvedInputs, const ProtocolParameters& parameters);
+
+    /** @brief Grants isTransactionBalanced access to stored protocol parameters. */
+    friend bool isTransactionBalanced(const Transaction& transaction, const UtxoList& resolvedInputs, const ProtocolParameters& parameters);
+
+    /** @brief Grants balanceTransaction access to stored protocol parameters. */
+    friend Transaction balanceTransaction(const TransactionBalanceRequest& request);
+
+    /** @brief Grants copyProtocolParametersToNative access to stored protocol parameters. */
+    friend cardano_protocol_parameters_t* copyProtocolParametersToNative(const ProtocolParameters& parameters);
+
+    /** @brief Grants copyProtocolParametersFromNative access to stored protocol parameters. */
+    friend ProtocolParameters copyProtocolParametersFromNative(const cardano_protocol_parameters_t* parameters);
 
     /** @brief Allows transaction builders to retain protocol parameters. */
     friend class TransactionBuilder;

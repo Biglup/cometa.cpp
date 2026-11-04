@@ -26,6 +26,7 @@
 #include <Cometa/ProtocolParams/ProtocolParameters.h>
 
 #include "../CardanoInterop.h"
+#include "ProtocolParametersInterop.h"
 
 #include <cardano/buffer.h>
 
@@ -1314,6 +1315,34 @@ ProtocolParameters::checked() const
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/
+
+cardano_protocol_parameters_t*
+copyProtocolParametersToNative(const ProtocolParameters& parameters)
+{
+  cardano_protocol_parameters_t*                                                  value  = nullptr;
+  const cardano_error_t                                                           status = cardano_protocol_parameters_deep_clone(parameters.checked(), &value);
+  CardanoObject<cardano_protocol_parameters_t, cardano_protocol_parameters_unref> owner(value);
+
+  checkCardanoError(status, "Copy protocol parameters to native");
+
+  return owner.release();
+}
+
+ProtocolParameters
+copyProtocolParametersFromNative(const cardano_protocol_parameters_t* parameters)
+{
+  ProtocolParameters result;
+
+  cardano_protocol_parameters_t*                                                  value  = nullptr;
+  const cardano_error_t                                                           status = cardano_protocol_parameters_deep_clone(parameters, &value);
+  CardanoObject<cardano_protocol_parameters_t, cardano_protocol_parameters_unref> owner(value);
+
+  checkCardanoError(status, "Copy protocol parameters from native");
+  cardano_protocol_parameters_unref(&result.m_value);
+  result.m_value = owner.release();
+
+  return result;
+}
 
 void
 swap(ProtocolParameters& lhs, ProtocolParameters& rhs) noexcept

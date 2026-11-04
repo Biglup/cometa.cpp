@@ -1,7 +1,7 @@
 /**
- * @file TransactionUtilityAccess.h
+ * @file TransactionConversions.h
  *
- * @brief Private access used by transaction utilities.
+ * @brief Private transaction value and input conversions.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -27,51 +27,36 @@
 
 #include <Cometa/Address/Address.h>
 #include <Cometa/Common/UtxoList.h>
-#include <Cometa/ProtocolParams/ProtocolParameters.h>
 #include <Cometa/TransactionBody/Value.h>
 
 /* FORWARD DECLARATIONS ******************************************************/
 
-struct cardano_protocol_parameters_t;
 struct cardano_utxo_list_t;
 struct cardano_address_t;
 
-/* DECLARATIONS **************************************************************/
+/* PROTOTYPES ****************************************************************/
 
 namespace Cometa
 {
-/** @brief Provides internal parameter access for transaction utilities. */
-class TransactionUtilityAccess
-{
-  public:
-
-    /**
-     * @brief Gets the parameters borrowed for the duration of a utility call.
-     * @param parameters The owning C++ parameters.
-     * @return The borrowed native parameters.
-     */
-    static cardano_protocol_parameters_t* parameters(const ProtocolParameters& parameters);
-
-    /**
-     * @brief Copies a newly computed signed value.
-     * @param value The borrowed native value.
-     * @return The signed C++ value.
-     */
-    static Value copyValue(cardano_value_t* value);
-};
+/**
+ * @brief Copies a signed value without changing negative quantities.
+ * @param value The borrowed native value.
+ * @return An independent C++ value.
+ */
+Value copyValueFromNative(cardano_value_t* value);
 
 /**
  * @brief Copies resolved outputs into an owned native list.
  * @param utxos The outputs to copy.
  * @return The owned list.
  */
-cardano_utxo_list_t* copyUtilityUtxos(const UtxoList& utxos);
+cardano_utxo_list_t* copyUtxosToNative(const UtxoList& utxos);
 
 /**
  * @brief Copies a change address into an owned native value.
  * @param address The address to copy.
  * @return The owned address.
  */
-cardano_address_t* copyUtilityAddress(const Address& address);
+cardano_address_t* copyAddressToNative(const Address& address);
 
 } // namespace Cometa

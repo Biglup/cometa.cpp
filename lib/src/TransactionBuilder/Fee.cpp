@@ -26,7 +26,7 @@
 #include <Cometa/TransactionBuilder/Fee.h>
 
 #include "../CardanoInterop.h"
-#include "TransactionUtilityAccess.h"
+#include "TransactionConversions.h"
 
 #include <cardano/common/ex_units.h>
 #include <cardano/common/unit_interval.h>
@@ -45,10 +45,10 @@ computeTransactionFee(const Transaction& transaction, const UtxoList& resolvedIn
 {
   CardanoObject<cardano_transaction_t, cardano_transaction_unref> nativeTransaction(
     decodeCbor<cardano_transaction_t, cardano_transaction_unref>(transaction.toCbor(), cardano_transaction_from_cbor));
-  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtilityUtxos(resolvedInputs));
+  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
 
   std::uint64_t result {};
-  checkCardanoError(cardano_compute_transaction_fee(nativeTransaction.get(), nativeResolvedInputs.get(), TransactionUtilityAccess::parameters(parameters), &result), "computeTransactionFee");
+  checkCardanoError(cardano_compute_transaction_fee(nativeTransaction.get(), nativeResolvedInputs.get(), parameters.checked(), &result), "computeTransactionFee");
 
   return result;
 }
@@ -72,7 +72,7 @@ computeMinScriptFee(const Transaction& transaction, const ExUnitPrices& prices, 
     decodeCbor<cardano_transaction_t, cardano_transaction_unref>(transaction.toCbor(), cardano_transaction_from_cbor));
   CardanoObject<cardano_ex_unit_prices_t, cardano_ex_unit_prices_unref> nativePrices(
     decodeCbor<cardano_ex_unit_prices_t, cardano_ex_unit_prices_unref>(prices.toCbor(), cardano_ex_unit_prices_from_cbor));
-  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref>         nativeResolvedInputs(copyUtilityUtxos(resolvedInputs));
+  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref>         nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> nativeCoinsPerRefScriptByte(
     decodeCbor<cardano_unit_interval_t, cardano_unit_interval_unref>(coinsPerRefScriptByte.toCbor(), cardano_unit_interval_from_cbor));
 
@@ -97,7 +97,7 @@ computeMinFeeWithoutScripts(const Transaction& transaction, std::uint64_t consta
 std::uint64_t
 computeScriptRefFee(const UtxoList& resolvedInputs, const UnitInterval& coinsPerRefScriptByte)
 {
-  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref>         nativeResolvedInputs(copyUtilityUtxos(resolvedInputs));
+  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref>         nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> nativeCoinsPerRefScriptByte(
     decodeCbor<cardano_unit_interval_t, cardano_unit_interval_unref>(coinsPerRefScriptByte.toCbor(), cardano_unit_interval_from_cbor));
 
@@ -110,10 +110,10 @@ computeScriptRefFee(const UtxoList& resolvedInputs, const UnitInterval& coinsPer
 std::uint64_t
 computeScriptRefFee(const UtxoList& resolvedInputs, const ProtocolParameters& parameters)
 {
-  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtilityUtxos(resolvedInputs));
+  CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
 
   std::uint64_t result {};
-  checkCardanoError(cardano_compute_script_ref_fee_with_params(nativeResolvedInputs.get(), TransactionUtilityAccess::parameters(parameters), &result), "computeScriptRefFee");
+  checkCardanoError(cardano_compute_script_ref_fee_with_params(nativeResolvedInputs.get(), parameters.checked(), &result), "computeScriptRefFee");
 
   return result;
 }

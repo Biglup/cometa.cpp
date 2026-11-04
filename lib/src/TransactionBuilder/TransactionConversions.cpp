@@ -1,7 +1,7 @@
 /**
- * @file TransactionUtilityAccess.cpp
+ * @file TransactionConversions.cpp
  *
- * @brief Private parameter and UTxO conversion for transaction utilities.
+ * @brief Private transaction value and input conversions.
  *
  * @author angel.castillo
  * @date   Nov 02, 2026
@@ -23,7 +23,7 @@
 
 /* INCLUDES ******************************************************************/
 
-#include "TransactionUtilityAccess.h"
+#include "TransactionConversions.h"
 #include "../CardanoInterop.h"
 
 #include <cardano/address/address.h>
@@ -36,14 +36,8 @@
 
 namespace Cometa
 {
-cardano_protocol_parameters_t*
-TransactionUtilityAccess::parameters(const ProtocolParameters& parameters)
-{
-  return parameters.checked();
-}
-
 Value
-TransactionUtilityAccess::copyValue(cardano_value_t* value)
+copyValueFromNative(cardano_value_t* value)
 {
   CardanoObject<cardano_multi_asset_t, cardano_multi_asset_unref> assets(cardano_value_get_multi_asset(value));
 
@@ -56,7 +50,7 @@ TransactionUtilityAccess::copyValue(cardano_value_t* value)
 }
 
 cardano_utxo_list_t*
-copyUtilityUtxos(const UtxoList& utxos)
+copyUtxosToNative(const UtxoList& utxos)
 {
   cardano_utxo_list_t*                                        value  = nullptr;
   const cardano_error_t                                       status = cardano_utxo_list_new(&value);
@@ -76,7 +70,7 @@ copyUtilityUtxos(const UtxoList& utxos)
 }
 
 cardano_address_t*
-copyUtilityAddress(const Address& address)
+copyAddressToNative(const Address& address)
 {
   const std::vector<std::uint8_t>                         bytes  = address.toBytes();
   cardano_address_t*                                      value  = nullptr;

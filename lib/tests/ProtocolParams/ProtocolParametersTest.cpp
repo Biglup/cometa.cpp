@@ -25,9 +25,16 @@
 
 #include <Cometa/Cometa.h>
 
+#include "../../src/CardanoInterop.h"
+#include "../../src/ProtocolParams/ProtocolParametersInterop.h"
+
+#include <cardano/protocol_params/protocol_parameters.h>
+
 #include <gtest/gtest.h>
 
 #include <limits>
+#include <stdexcept>
+#include <utility>
 
 /* USINGS ********************************************************************/
 
@@ -197,4 +204,38 @@ TEST(ProtocolParameters, CopiesAndNullableFieldsAreIndependent)
   EXPECT_FALSE(parameters.perasHealingFactor().has_value());
   EXPECT_FALSE(parameters.perasBootstrapRound().has_value());
   EXPECT_THROW(parameters.setMaxValueSize(std::numeric_limits<std::uint64_t>::max()), std::out_of_range);
+}
+
+TEST(ProtocolParameters, InteropCopiesRemainIndependentInBothDirections)
+{
+  // Arrange
+  ProtocolParameters original;
+  original.setMinFeeA(44);
+  CardanoObject<cardano_protocol_parameters_t, cardano_protocol_parameters_unref> native(copyProtocolParametersToNative(original));
+
+  // Act
+  original.setMinFeeA(55);
+  ProtocolParameters copied = copyProtocolParametersFromNative(native.get());
+  ASSERT_EQ(cardano_protocol_parameters_set_min_fee_a(native.get(), 66), CARDANO_SUCCESS);
+
+  // Assert
+  EXPECT_EQ(original.minFeeA(), 55U);
+  EXPECT_EQ(copied.minFeeA(), 44U);
+  EXPECT_EQ(cardano_protocol_parameters_get_min_fee_a(native.get()), 66U);
+
+  copied.setMinFeeA(77);
+  EXPECT_EQ(cardano_protocol_parameters_get_min_fee_a(native.get()), 66U);
+}
+
+TEST(ProtocolParameters, InteropRejectsNullAndMovedFromSources)
+{
+  // Arrange
+  ProtocolParameters source;
+  ProtocolParameters empty(std::move(source));
+  source.swap(empty);
+
+  // Act & Assert
+  EXPECT_THROW(copyProtocolParametersFromNative(nullptr), Error);
+  EXPECT_THROW(copyProtocolParametersToNative(empty), std::logic_error);
+  EXPECT_EQ(source.minFeeA(), 0U);
 }

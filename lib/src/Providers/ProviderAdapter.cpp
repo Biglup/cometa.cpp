@@ -26,6 +26,7 @@
 #include "ProviderAdapter.h"
 
 #include "../CardanoInterop.h"
+#include "../ProtocolParams/ProtocolParametersInterop.h"
 
 #include <cardano/address/address.h>
 #include <cardano/address/reward_address.h>
@@ -499,37 +500,38 @@ evaluateTransaction(cardano_provider_impl_t* implementation, cardano_transaction
     return providerError(implementation, "Provider evaluation failed");
   }
 }
-} // namespace
 
-/** @brief Connects protocol-parameter copying to the C++ provider. */
-class ProviderAdapter
+/**
+ * @brief Dispatches a protocol-parameter query.
+ * @param implementation The native provider implementation.
+ * @param output Receives independent parameters.
+ * @return The native status.
+ */
+cardano_error_t
+getParameters(cardano_provider_impl_t* implementation, cardano_protocol_parameters_t** output)
 {
-  public:
+  try
+  {
+    const ProtocolParameters parameters = providerOf(implementation).getParameters();
 
-    /**
-     * @brief Dispatches a protocol-parameter query.
-     * @param implementation The native provider implementation.
-     * @param output Receives independent parameters.
-     * @return The native status.
-     */
-    static cardano_error_t
-    getParameters(cardano_provider_impl_t* implementation, cardano_protocol_parameters_t** output)
-    {
-      try
-      {
-        const ProtocolParameters parameters = providerOf(implementation).getParameters();
-        return cardano_protocol_parameters_deep_clone(parameters.checked(), output);
-      }
-      catch (const std::exception& error)
-      {
-        return providerError(implementation, error.what());
-      }
-      catch (...)
-      {
-        return providerError(implementation, "Provider parameters query failed");
-      }
-    }
-};
+    *output = copyProtocolParametersToNative(parameters);
+
+    return CARDANO_SUCCESS;
+  }
+  catch (const std::bad_alloc&)
+  {
+    return CARDANO_ERROR_MEMORY_ALLOCATION_FAILED;
+  }
+  catch (const std::exception& error)
+  {
+    return providerError(implementation, error.what());
+  }
+  catch (...)
+  {
+    return providerError(implementation, "Provider parameters query failed");
+  }
+}
+} // namespace
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/
 
@@ -554,7 +556,7 @@ createProviderAdapter(std::shared_ptr<Provider> provider)
   std::memcpy(implementation.name, name.data(), name.size());
   implementation.network_magic                  = static_cast<cardano_network_magic_t>(network);
   implementation.context                        = context;
-  implementation.get_parameters                 = &ProviderAdapter::getParameters;
+  implementation.get_parameters                 = &getParameters;
   implementation.get_unspent_outputs            = &getUnspentOutputs;
   implementation.get_rewards_balance            = &getRewardsAvailable;
   implementation.get_unspent_outputs_with_asset = &getUnspentOutputsWithAsset;
