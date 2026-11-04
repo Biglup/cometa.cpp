@@ -1,25 +1,22 @@
 :orphan:
 
-Implementation plan
-===================
+Implementation record
+=====================
 
-Implement the public cardano-c capabilities through C++17 domain types and
-operations. C reference counting, callback contexts, and output buffers remain
-private. Use the coverage ledger in :doc:`coverage` to record each mapping and
-its tests. Cometa.py is a useful structural reference; neither existing binding
-replaces the C API as the coverage baseline.
+The planned cardano-c binding slices are implemented. The coverage ledger in
+:doc:`coverage` accounts for every exported declaration in the pinned native
+revision; no entries remain planned. This page records the implementation
+sequence and its acceptance criteria, rather than an outstanding PR backlog.
 
-PR sequence
------------
+Ordinary C++ operations manage ownership automatically. Explicit native
+interoperability is documented in :doc:`design`.
 
-The foundation is merged. The first common-types slice is divided into three
-PRs to keep numeric and encoding boundary work independently reviewable.
-P01a.1, P01a.2, and P01a.3 are merged.
-P01b is split into CBOR and JSON slices to keep parsing changes reviewable.
-Both CBOR and JSON are merged. P02 is split into key/signature values and
-cryptographic utilities.
-Implementation PRs are stacked on their preceding branch and reviewed in order;
-work continues while reviews are pending.
+Implementation sequence
+-----------------------
+
+The following slices were delivered through reviewed implementation PRs. Later
+completion work added the remaining transaction utilities, governance builder
+operations, and native interoperability.
 
 .. list-table:: Implementation slices
    :header-rows: 1
@@ -172,14 +169,14 @@ ownership and failure-path tests, documentation, and coverage updates. Preserve
 clang-format, cppcheck, platform builds, package-consumer checks, and Valgrind CI.
 Port relevant native unit tests and compare known encodings, not only round trips.
 
-By P23, implement a C++ adapter for all 229 cases in the shared conformance corpus:
+The C++ conformance adapter covers all 229 cases in the pinned shared corpus:
 serialization, invalid inputs, primitives, transactions, builders, and lifecycle
-scenarios. Pin the corpus alongside the native dependency. Never generate expected
-values from the binding under test during a test run.
+scenarios. The corpus is pinned alongside the native dependency. Expected values
+come from cardano-c, not from the binding under test.
 
-Blockfrost is last. First build and package the optional libcurl transport with
-verified TLS, bounded responses, timeouts, and offline transport injection. Then
-cover every provider operation, pagination, HTTP failures, and exact amounts.
+Blockfrost and the platform HTTP transports are implemented with
+verified TLS, bounded responses, timeouts, and offline transport injection. Tests
+cover provider operations, pagination, HTTP failures, and exact amounts.
 The opt-in live test must fetch UTxOs and parameters, build, sign, submit, and
 confirm a transaction. Test custom coin selectors and evaluators as well as the
 default native evaluator. Exercise Dijkstra submissions only on networks that
