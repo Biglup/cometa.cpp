@@ -85,7 +85,7 @@ Coverage ledger
 ---------------
 
 The inventory was reconciled against the pinned cardano-c commit
-``af8780f200bc8a604324fb1a93a974283094022d``. All exported declarations
+``8dc0c55f4132fcaa2e7961b6cfbfea96a6d93b5d``. All exported declarations
 in that revision have a mapping; no entries remain planned.
 It contains 231 public headers, 418 implementation files, 235 distinct public
 typedefs, and 3,335 exported function declarations. Tests and vendored dependencies

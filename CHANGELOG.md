@@ -1,25 +1,13 @@
-Next
+2.0.0-rc.1
 ---------------------
-- Add unique hash and credential sets with sorted CBOR/JSON and independent element access.
-- Add signed asset maps, multi-assets, and Value with checked arithmetic, serialization, and independent components.
-- Add asset identifiers and standard C++ lists for identifiers, names, and policy hashes.
-- Add Shelley and Byron address values, checked conversions, network/prefix validation, independent credential access, and shared address vectors.
-- Add BIP39 mnemonic conversion, PBKDF2, EMIP-003 encryption/decryption, CRC32, and named BLAKE2b digest lengths.
-- Add Ed25519 signatures and normal/extended keys, BIP32 derivation, and shared cryptographic fixture checks.
-- Add JSON values, writers, and enums with exact decimal tokens, owned child values, checked conversions, and allocation-failure tests; pin the native JSON fixes.
-- Add copyable CBOR readers/writers, typed enums, checked numeric boundaries, and owned byte/string results.
-- Add Base58 and Bech32 encoding helpers with owned results, checked inputs, and allocation-failure coverage; pin the native Base58 boundary fix.
-- Add arbitrary-precision BigInt arithmetic, checked conversions, bitwise and modular operations, and independent value semantics.
-- Add UnitInterval, Anchor, and GovernanceActionId values with checked conversions, independent copies, and CBOR/JSON encoding.
-- Add C++17 hash, credential, and asset-name value types with native deep copies and automatic memory management.
-- Add static cardano-c builds, relocatable CMake packages, platform ZIP packaging, unit tests, and Valgrind CI.
-- Add Doxygen/Breathe/Sphinx documentation and Read the Docs configuration.
-- Use the Cometa namespace and PascalCase .h headers; document C++17 coding and API documentation conventions.
-- Capitalize the Cometa include directory, separate enum headers, and expose documented ErrorCode values.
-- Accept hexadecimal CBOR through string-view overloads and add per-type unit test suites.
-- Report empty CBOR as an invalid argument instead of an allocation failure.
-- Simplify C interoperability with direct calls, remove the example, and enforce formatting and static analysis in CI.
-- Organize domain headers, sources, and tests into Assets, Common, and Crypto folders.
-- Check private and internal documentation in CI and retain Valgrind reports.
-- Add execution budgets, protocol versions, network and governance enums, and checked slot/time conversion.
-- Pin the merged native implementation and track the remaining API and implementation PRs in the coverage ledger.
+
+First release candidate of Cometa.cpp, a C++17 library for Cardano.
+
+- Add Cardano domain values, cryptography, addresses, scripts, metadata, certificates, governance, and transaction inspection.
+- Add transaction and subtransaction builders, balancing utilities, deferred redeemers, Dijkstra guards, and direct account deposits.
+- Add native Plutus evaluation and script parameter application, with injectable coin selectors, evaluators, providers, and signing callbacks.
+- Add Blockfrost access and platform HTTP transports with TLS verification, timeouts, and bounded responses.
+- Provide independent value copies, automatic resource management, standard collection iterators, and implicit conversions between related domain types.
+- Expose explicit native borrowing and ownership transfer through `nativeHandle()`, `adopt()`, and `release()` where applicable.
+- Package static and shared libraries, matching C headers, and relocatable CMake targets for Linux and macOS x64/ARM64, and Windows x64.
+- Publish API documentation and usage guides, port the cardano-c examples, and validate the binding with shared conformance fixtures, allocation-failure tests, and Valgrind.
