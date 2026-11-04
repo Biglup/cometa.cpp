@@ -30,6 +30,8 @@
 #include <cardano/certs/register_drep_cert.h>
 #include <cardano/common/anchor.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -39,7 +41,7 @@ RegisterDRepCert::RegisterDRepCert(const Credential& credential, std::uint64_t d
 {
   const Credential                                                              copy(credential);
   cardano_register_drep_cert_t*                                                 value  = nullptr;
-  const cardano_error_t                                                         status = cardano_register_drep_cert_new(copy.checked(), deposit, anchor ? anchor->checked() : nullptr, &value);
+  const cardano_error_t                                                         status = cardano_register_drep_cert_new(checkedNativeHandle(copy), deposit, anchor ? checkedNativeHandle(*anchor) : nullptr, &value);
   CardanoObject<cardano_register_drep_cert_t, cardano_register_drep_cert_unref> owner(value);
 
   checkCardanoError(status, "RegisterDRepCert");
@@ -89,7 +91,7 @@ RegisterDRepCert::credential() const
     throw std::logic_error("DRep registration certificate has no credential");
   }
 
-  const Credential result(value);
+  const Credential result = Credential::adopt(value);
   return Credential(result);
 }
 
@@ -97,7 +99,7 @@ void
 RegisterDRepCert::setCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_register_drep_cert_set_credential(checked(), copy.checked()), "RegisterDRepCert setCredential");
+  checkCardanoError(cardano_register_drep_cert_set_credential(checked(), checkedNativeHandle(copy)), "RegisterDRepCert setCredential");
 }
 
 std::uint64_t
@@ -121,7 +123,7 @@ RegisterDRepCert::anchor() const
     return std::nullopt;
   }
 
-  const Anchor result(value);
+  const Anchor result = Anchor::adopt(value);
   return Anchor(result);
 }
 
@@ -184,6 +186,35 @@ bool
 RegisterDRepCert::operator!=(const RegisterDRepCert& other) const
 {
   return !(*this == other);
+}
+
+RegisterDRepCert
+RegisterDRepCert::adopt(cardano_register_drep_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null RegisterDRepCert");
+  }
+
+  return RegisterDRepCert(value);
+}
+
+cardano_register_drep_cert_t*
+RegisterDRepCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_register_drep_cert_t*
+RegisterDRepCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_register_drep_cert_t*
+RegisterDRepCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

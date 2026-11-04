@@ -31,6 +31,8 @@
 #include <cardano/plutus_data/plutus_data.h>
 #include <cardano/witness_set/redeemer.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -41,7 +43,7 @@ Redeemer::Redeemer(RedeemerTag tag, std::uint64_t index, const PlutusData& data,
   const PlutusData                                          dataCopy(data);
   const ExUnits                                             unitsCopy(exUnits);
   cardano_redeemer_t*                                       value  = nullptr;
-  const cardano_error_t                                     status = cardano_redeemer_new(static_cast<cardano_redeemer_tag_t>(tag), index, dataCopy.checked(), unitsCopy.checked(), &value);
+  const cardano_error_t                                     status = cardano_redeemer_new(static_cast<cardano_redeemer_tag_t>(tag), index, checkedNativeHandle(dataCopy), checkedNativeHandle(unitsCopy), &value);
   CardanoObject<cardano_redeemer_t, cardano_redeemer_unref> owner(value);
 
   checkCardanoError(status, "Redeemer");
@@ -118,7 +120,7 @@ Redeemer::data() const
     throw std::logic_error("Redeemer has no data");
   }
 
-  const PlutusData found(*owner.release());
+  const PlutusData found = PlutusData::adopt(owner.release());
   return PlutusData(found);
 }
 
@@ -126,7 +128,7 @@ void
 Redeemer::setData(const PlutusData& value)
 {
   const PlutusData copy(value);
-  checkCardanoError(cardano_redeemer_set_data(checked(), copy.checked()), "Redeemer setData");
+  checkCardanoError(cardano_redeemer_set_data(checked(), checkedNativeHandle(copy)), "Redeemer setData");
   cardano_redeemer_clear_cbor_cache(checked());
 }
 
@@ -141,7 +143,7 @@ Redeemer::exUnits() const
     throw std::logic_error("Redeemer has no execution budget");
   }
 
-  const ExUnits found(owner.release());
+  const ExUnits found = ExUnits::adopt(owner.release());
   return ExUnits(found);
 }
 
@@ -149,7 +151,7 @@ void
 Redeemer::setExUnits(const ExUnits& value)
 {
   const ExUnits copy(value);
-  checkCardanoError(cardano_redeemer_set_ex_units(checked(), copy.checked()), "Redeemer setExUnits");
+  checkCardanoError(cardano_redeemer_set_ex_units(checked(), checkedNativeHandle(copy)), "Redeemer setExUnits");
   cardano_redeemer_clear_cbor_cache(checked());
 }
 
@@ -203,6 +205,35 @@ bool
 Redeemer::operator!=(const Redeemer& other) const
 {
   return !(*this == other);
+}
+
+Redeemer
+Redeemer::adopt(cardano_redeemer_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Redeemer");
+  }
+
+  return Redeemer(value);
+}
+
+cardano_redeemer_t*
+Redeemer::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_redeemer_t*
+Redeemer::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_redeemer_t*
+Redeemer::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

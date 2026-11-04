@@ -29,6 +29,8 @@
 
 #include <cardano/certs/genesis_key_delegation_cert.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -44,7 +46,7 @@ GenesisKeyDelegationCert::GenesisKeyDelegationCert(const Blake2bHash& genesisHas
   const Blake2bHash                                                                               delegateCopy(delegateHash);
   const Blake2bHash                                                                               vrfCopy(vrfKeyHash);
   cardano_genesis_key_delegation_cert_t*                                                          value  = nullptr;
-  const cardano_error_t                                                                           status = cardano_genesis_key_delegation_cert_new(genesisCopy.checked(), delegateCopy.checked(), vrfCopy.checked(), &value);
+  const cardano_error_t                                                                           status = cardano_genesis_key_delegation_cert_new(checkedNativeHandle(genesisCopy), checkedNativeHandle(delegateCopy), checkedNativeHandle(vrfCopy), &value);
   CardanoObject<cardano_genesis_key_delegation_cert_t, cardano_genesis_key_delegation_cert_unref> owner(value);
 
   checkCardanoError(status, "GenesisKeyDelegationCert");
@@ -100,7 +102,7 @@ GenesisKeyDelegationCert::genesisHash() const
     throw std::logic_error("Genesis key delegation certificate has no genesis key hash");
   }
 
-  const Blake2bHash result(value);
+  const Blake2bHash result = Blake2bHash::adopt(value);
   return Blake2bHash(result);
 }
 
@@ -109,7 +111,7 @@ GenesisKeyDelegationCert::setGenesisHash(const Blake2bHash& value)
 {
   validateHash(value, 28);
   const Blake2bHash copy(value);
-  checkCardanoError(cardano_genesis_key_delegation_cert_set_genesis_hash(checked(), copy.checked()), "GenesisKeyDelegationCert setGenesisHash");
+  checkCardanoError(cardano_genesis_key_delegation_cert_set_genesis_hash(checked(), checkedNativeHandle(copy)), "GenesisKeyDelegationCert setGenesisHash");
 }
 
 Blake2bHash
@@ -121,7 +123,7 @@ GenesisKeyDelegationCert::delegateHash() const
     throw std::logic_error("Genesis key delegation certificate has no delegate key hash");
   }
 
-  const Blake2bHash result(value);
+  const Blake2bHash result = Blake2bHash::adopt(value);
   return Blake2bHash(result);
 }
 
@@ -130,7 +132,7 @@ GenesisKeyDelegationCert::setDelegateHash(const Blake2bHash& value)
 {
   validateHash(value, 28);
   const Blake2bHash copy(value);
-  checkCardanoError(cardano_genesis_key_delegation_cert_set_genesis_delegate_hash(checked(), copy.checked()), "GenesisKeyDelegationCert setDelegateHash");
+  checkCardanoError(cardano_genesis_key_delegation_cert_set_genesis_delegate_hash(checked(), checkedNativeHandle(copy)), "GenesisKeyDelegationCert setDelegateHash");
 }
 
 Blake2bHash
@@ -142,7 +144,7 @@ GenesisKeyDelegationCert::vrfKeyHash() const
     throw std::logic_error("Genesis key delegation certificate has no VRF key hash");
   }
 
-  const Blake2bHash result(value);
+  const Blake2bHash result = Blake2bHash::adopt(value);
   return Blake2bHash(result);
 }
 
@@ -151,7 +153,7 @@ GenesisKeyDelegationCert::setVrfKeyHash(const Blake2bHash& value)
 {
   validateHash(value, 32);
   const Blake2bHash copy(value);
-  checkCardanoError(cardano_genesis_key_delegation_cert_set_vrf_key_hash(checked(), copy.checked()), "GenesisKeyDelegationCert setVrfKeyHash");
+  checkCardanoError(cardano_genesis_key_delegation_cert_set_vrf_key_hash(checked(), checkedNativeHandle(copy)), "GenesisKeyDelegationCert setVrfKeyHash");
 }
 
 std::vector<std::uint8_t>
@@ -206,6 +208,35 @@ bool
 GenesisKeyDelegationCert::operator!=(const GenesisKeyDelegationCert& other) const
 {
   return !(*this == other);
+}
+
+GenesisKeyDelegationCert
+GenesisKeyDelegationCert::adopt(cardano_genesis_key_delegation_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null GenesisKeyDelegationCert");
+  }
+
+  return GenesisKeyDelegationCert(value);
+}
+
+cardano_genesis_key_delegation_cert_t*
+GenesisKeyDelegationCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_genesis_key_delegation_cert_t*
+GenesisKeyDelegationCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_genesis_key_delegation_cert_t*
+GenesisKeyDelegationCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

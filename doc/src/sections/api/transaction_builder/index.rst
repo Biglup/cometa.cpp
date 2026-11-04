@@ -10,6 +10,11 @@ SubTransactionBuilder builds Dijkstra intents for inclusion in a batch.
    :maxdepth: 1
 
    usage
+   fee
+   script_data_hash
+   implicit_coin
+   transaction_balance_request
+   transaction_balancing
    coin_selection_request
    coin_selection_result
    coin_selector

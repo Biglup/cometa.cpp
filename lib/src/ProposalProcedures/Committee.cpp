@@ -32,6 +32,8 @@
 #include <cardano/proposal_procedures/committee.h>
 #include <cardano/proposal_procedures/credential_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -41,7 +43,7 @@ Committee::Committee(const UnitInterval& quorumThreshold)
 {
   const UnitInterval                                          copy(quorumThreshold);
   cardano_committee_t*                                        value  = nullptr;
-  const cardano_error_t                                       status = cardano_committee_new(copy.checked(), &value);
+  const cardano_error_t                                       status = cardano_committee_new(checkedNativeHandle(copy), &value);
   CardanoObject<cardano_committee_t, cardano_committee_unref> owner(value);
 
   checkCardanoError(status, "Committee");
@@ -92,7 +94,7 @@ Committee::quorumThreshold() const
     throw std::logic_error("Committee has no quorum threshold");
   }
 
-  const UnitInterval found(owner.release());
+  const UnitInterval found = UnitInterval::adopt(owner.release());
   return UnitInterval(found);
 }
 
@@ -100,14 +102,14 @@ void
 Committee::setQuorumThreshold(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_committee_set_quorum_threshold(checked(), copy.checked()), "Committee setQuorumThreshold");
+  checkCardanoError(cardano_committee_set_quorum_threshold(checked(), checkedNativeHandle(copy)), "Committee setQuorumThreshold");
 }
 
 void
 Committee::addMember(const Credential& credential, std::uint64_t epoch)
 {
   const Credential copy(credential);
-  checkCardanoError(cardano_committee_add_member(checked(), copy.checked(), epoch), "Committee addMember");
+  checkCardanoError(cardano_committee_add_member(checked(), checkedNativeHandle(copy), epoch), "Committee addMember");
 }
 
 CredentialSet
@@ -118,13 +120,13 @@ Committee::keys() const
   CardanoObject<cardano_credential_set_t, cardano_credential_set_unref> owner(value);
 
   checkCardanoError(status, "Committee keys");
-  return CredentialSet(owner.release());
+  return CredentialSet::adopt(owner.release());
 }
 
 std::uint64_t
 Committee::memberEpoch(const Credential& credential) const
 {
-  return cardano_committee_get_member_epoch(checked(), credential.checked());
+  return cardano_committee_get_member_epoch(checked(), checkedNativeHandle(credential));
 }
 
 Credential
@@ -140,7 +142,7 @@ Committee::keyAt(std::size_t index) const
   CardanoObject<cardano_credential_t, cardano_credential_unref> owner(value);
 
   checkCardanoError(status, "Committee keyAt");
-  const Credential found(owner.release());
+  const Credential found = Credential::adopt(owner.release());
   return Credential(found);
 }
 
@@ -171,7 +173,7 @@ Committee::at(std::size_t index) const
   CardanoObject<cardano_credential_t, cardano_credential_unref> owner(key);
 
   checkCardanoError(status, "Committee at");
-  const Credential found(owner.release());
+  const Credential found = Credential::adopt(owner.release());
   return { Credential(found), epoch };
 }
 
@@ -219,6 +221,35 @@ bool
 Committee::operator!=(const Committee& other) const
 {
   return !(*this == other);
+}
+
+Committee
+Committee::adopt(cardano_committee_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Committee");
+  }
+
+  return Committee(value);
+}
+
+cardano_committee_t*
+Committee::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_committee_t*
+Committee::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_committee_t*
+Committee::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

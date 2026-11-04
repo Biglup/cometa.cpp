@@ -30,6 +30,8 @@
 #include <cardano/common/credential.h>
 #include <cardano/common/drep.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -40,7 +42,7 @@ DRep::DRep(DRepType type, std::optional<Credential> credential)
   validate(type, credential);
 
   cardano_drep_t*                                   value  = nullptr;
-  const cardano_error_t                             status = cardano_drep_new(static_cast<cardano_drep_type_t>(type), credential ? credential->checked() : nullptr, &value);
+  const cardano_error_t                             status = cardano_drep_new(static_cast<cardano_drep_type_t>(type), credential ? checkedNativeHandle(*credential) : nullptr, &value);
   CardanoObject<cardano_drep_t, cardano_drep_unref> owner(value);
 
   checkCardanoError(status, "DRep");
@@ -127,7 +129,7 @@ DRep::credential() const
   CardanoObject<cardano_credential_t, cardano_credential_unref> owner(value);
 
   checkCardanoError(status, "DRep credential");
-  Credential copied(owner.release());
+  Credential copied = Credential::adopt(owner.release());
   return Credential(copied);
 }
 
@@ -137,7 +139,7 @@ DRep::setCredential(const Credential& value)
   validate(type(), value);
 
   Credential copy(value);
-  checkCardanoError(cardano_drep_set_credential(checked(), copy.checked()), "DRep setCredential");
+  checkCardanoError(cardano_drep_set_credential(checked(), checkedNativeHandle(copy)), "DRep setCredential");
 }
 
 void
@@ -215,6 +217,35 @@ bool
 DRep::operator!=(const DRep& other) const
 {
   return !(*this == other);
+}
+
+DRep
+DRep::adopt(cardano_drep_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null DRep");
+  }
+
+  return DRep(value);
+}
+
+cardano_drep_t*
+DRep::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_drep_t*
+DRep::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_drep_t*
+DRep::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -34,6 +34,8 @@
 
 #include <limits>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -54,7 +56,7 @@ Value::Value(std::int64_t coin, const MultiAsset& assets)
 {
   const MultiAsset                                    copy(assets);
   cardano_value_t*                                    value  = nullptr;
-  const cardano_error_t                               status = cardano_value_new(coin, copy.checked(), &value);
+  const cardano_error_t                               status = cardano_value_new(coin, checkedNativeHandle(copy), &value);
   CardanoObject<cardano_value_t, cardano_value_unref> owner(value);
 
   checkCardanoError(status, "Value with assets");
@@ -175,7 +177,7 @@ Value::assets() const
     return MultiAsset();
   }
 
-  const MultiAsset result(owner.release());
+  const MultiAsset result = MultiAsset::adopt(owner.release());
   return MultiAsset(result);
 }
 
@@ -184,7 +186,7 @@ Value::setAssets(const MultiAsset& assets)
 {
   const MultiAsset copy(assets);
 
-  checkCardanoError(cardano_value_set_multi_asset(checked(), copy.checked()), "Value setAssets");
+  checkCardanoError(cardano_value_set_multi_asset(checked(), checkedNativeHandle(copy)), "Value setAssets");
 }
 
 void
@@ -399,6 +401,35 @@ bool
 Value::operator!=(const Value& other) const
 {
   return !(*this == other);
+}
+
+Value
+Value::adopt(cardano_value_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Value");
+  }
+
+  return Value(*value);
+}
+
+cardano_value_t*
+Value::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_value_t*
+Value::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_value_t*
+Value::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

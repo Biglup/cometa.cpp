@@ -30,6 +30,8 @@
 
 #include <cardano/scripts/native_scripts/script_require_guard.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -40,7 +42,7 @@ ScriptRequireGuard::ScriptRequireGuard(const Credential& credential)
   Credential copy(credential);
 
   cardano_script_require_guard_t* value  = nullptr;
-  const cardano_error_t           result = cardano_script_require_guard_new(copy.checked(), &value);
+  const cardano_error_t           result = cardano_script_require_guard_new(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_script_require_guard_t, cardano_script_require_guard_unref> owner(value);
 
@@ -120,7 +122,7 @@ ScriptRequireGuard::credential() const
 
   checkCardanoError(result, "ScriptRequireGuard credential");
 
-  const Credential component(owner.release());
+  const Credential component = Credential::adopt(owner.release());
 
   return Credential(component);
 }
@@ -130,7 +132,7 @@ ScriptRequireGuard::setCredential(const Credential& credential)
 {
   Credential copy(credential);
 
-  checkCardanoError(cardano_script_require_guard_set_credential(checked(), copy.checked()), "ScriptRequireGuard setCredential");
+  checkCardanoError(cardano_script_require_guard_set_credential(checked(), checkedNativeHandle(copy)), "ScriptRequireGuard setCredential");
 }
 
 std::vector<std::uint8_t>
@@ -192,6 +194,35 @@ bool
 ScriptRequireGuard::operator!=(const ScriptRequireGuard& other) const
 {
   return !(*this == other);
+}
+
+ScriptRequireGuard
+ScriptRequireGuard::adopt(cardano_script_require_guard_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ScriptRequireGuard");
+  }
+
+  return ScriptRequireGuard(*value);
+}
+
+cardano_script_require_guard_t*
+ScriptRequireGuard::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_script_require_guard_t*
+ScriptRequireGuard::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_script_require_guard_t*
+ScriptRequireGuard::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -29,6 +29,8 @@
 
 #include <cardano/transaction_body/direct_deposit_map.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -102,7 +104,7 @@ std::optional<std::uint64_t>
 DirectDepositMap::get(const RewardAddress& address) const
 {
   std::uint64_t         amount = 0;
-  const cardano_error_t status = cardano_direct_deposit_map_get(checked(), address.checked(), &amount);
+  const cardano_error_t status = cardano_direct_deposit_map_get(checked(), checkedNativeHandle(address), &amount);
 
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
@@ -117,7 +119,7 @@ void
 DirectDepositMap::insert(const RewardAddress& address, std::uint64_t amount)
 {
   const RewardAddress copy(address);
-  checkCardanoError(cardano_direct_deposit_map_insert(checked(), copy.checked(), amount), "DirectDepositMap insert");
+  checkCardanoError(cardano_direct_deposit_map_insert(checked(), checkedNativeHandle(copy), amount), "DirectDepositMap insert");
   invalidateElements();
 }
 
@@ -142,7 +144,7 @@ DirectDepositMap::entryAt(std::size_t index) const
   CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> owner(key);
 
   checkCardanoError(status, "DirectDepositMap entryAt");
-  RewardAddress address(*owner.release());
+  RewardAddress address = RewardAddress::adopt(owner.release());
   return std::make_pair(std::move(address), amount);
 }
 
@@ -459,6 +461,60 @@ DirectDepositMap::clear()
   materialize();
   m_elements.clear();
   m_mutableAccess = true;
+}
+
+DirectDepositMap
+DirectDepositMap::adopt(cardano_direct_deposit_map_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null DirectDepositMap");
+  }
+
+  return DirectDepositMap(value);
+}
+
+cardano_direct_deposit_map_t*
+DirectDepositMap::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_direct_deposit_map_t*
+DirectDepositMap::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_direct_deposit_map_t*
+DirectDepositMap::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

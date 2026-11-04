@@ -31,6 +31,8 @@
 
 #include <cstring>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -149,6 +151,35 @@ Ed25519Signature::operator=(Ed25519Signature&& other) noexcept
   }
 
   return *this;
+}
+
+Ed25519Signature
+Ed25519Signature::adopt(cardano_ed25519_signature_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Ed25519Signature");
+  }
+
+  return Ed25519Signature(*value);
+}
+
+cardano_ed25519_signature_t*
+Ed25519Signature::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_ed25519_signature_t*
+Ed25519Signature::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_ed25519_signature_t*
+Ed25519Signature::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

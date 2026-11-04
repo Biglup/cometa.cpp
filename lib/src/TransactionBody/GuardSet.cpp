@@ -30,6 +30,8 @@
 #include <cardano/common/credential.h>
 #include <cardano/common/guard_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -90,7 +92,7 @@ void
 GuardSet::add(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_guard_set_add(checked(), copy.checked()), "GuardSet add");
+  checkCardanoError(cardano_guard_set_add(checked(), checkedNativeHandle(copy)), "GuardSet add");
   invalidateElements();
 }
 
@@ -107,7 +109,7 @@ GuardSet::at(std::size_t index) const
   CardanoObject<cardano_credential_t, cardano_credential_unref> owner(value);
 
   checkCardanoError(status, "GuardSet at");
-  const Credential copied(owner.release());
+  const Credential copied = Credential::adopt(owner.release());
   return Credential(copied);
 }
 
@@ -360,6 +362,41 @@ GuardSet::erase(const value_type& value)
   erase(position);
 
   return 1;
+}
+
+GuardSet
+GuardSet::adopt(cardano_guard_set_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null GuardSet");
+  }
+
+  return GuardSet(value);
+}
+
+cardano_guard_set_t*
+GuardSet::nativeHandle() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return m_value;
+}
+
+const cardano_guard_set_t*
+GuardSet::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_guard_set_t*
+GuardSet::release() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

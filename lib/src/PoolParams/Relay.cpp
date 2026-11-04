@@ -44,7 +44,7 @@ Relay::Relay(const SingleHostAddrRelay& relay)
   SingleHostAddrRelay copy(relay);
 
   cardano_relay_t*      value  = nullptr;
-  const cardano_error_t result = cardano_relay_new_single_host_addr(copy.checked(), &value);
+  const cardano_error_t result = cardano_relay_new_single_host_addr(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_relay_t, cardano_relay_unref> owner(value);
 
@@ -57,7 +57,7 @@ Relay::Relay(SingleHostAddrRelay&& relay)
 : m_value(nullptr)
 {
   cardano_relay_t*      value  = nullptr;
-  const cardano_error_t result = cardano_relay_new_single_host_addr(relay.checked(), &value);
+  const cardano_error_t result = cardano_relay_new_single_host_addr(checkedNativeHandle(relay), &value);
 
   CardanoObject<cardano_relay_t, cardano_relay_unref> owner(value);
 
@@ -74,7 +74,7 @@ Relay::Relay(const SingleHostNameRelay& relay)
   SingleHostNameRelay copy(relay);
 
   cardano_relay_t*      value  = nullptr;
-  const cardano_error_t result = cardano_relay_new_single_host_name(copy.checked(), &value);
+  const cardano_error_t result = cardano_relay_new_single_host_name(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_relay_t, cardano_relay_unref> owner(value);
 
@@ -87,7 +87,7 @@ Relay::Relay(SingleHostNameRelay&& relay)
 : m_value(nullptr)
 {
   cardano_relay_t*      value  = nullptr;
-  const cardano_error_t result = cardano_relay_new_single_host_name(relay.checked(), &value);
+  const cardano_error_t result = cardano_relay_new_single_host_name(checkedNativeHandle(relay), &value);
 
   CardanoObject<cardano_relay_t, cardano_relay_unref> owner(value);
 
@@ -104,7 +104,7 @@ Relay::Relay(const MultiHostNameRelay& relay)
   MultiHostNameRelay copy(relay);
 
   cardano_relay_t*      value  = nullptr;
-  const cardano_error_t result = cardano_relay_new_multi_host_name(copy.checked(), &value);
+  const cardano_error_t result = cardano_relay_new_multi_host_name(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_relay_t, cardano_relay_unref> owner(value);
 
@@ -117,7 +117,7 @@ Relay::Relay(MultiHostNameRelay&& relay)
 : m_value(nullptr)
 {
   cardano_relay_t*      value  = nullptr;
-  const cardano_error_t result = cardano_relay_new_multi_host_name(relay.checked(), &value);
+  const cardano_error_t result = cardano_relay_new_multi_host_name(checkedNativeHandle(relay), &value);
 
   CardanoObject<cardano_relay_t, cardano_relay_unref> owner(value);
 
@@ -185,7 +185,7 @@ Relay::asSingleHostAddr() const
 
   checkCardanoError(result, "Relay asSingleHostAddr");
 
-  const SingleHostAddrRelay relay(*owner.release());
+  const SingleHostAddrRelay relay = SingleHostAddrRelay::adopt(owner.release());
 
   return SingleHostAddrRelay(relay);
 }
@@ -200,7 +200,7 @@ Relay::asSingleHostName() const
 
   checkCardanoError(result, "Relay asSingleHostName");
 
-  const SingleHostNameRelay relay(*owner.release());
+  const SingleHostNameRelay relay = SingleHostNameRelay::adopt(owner.release());
 
   return SingleHostNameRelay(relay);
 }
@@ -215,7 +215,7 @@ Relay::asMultiHostName() const
 
   checkCardanoError(result, "Relay asMultiHostName");
 
-  const MultiHostNameRelay relay(*owner.release());
+  const MultiHostNameRelay relay = MultiHostNameRelay::adopt(owner.release());
 
   return MultiHostNameRelay(relay);
 }
@@ -273,6 +273,35 @@ bool
 Relay::operator!=(const Relay& other) const
 {
   return !(*this == other);
+}
+
+Relay
+Relay::adopt(cardano_relay_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Relay");
+  }
+
+  return Relay(*value);
+}
+
+cardano_relay_t*
+Relay::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_relay_t*
+Relay::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_relay_t*
+Relay::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

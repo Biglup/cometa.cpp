@@ -45,8 +45,6 @@ struct cardano_protocol_parameters_t;
 
 namespace Cometa
 {
-class ProviderAdapter;
-
 /**
  * @brief A snapshot of a network's ledger limits, fees, deposits, and governance settings.
  *
@@ -794,19 +792,46 @@ class ProtocolParameters
      */
     bool operator!=(const ProtocolParameters& other) const;
 
+  public:
+
+    /**
+     * @brief Takes ownership of one native reference without copying it.
+     * @param value An owned reference; the caller must stop managing it after this call succeeds.
+     * @return The C++ owner of the supplied reference.
+     * @throws std::invalid_argument The reference is null; ownership is not transferred.
+     */
+    static ProtocolParameters adopt(cardano_protocol_parameters_t* value);
+
+    /**
+     * @brief Borrows the native object for C interoperability.
+     * @return The native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    cardano_protocol_parameters_t* nativeHandle() noexcept;
+
+    /**
+     * @brief Borrows the native object for read-only C interoperability.
+     * @return The read-only native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    const cardano_protocol_parameters_t* nativeHandle() const noexcept;
+
+    /**
+     * @brief Transfers the owned native reference to the caller.
+     * @return The owned pointer, or nullptr if this object is already empty.
+     * @remark Leaves this object empty. The caller must adopt the reference or release it with the matching C unref function.
+     */
+    cardano_protocol_parameters_t* release() noexcept;
+
   private:
 
-    /** @brief Allows the provider bridge to copy parameters into native calls. */
-    friend class ProviderAdapter;
+    /**
+     * @brief Takes ownership of a validated native reference.
+     * @param value The owned non-null reference.
+     */
+    explicit ProtocolParameters(cardano_protocol_parameters_t* value) noexcept;
 
-    /** @brief Allows the coin selection bridge to copy parameters into native calls. */
-    friend class CoinSelectorAdapter;
-
-    /** @brief Allows transaction builders to retain protocol parameters. */
-    friend class TransactionBuilder;
-
-    /** @brief Allows sub-transaction builders to retain protocol parameters. */
-    friend class SubTransactionBuilder;
+  private:
 
     /**
      * @brief Gets the stored parameters.

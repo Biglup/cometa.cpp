@@ -29,6 +29,8 @@
 
 #include <cardano/protocol_params/update.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -38,7 +40,7 @@ Update::Update(std::uint64_t epoch, const ProposedParamUpdates& proposals)
 {
   const ProposedParamUpdates                            copy(proposals);
   cardano_update_t*                                     value  = nullptr;
-  const cardano_error_t                                 status = cardano_update_new(epoch, copy.checked(), &value);
+  const cardano_error_t                                 status = cardano_update_new(epoch, checkedNativeHandle(copy), &value);
   CardanoObject<cardano_update_t, cardano_update_unref> owner(value);
 
   checkCardanoError(status, "Update");
@@ -104,7 +106,7 @@ Update::proposals() const
   CardanoObject<cardano_proposed_param_updates_t, cardano_proposed_param_updates_unref> owner(clone);
 
   checkCardanoError(status, "Update proposals copy");
-  return ProposedParamUpdates(owner.release());
+  return ProposedParamUpdates::adopt(owner.release());
 }
 
 void
@@ -117,7 +119,7 @@ void
 Update::setProposals(const ProposedParamUpdates& value)
 {
   const ProposedParamUpdates copy(value);
-  checkCardanoError(cardano_update_set_proposed_parameters(checked(), copy.checked()), "Update setProposals");
+  checkCardanoError(cardano_update_set_proposed_parameters(checked(), checkedNativeHandle(copy)), "Update setProposals");
 }
 
 std::vector<std::uint8_t>
@@ -170,6 +172,35 @@ bool
 Update::operator!=(const Update& other) const
 {
   return !(*this == other);
+}
+
+Update
+Update::adopt(cardano_update_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Update");
+  }
+
+  return Update(value);
+}
+
+cardano_update_t*
+Update::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_update_t*
+Update::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_update_t*
+Update::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

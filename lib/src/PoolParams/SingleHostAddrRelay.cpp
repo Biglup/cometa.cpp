@@ -29,6 +29,8 @@
 
 #include <cardano/pool_params/single_host_addr_relay.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -40,7 +42,7 @@ SingleHostAddrRelay::SingleHostAddrRelay(std::optional<std::uint16_t> port, cons
   const std::optional<Ipv6> v6(ipv6);
 
   cardano_single_host_addr_relay_t* value  = nullptr;
-  const cardano_error_t             result = cardano_single_host_addr_relay_new(port ? &*port : nullptr, v4 ? v4->checked() : nullptr, v6 ? v6->checked() : nullptr, &value);
+  const cardano_error_t             result = cardano_single_host_addr_relay_new(port ? &*port : nullptr, v4 ? checkedNativeHandle(*v4) : nullptr, v6 ? checkedNativeHandle(*v6) : nullptr, &value);
 
   CardanoObject<cardano_single_host_addr_relay_t, cardano_single_host_addr_relay_unref> owner(value);
 
@@ -115,7 +117,7 @@ SingleHostAddrRelay::ipv4() const
     return std::nullopt;
   }
 
-  const Ipv4 address(*owner.release());
+  const Ipv4 address = Ipv4::adopt(owner.release());
 
   return Ipv4(address);
 }
@@ -143,7 +145,7 @@ SingleHostAddrRelay::ipv6() const
     return std::nullopt;
   }
 
-  const Ipv6 address(*owner.release());
+  const Ipv6 address = Ipv6::adopt(owner.release());
 
   return Ipv6(address);
 }
@@ -209,6 +211,35 @@ bool
 SingleHostAddrRelay::operator!=(const SingleHostAddrRelay& other) const
 {
   return !(*this == other);
+}
+
+SingleHostAddrRelay
+SingleHostAddrRelay::adopt(cardano_single_host_addr_relay_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null SingleHostAddrRelay");
+  }
+
+  return SingleHostAddrRelay(*value);
+}
+
+cardano_single_host_addr_relay_t*
+SingleHostAddrRelay::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_single_host_addr_relay_t*
+SingleHostAddrRelay::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_single_host_addr_relay_t*
+SingleHostAddrRelay::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

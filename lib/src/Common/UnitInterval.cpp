@@ -32,6 +32,8 @@
 #include <cmath>
 #include <limits>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -210,6 +212,35 @@ bool
 UnitInterval::operator!=(const UnitInterval& other) const
 {
   return !(*this == other);
+}
+
+UnitInterval
+UnitInterval::adopt(cardano_unit_interval_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null UnitInterval");
+  }
+
+  return UnitInterval(value);
+}
+
+cardano_unit_interval_t*
+UnitInterval::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_unit_interval_t*
+UnitInterval::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_unit_interval_t*
+UnitInterval::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

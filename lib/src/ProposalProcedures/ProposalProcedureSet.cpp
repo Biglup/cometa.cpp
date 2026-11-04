@@ -33,6 +33,8 @@
 #include <functional>
 #include <iterator>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -106,7 +108,7 @@ ProposalProcedureSet::add(const ProposalProcedure& value)
   }
 
   const ProposalProcedure copy(value);
-  checkCardanoError(cardano_proposal_procedure_set_add(checked(), copy.checked()), "ProposalProcedureSet add");
+  checkCardanoError(cardano_proposal_procedure_set_add(checked(), checkedNativeHandle(copy)), "ProposalProcedureSet add");
 }
 
 std::vector<std::uint8_t>
@@ -433,6 +435,60 @@ ProposalProcedureSet::empty() const
   return size() == 0;
 }
 
+ProposalProcedureSet
+ProposalProcedureSet::adopt(cardano_proposal_procedure_set_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ProposalProcedureSet");
+  }
+
+  return ProposalProcedureSet(value);
+}
+
+cardano_proposal_procedure_set_t*
+ProposalProcedureSet::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_proposal_procedure_set_t*
+ProposalProcedureSet::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_proposal_procedure_set_t*
+ProposalProcedureSet::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 ProposalProcedureSet::ProposalProcedureSet(cardano_proposal_procedure_set_t* value) noexcept
@@ -523,7 +579,7 @@ ProposalProcedureSet::copyElement(std::size_t index) const
   CardanoObject<cardano_proposal_procedure_t, cardano_proposal_procedure_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedureSet at");
-  const ProposalProcedure copied(owner.release());
+  const ProposalProcedure copied = ProposalProcedure::adopt(owner.release());
   return ProposalProcedure(copied);
 }
 

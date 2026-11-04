@@ -37,6 +37,8 @@
 #include <cstring>
 #include <limits>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -59,7 +61,7 @@ PointerAddress::PointerAddress(NetworkId network, const Credential& payment, con
   const cardano_stake_pointer_t nativePointer { pointer.slot, pointer.transactionIndex, pointer.certificateIndex };
 
   cardano_pointer_address_t* value  = nullptr;
-  const cardano_error_t      result = cardano_pointer_address_from_credentials(static_cast<cardano_network_id_t>(network), paymentCopy.checked(), nativePointer, &value);
+  const cardano_error_t      result = cardano_pointer_address_from_credentials(static_cast<cardano_network_id_t>(network), checkedNativeHandle(paymentCopy), nativePointer, &value);
 
   CardanoObject<cardano_pointer_address_t, cardano_pointer_address_unref> owner(value);
 
@@ -106,7 +108,7 @@ PointerAddress
 PointerAddress::fromAddress(const Address& address)
 {
   cardano_pointer_address_t* value  = nullptr;
-  const cardano_error_t      result = cardano_pointer_address_from_address(address.checked(), &value);
+  const cardano_error_t      result = cardano_pointer_address_from_address(checkedNativeHandle(address), &value);
 
   CardanoObject<cardano_pointer_address_t, cardano_pointer_address_unref> owner(value);
 
@@ -158,7 +160,7 @@ PointerAddress::paymentCredential() const
 
   checkCardanoError(result, "PointerAddress paymentCredential");
 
-  return Credential(owner.release());
+  return Credential::adopt(owner.release());
 }
 
 StakePointer
@@ -214,6 +216,35 @@ bool
 PointerAddress::operator!=(const PointerAddress& other) const
 {
   return !(*this == other);
+}
+
+PointerAddress
+PointerAddress::adopt(cardano_pointer_address_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PointerAddress");
+  }
+
+  return PointerAddress(*value);
+}
+
+cardano_pointer_address_t*
+PointerAddress::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_pointer_address_t*
+PointerAddress::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_pointer_address_t*
+PointerAddress::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -29,6 +29,8 @@
 
 #include <cardano/common/ex_units.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -158,6 +160,35 @@ bool
 ExUnits::operator!=(const ExUnits& other) const
 {
   return !(*this == other);
+}
+
+ExUnits
+ExUnits::adopt(cardano_ex_units_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ExUnits");
+  }
+
+  return ExUnits(value);
+}
+
+cardano_ex_units_t*
+ExUnits::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_ex_units_t*
+ExUnits::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_ex_units_t*
+ExUnits::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

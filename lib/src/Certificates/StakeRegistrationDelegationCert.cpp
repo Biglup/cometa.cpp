@@ -29,6 +29,8 @@
 
 #include <cardano/certs/stake_registration_delegation_cert.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -44,7 +46,7 @@ StakeRegistrationDelegationCert::StakeRegistrationDelegationCert(const Credentia
   const Credential                                                                                              copy(credential);
   const Blake2bHash                                                                                             poolCopy(poolKeyHash);
   cardano_stake_registration_delegation_cert_t*                                                                 value  = nullptr;
-  const cardano_error_t                                                                                         status = cardano_stake_registration_delegation_cert_new(copy.checked(), poolCopy.checked(), deposit, &value);
+  const cardano_error_t                                                                                         status = cardano_stake_registration_delegation_cert_new(checkedNativeHandle(copy), checkedNativeHandle(poolCopy), deposit, &value);
   CardanoObject<cardano_stake_registration_delegation_cert_t, cardano_stake_registration_delegation_cert_unref> owner(value);
 
   checkCardanoError(status, "StakeRegistrationDelegationCert");
@@ -94,7 +96,7 @@ StakeRegistrationDelegationCert::credential() const
     throw std::logic_error("Stake registration certificate has no credential");
   }
 
-  const Credential result(value);
+  const Credential result = Credential::adopt(value);
   return Credential(result);
 }
 
@@ -102,7 +104,7 @@ void
 StakeRegistrationDelegationCert::setCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_stake_registration_delegation_cert_set_credential(checked(), copy.checked()), "StakeRegistrationDelegationCert setCredential");
+  checkCardanoError(cardano_stake_registration_delegation_cert_set_credential(checked(), checkedNativeHandle(copy)), "StakeRegistrationDelegationCert setCredential");
 }
 
 Blake2bHash
@@ -114,7 +116,7 @@ StakeRegistrationDelegationCert::poolKeyHash() const
     throw std::logic_error("Stake registration and delegation certificate has no pool key hash");
   }
 
-  const Blake2bHash result(value);
+  const Blake2bHash result = Blake2bHash::adopt(value);
   return Blake2bHash(result);
 }
 
@@ -127,7 +129,7 @@ StakeRegistrationDelegationCert::setPoolKeyHash(const Blake2bHash& value)
   }
 
   const Blake2bHash copy(value);
-  checkCardanoError(cardano_stake_registration_delegation_cert_set_pool_key_hash(checked(), copy.checked()), "StakeRegistrationDelegationCert setPoolKeyHash");
+  checkCardanoError(cardano_stake_registration_delegation_cert_set_pool_key_hash(checked(), checkedNativeHandle(copy)), "StakeRegistrationDelegationCert setPoolKeyHash");
 }
 
 std::uint64_t
@@ -194,6 +196,35 @@ bool
 StakeRegistrationDelegationCert::operator!=(const StakeRegistrationDelegationCert& other) const
 {
   return !(*this == other);
+}
+
+StakeRegistrationDelegationCert
+StakeRegistrationDelegationCert::adopt(cardano_stake_registration_delegation_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null StakeRegistrationDelegationCert");
+  }
+
+  return StakeRegistrationDelegationCert(value);
+}
+
+cardano_stake_registration_delegation_cert_t*
+StakeRegistrationDelegationCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_stake_registration_delegation_cert_t*
+StakeRegistrationDelegationCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_stake_registration_delegation_cert_t*
+StakeRegistrationDelegationCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -196,14 +196,36 @@ class ProtocolVersion
      */
     bool operator!=(const ProtocolVersion& other) const;
 
-    /** @brief Allows protocol updates to copy native values. */
-    friend class ProtocolParamUpdate;
+  public:
 
-    /** @brief Allows protocol parameters to copy native values. */
-    friend class ProtocolParameters;
+    /**
+     * @brief Takes ownership of one native reference without copying it.
+     * @param value An owned reference; the caller must stop managing it after this call succeeds.
+     * @return The C++ owner of the supplied reference.
+     * @throws std::invalid_argument The reference is null; ownership is not transferred.
+     */
+    static ProtocolVersion adopt(cardano_protocol_version_t* value);
 
-    /** @brief Allows hard fork actions to copy protocol versions. */
-    friend class HardForkInitiationAction;
+    /**
+     * @brief Borrows the native object for C interoperability.
+     * @return The native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    cardano_protocol_version_t* nativeHandle() noexcept;
+
+    /**
+     * @brief Borrows the native object for read-only C interoperability.
+     * @return The read-only native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    const cardano_protocol_version_t* nativeHandle() const noexcept;
+
+    /**
+     * @brief Transfers the owned native reference to the caller.
+     * @return The owned pointer, or nullptr if this object is already empty.
+     * @remark Leaves this object empty. The caller must adopt the reference or release it with the matching C unref function.
+     */
+    cardano_protocol_version_t* release() noexcept;
 
   private:
 

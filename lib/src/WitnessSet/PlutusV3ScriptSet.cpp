@@ -30,6 +30,8 @@
 #include <cardano/scripts/plutus_scripts/plutus_v3_script.h>
 #include <cardano/witness_set/plutus_v3_script_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -98,7 +100,7 @@ PlutusV3ScriptSet::add(const PlutusV3Script& value)
   }
 
   const PlutusV3Script copy(value);
-  checkCardanoError(cardano_plutus_v3_script_set_add(checked(), copy.checked()), "PlutusV3ScriptSet add");
+  checkCardanoError(cardano_plutus_v3_script_set_add(checked(), checkedNativeHandle(copy)), "PlutusV3ScriptSet add");
   invalidateElements();
 }
 
@@ -115,7 +117,7 @@ PlutusV3ScriptSet::at(std::size_t index) const
   CardanoObject<cardano_plutus_v3_script_t, cardano_plutus_v3_script_unref> owner(value);
 
   checkCardanoError(status, "PlutusV3ScriptSet at");
-  const PlutusV3Script copied(*owner.release());
+  const PlutusV3Script copied = PlutusV3Script::adopt(owner.release());
   return PlutusV3Script(copied);
 }
 
@@ -368,6 +370,41 @@ PlutusV3ScriptSet::erase(const value_type& value)
   erase(position);
 
   return 1;
+}
+
+PlutusV3ScriptSet
+PlutusV3ScriptSet::adopt(cardano_plutus_v3_script_set_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PlutusV3ScriptSet");
+  }
+
+  return PlutusV3ScriptSet(value);
+}
+
+cardano_plutus_v3_script_set_t*
+PlutusV3ScriptSet::nativeHandle() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return m_value;
+}
+
+const cardano_plutus_v3_script_set_t*
+PlutusV3ScriptSet::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_plutus_v3_script_set_t*
+PlutusV3ScriptSet::release() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -26,6 +26,7 @@
 #include <Cometa/TransactionBody/TransactionOutputList.h>
 
 #include "../CardanoInterop.h"
+#include "../ValueValidation.h"
 #include <Cometa/TransactionBody/TransactionOutput.h>
 
 #include <cardano/transaction_body/transaction_output.h>
@@ -34,6 +35,8 @@
 #include <algorithm>
 #include <functional>
 #include <iterator>
+
+#include <utility>
 
 /* CLASS IMPLEMENTATION ******************************************************/
 
@@ -93,7 +96,7 @@ TransactionOutputList::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   TransactionOutputList value(*decodeCbor<cardano_transaction_output_list_t, cardano_transaction_output_list_unref>(cbor, cardano_transaction_output_list_from_cbor));
 
-  value.validate();
+  validateValue(value);
 
   return value;
 }
@@ -132,7 +135,7 @@ TransactionOutputList::pushBack(const TransactionOutput& output)
 
   TransactionOutput copy(output);
 
-  checkCardanoError(cardano_transaction_output_list_add(checked(), copy.checked()), "TransactionOutputList pushBack");
+  checkCardanoError(cardano_transaction_output_list_add(checked(), checkedNativeHandle(copy)), "TransactionOutputList pushBack");
 }
 
 std::vector<TransactionOutput>
@@ -472,6 +475,60 @@ TransactionOutputList::erase(const_iterator first, const_iterator last)
   return m_elements.erase(first, last);
 }
 
+TransactionOutputList
+TransactionOutputList::adopt(cardano_transaction_output_list_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null TransactionOutputList");
+  }
+
+  return TransactionOutputList(*value);
+}
+
+cardano_transaction_output_list_t*
+TransactionOutputList::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_transaction_output_list_t*
+TransactionOutputList::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_transaction_output_list_t*
+TransactionOutputList::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 TransactionOutputList::TransactionOutputList(cardano_transaction_output_list_t& value) noexcept
@@ -493,13 +550,13 @@ TransactionOutputList::checked() const
 }
 
 void
-TransactionOutputList::validate() const
+validateValue(const TransactionOutputList& value)
 {
-  const std::size_t count = size();
+  const std::size_t count = value.size();
 
   for (std::size_t index = 0U; index < count; ++index)
   {
-    at(index).validate();
+    validateValue(value.at(index));
   }
 }
 
@@ -576,7 +633,7 @@ TransactionOutputList::copyElement(std::size_t index) const
 
   checkCardanoError(result, "TransactionOutputList at");
 
-  const TransactionOutput output(*owner.release());
+  const TransactionOutput output = TransactionOutput::adopt(owner.release());
 
   return TransactionOutput(output);
 }

@@ -29,6 +29,8 @@
 
 #include <cardano/witness_set/witness_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -86,7 +88,7 @@ WitnessSet::vkeys() const
     return std::nullopt;
   }
 
-  return VkeyWitnessSet(value);
+  return VkeyWitnessSet::adopt(value);
 }
 
 void
@@ -95,7 +97,7 @@ WitnessSet::setVkeys(const std::optional<VkeyWitnessSet>& value)
   if (value)
   {
     const VkeyWitnessSet copy(*value);
-    checkCardanoError(cardano_witness_set_set_vkeys(checked(), copy.checked()), "WitnessSet setVkeys");
+    checkCardanoError(cardano_witness_set_set_vkeys(checked(), checkedNativeHandle(copy)), "WitnessSet setVkeys");
   }
   else
   {
@@ -114,7 +116,7 @@ WitnessSet::bootstrap() const
     return std::nullopt;
   }
 
-  return BootstrapWitnessSet(value);
+  return BootstrapWitnessSet::adopt(value);
 }
 
 void
@@ -123,7 +125,7 @@ WitnessSet::setBootstrap(const std::optional<BootstrapWitnessSet>& value)
   if (value)
   {
     const BootstrapWitnessSet copy(*value);
-    checkCardanoError(cardano_witness_set_set_bootstrap(checked(), copy.checked()), "WitnessSet setBootstrap");
+    checkCardanoError(cardano_witness_set_set_bootstrap(checked(), checkedNativeHandle(copy)), "WitnessSet setBootstrap");
   }
   else
   {
@@ -142,7 +144,7 @@ WitnessSet::nativeScripts() const
     return std::nullopt;
   }
 
-  return NativeScriptSet(value);
+  return NativeScriptSet::adopt(value);
 }
 
 void
@@ -151,7 +153,7 @@ WitnessSet::setNativeScripts(const std::optional<NativeScriptSet>& value)
   if (value)
   {
     const NativeScriptSet copy(*value);
-    checkCardanoError(cardano_witness_set_set_native_scripts(checked(), copy.checked()), "WitnessSet setNativeScripts");
+    checkCardanoError(cardano_witness_set_set_native_scripts(checked(), checkedNativeHandle(copy)), "WitnessSet setNativeScripts");
   }
   else
   {
@@ -170,7 +172,7 @@ WitnessSet::plutusV1Scripts() const
     return std::nullopt;
   }
 
-  return PlutusV1ScriptSet(value);
+  return PlutusV1ScriptSet::adopt(value);
 }
 
 void
@@ -179,7 +181,7 @@ WitnessSet::setPlutusV1Scripts(const std::optional<PlutusV1ScriptSet>& value)
   if (value)
   {
     const PlutusV1ScriptSet copy(*value);
-    checkCardanoError(cardano_witness_set_set_plutus_v1_scripts(checked(), copy.checked()), "WitnessSet setPlutusV1Scripts");
+    checkCardanoError(cardano_witness_set_set_plutus_v1_scripts(checked(), checkedNativeHandle(copy)), "WitnessSet setPlutusV1Scripts");
   }
   else
   {
@@ -198,7 +200,7 @@ WitnessSet::plutusV2Scripts() const
     return std::nullopt;
   }
 
-  return PlutusV2ScriptSet(value);
+  return PlutusV2ScriptSet::adopt(value);
 }
 
 void
@@ -207,7 +209,7 @@ WitnessSet::setPlutusV2Scripts(const std::optional<PlutusV2ScriptSet>& value)
   if (value)
   {
     const PlutusV2ScriptSet copy(*value);
-    checkCardanoError(cardano_witness_set_set_plutus_v2_scripts(checked(), copy.checked()), "WitnessSet setPlutusV2Scripts");
+    checkCardanoError(cardano_witness_set_set_plutus_v2_scripts(checked(), checkedNativeHandle(copy)), "WitnessSet setPlutusV2Scripts");
   }
   else
   {
@@ -226,7 +228,7 @@ WitnessSet::plutusV3Scripts() const
     return std::nullopt;
   }
 
-  return PlutusV3ScriptSet(value);
+  return PlutusV3ScriptSet::adopt(value);
 }
 
 void
@@ -235,7 +237,7 @@ WitnessSet::setPlutusV3Scripts(const std::optional<PlutusV3ScriptSet>& value)
   if (value)
   {
     const PlutusV3ScriptSet copy(*value);
-    checkCardanoError(cardano_witness_set_set_plutus_v3_scripts(checked(), copy.checked()), "WitnessSet setPlutusV3Scripts");
+    checkCardanoError(cardano_witness_set_set_plutus_v3_scripts(checked(), checkedNativeHandle(copy)), "WitnessSet setPlutusV3Scripts");
   }
   else
   {
@@ -254,7 +256,7 @@ WitnessSet::plutusV4Scripts() const
     return std::nullopt;
   }
 
-  return PlutusV4ScriptSet(value);
+  return PlutusV4ScriptSet::adopt(value);
 }
 
 void
@@ -263,7 +265,7 @@ WitnessSet::setPlutusV4Scripts(const std::optional<PlutusV4ScriptSet>& value)
   if (value)
   {
     const PlutusV4ScriptSet copy(*value);
-    checkCardanoError(cardano_witness_set_set_plutus_v4_scripts(checked(), copy.checked()), "WitnessSet setPlutusV4Scripts");
+    checkCardanoError(cardano_witness_set_set_plutus_v4_scripts(checked(), checkedNativeHandle(copy)), "WitnessSet setPlutusV4Scripts");
   }
   else
   {
@@ -282,7 +284,7 @@ WitnessSet::plutusData() const
     return std::nullopt;
   }
 
-  return PlutusDataSet(value);
+  return PlutusDataSet::adopt(value);
 }
 
 void
@@ -291,7 +293,7 @@ WitnessSet::setPlutusData(const std::optional<PlutusDataSet>& value)
   if (value)
   {
     const PlutusDataSet copy(*value);
-    checkCardanoError(cardano_witness_set_set_plutus_data(checked(), copy.checked()), "WitnessSet setPlutusData");
+    checkCardanoError(cardano_witness_set_set_plutus_data(checked(), checkedNativeHandle(copy)), "WitnessSet setPlutusData");
   }
   else
   {
@@ -310,7 +312,7 @@ WitnessSet::redeemers() const
     return std::nullopt;
   }
 
-  return RedeemerList(value);
+  return RedeemerList::adopt(value);
 }
 
 void
@@ -319,7 +321,7 @@ WitnessSet::setRedeemers(const std::optional<RedeemerList>& value)
   if (value)
   {
     const RedeemerList copy(*value);
-    checkCardanoError(cardano_witness_set_set_redeemers(checked(), copy.checked()), "WitnessSet setRedeemers");
+    checkCardanoError(cardano_witness_set_set_redeemers(checked(), checkedNativeHandle(copy)), "WitnessSet setRedeemers");
   }
   else
   {
@@ -332,7 +334,7 @@ WitnessSet::setRedeemers(const std::optional<RedeemerList>& value)
 void
 WitnessSet::addScript(const Script& script)
 {
-  checkCardanoError(cardano_witness_set_add_script(checked(), script.checked()), "WitnessSet addScript");
+  checkCardanoError(cardano_witness_set_add_script(checked(), checkedNativeHandle(script)), "WitnessSet addScript");
   cardano_witness_set_clear_cbor_cache(checked());
 }
 
@@ -386,6 +388,35 @@ bool
 WitnessSet::operator!=(const WitnessSet& other) const
 {
   return !(*this == other);
+}
+
+WitnessSet
+WitnessSet::adopt(cardano_witness_set_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null WitnessSet");
+  }
+
+  return WitnessSet(value);
+}
+
+cardano_witness_set_t*
+WitnessSet::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_witness_set_t*
+WitnessSet::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_witness_set_t*
+WitnessSet::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

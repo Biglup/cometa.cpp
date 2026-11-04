@@ -30,6 +30,8 @@
 #include <cardano/witness_set/redeemer.h>
 #include <cardano/witness_set/redeemer_list.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -100,7 +102,7 @@ RedeemerList::add(const Redeemer& value)
   }
 
   const Redeemer copy(value);
-  checkCardanoError(cardano_redeemer_list_add(checked(), copy.checked()), "RedeemerList add");
+  checkCardanoError(cardano_redeemer_list_add(checked(), checkedNativeHandle(copy)), "RedeemerList add");
   cardano_redeemer_list_clear_cbor_cache(checked());
   invalidateElements();
 }
@@ -118,7 +120,7 @@ RedeemerList::at(std::size_t index) const
   CardanoObject<cardano_redeemer_t, cardano_redeemer_unref> owner(value);
 
   checkCardanoError(status, "RedeemerList at");
-  const Redeemer copied(owner.release());
+  const Redeemer copied = Redeemer::adopt(owner.release());
   return Redeemer(copied);
 }
 
@@ -365,6 +367,41 @@ RedeemerList::erase(const value_type& value)
   erase(position);
 
   return 1;
+}
+
+RedeemerList
+RedeemerList::adopt(cardano_redeemer_list_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null RedeemerList");
+  }
+
+  return RedeemerList(value);
+}
+
+cardano_redeemer_list_t*
+RedeemerList::nativeHandle() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return m_value;
+}
+
+const cardano_redeemer_list_t*
+RedeemerList::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_redeemer_list_t*
+RedeemerList::release() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

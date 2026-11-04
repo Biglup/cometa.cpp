@@ -53,6 +53,8 @@ validatePolicy(const Cometa::Blake2bHash& policyId)
 }
 } // namespace
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -147,7 +149,7 @@ MultiAsset::assets(const Blake2bHash& policyId) const
   validatePolicy(policyId);
 
   cardano_asset_name_map_t*                                             value  = nullptr;
-  const cardano_error_t                                                 result = cardano_multi_asset_get_assets(checked(), policyId.checked(), &value);
+  const cardano_error_t                                                 result = cardano_multi_asset_get_assets(checked(), checkedNativeHandle(policyId), &value);
   CardanoObject<cardano_asset_name_map_t, cardano_asset_name_map_unref> owner(value);
 
   if (result == CARDANO_ERROR_ELEMENT_NOT_FOUND)
@@ -156,7 +158,7 @@ MultiAsset::assets(const Blake2bHash& policyId) const
   }
 
   checkCardanoError(result, "MultiAsset assets");
-  const AssetNameMap map(owner.release());
+  const AssetNameMap map = AssetNameMap::adopt(owner.release());
 
   return map;
 }
@@ -169,7 +171,7 @@ MultiAsset::setAssets(const Blake2bHash& policyId, const AssetNameMap& assets)
   const Blake2bHash  policyCopy(policyId);
   const AssetNameMap assetsCopy(assets);
 
-  checkCardanoError(cardano_multi_asset_insert_assets(checked(), policyCopy.checked(), assetsCopy.checked()), "MultiAsset setAssets");
+  checkCardanoError(cardano_multi_asset_insert_assets(checked(), checkedNativeHandle(policyCopy), checkedNativeHandle(assetsCopy)), "MultiAsset setAssets");
   invalidateElements();
 }
 
@@ -179,7 +181,7 @@ MultiAsset::get(const Blake2bHash& policyId, const AssetName& name) const
   validatePolicy(policyId);
 
   std::int64_t          amount = 0;
-  const cardano_error_t result = cardano_multi_asset_get(checked(), policyId.checked(), name.checked(), &amount);
+  const cardano_error_t result = cardano_multi_asset_get(checked(), checkedNativeHandle(policyId), checkedNativeHandle(name), &amount);
 
   if (result == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
@@ -210,7 +212,7 @@ MultiAsset::set(const Blake2bHash& policyId, const AssetName& name, std::int64_t
   const Blake2bHash policyCopy(policyId);
   const AssetName   nameCopy(name);
 
-  checkCardanoError(cardano_multi_asset_set(copy.checked(), policyCopy.checked(), nameCopy.checked(), amount), "MultiAsset set");
+  checkCardanoError(cardano_multi_asset_set(copy.nativeHandle(), checkedNativeHandle(policyCopy), checkedNativeHandle(nameCopy), amount), "MultiAsset set");
   swap(copy);
   invalidateElements();
 }
@@ -246,7 +248,7 @@ MultiAsset::policies() const
     CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> hashOwner(hash);
 
     checkCardanoError(getResult, "MultiAsset policy");
-    const Blake2bHash policy(hashOwner.release());
+    const Blake2bHash policy = Blake2bHash::adopt(hashOwner.release());
     result.push_back(policy);
   }
 
@@ -686,6 +688,60 @@ bool
 MultiAsset::empty() const
 {
   return size() == 0;
+}
+
+MultiAsset
+MultiAsset::adopt(cardano_multi_asset_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null MultiAsset");
+  }
+
+  return MultiAsset(value);
+}
+
+cardano_multi_asset_t*
+MultiAsset::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_multi_asset_t*
+MultiAsset::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_multi_asset_t*
+MultiAsset::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

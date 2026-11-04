@@ -41,11 +41,17 @@
 #include <cardano/common/datum.h>
 #include <cardano/common/drep.h>
 #include <cardano/common/governance_action_id.h>
+#include <cardano/common/protocol_version.h>
+#include <cardano/common/unit_interval.h>
 #include <cardano/common/utxo.h>
 #include <cardano/common/utxo_list.h>
 #include <cardano/common/withdrawal_map.h>
 #include <cardano/crypto/blake2b_hash.h>
 #include <cardano/plutus_data/plutus_data.h>
+#include <cardano/proposal_procedures/committee_members_map.h>
+#include <cardano/proposal_procedures/constitution.h>
+#include <cardano/proposal_procedures/credential_set.h>
+#include <cardano/protocol_params/protocol_param_update.h>
 #include <cardano/scripts/script.h>
 #include <cardano/slot_config.h>
 #include <cardano/transaction/sub_transaction.h>
@@ -177,7 +183,7 @@ TransactionBuilder::TransactionBuilder(const ProtocolParameters& parameters, Slo
   }
 
   const cardano_slot_config_t nativeSlots { slots.zeroTime, slots.zeroSlot, slots.slotLength };
-  m_value = cardano_tx_builder_new(parameters.checked(), &nativeSlots);
+  m_value = cardano_tx_builder_new(checkedNativeHandle(parameters), &nativeSlots);
 
   if (!m_value)
   {
@@ -798,6 +804,124 @@ TransactionBuilder::build()
 }
 
 TransactionBuilder&
+TransactionBuilder::proposeParameterChange(
+  const RewardAddress&                     refundAddress,
+  const Anchor&                            anchor,
+  const ProtocolParamUpdate&               update,
+  const Blake2bHash&                       policyHash,
+  const std::optional<GovernanceActionId>& previousAction)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(refundAddress));
+  CardanoObject<cardano_anchor_t, cardano_anchor_unref>                 nativeAnchor(
+    decodeCbor<cardano_anchor_t, cardano_anchor_unref>(anchor.toCbor(), cardano_anchor_from_cbor));
+
+  CardanoObject<cardano_protocol_param_update_t, cardano_protocol_param_update_unref> nativeUpdate(
+    decodeCbor<cardano_protocol_param_update_t, cardano_protocol_param_update_unref>(update.toCbor(), cardano_protocol_param_update_from_cbor));
+
+  CardanoObject<cardano_governance_action_id_t, cardano_governance_action_id_unref> nativePreviousAction(
+    previousAction ? decodeCbor<cardano_governance_action_id_t, cardano_governance_action_id_unref>(previousAction->toCbor(), cardano_governance_action_id_from_cbor) : nullptr);
+
+  CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> nativePolicyHash(
+    decodeCbor<cardano_blake2b_hash_t, cardano_blake2b_hash_unref>(policyHash.toCbor(), cardano_blake2b_hash_from_cbor));
+
+  cardano_tx_builder_propose_parameter_change(checked(), nativeAddress.get(), nativeAnchor.get(), nativeUpdate.get(), nativePreviousAction.get(), nativePolicyHash.get());
+
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::proposeHardFork(
+  const RewardAddress&                     refundAddress,
+  const Anchor&                            anchor,
+  const ProtocolVersion&                   version,
+  const std::optional<GovernanceActionId>& previousAction)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(refundAddress));
+  CardanoObject<cardano_anchor_t, cardano_anchor_unref>                 nativeAnchor(
+    decodeCbor<cardano_anchor_t, cardano_anchor_unref>(anchor.toCbor(), cardano_anchor_from_cbor));
+
+  CardanoObject<cardano_protocol_version_t, cardano_protocol_version_unref> nativeVersion(
+    decodeCbor<cardano_protocol_version_t, cardano_protocol_version_unref>(version.toCbor(), cardano_protocol_version_from_cbor));
+
+  CardanoObject<cardano_governance_action_id_t, cardano_governance_action_id_unref> nativePreviousAction(
+    previousAction ? decodeCbor<cardano_governance_action_id_t, cardano_governance_action_id_unref>(previousAction->toCbor(), cardano_governance_action_id_from_cbor) : nullptr);
+
+  cardano_tx_builder_propose_hardfork(checked(), nativeAddress.get(), nativeAnchor.get(), nativeVersion.get(), nativePreviousAction.get());
+
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::proposeNoConfidence(
+  const RewardAddress&                     refundAddress,
+  const Anchor&                            anchor,
+  const std::optional<GovernanceActionId>& previousAction)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(refundAddress));
+  CardanoObject<cardano_anchor_t, cardano_anchor_unref>                 nativeAnchor(
+    decodeCbor<cardano_anchor_t, cardano_anchor_unref>(anchor.toCbor(), cardano_anchor_from_cbor));
+
+  CardanoObject<cardano_governance_action_id_t, cardano_governance_action_id_unref> nativePreviousAction(
+    previousAction ? decodeCbor<cardano_governance_action_id_t, cardano_governance_action_id_unref>(previousAction->toCbor(), cardano_governance_action_id_from_cbor) : nullptr);
+
+  cardano_tx_builder_propose_no_confidence(checked(), nativeAddress.get(), nativeAnchor.get(), nativePreviousAction.get());
+
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::proposeUpdateCommittee(
+  const RewardAddress&                     refundAddress,
+  const Anchor&                            anchor,
+  const CredentialSet&                     removedMembers,
+  const CommitteeMembersMap&               addedMembers,
+  const UnitInterval&                      quorum,
+  const std::optional<GovernanceActionId>& previousAction)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(refundAddress));
+  CardanoObject<cardano_anchor_t, cardano_anchor_unref>                 nativeAnchor(
+    decodeCbor<cardano_anchor_t, cardano_anchor_unref>(anchor.toCbor(), cardano_anchor_from_cbor));
+
+  CardanoObject<cardano_credential_set_t, cardano_credential_set_unref> nativeRemovedMembers(
+    decodeCbor<cardano_credential_set_t, cardano_credential_set_unref>(removedMembers.toCbor(), cardano_credential_set_from_cbor));
+
+  CardanoObject<cardano_committee_members_map_t, cardano_committee_members_map_unref> nativeAddedMembers(
+    decodeCbor<cardano_committee_members_map_t, cardano_committee_members_map_unref>(addedMembers.toCbor(), cardano_committee_members_map_from_cbor));
+
+  CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> nativeQuorum(
+    decodeCbor<cardano_unit_interval_t, cardano_unit_interval_unref>(quorum.toCbor(), cardano_unit_interval_from_cbor));
+
+  CardanoObject<cardano_governance_action_id_t, cardano_governance_action_id_unref> nativePreviousAction(
+    previousAction ? decodeCbor<cardano_governance_action_id_t, cardano_governance_action_id_unref>(previousAction->toCbor(), cardano_governance_action_id_from_cbor) : nullptr);
+
+  cardano_tx_builder_propose_update_committee(checked(), nativeAddress.get(), nativeAnchor.get(), nativePreviousAction.get(), nativeRemovedMembers.get(), nativeAddedMembers.get(), nativeQuorum.get());
+
+  return *this;
+}
+
+TransactionBuilder&
+TransactionBuilder::proposeNewConstitution(
+  const RewardAddress&                     refundAddress,
+  const Anchor&                            anchor,
+  const Constitution&                      constitution,
+  const std::optional<GovernanceActionId>& previousAction)
+{
+  CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> nativeAddress(copyRewardAddress(refundAddress));
+  CardanoObject<cardano_anchor_t, cardano_anchor_unref>                 nativeAnchor(
+    decodeCbor<cardano_anchor_t, cardano_anchor_unref>(anchor.toCbor(), cardano_anchor_from_cbor));
+
+  CardanoObject<cardano_constitution_t, cardano_constitution_unref> nativeConstitution(
+    decodeCbor<cardano_constitution_t, cardano_constitution_unref>(constitution.toCbor(), cardano_constitution_from_cbor));
+
+  CardanoObject<cardano_governance_action_id_t, cardano_governance_action_id_unref> nativePreviousAction(
+    previousAction ? decodeCbor<cardano_governance_action_id_t, cardano_governance_action_id_unref>(previousAction->toCbor(), cardano_governance_action_id_from_cbor) : nullptr);
+
+  cardano_tx_builder_propose_new_constitution(checked(), nativeAddress.get(), nativeAnchor.get(), nativePreviousAction.get(), nativeConstitution.get());
+
+  return *this;
+}
+
+TransactionBuilder&
 TransactionBuilder::operator=(TransactionBuilder&& other) noexcept
 {
   if (this != &other)
@@ -813,6 +937,18 @@ TransactionBuilder::operator=(TransactionBuilder&& other) noexcept
 }
 
 cardano_tx_builder_t*
+TransactionBuilder::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_tx_builder_t*
+TransactionBuilder::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_tx_builder_t*
 TransactionBuilder::checked() const
 {
   if (!m_value)
@@ -822,4 +958,5 @@ TransactionBuilder::checked() const
 
   return m_value;
 }
+
 } // namespace Cometa

@@ -45,6 +45,7 @@
 #include <gtest/gtest.h>
 
 #include <memory>
+#include <new>
 #include <stdexcept>
 
 /* USINGS ********************************************************************/
@@ -73,6 +74,9 @@ class TestProvider : public Provider
     /** @brief Selects whether UTxO queries fail. */
     bool failUtxos = false;
 
+    /** @brief Selects whether the parameter query exhausts memory. */
+    bool failParametersAllocation = false;
+
     /** @brief Gets the provider name. @return The name. */
     std::string
     name() const override
@@ -91,6 +95,11 @@ class TestProvider : public Provider
     ProtocolParameters
     getParameters() const override
     {
+      if (failParametersAllocation)
+      {
+        throw std::bad_alloc();
+      }
+
       ProtocolParameters parameters;
       parameters.setMinFeeA(44);
       return parameters;
@@ -372,4 +381,21 @@ TEST(ProviderAdapter, EvaluatesThroughProviderStrategy)
   // Assert
   EXPECT_EQ(evaluator.name(), "test-provider");
   EXPECT_EQ(result.size(), 0U);
+}
+
+TEST(ProviderAdapter, ReportsParameterAllocationFailures)
+{
+  // Arrange
+  const std::shared_ptr<TestProvider> provider = std::make_shared<TestProvider>();
+  provider->failParametersAllocation           = true;
+  CardanoObject<cardano_provider_t, cardano_provider_unref> native(createProviderAdapter(provider));
+  cardano_protocol_parameters_t*                            parameters = nullptr;
+
+  // Act
+  const cardano_error_t                                                           status = cardano_provider_get_parameters(native.get(), &parameters);
+  CardanoObject<cardano_protocol_parameters_t, cardano_protocol_parameters_unref> owner(parameters);
+
+  // Assert
+  EXPECT_EQ(status, CARDANO_ERROR_MEMORY_ALLOCATION_FAILED);
+  EXPECT_EQ(owner.get(), nullptr);
 }

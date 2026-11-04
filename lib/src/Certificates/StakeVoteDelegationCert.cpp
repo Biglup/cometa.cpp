@@ -30,6 +30,8 @@
 #include <cardano/certs/stake_vote_delegation_cert.h>
 #include <cardano/common/drep.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -46,7 +48,7 @@ StakeVoteDelegationCert::StakeVoteDelegationCert(const Credential& credential, c
   const Blake2bHash                                                                             poolCopy(poolKeyHash);
   const DRep                                                                                    drepCopy(drep);
   cardano_stake_vote_delegation_cert_t*                                                         value  = nullptr;
-  const cardano_error_t                                                                         status = cardano_stake_vote_delegation_cert_new(copy.checked(), poolCopy.checked(), drepCopy.checked(), &value);
+  const cardano_error_t                                                                         status = cardano_stake_vote_delegation_cert_new(checkedNativeHandle(copy), checkedNativeHandle(poolCopy), checkedNativeHandle(drepCopy), &value);
   CardanoObject<cardano_stake_vote_delegation_cert_t, cardano_stake_vote_delegation_cert_unref> owner(value);
 
   checkCardanoError(status, "StakeVoteDelegationCert");
@@ -96,7 +98,7 @@ StakeVoteDelegationCert::credential() const
     throw std::logic_error("Stake and vote delegation certificate has no credential");
   }
 
-  const Credential result(value);
+  const Credential result = Credential::adopt(value);
   return Credential(result);
 }
 
@@ -104,7 +106,7 @@ void
 StakeVoteDelegationCert::setCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_stake_vote_delegation_cert_set_credential(checked(), copy.checked()), "StakeVoteDelegationCert setCredential");
+  checkCardanoError(cardano_stake_vote_delegation_cert_set_credential(checked(), checkedNativeHandle(copy)), "StakeVoteDelegationCert setCredential");
 }
 
 Blake2bHash
@@ -116,7 +118,7 @@ StakeVoteDelegationCert::poolKeyHash() const
     throw std::logic_error("Stake and vote delegation certificate has no pool key hash");
   }
 
-  const Blake2bHash result(value);
+  const Blake2bHash result = Blake2bHash::adopt(value);
   return Blake2bHash(result);
 }
 
@@ -129,7 +131,7 @@ StakeVoteDelegationCert::setPoolKeyHash(const Blake2bHash& value)
   }
 
   const Blake2bHash copy(value);
-  checkCardanoError(cardano_stake_vote_delegation_cert_set_pool_key_hash(checked(), copy.checked()), "StakeVoteDelegationCert setPoolKeyHash");
+  checkCardanoError(cardano_stake_vote_delegation_cert_set_pool_key_hash(checked(), checkedNativeHandle(copy)), "StakeVoteDelegationCert setPoolKeyHash");
 }
 
 DRep
@@ -141,7 +143,7 @@ StakeVoteDelegationCert::drep() const
     throw std::logic_error("Stake and vote delegation certificate has no DRep");
   }
 
-  const DRep result(value);
+  const DRep result = DRep::adopt(value);
   return DRep(result);
 }
 
@@ -149,7 +151,7 @@ void
 StakeVoteDelegationCert::setDRep(const DRep& value)
 {
   const DRep copy(value);
-  checkCardanoError(cardano_stake_vote_delegation_cert_set_drep(checked(), copy.checked()), "StakeVoteDelegationCert setDRep");
+  checkCardanoError(cardano_stake_vote_delegation_cert_set_drep(checked(), checkedNativeHandle(copy)), "StakeVoteDelegationCert setDRep");
 }
 
 std::vector<std::uint8_t>
@@ -204,6 +206,35 @@ bool
 StakeVoteDelegationCert::operator!=(const StakeVoteDelegationCert& other) const
 {
   return !(*this == other);
+}
+
+StakeVoteDelegationCert
+StakeVoteDelegationCert::adopt(cardano_stake_vote_delegation_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null StakeVoteDelegationCert");
+  }
+
+  return StakeVoteDelegationCert(value);
+}
+
+cardano_stake_vote_delegation_cert_t*
+StakeVoteDelegationCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_stake_vote_delegation_cert_t*
+StakeVoteDelegationCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_stake_vote_delegation_cert_t*
+StakeVoteDelegationCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -31,6 +31,8 @@
 #include <cardano/plutus_data/plutus_data.h>
 #include <cardano/transaction_body/required_guards_map.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -104,7 +106,7 @@ bool
 RequiredGuardsMap::contains(const Credential& credential) const
 {
   cardano_plutus_data_t*                                          value  = nullptr;
-  const cardano_error_t                                           status = cardano_required_guards_map_get(checked(), credential.checked(), &value);
+  const cardano_error_t                                           status = cardano_required_guards_map_get(checked(), checkedNativeHandle(credential), &value);
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
 
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
@@ -120,7 +122,7 @@ std::optional<std::optional<PlutusData>>
 RequiredGuardsMap::get(const Credential& credential) const
 {
   cardano_plutus_data_t*                                          value  = nullptr;
-  const cardano_error_t                                           status = cardano_required_guards_map_get(checked(), credential.checked(), &value);
+  const cardano_error_t                                           status = cardano_required_guards_map_get(checked(), checkedNativeHandle(credential), &value);
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
 
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
@@ -134,7 +136,7 @@ RequiredGuardsMap::get(const Credential& credential) const
     return std::make_optional(std::optional<PlutusData>());
   }
 
-  const PlutusData copied(*owner.release());
+  const PlutusData copied = PlutusData::adopt(owner.release());
   return std::make_optional(std::make_optional(PlutusData(copied)));
 }
 
@@ -146,11 +148,11 @@ RequiredGuardsMap::insert(const Credential& credential, const std::optional<Plut
   if (datum)
   {
     const PlutusData copyDatum(*datum);
-    checkCardanoError(cardano_required_guards_map_insert(checked(), copyCredential.checked(), copyDatum.checked()), "RequiredGuardsMap insert");
+    checkCardanoError(cardano_required_guards_map_insert(checked(), checkedNativeHandle(copyCredential), checkedNativeHandle(copyDatum)), "RequiredGuardsMap insert");
   }
   else
   {
-    checkCardanoError(cardano_required_guards_map_insert(checked(), copyCredential.checked(), nullptr), "RequiredGuardsMap insert");
+    checkCardanoError(cardano_required_guards_map_insert(checked(), checkedNativeHandle(copyCredential), nullptr), "RequiredGuardsMap insert");
   }
   invalidateElements();
 }
@@ -170,13 +172,13 @@ RequiredGuardsMap::entryAt(std::size_t index) const
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> valueOwner(value);
 
   checkCardanoError(status, "RequiredGuardsMap entryAt");
-  Credential                credential(keyOwner.release());
+  Credential                credential = Credential::adopt(keyOwner.release());
   std::optional<PlutusData> datum;
 
   if (valueOwner.get())
   {
-    PlutusData copied(*valueOwner.release());
-    datum = std::move(copied);
+    PlutusData copied = PlutusData::adopt(valueOwner.release());
+    datum             = std::move(copied);
   }
 
   return std::make_pair(std::move(credential), std::move(datum));
@@ -489,6 +491,60 @@ RequiredGuardsMap::clear()
   materialize();
   m_elements.clear();
   m_mutableAccess = true;
+}
+
+RequiredGuardsMap
+RequiredGuardsMap::adopt(cardano_required_guards_map_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null RequiredGuardsMap");
+  }
+
+  return RequiredGuardsMap(value);
+}
+
+cardano_required_guards_map_t*
+RequiredGuardsMap::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_required_guards_map_t*
+RequiredGuardsMap::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_required_guards_map_t*
+RequiredGuardsMap::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

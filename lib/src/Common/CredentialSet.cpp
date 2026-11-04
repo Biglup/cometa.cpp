@@ -31,6 +31,8 @@
 
 #include <cardano/proposal_procedures/credential_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -133,7 +135,7 @@ CredentialSet::contains(const Credential& value) const
 
     checkCardanoError(status, "CredentialSet contains");
 
-    if (cardano_credential_equals(owner.get(), value.checked()))
+    if (cardano_credential_equals(owner.get(), checkedNativeHandle(value)))
     {
       return true;
     }
@@ -155,7 +157,7 @@ CredentialSet::at(std::size_t index) const
   CardanoObject<cardano_credential_t, cardano_credential_unref> owner(element);
 
   checkCardanoError(status, "CredentialSet at");
-  const Credential value(owner.release());
+  const Credential value = Credential::adopt(owner.release());
 
   return Credential(value);
 }
@@ -429,6 +431,41 @@ CredentialSet::erase(const value_type& value)
   return 1;
 }
 
+CredentialSet
+CredentialSet::adopt(cardano_credential_set_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null CredentialSet");
+  }
+
+  return CredentialSet(value);
+}
+
+cardano_credential_set_t*
+CredentialSet::nativeHandle() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return m_value;
+}
+
+const cardano_credential_set_t*
+CredentialSet::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_credential_set_t*
+CredentialSet::release() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 CredentialSet::CredentialSet(cardano_credential_set_t* value) noexcept
@@ -491,7 +528,7 @@ CredentialSet::insertValue(const Credential& value)
 
   const Credential copy(value);
 
-  checkCardanoError(cardano_credential_set_add(checked(), copy.checked()), "CredentialSet insert");
+  checkCardanoError(cardano_credential_set_add(checked(), checkedNativeHandle(copy)), "CredentialSet insert");
   invalidateElements();
 
   return true;

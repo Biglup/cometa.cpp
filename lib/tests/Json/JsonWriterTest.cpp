@@ -167,3 +167,38 @@ TEST(JsonWriterTest, RejectsInvalidInputsBeforeWriting)
   writer.writeString("");
   EXPECT_EQ(writer.toString(), "\"\"");
 }
+
+TEST(JsonWriter, NativeTransferPreservesPrettyFormattingAfterReset)
+{
+  // Arrange
+  JsonWriter writer(JsonFormat::Pretty);
+  writer.writeStartObject();
+  writer.writePropertyName("value");
+  writer.writeUInt(42);
+  writer.writeEndObject();
+  const std::string      expected = writer.toString();
+  const JsonWriter&      view     = writer;
+  cardano_json_writer_t* pointer  = writer.nativeHandle();
+
+  // Act
+  JsonWriter adopted = JsonWriter::adopt(writer.release(), JsonFormat::Pretty);
+
+  // Assert
+  EXPECT_EQ(adopted.nativeHandle(), pointer);
+  EXPECT_THROW(JsonWriter::adopt(pointer, static_cast<JsonFormat>(-1)), std::invalid_argument);
+  EXPECT_EQ(writer.nativeHandle(), nullptr);
+  EXPECT_EQ(view.nativeHandle(), nullptr);
+  EXPECT_EQ(writer.release(), nullptr);
+  EXPECT_EQ(adopted.toString(), expected);
+  EXPECT_THROW(JsonWriter::adopt(nullptr, JsonFormat::Pretty), std::invalid_argument);
+
+  // Act
+  adopted.reset();
+  adopted.writeStartObject();
+  adopted.writePropertyName("value");
+  adopted.writeUInt(42);
+  adopted.writeEndObject();
+
+  // Assert
+  EXPECT_EQ(adopted.toString(), expected);
+}

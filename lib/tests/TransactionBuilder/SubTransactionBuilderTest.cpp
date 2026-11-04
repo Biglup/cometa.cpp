@@ -299,3 +299,14 @@ TEST(SubTransactionBuilder, RegistersAndDelegatesStakeAndDRep)
   ASSERT_TRUE(transaction.body().certificates().has_value());
   EXPECT_EQ(transaction.body().certificates()->size(), 4U);
 }
+
+TEST(SubTransactionBuilder, BorrowsNativeHandleWithoutTransferringOwnership)
+{
+  // Arrange
+  SubTransactionBuilder        builder(ProtocolParameters(), SlotConfig::forNetwork(NetworkMagic::Preprod));
+  const SubTransactionBuilder& view = builder;
+
+  // Act & Assert
+  EXPECT_NE(builder.nativeHandle(), nullptr);
+  EXPECT_EQ(builder.nativeHandle(), view.nativeHandle());
+}

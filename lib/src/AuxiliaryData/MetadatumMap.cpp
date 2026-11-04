@@ -32,6 +32,8 @@
 #include <cardano/auxiliary_data/metadatum_list.h>
 #include <cardano/auxiliary_data/metadatum_map.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -109,7 +111,7 @@ std::optional<Metadatum>
 MetadatumMap::get(const Metadatum& key) const
 {
   cardano_metadatum_t*  value  = nullptr;
-  const cardano_error_t result = cardano_metadatum_map_get(checked(), key.checked(), &value);
+  const cardano_error_t result = cardano_metadatum_map_get(checked(), checkedNativeHandle(key), &value);
 
   CardanoObject<cardano_metadatum_t, cardano_metadatum_unref> owner(value);
 
@@ -120,7 +122,7 @@ MetadatumMap::get(const Metadatum& key) const
 
   checkCardanoError(result, "MetadatumMap get");
 
-  const Metadatum data(*owner.release());
+  const Metadatum data = Metadatum::adopt(owner.release());
 
   return Metadatum(data);
 }
@@ -137,7 +139,7 @@ MetadatumMap::insert(const Metadatum& key, const Metadatum& value)
   Metadatum keyCopy(key);
   Metadatum valueCopy(value);
 
-  checkCardanoError(cardano_metadatum_map_insert(checked(), keyCopy.checked(), valueCopy.checked()), "MetadatumMap insert");
+  checkCardanoError(cardano_metadatum_map_insert(checked(), checkedNativeHandle(keyCopy), checkedNativeHandle(valueCopy)), "MetadatumMap insert");
 }
 
 std::vector<Metadatum>
@@ -150,7 +152,7 @@ MetadatumMap::keys() const
 
   checkCardanoError(result, "MetadatumMap keys");
 
-  const MetadatumList list(*owner.release());
+  const MetadatumList list = MetadatumList::adopt(owner.release());
 
   return list.values();
 }
@@ -165,7 +167,7 @@ MetadatumMap::values() const
 
   checkCardanoError(result, "MetadatumMap values");
 
-  const MetadatumList list(*owner.release());
+  const MetadatumList list = MetadatumList::adopt(owner.release());
 
   return list.values();
 }
@@ -204,8 +206,8 @@ MetadatumMap::entryAt(std::size_t index) const
 
   checkCardanoError(result, "MetadatumMap entryAt");
 
-  const Metadatum keyValue(*keyOwner.release());
-  const Metadatum dataValue(*valueOwner.release());
+  const Metadatum keyValue  = Metadatum::adopt(keyOwner.release());
+  const Metadatum dataValue = Metadatum::adopt(valueOwner.release());
 
   return std::make_pair(Metadatum(keyValue), Metadatum(dataValue));
 }
@@ -541,6 +543,60 @@ MetadatumMap::erase(const_iterator first, const_iterator last)
   m_mutableAccess = true;
 
   return m_elements.erase(first, last);
+}
+
+MetadatumMap
+MetadatumMap::adopt(cardano_metadatum_map_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null MetadatumMap");
+  }
+
+  return MetadatumMap(*value);
+}
+
+cardano_metadatum_map_t*
+MetadatumMap::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_metadatum_map_t*
+MetadatumMap::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_metadatum_map_t*
+MetadatumMap::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

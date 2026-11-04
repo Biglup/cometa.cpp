@@ -29,6 +29,8 @@
 
 #include <cardano/pool_params/pool_params.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -48,7 +50,7 @@ PoolParams::PoolParams(const Blake2bHash& operatorKeyHash, const Blake2bHash& vr
   const std::optional<PoolMetadata> metadataCopy(metadata);
 
   cardano_pool_params_t*                                          value  = nullptr;
-  const cardano_error_t                                           status = cardano_pool_params_new(operatorCopy.checked(), vrfCopy.checked(), pledge, cost, marginCopy.checked(), rewardCopy.checked(), ownersCopy.checked(), relaysCopy.checked(), metadataCopy ? metadataCopy->checked() : nullptr, &value);
+  const cardano_error_t                                           status = cardano_pool_params_new(checkedNativeHandle(operatorCopy), checkedNativeHandle(vrfCopy), pledge, cost, checkedNativeHandle(marginCopy), checkedNativeHandle(rewardCopy), checkedNativeHandle(ownersCopy), checkedNativeHandle(relaysCopy), metadataCopy ? checkedNativeHandle(*metadataCopy) : nullptr, &value);
   CardanoObject<cardano_pool_params_t, cardano_pool_params_unref> owner(value);
 
   checkCardanoError(status, "PoolParams");
@@ -130,7 +132,7 @@ PoolParams::operatorKeyHash() const
   CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
 
   checkCardanoError(status, "PoolParams operatorKeyHash");
-  const Blake2bHash result(owner.release());
+  const Blake2bHash result = Blake2bHash::adopt(owner.release());
   return Blake2bHash(result);
 }
 
@@ -139,7 +141,7 @@ PoolParams::setOperatorKeyHash(const Blake2bHash& value)
 {
   validateHash(value, 28);
   const Blake2bHash copy(value);
-  checkCardanoError(cardano_pool_params_set_operator_key_hash(checked(), copy.checked()), "PoolParams set operatorKeyHash");
+  checkCardanoError(cardano_pool_params_set_operator_key_hash(checked(), checkedNativeHandle(copy)), "PoolParams set operatorKeyHash");
 }
 
 Blake2bHash
@@ -150,7 +152,7 @@ PoolParams::vrfKeyHash() const
   CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
 
   checkCardanoError(status, "PoolParams vrfKeyHash");
-  const Blake2bHash result(owner.release());
+  const Blake2bHash result = Blake2bHash::adopt(owner.release());
   return Blake2bHash(result);
 }
 
@@ -159,7 +161,7 @@ PoolParams::setVrfKeyHash(const Blake2bHash& value)
 {
   validateHash(value, 32);
   const Blake2bHash copy(value);
-  checkCardanoError(cardano_pool_params_set_vrf_vk_hash(checked(), copy.checked()), "PoolParams set vrfKeyHash");
+  checkCardanoError(cardano_pool_params_set_vrf_vk_hash(checked(), checkedNativeHandle(copy)), "PoolParams set vrfKeyHash");
 }
 
 UnitInterval
@@ -170,7 +172,7 @@ PoolParams::margin() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "PoolParams margin");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -178,7 +180,7 @@ void
 PoolParams::setMargin(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_pool_params_set_margin(checked(), copy.checked()), "PoolParams set margin");
+  checkCardanoError(cardano_pool_params_set_margin(checked(), checkedNativeHandle(copy)), "PoolParams set margin");
 }
 
 RewardAddress
@@ -189,7 +191,7 @@ PoolParams::rewardAccount() const
   CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> owner(value);
 
   checkCardanoError(status, "PoolParams rewardAccount");
-  const RewardAddress result(*owner.release());
+  const RewardAddress result = RewardAddress::adopt(owner.release());
   return RewardAddress(result);
 }
 
@@ -197,7 +199,7 @@ void
 PoolParams::setRewardAccount(const RewardAddress& value)
 {
   const RewardAddress copy(value);
-  checkCardanoError(cardano_pool_params_set_reward_account(checked(), copy.checked()), "PoolParams set rewardAccount");
+  checkCardanoError(cardano_pool_params_set_reward_account(checked(), checkedNativeHandle(copy)), "PoolParams set rewardAccount");
 }
 
 PoolOwners
@@ -208,7 +210,7 @@ PoolParams::owners() const
   CardanoObject<cardano_pool_owners_t, cardano_pool_owners_unref> owner(value);
 
   checkCardanoError(status, "PoolParams owners");
-  const PoolOwners result(owner.release());
+  const PoolOwners result = PoolOwners::adopt(owner.release());
   return PoolOwners(result);
 }
 
@@ -216,7 +218,7 @@ void
 PoolParams::setOwners(const PoolOwners& value)
 {
   const PoolOwners copy(value);
-  checkCardanoError(cardano_pool_params_set_owners(checked(), copy.checked()), "PoolParams set owners");
+  checkCardanoError(cardano_pool_params_set_owners(checked(), checkedNativeHandle(copy)), "PoolParams set owners");
 }
 
 Relays
@@ -227,7 +229,7 @@ PoolParams::relays() const
   CardanoObject<cardano_relays_t, cardano_relays_unref> owner(value);
 
   checkCardanoError(status, "PoolParams relays");
-  const Relays result(*owner.release());
+  const Relays result = Relays::adopt(owner.release());
   return Relays(result);
 }
 
@@ -235,7 +237,7 @@ void
 PoolParams::setRelays(const Relays& value)
 {
   const Relays copy(value);
-  checkCardanoError(cardano_pool_params_set_relays(checked(), copy.checked()), "PoolParams set relays");
+  checkCardanoError(cardano_pool_params_set_relays(checked(), checkedNativeHandle(copy)), "PoolParams set relays");
 }
 
 std::optional<BlsKey>
@@ -251,7 +253,7 @@ PoolParams::blsKey() const
     return std::nullopt;
   }
 
-  const BlsKey result(*owner.release());
+  const BlsKey result = BlsKey::adopt(owner.release());
   return BlsKey(result);
 }
 
@@ -259,7 +261,7 @@ void
 PoolParams::setBlsKey(const std::optional<BlsKey>& value)
 {
   const std::optional<BlsKey> copy(value);
-  checkCardanoError(cardano_pool_params_set_bls_key(checked(), copy ? copy->checked() : nullptr), "PoolParams set blsKey");
+  checkCardanoError(cardano_pool_params_set_bls_key(checked(), copy ? checkedNativeHandle(*copy) : nullptr), "PoolParams set blsKey");
 }
 
 std::optional<PoolMetadata>
@@ -275,7 +277,7 @@ PoolParams::metadata() const
     return std::nullopt;
   }
 
-  const PoolMetadata result(*owner.release());
+  const PoolMetadata result = PoolMetadata::adopt(owner.release());
   return PoolMetadata(result);
 }
 
@@ -283,7 +285,7 @@ void
 PoolParams::setMetadata(const std::optional<PoolMetadata>& value)
 {
   const std::optional<PoolMetadata> copy(value);
-  checkCardanoError(cardano_pool_params_set_metadata(checked(), copy ? copy->checked() : nullptr), "PoolParams set metadata");
+  checkCardanoError(cardano_pool_params_set_metadata(checked(), copy ? checkedNativeHandle(*copy) : nullptr), "PoolParams set metadata");
 }
 
 std::vector<std::uint8_t>
@@ -341,6 +343,35 @@ bool
 PoolParams::operator!=(const PoolParams& other) const
 {
   return !(*this == other);
+}
+
+PoolParams
+PoolParams::adopt(cardano_pool_params_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PoolParams");
+  }
+
+  return PoolParams(value);
+}
+
+cardano_pool_params_t*
+PoolParams::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_pool_params_t*
+PoolParams::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_pool_params_t*
+PoolParams::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -30,6 +30,8 @@
 
 #include <cardano/scripts/native_scripts/script_invalid_before.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -172,6 +174,35 @@ bool
 ScriptInvalidBefore::operator!=(const ScriptInvalidBefore& other) const
 {
   return !(*this == other);
+}
+
+ScriptInvalidBefore
+ScriptInvalidBefore::adopt(cardano_script_invalid_before_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ScriptInvalidBefore");
+  }
+
+  return ScriptInvalidBefore(*value);
+}
+
+cardano_script_invalid_before_t*
+ScriptInvalidBefore::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_script_invalid_before_t*
+ScriptInvalidBefore::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_script_invalid_before_t*
+ScriptInvalidBefore::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

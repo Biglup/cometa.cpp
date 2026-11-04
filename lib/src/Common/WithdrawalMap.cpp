@@ -30,6 +30,8 @@
 #include <cardano/address/reward_address.h>
 #include <cardano/common/withdrawal_map.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -118,7 +120,7 @@ std::optional<std::uint64_t>
 WithdrawalMap::get(const RewardAddress& key) const
 {
   std::uint64_t         amount = 0U;
-  const cardano_error_t result = cardano_withdrawal_map_get(checked(), key.checked(), &amount);
+  const cardano_error_t result = cardano_withdrawal_map_get(checked(), checkedNativeHandle(key), &amount);
 
   if (result == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
@@ -141,7 +143,7 @@ WithdrawalMap::set(const RewardAddress& key, std::uint64_t amount)
     for (const std::pair<RewardAddress, std::uint64_t>& entry: current)
     {
       const std::uint64_t quantity = entry.first == key ? amount : entry.second;
-      checkCardanoError(cardano_withdrawal_map_insert(replacement.checked(), entry.first.checked(), quantity), "WithdrawalMap replacement");
+      checkCardanoError(cardano_withdrawal_map_insert(replacement.checked(), checkedNativeHandle(entry.first), quantity), "WithdrawalMap replacement");
     }
 
     swap(replacement);
@@ -150,7 +152,7 @@ WithdrawalMap::set(const RewardAddress& key, std::uint64_t amount)
 
   RewardAddress copy(key);
 
-  checkCardanoError(cardano_withdrawal_map_insert(checked(), copy.checked(), amount), "WithdrawalMap set");
+  checkCardanoError(cardano_withdrawal_map_insert(checked(), checkedNativeHandle(copy), amount), "WithdrawalMap set");
   invalidateElements();
 }
 
@@ -177,7 +179,7 @@ WithdrawalMap::entryAt(std::size_t index) const
 
   checkCardanoError(result, "WithdrawalMap entryAt");
 
-  const RewardAddress address(*owner.release());
+  const RewardAddress address = RewardAddress::adopt(owner.release());
 
   return std::make_pair(RewardAddress(address), amount);
 }
@@ -500,6 +502,60 @@ WithdrawalMap::clear()
   materialize();
   m_elements.clear();
   m_mutableAccess = true;
+}
+
+WithdrawalMap
+WithdrawalMap::adopt(cardano_withdrawal_map_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null WithdrawalMap");
+  }
+
+  return WithdrawalMap(*value);
+}
+
+cardano_withdrawal_map_t*
+WithdrawalMap::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_withdrawal_map_t*
+WithdrawalMap::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_withdrawal_map_t*
+WithdrawalMap::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

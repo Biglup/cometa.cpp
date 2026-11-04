@@ -238,6 +238,47 @@ class JsonWriter
      */
     JsonWriter& operator=(JsonWriter&& other) noexcept;
 
+  public:
+
+    /**
+     * @brief Takes ownership of one native reference without copying it.
+     * @param value An owned reference; the caller must stop managing it after this call succeeds.
+     * @param format The format used to create the native writer; preserved by reset().
+     * @return The C++ owner of the supplied reference.
+     * @throws std::invalid_argument The reference is null or the format is invalid; ownership is not transferred.
+     */
+    static JsonWriter adopt(cardano_json_writer_t* value, JsonFormat format);
+
+    /**
+     * @brief Borrows the native object for C interoperability.
+     * @return The native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    cardano_json_writer_t* nativeHandle() noexcept;
+
+    /**
+     * @brief Borrows the native object for read-only C interoperability.
+     * @return The read-only native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    const cardano_json_writer_t* nativeHandle() const noexcept;
+
+    /**
+     * @brief Transfers the owned native reference to the caller.
+     * @return The owned pointer, or nullptr if this object is already empty.
+     * @remark Leaves this object empty. The caller must adopt the reference or release it with the matching C unref function.
+     */
+    cardano_json_writer_t* release() noexcept;
+
+  private:
+
+    /**
+     * @brief Takes ownership of a validated native reference.
+     * @param value The owned non-null reference.
+     * @param format The format to preserve when resetting.
+     */
+    explicit JsonWriter(cardano_json_writer_t* value, JsonFormat format) noexcept;
+
   private:
 
     /**

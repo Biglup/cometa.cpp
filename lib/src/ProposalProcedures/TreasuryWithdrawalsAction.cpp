@@ -29,6 +29,8 @@
 
 #include <cardano/proposal_procedures/treasury_withdrawals_action.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -38,9 +40,9 @@ TreasuryWithdrawalsAction::TreasuryWithdrawalsAction(const WithdrawalMap& withdr
 {
   const WithdrawalMap                                                                             withdrawalsCopy(withdrawals);
   const std::optional<Blake2bHash>                                                                policyCopy(policyHash);
-  cardano_blake2b_hash_t*                                                                         policy = policyCopy ? policyCopy->checked() : nullptr;
+  cardano_blake2b_hash_t*                                                                         policy = policyCopy ? checkedNativeHandle(*policyCopy) : nullptr;
   cardano_treasury_withdrawals_action_t*                                                          value  = nullptr;
-  const cardano_error_t                                                                           status = cardano_treasury_withdrawals_action_new(withdrawalsCopy.checked(), policy, &value);
+  const cardano_error_t                                                                           status = cardano_treasury_withdrawals_action_new(checkedNativeHandle(withdrawalsCopy), policy, &value);
   CardanoObject<cardano_treasury_withdrawals_action_t, cardano_treasury_withdrawals_action_unref> owner(value);
 
   checkCardanoError(status, "TreasuryWithdrawalsAction");
@@ -91,7 +93,7 @@ TreasuryWithdrawalsAction::withdrawals() const
     throw std::logic_error("TreasuryWithdrawalsAction has no withdrawals");
   }
 
-  const WithdrawalMap found(*owner.release());
+  const WithdrawalMap found = WithdrawalMap::adopt(owner.release());
   return WithdrawalMap(found);
 }
 
@@ -99,7 +101,7 @@ void
 TreasuryWithdrawalsAction::setWithdrawals(const WithdrawalMap& value)
 {
   const WithdrawalMap copy(value);
-  checkCardanoError(cardano_treasury_withdrawals_action_set_withdrawals(checked(), copy.checked()), "TreasuryWithdrawalsAction setWithdrawals");
+  checkCardanoError(cardano_treasury_withdrawals_action_set_withdrawals(checked(), checkedNativeHandle(copy)), "TreasuryWithdrawalsAction setWithdrawals");
 }
 
 std::optional<Blake2bHash>
@@ -113,7 +115,7 @@ TreasuryWithdrawalsAction::policyHash() const
     return std::nullopt;
   }
 
-  const Blake2bHash found(owner.release());
+  const Blake2bHash found = Blake2bHash::adopt(owner.release());
   return Blake2bHash(found);
 }
 
@@ -121,7 +123,7 @@ void
 TreasuryWithdrawalsAction::setPolicyHash(const std::optional<Blake2bHash>& value)
 {
   const std::optional<Blake2bHash> copy(value);
-  cardano_blake2b_hash_t*          data = copy ? copy->checked() : nullptr;
+  cardano_blake2b_hash_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_treasury_withdrawals_action_set_policy_hash(checked(), data), "TreasuryWithdrawalsAction setPolicyHash");
 }
 
@@ -175,6 +177,35 @@ bool
 TreasuryWithdrawalsAction::operator!=(const TreasuryWithdrawalsAction& other) const
 {
   return !(*this == other);
+}
+
+TreasuryWithdrawalsAction
+TreasuryWithdrawalsAction::adopt(cardano_treasury_withdrawals_action_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null TreasuryWithdrawalsAction");
+  }
+
+  return TreasuryWithdrawalsAction(value);
+}
+
+cardano_treasury_withdrawals_action_t*
+TreasuryWithdrawalsAction::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_treasury_withdrawals_action_t*
+TreasuryWithdrawalsAction::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_treasury_withdrawals_action_t*
+TreasuryWithdrawalsAction::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

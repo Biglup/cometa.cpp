@@ -30,6 +30,8 @@
 #include <cardano/common/unit_interval.h>
 #include <cardano/protocol_params/pool_voting_thresholds.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -49,11 +51,11 @@ PoolVotingThresholds::PoolVotingThresholds(
   const UnitInterval                securityRelevantParamCopy(securityRelevantParam);
   cardano_pool_voting_thresholds_t* value  = nullptr;
   const cardano_error_t             status = cardano_pool_voting_thresholds_new(
-    motionNoConfidenceCopy.checked(),
-    committeeNormalCopy.checked(),
-    committeeNoConfidenceCopy.checked(),
-    hardForkInitiationCopy.checked(),
-    securityRelevantParamCopy.checked(),
+    checkedNativeHandle(motionNoConfidenceCopy),
+    checkedNativeHandle(committeeNormalCopy),
+    checkedNativeHandle(committeeNoConfidenceCopy),
+    checkedNativeHandle(hardForkInitiationCopy),
+    checkedNativeHandle(securityRelevantParamCopy),
     &value);
   CardanoObject<cardano_pool_voting_thresholds_t, cardano_pool_voting_thresholds_unref> owner(value);
 
@@ -102,7 +104,7 @@ PoolVotingThresholds::motionNoConfidence() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "PoolVotingThresholds motionNoConfidence");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -110,7 +112,7 @@ void
 PoolVotingThresholds::setMotionNoConfidence(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_pool_voting_thresholds_set_motion_no_confidence(checked(), copy.checked()), "PoolVotingThresholds setMotionNoConfidence");
+  checkCardanoError(cardano_pool_voting_thresholds_set_motion_no_confidence(checked(), checkedNativeHandle(copy)), "PoolVotingThresholds setMotionNoConfidence");
 }
 
 UnitInterval
@@ -121,7 +123,7 @@ PoolVotingThresholds::committeeNormal() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "PoolVotingThresholds committeeNormal");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -129,7 +131,7 @@ void
 PoolVotingThresholds::setCommitteeNormal(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_pool_voting_thresholds_set_committee_normal(checked(), copy.checked()), "PoolVotingThresholds setCommitteeNormal");
+  checkCardanoError(cardano_pool_voting_thresholds_set_committee_normal(checked(), checkedNativeHandle(copy)), "PoolVotingThresholds setCommitteeNormal");
 }
 
 UnitInterval
@@ -140,7 +142,7 @@ PoolVotingThresholds::committeeNoConfidence() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "PoolVotingThresholds committeeNoConfidence");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -148,7 +150,7 @@ void
 PoolVotingThresholds::setCommitteeNoConfidence(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_pool_voting_thresholds_set_committee_no_confidence(checked(), copy.checked()), "PoolVotingThresholds setCommitteeNoConfidence");
+  checkCardanoError(cardano_pool_voting_thresholds_set_committee_no_confidence(checked(), checkedNativeHandle(copy)), "PoolVotingThresholds setCommitteeNoConfidence");
 }
 
 UnitInterval
@@ -159,7 +161,7 @@ PoolVotingThresholds::hardForkInitiation() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "PoolVotingThresholds hardForkInitiation");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -167,7 +169,7 @@ void
 PoolVotingThresholds::setHardForkInitiation(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_pool_voting_thresholds_set_hard_fork_initiation(checked(), copy.checked()), "PoolVotingThresholds setHardForkInitiation");
+  checkCardanoError(cardano_pool_voting_thresholds_set_hard_fork_initiation(checked(), checkedNativeHandle(copy)), "PoolVotingThresholds setHardForkInitiation");
 }
 
 UnitInterval
@@ -178,7 +180,7 @@ PoolVotingThresholds::securityRelevantParam() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "PoolVotingThresholds securityRelevantParam");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -186,7 +188,7 @@ void
 PoolVotingThresholds::setSecurityRelevantParam(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_pool_voting_thresholds_set_security_relevant_param(checked(), copy.checked()), "PoolVotingThresholds setSecurityRelevantParam");
+  checkCardanoError(cardano_pool_voting_thresholds_set_security_relevant_param(checked(), checkedNativeHandle(copy)), "PoolVotingThresholds setSecurityRelevantParam");
 }
 
 std::vector<std::uint8_t>
@@ -239,6 +241,35 @@ bool
 PoolVotingThresholds::operator!=(const PoolVotingThresholds& other) const
 {
   return !(*this == other);
+}
+
+PoolVotingThresholds
+PoolVotingThresholds::adopt(cardano_pool_voting_thresholds_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PoolVotingThresholds");
+  }
+
+  return PoolVotingThresholds(value);
+}
+
+cardano_pool_voting_thresholds_t*
+PoolVotingThresholds::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_pool_voting_thresholds_t*
+PoolVotingThresholds::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_pool_voting_thresholds_t*
+PoolVotingThresholds::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

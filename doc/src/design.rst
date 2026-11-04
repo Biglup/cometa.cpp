@@ -15,6 +15,56 @@ witness remains usable after its parent is destroyed. Collection accessors and
 iterators can return references; see :doc:`collections`. Mutating an object from
 multiple threads requires application-level synchronization.
 
+C interoperability
+------------------
+
+Owning value wrappers expose three operations for integrating existing cardano-c
+code:
+
+* ``nativeHandle()`` borrows a pointer. The const overload returns a pointer to
+  const. Do not unref a borrowed pointer or retain it beyond the next operation on
+  its C++ owner.
+* ``release()`` transfers the owned reference and leaves the wrapper empty. The
+  caller must adopt it into another wrapper or call the matching C unref function.
+* ``Type::adopt(pointer)`` takes ownership without copying or incrementing the
+  reference count. It rejects null with ``std::invalid_argument``.
+
+``JsonWriter::adopt(pointer, format)`` additionally requires the format used to
+create the writer, so ``reset()`` preserves that choice.
+
+Borrowing or releasing an empty wrapper returns ``nullptr``. Empty wrappers can
+be assigned, swapped, or destroyed; ordinary value operations reject them.
+
+.. code-block:: cpp
+
+   #include <Cometa/Assets/AssetName.h>
+   #include <cardano/assets/asset_name.h>
+
+   Cometa::AssetName name = Cometa::AssetName::fromString("Cometa");
+
+   cardano_asset_name_t* borrowed = name.nativeHandle();
+   const std::size_t length = cardano_asset_name_get_bytes_size(borrowed);
+
+   Cometa::AssetName transferred = Cometa::AssetName::adopt(name.release());
+
+Collections synchronize edits through C++ element references before exposing a
+native pointer. Synchronization can allocate and throw; on failure, ownership and
+pending edits remain with the collection. A mutable borrow invalidates all C++
+iterators and element references. Finish native access before using C++ collection
+operations again. Do not retain native pointers across later C++ operations or
+mutate through a pointer obtained from a const wrapper.
+
+``TransactionBuilder``, ``SubTransactionBuilder``, and ``SecureKeyHandler`` expose
+borrowed handles only: their C++ callback state cannot be transferred by a raw
+pointer. Keep these wrappers alive during native calls. Use C++ signing methods
+when a software signer needs its C++ passphrase provider; direct C calls do not
+activate that provider.
+
+Use the matching cardano-c headers and library shipped with Cometa. Do not mix
+objects from different cardano-c builds or change global allocators while native
+objects are alive. Native mutations must respect cardano-c's invariants and any
+required parent CBOR-cache invalidation.
+
 Concrete and general values
 ---------------------------
 
@@ -99,7 +149,7 @@ The project key is supplied at runtime.
 Distribution
 ------------
 
-Each platform ZIP contains the C++ headers, static and shared Cometa libraries,
+Each platform ZIP contains the C++ and matching C headers, static and shared Cometa libraries,
 the static cardano-c archive, licenses, and a relocatable CMake package. The
 shared Cometa library includes cardano-c. The HTTP transport is available in
 both link modes. Windows uses the system WinHTTP service. Unix packages use

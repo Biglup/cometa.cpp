@@ -30,6 +30,8 @@
 #include <cardano/buffer.h>
 #include <cardano/protocol_params/costmdls.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -86,7 +88,7 @@ void
 CostModels::insert(const CostModel& model)
 {
   const CostModel copy(model);
-  checkCardanoError(cardano_costmdls_insert(checked(), copy.checked()), "CostModels insert");
+  checkCardanoError(cardano_costmdls_insert(checked(), checkedNativeHandle(copy)), "CostModels insert");
   invalidateElements();
 }
 
@@ -116,7 +118,7 @@ CostModels::get(std::uint8_t languageId) const
     return std::nullopt;
   }
 
-  const CostModel borrowed(owner.release());
+  const CostModel borrowed = CostModel::adopt(owner.release());
   return CostModel(borrowed);
 }
 
@@ -453,6 +455,60 @@ bool
 CostModels::empty() const
 {
   return size() == 0;
+}
+
+CostModels
+CostModels::adopt(cardano_costmdls_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null CostModels");
+  }
+
+  return CostModels(value);
+}
+
+cardano_costmdls_t*
+CostModels::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_costmdls_t*
+CostModels::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_costmdls_t*
+CostModels::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

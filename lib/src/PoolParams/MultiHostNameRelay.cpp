@@ -29,6 +29,8 @@
 
 #include <cardano/pool_params/multi_host_name_relay.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -154,6 +156,35 @@ bool
 MultiHostNameRelay::operator!=(const MultiHostNameRelay& other) const
 {
   return !(*this == other);
+}
+
+MultiHostNameRelay
+MultiHostNameRelay::adopt(cardano_multi_host_name_relay_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null MultiHostNameRelay");
+  }
+
+  return MultiHostNameRelay(*value);
+}
+
+cardano_multi_host_name_relay_t*
+MultiHostNameRelay::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_multi_host_name_relay_t*
+MultiHostNameRelay::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_multi_host_name_relay_t*
+MultiHostNameRelay::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

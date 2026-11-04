@@ -29,6 +29,8 @@
 
 #include <cardano/proposal_procedures/parameter_change_action.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -42,10 +44,10 @@ ParameterChangeAction::ParameterChangeAction(
   const ProtocolParamUpdate                                                               updateCopy(update);
   const std::optional<GovernanceActionId>                                                 previousCopy(previousAction);
   const std::optional<Blake2bHash>                                                        policyCopy(policyHash);
-  cardano_governance_action_id_t*                                                         previous = previousCopy ? previousCopy->checked() : nullptr;
-  cardano_blake2b_hash_t*                                                                 policy   = policyCopy ? policyCopy->checked() : nullptr;
+  cardano_governance_action_id_t*                                                         previous = previousCopy ? checkedNativeHandle(*previousCopy) : nullptr;
+  cardano_blake2b_hash_t*                                                                 policy   = policyCopy ? checkedNativeHandle(*policyCopy) : nullptr;
   cardano_parameter_change_action_t*                                                      value    = nullptr;
-  const cardano_error_t                                                                   status   = cardano_parameter_change_action_new(updateCopy.checked(), previous, policy, &value);
+  const cardano_error_t                                                                   status   = cardano_parameter_change_action_new(checkedNativeHandle(updateCopy), previous, policy, &value);
   CardanoObject<cardano_parameter_change_action_t, cardano_parameter_change_action_unref> owner(value);
 
   checkCardanoError(status, "ParameterChangeAction");
@@ -96,7 +98,7 @@ ParameterChangeAction::update() const
     throw std::logic_error("ParameterChangeAction has no parameter update");
   }
 
-  const ProtocolParamUpdate found(owner.release());
+  const ProtocolParamUpdate found = ProtocolParamUpdate::adopt(owner.release());
   return ProtocolParamUpdate(found);
 }
 
@@ -104,7 +106,7 @@ void
 ParameterChangeAction::setUpdate(const ProtocolParamUpdate& value)
 {
   const ProtocolParamUpdate copy(value);
-  checkCardanoError(cardano_parameter_change_action_set_protocol_param_update(checked(), copy.checked()), "ParameterChangeAction setUpdate");
+  checkCardanoError(cardano_parameter_change_action_set_protocol_param_update(checked(), checkedNativeHandle(copy)), "ParameterChangeAction setUpdate");
 }
 
 std::optional<Blake2bHash>
@@ -118,7 +120,7 @@ ParameterChangeAction::policyHash() const
     return std::nullopt;
   }
 
-  const Blake2bHash found(owner.release());
+  const Blake2bHash found = Blake2bHash::adopt(owner.release());
   return Blake2bHash(found);
 }
 
@@ -126,7 +128,7 @@ void
 ParameterChangeAction::setPolicyHash(const std::optional<Blake2bHash>& value)
 {
   const std::optional<Blake2bHash> copy(value);
-  cardano_blake2b_hash_t*          data = copy ? copy->checked() : nullptr;
+  cardano_blake2b_hash_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_parameter_change_action_set_policy_hash(checked(), data), "ParameterChangeAction setPolicyHash");
 }
 
@@ -141,7 +143,7 @@ ParameterChangeAction::previousAction() const
     return std::nullopt;
   }
 
-  const GovernanceActionId found(owner.release());
+  const GovernanceActionId found = GovernanceActionId::adopt(owner.release());
   return GovernanceActionId(found);
 }
 
@@ -149,7 +151,7 @@ void
 ParameterChangeAction::setPreviousAction(const std::optional<GovernanceActionId>& value)
 {
   const std::optional<GovernanceActionId> copy(value);
-  cardano_governance_action_id_t*         data = copy ? copy->checked() : nullptr;
+  cardano_governance_action_id_t*         data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_parameter_change_action_set_governance_action_id(checked(), data), "ParameterChangeAction setPreviousAction");
 }
 
@@ -203,6 +205,35 @@ bool
 ParameterChangeAction::operator!=(const ParameterChangeAction& other) const
 {
   return !(*this == other);
+}
+
+ParameterChangeAction
+ParameterChangeAction::adopt(cardano_parameter_change_action_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ParameterChangeAction");
+  }
+
+  return ParameterChangeAction(value);
+}
+
+cardano_parameter_change_action_t*
+ParameterChangeAction::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_parameter_change_action_t*
+ParameterChangeAction::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_parameter_change_action_t*
+ParameterChangeAction::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

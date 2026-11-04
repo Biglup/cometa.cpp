@@ -39,6 +39,7 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -64,6 +65,27 @@ checkCardanoError(cardano_error_t error, const char* operation)
   {
     throw Error(static_cast<ErrorCode>(error), operation);
   }
+}
+
+/**
+ * @brief Borrows a live native object for an internal C call.
+ * @tparam T The C++ wrapper type.
+ * @param value The wrapper to borrow without invalidating C++ element references.
+ * @return The borrowed pointer; C APIs may update reference counts but must not change the value.
+ * @throws std::logic_error The wrapper is empty.
+ */
+template<class T>
+std::remove_const_t<std::remove_pointer_t<decltype(std::declval<const T&>().nativeHandle())>>*
+checkedNativeHandle(const T& value)
+{
+  const decltype(value.nativeHandle()) handle = value.nativeHandle();
+
+  if (!handle)
+  {
+    throw std::logic_error("Cannot observe an empty value");
+  }
+
+  return const_cast<std::remove_const_t<std::remove_pointer_t<decltype(handle)>>*>(handle);
 }
 
 /**

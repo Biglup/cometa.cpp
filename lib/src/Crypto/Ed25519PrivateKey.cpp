@@ -31,6 +31,8 @@
 
 #include <cstring>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -152,7 +154,7 @@ Ed25519PrivateKey::sign(const std::vector<std::uint8_t>& message) const
 
   checkCardanoError(result, "Ed25519PrivateKey sign");
 
-  return Ed25519Signature(*owner.release());
+  return Ed25519Signature::adopt(owner.release());
 }
 
 Ed25519PublicKey
@@ -165,7 +167,7 @@ Ed25519PrivateKey::publicKey() const
 
   checkCardanoError(result, "Ed25519PrivateKey publicKey");
 
-  return Ed25519PublicKey(*owner.release());
+  return Ed25519PublicKey::adopt(owner.release());
 }
 
 void
@@ -197,6 +199,35 @@ Ed25519PrivateKey::operator=(Ed25519PrivateKey&& other) noexcept
   }
 
   return *this;
+}
+
+Ed25519PrivateKey
+Ed25519PrivateKey::adopt(cardano_ed25519_private_key_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Ed25519PrivateKey");
+  }
+
+  return Ed25519PrivateKey(*value);
+}
+
+cardano_ed25519_private_key_t*
+Ed25519PrivateKey::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_ed25519_private_key_t*
+Ed25519PrivateKey::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_ed25519_private_key_t*
+Ed25519PrivateKey::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

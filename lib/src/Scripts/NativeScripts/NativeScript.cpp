@@ -26,6 +26,7 @@
 #include <Cometa/Scripts/NativeScripts/NativeScript.h>
 
 #include "../../CardanoInterop.h"
+#include "../../ValueValidation.h"
 #include <Cometa/Json/JsonValue.h>
 #include <Cometa/Scripts/NativeScripts/NativeScriptType.h>
 #include <Cometa/Scripts/NativeScripts/ScriptAll.h>
@@ -57,7 +58,7 @@ NativeScript::NativeScript(const ScriptPubkey& script)
   ScriptPubkey copy(script);
 
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_pubkey(copy.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_pubkey(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -70,7 +71,7 @@ NativeScript::NativeScript(ScriptPubkey&& script)
 : m_value(nullptr)
 {
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_pubkey(script.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_pubkey(checkedNativeHandle(script), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -87,7 +88,7 @@ NativeScript::NativeScript(const ScriptAll& script)
   ScriptAll copy(script);
 
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_all(copy.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_all(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -100,7 +101,7 @@ NativeScript::NativeScript(ScriptAll&& script)
 : m_value(nullptr)
 {
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_all(script.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_all(checkedNativeHandle(script), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -117,7 +118,7 @@ NativeScript::NativeScript(const ScriptAny& script)
   ScriptAny copy(script);
 
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_any(copy.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_any(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -130,7 +131,7 @@ NativeScript::NativeScript(ScriptAny&& script)
 : m_value(nullptr)
 {
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_any(script.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_any(checkedNativeHandle(script), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -147,7 +148,7 @@ NativeScript::NativeScript(const ScriptNOfK& script)
   ScriptNOfK copy(script);
 
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_n_of_k(copy.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_n_of_k(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -160,7 +161,7 @@ NativeScript::NativeScript(ScriptNOfK&& script)
 : m_value(nullptr)
 {
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_n_of_k(script.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_n_of_k(checkedNativeHandle(script), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -177,7 +178,7 @@ NativeScript::NativeScript(const ScriptInvalidBefore& script)
   ScriptInvalidBefore copy(script);
 
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_invalid_before(copy.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_invalid_before(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -190,7 +191,7 @@ NativeScript::NativeScript(ScriptInvalidBefore&& script)
 : m_value(nullptr)
 {
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_invalid_before(script.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_invalid_before(checkedNativeHandle(script), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -207,7 +208,7 @@ NativeScript::NativeScript(const ScriptInvalidAfter& script)
   ScriptInvalidAfter copy(script);
 
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_invalid_after(copy.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_invalid_after(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -220,7 +221,7 @@ NativeScript::NativeScript(ScriptInvalidAfter&& script)
 : m_value(nullptr)
 {
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_invalid_after(script.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_invalid_after(checkedNativeHandle(script), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -237,7 +238,7 @@ NativeScript::NativeScript(const ScriptRequireGuard& script)
   ScriptRequireGuard copy(script);
 
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_require_guard(copy.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_require_guard(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -250,7 +251,7 @@ NativeScript::NativeScript(ScriptRequireGuard&& script)
 : m_value(nullptr)
 {
   cardano_native_script_t* value  = nullptr;
-  const cardano_error_t    result = cardano_native_script_new_require_guard(script.checked(), &value);
+  const cardano_error_t    result = cardano_native_script_new_require_guard(checkedNativeHandle(script), &value);
 
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
@@ -289,7 +290,7 @@ NativeScript::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   NativeScript value(*decodeCbor<cardano_native_script_t, cardano_native_script_unref>(cbor, cardano_native_script_from_cbor));
 
-  value.validate();
+  validateValue(value);
 
   return value;
 }
@@ -364,7 +365,7 @@ NativeScript::asPubkey() const
 
   checkCardanoError(result, "NativeScript asPubkey");
 
-  const ScriptPubkey script(*owner.release());
+  const ScriptPubkey script = ScriptPubkey::adopt(owner.release());
 
   return ScriptPubkey(script);
 }
@@ -379,7 +380,7 @@ NativeScript::asAll() const
 
   checkCardanoError(result, "NativeScript asAll");
 
-  const ScriptAll script(*owner.release());
+  const ScriptAll script = ScriptAll::adopt(owner.release());
 
   return ScriptAll(script);
 }
@@ -394,7 +395,7 @@ NativeScript::asAny() const
 
   checkCardanoError(result, "NativeScript asAny");
 
-  const ScriptAny script(*owner.release());
+  const ScriptAny script = ScriptAny::adopt(owner.release());
 
   return ScriptAny(script);
 }
@@ -409,7 +410,7 @@ NativeScript::asNOfK() const
 
   checkCardanoError(result, "NativeScript asNOfK");
 
-  const ScriptNOfK script(*owner.release());
+  const ScriptNOfK script = ScriptNOfK::adopt(owner.release());
 
   return ScriptNOfK(script);
 }
@@ -424,7 +425,7 @@ NativeScript::asInvalidBefore() const
 
   checkCardanoError(result, "NativeScript asInvalidBefore");
 
-  const ScriptInvalidBefore script(*owner.release());
+  const ScriptInvalidBefore script = ScriptInvalidBefore::adopt(owner.release());
 
   return ScriptInvalidBefore(script);
 }
@@ -439,7 +440,7 @@ NativeScript::asInvalidAfter() const
 
   checkCardanoError(result, "NativeScript asInvalidAfter");
 
-  const ScriptInvalidAfter script(*owner.release());
+  const ScriptInvalidAfter script = ScriptInvalidAfter::adopt(owner.release());
 
   return ScriptInvalidAfter(script);
 }
@@ -454,7 +455,7 @@ NativeScript::asRequireGuard() const
 
   checkCardanoError(result, "NativeScript asRequireGuard");
 
-  const ScriptRequireGuard script(*owner.release());
+  const ScriptRequireGuard script = ScriptRequireGuard::adopt(owner.release());
 
   return ScriptRequireGuard(script);
 }
@@ -529,6 +530,35 @@ NativeScript::operator!=(const NativeScript& other) const
   return !(*this == other);
 }
 
+NativeScript
+NativeScript::adopt(cardano_native_script_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null NativeScript");
+  }
+
+  return NativeScript(*value);
+}
+
+cardano_native_script_t*
+NativeScript::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_native_script_t*
+NativeScript::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_native_script_t*
+NativeScript::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 NativeScript::NativeScript(cardano_native_script_t& value) noexcept
@@ -548,24 +578,24 @@ NativeScript::checked() const
 }
 
 void
-NativeScript::validate() const
+validateValue(const NativeScript& value)
 {
-  switch (type())
+  switch (value.type())
   {
     case NativeScriptType::RequirePubkey:
-      if (asPubkey().keyHash().toBytes().size() != 28U)
+      if (value.asPubkey().keyHash().toBytes().size() != 28U)
       {
         throw std::invalid_argument("Script key hash must be 28 bytes");
       }
       break;
     case NativeScriptType::RequireAllOf:
-      asAll().scripts().validate();
+      validateValue(value.asAll().scripts());
       break;
     case NativeScriptType::RequireAnyOf:
-      asAny().scripts().validate();
+      validateValue(value.asAny().scripts());
       break;
     case NativeScriptType::RequireNOfK:
-      asNOfK().scripts().validate();
+      validateValue(value.asNOfK().scripts());
       break;
     case NativeScriptType::InvalidBefore:
     case NativeScriptType::InvalidAfter:

@@ -30,6 +30,8 @@
 #include <cardano/certs/resign_committee_cold_cert.h>
 #include <cardano/common/anchor.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -39,7 +41,7 @@ ResignCommitteeColdCert::ResignCommitteeColdCert(const Credential& credential, s
 {
   const Credential                                                                              copy(credential);
   cardano_resign_committee_cold_cert_t*                                                         value  = nullptr;
-  const cardano_error_t                                                                         status = cardano_resign_committee_cold_cert_new(copy.checked(), anchor ? anchor->checked() : nullptr, &value);
+  const cardano_error_t                                                                         status = cardano_resign_committee_cold_cert_new(checkedNativeHandle(copy), anchor ? checkedNativeHandle(*anchor) : nullptr, &value);
   CardanoObject<cardano_resign_committee_cold_cert_t, cardano_resign_committee_cold_cert_unref> owner(value);
 
   checkCardanoError(status, "ResignCommitteeColdCert");
@@ -89,7 +91,7 @@ ResignCommitteeColdCert::credential() const
     throw std::logic_error("Committee resignation certificate has no credential");
   }
 
-  const Credential result(value);
+  const Credential result = Credential::adopt(value);
   return Credential(result);
 }
 
@@ -97,7 +99,7 @@ void
 ResignCommitteeColdCert::setCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_resign_committee_cold_cert_set_credential(checked(), copy.checked()), "ResignCommitteeColdCert setCredential");
+  checkCardanoError(cardano_resign_committee_cold_cert_set_credential(checked(), checkedNativeHandle(copy)), "ResignCommitteeColdCert setCredential");
 }
 
 std::optional<Anchor>
@@ -109,7 +111,7 @@ ResignCommitteeColdCert::anchor() const
     return std::nullopt;
   }
 
-  const Anchor result(value);
+  const Anchor result = Anchor::adopt(value);
   return Anchor(result);
 }
 
@@ -172,6 +174,35 @@ bool
 ResignCommitteeColdCert::operator!=(const ResignCommitteeColdCert& other) const
 {
   return !(*this == other);
+}
+
+ResignCommitteeColdCert
+ResignCommitteeColdCert::adopt(cardano_resign_committee_cold_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ResignCommitteeColdCert");
+  }
+
+  return ResignCommitteeColdCert(value);
+}
+
+cardano_resign_committee_cold_cert_t*
+ResignCommitteeColdCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_resign_committee_cold_cert_t*
+ResignCommitteeColdCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_resign_committee_cold_cert_t*
+ResignCommitteeColdCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -30,6 +30,8 @@
 #include <cardano/common/credential.h>
 #include <cardano/voting_procedures/voter.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -39,7 +41,7 @@ Voter::Voter(VoterType type, const Credential& credential)
 {
   const Credential                                    copy(credential);
   cardano_voter_t*                                    value  = nullptr;
-  const cardano_error_t                               status = cardano_voter_new(static_cast<cardano_voter_type_t>(type), copy.checked(), &value);
+  const cardano_error_t                               status = cardano_voter_new(static_cast<cardano_voter_type_t>(type), checkedNativeHandle(copy), &value);
   CardanoObject<cardano_voter_t, cardano_voter_unref> owner(value);
 
   checkCardanoError(status, "Voter");
@@ -104,7 +106,7 @@ Voter::credential() const
     throw std::logic_error("Voter has no credential");
   }
 
-  const Credential found(owner.release());
+  const Credential found = Credential::adopt(owner.release());
   return Credential(found);
 }
 
@@ -112,7 +114,7 @@ void
 Voter::setCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_voter_set_credential(checked(), copy.checked()), "Voter setCredential");
+  checkCardanoError(cardano_voter_set_credential(checked(), checkedNativeHandle(copy)), "Voter setCredential");
 }
 
 std::vector<std::uint8_t>
@@ -171,6 +173,35 @@ bool
 Voter::operator<(const Voter& other) const
 {
   return cardano_voter_compare(checked(), other.checked()) < 0;
+}
+
+Voter
+Voter::adopt(cardano_voter_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Voter");
+  }
+
+  return Voter(value);
+}
+
+cardano_voter_t*
+Voter::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_voter_t*
+Voter::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_voter_t*
+Voter::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -37,6 +37,8 @@
 #include <cstring>
 #include <limits>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -52,7 +54,7 @@ EnterpriseAddress::EnterpriseAddress(NetworkId network, const Credential& paymen
   const Credential paymentCopy(payment);
 
   cardano_enterprise_address_t* value  = nullptr;
-  const cardano_error_t         result = cardano_enterprise_address_from_credentials(static_cast<cardano_network_id_t>(network), paymentCopy.checked(), &value);
+  const cardano_error_t         result = cardano_enterprise_address_from_credentials(static_cast<cardano_network_id_t>(network), checkedNativeHandle(paymentCopy), &value);
 
   CardanoObject<cardano_enterprise_address_t, cardano_enterprise_address_unref> owner(value);
 
@@ -99,7 +101,7 @@ EnterpriseAddress
 EnterpriseAddress::fromAddress(const Address& address)
 {
   cardano_enterprise_address_t* value  = nullptr;
-  const cardano_error_t         result = cardano_enterprise_address_from_address(address.checked(), &value);
+  const cardano_error_t         result = cardano_enterprise_address_from_address(checkedNativeHandle(address), &value);
 
   CardanoObject<cardano_enterprise_address_t, cardano_enterprise_address_unref> owner(value);
 
@@ -151,7 +153,7 @@ EnterpriseAddress::paymentCredential() const
 
   checkCardanoError(result, "EnterpriseAddress paymentCredential");
 
-  return Credential(owner.release());
+  return Credential::adopt(owner.release());
 }
 
 void
@@ -197,6 +199,35 @@ bool
 EnterpriseAddress::operator!=(const EnterpriseAddress& other) const
 {
   return !(*this == other);
+}
+
+EnterpriseAddress
+EnterpriseAddress::adopt(cardano_enterprise_address_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null EnterpriseAddress");
+  }
+
+  return EnterpriseAddress(*value);
+}
+
+cardano_enterprise_address_t*
+EnterpriseAddress::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_enterprise_address_t*
+EnterpriseAddress::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_enterprise_address_t*
+EnterpriseAddress::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

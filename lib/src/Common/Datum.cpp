@@ -29,6 +29,8 @@
 
 #include <cardano/common/datum.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -59,7 +61,7 @@ Datum::Datum(const PlutusData& data)
   PlutusData copy(data);
 
   cardano_datum_t*      value  = nullptr;
-  const cardano_error_t result = cardano_datum_new_inline_data(copy.checked(), &value);
+  const cardano_error_t result = cardano_datum_new_inline_data(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_datum_t, cardano_datum_unref> owner(value);
 
@@ -121,7 +123,7 @@ Datum::inlineData() const
     return std::nullopt;
   }
 
-  const PlutusData data(*cardano_datum_get_inline_data(checked()));
+  const PlutusData data = PlutusData::adopt(cardano_datum_get_inline_data(checked()));
 
   return PlutusData(data);
 }
@@ -205,6 +207,35 @@ bool
 Datum::operator!=(const Datum& other) const
 {
   return !(*this == other);
+}
+
+Datum
+Datum::adopt(cardano_datum_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Datum");
+  }
+
+  return Datum(*value);
+}
+
+cardano_datum_t*
+Datum::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_datum_t*
+Datum::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_datum_t*
+Datum::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

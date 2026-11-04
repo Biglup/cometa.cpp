@@ -34,6 +34,8 @@
 #include <functional>
 #include <iterator>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -118,7 +120,7 @@ PlutusList::pushBack(const PlutusData& data)
 
   PlutusData copy(data);
 
-  checkCardanoError(cardano_plutus_list_add(checked(), copy.checked()), "PlutusList pushBack");
+  checkCardanoError(cardano_plutus_list_add(checked(), checkedNativeHandle(copy)), "PlutusList pushBack");
   normalizeEncoding();
 }
 
@@ -474,6 +476,60 @@ PlutusList::erase(const_iterator first, const_iterator last)
   return m_elements.erase(first, last);
 }
 
+PlutusList
+PlutusList::adopt(cardano_plutus_list_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PlutusList");
+  }
+
+  return PlutusList(*value);
+}
+
+cardano_plutus_list_t*
+PlutusList::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_plutus_list_t*
+PlutusList::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_plutus_list_t*
+PlutusList::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 PlutusList::PlutusList(cardano_plutus_list_t& value) noexcept
@@ -567,7 +623,7 @@ PlutusList::copyElement(std::size_t index) const
 
   checkCardanoError(result, "PlutusList at");
 
-  const PlutusData data(*owner.release());
+  const PlutusData data = PlutusData::adopt(owner.release());
 
   return PlutusData(data);
 }

@@ -109,9 +109,10 @@ Use separate access-label groups in this order, omitting groups that do not appl
 3. Public static factories.
 4. Public observers, modifiers, serialization, and swap.
 5. Public assignment and comparison operators.
-6. Private constructors used for internal ownership transfer.
-7. Private helper methods.
-8. Private data members.
+6. Explicit native interoperability (adoption, borrowing, and release).
+7. Private constructors used for internal ownership transfer.
+8. Private helper methods.
+9. Private data members.
 
 Repeat `public:` and `private:` to separate those groups. Keep blank lines after
 access labels and between documented declarations. Keep implementation order close
@@ -127,7 +128,15 @@ without meaningful copy semantics may be noncopyable.
 Ordinary values use RAII and independent copy semantics; moves and swaps transfer
 ownership without allocating. Native C references may be owned privately by these
 RAII value classes. Temporary native allocations belong in scoped ownership guards.
-Do not expose reference counting, disposal, or raw owning pointers in the public API.
+Ordinary C++ operations must not require reference counting or disposal. Explicit
+C interoperability is the exception: owning value wrappers provide `nativeHandle()`,
+`release()`, and `adopt()` with documented borrowing and transfer contracts.
+Reject null adoption; release leaves an empty object and returns null when already
+empty. Provide const and mutable borrowed handles. Collections synchronize pending
+iterator edits before borrowing or releasing, and mutable borrowing invalidates
+C++ iterators and element references. These operations may throw when synchronization
+is required. Resources retaining C++ callback state expose borrowing only unless
+that state can safely accompany the native ownership transfer.
 When a C getter returns a shared reference, clone it before exposing a mutable
 value. Returning a named local by value may elide its copy; do not rely on that
 return statement to make the result independent.
@@ -137,6 +146,13 @@ before checking an error that can throw. Release ownership only when transferrin
 the successful result into its destination. Preserve cleanup on partial failures
 and leave the destination unchanged when copy assignment fails. Shared helpers
 should have narrow, descriptive names; keep them in private implementation files.
+
+Use the explicit native interoperability API instead of friendship for native access.
+Do not introduce stateless access classes or static-method containers solely to
+bypass visibility.
+Keep conversion functions private, name the values and conversion direction, and
+make ownership explicit in their internal documentation. Retain classes for domain
+objects, resource ownership, callback state, and other concrete responsibilities.
 
 Use documented `ErrorCode` values and `Error` for operation failures instead of
 requiring callers to interpret integers or include C headers. Keep each enum in
@@ -206,7 +222,8 @@ void setHash(const Blake2bHash& hash);
 - Document only the declaration belonging to each comment; describe move behavior
   on move operations, not in the class summary.
 - Keep public documentation about observable behavior. Do not describe C handles,
-  reference counts, native storage, or cloning mechanisms in interface documentation.
+  reference counts, native storage, or cloning mechanisms in ordinary interface documentation.
+  Native interoperability methods must document pointer ownership, lifetime, and invalidation.
 - Use `@remark` only for useful behavior guarantees and important limits.
 - Distinguish owned return values from borrowed internal references. Describe
   mutation and moved-from behavior accurately.

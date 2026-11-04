@@ -26,6 +26,7 @@
 #include <Cometa/Scripts/Script.h>
 
 #include "../CardanoInterop.h"
+#include "../ValueValidation.h"
 
 #include <cardano/scripts/native_scripts/native_script.h>
 #include <cardano/scripts/plutus_scripts/plutus_v1_script.h>
@@ -81,7 +82,7 @@ Script::Script(const NativeScript& script)
   NativeScript copy(script);
 
   cardano_script_t*     value  = nullptr;
-  const cardano_error_t result = cardano_script_new_native(copy.checked(), &value);
+  const cardano_error_t result = cardano_script_new_native(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
 
@@ -94,7 +95,7 @@ Script::Script(NativeScript&& script)
 : m_value(nullptr)
 {
   cardano_script_t*     value  = nullptr;
-  const cardano_error_t result = cardano_script_new_native(script.checked(), &value);
+  const cardano_error_t result = cardano_script_new_native(checkedNativeHandle(script), &value);
 
   CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
 
@@ -111,7 +112,7 @@ Script::Script(const PlutusV1Script& script)
   PlutusV1Script copy(script);
 
   cardano_script_t*     value  = nullptr;
-  const cardano_error_t result = cardano_script_new_plutus_v1(copy.checked(), &value);
+  const cardano_error_t result = cardano_script_new_plutus_v1(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
 
@@ -124,7 +125,7 @@ Script::Script(PlutusV1Script&& script)
 : m_value(nullptr)
 {
   cardano_script_t*     value  = nullptr;
-  const cardano_error_t result = cardano_script_new_plutus_v1(script.checked(), &value);
+  const cardano_error_t result = cardano_script_new_plutus_v1(checkedNativeHandle(script), &value);
 
   CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
 
@@ -141,7 +142,7 @@ Script::Script(const PlutusV2Script& script)
   PlutusV2Script copy(script);
 
   cardano_script_t*     value  = nullptr;
-  const cardano_error_t result = cardano_script_new_plutus_v2(copy.checked(), &value);
+  const cardano_error_t result = cardano_script_new_plutus_v2(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
 
@@ -154,7 +155,7 @@ Script::Script(PlutusV2Script&& script)
 : m_value(nullptr)
 {
   cardano_script_t*     value  = nullptr;
-  const cardano_error_t result = cardano_script_new_plutus_v2(script.checked(), &value);
+  const cardano_error_t result = cardano_script_new_plutus_v2(checkedNativeHandle(script), &value);
 
   CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
 
@@ -171,7 +172,7 @@ Script::Script(const PlutusV3Script& script)
   PlutusV3Script copy(script);
 
   cardano_script_t*     value  = nullptr;
-  const cardano_error_t result = cardano_script_new_plutus_v3(copy.checked(), &value);
+  const cardano_error_t result = cardano_script_new_plutus_v3(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
 
@@ -184,7 +185,7 @@ Script::Script(PlutusV3Script&& script)
 : m_value(nullptr)
 {
   cardano_script_t*     value  = nullptr;
-  const cardano_error_t result = cardano_script_new_plutus_v3(script.checked(), &value);
+  const cardano_error_t result = cardano_script_new_plutus_v3(checkedNativeHandle(script), &value);
 
   CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
 
@@ -201,7 +202,7 @@ Script::Script(const PlutusV4Script& script)
   PlutusV4Script copy(script);
 
   cardano_script_t*     value  = nullptr;
-  const cardano_error_t result = cardano_script_new_plutus_v4(copy.checked(), &value);
+  const cardano_error_t result = cardano_script_new_plutus_v4(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
 
@@ -214,7 +215,7 @@ Script::Script(PlutusV4Script&& script)
 : m_value(nullptr)
 {
   cardano_script_t*     value  = nullptr;
-  const cardano_error_t result = cardano_script_new_plutus_v4(script.checked(), &value);
+  const cardano_error_t result = cardano_script_new_plutus_v4(checkedNativeHandle(script), &value);
 
   CardanoObject<cardano_script_t, cardano_script_unref> owner(value);
 
@@ -253,7 +254,7 @@ Script::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   Script value(*decodeCbor<cardano_script_t, cardano_script_unref>(cbor, cardano_script_from_cbor));
 
-  value.validate();
+  validateValue(value);
 
   return value;
 }
@@ -283,7 +284,7 @@ Script::asNative() const
 
   checkCardanoError(result, "Script asNative");
 
-  const NativeScript component(*owner.release());
+  const NativeScript component = NativeScript::adopt(owner.release());
 
   return NativeScript(component);
 }
@@ -298,7 +299,7 @@ Script::asPlutusV1() const
 
   checkCardanoError(result, "Script asPlutusV1");
 
-  const PlutusV1Script component(*owner.release());
+  const PlutusV1Script component = PlutusV1Script::adopt(owner.release());
 
   return PlutusV1Script(component);
 }
@@ -313,7 +314,7 @@ Script::asPlutusV2() const
 
   checkCardanoError(result, "Script asPlutusV2");
 
-  const PlutusV2Script component(*owner.release());
+  const PlutusV2Script component = PlutusV2Script::adopt(owner.release());
 
   return PlutusV2Script(component);
 }
@@ -328,7 +329,7 @@ Script::asPlutusV3() const
 
   checkCardanoError(result, "Script asPlutusV3");
 
-  const PlutusV3Script component(*owner.release());
+  const PlutusV3Script component = PlutusV3Script::adopt(owner.release());
 
   return PlutusV3Script(component);
 }
@@ -343,7 +344,7 @@ Script::asPlutusV4() const
 
   checkCardanoError(result, "Script asPlutusV4");
 
-  const PlutusV4Script component(*owner.release());
+  const PlutusV4Script component = PlutusV4Script::adopt(owner.release());
 
   return PlutusV4Script(component);
 }
@@ -423,6 +424,35 @@ Script::operator!=(const Script& other) const
   return !(*this == other);
 }
 
+Script
+Script::adopt(cardano_script_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Script");
+  }
+
+  return Script(*value);
+}
+
+cardano_script_t*
+Script::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_script_t*
+Script::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_script_t*
+Script::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 Script::Script(cardano_script_t& value) noexcept
@@ -442,11 +472,11 @@ Script::checked() const
 }
 
 void
-Script::validate() const
+validateValue(const Script& value)
 {
-  if (language() == ScriptLanguage::Native)
+  if (value.language() == ScriptLanguage::Native)
   {
-    asNative().validate();
+    validateValue(value.asNative());
   }
 }
 

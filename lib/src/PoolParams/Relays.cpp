@@ -36,6 +36,8 @@
 #include <functional>
 #include <iterator>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -131,7 +133,7 @@ Relays::pushBack(const Relay& relay)
 
   Relay copy(relay);
 
-  checkCardanoError(cardano_relays_add(checked(), copy.checked()), "Relays pushBack");
+  checkCardanoError(cardano_relays_add(checked(), checkedNativeHandle(copy)), "Relays pushBack");
 }
 
 std::vector<Relay>
@@ -471,6 +473,60 @@ Relays::erase(const_iterator first, const_iterator last)
   return m_elements.erase(first, last);
 }
 
+Relays
+Relays::adopt(cardano_relays_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Relays");
+  }
+
+  return Relays(*value);
+}
+
+cardano_relays_t*
+Relays::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_relays_t*
+Relays::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_relays_t*
+Relays::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 Relays::Relays(cardano_relays_t& value) noexcept
@@ -564,7 +620,7 @@ Relays::copyElement(std::size_t index) const
 
   checkCardanoError(result, "Relays at");
 
-  const Relay relay(*owner.release());
+  const Relay relay = Relay::adopt(owner.release());
 
   return Relay(relay);
 }

@@ -30,6 +30,8 @@
 #include <cardano/certs/mir_to_stake_creds_cert.h>
 #include <cardano/common/credential.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -106,7 +108,7 @@ MirToStakeCredentialsCert::size() const
 void
 MirToStakeCredentialsCert::insert(const Credential& credential, std::uint64_t amount)
 {
-  checkCardanoError(cardano_mir_to_stake_creds_cert_insert(checked(), credential.checked(), amount), "MirToStakeCredentialsCert insert");
+  checkCardanoError(cardano_mir_to_stake_creds_cert_insert(checked(), checkedNativeHandle(credential), amount), "MirToStakeCredentialsCert insert");
 }
 
 std::pair<Credential, std::uint64_t>
@@ -123,7 +125,7 @@ MirToStakeCredentialsCert::at(std::size_t index) const
   CardanoObject<cardano_credential_t, cardano_credential_unref> owner(value);
 
   checkCardanoError(status, "MirToStakeCredentialsCert at");
-  Credential copied(owner.release());
+  Credential copied = Credential::adopt(owner.release());
   return std::make_pair(Credential(copied), amount);
 }
 
@@ -177,6 +179,35 @@ bool
 MirToStakeCredentialsCert::operator!=(const MirToStakeCredentialsCert& other) const
 {
   return !(*this == other);
+}
+
+MirToStakeCredentialsCert
+MirToStakeCredentialsCert::adopt(cardano_mir_to_stake_creds_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null MirToStakeCredentialsCert");
+  }
+
+  return MirToStakeCredentialsCert(value);
+}
+
+cardano_mir_to_stake_creds_cert_t*
+MirToStakeCredentialsCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_mir_to_stake_creds_cert_t*
+MirToStakeCredentialsCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_mir_to_stake_creds_cert_t*
+MirToStakeCredentialsCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

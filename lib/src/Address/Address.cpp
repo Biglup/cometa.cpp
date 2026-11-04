@@ -37,6 +37,8 @@
 #include <cstring>
 #include <limits>
 
+#include <utility>
+
 /* INTERNAL IMPLEMENTATION ***************************************************/
 
 namespace Cometa
@@ -389,6 +391,35 @@ bool
 Address::operator!=(const Address& other) const
 {
   return !(*this == other);
+}
+
+Address
+Address::adopt(cardano_address_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Address");
+  }
+
+  return Address(*value);
+}
+
+cardano_address_t*
+Address::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_address_t*
+Address::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_address_t*
+Address::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

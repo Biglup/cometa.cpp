@@ -25,6 +25,8 @@
 
 #include <Cometa/Cometa.h>
 
+#include <cardano/assets/asset_name.h>
+
 #ifdef COMETA_TEST_HTTP_TRANSPORT
 #include <Cometa/Providers/DefaultHttpTransport.h>
 #endif
@@ -55,6 +57,20 @@ main()
   const Cometa::Error decodingError(Cometa::ErrorCode::Decoding, "fromCbor");
 
   if (decodingError.code() != Cometa::ErrorCode::Decoding || Cometa::ErrorCode::Encoding == decodingError.code())
+  {
+    return 1;
+  }
+
+  Cometa::AssetName nativeName = Cometa::AssetName::fromString("Cometa");
+
+  if (cardano_asset_name_get_bytes_size(nativeName.nativeHandle()) != 6U)
+  {
+    return 1;
+  }
+
+  Cometa::AssetName adoptedName = Cometa::AssetName::adopt(nativeName.release());
+
+  if (nativeName.nativeHandle() != nullptr || adoptedName.toString() != "Cometa")
   {
     return 1;
   }
@@ -805,6 +821,20 @@ main()
     Cometa::Credential(Cometa::CredentialType::KeyHash, Cometa::Blake2bHash::fromHex(std::string(56, '1'))));
 
   if (convertedScript.asNative().asInvalidBefore().slot() != 100 || convertedRequirements.size() != 2 || !convertedAddress.asEnterprise())
+  {
+    return 1;
+  }
+
+  const Cometa::Transaction pricedTransaction(transactionBody, Cometa::WitnessSet());
+  const std::size_t         encodedSize = pricedTransaction.toCbor().size();
+  const std::uint64_t       minimumFee  = Cometa::computeMinFeeWithoutScripts(pricedTransaction, 100, 2);
+
+  if (Cometa::serializedTransactionSize(pricedTransaction) != encodedSize || minimumFee != 100 + 2 * (encodedSize - 1))
+  {
+    return 1;
+  }
+
+  if (Cometa::computeScriptDataHash(Cometa::CostModels(), Cometa::RedeemerList(), Cometa::PlutusDataSet()))
   {
     return 1;
   }

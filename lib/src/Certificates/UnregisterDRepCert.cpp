@@ -29,6 +29,8 @@
 
 #include <cardano/certs/unregister_drep_cert.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -38,7 +40,7 @@ UnregisterDRepCert::UnregisterDRepCert(const Credential& credential, std::uint64
 {
   const Credential                                                                  copy(credential);
   cardano_unregister_drep_cert_t*                                                   value  = nullptr;
-  const cardano_error_t                                                             status = cardano_unregister_drep_cert_new(copy.checked(), deposit, &value);
+  const cardano_error_t                                                             status = cardano_unregister_drep_cert_new(checkedNativeHandle(copy), deposit, &value);
   CardanoObject<cardano_unregister_drep_cert_t, cardano_unregister_drep_cert_unref> owner(value);
 
   checkCardanoError(status, "UnregisterDRepCert");
@@ -88,7 +90,7 @@ UnregisterDRepCert::credential() const
     throw std::logic_error("DRep unregistration certificate has no credential");
   }
 
-  const Credential result(value);
+  const Credential result = Credential::adopt(value);
   return Credential(result);
 }
 
@@ -96,7 +98,7 @@ void
 UnregisterDRepCert::setCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_unregister_drep_cert_set_credential(checked(), copy.checked()), "UnregisterDRepCert setCredential");
+  checkCardanoError(cardano_unregister_drep_cert_set_credential(checked(), checkedNativeHandle(copy)), "UnregisterDRepCert setCredential");
 }
 
 std::uint64_t
@@ -163,6 +165,35 @@ bool
 UnregisterDRepCert::operator!=(const UnregisterDRepCert& other) const
 {
   return !(*this == other);
+}
+
+UnregisterDRepCert
+UnregisterDRepCert::adopt(cardano_unregister_drep_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null UnregisterDRepCert");
+  }
+
+  return UnregisterDRepCert(value);
+}
+
+cardano_unregister_drep_cert_t*
+UnregisterDRepCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_unregister_drep_cert_t*
+UnregisterDRepCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_unregister_drep_cert_t*
+UnregisterDRepCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

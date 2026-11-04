@@ -35,6 +35,8 @@
 #include <functional>
 #include <iterator>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -130,7 +132,7 @@ PlutusV4ScriptList::pushBack(const PlutusV4Script& script)
 
   PlutusV4Script copy(script);
 
-  checkCardanoError(cardano_plutus_v4_script_list_add(checked(), copy.checked()), "PlutusV4ScriptList pushBack");
+  checkCardanoError(cardano_plutus_v4_script_list_add(checked(), checkedNativeHandle(copy)), "PlutusV4ScriptList pushBack");
 }
 
 std::vector<PlutusV4Script>
@@ -470,6 +472,60 @@ PlutusV4ScriptList::erase(const_iterator first, const_iterator last)
   return m_elements.erase(first, last);
 }
 
+PlutusV4ScriptList
+PlutusV4ScriptList::adopt(cardano_plutus_v4_script_list_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PlutusV4ScriptList");
+  }
+
+  return PlutusV4ScriptList(*value);
+}
+
+cardano_plutus_v4_script_list_t*
+PlutusV4ScriptList::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_plutus_v4_script_list_t*
+PlutusV4ScriptList::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_plutus_v4_script_list_t*
+PlutusV4ScriptList::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 PlutusV4ScriptList::PlutusV4ScriptList(cardano_plutus_v4_script_list_t& value) noexcept
@@ -563,7 +619,7 @@ PlutusV4ScriptList::copyElement(std::size_t index) const
 
   checkCardanoError(result, "PlutusV4ScriptList at");
 
-  const PlutusV4Script script(*owner.release());
+  const PlutusV4Script script = PlutusV4Script::adopt(owner.release());
 
   return PlutusV4Script(script);
 }

@@ -42,6 +42,8 @@
 #include <cardano/witness_set/vkey_witness_set.h>
 #include <cardano/witness_set/witness_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -53,7 +55,7 @@ Transaction::Transaction(const TransactionBody& body, const WitnessSet& witnesse
   const WitnessSet                                                witnessCopy(witnesses);
   std::optional<AuxiliaryData>                                    auxiliaryCopy(auxiliaryData);
   cardano_transaction_t*                                          value  = nullptr;
-  const cardano_error_t                                           status = cardano_transaction_new(bodyCopy.checked(), witnessCopy.checked(), auxiliaryCopy ? auxiliaryCopy->checked() : nullptr, &value);
+  const cardano_error_t                                           status = cardano_transaction_new(checkedNativeHandle(bodyCopy), checkedNativeHandle(witnessCopy), auxiliaryCopy ? checkedNativeHandle(*auxiliaryCopy) : nullptr, &value);
   CardanoObject<cardano_transaction_t, cardano_transaction_unref> owner(value);
 
   checkCardanoError(status, "Transaction");
@@ -103,7 +105,7 @@ Transaction::body() const
   }
 
   CardanoObject<cardano_transaction_body_t, cardano_transaction_body_unref> owner(value);
-  const TransactionBody                                                     copied(owner.release());
+  const TransactionBody                                                     copied = TransactionBody::adopt(owner.release());
   return TransactionBody(copied);
 }
 
@@ -111,7 +113,7 @@ void
 Transaction::setBody(const TransactionBody& value)
 {
   const TransactionBody copy(value);
-  checkCardanoError(cardano_transaction_set_body(checked(), copy.checked()), "Transaction setBody");
+  checkCardanoError(cardano_transaction_set_body(checked(), checkedNativeHandle(copy)), "Transaction setBody");
   cardano_transaction_clear_cbor_cache(checked());
 }
 
@@ -125,7 +127,7 @@ Transaction::witnessSet() const
   }
 
   CardanoObject<cardano_witness_set_t, cardano_witness_set_unref> owner(value);
-  const WitnessSet                                                copied(owner.release());
+  const WitnessSet                                                copied = WitnessSet::adopt(owner.release());
   return WitnessSet(copied);
 }
 
@@ -133,7 +135,7 @@ void
 Transaction::setWitnessSet(const WitnessSet& value)
 {
   const WitnessSet copy(value);
-  checkCardanoError(cardano_transaction_set_witness_set(checked(), copy.checked()), "Transaction setWitnessSet");
+  checkCardanoError(cardano_transaction_set_witness_set(checked(), checkedNativeHandle(copy)), "Transaction setWitnessSet");
   cardano_transaction_clear_cbor_cache(checked());
 }
 
@@ -147,7 +149,7 @@ Transaction::auxiliaryData() const
   }
 
   CardanoObject<cardano_auxiliary_data_t, cardano_auxiliary_data_unref> owner(value);
-  const AuxiliaryData                                                   copied(*owner.release());
+  const AuxiliaryData                                                   copied = AuxiliaryData::adopt(owner.release());
   return AuxiliaryData(copied);
 }
 
@@ -157,7 +159,7 @@ Transaction::setAuxiliaryData(const std::optional<AuxiliaryData>& value)
   if (value)
   {
     const AuxiliaryData copy(*value);
-    checkCardanoError(cardano_transaction_set_auxiliary_data(checked(), copy.checked()), "Transaction setAuxiliaryData");
+    checkCardanoError(cardano_transaction_set_auxiliary_data(checked(), checkedNativeHandle(copy)), "Transaction setAuxiliaryData");
   }
   else
   {
@@ -177,7 +179,7 @@ Transaction::id() const
   }
 
   CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
-  const Blake2bHash                                                 copied(owner.release());
+  const Blake2bHash                                                 copied = Blake2bHash::adopt(owner.release());
   return Blake2bHash(copied);
 }
 
@@ -185,7 +187,7 @@ void
 Transaction::applyVkeyWitnesses(const VkeyWitnessSet& witnesses)
 {
   const VkeyWitnessSet copy(witnesses);
-  checkCardanoError(cardano_transaction_apply_vkey_witnesses(checked(), copy.checked()), "Transaction applyVkeyWitnesses");
+  checkCardanoError(cardano_transaction_apply_vkey_witnesses(checked(), checkedNativeHandle(copy)), "Transaction applyVkeyWitnesses");
   cardano_transaction_clear_cbor_cache(checked());
 }
 
@@ -219,7 +221,7 @@ Transaction::uniqueSigners(const UtxoList& resolvedInputs) const
   for (const Utxo& input: resolvedInputs)
   {
     const Utxo copy(input);
-    checkCardanoError(cardano_utxo_list_add(list, copy.checked()), "Transaction uniqueSigners");
+    checkCardanoError(cardano_utxo_list_add(list, checkedNativeHandle(copy)), "Transaction uniqueSigners");
   }
 
   cardano_blake2b_hash_set_t*                                               hashes = nullptr;
@@ -227,7 +229,7 @@ Transaction::uniqueSigners(const UtxoList& resolvedInputs) const
   CardanoObject<cardano_blake2b_hash_set_t, cardano_blake2b_hash_set_unref> owner(hashes);
   checkCardanoError(status, "Transaction uniqueSigners");
 
-  const Blake2bHashSet copied(owner.release());
+  const Blake2bHashSet copied = Blake2bHashSet::adopt(owner.release());
   return Blake2bHashSet(copied);
 }
 
@@ -236,7 +238,7 @@ Transaction::findInputIndex(const TransactionInput& input) const
 {
   const Blake2bHash     inputId = input.id();
   std::uint64_t         index   = 0;
-  const cardano_error_t status  = cardano_transaction_find_input_index(checked(), inputId.checked(), input.index(), &index);
+  const cardano_error_t status  = cardano_transaction_find_input_index(checked(), checkedNativeHandle(inputId), input.index(), &index);
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
     return std::nullopt;
@@ -251,7 +253,7 @@ Transaction::findReferenceInputIndex(const TransactionInput& input) const
 {
   const Blake2bHash     inputId = input.id();
   std::uint64_t         index   = 0;
-  const cardano_error_t status  = cardano_transaction_find_reference_input_index(checked(), inputId.checked(), input.index(), &index);
+  const cardano_error_t status  = cardano_transaction_find_reference_input_index(checked(), checkedNativeHandle(inputId), input.index(), &index);
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
     return std::nullopt;
@@ -265,7 +267,7 @@ std::optional<std::uint64_t>
 Transaction::findOutputIndex(const Address& address, std::uint64_t minLovelace) const
 {
   std::uint64_t         index  = 0;
-  const cardano_error_t status = cardano_transaction_find_output_index(checked(), address.checked(), minLovelace, &index);
+  const cardano_error_t status = cardano_transaction_find_output_index(checked(), checkedNativeHandle(address), minLovelace, &index);
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
     return std::nullopt;
@@ -279,7 +281,7 @@ std::optional<std::uint64_t>
 Transaction::findMintPolicyIndex(const Blake2bHash& policyId) const
 {
   std::uint64_t         index  = 0;
-  const cardano_error_t status = cardano_transaction_find_mint_policy_index(checked(), policyId.checked(), &index);
+  const cardano_error_t status = cardano_transaction_find_mint_policy_index(checked(), checkedNativeHandle(policyId), &index);
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
     return std::nullopt;
@@ -293,7 +295,7 @@ std::optional<std::uint64_t>
 Transaction::findWithdrawalIndex(const RewardAddress& address) const
 {
   std::uint64_t         index  = 0;
-  const cardano_error_t status = cardano_transaction_find_withdrawal_index(checked(), address.checked(), &index);
+  const cardano_error_t status = cardano_transaction_find_withdrawal_index(checked(), checkedNativeHandle(address), &index);
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
     return std::nullopt;
@@ -307,7 +309,7 @@ std::optional<std::uint64_t>
 Transaction::findCertificateIndex(const Certificate& certificate) const
 {
   std::uint64_t         index  = 0;
-  const cardano_error_t status = cardano_transaction_find_certificate_index(checked(), certificate.checked(), &index);
+  const cardano_error_t status = cardano_transaction_find_certificate_index(checked(), checkedNativeHandle(certificate), &index);
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
     return std::nullopt;
@@ -321,7 +323,7 @@ std::optional<std::uint64_t>
 Transaction::findVoteIndex(const Voter& voter) const
 {
   std::uint64_t         index  = 0;
-  const cardano_error_t status = cardano_transaction_find_vote_index(checked(), voter.checked(), &index);
+  const cardano_error_t status = cardano_transaction_find_vote_index(checked(), checkedNativeHandle(voter), &index);
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
     return std::nullopt;
@@ -395,6 +397,35 @@ bool
 Transaction::operator!=(const Transaction& other) const
 {
   return !(*this == other);
+}
+
+Transaction
+Transaction::adopt(cardano_transaction_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Transaction");
+  }
+
+  return Transaction(value);
+}
+
+cardano_transaction_t*
+Transaction::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_transaction_t*
+Transaction::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_transaction_t*
+Transaction::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

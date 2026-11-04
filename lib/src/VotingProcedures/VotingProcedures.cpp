@@ -34,6 +34,8 @@
 #include <cardano/voting_procedures/voting_procedure.h>
 #include <cardano/voting_procedures/voting_procedures.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -89,7 +91,7 @@ VotingProcedures::fromCbor(std::string_view cborHex)
 void
 VotingProcedures::insert(const Voter& voter, const GovernanceActionId& actionId, const VotingProcedure& procedure)
 {
-  cardano_voting_procedure_t*                                               existing = cardano_voting_procedures_get(checked(), voter.checked(), actionId.checked());
+  cardano_voting_procedure_t*                                               existing = cardano_voting_procedures_get(checked(), checkedNativeHandle(voter), checkedNativeHandle(actionId));
   CardanoObject<cardano_voting_procedure_t, cardano_voting_procedure_unref> existingOwner(existing);
 
   if (existing)
@@ -101,14 +103,14 @@ VotingProcedures::insert(const Voter& voter, const GovernanceActionId& actionId,
   const GovernanceActionId idCopy(actionId);
   const VotingProcedure    procedureCopy(procedure);
 
-  checkCardanoError(cardano_voting_procedures_insert(checked(), voterCopy.checked(), idCopy.checked(), procedureCopy.checked()), "VotingProcedures insert");
+  checkCardanoError(cardano_voting_procedures_insert(checked(), checkedNativeHandle(voterCopy), checkedNativeHandle(idCopy), checkedNativeHandle(procedureCopy)), "VotingProcedures insert");
   invalidateElements();
 }
 
 std::optional<VotingProcedure>
 VotingProcedures::get(const Voter& voter, const GovernanceActionId& actionId) const
 {
-  cardano_voting_procedure_t*                                               value = cardano_voting_procedures_get(checked(), voter.checked(), actionId.checked());
+  cardano_voting_procedure_t*                                               value = cardano_voting_procedures_get(checked(), checkedNativeHandle(voter), checkedNativeHandle(actionId));
   CardanoObject<cardano_voting_procedure_t, cardano_voting_procedure_unref> owner(value);
 
   if (!value)
@@ -116,7 +118,7 @@ VotingProcedures::get(const Voter& voter, const GovernanceActionId& actionId) co
     return std::nullopt;
   }
 
-  const VotingProcedure found(owner.release());
+  const VotingProcedure found = VotingProcedure::adopt(owner.release());
   return VotingProcedure(found);
 }
 
@@ -139,7 +141,7 @@ VotingProcedures::voters() const
     CardanoObject<cardano_voter_t, cardano_voter_unref> voterOwner(value);
 
     checkCardanoError(resultCode, "VotingProcedures voters get");
-    const Voter found(voterOwner.release());
+    const Voter found = Voter::adopt(voterOwner.release());
     result.push_back(found);
   }
 
@@ -150,7 +152,7 @@ GovernanceActionIdList
 VotingProcedures::actionIds(const Voter& voter) const
 {
   cardano_governance_action_id_list_t*                                                        list   = nullptr;
-  const cardano_error_t                                                                       status = cardano_voting_procedures_get_governance_ids_by_voter(checked(), voter.checked(), &list);
+  const cardano_error_t                                                                       status = cardano_voting_procedures_get_governance_ids_by_voter(checked(), checkedNativeHandle(voter), &list);
   CardanoObject<cardano_governance_action_id_list_t, cardano_governance_action_id_list_unref> owner(list);
 
   checkCardanoError(status, "VotingProcedures actionIds");
@@ -171,7 +173,7 @@ VotingProcedures::actionIds(const Voter& voter) const
     CardanoObject<cardano_governance_action_id_t, cardano_governance_action_id_unref> idOwner(value);
 
     checkCardanoError(resultCode, "VotingProcedures actionIds get");
-    const GovernanceActionId found(idOwner.release());
+    const GovernanceActionId found = GovernanceActionId::adopt(idOwner.release());
     result.push_back(found);
   }
 
@@ -491,6 +493,60 @@ bool
 VotingProcedures::empty() const
 {
   return size() == 0;
+}
+
+VotingProcedures
+VotingProcedures::adopt(cardano_voting_procedures_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null VotingProcedures");
+  }
+
+  return VotingProcedures(value);
+}
+
+cardano_voting_procedures_t*
+VotingProcedures::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_voting_procedures_t*
+VotingProcedures::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_voting_procedures_t*
+VotingProcedures::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

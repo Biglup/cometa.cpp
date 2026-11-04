@@ -37,6 +37,8 @@
 #include <cstring>
 #include <limits>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -52,7 +54,7 @@ RewardAddress::RewardAddress(NetworkId network, const Credential& credential)
   const Credential credentialCopy(credential);
 
   cardano_reward_address_t* value  = nullptr;
-  const cardano_error_t     result = cardano_reward_address_from_credentials(static_cast<cardano_network_id_t>(network), credentialCopy.checked(), &value);
+  const cardano_error_t     result = cardano_reward_address_from_credentials(static_cast<cardano_network_id_t>(network), checkedNativeHandle(credentialCopy), &value);
 
   CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> owner(value);
 
@@ -99,7 +101,7 @@ RewardAddress
 RewardAddress::fromAddress(const Address& address)
 {
   cardano_reward_address_t* value  = nullptr;
-  const cardano_error_t     result = cardano_reward_address_from_address(address.checked(), &value);
+  const cardano_error_t     result = cardano_reward_address_from_address(checkedNativeHandle(address), &value);
 
   CardanoObject<cardano_reward_address_t, cardano_reward_address_unref> owner(value);
 
@@ -151,7 +153,7 @@ RewardAddress::credential() const
 
   checkCardanoError(result, "RewardAddress credential");
 
-  return Credential(owner.release());
+  return Credential::adopt(owner.release());
 }
 
 void
@@ -197,6 +199,35 @@ bool
 RewardAddress::operator!=(const RewardAddress& other) const
 {
   return !(*this == other);
+}
+
+RewardAddress
+RewardAddress::adopt(cardano_reward_address_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null RewardAddress");
+  }
+
+  return RewardAddress(*value);
+}
+
+cardano_reward_address_t*
+RewardAddress::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_reward_address_t*
+RewardAddress::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_reward_address_t*
+RewardAddress::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

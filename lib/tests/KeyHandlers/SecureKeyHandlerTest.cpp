@@ -196,3 +196,19 @@ TEST(SecureKeyHandler, MissingRequiredCallbacksAreRejected)
   EXPECT_THROW(SecureKeyHandler::bip32("missing", bip32), std::invalid_argument);
   EXPECT_THROW(SecureKeyHandler::ed25519("missing", ed25519), std::invalid_argument);
 }
+
+TEST(SecureKeyHandler, BorrowsNativeHandleWhileRetainingCallbacks)
+{
+  // Arrange
+  Ed25519KeyCallbacks callbacks;
+  callbacks.signTransaction       = &signEd25519Transaction;
+  callbacks.signSubTransaction    = &signEd25519SubTransaction;
+  callbacks.publicKey             = &ed25519PublicKey;
+  SecureKeyHandler        handler = SecureKeyHandler::ed25519("interop", callbacks);
+  const SecureKeyHandler& view    = handler;
+
+  // Act & Assert
+  EXPECT_NE(handler.nativeHandle(), nullptr);
+  EXPECT_EQ(handler.nativeHandle(), view.nativeHandle());
+  EXPECT_EQ(handler.publicKey(), ed25519PublicKey());
+}

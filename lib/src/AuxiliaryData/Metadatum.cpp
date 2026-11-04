@@ -58,7 +58,7 @@ Metadatum::Metadatum(const BigInt& integer)
 : m_value(nullptr)
 {
   cardano_metadatum_t*  value  = nullptr;
-  const cardano_error_t result = cardano_metadatum_new_integer(integer.checked(), &value);
+  const cardano_error_t result = cardano_metadatum_new_integer(checkedNativeHandle(integer), &value);
 
   CardanoObject<cardano_metadatum_t, cardano_metadatum_unref> owner(value);
 
@@ -86,7 +86,7 @@ Metadatum::Metadatum(const MetadatumList& data)
   MetadatumList copy(data);
 
   cardano_metadatum_t*  value  = nullptr;
-  const cardano_error_t result = cardano_metadatum_new_list(copy.checked(), &value);
+  const cardano_error_t result = cardano_metadatum_new_list(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_metadatum_t, cardano_metadatum_unref> owner(value);
 
@@ -99,7 +99,7 @@ Metadatum::Metadatum(MetadatumList&& data)
 : m_value(nullptr)
 {
   cardano_metadatum_t*  value  = nullptr;
-  const cardano_error_t result = cardano_metadatum_new_list(data.checked(), &value);
+  const cardano_error_t result = cardano_metadatum_new_list(checkedNativeHandle(data), &value);
 
   CardanoObject<cardano_metadatum_t, cardano_metadatum_unref> owner(value);
 
@@ -116,7 +116,7 @@ Metadatum::Metadatum(const MetadatumMap& data)
   MetadatumMap copy(data);
 
   cardano_metadatum_t*  value  = nullptr;
-  const cardano_error_t result = cardano_metadatum_new_map(copy.checked(), &value);
+  const cardano_error_t result = cardano_metadatum_new_map(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_metadatum_t, cardano_metadatum_unref> owner(value);
 
@@ -129,7 +129,7 @@ Metadatum::Metadatum(MetadatumMap&& data)
 : m_value(nullptr)
 {
   cardano_metadatum_t*  value  = nullptr;
-  const cardano_error_t result = cardano_metadatum_new_map(data.checked(), &value);
+  const cardano_error_t result = cardano_metadatum_new_map(checkedNativeHandle(data), &value);
 
   CardanoObject<cardano_metadatum_t, cardano_metadatum_unref> owner(value);
 
@@ -233,7 +233,7 @@ Metadatum::asList() const
 
   checkCardanoError(result, "Metadatum asList");
 
-  const MetadatumList data(*owner.release());
+  const MetadatumList data = MetadatumList::adopt(owner.release());
 
   return MetadatumList(data);
 }
@@ -248,7 +248,7 @@ Metadatum::asMap() const
 
   checkCardanoError(result, "Metadatum asMap");
 
-  const MetadatumMap data(*owner.release());
+  const MetadatumMap data = MetadatumMap::adopt(owner.release());
 
   return MetadatumMap(data);
 }
@@ -279,7 +279,7 @@ Metadatum::asInteger() const
 
   checkCardanoError(result, "Metadatum asInteger");
 
-  return BigInt(*owner.release());
+  return BigInt::adopt(owner.release());
 }
 
 std::vector<std::uint8_t>
@@ -366,6 +366,35 @@ bool
 Metadatum::operator!=(const Metadatum& other) const
 {
   return !(*this == other);
+}
+
+Metadatum
+Metadatum::adopt(cardano_metadatum_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Metadatum");
+  }
+
+  return Metadatum(*value);
+}
+
+cardano_metadatum_t*
+Metadatum::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_metadatum_t*
+Metadatum::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_metadatum_t*
+Metadatum::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

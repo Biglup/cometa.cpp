@@ -31,6 +31,8 @@
 
 #include <limits>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -164,7 +166,7 @@ CborWriter::writeText(std::string_view text)
 void
 CborWriter::writeBigInt(const BigInt& value)
 {
-  checkCardanoError(cardano_cbor_writer_write_bigint(checked(), value.checked()), "CborWriter writeBigInt");
+  checkCardanoError(cardano_cbor_writer_write_bigint(checked(), checkedNativeHandle(value)), "CborWriter writeBigInt");
 }
 
 void
@@ -240,7 +242,41 @@ CborWriter::operator=(CborWriter&& other) noexcept
   return *this;
 }
 
+CborWriter
+CborWriter::adopt(cardano_cbor_writer_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null CborWriter");
+  }
+
+  return CborWriter(value);
+}
+
+cardano_cbor_writer_t*
+CborWriter::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_cbor_writer_t*
+CborWriter::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_cbor_writer_t*
+CborWriter::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
+
+CborWriter::CborWriter(cardano_cbor_writer_t* value) noexcept
+: m_value(value)
+{
+}
 
 cardano_cbor_writer_t*
 CborWriter::checked() const

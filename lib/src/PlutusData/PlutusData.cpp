@@ -58,7 +58,7 @@ PlutusData::PlutusData(const BigInt& integer)
 : m_value(nullptr)
 {
   cardano_plutus_data_t* value  = nullptr;
-  const cardano_error_t  result = cardano_plutus_data_new_integer(integer.checked(), &value);
+  const cardano_error_t  result = cardano_plutus_data_new_integer(checkedNativeHandle(integer), &value);
 
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
 
@@ -86,7 +86,7 @@ PlutusData::PlutusData(const PlutusList& data)
   PlutusList copy(data);
 
   cardano_plutus_data_t* value  = nullptr;
-  const cardano_error_t  result = cardano_plutus_data_new_list(copy.checked(), &value);
+  const cardano_error_t  result = cardano_plutus_data_new_list(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
 
@@ -99,7 +99,7 @@ PlutusData::PlutusData(PlutusList&& data)
 : m_value(nullptr)
 {
   cardano_plutus_data_t* value  = nullptr;
-  const cardano_error_t  result = cardano_plutus_data_new_list(data.checked(), &value);
+  const cardano_error_t  result = cardano_plutus_data_new_list(checkedNativeHandle(data), &value);
 
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
 
@@ -116,7 +116,7 @@ PlutusData::PlutusData(const PlutusMap& data)
   PlutusMap copy(data);
 
   cardano_plutus_data_t* value  = nullptr;
-  const cardano_error_t  result = cardano_plutus_data_new_map(copy.checked(), &value);
+  const cardano_error_t  result = cardano_plutus_data_new_map(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
 
@@ -129,7 +129,7 @@ PlutusData::PlutusData(PlutusMap&& data)
 : m_value(nullptr)
 {
   cardano_plutus_data_t* value  = nullptr;
-  const cardano_error_t  result = cardano_plutus_data_new_map(data.checked(), &value);
+  const cardano_error_t  result = cardano_plutus_data_new_map(checkedNativeHandle(data), &value);
 
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
 
@@ -146,7 +146,7 @@ PlutusData::PlutusData(const ConstrPlutusData& data)
   ConstrPlutusData copy(data);
 
   cardano_plutus_data_t* value  = nullptr;
-  const cardano_error_t  result = cardano_plutus_data_new_constr(copy.checked(), &value);
+  const cardano_error_t  result = cardano_plutus_data_new_constr(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
 
@@ -159,7 +159,7 @@ PlutusData::PlutusData(ConstrPlutusData&& data)
 : m_value(nullptr)
 {
   cardano_plutus_data_t* value  = nullptr;
-  const cardano_error_t  result = cardano_plutus_data_new_constr(data.checked(), &value);
+  const cardano_error_t  result = cardano_plutus_data_new_constr(checkedNativeHandle(data), &value);
 
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
 
@@ -244,7 +244,7 @@ PlutusData::asList() const
 
   checkCardanoError(result, "PlutusData asList");
 
-  const PlutusList data(*owner.release());
+  const PlutusList data = PlutusList::adopt(owner.release());
 
   return PlutusList(data);
 }
@@ -259,7 +259,7 @@ PlutusData::asMap() const
 
   checkCardanoError(result, "PlutusData asMap");
 
-  const PlutusMap data(*owner.release());
+  const PlutusMap data = PlutusMap::adopt(owner.release());
 
   return PlutusMap(data);
 }
@@ -274,7 +274,7 @@ PlutusData::asConstructor() const
 
   checkCardanoError(result, "PlutusData asConstr");
 
-  const ConstrPlutusData data(*owner.release());
+  const ConstrPlutusData data = ConstrPlutusData::adopt(owner.release());
 
   return ConstrPlutusData(data);
 }
@@ -289,7 +289,7 @@ PlutusData::asInteger() const
 
   checkCardanoError(result, "PlutusData asInteger");
 
-  return BigInt(*owner.release());
+  return BigInt::adopt(owner.release());
 }
 
 std::vector<std::uint8_t>
@@ -372,6 +372,35 @@ bool
 PlutusData::operator!=(const PlutusData& other) const
 {
   return !(*this == other);
+}
+
+PlutusData
+PlutusData::adopt(cardano_plutus_data_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PlutusData");
+  }
+
+  return PlutusData(*value);
+}
+
+cardano_plutus_data_t*
+PlutusData::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_plutus_data_t*
+PlutusData::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_plutus_data_t*
+PlutusData::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

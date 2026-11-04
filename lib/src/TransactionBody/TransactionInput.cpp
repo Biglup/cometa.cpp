@@ -26,10 +26,13 @@
 #include <Cometa/TransactionBody/TransactionInput.h>
 
 #include "../CardanoInterop.h"
+#include "../ValueValidation.h"
 
 #include <cardano/transaction_body/transaction_input.h>
 
 #include <cardano/crypto/blake2b_hash.h>
+
+#include <utility>
 
 /* CLASS IMPLEMENTATION ******************************************************/
 
@@ -41,7 +44,7 @@ TransactionInput::TransactionInput(const Blake2bHash& id, std::uint64_t index)
   Blake2bHash copy(id);
 
   cardano_transaction_input_t* value  = nullptr;
-  const cardano_error_t        result = cardano_transaction_input_new(copy.checked(), index, &value);
+  const cardano_error_t        result = cardano_transaction_input_new(checkedNativeHandle(copy), index, &value);
 
   CardanoObject<cardano_transaction_input_t, cardano_transaction_input_unref> owner(value);
 
@@ -78,7 +81,7 @@ TransactionInput::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   TransactionInput value(*decodeCbor<cardano_transaction_input_t, cardano_transaction_input_unref>(cbor, cardano_transaction_input_from_cbor));
 
-  value.validate();
+  validateValue(value);
 
   return value;
 }
@@ -101,7 +104,7 @@ TransactionInput::id() const
   cardano_blake2b_hash_t*                                           value = cardano_transaction_input_get_id(checked());
   CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
 
-  const Blake2bHash component(owner.release());
+  const Blake2bHash component = Blake2bHash::adopt(owner.release());
 
   return Blake2bHash(component);
 }
@@ -116,7 +119,7 @@ TransactionInput::setId(const Blake2bHash& value)
     throw std::invalid_argument("Transaction ID must be 32 bytes");
   }
 
-  checkCardanoError(cardano_transaction_input_set_id(checked(), copy.checked()), "TransactionInput setId");
+  checkCardanoError(cardano_transaction_input_set_id(checked(), checkedNativeHandle(copy)), "TransactionInput setId");
 }
 
 std::uint64_t
@@ -210,6 +213,35 @@ TransactionInput::operator!=(const TransactionInput& other) const
   return !(*this == other);
 }
 
+TransactionInput
+TransactionInput::adopt(cardano_transaction_input_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null TransactionInput");
+  }
+
+  return TransactionInput(*value);
+}
+
+cardano_transaction_input_t*
+TransactionInput::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_transaction_input_t*
+TransactionInput::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_transaction_input_t*
+TransactionInput::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 TransactionInput::TransactionInput(cardano_transaction_input_t& value) noexcept
@@ -229,9 +261,9 @@ TransactionInput::checked() const
 }
 
 void
-TransactionInput::validate() const
+validateValue(const TransactionInput& value)
 {
-  if (id().toBytes().size() != 32U)
+  if (value.id().toBytes().size() != 32U)
   {
     throw std::invalid_argument("Transaction ID must be 32 bytes");
   }

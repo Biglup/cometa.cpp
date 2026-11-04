@@ -32,14 +32,21 @@
 #include <Cometa/Certificates/Certificate.h>
 #include <Cometa/Common/Anchor.h>
 #include <Cometa/Common/Credential.h>
+#include <Cometa/Common/CredentialSet.h>
 #include <Cometa/Common/Datum.h>
 #include <Cometa/Common/DRep.h>
 #include <Cometa/Common/GovernanceActionId.h>
 #include <Cometa/Common/NetworkId.h>
+#include <Cometa/Common/ProtocolVersion.h>
+#include <Cometa/Common/UnitInterval.h>
 #include <Cometa/Common/Utxo.h>
+#include <Cometa/Common/WithdrawalMap.h>
 #include <Cometa/Crypto/Blake2bHash.h>
 #include <Cometa/PlutusData/PlutusData.h>
+#include <Cometa/ProposalProcedures/CommitteeMembersMap.h>
+#include <Cometa/ProposalProcedures/Constitution.h>
 #include <Cometa/ProtocolParams/ProtocolParameters.h>
+#include <Cometa/ProtocolParams/ProtocolParamUpdate.h>
 #include <Cometa/Scripts/Script.h>
 #include <Cometa/SlotConfig.h>
 #include <Cometa/Transaction/SubTransaction.h>
@@ -102,6 +109,13 @@ class SubTransactionBuilder
      * @return This builder.
      */
     SubTransactionBuilder& setNetworkId(NetworkId network);
+
+    /**
+     * @brief Sets a treasury donation in the intent.
+     * @param lovelace The amount donated to the treasury, in lovelace.
+     * @return This builder.
+     */
+    SubTransactionBuilder& setDonation(std::uint64_t lovelace);
 
     /**
      * @brief Sets the earliest valid slot.
@@ -472,6 +486,118 @@ class SubTransactionBuilder
       const std::optional<PlutusData>& datum = std::nullopt);
 
     /**
+     * @brief Proposes selected protocol parameter changes.
+     *
+     * The governance deposit is taken from the configured protocol parameters.
+     * @param refundAddress The reward account receiving the deposit refund.
+     * @param anchor Metadata describing the proposal.
+     * @param update The proposed parameter changes.
+     * @param policyHash The constitution guardrails script hash; add its script to the builder.
+     * @param previousAction The preceding action, or std::nullopt for no predecessor.
+     * @return This builder.
+     */
+    SubTransactionBuilder& proposeParameterChange(
+      const RewardAddress&                     refundAddress,
+      const Anchor&                            anchor,
+      const ProtocolParamUpdate&               update,
+      const Blake2bHash&                       policyHash,
+      const std::optional<GovernanceActionId>& previousAction = std::nullopt);
+
+    /**
+     * @brief Proposes a ledger protocol-version upgrade.
+     *
+     * The governance deposit is taken from the configured protocol parameters.
+     * @param refundAddress The reward account receiving the deposit refund.
+     * @param anchor Metadata describing the proposal.
+     * @param version The proposed major and minor protocol version.
+     * @param previousAction The preceding action, or std::nullopt for no predecessor.
+     * @return This builder.
+     */
+    SubTransactionBuilder& proposeHardFork(
+      const RewardAddress&                     refundAddress,
+      const Anchor&                            anchor,
+      const ProtocolVersion&                   version,
+      const std::optional<GovernanceActionId>& previousAction = std::nullopt);
+
+    /**
+     * @brief Proposes no confidence in the constitutional committee.
+     *
+     * The governance deposit is taken from the configured protocol parameters.
+     * @param refundAddress The reward account receiving the deposit refund.
+     * @param anchor Metadata describing the proposal.
+     * @param previousAction The preceding committee action, or std::nullopt when absent.
+     * @return This builder.
+     */
+    SubTransactionBuilder& proposeNoConfidence(
+      const RewardAddress&                     refundAddress,
+      const Anchor&                            anchor,
+      const std::optional<GovernanceActionId>& previousAction = std::nullopt);
+
+    /**
+     * @brief Proposes committee membership and quorum changes.
+     *
+     * The governance deposit is taken from the configured protocol parameters.
+     * @param refundAddress The reward account receiving the deposit refund.
+     * @param anchor Metadata describing the proposal.
+     * @param removedMembers Cold credentials to remove.
+     * @param addedMembers New cold credentials and their expiry epochs.
+     * @param quorum The proposed voting quorum fraction.
+     * @param previousAction The preceding committee action, or std::nullopt when absent.
+     * @return This builder.
+     */
+    SubTransactionBuilder& proposeUpdateCommittee(
+      const RewardAddress&                     refundAddress,
+      const Anchor&                            anchor,
+      const CredentialSet&                     removedMembers,
+      const CommitteeMembersMap&               addedMembers,
+      const UnitInterval&                      quorum,
+      const std::optional<GovernanceActionId>& previousAction = std::nullopt);
+
+    /**
+     * @brief Proposes a replacement constitution.
+     *
+     * The governance deposit is taken from the configured protocol parameters.
+     * @param refundAddress The reward account receiving the deposit refund.
+     * @param anchor Metadata describing the proposal.
+     * @param constitution The new constitution anchor and optional guardrails script.
+     * @param previousAction The preceding constitution action, or std::nullopt when absent.
+     * @return This builder.
+     */
+    SubTransactionBuilder& proposeNewConstitution(
+      const RewardAddress&                     refundAddress,
+      const Anchor&                            anchor,
+      const Constitution&                      constitution,
+      const std::optional<GovernanceActionId>& previousAction = std::nullopt);
+
+    /**
+     * @brief Proposes an informational governance action.
+     *
+     * The governance deposit is taken from the configured protocol parameters.
+     * @param refundAddress The reward account receiving the deposit refund.
+     * @param anchor Metadata describing the proposal.
+     * @return This builder.
+     */
+    SubTransactionBuilder& proposeInfo(
+      const RewardAddress& refundAddress,
+      const Anchor&        anchor);
+
+    /**
+     * @brief Proposes payments from the treasury to reward accounts.
+     *
+     * The governance deposit is taken from the configured protocol parameters.
+     * @param refundAddress The reward account receiving the deposit refund.
+     * @param anchor Metadata describing the proposal.
+     * @param withdrawals Recipient reward accounts and amounts in lovelace.
+     * @param policyHash The constitution guardrails script hash; add its script to the builder.
+     * @return This builder.
+     */
+    SubTransactionBuilder& proposeTreasuryWithdrawals(
+      const RewardAddress& refundAddress,
+      const Anchor&        anchor,
+      const WithdrawalMap& withdrawals,
+      const Blake2bHash&   policyHash);
+
+    /**
      * @brief Builds one sub-transaction.
      *
      * Returns an intent for signing and inclusion in a top-level batch. It is not submitted directly as an
@@ -495,6 +621,22 @@ class SubTransactionBuilder
 
     /** @brief A builder cannot be copy assigned. */
     SubTransactionBuilder& operator=(const SubTransactionBuilder&) = delete;
+
+  public:
+
+    /**
+     * @brief Borrows the native object for C interoperability.
+     * @return The native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    cardano_sub_tx_builder_t* nativeHandle() noexcept;
+
+    /**
+     * @brief Borrows the native object for read-only C interoperability.
+     * @return The read-only native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    const cardano_sub_tx_builder_t* nativeHandle() const noexcept;
 
   private:
 

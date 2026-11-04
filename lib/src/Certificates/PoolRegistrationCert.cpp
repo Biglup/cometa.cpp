@@ -29,6 +29,8 @@
 
 #include <cardano/certs/pool_registration_cert.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -38,7 +40,7 @@ PoolRegistrationCert::PoolRegistrationCert(const PoolParams& params)
 {
   const PoolParams                                                                      copy(params);
   cardano_pool_registration_cert_t*                                                     value  = nullptr;
-  const cardano_error_t                                                                 status = cardano_pool_registration_cert_new(copy.checked(), &value);
+  const cardano_error_t                                                                 status = cardano_pool_registration_cert_new(checkedNativeHandle(copy), &value);
   CardanoObject<cardano_pool_registration_cert_t, cardano_pool_registration_cert_unref> owner(value);
 
   checkCardanoError(status, "PoolRegistrationCert");
@@ -87,7 +89,7 @@ PoolRegistrationCert::params() const
   CardanoObject<cardano_pool_params_t, cardano_pool_params_unref> owner(value);
 
   checkCardanoError(status, "PoolRegistrationCert params");
-  const PoolParams result(owner.release());
+  const PoolParams result = PoolParams::adopt(owner.release());
   return PoolParams(result);
 }
 
@@ -95,7 +97,7 @@ void
 PoolRegistrationCert::setParams(const PoolParams& value)
 {
   const PoolParams copy(value);
-  checkCardanoError(cardano_pool_registration_cert_set_params(checked(), copy.checked()), "PoolRegistrationCert setParams");
+  checkCardanoError(cardano_pool_registration_cert_set_params(checked(), checkedNativeHandle(copy)), "PoolRegistrationCert setParams");
 }
 
 std::vector<std::uint8_t>
@@ -150,6 +152,35 @@ bool
 PoolRegistrationCert::operator!=(const PoolRegistrationCert& other) const
 {
   return !(*this == other);
+}
+
+PoolRegistrationCert
+PoolRegistrationCert::adopt(cardano_pool_registration_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PoolRegistrationCert");
+  }
+
+  return PoolRegistrationCert(value);
+}
+
+cardano_pool_registration_cert_t*
+PoolRegistrationCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_pool_registration_cert_t*
+PoolRegistrationCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_pool_registration_cert_t*
+PoolRegistrationCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

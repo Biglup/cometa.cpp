@@ -31,6 +31,8 @@
 
 #include <limits>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -317,7 +319,7 @@ CborReader::readBigInt()
 
   checkCardanoError(result, "CborReader readBigInt");
 
-  return BigInt(*owner.release());
+  return BigInt::adopt(owner.release());
 }
 
 CborTag
@@ -379,7 +381,41 @@ CborReader::operator=(CborReader&& other) noexcept
   return *this;
 }
 
+CborReader
+CborReader::adopt(cardano_cbor_reader_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null CborReader");
+  }
+
+  return CborReader(value);
+}
+
+cardano_cbor_reader_t*
+CborReader::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_cbor_reader_t*
+CborReader::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_cbor_reader_t*
+CborReader::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
+
+CborReader::CborReader(cardano_cbor_reader_t* value) noexcept
+: m_value(value)
+{
+}
 
 cardano_cbor_reader_t*
 CborReader::checked() const
