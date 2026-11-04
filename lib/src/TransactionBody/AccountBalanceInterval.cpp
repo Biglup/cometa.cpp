@@ -29,6 +29,8 @@
 
 #include <cardano/transaction_body/account_balance_interval.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -165,6 +167,35 @@ bool
 AccountBalanceInterval::operator!=(const AccountBalanceInterval& other) const
 {
   return !(*this == other);
+}
+
+AccountBalanceInterval
+AccountBalanceInterval::adopt(cardano_account_balance_interval_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null AccountBalanceInterval");
+  }
+
+  return AccountBalanceInterval(value);
+}
+
+cardano_account_balance_interval_t*
+AccountBalanceInterval::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_account_balance_interval_t*
+AccountBalanceInterval::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_account_balance_interval_t*
+AccountBalanceInterval::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

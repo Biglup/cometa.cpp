@@ -29,6 +29,8 @@
 
 #include <cardano/certs/stake_registration_cert.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -38,7 +40,7 @@ StakeRegistrationCert::StakeRegistrationCert(const Credential& credential)
 {
   const Credential                                                                        copy(credential);
   cardano_stake_registration_cert_t*                                                      value  = nullptr;
-  const cardano_error_t                                                                   status = cardano_stake_registration_cert_new(copy.checked(), &value);
+  const cardano_error_t                                                                   status = cardano_stake_registration_cert_new(checkedNativeHandle(copy), &value);
   CardanoObject<cardano_stake_registration_cert_t, cardano_stake_registration_cert_unref> owner(value);
 
   checkCardanoError(status, "StakeRegistrationCert");
@@ -88,7 +90,7 @@ StakeRegistrationCert::credential() const
     throw std::logic_error("Stake registration certificate has no credential");
   }
 
-  const Credential result(value);
+  const Credential result = Credential::adopt(value);
   return Credential(result);
 }
 
@@ -96,7 +98,7 @@ void
 StakeRegistrationCert::setCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_stake_registration_cert_set_credential(checked(), copy.checked()), "StakeRegistrationCert setCredential");
+  checkCardanoError(cardano_stake_registration_cert_set_credential(checked(), checkedNativeHandle(copy)), "StakeRegistrationCert setCredential");
 }
 
 std::vector<std::uint8_t>
@@ -151,6 +153,35 @@ bool
 StakeRegistrationCert::operator!=(const StakeRegistrationCert& other) const
 {
   return !(*this == other);
+}
+
+StakeRegistrationCert
+StakeRegistrationCert::adopt(cardano_stake_registration_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null StakeRegistrationCert");
+  }
+
+  return StakeRegistrationCert(value);
+}
+
+cardano_stake_registration_cert_t*
+StakeRegistrationCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_stake_registration_cert_t*
+StakeRegistrationCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_stake_registration_cert_t*
+StakeRegistrationCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

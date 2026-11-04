@@ -29,6 +29,8 @@
 
 #include <cardano/proposal_procedures/hard_fork_initiation_action.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -38,9 +40,9 @@ HardForkInitiationAction::HardForkInitiationAction(const ProtocolVersion& versio
 {
   const ProtocolVersion                                                                           versionCopy(version);
   const std::optional<GovernanceActionId>                                                         previousCopy(previousAction);
-  cardano_governance_action_id_t*                                                                 previous = previousCopy ? previousCopy->checked() : nullptr;
+  cardano_governance_action_id_t*                                                                 previous = previousCopy ? checkedNativeHandle(*previousCopy) : nullptr;
   cardano_hard_fork_initiation_action_t*                                                          value    = nullptr;
-  const cardano_error_t                                                                           status   = cardano_hard_fork_initiation_action_new(versionCopy.checked(), previous, &value);
+  const cardano_error_t                                                                           status   = cardano_hard_fork_initiation_action_new(checkedNativeHandle(versionCopy), previous, &value);
   CardanoObject<cardano_hard_fork_initiation_action_t, cardano_hard_fork_initiation_action_unref> owner(value);
 
   checkCardanoError(status, "HardForkInitiationAction");
@@ -91,7 +93,7 @@ HardForkInitiationAction::version() const
     throw std::logic_error("HardForkInitiationAction has no protocol version");
   }
 
-  const ProtocolVersion found(owner.release());
+  const ProtocolVersion found = ProtocolVersion::adopt(owner.release());
   return ProtocolVersion(found);
 }
 
@@ -99,7 +101,7 @@ void
 HardForkInitiationAction::setVersion(const ProtocolVersion& value)
 {
   const ProtocolVersion copy(value);
-  checkCardanoError(cardano_hard_fork_initiation_action_set_protocol_version(checked(), copy.checked()), "HardForkInitiationAction setVersion");
+  checkCardanoError(cardano_hard_fork_initiation_action_set_protocol_version(checked(), checkedNativeHandle(copy)), "HardForkInitiationAction setVersion");
 }
 
 std::optional<GovernanceActionId>
@@ -113,7 +115,7 @@ HardForkInitiationAction::previousAction() const
     return std::nullopt;
   }
 
-  const GovernanceActionId found(owner.release());
+  const GovernanceActionId found = GovernanceActionId::adopt(owner.release());
   return GovernanceActionId(found);
 }
 
@@ -121,7 +123,7 @@ void
 HardForkInitiationAction::setPreviousAction(const std::optional<GovernanceActionId>& value)
 {
   const std::optional<GovernanceActionId> copy(value);
-  cardano_governance_action_id_t*         data = copy ? copy->checked() : nullptr;
+  cardano_governance_action_id_t*         data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_hard_fork_initiation_action_set_governance_action_id(checked(), data), "HardForkInitiationAction setPreviousAction");
 }
 
@@ -175,6 +177,35 @@ bool
 HardForkInitiationAction::operator!=(const HardForkInitiationAction& other) const
 {
   return !(*this == other);
+}
+
+HardForkInitiationAction
+HardForkInitiationAction::adopt(cardano_hard_fork_initiation_action_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null HardForkInitiationAction");
+  }
+
+  return HardForkInitiationAction(value);
+}
+
+cardano_hard_fork_initiation_action_t*
+HardForkInitiationAction::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_hard_fork_initiation_action_t*
+HardForkInitiationAction::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_hard_fork_initiation_action_t*
+HardForkInitiationAction::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

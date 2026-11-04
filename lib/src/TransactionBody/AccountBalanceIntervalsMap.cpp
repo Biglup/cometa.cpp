@@ -29,6 +29,8 @@
 
 #include <cardano/transaction_body/account_balance_intervals_map.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -102,7 +104,7 @@ std::optional<AccountBalanceInterval>
 AccountBalanceIntervalsMap::get(const RewardAddress& address) const
 {
   cardano_account_balance_interval_t*                                                       value  = nullptr;
-  const cardano_error_t                                                                     status = cardano_account_balance_intervals_map_get(checked(), address.checked(), &value);
+  const cardano_error_t                                                                     status = cardano_account_balance_intervals_map_get(checked(), checkedNativeHandle(address), &value);
   CardanoObject<cardano_account_balance_interval_t, cardano_account_balance_interval_unref> owner(value);
 
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
@@ -111,7 +113,7 @@ AccountBalanceIntervalsMap::get(const RewardAddress& address) const
   }
 
   checkCardanoError(status, "AccountBalanceIntervalsMap get");
-  const AccountBalanceInterval copied(owner.release());
+  const AccountBalanceInterval copied = AccountBalanceInterval::adopt(owner.release());
   return AccountBalanceInterval(copied);
 }
 
@@ -120,7 +122,7 @@ AccountBalanceIntervalsMap::insert(const RewardAddress& address, const AccountBa
 {
   const RewardAddress          copyAddress(address);
   const AccountBalanceInterval copyInterval(interval);
-  checkCardanoError(cardano_account_balance_intervals_map_insert(checked(), copyAddress.checked(), copyInterval.checked()), "AccountBalanceIntervalsMap insert");
+  checkCardanoError(cardano_account_balance_intervals_map_insert(checked(), checkedNativeHandle(copyAddress), checkedNativeHandle(copyInterval)), "AccountBalanceIntervalsMap insert");
   invalidateElements();
 }
 
@@ -146,8 +148,8 @@ AccountBalanceIntervalsMap::entryAt(std::size_t index) const
   CardanoObject<cardano_account_balance_interval_t, cardano_account_balance_interval_unref> valueOwner(value);
 
   checkCardanoError(status, "AccountBalanceIntervalsMap entryAt");
-  RewardAddress          address(*keyOwner.release());
-  AccountBalanceInterval interval(valueOwner.release());
+  RewardAddress          address  = RewardAddress::adopt(keyOwner.release());
+  AccountBalanceInterval interval = AccountBalanceInterval::adopt(valueOwner.release());
   return std::make_pair(std::move(address), std::move(interval));
 }
 
@@ -458,6 +460,60 @@ AccountBalanceIntervalsMap::clear()
   materialize();
   m_elements.clear();
   m_mutableAccess = true;
+}
+
+AccountBalanceIntervalsMap
+AccountBalanceIntervalsMap::adopt(cardano_account_balance_intervals_map_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null AccountBalanceIntervalsMap");
+  }
+
+  return AccountBalanceIntervalsMap(value);
+}
+
+cardano_account_balance_intervals_map_t*
+AccountBalanceIntervalsMap::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_account_balance_intervals_map_t*
+AccountBalanceIntervalsMap::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_account_balance_intervals_map_t*
+AccountBalanceIntervalsMap::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

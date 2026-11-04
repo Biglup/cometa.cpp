@@ -34,6 +34,8 @@
 #include <cardano/witness_set/vkey_witness_set.h>
 #include <cardano/witness_set/witness_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -45,7 +47,7 @@ SubTransaction::SubTransaction(const SubTransactionBody& body, const WitnessSet&
   const WitnessSet                                                        witnessCopy(witnesses);
   std::optional<AuxiliaryData>                                            auxiliaryCopy(auxiliaryData);
   cardano_sub_transaction_t*                                              value  = nullptr;
-  const cardano_error_t                                                   status = cardano_sub_transaction_new(bodyCopy.checked(), witnessCopy.checked(), auxiliaryCopy ? auxiliaryCopy->checked() : nullptr, &value);
+  const cardano_error_t                                                   status = cardano_sub_transaction_new(checkedNativeHandle(bodyCopy), checkedNativeHandle(witnessCopy), auxiliaryCopy ? checkedNativeHandle(*auxiliaryCopy) : nullptr, &value);
   CardanoObject<cardano_sub_transaction_t, cardano_sub_transaction_unref> owner(value);
 
   checkCardanoError(status, "SubTransaction");
@@ -95,7 +97,7 @@ SubTransaction::body() const
   }
 
   CardanoObject<cardano_sub_transaction_body_t, cardano_sub_transaction_body_unref> owner(value);
-  const SubTransactionBody                                                          copied(owner.release());
+  const SubTransactionBody                                                          copied = SubTransactionBody::adopt(owner.release());
   return SubTransactionBody(copied);
 }
 
@@ -103,7 +105,7 @@ void
 SubTransaction::setBody(const SubTransactionBody& value)
 {
   const SubTransactionBody copy(value);
-  checkCardanoError(cardano_sub_transaction_set_body(checked(), copy.checked()), "SubTransaction setBody");
+  checkCardanoError(cardano_sub_transaction_set_body(checked(), checkedNativeHandle(copy)), "SubTransaction setBody");
   cardano_sub_transaction_clear_cbor_cache(checked());
 }
 
@@ -117,7 +119,7 @@ SubTransaction::witnessSet() const
   }
 
   CardanoObject<cardano_witness_set_t, cardano_witness_set_unref> owner(value);
-  const WitnessSet                                                copied(owner.release());
+  const WitnessSet                                                copied = WitnessSet::adopt(owner.release());
   return WitnessSet(copied);
 }
 
@@ -125,7 +127,7 @@ void
 SubTransaction::setWitnessSet(const WitnessSet& value)
 {
   const WitnessSet copy(value);
-  checkCardanoError(cardano_sub_transaction_set_witness_set(checked(), copy.checked()), "SubTransaction setWitnessSet");
+  checkCardanoError(cardano_sub_transaction_set_witness_set(checked(), checkedNativeHandle(copy)), "SubTransaction setWitnessSet");
   cardano_sub_transaction_clear_cbor_cache(checked());
 }
 
@@ -139,7 +141,7 @@ SubTransaction::auxiliaryData() const
   }
 
   CardanoObject<cardano_auxiliary_data_t, cardano_auxiliary_data_unref> owner(value);
-  const AuxiliaryData                                                   copied(*owner.release());
+  const AuxiliaryData                                                   copied = AuxiliaryData::adopt(owner.release());
   return AuxiliaryData(copied);
 }
 
@@ -149,7 +151,7 @@ SubTransaction::setAuxiliaryData(const std::optional<AuxiliaryData>& value)
   if (value)
   {
     const AuxiliaryData copy(*value);
-    checkCardanoError(cardano_sub_transaction_set_auxiliary_data(checked(), copy.checked()), "SubTransaction setAuxiliaryData");
+    checkCardanoError(cardano_sub_transaction_set_auxiliary_data(checked(), checkedNativeHandle(copy)), "SubTransaction setAuxiliaryData");
   }
   else
   {
@@ -169,7 +171,7 @@ SubTransaction::id() const
   }
 
   CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
-  const Blake2bHash                                                 copied(owner.release());
+  const Blake2bHash                                                 copied = Blake2bHash::adopt(owner.release());
   return Blake2bHash(copied);
 }
 
@@ -177,7 +179,7 @@ void
 SubTransaction::applyVkeyWitnesses(const VkeyWitnessSet& witnesses)
 {
   const VkeyWitnessSet copy(witnesses);
-  checkCardanoError(cardano_sub_transaction_apply_vkey_witnesses(checked(), copy.checked()), "SubTransaction applyVkeyWitnesses");
+  checkCardanoError(cardano_sub_transaction_apply_vkey_witnesses(checked(), checkedNativeHandle(copy)), "SubTransaction applyVkeyWitnesses");
   cardano_sub_transaction_clear_cbor_cache(checked());
 }
 
@@ -231,6 +233,35 @@ bool
 SubTransaction::operator!=(const SubTransaction& other) const
 {
   return !(*this == other);
+}
+
+SubTransaction
+SubTransaction::adopt(cardano_sub_transaction_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null SubTransaction");
+  }
+
+  return SubTransaction(value);
+}
+
+cardano_sub_transaction_t*
+SubTransaction::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_sub_transaction_t*
+SubTransaction::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_sub_transaction_t*
+SubTransaction::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

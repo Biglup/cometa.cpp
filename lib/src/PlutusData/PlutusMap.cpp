@@ -32,6 +32,8 @@
 #include <cardano/plutus_data/plutus_list.h>
 #include <cardano/plutus_data/plutus_map.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -109,7 +111,7 @@ std::optional<PlutusData>
 PlutusMap::get(const PlutusData& key) const
 {
   cardano_plutus_data_t* value  = nullptr;
-  const cardano_error_t  result = cardano_plutus_map_get(checked(), key.checked(), &value);
+  const cardano_error_t  result = cardano_plutus_map_get(checked(), checkedNativeHandle(key), &value);
 
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
 
@@ -120,7 +122,7 @@ PlutusMap::get(const PlutusData& key) const
 
   checkCardanoError(result, "PlutusMap get");
 
-  const PlutusData data(*owner.release());
+  const PlutusData data = PlutusData::adopt(owner.release());
 
   return PlutusData(data);
 }
@@ -138,7 +140,7 @@ PlutusMap::insert(const PlutusData& key, const PlutusData& value)
   PlutusData valueCopy(value);
   PlutusMap  replacement(*this);
 
-  checkCardanoError(cardano_plutus_map_insert(replacement.checked(), keyCopy.checked(), valueCopy.checked()), "PlutusMap insert");
+  checkCardanoError(cardano_plutus_map_insert(replacement.nativeHandle(), checkedNativeHandle(keyCopy), checkedNativeHandle(valueCopy)), "PlutusMap insert");
   replacement.normalizeEncoding();
   swap(replacement);
 }
@@ -153,7 +155,7 @@ PlutusMap::keys() const
 
   checkCardanoError(result, "PlutusMap keys");
 
-  const PlutusList list(*owner.release());
+  const PlutusList list = PlutusList::adopt(owner.release());
 
   return list.values();
 }
@@ -168,7 +170,7 @@ PlutusMap::values() const
 
   checkCardanoError(result, "PlutusMap values");
 
-  const PlutusList list(*owner.release());
+  const PlutusList list = PlutusList::adopt(owner.release());
 
   return list.values();
 }
@@ -537,6 +539,60 @@ PlutusMap::erase(const_iterator first, const_iterator last)
   m_mutableAccess = true;
 
   return m_elements.erase(first, last);
+}
+
+PlutusMap
+PlutusMap::adopt(cardano_plutus_map_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PlutusMap");
+  }
+
+  return PlutusMap(*value);
+}
+
+cardano_plutus_map_t*
+PlutusMap::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_plutus_map_t*
+PlutusMap::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_plutus_map_t*
+PlutusMap::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

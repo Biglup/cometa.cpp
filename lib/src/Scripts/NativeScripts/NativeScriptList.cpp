@@ -26,6 +26,7 @@
 #include <Cometa/Scripts/NativeScripts/NativeScriptList.h>
 
 #include "../../CardanoInterop.h"
+#include "../../ValueValidation.h"
 #include <Cometa/Json/JsonValue.h>
 #include <Cometa/Scripts/NativeScripts/NativeScript.h>
 
@@ -35,6 +36,8 @@
 #include <algorithm>
 #include <functional>
 #include <iterator>
+
+#include <utility>
 
 /* CLASS IMPLEMENTATION ******************************************************/
 
@@ -94,7 +97,7 @@ NativeScriptList::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   NativeScriptList value(*decodeCbor<cardano_native_script_list_t, cardano_native_script_list_unref>(cbor, cardano_native_script_list_from_cbor));
 
-  value.validate();
+  validateValue(value);
 
   return value;
 }
@@ -152,7 +155,7 @@ NativeScriptList::pushBack(const NativeScript& script)
 
   NativeScript copy(script);
 
-  checkCardanoError(cardano_native_script_list_add(checked(), copy.checked()), "NativeScriptList pushBack");
+  checkCardanoError(cardano_native_script_list_add(checked(), checkedNativeHandle(copy)), "NativeScriptList pushBack");
 }
 
 std::vector<NativeScript>
@@ -507,6 +510,60 @@ NativeScriptList::erase(const_iterator first, const_iterator last)
   return m_elements.erase(first, last);
 }
 
+NativeScriptList
+NativeScriptList::adopt(cardano_native_script_list_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null NativeScriptList");
+  }
+
+  return NativeScriptList(*value);
+}
+
+cardano_native_script_list_t*
+NativeScriptList::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_native_script_list_t*
+NativeScriptList::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_native_script_list_t*
+NativeScriptList::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 NativeScriptList::NativeScriptList(cardano_native_script_list_t& value) noexcept
@@ -528,13 +585,13 @@ NativeScriptList::checked() const
 }
 
 void
-NativeScriptList::validate() const
+validateValue(const NativeScriptList& value)
 {
-  const std::size_t count = size();
+  const std::size_t count = value.size();
 
   for (std::size_t index = 0U; index < count; ++index)
   {
-    at(index).validate();
+    validateValue(value.at(index));
   }
 }
 
@@ -614,7 +671,7 @@ NativeScriptList::copyElement(std::size_t index) const
 
   checkCardanoError(result, "NativeScriptList at");
 
-  const NativeScript script(*owner.release());
+  const NativeScript script = NativeScript::adopt(owner.release());
 
   return NativeScript(script);
 }

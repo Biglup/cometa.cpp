@@ -38,6 +38,8 @@
 #include <cardano/proposal_procedures/treasury_withdrawals_action.h>
 #include <cardano/proposal_procedures/update_committee_action.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -49,7 +51,7 @@ ProposalProcedure::ProposalProcedure(std::uint64_t deposit, const RewardAddress&
   const Anchor                                                                  anchorCopy(anchor);
   const ParameterChangeAction                                                   actionCopy(action);
   cardano_proposal_procedure_t*                                                 value  = nullptr;
-  const cardano_error_t                                                         status = cardano_proposal_procedure_new_parameter_change_action(deposit, addressCopy.checked(), anchorCopy.checked(), actionCopy.checked(), &value);
+  const cardano_error_t                                                         status = cardano_proposal_procedure_new_parameter_change_action(deposit, checkedNativeHandle(addressCopy), checkedNativeHandle(anchorCopy), checkedNativeHandle(actionCopy), &value);
   CardanoObject<cardano_proposal_procedure_t, cardano_proposal_procedure_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure ParameterChangeAction");
@@ -63,7 +65,7 @@ ProposalProcedure::ProposalProcedure(std::uint64_t deposit, const RewardAddress&
   const Anchor                                                                  anchorCopy(anchor);
   const HardForkInitiationAction                                                actionCopy(action);
   cardano_proposal_procedure_t*                                                 value  = nullptr;
-  const cardano_error_t                                                         status = cardano_proposal_procedure_new_hard_fork_initiation_action(deposit, addressCopy.checked(), anchorCopy.checked(), actionCopy.checked(), &value);
+  const cardano_error_t                                                         status = cardano_proposal_procedure_new_hard_fork_initiation_action(deposit, checkedNativeHandle(addressCopy), checkedNativeHandle(anchorCopy), checkedNativeHandle(actionCopy), &value);
   CardanoObject<cardano_proposal_procedure_t, cardano_proposal_procedure_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure HardForkInitiationAction");
@@ -77,7 +79,7 @@ ProposalProcedure::ProposalProcedure(std::uint64_t deposit, const RewardAddress&
   const Anchor                                                                  anchorCopy(anchor);
   const TreasuryWithdrawalsAction                                               actionCopy(action);
   cardano_proposal_procedure_t*                                                 value  = nullptr;
-  const cardano_error_t                                                         status = cardano_proposal_procedure_new_treasury_withdrawals_action(deposit, addressCopy.checked(), anchorCopy.checked(), actionCopy.checked(), &value);
+  const cardano_error_t                                                         status = cardano_proposal_procedure_new_treasury_withdrawals_action(deposit, checkedNativeHandle(addressCopy), checkedNativeHandle(anchorCopy), checkedNativeHandle(actionCopy), &value);
   CardanoObject<cardano_proposal_procedure_t, cardano_proposal_procedure_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure TreasuryWithdrawalsAction");
@@ -91,7 +93,7 @@ ProposalProcedure::ProposalProcedure(std::uint64_t deposit, const RewardAddress&
   const Anchor                                                                  anchorCopy(anchor);
   const NoConfidenceAction                                                      actionCopy(action);
   cardano_proposal_procedure_t*                                                 value  = nullptr;
-  const cardano_error_t                                                         status = cardano_proposal_procedure_new_no_confidence_action(deposit, addressCopy.checked(), anchorCopy.checked(), actionCopy.checked(), &value);
+  const cardano_error_t                                                         status = cardano_proposal_procedure_new_no_confidence_action(deposit, checkedNativeHandle(addressCopy), checkedNativeHandle(anchorCopy), checkedNativeHandle(actionCopy), &value);
   CardanoObject<cardano_proposal_procedure_t, cardano_proposal_procedure_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure NoConfidenceAction");
@@ -105,7 +107,7 @@ ProposalProcedure::ProposalProcedure(std::uint64_t deposit, const RewardAddress&
   const Anchor                                                                  anchorCopy(anchor);
   const UpdateCommitteeAction                                                   actionCopy(action);
   cardano_proposal_procedure_t*                                                 value  = nullptr;
-  const cardano_error_t                                                         status = cardano_proposal_procedure_new_update_committee_action(deposit, addressCopy.checked(), anchorCopy.checked(), actionCopy.checked(), &value);
+  const cardano_error_t                                                         status = cardano_proposal_procedure_new_update_committee_action(deposit, checkedNativeHandle(addressCopy), checkedNativeHandle(anchorCopy), checkedNativeHandle(actionCopy), &value);
   CardanoObject<cardano_proposal_procedure_t, cardano_proposal_procedure_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure UpdateCommitteeAction");
@@ -119,7 +121,7 @@ ProposalProcedure::ProposalProcedure(std::uint64_t deposit, const RewardAddress&
   const Anchor                                                                  anchorCopy(anchor);
   const NewConstitutionAction                                                   actionCopy(action);
   cardano_proposal_procedure_t*                                                 value  = nullptr;
-  const cardano_error_t                                                         status = cardano_proposal_procedure_new_constitution_action(deposit, addressCopy.checked(), anchorCopy.checked(), actionCopy.checked(), &value);
+  const cardano_error_t                                                         status = cardano_proposal_procedure_new_constitution_action(deposit, checkedNativeHandle(addressCopy), checkedNativeHandle(anchorCopy), checkedNativeHandle(actionCopy), &value);
   CardanoObject<cardano_proposal_procedure_t, cardano_proposal_procedure_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure NewConstitutionAction");
@@ -133,7 +135,7 @@ ProposalProcedure::ProposalProcedure(std::uint64_t deposit, const RewardAddress&
   const Anchor                                                                  anchorCopy(anchor);
   const InfoAction                                                              actionCopy(action);
   cardano_proposal_procedure_t*                                                 value  = nullptr;
-  const cardano_error_t                                                         status = cardano_proposal_procedure_new_info_action(deposit, addressCopy.checked(), anchorCopy.checked(), actionCopy.checked(), &value);
+  const cardano_error_t                                                         status = cardano_proposal_procedure_new_info_action(deposit, checkedNativeHandle(addressCopy), checkedNativeHandle(anchorCopy), checkedNativeHandle(actionCopy), &value);
   CardanoObject<cardano_proposal_procedure_t, cardano_proposal_procedure_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure InfoAction");
@@ -194,7 +196,7 @@ ProposalProcedure::asParameterChangeAction() const
   CardanoObject<cardano_parameter_change_action_t, cardano_parameter_change_action_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure asParameterChangeAction");
-  const ParameterChangeAction found(owner.release());
+  const ParameterChangeAction found = ParameterChangeAction::adopt(owner.release());
   return ParameterChangeAction(found);
 }
 
@@ -211,7 +213,7 @@ ProposalProcedure::asHardForkInitiationAction() const
   CardanoObject<cardano_hard_fork_initiation_action_t, cardano_hard_fork_initiation_action_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure asHardForkInitiationAction");
-  const HardForkInitiationAction found(owner.release());
+  const HardForkInitiationAction found = HardForkInitiationAction::adopt(owner.release());
   return HardForkInitiationAction(found);
 }
 
@@ -228,7 +230,7 @@ ProposalProcedure::asTreasuryWithdrawalsAction() const
   CardanoObject<cardano_treasury_withdrawals_action_t, cardano_treasury_withdrawals_action_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure asTreasuryWithdrawalsAction");
-  const TreasuryWithdrawalsAction found(owner.release());
+  const TreasuryWithdrawalsAction found = TreasuryWithdrawalsAction::adopt(owner.release());
   return TreasuryWithdrawalsAction(found);
 }
 
@@ -245,7 +247,7 @@ ProposalProcedure::asNoConfidenceAction() const
   CardanoObject<cardano_no_confidence_action_t, cardano_no_confidence_action_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure asNoConfidenceAction");
-  const NoConfidenceAction found(owner.release());
+  const NoConfidenceAction found = NoConfidenceAction::adopt(owner.release());
   return NoConfidenceAction(found);
 }
 
@@ -262,7 +264,7 @@ ProposalProcedure::asUpdateCommitteeAction() const
   CardanoObject<cardano_update_committee_action_t, cardano_update_committee_action_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure asUpdateCommitteeAction");
-  const UpdateCommitteeAction found(owner.release());
+  const UpdateCommitteeAction found = UpdateCommitteeAction::adopt(owner.release());
   return UpdateCommitteeAction(found);
 }
 
@@ -279,7 +281,7 @@ ProposalProcedure::asNewConstitutionAction() const
   CardanoObject<cardano_new_constitution_action_t, cardano_new_constitution_action_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure asNewConstitutionAction");
-  const NewConstitutionAction found(owner.release());
+  const NewConstitutionAction found = NewConstitutionAction::adopt(owner.release());
   return NewConstitutionAction(found);
 }
 
@@ -296,7 +298,7 @@ ProposalProcedure::asInfoAction() const
   CardanoObject<cardano_info_action_t, cardano_info_action_unref> owner(value);
 
   checkCardanoError(status, "ProposalProcedure asInfoAction");
-  const InfoAction found(owner.release());
+  const InfoAction found = InfoAction::adopt(owner.release());
   return InfoAction(found);
 }
 
@@ -323,7 +325,7 @@ ProposalProcedure::rewardAddress() const
     throw std::logic_error("ProposalProcedure has no reward address");
   }
 
-  const RewardAddress found(*owner.release());
+  const RewardAddress found = RewardAddress::adopt(owner.release());
   return RewardAddress(found);
 }
 
@@ -331,7 +333,7 @@ void
 ProposalProcedure::setRewardAddress(const RewardAddress& value)
 {
   const RewardAddress copy(value);
-  checkCardanoError(cardano_proposal_procedure_set_reward_address(checked(), copy.checked()), "ProposalProcedure setRewardAddress");
+  checkCardanoError(cardano_proposal_procedure_set_reward_address(checked(), checkedNativeHandle(copy)), "ProposalProcedure setRewardAddress");
 }
 
 Anchor
@@ -345,7 +347,7 @@ ProposalProcedure::anchor() const
     throw std::logic_error("ProposalProcedure has no anchor");
   }
 
-  const Anchor found(owner.release());
+  const Anchor found = Anchor::adopt(owner.release());
   return Anchor(found);
 }
 
@@ -353,7 +355,7 @@ void
 ProposalProcedure::setAnchor(const Anchor& value)
 {
   const Anchor copy(value);
-  checkCardanoError(cardano_proposal_procedure_set_anchor(checked(), copy.checked()), "ProposalProcedure setAnchor");
+  checkCardanoError(cardano_proposal_procedure_set_anchor(checked(), checkedNativeHandle(copy)), "ProposalProcedure setAnchor");
 }
 
 std::vector<std::uint8_t>
@@ -406,6 +408,35 @@ bool
 ProposalProcedure::operator!=(const ProposalProcedure& other) const
 {
   return !(*this == other);
+}
+
+ProposalProcedure
+ProposalProcedure::adopt(cardano_proposal_procedure_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ProposalProcedure");
+  }
+
+  return ProposalProcedure(value);
+}
+
+cardano_proposal_procedure_t*
+ProposalProcedure::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_proposal_procedure_t*
+ProposalProcedure::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_proposal_procedure_t*
+ProposalProcedure::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -30,6 +30,8 @@
 #include <cardano/certs/auth_committee_hot_cert.h>
 #include <cardano/common/credential.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -40,7 +42,7 @@ AuthCommitteeHotCert::AuthCommitteeHotCert(const Credential& coldCredential, con
   const Credential                                                                        coldCopy(coldCredential);
   const Credential                                                                        hotCopy(hotCredential);
   cardano_auth_committee_hot_cert_t*                                                      value  = nullptr;
-  const cardano_error_t                                                                   status = cardano_auth_committee_hot_cert_new(coldCopy.checked(), hotCopy.checked(), &value);
+  const cardano_error_t                                                                   status = cardano_auth_committee_hot_cert_new(checkedNativeHandle(coldCopy), checkedNativeHandle(hotCopy), &value);
   CardanoObject<cardano_auth_committee_hot_cert_t, cardano_auth_committee_hot_cert_unref> owner(value);
 
   checkCardanoError(status, "AuthCommitteeHotCert");
@@ -89,7 +91,7 @@ AuthCommitteeHotCert::coldCredential() const
   CardanoObject<cardano_credential_t, cardano_credential_unref> owner(value);
 
   checkCardanoError(status, "AuthCommitteeHotCert coldCredential");
-  const Credential result(owner.release());
+  const Credential result = Credential::adopt(owner.release());
   return Credential(result);
 }
 
@@ -97,7 +99,7 @@ void
 AuthCommitteeHotCert::setColdCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_auth_committee_hot_cert_set_cold_cred(checked(), copy.checked()), "AuthCommitteeHotCert setColdCredential");
+  checkCardanoError(cardano_auth_committee_hot_cert_set_cold_cred(checked(), checkedNativeHandle(copy)), "AuthCommitteeHotCert setColdCredential");
 }
 
 Credential
@@ -108,7 +110,7 @@ AuthCommitteeHotCert::hotCredential() const
   CardanoObject<cardano_credential_t, cardano_credential_unref> owner(value);
 
   checkCardanoError(status, "AuthCommitteeHotCert hotCredential");
-  const Credential result(owner.release());
+  const Credential result = Credential::adopt(owner.release());
   return Credential(result);
 }
 
@@ -116,7 +118,7 @@ void
 AuthCommitteeHotCert::setHotCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_auth_committee_hot_cert_set_hot_cred(checked(), copy.checked()), "AuthCommitteeHotCert setHotCredential");
+  checkCardanoError(cardano_auth_committee_hot_cert_set_hot_cred(checked(), checkedNativeHandle(copy)), "AuthCommitteeHotCert setHotCredential");
 }
 
 std::vector<std::uint8_t>
@@ -171,6 +173,35 @@ bool
 AuthCommitteeHotCert::operator!=(const AuthCommitteeHotCert& other) const
 {
   return !(*this == other);
+}
+
+AuthCommitteeHotCert
+AuthCommitteeHotCert::adopt(cardano_auth_committee_hot_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null AuthCommitteeHotCert");
+  }
+
+  return AuthCommitteeHotCert(value);
+}
+
+cardano_auth_committee_hot_cert_t*
+AuthCommitteeHotCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_auth_committee_hot_cert_t*
+AuthCommitteeHotCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_auth_committee_hot_cert_t*
+AuthCommitteeHotCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

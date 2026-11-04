@@ -33,6 +33,8 @@
 #include <cardano/proposal_procedures/credential_set.h>
 #include <cardano/proposal_procedures/update_committee_action.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -44,9 +46,9 @@ UpdateCommitteeAction::UpdateCommitteeAction(const CredentialSet& removed, const
   const CommitteeMembersMap                                                               addedCopy(added);
   const UnitInterval                                                                      quorumCopy(quorum);
   const std::optional<GovernanceActionId>                                                 previousCopy(previousAction);
-  cardano_governance_action_id_t*                                                         previous = previousCopy ? previousCopy->checked() : nullptr;
+  cardano_governance_action_id_t*                                                         previous = previousCopy ? checkedNativeHandle(*previousCopy) : nullptr;
   cardano_update_committee_action_t*                                                      value    = nullptr;
-  const cardano_error_t                                                                   status   = cardano_update_committee_action_new(removedCopy.checked(), addedCopy.checked(), quorumCopy.checked(), previous, &value);
+  const cardano_error_t                                                                   status   = cardano_update_committee_action_new(checkedNativeHandle(removedCopy), checkedNativeHandle(addedCopy), checkedNativeHandle(quorumCopy), previous, &value);
   CardanoObject<cardano_update_committee_action_t, cardano_update_committee_action_unref> owner(value);
 
   checkCardanoError(status, "UpdateCommitteeAction");
@@ -97,7 +99,7 @@ UpdateCommitteeAction::removedMembers() const
     throw std::logic_error("UpdateCommitteeAction has no removed members");
   }
 
-  const CredentialSet found(owner.release());
+  const CredentialSet found = CredentialSet::adopt(owner.release());
   return CredentialSet(found);
 }
 
@@ -105,7 +107,7 @@ void
 UpdateCommitteeAction::setRemovedMembers(const CredentialSet& value)
 {
   const CredentialSet copy(value);
-  checkCardanoError(cardano_update_committee_action_set_members_to_be_removed(checked(), copy.checked()), "UpdateCommitteeAction setRemovedMembers");
+  checkCardanoError(cardano_update_committee_action_set_members_to_be_removed(checked(), checkedNativeHandle(copy)), "UpdateCommitteeAction setRemovedMembers");
 }
 
 CommitteeMembersMap
@@ -119,7 +121,7 @@ UpdateCommitteeAction::addedMembers() const
     throw std::logic_error("UpdateCommitteeAction has no added members");
   }
 
-  const CommitteeMembersMap found(owner.release());
+  const CommitteeMembersMap found = CommitteeMembersMap::adopt(owner.release());
   return CommitteeMembersMap(found);
 }
 
@@ -127,7 +129,7 @@ void
 UpdateCommitteeAction::setAddedMembers(const CommitteeMembersMap& value)
 {
   const CommitteeMembersMap copy(value);
-  checkCardanoError(cardano_update_committee_action_set_members_to_be_added(checked(), copy.checked()), "UpdateCommitteeAction setAddedMembers");
+  checkCardanoError(cardano_update_committee_action_set_members_to_be_added(checked(), checkedNativeHandle(copy)), "UpdateCommitteeAction setAddedMembers");
 }
 
 UnitInterval
@@ -141,7 +143,7 @@ UpdateCommitteeAction::quorum() const
     throw std::logic_error("UpdateCommitteeAction has no quorum");
   }
 
-  const UnitInterval found(owner.release());
+  const UnitInterval found = UnitInterval::adopt(owner.release());
   return UnitInterval(found);
 }
 
@@ -149,7 +151,7 @@ void
 UpdateCommitteeAction::setQuorum(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_update_committee_action_set_quorum(checked(), copy.checked()), "UpdateCommitteeAction setQuorum");
+  checkCardanoError(cardano_update_committee_action_set_quorum(checked(), checkedNativeHandle(copy)), "UpdateCommitteeAction setQuorum");
 }
 
 std::optional<GovernanceActionId>
@@ -163,7 +165,7 @@ UpdateCommitteeAction::previousAction() const
     return std::nullopt;
   }
 
-  const GovernanceActionId found(owner.release());
+  const GovernanceActionId found = GovernanceActionId::adopt(owner.release());
   return GovernanceActionId(found);
 }
 
@@ -171,7 +173,7 @@ void
 UpdateCommitteeAction::setPreviousAction(const std::optional<GovernanceActionId>& value)
 {
   const std::optional<GovernanceActionId> copy(value);
-  cardano_governance_action_id_t*         data = copy ? copy->checked() : nullptr;
+  cardano_governance_action_id_t*         data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_update_committee_action_set_governance_action_id(checked(), data), "UpdateCommitteeAction setPreviousAction");
 }
 
@@ -225,6 +227,35 @@ bool
 UpdateCommitteeAction::operator!=(const UpdateCommitteeAction& other) const
 {
   return !(*this == other);
+}
+
+UpdateCommitteeAction
+UpdateCommitteeAction::adopt(cardano_update_committee_action_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null UpdateCommitteeAction");
+  }
+
+  return UpdateCommitteeAction(value);
+}
+
+cardano_update_committee_action_t*
+UpdateCommitteeAction::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_update_committee_action_t*
+UpdateCommitteeAction::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_update_committee_action_t*
+UpdateCommitteeAction::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

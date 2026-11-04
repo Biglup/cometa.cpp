@@ -29,6 +29,8 @@
 
 #include <cardano/common/credential.h>
 
+#include <utility>
+
 /* INTERNAL IMPLEMENTATION ***************************************************/
 
 namespace Cometa
@@ -227,6 +229,35 @@ bool
 Credential::operator<(const Credential& other) const
 {
   return cardano_credential_compare(checked(), other.checked()) < 0;
+}
+
+Credential
+Credential::adopt(cardano_credential_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Credential");
+  }
+
+  return Credential(value);
+}
+
+cardano_credential_t*
+Credential::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_credential_t*
+Credential::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_credential_t*
+Credential::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

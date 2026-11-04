@@ -29,6 +29,8 @@
 
 #include <cardano/certs/mir_to_pot_cert.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -160,6 +162,35 @@ bool
 MirToPotCert::operator!=(const MirToPotCert& other) const
 {
   return !(*this == other);
+}
+
+MirToPotCert
+MirToPotCert::adopt(cardano_mir_to_pot_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null MirToPotCert");
+  }
+
+  return MirToPotCert(value);
+}
+
+cardano_mir_to_pot_cert_t*
+MirToPotCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_mir_to_pot_cert_t*
+MirToPotCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_mir_to_pot_cert_t*
+MirToPotCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

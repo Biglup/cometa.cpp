@@ -30,6 +30,8 @@
 
 #include <cardano/scripts/native_scripts/script_pubkey.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -45,7 +47,7 @@ ScriptPubkey::ScriptPubkey(const Blake2bHash& keyHash)
   }
 
   cardano_script_pubkey_t* value  = nullptr;
-  const cardano_error_t    result = cardano_script_pubkey_new(copy.checked(), &value);
+  const cardano_error_t    result = cardano_script_pubkey_new(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_script_pubkey_t, cardano_script_pubkey_unref> owner(value);
 
@@ -119,7 +121,7 @@ ScriptPubkey::keyHash() const
 
   checkCardanoError(result, "ScriptPubkey keyHash");
 
-  const Blake2bHash component(owner.release());
+  const Blake2bHash component = Blake2bHash::adopt(owner.release());
 
   return Blake2bHash(component);
 }
@@ -134,7 +136,7 @@ ScriptPubkey::setKeyHash(const Blake2bHash& keyHash)
     throw std::invalid_argument("Script key hash must be 28 bytes");
   }
 
-  checkCardanoError(cardano_script_pubkey_set_key_hash(checked(), copy.checked()), "ScriptPubkey setKeyHash");
+  checkCardanoError(cardano_script_pubkey_set_key_hash(checked(), checkedNativeHandle(copy)), "ScriptPubkey setKeyHash");
 }
 
 std::vector<std::uint8_t>
@@ -196,6 +198,35 @@ bool
 ScriptPubkey::operator!=(const ScriptPubkey& other) const
 {
   return !(*this == other);
+}
+
+ScriptPubkey
+ScriptPubkey::adopt(cardano_script_pubkey_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ScriptPubkey");
+  }
+
+  return ScriptPubkey(*value);
+}
+
+cardano_script_pubkey_t*
+ScriptPubkey::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_script_pubkey_t*
+ScriptPubkey::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_script_pubkey_t*
+ScriptPubkey::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

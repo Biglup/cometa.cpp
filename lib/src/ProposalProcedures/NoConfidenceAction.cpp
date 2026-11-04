@@ -29,6 +29,8 @@
 
 #include <cardano/proposal_procedures/no_confidence_action.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -37,7 +39,7 @@ NoConfidenceAction::NoConfidenceAction(const std::optional<GovernanceActionId>& 
 : m_value(nullptr)
 {
   const std::optional<GovernanceActionId>                                           copy(previousAction);
-  cardano_governance_action_id_t*                                                   previous = copy ? copy->checked() : nullptr;
+  cardano_governance_action_id_t*                                                   previous = copy ? checkedNativeHandle(*copy) : nullptr;
   cardano_no_confidence_action_t*                                                   value    = nullptr;
   const cardano_error_t                                                             status   = cardano_no_confidence_action_new(previous, &value);
   CardanoObject<cardano_no_confidence_action_t, cardano_no_confidence_action_unref> owner(value);
@@ -90,7 +92,7 @@ NoConfidenceAction::previousAction() const
     return std::nullopt;
   }
 
-  const GovernanceActionId found(owner.release());
+  const GovernanceActionId found = GovernanceActionId::adopt(owner.release());
   return GovernanceActionId(found);
 }
 
@@ -98,7 +100,7 @@ void
 NoConfidenceAction::setPreviousAction(const std::optional<GovernanceActionId>& value)
 {
   const std::optional<GovernanceActionId> copy(value);
-  cardano_governance_action_id_t*         data = copy ? copy->checked() : nullptr;
+  cardano_governance_action_id_t*         data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_no_confidence_action_set_governance_action_id(checked(), data), "NoConfidenceAction setPreviousAction");
 }
 
@@ -152,6 +154,35 @@ bool
 NoConfidenceAction::operator!=(const NoConfidenceAction& other) const
 {
   return !(*this == other);
+}
+
+NoConfidenceAction
+NoConfidenceAction::adopt(cardano_no_confidence_action_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null NoConfidenceAction");
+  }
+
+  return NoConfidenceAction(value);
+}
+
+cardano_no_confidence_action_t*
+NoConfidenceAction::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_no_confidence_action_t*
+NoConfidenceAction::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_no_confidence_action_t*
+NoConfidenceAction::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

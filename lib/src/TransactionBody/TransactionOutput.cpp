@@ -26,6 +26,7 @@
 #include <Cometa/TransactionBody/TransactionOutput.h>
 
 #include "../CardanoInterop.h"
+#include "../ValueValidation.h"
 
 #include <cardano/transaction_body/transaction_output.h>
 
@@ -33,6 +34,8 @@
 #include <cardano/common/datum.h>
 #include <cardano/scripts/script.h>
 #include <cardano/transaction_body/value.h>
+
+#include <utility>
 
 /* CLASS IMPLEMENTATION ******************************************************/
 
@@ -50,12 +53,12 @@ TransactionOutput::TransactionOutput(const Address& address, const Value& amount
   }
 
   cardano_transaction_output_t* value  = nullptr;
-  const cardano_error_t         result = cardano_transaction_output_new(addressCopy.checked(), 0U, &value);
+  const cardano_error_t         result = cardano_transaction_output_new(checkedNativeHandle(addressCopy), 0U, &value);
 
   CardanoObject<cardano_transaction_output_t, cardano_transaction_output_unref> owner(value);
 
   checkCardanoError(result, "TransactionOutput");
-  checkCardanoError(cardano_transaction_output_set_value(value, amountCopy.checked()), "TransactionOutput amount");
+  checkCardanoError(cardano_transaction_output_set_value(value, checkedNativeHandle(amountCopy)), "TransactionOutput amount");
 
   m_value = owner.release();
 }
@@ -88,7 +91,7 @@ TransactionOutput::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   TransactionOutput value(*decodeCbor<cardano_transaction_output_t, cardano_transaction_output_unref>(cbor, cardano_transaction_output_from_cbor));
 
-  value.validate();
+  validateValue(value);
 
   return value;
 }
@@ -105,7 +108,7 @@ TransactionOutput::address() const
   cardano_address_t*                                      value = cardano_transaction_output_get_address(checked());
   CardanoObject<cardano_address_t, cardano_address_unref> owner(value);
 
-  const Address component(*owner.release());
+  const Address component = Address::adopt(owner.release());
 
   return Address(component);
 }
@@ -115,7 +118,7 @@ TransactionOutput::setAddress(const Address& value)
 {
   Address copy(value);
 
-  checkCardanoError(cardano_transaction_output_set_address(checked(), copy.checked()), "TransactionOutput setAddress");
+  checkCardanoError(cardano_transaction_output_set_address(checked(), checkedNativeHandle(copy)), "TransactionOutput setAddress");
 }
 
 Value
@@ -124,7 +127,7 @@ TransactionOutput::amount() const
   cardano_value_t*                                    value = cardano_transaction_output_get_value(checked());
   CardanoObject<cardano_value_t, cardano_value_unref> owner(value);
 
-  const Value component(*owner.release());
+  const Value component = Value::adopt(owner.release());
 
   return Value(component);
 }
@@ -139,7 +142,7 @@ TransactionOutput::setAmount(const Value& value)
     throw std::invalid_argument("Output lovelace must not be negative");
   }
 
-  checkCardanoError(cardano_transaction_output_set_value(checked(), copy.checked()), "TransactionOutput setAmount");
+  checkCardanoError(cardano_transaction_output_set_value(checked(), checkedNativeHandle(copy)), "TransactionOutput setAmount");
 }
 
 std::optional<Datum>
@@ -153,7 +156,7 @@ TransactionOutput::datum() const
     return std::nullopt;
   }
 
-  const Datum component(*owner.release());
+  const Datum component = Datum::adopt(owner.release());
 
   return Datum(component);
 }
@@ -163,7 +166,7 @@ TransactionOutput::setDatum(const std::optional<Datum>& value)
 {
   std::optional<Datum> copy(value);
 
-  checkCardanoError(cardano_transaction_output_set_datum(checked(), copy ? copy->checked() : nullptr), "TransactionOutput setDatum");
+  checkCardanoError(cardano_transaction_output_set_datum(checked(), copy ? checkedNativeHandle(*copy) : nullptr), "TransactionOutput setDatum");
 }
 
 std::optional<Script>
@@ -177,7 +180,7 @@ TransactionOutput::scriptRef() const
     return std::nullopt;
   }
 
-  const Script component(*owner.release());
+  const Script component = Script::adopt(owner.release());
 
   return Script(component);
 }
@@ -187,7 +190,7 @@ TransactionOutput::setScriptRef(const std::optional<Script>& value)
 {
   std::optional<Script> copy(value);
 
-  checkCardanoError(cardano_transaction_output_set_script_ref(checked(), copy ? copy->checked() : nullptr), "TransactionOutput setScriptRef");
+  checkCardanoError(cardano_transaction_output_set_script_ref(checked(), copy ? checkedNativeHandle(*copy) : nullptr), "TransactionOutput setScriptRef");
 }
 
 std::vector<std::uint8_t>
@@ -245,6 +248,35 @@ TransactionOutput::operator!=(const TransactionOutput& other) const
   return !(*this == other);
 }
 
+TransactionOutput
+TransactionOutput::adopt(cardano_transaction_output_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null TransactionOutput");
+  }
+
+  return TransactionOutput(*value);
+}
+
+cardano_transaction_output_t*
+TransactionOutput::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_transaction_output_t*
+TransactionOutput::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_transaction_output_t*
+TransactionOutput::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 TransactionOutput::TransactionOutput(cardano_transaction_output_t& value) noexcept
@@ -264,17 +296,17 @@ TransactionOutput::checked() const
 }
 
 void
-TransactionOutput::validate() const
+validateValue(const TransactionOutput& value)
 {
-  if (amount().coin() < 0)
+  if (value.amount().coin() < 0)
   {
     throw std::invalid_argument("Output lovelace must not be negative");
   }
 
-  const std::optional<Script> reference = scriptRef();
+  const std::optional<Script> reference = value.scriptRef();
   if (reference)
   {
-    reference->validate();
+    validateValue(*reference);
   }
 }
 

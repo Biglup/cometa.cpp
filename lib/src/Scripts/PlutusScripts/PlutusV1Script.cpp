@@ -30,6 +30,8 @@
 
 #include <cardano/scripts/plutus_scripts/plutus_v1_script.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -148,7 +150,7 @@ PlutusV1Script::applyParameters(const PlutusList& parameters) const
 {
   const std::vector<std::uint8_t> bytes  = toBytes();
   cardano_buffer_t*               value  = nullptr;
-  const cardano_error_t           result = cardano_uplc_apply_params_to_script(parameters.checked(), byteData(bytes), bytes.size(), &value);
+  const cardano_error_t           result = cardano_uplc_apply_params_to_script(checkedNativeHandle(parameters), byteData(bytes), bytes.size(), &value);
 
   CardanoObject<cardano_buffer_t, cardano_buffer_unref> owner(value);
 
@@ -213,6 +215,35 @@ bool
 PlutusV1Script::operator!=(const PlutusV1Script& other) const
 {
   return !(*this == other);
+}
+
+PlutusV1Script
+PlutusV1Script::adopt(cardano_plutus_v1_script_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PlutusV1Script");
+  }
+
+  return PlutusV1Script(*value);
+}
+
+cardano_plutus_v1_script_t*
+PlutusV1Script::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_plutus_v1_script_t*
+PlutusV1Script::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_plutus_v1_script_t*
+PlutusV1Script::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -31,6 +31,8 @@
 
 #include <cstring>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -183,6 +185,35 @@ bool
 Anchor::operator!=(const Anchor& other) const
 {
   return !(*this == other);
+}
+
+Anchor
+Anchor::adopt(cardano_anchor_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Anchor");
+  }
+
+  return Anchor(value);
+}
+
+cardano_anchor_t*
+Anchor::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_anchor_t*
+Anchor::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_anchor_t*
+Anchor::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

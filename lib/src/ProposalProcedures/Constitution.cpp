@@ -29,6 +29,8 @@
 
 #include <cardano/proposal_procedures/constitution.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -38,9 +40,9 @@ Constitution::Constitution(const Anchor& anchor, const std::optional<Blake2bHash
 {
   const Anchor                                                      anchorCopy(anchor);
   const std::optional<Blake2bHash>                                  scriptCopy(scriptHash);
-  cardano_blake2b_hash_t*                                           script = scriptCopy ? scriptCopy->checked() : nullptr;
+  cardano_blake2b_hash_t*                                           script = scriptCopy ? checkedNativeHandle(*scriptCopy) : nullptr;
   cardano_constitution_t*                                           value  = nullptr;
-  const cardano_error_t                                             status = cardano_constitution_new(anchorCopy.checked(), script, &value);
+  const cardano_error_t                                             status = cardano_constitution_new(checkedNativeHandle(anchorCopy), script, &value);
   CardanoObject<cardano_constitution_t, cardano_constitution_unref> owner(value);
 
   checkCardanoError(status, "Constitution");
@@ -91,7 +93,7 @@ Constitution::anchor() const
     throw std::logic_error("Constitution has no anchor");
   }
 
-  const Anchor found(owner.release());
+  const Anchor found = Anchor::adopt(owner.release());
   return Anchor(found);
 }
 
@@ -99,7 +101,7 @@ void
 Constitution::setAnchor(const Anchor& value)
 {
   const Anchor copy(value);
-  checkCardanoError(cardano_constitution_set_anchor(checked(), copy.checked()), "Constitution setAnchor");
+  checkCardanoError(cardano_constitution_set_anchor(checked(), checkedNativeHandle(copy)), "Constitution setAnchor");
 }
 
 std::optional<Blake2bHash>
@@ -113,7 +115,7 @@ Constitution::scriptHash() const
     return std::nullopt;
   }
 
-  const Blake2bHash found(owner.release());
+  const Blake2bHash found = Blake2bHash::adopt(owner.release());
   return Blake2bHash(found);
 }
 
@@ -121,7 +123,7 @@ void
 Constitution::setScriptHash(const std::optional<Blake2bHash>& value)
 {
   const std::optional<Blake2bHash> copy(value);
-  cardano_blake2b_hash_t*          data = copy ? copy->checked() : nullptr;
+  cardano_blake2b_hash_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_constitution_set_script_hash(checked(), data), "Constitution setScriptHash");
 }
 
@@ -175,6 +177,35 @@ bool
 Constitution::operator!=(const Constitution& other) const
 {
   return !(*this == other);
+}
+
+Constitution
+Constitution::adopt(cardano_constitution_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Constitution");
+  }
+
+  return Constitution(value);
+}
+
+cardano_constitution_t*
+Constitution::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_constitution_t*
+Constitution::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_constitution_t*
+Constitution::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

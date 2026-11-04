@@ -29,6 +29,8 @@
 
 #include <cardano/certs/unregistration_cert.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -38,7 +40,7 @@ UnregistrationCert::UnregistrationCert(const Credential& credential, std::uint64
 {
   const Credential                                                                copy(credential);
   cardano_unregistration_cert_t*                                                  value  = nullptr;
-  const cardano_error_t                                                           status = cardano_unregistration_cert_new(copy.checked(), deposit, &value);
+  const cardano_error_t                                                           status = cardano_unregistration_cert_new(checkedNativeHandle(copy), deposit, &value);
   CardanoObject<cardano_unregistration_cert_t, cardano_unregistration_cert_unref> owner(value);
 
   checkCardanoError(status, "UnregistrationCert");
@@ -88,7 +90,7 @@ UnregistrationCert::credential() const
     throw std::logic_error("Unregistration certificate has no credential");
   }
 
-  const Credential result(value);
+  const Credential result = Credential::adopt(value);
   return Credential(result);
 }
 
@@ -96,7 +98,7 @@ void
 UnregistrationCert::setCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_unregistration_cert_set_credential(checked(), copy.checked()), "UnregistrationCert setCredential");
+  checkCardanoError(cardano_unregistration_cert_set_credential(checked(), checkedNativeHandle(copy)), "UnregistrationCert setCredential");
 }
 
 std::uint64_t
@@ -163,6 +165,35 @@ bool
 UnregistrationCert::operator!=(const UnregistrationCert& other) const
 {
   return !(*this == other);
+}
+
+UnregistrationCert
+UnregistrationCert::adopt(cardano_unregistration_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null UnregistrationCert");
+  }
+
+  return UnregistrationCert(value);
+}
+
+cardano_unregistration_cert_t*
+UnregistrationCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_unregistration_cert_t*
+UnregistrationCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_unregistration_cert_t*
+UnregistrationCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

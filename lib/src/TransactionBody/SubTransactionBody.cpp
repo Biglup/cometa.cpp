@@ -42,6 +42,8 @@
 #include <cardano/transaction_body/transaction_output_list.h>
 #include <cardano/voting_procedures/voting_procedures.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -52,7 +54,7 @@ SubTransactionBody::SubTransactionBody(const TransactionInputSet& inputs, const 
   const TransactionInputSet                                                         inputCopy(inputs);
   const TransactionOutputList                                                       outputCopy(outputs);
   cardano_sub_transaction_body_t*                                                   value  = nullptr;
-  const cardano_error_t                                                             status = cardano_sub_transaction_body_new(inputCopy.checked(), outputCopy.checked(), invalidAfter ? &*invalidAfter : nullptr, &value);
+  const cardano_error_t                                                             status = cardano_sub_transaction_body_new(checkedNativeHandle(inputCopy), checkedNativeHandle(outputCopy), invalidAfter ? &*invalidAfter : nullptr, &value);
   CardanoObject<cardano_sub_transaction_body_t, cardano_sub_transaction_body_unref> owner(value);
 
   checkCardanoError(status, "SubTransactionBody");
@@ -102,7 +104,7 @@ SubTransactionBody::inputs() const
   }
 
   CardanoObject<cardano_transaction_input_set_t, cardano_transaction_input_set_unref> owner(value);
-  const TransactionInputSet                                                           copied(*owner.release());
+  const TransactionInputSet                                                           copied = TransactionInputSet::adopt(owner.release());
   return TransactionInputSet(copied);
 }
 
@@ -110,7 +112,7 @@ void
 SubTransactionBody::setInputs(const TransactionInputSet& value)
 {
   const TransactionInputSet copy(value);
-  checkCardanoError(cardano_sub_transaction_body_set_inputs(checked(), copy.checked()), "SubTransactionBody setInputs");
+  checkCardanoError(cardano_sub_transaction_body_set_inputs(checked(), checkedNativeHandle(copy)), "SubTransactionBody setInputs");
 
   cardano_sub_transaction_body_clear_cbor_cache(checked());
 }
@@ -125,7 +127,7 @@ SubTransactionBody::outputs() const
   }
 
   CardanoObject<cardano_transaction_output_list_t, cardano_transaction_output_list_unref> owner(value);
-  const TransactionOutputList                                                             copied(*owner.release());
+  const TransactionOutputList                                                             copied = TransactionOutputList::adopt(owner.release());
   return TransactionOutputList(copied);
 }
 
@@ -133,7 +135,7 @@ void
 SubTransactionBody::setOutputs(const TransactionOutputList& value)
 {
   const TransactionOutputList copy(value);
-  checkCardanoError(cardano_sub_transaction_body_set_outputs(checked(), copy.checked()), "SubTransactionBody setOutputs");
+  checkCardanoError(cardano_sub_transaction_body_set_outputs(checked(), checkedNativeHandle(copy)), "SubTransactionBody setOutputs");
 
   cardano_sub_transaction_body_clear_cbor_cache(checked());
 }
@@ -148,7 +150,7 @@ SubTransactionBody::certificates() const
   }
 
   CardanoObject<cardano_certificate_set_t, cardano_certificate_set_unref> owner(value);
-  const CertificateSet                                                    copied(owner.release());
+  const CertificateSet                                                    copied = CertificateSet::adopt(owner.release());
   return CertificateSet(copied);
 }
 
@@ -158,7 +160,7 @@ SubTransactionBody::setCertificates(const std::optional<CertificateSet>& value)
   if (value)
   {
     const CertificateSet copy(*value);
-    checkCardanoError(cardano_sub_transaction_body_set_certificates(checked(), copy.checked()), "SubTransactionBody setCertificates");
+    checkCardanoError(cardano_sub_transaction_body_set_certificates(checked(), checkedNativeHandle(copy)), "SubTransactionBody setCertificates");
   }
   else
   {
@@ -178,7 +180,7 @@ SubTransactionBody::withdrawals() const
   }
 
   CardanoObject<cardano_withdrawal_map_t, cardano_withdrawal_map_unref> owner(value);
-  const WithdrawalMap                                                   copied(*owner.release());
+  const WithdrawalMap                                                   copied = WithdrawalMap::adopt(owner.release());
   return WithdrawalMap(copied);
 }
 
@@ -188,7 +190,7 @@ SubTransactionBody::setWithdrawals(const std::optional<WithdrawalMap>& value)
   if (value)
   {
     const WithdrawalMap copy(*value);
-    checkCardanoError(cardano_sub_transaction_body_set_withdrawals(checked(), copy.checked()), "SubTransactionBody setWithdrawals");
+    checkCardanoError(cardano_sub_transaction_body_set_withdrawals(checked(), checkedNativeHandle(copy)), "SubTransactionBody setWithdrawals");
   }
   else
   {
@@ -208,7 +210,7 @@ SubTransactionBody::auxDataHash() const
   }
 
   CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
-  const Blake2bHash                                                 copied(owner.release());
+  const Blake2bHash                                                 copied = Blake2bHash::adopt(owner.release());
   return Blake2bHash(copied);
 }
 
@@ -218,7 +220,7 @@ SubTransactionBody::setAuxDataHash(const std::optional<Blake2bHash>& value)
   if (value)
   {
     const Blake2bHash copy(*value);
-    checkCardanoError(cardano_sub_transaction_body_set_aux_data_hash(checked(), copy.checked()), "SubTransactionBody setAuxDataHash");
+    checkCardanoError(cardano_sub_transaction_body_set_aux_data_hash(checked(), checkedNativeHandle(copy)), "SubTransactionBody setAuxDataHash");
   }
   else
   {
@@ -238,7 +240,7 @@ SubTransactionBody::mint() const
   }
 
   CardanoObject<cardano_multi_asset_t, cardano_multi_asset_unref> owner(value);
-  const MultiAsset                                                copied(owner.release());
+  const MultiAsset                                                copied = MultiAsset::adopt(owner.release());
   return MultiAsset(copied);
 }
 
@@ -248,7 +250,7 @@ SubTransactionBody::setMint(const std::optional<MultiAsset>& value)
   if (value)
   {
     const MultiAsset copy(*value);
-    checkCardanoError(cardano_sub_transaction_body_set_mint(checked(), copy.checked()), "SubTransactionBody setMint");
+    checkCardanoError(cardano_sub_transaction_body_set_mint(checked(), checkedNativeHandle(copy)), "SubTransactionBody setMint");
   }
   else
   {
@@ -268,7 +270,7 @@ SubTransactionBody::scriptDataHash() const
   }
 
   CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
-  const Blake2bHash                                                 copied(owner.release());
+  const Blake2bHash                                                 copied = Blake2bHash::adopt(owner.release());
   return Blake2bHash(copied);
 }
 
@@ -278,7 +280,7 @@ SubTransactionBody::setScriptDataHash(const std::optional<Blake2bHash>& value)
   if (value)
   {
     const Blake2bHash copy(*value);
-    checkCardanoError(cardano_sub_transaction_body_set_script_data_hash(checked(), copy.checked()), "SubTransactionBody setScriptDataHash");
+    checkCardanoError(cardano_sub_transaction_body_set_script_data_hash(checked(), checkedNativeHandle(copy)), "SubTransactionBody setScriptDataHash");
   }
   else
   {
@@ -298,7 +300,7 @@ SubTransactionBody::guards() const
   }
 
   CardanoObject<cardano_guard_set_t, cardano_guard_set_unref> owner(value);
-  const GuardSet                                              copied(owner.release());
+  const GuardSet                                              copied = GuardSet::adopt(owner.release());
   return GuardSet(copied);
 }
 
@@ -308,7 +310,7 @@ SubTransactionBody::setGuards(const std::optional<GuardSet>& value)
   if (value)
   {
     const GuardSet copy(*value);
-    checkCardanoError(cardano_sub_transaction_body_set_guards(checked(), copy.checked()), "SubTransactionBody setGuards");
+    checkCardanoError(cardano_sub_transaction_body_set_guards(checked(), checkedNativeHandle(copy)), "SubTransactionBody setGuards");
   }
   else
   {
@@ -328,7 +330,7 @@ SubTransactionBody::referenceInputs() const
   }
 
   CardanoObject<cardano_transaction_input_set_t, cardano_transaction_input_set_unref> owner(value);
-  const TransactionInputSet                                                           copied(*owner.release());
+  const TransactionInputSet                                                           copied = TransactionInputSet::adopt(owner.release());
   return TransactionInputSet(copied);
 }
 
@@ -338,7 +340,7 @@ SubTransactionBody::setReferenceInputs(const std::optional<TransactionInputSet>&
   if (value)
   {
     const TransactionInputSet copy(*value);
-    checkCardanoError(cardano_sub_transaction_body_set_reference_inputs(checked(), copy.checked()), "SubTransactionBody setReferenceInputs");
+    checkCardanoError(cardano_sub_transaction_body_set_reference_inputs(checked(), checkedNativeHandle(copy)), "SubTransactionBody setReferenceInputs");
   }
   else
   {
@@ -358,7 +360,7 @@ SubTransactionBody::votingProcedures() const
   }
 
   CardanoObject<cardano_voting_procedures_t, cardano_voting_procedures_unref> owner(value);
-  const VotingProcedures                                                      copied(owner.release());
+  const VotingProcedures                                                      copied = VotingProcedures::adopt(owner.release());
   return VotingProcedures(copied);
 }
 
@@ -368,7 +370,7 @@ SubTransactionBody::setVotingProcedures(const std::optional<VotingProcedures>& v
   if (value)
   {
     const VotingProcedures copy(*value);
-    checkCardanoError(cardano_sub_transaction_body_set_voting_procedures(checked(), copy.checked()), "SubTransactionBody setVotingProcedures");
+    checkCardanoError(cardano_sub_transaction_body_set_voting_procedures(checked(), checkedNativeHandle(copy)), "SubTransactionBody setVotingProcedures");
   }
   else
   {
@@ -388,7 +390,7 @@ SubTransactionBody::proposalProcedures() const
   }
 
   CardanoObject<cardano_proposal_procedure_set_t, cardano_proposal_procedure_set_unref> owner(value);
-  const ProposalProcedureSet                                                            copied(owner.release());
+  const ProposalProcedureSet                                                            copied = ProposalProcedureSet::adopt(owner.release());
   return ProposalProcedureSet(copied);
 }
 
@@ -398,7 +400,7 @@ SubTransactionBody::setProposalProcedures(const std::optional<ProposalProcedureS
   if (value)
   {
     const ProposalProcedureSet copy(*value);
-    checkCardanoError(cardano_sub_transaction_body_set_proposal_procedures(checked(), copy.checked()), "SubTransactionBody setProposalProcedures");
+    checkCardanoError(cardano_sub_transaction_body_set_proposal_procedures(checked(), checkedNativeHandle(copy)), "SubTransactionBody setProposalProcedures");
   }
   else
   {
@@ -418,7 +420,7 @@ SubTransactionBody::requiredTopLevelGuards() const
   }
 
   CardanoObject<cardano_required_guards_map_t, cardano_required_guards_map_unref> owner(value);
-  const RequiredGuardsMap                                                         copied(owner.release());
+  const RequiredGuardsMap                                                         copied = RequiredGuardsMap::adopt(owner.release());
   return RequiredGuardsMap(copied);
 }
 
@@ -428,7 +430,7 @@ SubTransactionBody::setRequiredTopLevelGuards(const std::optional<RequiredGuards
   if (value)
   {
     const RequiredGuardsMap copy(*value);
-    checkCardanoError(cardano_sub_transaction_body_set_required_top_level_guards(checked(), copy.checked()), "SubTransactionBody setRequiredTopLevelGuards");
+    checkCardanoError(cardano_sub_transaction_body_set_required_top_level_guards(checked(), checkedNativeHandle(copy)), "SubTransactionBody setRequiredTopLevelGuards");
   }
   else
   {
@@ -448,7 +450,7 @@ SubTransactionBody::directDeposits() const
   }
 
   CardanoObject<cardano_direct_deposit_map_t, cardano_direct_deposit_map_unref> owner(value);
-  const DirectDepositMap                                                        copied(owner.release());
+  const DirectDepositMap                                                        copied = DirectDepositMap::adopt(owner.release());
   return DirectDepositMap(copied);
 }
 
@@ -458,7 +460,7 @@ SubTransactionBody::setDirectDeposits(const std::optional<DirectDepositMap>& val
   if (value)
   {
     const DirectDepositMap copy(*value);
-    checkCardanoError(cardano_sub_transaction_body_set_direct_deposits(checked(), copy.checked()), "SubTransactionBody setDirectDeposits");
+    checkCardanoError(cardano_sub_transaction_body_set_direct_deposits(checked(), checkedNativeHandle(copy)), "SubTransactionBody setDirectDeposits");
   }
   else
   {
@@ -478,7 +480,7 @@ SubTransactionBody::accountBalanceIntervals() const
   }
 
   CardanoObject<cardano_account_balance_intervals_map_t, cardano_account_balance_intervals_map_unref> owner(value);
-  const AccountBalanceIntervalsMap                                                                    copied(owner.release());
+  const AccountBalanceIntervalsMap                                                                    copied = AccountBalanceIntervalsMap::adopt(owner.release());
   return AccountBalanceIntervalsMap(copied);
 }
 
@@ -488,7 +490,7 @@ SubTransactionBody::setAccountBalanceIntervals(const std::optional<AccountBalanc
   if (value)
   {
     const AccountBalanceIntervalsMap copy(*value);
-    checkCardanoError(cardano_sub_transaction_body_set_account_balance_intervals(checked(), copy.checked()), "SubTransactionBody setAccountBalanceIntervals");
+    checkCardanoError(cardano_sub_transaction_body_set_account_balance_intervals(checked(), checkedNativeHandle(copy)), "SubTransactionBody setAccountBalanceIntervals");
   }
   else
   {
@@ -604,7 +606,7 @@ SubTransactionBody::hash() const
   }
 
   CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
-  const Blake2bHash                                                 copied(owner.release());
+  const Blake2bHash                                                 copied = Blake2bHash::adopt(owner.release());
   return Blake2bHash(copied);
 }
 
@@ -658,6 +660,35 @@ bool
 SubTransactionBody::operator!=(const SubTransactionBody& other) const
 {
   return !(*this == other);
+}
+
+SubTransactionBody
+SubTransactionBody::adopt(cardano_sub_transaction_body_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null SubTransactionBody");
+  }
+
+  return SubTransactionBody(value);
+}
+
+cardano_sub_transaction_body_t*
+SubTransactionBody::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_sub_transaction_body_t*
+SubTransactionBody::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_sub_transaction_body_t*
+SubTransactionBody::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

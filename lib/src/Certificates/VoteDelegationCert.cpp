@@ -30,6 +30,8 @@
 #include <cardano/certs/vote_delegation_cert.h>
 #include <cardano/common/drep.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -40,7 +42,7 @@ VoteDelegationCert::VoteDelegationCert(const Credential& credential, const DRep&
   const Credential                                                                  copy(credential);
   const DRep                                                                        drepCopy(drep);
   cardano_vote_delegation_cert_t*                                                   value  = nullptr;
-  const cardano_error_t                                                             status = cardano_vote_delegation_cert_new(copy.checked(), drepCopy.checked(), &value);
+  const cardano_error_t                                                             status = cardano_vote_delegation_cert_new(checkedNativeHandle(copy), checkedNativeHandle(drepCopy), &value);
   CardanoObject<cardano_vote_delegation_cert_t, cardano_vote_delegation_cert_unref> owner(value);
 
   checkCardanoError(status, "VoteDelegationCert");
@@ -90,7 +92,7 @@ VoteDelegationCert::credential() const
     throw std::logic_error("Vote delegation certificate has no credential");
   }
 
-  const Credential result(value);
+  const Credential result = Credential::adopt(value);
   return Credential(result);
 }
 
@@ -98,7 +100,7 @@ void
 VoteDelegationCert::setCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_vote_delegation_cert_set_credential(checked(), copy.checked()), "VoteDelegationCert setCredential");
+  checkCardanoError(cardano_vote_delegation_cert_set_credential(checked(), checkedNativeHandle(copy)), "VoteDelegationCert setCredential");
 }
 
 DRep
@@ -110,7 +112,7 @@ VoteDelegationCert::drep() const
     throw std::logic_error("Vote delegation certificate has no DRep");
   }
 
-  const DRep result(value);
+  const DRep result = DRep::adopt(value);
   return DRep(result);
 }
 
@@ -118,7 +120,7 @@ void
 VoteDelegationCert::setDRep(const DRep& value)
 {
   const DRep copy(value);
-  checkCardanoError(cardano_vote_delegation_cert_set_drep(checked(), copy.checked()), "VoteDelegationCert setDRep");
+  checkCardanoError(cardano_vote_delegation_cert_set_drep(checked(), checkedNativeHandle(copy)), "VoteDelegationCert setDRep");
 }
 
 std::vector<std::uint8_t>
@@ -173,6 +175,35 @@ bool
 VoteDelegationCert::operator!=(const VoteDelegationCert& other) const
 {
   return !(*this == other);
+}
+
+VoteDelegationCert
+VoteDelegationCert::adopt(cardano_vote_delegation_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null VoteDelegationCert");
+  }
+
+  return VoteDelegationCert(value);
+}
+
+cardano_vote_delegation_cert_t*
+VoteDelegationCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_vote_delegation_cert_t*
+VoteDelegationCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_vote_delegation_cert_t*
+VoteDelegationCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

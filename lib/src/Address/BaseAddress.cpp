@@ -37,6 +37,8 @@
 #include <cstring>
 #include <limits>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -53,7 +55,7 @@ BaseAddress::BaseAddress(NetworkId network, const Credential& payment, const Cre
   const Credential stakeCopy(stake);
 
   cardano_base_address_t* value  = nullptr;
-  const cardano_error_t   result = cardano_base_address_from_credentials(static_cast<cardano_network_id_t>(network), paymentCopy.checked(), stakeCopy.checked(), &value);
+  const cardano_error_t   result = cardano_base_address_from_credentials(static_cast<cardano_network_id_t>(network), checkedNativeHandle(paymentCopy), checkedNativeHandle(stakeCopy), &value);
 
   CardanoObject<cardano_base_address_t, cardano_base_address_unref> owner(value);
 
@@ -100,7 +102,7 @@ BaseAddress
 BaseAddress::fromAddress(const Address& address)
 {
   cardano_base_address_t* value  = nullptr;
-  const cardano_error_t   result = cardano_base_address_from_address(address.checked(), &value);
+  const cardano_error_t   result = cardano_base_address_from_address(checkedNativeHandle(address), &value);
 
   CardanoObject<cardano_base_address_t, cardano_base_address_unref> owner(value);
 
@@ -152,7 +154,7 @@ BaseAddress::paymentCredential() const
 
   checkCardanoError(result, "BaseAddress paymentCredential");
 
-  return Credential(owner.release());
+  return Credential::adopt(owner.release());
 }
 
 Credential
@@ -166,7 +168,7 @@ BaseAddress::stakeCredential() const
 
   checkCardanoError(result, "BaseAddress stakeCredential");
 
-  return Credential(owner.release());
+  return Credential::adopt(owner.release());
 }
 
 void
@@ -212,6 +214,35 @@ bool
 BaseAddress::operator!=(const BaseAddress& other) const
 {
   return !(*this == other);
+}
+
+BaseAddress
+BaseAddress::adopt(cardano_base_address_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null BaseAddress");
+  }
+
+  return BaseAddress(*value);
+}
+
+cardano_base_address_t*
+BaseAddress::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_base_address_t*
+BaseAddress::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_base_address_t*
+BaseAddress::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -34,6 +34,8 @@
 #include <functional>
 #include <iterator>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -127,7 +129,7 @@ MetadatumList::pushBack(const Metadatum& data)
 
   Metadatum copy(data);
 
-  checkCardanoError(cardano_metadatum_list_add(checked(), copy.checked()), "MetadatumList pushBack");
+  checkCardanoError(cardano_metadatum_list_add(checked(), checkedNativeHandle(copy)), "MetadatumList pushBack");
 }
 
 std::vector<Metadatum>
@@ -467,6 +469,60 @@ MetadatumList::erase(const_iterator first, const_iterator last)
   return m_elements.erase(first, last);
 }
 
+MetadatumList
+MetadatumList::adopt(cardano_metadatum_list_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null MetadatumList");
+  }
+
+  return MetadatumList(*value);
+}
+
+cardano_metadatum_list_t*
+MetadatumList::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_metadatum_list_t*
+MetadatumList::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_metadatum_list_t*
+MetadatumList::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 MetadatumList::MetadatumList(cardano_metadatum_list_t& value) noexcept
@@ -560,7 +616,7 @@ MetadatumList::copyElement(std::size_t index) const
 
   checkCardanoError(result, "MetadatumList at");
 
-  const Metadatum data(*owner.release());
+  const Metadatum data = Metadatum::adopt(owner.release());
 
   return Metadatum(data);
 }

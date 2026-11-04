@@ -59,7 +59,7 @@ computeTransactionImbalance(const Transaction& transaction, const UtxoList& reso
   CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
 
   cardano_value_t*                                    result = nullptr;
-  const cardano_error_t                               status = cardano_compute_transaction_imbalance(nativeTransaction.get(), nativeResolvedInputs.get(), parameters.checked(), &result);
+  const cardano_error_t                               status = cardano_compute_transaction_imbalance(nativeTransaction.get(), nativeResolvedInputs.get(), checkedNativeHandle(parameters), &result);
   CardanoObject<cardano_value_t, cardano_value_unref> owner(result);
 
   checkCardanoError(status, "computeTransactionImbalance");
@@ -75,7 +75,7 @@ computeSubTransactionImbalance(const SubTransaction& transaction, const UtxoList
   CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
 
   cardano_value_t*                                    result = nullptr;
-  const cardano_error_t                               status = cardano_compute_sub_transaction_imbalance(nativeTransaction.get(), nativeResolvedInputs.get(), parameters.checked(), &result);
+  const cardano_error_t                               status = cardano_compute_sub_transaction_imbalance(nativeTransaction.get(), nativeResolvedInputs.get(), checkedNativeHandle(parameters), &result);
   CardanoObject<cardano_value_t, cardano_value_unref> owner(result);
 
   checkCardanoError(status, "computeSubTransactionImbalance");
@@ -91,7 +91,7 @@ computeTransactionBatchImbalance(const Transaction& transaction, const UtxoList&
   CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
 
   cardano_value_t*                                    result = nullptr;
-  const cardano_error_t                               status = cardano_compute_transaction_batch_imbalance(nativeTransaction.get(), nativeResolvedInputs.get(), parameters.checked(), &result);
+  const cardano_error_t                               status = cardano_compute_transaction_batch_imbalance(nativeTransaction.get(), nativeResolvedInputs.get(), checkedNativeHandle(parameters), &result);
   CardanoObject<cardano_value_t, cardano_value_unref> owner(result);
 
   checkCardanoError(status, "computeTransactionBatchImbalance");
@@ -107,7 +107,7 @@ isTransactionBalanced(const Transaction& transaction, const UtxoList& resolvedIn
   CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
 
   bool result {};
-  checkCardanoError(cardano_is_transaction_balanced(nativeTransaction.get(), nativeResolvedInputs.get(), parameters.checked(), &result), "isTransactionBalanced");
+  checkCardanoError(cardano_is_transaction_balanced(nativeTransaction.get(), nativeResolvedInputs.get(), checkedNativeHandle(parameters), &result), "isTransactionBalanced");
 
   return result;
 }
@@ -225,7 +225,7 @@ balanceTransaction(const TransactionBalanceRequest& request)
   cardano_transaction_clear_cbor_cache(transaction.get());
 
   const cardano_error_t status = cardano_balance_transaction(
-    transaction.get(), request.foreignSignatureCount, request.parameters.checked(), references.get(), preselected.get(), inputRedeemers.get(), available.get(), nativeSelector.get(), change.get(), collateral.get(), collateralChange.get(), nativeEvaluator.get(), nullptr);
+    transaction.get(), request.foreignSignatureCount, checkedNativeHandle(request.parameters), references.get(), preselected.get(), inputRedeemers.get(), available.get(), nativeSelector.get(), change.get(), collateral.get(), collateralChange.get(), nativeEvaluator.get(), nullptr);
 
   checkCardanoError(status, "balanceTransaction");
   cardano_transaction_clear_cbor_cache(transaction.get());

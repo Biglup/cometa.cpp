@@ -31,6 +31,8 @@
 #include <cardano/crypto/ed25519_signature.h>
 #include <cardano/witness_set/vkey_witness.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -41,7 +43,7 @@ VkeyWitness::VkeyWitness(const Ed25519PublicKey& publicKey, const Ed25519Signatu
   const Ed25519PublicKey                                            keyCopy(publicKey);
   const Ed25519Signature                                            signatureCopy(signature);
   cardano_vkey_witness_t*                                           value  = nullptr;
-  const cardano_error_t                                             status = cardano_vkey_witness_new(keyCopy.checked(), signatureCopy.checked(), &value);
+  const cardano_error_t                                             status = cardano_vkey_witness_new(checkedNativeHandle(keyCopy), checkedNativeHandle(signatureCopy), &value);
   CardanoObject<cardano_vkey_witness_t, cardano_vkey_witness_unref> owner(value);
 
   checkCardanoError(status, "VkeyWitness");
@@ -92,7 +94,7 @@ VkeyWitness::publicKey() const
     throw std::logic_error("VkeyWitness has no verification key");
   }
 
-  const Ed25519PublicKey found(*owner.release());
+  const Ed25519PublicKey found = Ed25519PublicKey::adopt(owner.release());
   return Ed25519PublicKey(found);
 }
 
@@ -100,13 +102,13 @@ void
 VkeyWitness::setPublicKey(const Ed25519PublicKey& value)
 {
   const Ed25519PublicKey copy(value);
-  checkCardanoError(cardano_vkey_witness_set_vkey(checked(), copy.checked()), "VkeyWitness setPublicKey");
+  checkCardanoError(cardano_vkey_witness_set_vkey(checked(), checkedNativeHandle(copy)), "VkeyWitness setPublicKey");
 }
 
 bool
 VkeyWitness::hasPublicKey(const Ed25519PublicKey& value) const
 {
-  return cardano_vkey_witness_has_public_key(checked(), value.checked());
+  return cardano_vkey_witness_has_public_key(checked(), checkedNativeHandle(value));
 }
 
 Ed25519Signature
@@ -120,7 +122,7 @@ VkeyWitness::signature() const
     throw std::logic_error("VkeyWitness has no signature");
   }
 
-  const Ed25519Signature found(*owner.release());
+  const Ed25519Signature found = Ed25519Signature::adopt(owner.release());
   return Ed25519Signature(found);
 }
 
@@ -128,7 +130,7 @@ void
 VkeyWitness::setSignature(const Ed25519Signature& value)
 {
   const Ed25519Signature copy(value);
-  checkCardanoError(cardano_vkey_witness_set_signature(checked(), copy.checked()), "VkeyWitness setSignature");
+  checkCardanoError(cardano_vkey_witness_set_signature(checked(), checkedNativeHandle(copy)), "VkeyWitness setSignature");
 }
 
 std::vector<std::uint8_t>
@@ -181,6 +183,35 @@ bool
 VkeyWitness::operator!=(const VkeyWitness& other) const
 {
   return !(*this == other);
+}
+
+VkeyWitness
+VkeyWitness::adopt(cardano_vkey_witness_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null VkeyWitness");
+  }
+
+  return VkeyWitness(value);
+}
+
+cardano_vkey_witness_t*
+VkeyWitness::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_vkey_witness_t*
+VkeyWitness::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_vkey_witness_t*
+VkeyWitness::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

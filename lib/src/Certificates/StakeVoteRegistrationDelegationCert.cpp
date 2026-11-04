@@ -30,6 +30,8 @@
 #include <cardano/certs/stake_vote_registration_delegation_cert.h>
 #include <cardano/common/drep.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -46,7 +48,7 @@ StakeVoteRegistrationDelegationCert::StakeVoteRegistrationDelegationCert(const C
   const Blake2bHash                                                                                                       poolCopy(poolKeyHash);
   const DRep                                                                                                              drepCopy(drep);
   cardano_stake_vote_registration_delegation_cert_t*                                                                      value  = nullptr;
-  const cardano_error_t                                                                                                   status = cardano_stake_vote_registration_delegation_cert_new(copy.checked(), deposit, drepCopy.checked(), poolCopy.checked(), &value);
+  const cardano_error_t                                                                                                   status = cardano_stake_vote_registration_delegation_cert_new(checkedNativeHandle(copy), deposit, checkedNativeHandle(drepCopy), checkedNativeHandle(poolCopy), &value);
   CardanoObject<cardano_stake_vote_registration_delegation_cert_t, cardano_stake_vote_registration_delegation_cert_unref> owner(value);
 
   checkCardanoError(status, "StakeVoteRegistrationDelegationCert");
@@ -96,7 +98,7 @@ StakeVoteRegistrationDelegationCert::credential() const
     throw std::logic_error("Stake and vote delegation certificate has no credential");
   }
 
-  const Credential result(value);
+  const Credential result = Credential::adopt(value);
   return Credential(result);
 }
 
@@ -104,7 +106,7 @@ void
 StakeVoteRegistrationDelegationCert::setCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_stake_vote_registration_delegation_cert_set_credential(checked(), copy.checked()), "StakeVoteRegistrationDelegationCert setCredential");
+  checkCardanoError(cardano_stake_vote_registration_delegation_cert_set_credential(checked(), checkedNativeHandle(copy)), "StakeVoteRegistrationDelegationCert setCredential");
 }
 
 Blake2bHash
@@ -116,7 +118,7 @@ StakeVoteRegistrationDelegationCert::poolKeyHash() const
     throw std::logic_error("Stake and vote delegation certificate has no pool key hash");
   }
 
-  const Blake2bHash result(value);
+  const Blake2bHash result = Blake2bHash::adopt(value);
   return Blake2bHash(result);
 }
 
@@ -129,7 +131,7 @@ StakeVoteRegistrationDelegationCert::setPoolKeyHash(const Blake2bHash& value)
   }
 
   const Blake2bHash copy(value);
-  checkCardanoError(cardano_stake_vote_registration_delegation_cert_set_pool_key_hash(checked(), copy.checked()), "StakeVoteRegistrationDelegationCert setPoolKeyHash");
+  checkCardanoError(cardano_stake_vote_registration_delegation_cert_set_pool_key_hash(checked(), checkedNativeHandle(copy)), "StakeVoteRegistrationDelegationCert setPoolKeyHash");
 }
 
 DRep
@@ -141,7 +143,7 @@ StakeVoteRegistrationDelegationCert::drep() const
     throw std::logic_error("Stake and vote delegation certificate has no DRep");
   }
 
-  const DRep result(value);
+  const DRep result = DRep::adopt(value);
   return DRep(result);
 }
 
@@ -149,7 +151,7 @@ void
 StakeVoteRegistrationDelegationCert::setDRep(const DRep& value)
 {
   const DRep copy(value);
-  checkCardanoError(cardano_stake_vote_registration_delegation_cert_set_drep(checked(), copy.checked()), "StakeVoteRegistrationDelegationCert setDRep");
+  checkCardanoError(cardano_stake_vote_registration_delegation_cert_set_drep(checked(), checkedNativeHandle(copy)), "StakeVoteRegistrationDelegationCert setDRep");
 }
 
 std::uint64_t
@@ -216,6 +218,35 @@ bool
 StakeVoteRegistrationDelegationCert::operator!=(const StakeVoteRegistrationDelegationCert& other) const
 {
   return !(*this == other);
+}
+
+StakeVoteRegistrationDelegationCert
+StakeVoteRegistrationDelegationCert::adopt(cardano_stake_vote_registration_delegation_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null StakeVoteRegistrationDelegationCert");
+  }
+
+  return StakeVoteRegistrationDelegationCert(value);
+}
+
+cardano_stake_vote_registration_delegation_cert_t*
+StakeVoteRegistrationDelegationCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_stake_vote_registration_delegation_cert_t*
+StakeVoteRegistrationDelegationCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_stake_vote_registration_delegation_cert_t*
+StakeVoteRegistrationDelegationCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

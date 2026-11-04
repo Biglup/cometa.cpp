@@ -37,6 +37,8 @@
 #include <cstring>
 #include <limits>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -55,7 +57,7 @@ ByronAddress::ByronAddress(const Blake2bHash& root, const ByronAddressAttributes
   std::copy(attributes.derivationPath.begin(), attributes.derivationPath.end(), nativeAttributes.derivation_path);
 
   cardano_byron_address_t* value  = nullptr;
-  const cardano_error_t    result = cardano_byron_address_from_credentials(root.checked(), nativeAttributes, static_cast<cardano_byron_address_type_t>(type), &value);
+  const cardano_error_t    result = cardano_byron_address_from_credentials(checkedNativeHandle(root), nativeAttributes, static_cast<cardano_byron_address_type_t>(type), &value);
 
   CardanoObject<cardano_byron_address_t, cardano_byron_address_unref> owner(value);
 
@@ -102,7 +104,7 @@ ByronAddress
 ByronAddress::fromAddress(const Address& address)
 {
   cardano_byron_address_t* value  = nullptr;
-  const cardano_error_t    result = cardano_byron_address_from_address(address.checked(), &value);
+  const cardano_error_t    result = cardano_byron_address_from_address(checkedNativeHandle(address), &value);
 
   CardanoObject<cardano_byron_address_t, cardano_byron_address_unref> owner(value);
 
@@ -181,7 +183,7 @@ ByronAddress::root() const
 
   checkCardanoError(result, "ByronAddress root");
 
-  return Blake2bHash(owner.release());
+  return Blake2bHash::adopt(owner.release());
 }
 
 void
@@ -227,6 +229,35 @@ bool
 ByronAddress::operator!=(const ByronAddress& other) const
 {
   return !(*this == other);
+}
+
+ByronAddress
+ByronAddress::adopt(cardano_byron_address_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ByronAddress");
+  }
+
+  return ByronAddress(*value);
+}
+
+cardano_byron_address_t*
+ByronAddress::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_byron_address_t*
+ByronAddress::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_byron_address_t*
+ByronAddress::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

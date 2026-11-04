@@ -31,6 +31,8 @@
 
 #include <cardano/pool_params/pool_owners.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -139,7 +141,7 @@ PoolOwners::contains(const Blake2bHash& value) const
 
     checkCardanoError(status, "PoolOwners contains");
 
-    if (cardano_blake2b_hash_equals(owner.get(), value.checked()))
+    if (cardano_blake2b_hash_equals(owner.get(), checkedNativeHandle(value)))
     {
       return true;
     }
@@ -161,7 +163,7 @@ PoolOwners::at(std::size_t index) const
   CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(element);
 
   checkCardanoError(status, "PoolOwners at");
-  const Blake2bHash value(owner.release());
+  const Blake2bHash value = Blake2bHash::adopt(owner.release());
 
   return Blake2bHash(value);
 }
@@ -435,6 +437,41 @@ PoolOwners::erase(const value_type& value)
   return 1;
 }
 
+PoolOwners
+PoolOwners::adopt(cardano_pool_owners_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PoolOwners");
+  }
+
+  return PoolOwners(value);
+}
+
+cardano_pool_owners_t*
+PoolOwners::nativeHandle() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return m_value;
+}
+
+const cardano_pool_owners_t*
+PoolOwners::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_pool_owners_t*
+PoolOwners::release() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 PoolOwners::PoolOwners(cardano_pool_owners_t* value) noexcept
@@ -507,7 +544,7 @@ PoolOwners::insertValue(const Blake2bHash& value)
 
   const Blake2bHash copy(value);
 
-  checkCardanoError(cardano_pool_owners_add(checked(), copy.checked()), "PoolOwners insert");
+  checkCardanoError(cardano_pool_owners_add(checked(), checkedNativeHandle(copy)), "PoolOwners insert");
   invalidateElements();
 
   return true;

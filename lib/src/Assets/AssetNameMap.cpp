@@ -30,6 +30,8 @@
 
 #include <cardano/assets/asset_name_map.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -123,7 +125,7 @@ std::optional<std::int64_t>
 AssetNameMap::get(const AssetName& key) const
 {
   std::int64_t          amount = 0;
-  const cardano_error_t result = cardano_asset_name_map_get(checked(), key.checked(), &amount);
+  const cardano_error_t result = cardano_asset_name_map_get(checked(), checkedNativeHandle(key), &amount);
 
   if (result == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
@@ -139,7 +141,7 @@ AssetNameMap::set(const AssetName& key, std::int64_t amount)
 {
   const AssetName copy(key);
 
-  checkCardanoError(cardano_asset_name_map_insert(checked(), copy.checked(), amount), "AssetNameMap set");
+  checkCardanoError(cardano_asset_name_map_insert(checked(), checkedNativeHandle(copy), amount), "AssetNameMap set");
   invalidateElements();
 }
 
@@ -157,7 +159,7 @@ AssetNameMap::keys() const
     CardanoObject<cardano_asset_name_t, cardano_asset_name_unref> owner(key);
 
     checkCardanoError(status, "AssetNameMap keys");
-    const AssetName value(owner.release());
+    const AssetName value = AssetName::adopt(owner.release());
     result.push_back(value);
   }
 
@@ -179,7 +181,7 @@ AssetNameMap::entries() const
     CardanoObject<cardano_asset_name_t, cardano_asset_name_unref> owner(key);
 
     checkCardanoError(status, "AssetNameMap entries");
-    const AssetName value(owner.release());
+    const AssetName value = AssetName::adopt(owner.release());
     result.emplace_back(value, amount);
   }
 
@@ -535,6 +537,60 @@ AssetNameMap::clear()
   materialize();
   m_elements.clear();
   m_mutableAccess = true;
+}
+
+AssetNameMap
+AssetNameMap::adopt(cardano_asset_name_map_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null AssetNameMap");
+  }
+
+  return AssetNameMap(value);
+}
+
+cardano_asset_name_map_t*
+AssetNameMap::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_asset_name_map_t*
+AssetNameMap::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_asset_name_map_t*
+AssetNameMap::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

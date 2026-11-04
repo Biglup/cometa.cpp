@@ -788,6 +788,12 @@ INSTALL (
 )
 
 INSTALL (
+  DIRECTORY   "${cardano_source}/lib/include/cardano"
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  FILES_MATCHING PATTERN "*.h"
+)
+
+INSTALL (
   FILES       "${cardano_archive}"
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cometa
   RENAME      "${CMAKE_STATIC_LIBRARY_PREFIX}cardano-c${CMAKE_STATIC_LIBRARY_SUFFIX}"

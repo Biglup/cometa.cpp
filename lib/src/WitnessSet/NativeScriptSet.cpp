@@ -30,6 +30,8 @@
 #include <cardano/scripts/native_scripts/native_script.h>
 #include <cardano/witness_set/native_script_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -98,7 +100,7 @@ NativeScriptSet::add(const NativeScript& value)
   }
 
   const NativeScript copy(value);
-  checkCardanoError(cardano_native_script_set_add(checked(), copy.checked()), "NativeScriptSet add");
+  checkCardanoError(cardano_native_script_set_add(checked(), checkedNativeHandle(copy)), "NativeScriptSet add");
   invalidateElements();
 }
 
@@ -115,7 +117,7 @@ NativeScriptSet::at(std::size_t index) const
   CardanoObject<cardano_native_script_t, cardano_native_script_unref> owner(value);
 
   checkCardanoError(status, "NativeScriptSet at");
-  const NativeScript copied(*owner.release());
+  const NativeScript copied = NativeScript::adopt(owner.release());
   return NativeScript(copied);
 }
 
@@ -368,6 +370,41 @@ NativeScriptSet::erase(const value_type& value)
   erase(position);
 
   return 1;
+}
+
+NativeScriptSet
+NativeScriptSet::adopt(cardano_native_script_set_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null NativeScriptSet");
+  }
+
+  return NativeScriptSet(value);
+}
+
+cardano_native_script_set_t*
+NativeScriptSet::nativeHandle() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return m_value;
+}
+
+const cardano_native_script_set_t*
+NativeScriptSet::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_native_script_set_t*
+NativeScriptSet::release() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

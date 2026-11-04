@@ -201,25 +201,38 @@ class RewardAddress
      */
     bool operator!=(const RewardAddress& other) const;
 
+  public:
+
+    /**
+     * @brief Takes ownership of one native reference without copying it.
+     * @param value An owned reference; the caller must stop managing it after this call succeeds.
+     * @return The C++ owner of the supplied reference.
+     * @throws std::invalid_argument The reference is null; ownership is not transferred.
+     */
+    static RewardAddress adopt(cardano_reward_address_t* value);
+
+    /**
+     * @brief Borrows the native object for C interoperability.
+     * @return The native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    cardano_reward_address_t* nativeHandle() noexcept;
+
+    /**
+     * @brief Borrows the native object for read-only C interoperability.
+     * @return The read-only native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    const cardano_reward_address_t* nativeHandle() const noexcept;
+
+    /**
+     * @brief Transfers the owned native reference to the caller.
+     * @return The owned pointer, or nullptr if this object is already empty.
+     * @remark Leaves this object empty. The caller must adopt the reference or release it with the matching C unref function.
+     */
+    cardano_reward_address_t* release() noexcept;
+
   private:
-
-    /** @brief Allows transactions to use this value. */
-    friend class Transaction;
-
-    /** @brief Allows proposal procedures to copy this value. */
-    friend class ProposalProcedure;
-
-    /** @brief Allows PoolParams to copy pool components. */
-    friend class PoolParams;
-
-    /** @brief Allows WithdrawalMap to copy reward addresses. */
-    friend class WithdrawalMap;
-
-    /** @brief Allows account balance maps to copy addresses. */
-    friend class AccountBalanceIntervalsMap;
-
-    /** @brief Allows direct deposit maps to copy addresses. */
-    friend class DirectDepositMap;
 
     /**
      * @brief Adopts an owned native address.

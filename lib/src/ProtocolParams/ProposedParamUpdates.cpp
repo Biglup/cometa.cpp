@@ -30,6 +30,8 @@
 #include <cardano/crypto/blake2b_hash.h>
 #include <cardano/protocol_params/proposed_param_updates.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -89,14 +91,14 @@ ProposedParamUpdates::add(const Blake2bHash& key, const ProtocolParamUpdate& upd
 {
   const Blake2bHash         keyCopy(key);
   const ProtocolParamUpdate updateCopy(update);
-  checkCardanoError(cardano_proposed_param_updates_insert(checked(), keyCopy.checked(), updateCopy.checked()), "ProposedParamUpdates add");
+  checkCardanoError(cardano_proposed_param_updates_insert(checked(), checkedNativeHandle(keyCopy), checkedNativeHandle(updateCopy)), "ProposedParamUpdates add");
 }
 
 std::optional<ProtocolParamUpdate>
 ProposedParamUpdates::get(const Blake2bHash& key) const
 {
   cardano_protocol_param_update_t*                                                    value  = nullptr;
-  const cardano_error_t                                                               status = cardano_proposed_param_updates_get(checked(), key.checked(), &value);
+  const cardano_error_t                                                               status = cardano_proposed_param_updates_get(checked(), checkedNativeHandle(key), &value);
   CardanoObject<cardano_protocol_param_update_t, cardano_protocol_param_update_unref> owner(value);
 
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
@@ -105,7 +107,7 @@ ProposedParamUpdates::get(const Blake2bHash& key) const
   }
 
   checkCardanoError(status, "ProposedParamUpdates get");
-  const ProtocolParamUpdate found(owner.release());
+  const ProtocolParamUpdate found = ProtocolParamUpdate::adopt(owner.release());
   return ProtocolParamUpdate(found);
 }
 
@@ -122,7 +124,7 @@ ProposedParamUpdates::keyAt(std::size_t index) const
   CardanoObject<cardano_blake2b_hash_t, cardano_blake2b_hash_unref> owner(value);
 
   checkCardanoError(status, "ProposedParamUpdates keyAt");
-  const Blake2bHash found(owner.release());
+  const Blake2bHash found = Blake2bHash::adopt(owner.release());
   return Blake2bHash(found);
 }
 
@@ -139,7 +141,7 @@ ProposedParamUpdates::valueAt(std::size_t index) const
   CardanoObject<cardano_protocol_param_update_t, cardano_protocol_param_update_unref> owner(value);
 
   checkCardanoError(status, "ProposedParamUpdates valueAt");
-  const ProtocolParamUpdate found(owner.release());
+  const ProtocolParamUpdate found = ProtocolParamUpdate::adopt(owner.release());
   return ProtocolParamUpdate(found);
 }
 
@@ -158,8 +160,8 @@ ProposedParamUpdates::at(std::size_t index) const
   CardanoObject<cardano_protocol_param_update_t, cardano_protocol_param_update_unref> updateOwner(update);
 
   checkCardanoError(status, "ProposedParamUpdates at");
-  const Blake2bHash         copiedKey(keyOwner.release());
-  const ProtocolParamUpdate copiedUpdate(updateOwner.release());
+  const Blake2bHash         copiedKey    = Blake2bHash::adopt(keyOwner.release());
+  const ProtocolParamUpdate copiedUpdate = ProtocolParamUpdate::adopt(updateOwner.release());
   return { Blake2bHash(copiedKey), ProtocolParamUpdate(copiedUpdate) };
 }
 
@@ -213,6 +215,35 @@ bool
 ProposedParamUpdates::operator!=(const ProposedParamUpdates& other) const
 {
   return !(*this == other);
+}
+
+ProposedParamUpdates
+ProposedParamUpdates::adopt(cardano_proposed_param_updates_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ProposedParamUpdates");
+  }
+
+  return ProposedParamUpdates(value);
+}
+
+cardano_proposed_param_updates_t*
+ProposedParamUpdates::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_proposed_param_updates_t*
+ProposedParamUpdates::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_proposed_param_updates_t*
+ProposedParamUpdates::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

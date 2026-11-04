@@ -29,6 +29,8 @@
 
 #include <cardano/pool_params/ipv6.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -156,6 +158,35 @@ bool
 Ipv6::operator!=(const Ipv6& other) const
 {
   return !(*this == other);
+}
+
+Ipv6
+Ipv6::adopt(cardano_ipv6_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Ipv6");
+  }
+
+  return Ipv6(*value);
+}
+
+cardano_ipv6_t*
+Ipv6::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_ipv6_t*
+Ipv6::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_ipv6_t*
+Ipv6::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -30,6 +30,8 @@
 #include <cardano/plutus_data/constr_plutus_data.h>
 #include <cardano/plutus_data/plutus_list.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -40,7 +42,7 @@ ConstrPlutusData::ConstrPlutusData(std::uint64_t alternative, const PlutusList& 
   PlutusList copy(fields);
 
   cardano_constr_plutus_data_t* value  = nullptr;
-  const cardano_error_t         result = cardano_constr_plutus_data_new(alternative, copy.checked(), &value);
+  const cardano_error_t         result = cardano_constr_plutus_data_new(alternative, checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_constr_plutus_data_t, cardano_constr_plutus_data_unref> owner(value);
 
@@ -111,7 +113,7 @@ ConstrPlutusData::fields() const
 
   checkCardanoError(result, "ConstrPlutusData fields");
 
-  const PlutusList data(*owner.release());
+  const PlutusList data = PlutusList::adopt(owner.release());
 
   return PlutusList(data);
 }
@@ -121,7 +123,7 @@ ConstrPlutusData::setFields(const PlutusList& fields)
 {
   PlutusList copy(fields);
 
-  checkCardanoError(cardano_constr_plutus_data_set_data(checked(), copy.checked()), "ConstrPlutusData setFields");
+  checkCardanoError(cardano_constr_plutus_data_set_data(checked(), checkedNativeHandle(copy)), "ConstrPlutusData setFields");
   normalizeEncoding();
 }
 
@@ -184,6 +186,35 @@ bool
 ConstrPlutusData::operator!=(const ConstrPlutusData& other) const
 {
   return !(*this == other);
+}
+
+ConstrPlutusData
+ConstrPlutusData::adopt(cardano_constr_plutus_data_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ConstrPlutusData");
+  }
+
+  return ConstrPlutusData(*value);
+}
+
+cardano_constr_plutus_data_t*
+ConstrPlutusData::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_constr_plutus_data_t*
+ConstrPlutusData::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_constr_plutus_data_t*
+ConstrPlutusData::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

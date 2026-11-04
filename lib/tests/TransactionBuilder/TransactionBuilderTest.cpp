@@ -457,3 +457,14 @@ TEST(TransactionBuilder, IncludesSubTransaction)
   ASSERT_TRUE(transaction.body().subTransactions().has_value());
   EXPECT_EQ(transaction.body().subTransactions()->size(), 1U);
 }
+
+TEST(TransactionBuilder, BorrowsNativeHandleWithoutTransferringOwnership)
+{
+  // Arrange
+  TransactionBuilder        builder(ProtocolParameters(), SlotConfig::forNetwork(NetworkMagic::Preprod));
+  const TransactionBuilder& view = builder;
+
+  // Act & Assert
+  EXPECT_NE(builder.nativeHandle(), nullptr);
+  EXPECT_EQ(builder.nativeHandle(), view.nativeHandle());
+}

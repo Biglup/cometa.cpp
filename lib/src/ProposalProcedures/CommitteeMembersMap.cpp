@@ -31,6 +31,8 @@
 #include <cardano/proposal_procedures/committee_members_map.h>
 #include <cardano/proposal_procedures/credential_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -98,7 +100,7 @@ void
 CommitteeMembersMap::insert(const Credential& credential, std::uint64_t epoch)
 {
   const Credential copy(credential);
-  checkCardanoError(cardano_committee_members_map_insert(checked(), copy.checked(), epoch), "CommitteeMembersMap insert");
+  checkCardanoError(cardano_committee_members_map_insert(checked(), checkedNativeHandle(copy), epoch), "CommitteeMembersMap insert");
   invalidateElements();
 }
 
@@ -106,7 +108,7 @@ std::optional<std::uint64_t>
 CommitteeMembersMap::get(const Credential& credential) const
 {
   std::uint64_t         value  = 0;
-  const cardano_error_t status = cardano_committee_members_map_get(checked(), credential.checked(), &value);
+  const cardano_error_t status = cardano_committee_members_map_get(checked(), checkedNativeHandle(credential), &value);
 
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
   {
@@ -125,7 +127,7 @@ CommitteeMembersMap::keys() const
   CardanoObject<cardano_credential_set_t, cardano_credential_set_unref> owner(value);
 
   checkCardanoError(status, "CommitteeMembersMap keys");
-  return CredentialSet(owner.release());
+  return CredentialSet::adopt(owner.release());
 }
 
 Credential
@@ -141,7 +143,7 @@ CommitteeMembersMap::keyAt(std::size_t index) const
   CardanoObject<cardano_credential_t, cardano_credential_unref> owner(value);
 
   checkCardanoError(status, "CommitteeMembersMap keyAt");
-  const Credential found(owner.release());
+  const Credential found = Credential::adopt(owner.release());
   return Credential(found);
 }
 
@@ -172,7 +174,7 @@ CommitteeMembersMap::at(std::size_t index) const
   CardanoObject<cardano_credential_t, cardano_credential_unref> owner(key);
 
   checkCardanoError(status, "CommitteeMembersMap at");
-  const Credential found(owner.release());
+  const Credential found = Credential::adopt(owner.release());
   return { Credential(found), epoch };
 }
 
@@ -467,6 +469,60 @@ bool
 CommitteeMembersMap::empty() const
 {
   return size() == 0;
+}
+
+CommitteeMembersMap
+CommitteeMembersMap::adopt(cardano_committee_members_map_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null CommitteeMembersMap");
+  }
+
+  return CommitteeMembersMap(value);
+}
+
+cardano_committee_members_map_t*
+CommitteeMembersMap::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_committee_members_map_t*
+CommitteeMembersMap::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_committee_members_map_t*
+CommitteeMembersMap::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

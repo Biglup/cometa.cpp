@@ -741,6 +741,22 @@ class TransactionBuilder
     /** @brief A builder cannot be copy assigned. */
     TransactionBuilder& operator=(const TransactionBuilder&) = delete;
 
+  public:
+
+    /**
+     * @brief Borrows the native object for C interoperability.
+     * @return The native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    cardano_tx_builder_t* nativeHandle() noexcept;
+
+    /**
+     * @brief Borrows the native object for read-only C interoperability.
+     * @return The read-only native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    const cardano_tx_builder_t* nativeHandle() const noexcept;
+
   private:
 
     /**

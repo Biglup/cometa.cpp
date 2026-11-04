@@ -31,6 +31,8 @@
 
 #include <limits>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -170,6 +172,35 @@ bool
 ProtocolVersion::operator!=(const ProtocolVersion& other) const
 {
   return !(*this == other);
+}
+
+ProtocolVersion
+ProtocolVersion::adopt(cardano_protocol_version_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ProtocolVersion");
+  }
+
+  return ProtocolVersion(value);
+}
+
+cardano_protocol_version_t*
+ProtocolVersion::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_protocol_version_t*
+ProtocolVersion::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_protocol_version_t*
+ProtocolVersion::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

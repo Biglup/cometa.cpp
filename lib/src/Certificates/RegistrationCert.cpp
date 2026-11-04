@@ -29,6 +29,8 @@
 
 #include <cardano/certs/registration_cert.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -38,7 +40,7 @@ RegistrationCert::RegistrationCert(const Credential& credential, std::uint64_t d
 {
   const Credential                                                            copy(credential);
   cardano_registration_cert_t*                                                value  = nullptr;
-  const cardano_error_t                                                       status = cardano_registration_cert_new(copy.checked(), deposit, &value);
+  const cardano_error_t                                                       status = cardano_registration_cert_new(checkedNativeHandle(copy), deposit, &value);
   CardanoObject<cardano_registration_cert_t, cardano_registration_cert_unref> owner(value);
 
   checkCardanoError(status, "RegistrationCert");
@@ -88,7 +90,7 @@ RegistrationCert::credential() const
     throw std::logic_error("Registration certificate has no credential");
   }
 
-  const Credential result(value);
+  const Credential result = Credential::adopt(value);
   return Credential(result);
 }
 
@@ -96,7 +98,7 @@ void
 RegistrationCert::setCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_registration_cert_set_stake_credential(checked(), copy.checked()), "RegistrationCert setCredential");
+  checkCardanoError(cardano_registration_cert_set_stake_credential(checked(), checkedNativeHandle(copy)), "RegistrationCert setCredential");
 }
 
 std::uint64_t
@@ -163,6 +165,35 @@ bool
 RegistrationCert::operator!=(const RegistrationCert& other) const
 {
   return !(*this == other);
+}
+
+RegistrationCert
+RegistrationCert::adopt(cardano_registration_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null RegistrationCert");
+  }
+
+  return RegistrationCert(value);
+}
+
+cardano_registration_cert_t*
+RegistrationCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_registration_cert_t*
+RegistrationCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_registration_cert_t*
+RegistrationCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -185,6 +185,37 @@ class SingleHostNameRelay
      */
     bool operator!=(const SingleHostNameRelay& other) const;
 
+  public:
+
+    /**
+     * @brief Takes ownership of one native reference without copying it.
+     * @param value An owned reference; the caller must stop managing it after this call succeeds.
+     * @return The C++ owner of the supplied reference.
+     * @throws std::invalid_argument The reference is null; ownership is not transferred.
+     */
+    static SingleHostNameRelay adopt(cardano_single_host_name_relay_t* value);
+
+    /**
+     * @brief Borrows the native object for C interoperability.
+     * @return The native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    cardano_single_host_name_relay_t* nativeHandle() noexcept;
+
+    /**
+     * @brief Borrows the native object for read-only C interoperability.
+     * @return The read-only native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    const cardano_single_host_name_relay_t* nativeHandle() const noexcept;
+
+    /**
+     * @brief Transfers the owned native reference to the caller.
+     * @return The owned pointer, or nullptr if this object is already empty.
+     * @remark Leaves this object empty. The caller must adopt the reference or release it with the matching C unref function.
+     */
+    cardano_single_host_name_relay_t* release() noexcept;
+
   private:
 
     /**
@@ -218,9 +249,6 @@ class SingleHostNameRelay
      * @brief The owned reference, or null after a move.
      */
     cardano_single_host_name_relay_t* m_value;
-
-    /** @brief Allows Relay to exchange component values. */
-    friend class Relay;
 };
 } // namespace Cometa
 

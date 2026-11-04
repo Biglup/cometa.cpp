@@ -31,6 +31,8 @@
 
 #include <cstring>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -111,7 +113,7 @@ Ed25519PublicKey::toHex() const
 bool
 Ed25519PublicKey::verify(const Ed25519Signature& signature, const std::vector<std::uint8_t>& message) const
 {
-  return cardano_ed25519_public_verify(checked(), signature.checked(), byteData(message), message.size());
+  return cardano_ed25519_public_verify(checked(), checkedNativeHandle(signature), byteData(message), message.size());
 }
 
 Blake2bHash
@@ -124,7 +126,7 @@ Ed25519PublicKey::hash() const
 
   checkCardanoError(result, "Ed25519PublicKey hash");
 
-  return Blake2bHash(owner.release());
+  return Blake2bHash::adopt(owner.release());
 }
 
 bool
@@ -168,6 +170,35 @@ Ed25519PublicKey::operator=(Ed25519PublicKey&& other) noexcept
   }
 
   return *this;
+}
+
+Ed25519PublicKey
+Ed25519PublicKey::adopt(cardano_ed25519_public_key_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Ed25519PublicKey");
+  }
+
+  return Ed25519PublicKey(*value);
+}
+
+cardano_ed25519_public_key_t*
+Ed25519PublicKey::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_ed25519_public_key_t*
+Ed25519PublicKey::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_ed25519_public_key_t*
+Ed25519PublicKey::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

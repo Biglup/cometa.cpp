@@ -509,6 +509,45 @@ class TransactionOutputList
       m_mutableAccess = true;
     }
 
+  public:
+
+    /**
+     * @brief Takes ownership of one native reference without copying it.
+     * @param value An owned reference; the caller must stop managing it after this call succeeds.
+     * @return The C++ owner of the supplied reference.
+     * @throws std::invalid_argument The reference is null; ownership is not transferred.
+     */
+    static TransactionOutputList adopt(cardano_transaction_output_list_t* value);
+
+    /**
+     * @brief Borrows the native object for C interoperability.
+     * @return The native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     * @remark Invalidates all collection iterators and element references. Finish native access before using the collection again.
+     * @throws std::bad_alloc Synchronizing edited elements cannot allocate memory.
+     * @throws Error Edited elements cannot be represented by the native collection.
+     */
+    cardano_transaction_output_list_t* nativeHandle();
+
+    /**
+     * @brief Borrows the native object for read-only C interoperability.
+     * @return The read-only native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     * @throws std::bad_alloc Synchronizing edited elements cannot allocate memory.
+     * @throws Error Edited elements cannot be represented by the native collection.
+     */
+    const cardano_transaction_output_list_t* nativeHandle() const;
+
+    /**
+     * @brief Transfers the owned native reference to the caller.
+     * @return The owned pointer, or nullptr if this object is already empty.
+     * @remark Leaves this object empty. The caller must adopt the reference or release it with the matching C unref function.
+     * @remark Invalidates all collection iterators and element references. Finish native access before using the collection again.
+     * @throws std::bad_alloc Synchronizing edited elements cannot allocate memory.
+     * @throws Error Edited elements cannot be represented by the native collection.
+     */
+    cardano_transaction_output_list_t* release();
+
   private:
 
     /** @brief Copies native elements into the C++ sequence on first access. */
@@ -525,12 +564,6 @@ class TransactionOutputList
     value_type copyElement(std::size_t index) const;
 
   private:
-
-    /** @brief Allows sub-transaction bodies to copy this value. */
-    friend class SubTransactionBody;
-
-    /** @brief Allows transaction bodies to copy this value. */
-    friend class TransactionBody;
 
     /**
      * @brief Takes ownership of an existing reference.
@@ -549,13 +582,6 @@ class TransactionOutputList
      * @throws std::logic_error This instance has been moved from.
      */
     cardano_transaction_output_list_t* checked() const;
-
-    /**
-     * @brief Checks nested output values before exposing decoded values.
-     *
-     * @throws std::invalid_argument An output violates the value constraints.
-     */
-    void validate() const;
 
   private:
 

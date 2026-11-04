@@ -34,6 +34,8 @@
 
 #include <cmath>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -201,7 +203,7 @@ JsonWriter::writeRaw(std::string_view json)
 void
 JsonWriter::writeValue(const JsonValue& value)
 {
-  cardano_json_writer_write_object(checked(), value.checked());
+  cardano_json_writer_write_object(checked(), checkedNativeHandle(value));
   checkWrite();
 }
 
@@ -217,7 +219,7 @@ JsonWriter::writeBigInt(const BigInt& value)
 void
 JsonWriter::writeBigIntAsString(const BigInt& value)
 {
-  cardano_json_writer_write_bigint(checked(), value.checked());
+  cardano_json_writer_write_bigint(checked(), checkedNativeHandle(value));
   checkWrite();
 }
 
@@ -307,7 +309,47 @@ JsonWriter::operator=(JsonWriter&& other) noexcept
   return *this;
 }
 
+JsonWriter
+JsonWriter::adopt(cardano_json_writer_t* value, JsonFormat format)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null JsonWriter");
+  }
+
+  if (format != JsonFormat::Compact && format != JsonFormat::Pretty)
+  {
+    throw std::invalid_argument("Unknown JSON format");
+  }
+
+  return JsonWriter(value, format);
+}
+
+cardano_json_writer_t*
+JsonWriter::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_json_writer_t*
+JsonWriter::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_json_writer_t*
+JsonWriter::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
+
+JsonWriter::JsonWriter(cardano_json_writer_t* value, JsonFormat format) noexcept
+: m_value(value)
+, m_format(format)
+{
+}
 
 cardano_json_writer_t*
 JsonWriter::checked() const

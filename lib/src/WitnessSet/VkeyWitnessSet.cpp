@@ -30,6 +30,8 @@
 #include <cardano/witness_set/vkey_witness.h>
 #include <cardano/witness_set/vkey_witness_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -90,7 +92,7 @@ void
 VkeyWitnessSet::add(const VkeyWitness& value)
 {
   const VkeyWitness copy(value);
-  checkCardanoError(cardano_vkey_witness_set_add(checked(), copy.checked()), "VkeyWitnessSet add");
+  checkCardanoError(cardano_vkey_witness_set_add(checked(), checkedNativeHandle(copy)), "VkeyWitnessSet add");
   invalidateElements();
 }
 
@@ -107,7 +109,7 @@ VkeyWitnessSet::at(std::size_t index) const
   CardanoObject<cardano_vkey_witness_t, cardano_vkey_witness_unref> owner(value);
 
   checkCardanoError(status, "VkeyWitnessSet at");
-  const VkeyWitness copied(owner.release());
+  const VkeyWitness copied = VkeyWitness::adopt(owner.release());
   return VkeyWitness(copied);
 }
 
@@ -116,7 +118,7 @@ VkeyWitnessSet::apply(const VkeyWitnessSet& other)
 {
   VkeyWitnessSet       updated(*this);
   const VkeyWitnessSet copy(other);
-  checkCardanoError(cardano_vkey_witness_set_apply(updated.checked(), copy.checked()), "VkeyWitnessSet apply");
+  checkCardanoError(cardano_vkey_witness_set_apply(updated.nativeHandle(), copy.checked()), "VkeyWitnessSet apply");
   swap(updated);
   invalidateElements();
 }
@@ -370,6 +372,41 @@ VkeyWitnessSet::erase(const value_type& value)
   erase(position);
 
   return 1;
+}
+
+VkeyWitnessSet
+VkeyWitnessSet::adopt(cardano_vkey_witness_set_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null VkeyWitnessSet");
+  }
+
+  return VkeyWitnessSet(value);
+}
+
+cardano_vkey_witness_set_t*
+VkeyWitnessSet::nativeHandle() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return m_value;
+}
+
+const cardano_vkey_witness_set_t*
+VkeyWitnessSet::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_vkey_witness_set_t*
+VkeyWitnessSet::release() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

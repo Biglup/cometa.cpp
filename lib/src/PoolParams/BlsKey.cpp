@@ -29,6 +29,8 @@
 
 #include <cardano/pool_params/bls_key.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -158,6 +160,35 @@ bool
 BlsKey::operator!=(const BlsKey& other) const
 {
   return !(*this == other);
+}
+
+BlsKey
+BlsKey::adopt(cardano_bls_key_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null BlsKey");
+  }
+
+  return BlsKey(*value);
+}
+
+cardano_bls_key_t*
+BlsKey::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_bls_key_t*
+BlsKey::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_bls_key_t*
+BlsKey::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

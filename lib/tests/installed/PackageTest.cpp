@@ -25,6 +25,8 @@
 
 #include <Cometa/Cometa.h>
 
+#include <cardano/assets/asset_name.h>
+
 #ifdef COMETA_TEST_HTTP_TRANSPORT
 #include <Cometa/Providers/DefaultHttpTransport.h>
 #endif
@@ -55,6 +57,20 @@ main()
   const Cometa::Error decodingError(Cometa::ErrorCode::Decoding, "fromCbor");
 
   if (decodingError.code() != Cometa::ErrorCode::Decoding || Cometa::ErrorCode::Encoding == decodingError.code())
+  {
+    return 1;
+  }
+
+  Cometa::AssetName nativeName = Cometa::AssetName::fromString("Cometa");
+
+  if (cardano_asset_name_get_bytes_size(nativeName.nativeHandle()) != 6U)
+  {
+    return 1;
+  }
+
+  Cometa::AssetName adoptedName = Cometa::AssetName::adopt(nativeName.release());
+
+  if (nativeName.nativeHandle() != nullptr || adoptedName.toString() != "Cometa")
   {
     return 1;
   }

@@ -69,7 +69,7 @@ Certificate::Certificate(const AuthCommitteeHotCert& value)
 {
   const AuthCommitteeHotCert                                      copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_auth_committee_hot(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_auth_committee_hot(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate AuthorizeCommitteeHot");
@@ -80,7 +80,7 @@ Certificate::Certificate(AuthCommitteeHotCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_auth_committee_hot(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_auth_committee_hot(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate AuthorizeCommitteeHot");
@@ -94,7 +94,7 @@ Certificate::Certificate(const GenesisKeyDelegationCert& value)
 {
   const GenesisKeyDelegationCert                                  copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_genesis_key_delegation(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_genesis_key_delegation(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate GenesisKeyDelegation");
@@ -105,7 +105,7 @@ Certificate::Certificate(GenesisKeyDelegationCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_genesis_key_delegation(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_genesis_key_delegation(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate GenesisKeyDelegation");
@@ -119,7 +119,7 @@ Certificate::Certificate(const MirCert& value)
 {
   const MirCert                                                   copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_mir(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_mir(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate MoveInstantaneousRewards");
@@ -130,7 +130,7 @@ Certificate::Certificate(MirCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_mir(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_mir(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate MoveInstantaneousRewards");
@@ -144,7 +144,7 @@ Certificate::Certificate(const PoolRegistrationCert& value)
 {
   const PoolRegistrationCert                                      copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_pool_registration(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_pool_registration(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate PoolRegistration");
@@ -155,7 +155,7 @@ Certificate::Certificate(PoolRegistrationCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_pool_registration(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_pool_registration(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate PoolRegistration");
@@ -169,7 +169,7 @@ Certificate::Certificate(const PoolRetirementCert& value)
 {
   const PoolRetirementCert                                        copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_pool_retirement(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_pool_retirement(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate PoolRetirement");
@@ -180,7 +180,7 @@ Certificate::Certificate(PoolRetirementCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_pool_retirement(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_pool_retirement(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate PoolRetirement");
@@ -194,7 +194,7 @@ Certificate::Certificate(const RegisterDRepCert& value)
 {
   const RegisterDRepCert                                          copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_register_drep(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_register_drep(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate DRepRegistration");
@@ -205,7 +205,7 @@ Certificate::Certificate(RegisterDRepCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_register_drep(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_register_drep(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate DRepRegistration");
@@ -219,7 +219,7 @@ Certificate::Certificate(const RegistrationCert& value)
 {
   const RegistrationCert                                          copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_registration(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_registration(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate Registration");
@@ -230,7 +230,7 @@ Certificate::Certificate(RegistrationCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_registration(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_registration(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate Registration");
@@ -244,7 +244,7 @@ Certificate::Certificate(const ResignCommitteeColdCert& value)
 {
   const ResignCommitteeColdCert                                   copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_resign_committee_cold(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_resign_committee_cold(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate ResignCommitteeCold");
@@ -255,7 +255,7 @@ Certificate::Certificate(ResignCommitteeColdCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_resign_committee_cold(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_resign_committee_cold(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate ResignCommitteeCold");
@@ -269,7 +269,7 @@ Certificate::Certificate(const StakeDelegationCert& value)
 {
   const StakeDelegationCert                                       copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_stake_delegation(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_stake_delegation(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate StakeDelegation");
@@ -280,7 +280,7 @@ Certificate::Certificate(StakeDelegationCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_stake_delegation(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_stake_delegation(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate StakeDelegation");
@@ -294,7 +294,7 @@ Certificate::Certificate(const StakeDeregistrationCert& value)
 {
   const StakeDeregistrationCert                                   copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_stake_deregistration(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_stake_deregistration(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate StakeDeregistration");
@@ -305,7 +305,7 @@ Certificate::Certificate(StakeDeregistrationCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_stake_deregistration(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_stake_deregistration(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate StakeDeregistration");
@@ -319,7 +319,7 @@ Certificate::Certificate(const StakeRegistrationCert& value)
 {
   const StakeRegistrationCert                                     copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_stake_registration(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_stake_registration(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate StakeRegistration");
@@ -330,7 +330,7 @@ Certificate::Certificate(StakeRegistrationCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_stake_registration(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_stake_registration(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate StakeRegistration");
@@ -344,7 +344,7 @@ Certificate::Certificate(const StakeRegistrationDelegationCert& value)
 {
   const StakeRegistrationDelegationCert                           copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_stake_registration_delegation(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_stake_registration_delegation(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate StakeRegistrationDelegation");
@@ -355,7 +355,7 @@ Certificate::Certificate(StakeRegistrationDelegationCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_stake_registration_delegation(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_stake_registration_delegation(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate StakeRegistrationDelegation");
@@ -369,7 +369,7 @@ Certificate::Certificate(const StakeVoteDelegationCert& value)
 {
   const StakeVoteDelegationCert                                   copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_stake_vote_delegation(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_stake_vote_delegation(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate StakeVoteDelegation");
@@ -380,7 +380,7 @@ Certificate::Certificate(StakeVoteDelegationCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_stake_vote_delegation(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_stake_vote_delegation(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate StakeVoteDelegation");
@@ -394,7 +394,7 @@ Certificate::Certificate(const StakeVoteRegistrationDelegationCert& value)
 {
   const StakeVoteRegistrationDelegationCert                       copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_stake_vote_registration_delegation(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_stake_vote_registration_delegation(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate StakeVoteRegistrationDelegation");
@@ -405,7 +405,7 @@ Certificate::Certificate(StakeVoteRegistrationDelegationCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_stake_vote_registration_delegation(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_stake_vote_registration_delegation(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate StakeVoteRegistrationDelegation");
@@ -419,7 +419,7 @@ Certificate::Certificate(const UnregisterDRepCert& value)
 {
   const UnregisterDRepCert                                        copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_unregister_drep(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_unregister_drep(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate DRepUnregistration");
@@ -430,7 +430,7 @@ Certificate::Certificate(UnregisterDRepCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_unregister_drep(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_unregister_drep(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate DRepUnregistration");
@@ -444,7 +444,7 @@ Certificate::Certificate(const UnregistrationCert& value)
 {
   const UnregistrationCert                                        copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_unregistration(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_unregistration(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate Unregistration");
@@ -455,7 +455,7 @@ Certificate::Certificate(UnregistrationCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_unregistration(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_unregistration(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate Unregistration");
@@ -469,7 +469,7 @@ Certificate::Certificate(const UpdateDRepCert& value)
 {
   const UpdateDRepCert                                            copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_update_drep(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_update_drep(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate UpdateDRep");
@@ -480,7 +480,7 @@ Certificate::Certificate(UpdateDRepCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_update_drep(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_update_drep(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate UpdateDRep");
@@ -494,7 +494,7 @@ Certificate::Certificate(const VoteDelegationCert& value)
 {
   const VoteDelegationCert                                        copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_vote_delegation(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_vote_delegation(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate VoteDelegation");
@@ -505,7 +505,7 @@ Certificate::Certificate(VoteDelegationCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_vote_delegation(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_vote_delegation(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate VoteDelegation");
@@ -519,7 +519,7 @@ Certificate::Certificate(const VoteRegistrationDelegationCert& value)
 {
   const VoteRegistrationDelegationCert                            copy(value);
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_vote_registration_delegation(copy.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_vote_registration_delegation(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate VoteRegistrationDelegation");
@@ -530,7 +530,7 @@ Certificate::Certificate(VoteRegistrationDelegationCert&& value)
 : m_value(nullptr)
 {
   cardano_certificate_t*                                          native = nullptr;
-  const cardano_error_t                                           status = cardano_certificate_new_vote_registration_delegation(value.checked(), &native);
+  const cardano_error_t                                           status = cardano_certificate_new_vote_registration_delegation(checkedNativeHandle(value), &native);
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(native);
 
   checkCardanoError(status, "Certificate VoteRegistrationDelegation");
@@ -598,7 +598,7 @@ Certificate::asAuthCommitteeHot() const
   CardanoObject<cardano_auth_committee_hot_cert_t, cardano_auth_committee_hot_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asAuthCommitteeHot");
-  const AuthCommitteeHotCert value(owner.release());
+  const AuthCommitteeHotCert value = AuthCommitteeHotCert::adopt(owner.release());
   return AuthCommitteeHotCert(value);
 }
 
@@ -615,7 +615,7 @@ Certificate::asGenesisKeyDelegation() const
   CardanoObject<cardano_genesis_key_delegation_cert_t, cardano_genesis_key_delegation_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asGenesisKeyDelegation");
-  const GenesisKeyDelegationCert value(owner.release());
+  const GenesisKeyDelegationCert value = GenesisKeyDelegationCert::adopt(owner.release());
   return GenesisKeyDelegationCert(value);
 }
 
@@ -632,7 +632,7 @@ Certificate::asMir() const
   CardanoObject<cardano_mir_cert_t, cardano_mir_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asMir");
-  const MirCert value(owner.release());
+  const MirCert value = MirCert::adopt(owner.release());
   return MirCert(value);
 }
 
@@ -649,7 +649,7 @@ Certificate::asPoolRegistration() const
   CardanoObject<cardano_pool_registration_cert_t, cardano_pool_registration_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asPoolRegistration");
-  const PoolRegistrationCert value(owner.release());
+  const PoolRegistrationCert value = PoolRegistrationCert::adopt(owner.release());
   return PoolRegistrationCert(value);
 }
 
@@ -666,7 +666,7 @@ Certificate::asPoolRetirement() const
   CardanoObject<cardano_pool_retirement_cert_t, cardano_pool_retirement_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asPoolRetirement");
-  const PoolRetirementCert value(owner.release());
+  const PoolRetirementCert value = PoolRetirementCert::adopt(owner.release());
   return PoolRetirementCert(value);
 }
 
@@ -683,7 +683,7 @@ Certificate::asRegisterDRep() const
   CardanoObject<cardano_register_drep_cert_t, cardano_register_drep_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asRegisterDRep");
-  const RegisterDRepCert value(owner.release());
+  const RegisterDRepCert value = RegisterDRepCert::adopt(owner.release());
   return RegisterDRepCert(value);
 }
 
@@ -700,7 +700,7 @@ Certificate::asRegistration() const
   CardanoObject<cardano_registration_cert_t, cardano_registration_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asRegistration");
-  const RegistrationCert value(owner.release());
+  const RegistrationCert value = RegistrationCert::adopt(owner.release());
   return RegistrationCert(value);
 }
 
@@ -717,7 +717,7 @@ Certificate::asResignCommitteeCold() const
   CardanoObject<cardano_resign_committee_cold_cert_t, cardano_resign_committee_cold_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asResignCommitteeCold");
-  const ResignCommitteeColdCert value(owner.release());
+  const ResignCommitteeColdCert value = ResignCommitteeColdCert::adopt(owner.release());
   return ResignCommitteeColdCert(value);
 }
 
@@ -734,7 +734,7 @@ Certificate::asStakeDelegation() const
   CardanoObject<cardano_stake_delegation_cert_t, cardano_stake_delegation_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asStakeDelegation");
-  const StakeDelegationCert value(owner.release());
+  const StakeDelegationCert value = StakeDelegationCert::adopt(owner.release());
   return StakeDelegationCert(value);
 }
 
@@ -751,7 +751,7 @@ Certificate::asStakeDeregistration() const
   CardanoObject<cardano_stake_deregistration_cert_t, cardano_stake_deregistration_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asStakeDeregistration");
-  const StakeDeregistrationCert value(owner.release());
+  const StakeDeregistrationCert value = StakeDeregistrationCert::adopt(owner.release());
   return StakeDeregistrationCert(value);
 }
 
@@ -768,7 +768,7 @@ Certificate::asStakeRegistration() const
   CardanoObject<cardano_stake_registration_cert_t, cardano_stake_registration_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asStakeRegistration");
-  const StakeRegistrationCert value(owner.release());
+  const StakeRegistrationCert value = StakeRegistrationCert::adopt(owner.release());
   return StakeRegistrationCert(value);
 }
 
@@ -785,7 +785,7 @@ Certificate::asStakeRegistrationDelegation() const
   CardanoObject<cardano_stake_registration_delegation_cert_t, cardano_stake_registration_delegation_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asStakeRegistrationDelegation");
-  const StakeRegistrationDelegationCert value(owner.release());
+  const StakeRegistrationDelegationCert value = StakeRegistrationDelegationCert::adopt(owner.release());
   return StakeRegistrationDelegationCert(value);
 }
 
@@ -802,7 +802,7 @@ Certificate::asStakeVoteDelegation() const
   CardanoObject<cardano_stake_vote_delegation_cert_t, cardano_stake_vote_delegation_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asStakeVoteDelegation");
-  const StakeVoteDelegationCert value(owner.release());
+  const StakeVoteDelegationCert value = StakeVoteDelegationCert::adopt(owner.release());
   return StakeVoteDelegationCert(value);
 }
 
@@ -819,7 +819,7 @@ Certificate::asStakeVoteRegistrationDelegation() const
   CardanoObject<cardano_stake_vote_registration_delegation_cert_t, cardano_stake_vote_registration_delegation_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asStakeVoteRegistrationDelegation");
-  const StakeVoteRegistrationDelegationCert value(owner.release());
+  const StakeVoteRegistrationDelegationCert value = StakeVoteRegistrationDelegationCert::adopt(owner.release());
   return StakeVoteRegistrationDelegationCert(value);
 }
 
@@ -836,7 +836,7 @@ Certificate::asUnregisterDRep() const
   CardanoObject<cardano_unregister_drep_cert_t, cardano_unregister_drep_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asUnregisterDRep");
-  const UnregisterDRepCert value(owner.release());
+  const UnregisterDRepCert value = UnregisterDRepCert::adopt(owner.release());
   return UnregisterDRepCert(value);
 }
 
@@ -853,7 +853,7 @@ Certificate::asUnregistration() const
   CardanoObject<cardano_unregistration_cert_t, cardano_unregistration_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asUnregistration");
-  const UnregistrationCert value(owner.release());
+  const UnregistrationCert value = UnregistrationCert::adopt(owner.release());
   return UnregistrationCert(value);
 }
 
@@ -870,7 +870,7 @@ Certificate::asUpdateDRep() const
   CardanoObject<cardano_update_drep_cert_t, cardano_update_drep_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asUpdateDRep");
-  const UpdateDRepCert value(owner.release());
+  const UpdateDRepCert value = UpdateDRepCert::adopt(owner.release());
   return UpdateDRepCert(value);
 }
 
@@ -887,7 +887,7 @@ Certificate::asVoteDelegation() const
   CardanoObject<cardano_vote_delegation_cert_t, cardano_vote_delegation_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asVoteDelegation");
-  const VoteDelegationCert value(owner.release());
+  const VoteDelegationCert value = VoteDelegationCert::adopt(owner.release());
   return VoteDelegationCert(value);
 }
 
@@ -904,7 +904,7 @@ Certificate::asVoteRegistrationDelegation() const
   CardanoObject<cardano_vote_registration_delegation_cert_t, cardano_vote_registration_delegation_cert_unref> owner(native);
 
   checkCardanoError(status, "Certificate asVoteRegistrationDelegation");
-  const VoteRegistrationDelegationCert value(owner.release());
+  const VoteRegistrationDelegationCert value = VoteRegistrationDelegationCert::adopt(owner.release());
   return VoteRegistrationDelegationCert(value);
 }
 
@@ -958,6 +958,35 @@ bool
 Certificate::operator!=(const Certificate& other) const
 {
   return !(*this == other);
+}
+
+Certificate
+Certificate::adopt(cardano_certificate_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Certificate");
+  }
+
+  return Certificate(value);
+}
+
+cardano_certificate_t*
+Certificate::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_certificate_t*
+Certificate::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_certificate_t*
+Certificate::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

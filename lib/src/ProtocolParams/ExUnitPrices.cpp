@@ -30,6 +30,8 @@
 #include <cardano/common/unit_interval.h>
 #include <cardano/protocol_params/ex_unit_prices.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -40,7 +42,7 @@ ExUnitPrices::ExUnitPrices(const UnitInterval& memoryPrice, const UnitInterval& 
   const UnitInterval                                                    memoryCopy(memoryPrice);
   const UnitInterval                                                    stepsCopy(stepsPrice);
   cardano_ex_unit_prices_t*                                             value  = nullptr;
-  const cardano_error_t                                                 status = cardano_ex_unit_prices_new(memoryCopy.checked(), stepsCopy.checked(), &value);
+  const cardano_error_t                                                 status = cardano_ex_unit_prices_new(checkedNativeHandle(memoryCopy), checkedNativeHandle(stepsCopy), &value);
   CardanoObject<cardano_ex_unit_prices_t, cardano_ex_unit_prices_unref> owner(value);
 
   checkCardanoError(status, "ExUnitPrices");
@@ -88,7 +90,7 @@ ExUnitPrices::memoryPrice() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "ExUnitPrices memoryPrice");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -100,7 +102,7 @@ ExUnitPrices::stepsPrice() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "ExUnitPrices stepsPrice");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -108,14 +110,14 @@ void
 ExUnitPrices::setMemoryPrice(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_ex_unit_prices_set_memory_prices(checked(), copy.checked()), "ExUnitPrices setMemoryPrice");
+  checkCardanoError(cardano_ex_unit_prices_set_memory_prices(checked(), checkedNativeHandle(copy)), "ExUnitPrices setMemoryPrice");
 }
 
 void
 ExUnitPrices::setStepsPrice(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_ex_unit_prices_set_steps_prices(checked(), copy.checked()), "ExUnitPrices setStepsPrice");
+  checkCardanoError(cardano_ex_unit_prices_set_steps_prices(checked(), checkedNativeHandle(copy)), "ExUnitPrices setStepsPrice");
 }
 
 std::vector<std::uint8_t>
@@ -168,6 +170,35 @@ bool
 ExUnitPrices::operator!=(const ExUnitPrices& other) const
 {
   return !(*this == other);
+}
+
+ExUnitPrices
+ExUnitPrices::adopt(cardano_ex_unit_prices_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ExUnitPrices");
+  }
+
+  return ExUnitPrices(value);
+}
+
+cardano_ex_unit_prices_t*
+ExUnitPrices::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_ex_unit_prices_t*
+ExUnitPrices::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_ex_unit_prices_t*
+ExUnitPrices::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

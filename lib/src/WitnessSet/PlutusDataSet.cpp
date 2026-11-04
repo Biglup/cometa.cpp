@@ -30,6 +30,8 @@
 #include <cardano/plutus_data/plutus_data.h>
 #include <cardano/witness_set/plutus_data_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -98,7 +100,7 @@ PlutusDataSet::add(const PlutusData& value)
   }
 
   const PlutusData copy(value);
-  checkCardanoError(cardano_plutus_data_set_add(checked(), copy.checked()), "PlutusDataSet add");
+  checkCardanoError(cardano_plutus_data_set_add(checked(), checkedNativeHandle(copy)), "PlutusDataSet add");
   const bool tagged = useTag();
   cardano_plutus_data_set_clear_cbor_cache(checked());
   setUseTag(tagged);
@@ -118,7 +120,7 @@ PlutusDataSet::at(std::size_t index) const
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
 
   checkCardanoError(status, "PlutusDataSet at");
-  const PlutusData copied(*owner.release());
+  const PlutusData copied = PlutusData::adopt(owner.release());
   return PlutusData(copied);
 }
 
@@ -372,6 +374,41 @@ PlutusDataSet::erase(const value_type& value)
   erase(position);
 
   return 1;
+}
+
+PlutusDataSet
+PlutusDataSet::adopt(cardano_plutus_data_set_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PlutusDataSet");
+  }
+
+  return PlutusDataSet(value);
+}
+
+cardano_plutus_data_set_t*
+PlutusDataSet::nativeHandle() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return m_value;
+}
+
+const cardano_plutus_data_set_t*
+PlutusDataSet::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_plutus_data_set_t*
+PlutusDataSet::release() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

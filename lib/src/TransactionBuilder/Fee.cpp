@@ -48,7 +48,7 @@ computeTransactionFee(const Transaction& transaction, const UtxoList& resolvedIn
   CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
 
   std::uint64_t result {};
-  checkCardanoError(cardano_compute_transaction_fee(nativeTransaction.get(), nativeResolvedInputs.get(), parameters.checked(), &result), "computeTransactionFee");
+  checkCardanoError(cardano_compute_transaction_fee(nativeTransaction.get(), nativeResolvedInputs.get(), checkedNativeHandle(parameters), &result), "computeTransactionFee");
 
   return result;
 }
@@ -113,7 +113,7 @@ computeScriptRefFee(const UtxoList& resolvedInputs, const ProtocolParameters& pa
   CardanoObject<cardano_utxo_list_t, cardano_utxo_list_unref> nativeResolvedInputs(copyUtxosToNative(resolvedInputs));
 
   std::uint64_t result {};
-  checkCardanoError(cardano_compute_script_ref_fee_with_params(nativeResolvedInputs.get(), parameters.checked(), &result), "computeScriptRefFee");
+  checkCardanoError(cardano_compute_script_ref_fee_with_params(nativeResolvedInputs.get(), checkedNativeHandle(parameters), &result), "computeScriptRefFee");
 
   return result;
 }

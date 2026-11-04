@@ -30,6 +30,8 @@
 #include <cardano/common/unit_interval.h>
 #include <cardano/protocol_params/drep_voting_thresholds.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -59,16 +61,16 @@ DRepVotingThresholds::DRepVotingThresholds(
   const UnitInterval                treasuryWithdrawalCopy(treasuryWithdrawal);
   cardano_drep_voting_thresholds_t* value  = nullptr;
   const cardano_error_t             status = cardano_drep_voting_thresholds_new(
-    motionNoConfidenceCopy.checked(),
-    committeeNormalCopy.checked(),
-    committeeNoConfidenceCopy.checked(),
-    updateConstitutionCopy.checked(),
-    hardForkInitiationCopy.checked(),
-    ppNetworkGroupCopy.checked(),
-    ppEconomicGroupCopy.checked(),
-    ppTechnicalGroupCopy.checked(),
-    ppGovernanceGroupCopy.checked(),
-    treasuryWithdrawalCopy.checked(),
+    checkedNativeHandle(motionNoConfidenceCopy),
+    checkedNativeHandle(committeeNormalCopy),
+    checkedNativeHandle(committeeNoConfidenceCopy),
+    checkedNativeHandle(updateConstitutionCopy),
+    checkedNativeHandle(hardForkInitiationCopy),
+    checkedNativeHandle(ppNetworkGroupCopy),
+    checkedNativeHandle(ppEconomicGroupCopy),
+    checkedNativeHandle(ppTechnicalGroupCopy),
+    checkedNativeHandle(ppGovernanceGroupCopy),
+    checkedNativeHandle(treasuryWithdrawalCopy),
     &value);
   CardanoObject<cardano_drep_voting_thresholds_t, cardano_drep_voting_thresholds_unref> owner(value);
 
@@ -117,7 +119,7 @@ DRepVotingThresholds::motionNoConfidence() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "DRepVotingThresholds motionNoConfidence");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -125,7 +127,7 @@ void
 DRepVotingThresholds::setMotionNoConfidence(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_drep_voting_thresholds_set_motion_no_confidence(checked(), copy.checked()), "DRepVotingThresholds setMotionNoConfidence");
+  checkCardanoError(cardano_drep_voting_thresholds_set_motion_no_confidence(checked(), checkedNativeHandle(copy)), "DRepVotingThresholds setMotionNoConfidence");
 }
 
 UnitInterval
@@ -136,7 +138,7 @@ DRepVotingThresholds::committeeNormal() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "DRepVotingThresholds committeeNormal");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -144,7 +146,7 @@ void
 DRepVotingThresholds::setCommitteeNormal(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_drep_voting_thresholds_set_committee_normal(checked(), copy.checked()), "DRepVotingThresholds setCommitteeNormal");
+  checkCardanoError(cardano_drep_voting_thresholds_set_committee_normal(checked(), checkedNativeHandle(copy)), "DRepVotingThresholds setCommitteeNormal");
 }
 
 UnitInterval
@@ -155,7 +157,7 @@ DRepVotingThresholds::committeeNoConfidence() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "DRepVotingThresholds committeeNoConfidence");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -163,7 +165,7 @@ void
 DRepVotingThresholds::setCommitteeNoConfidence(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_drep_voting_thresholds_set_committee_no_confidence(checked(), copy.checked()), "DRepVotingThresholds setCommitteeNoConfidence");
+  checkCardanoError(cardano_drep_voting_thresholds_set_committee_no_confidence(checked(), checkedNativeHandle(copy)), "DRepVotingThresholds setCommitteeNoConfidence");
 }
 
 UnitInterval
@@ -174,7 +176,7 @@ DRepVotingThresholds::updateConstitution() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "DRepVotingThresholds updateConstitution");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -182,7 +184,7 @@ void
 DRepVotingThresholds::setUpdateConstitution(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_drep_voting_thresholds_set_update_constitution(checked(), copy.checked()), "DRepVotingThresholds setUpdateConstitution");
+  checkCardanoError(cardano_drep_voting_thresholds_set_update_constitution(checked(), checkedNativeHandle(copy)), "DRepVotingThresholds setUpdateConstitution");
 }
 
 UnitInterval
@@ -193,7 +195,7 @@ DRepVotingThresholds::hardForkInitiation() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "DRepVotingThresholds hardForkInitiation");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -201,7 +203,7 @@ void
 DRepVotingThresholds::setHardForkInitiation(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_drep_voting_thresholds_set_hard_fork_initiation(checked(), copy.checked()), "DRepVotingThresholds setHardForkInitiation");
+  checkCardanoError(cardano_drep_voting_thresholds_set_hard_fork_initiation(checked(), checkedNativeHandle(copy)), "DRepVotingThresholds setHardForkInitiation");
 }
 
 UnitInterval
@@ -212,7 +214,7 @@ DRepVotingThresholds::ppNetworkGroup() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "DRepVotingThresholds ppNetworkGroup");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -220,7 +222,7 @@ void
 DRepVotingThresholds::setPpNetworkGroup(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_drep_voting_thresholds_set_pp_network_group(checked(), copy.checked()), "DRepVotingThresholds setPpNetworkGroup");
+  checkCardanoError(cardano_drep_voting_thresholds_set_pp_network_group(checked(), checkedNativeHandle(copy)), "DRepVotingThresholds setPpNetworkGroup");
 }
 
 UnitInterval
@@ -231,7 +233,7 @@ DRepVotingThresholds::ppEconomicGroup() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "DRepVotingThresholds ppEconomicGroup");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -239,7 +241,7 @@ void
 DRepVotingThresholds::setPpEconomicGroup(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_drep_voting_thresholds_set_pp_economic_group(checked(), copy.checked()), "DRepVotingThresholds setPpEconomicGroup");
+  checkCardanoError(cardano_drep_voting_thresholds_set_pp_economic_group(checked(), checkedNativeHandle(copy)), "DRepVotingThresholds setPpEconomicGroup");
 }
 
 UnitInterval
@@ -250,7 +252,7 @@ DRepVotingThresholds::ppTechnicalGroup() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "DRepVotingThresholds ppTechnicalGroup");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -258,7 +260,7 @@ void
 DRepVotingThresholds::setPpTechnicalGroup(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_drep_voting_thresholds_set_pp_technical_group(checked(), copy.checked()), "DRepVotingThresholds setPpTechnicalGroup");
+  checkCardanoError(cardano_drep_voting_thresholds_set_pp_technical_group(checked(), checkedNativeHandle(copy)), "DRepVotingThresholds setPpTechnicalGroup");
 }
 
 UnitInterval
@@ -269,7 +271,7 @@ DRepVotingThresholds::ppGovernanceGroup() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "DRepVotingThresholds ppGovernanceGroup");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -277,7 +279,7 @@ void
 DRepVotingThresholds::setPpGovernanceGroup(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_drep_voting_thresholds_set_pp_governance_group(checked(), copy.checked()), "DRepVotingThresholds setPpGovernanceGroup");
+  checkCardanoError(cardano_drep_voting_thresholds_set_pp_governance_group(checked(), checkedNativeHandle(copy)), "DRepVotingThresholds setPpGovernanceGroup");
 }
 
 UnitInterval
@@ -288,7 +290,7 @@ DRepVotingThresholds::treasuryWithdrawal() const
   CardanoObject<cardano_unit_interval_t, cardano_unit_interval_unref> owner(value);
 
   checkCardanoError(status, "DRepVotingThresholds treasuryWithdrawal");
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -296,7 +298,7 @@ void
 DRepVotingThresholds::setTreasuryWithdrawal(const UnitInterval& value)
 {
   const UnitInterval copy(value);
-  checkCardanoError(cardano_drep_voting_thresholds_set_treasury_withdrawal(checked(), copy.checked()), "DRepVotingThresholds setTreasuryWithdrawal");
+  checkCardanoError(cardano_drep_voting_thresholds_set_treasury_withdrawal(checked(), checkedNativeHandle(copy)), "DRepVotingThresholds setTreasuryWithdrawal");
 }
 
 std::vector<std::uint8_t>
@@ -349,6 +351,35 @@ bool
 DRepVotingThresholds::operator!=(const DRepVotingThresholds& other) const
 {
   return !(*this == other);
+}
+
+DRepVotingThresholds
+DRepVotingThresholds::adopt(cardano_drep_voting_thresholds_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null DRepVotingThresholds");
+  }
+
+  return DRepVotingThresholds(value);
+}
+
+cardano_drep_voting_thresholds_t*
+DRepVotingThresholds::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_drep_voting_thresholds_t*
+DRepVotingThresholds::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_drep_voting_thresholds_t*
+DRepVotingThresholds::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

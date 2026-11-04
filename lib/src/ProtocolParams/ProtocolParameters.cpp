@@ -33,6 +33,8 @@
 #include <cardano/protocol_params/protocol_parameters.h>
 #include <limits>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -188,7 +190,7 @@ ProtocolParameters::poolPledgeInfluence() const
     throw std::logic_error("ProtocolParameters poolPledgeInfluence is unavailable");
   }
 
-  const UnitInterval found(owner.release());
+  const UnitInterval found = UnitInterval::adopt(owner.release());
   return UnitInterval(found);
 }
 
@@ -196,7 +198,7 @@ void
 ProtocolParameters::setPoolPledgeInfluence(const UnitInterval& value)
 {
   const UnitInterval       copy(value);
-  cardano_unit_interval_t* data = copy.checked();
+  cardano_unit_interval_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_pool_pledge_influence(checked(), data), "ProtocolParameters setPoolPledgeInfluence");
 }
 
@@ -211,7 +213,7 @@ ProtocolParameters::expansionRate() const
     throw std::logic_error("ProtocolParameters expansionRate is unavailable");
   }
 
-  const UnitInterval found(owner.release());
+  const UnitInterval found = UnitInterval::adopt(owner.release());
   return UnitInterval(found);
 }
 
@@ -219,7 +221,7 @@ void
 ProtocolParameters::setExpansionRate(const UnitInterval& value)
 {
   const UnitInterval       copy(value);
-  cardano_unit_interval_t* data = copy.checked();
+  cardano_unit_interval_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_expansion_rate(checked(), data), "ProtocolParameters setExpansionRate");
 }
 
@@ -234,7 +236,7 @@ ProtocolParameters::treasuryGrowthRate() const
     throw std::logic_error("ProtocolParameters treasuryGrowthRate is unavailable");
   }
 
-  const UnitInterval found(owner.release());
+  const UnitInterval found = UnitInterval::adopt(owner.release());
   return UnitInterval(found);
 }
 
@@ -242,7 +244,7 @@ void
 ProtocolParameters::setTreasuryGrowthRate(const UnitInterval& value)
 {
   const UnitInterval       copy(value);
-  cardano_unit_interval_t* data = copy.checked();
+  cardano_unit_interval_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_treasury_growth_rate(checked(), data), "ProtocolParameters setTreasuryGrowthRate");
 }
 
@@ -257,7 +259,7 @@ ProtocolParameters::d() const
     throw std::logic_error("ProtocolParameters d is unavailable");
   }
 
-  const UnitInterval found(owner.release());
+  const UnitInterval found = UnitInterval::adopt(owner.release());
   return UnitInterval(found);
 }
 
@@ -265,7 +267,7 @@ void
 ProtocolParameters::setD(const UnitInterval& value)
 {
   const UnitInterval       copy(value);
-  cardano_unit_interval_t* data = copy.checked();
+  cardano_unit_interval_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_d(checked(), data), "ProtocolParameters setD");
 }
 
@@ -317,7 +319,7 @@ ProtocolParameters::protocolVersion() const
     throw std::logic_error("ProtocolParameters protocolVersion is unavailable");
   }
 
-  const ProtocolVersion found(owner.release());
+  const ProtocolVersion found = ProtocolVersion::adopt(owner.release());
   return ProtocolVersion(found);
 }
 
@@ -325,7 +327,7 @@ void
 ProtocolParameters::setProtocolVersion(const ProtocolVersion& value)
 {
   const ProtocolVersion       copy(value);
-  cardano_protocol_version_t* data = copy.checked();
+  cardano_protocol_version_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_protocol_version(checked(), data), "ProtocolParameters setProtocolVersion");
 }
 
@@ -364,7 +366,7 @@ ProtocolParameters::costModels() const
     throw std::logic_error("ProtocolParameters costModels is unavailable");
   }
 
-  const CostModels found(owner.release());
+  const CostModels found = CostModels::adopt(owner.release());
   return CostModels(found);
 }
 
@@ -372,7 +374,7 @@ void
 ProtocolParameters::setCostModels(const CostModels& value)
 {
   const CostModels    copy(value);
-  cardano_costmdls_t* data = copy.checked();
+  cardano_costmdls_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_cost_models(checked(), data), "ProtocolParameters setCostModels");
 }
 
@@ -387,7 +389,7 @@ ProtocolParameters::executionCosts() const
     throw std::logic_error("ProtocolParameters executionCosts is unavailable");
   }
 
-  const ExUnitPrices found(owner.release());
+  const ExUnitPrices found = ExUnitPrices::adopt(owner.release());
   return ExUnitPrices(found);
 }
 
@@ -395,7 +397,7 @@ void
 ProtocolParameters::setExecutionCosts(const ExUnitPrices& value)
 {
   const ExUnitPrices        copy(value);
-  cardano_ex_unit_prices_t* data = copy.checked();
+  cardano_ex_unit_prices_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_execution_costs(checked(), data), "ProtocolParameters setExecutionCosts");
 }
 
@@ -410,7 +412,7 @@ ProtocolParameters::maxTxExUnits() const
     throw std::logic_error("ProtocolParameters maxTxExUnits is unavailable");
   }
 
-  const ExUnits found(owner.release());
+  const ExUnits found = ExUnits::adopt(owner.release());
   return ExUnits(found);
 }
 
@@ -418,7 +420,7 @@ void
 ProtocolParameters::setMaxTxExUnits(const ExUnits& value)
 {
   const ExUnits       copy(value);
-  cardano_ex_units_t* data = copy.checked();
+  cardano_ex_units_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_max_tx_ex_units(checked(), data), "ProtocolParameters setMaxTxExUnits");
 }
 
@@ -433,7 +435,7 @@ ProtocolParameters::maxBlockExUnits() const
     throw std::logic_error("ProtocolParameters maxBlockExUnits is unavailable");
   }
 
-  const ExUnits found(owner.release());
+  const ExUnits found = ExUnits::adopt(owner.release());
   return ExUnits(found);
 }
 
@@ -441,7 +443,7 @@ void
 ProtocolParameters::setMaxBlockExUnits(const ExUnits& value)
 {
   const ExUnits       copy(value);
-  cardano_ex_units_t* data = copy.checked();
+  cardano_ex_units_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_max_block_ex_units(checked(), data), "ProtocolParameters setMaxBlockExUnits");
 }
 
@@ -497,7 +499,7 @@ ProtocolParameters::poolVotingThresholds() const
     throw std::logic_error("ProtocolParameters poolVotingThresholds is unavailable");
   }
 
-  const PoolVotingThresholds found(owner.release());
+  const PoolVotingThresholds found = PoolVotingThresholds::adopt(owner.release());
   return PoolVotingThresholds(found);
 }
 
@@ -505,7 +507,7 @@ void
 ProtocolParameters::setPoolVotingThresholds(const PoolVotingThresholds& value)
 {
   const PoolVotingThresholds        copy(value);
-  cardano_pool_voting_thresholds_t* data = copy.checked();
+  cardano_pool_voting_thresholds_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_pool_voting_thresholds(checked(), data), "ProtocolParameters setPoolVotingThresholds");
 }
 
@@ -520,7 +522,7 @@ ProtocolParameters::drepVotingThresholds() const
     throw std::logic_error("ProtocolParameters drepVotingThresholds is unavailable");
   }
 
-  const DRepVotingThresholds found(owner.release());
+  const DRepVotingThresholds found = DRepVotingThresholds::adopt(owner.release());
   return DRepVotingThresholds(found);
 }
 
@@ -528,7 +530,7 @@ void
 ProtocolParameters::setDrepVotingThresholds(const DRepVotingThresholds& value)
 {
   const DRepVotingThresholds        copy(value);
-  cardano_drep_voting_thresholds_t* data = copy.checked();
+  cardano_drep_voting_thresholds_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_drep_voting_thresholds(checked(), data), "ProtocolParameters setDrepVotingThresholds");
 }
 
@@ -615,7 +617,7 @@ ProtocolParameters::refScriptCostPerByte() const
     throw std::logic_error("ProtocolParameters refScriptCostPerByte is unavailable");
   }
 
-  const UnitInterval found(owner.release());
+  const UnitInterval found = UnitInterval::adopt(owner.release());
   return UnitInterval(found);
 }
 
@@ -623,7 +625,7 @@ void
 ProtocolParameters::setRefScriptCostPerByte(const UnitInterval& value)
 {
   const UnitInterval       copy(value);
-  cardano_unit_interval_t* data = copy.checked();
+  cardano_unit_interval_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_ref_script_cost_per_byte(checked(), data), "ProtocolParameters setRefScriptCostPerByte");
 }
 
@@ -674,7 +676,7 @@ ProtocolParameters::refScriptCostMultiplier() const
     return std::nullopt;
   }
 
-  const UnitInterval found(owner.release());
+  const UnitInterval found = UnitInterval::adopt(owner.release());
   return UnitInterval(found);
 }
 
@@ -682,7 +684,7 @@ void
 ProtocolParameters::setRefScriptCostMultiplier(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_parameters_set_ref_script_cost_multiplier(checked(), data), "ProtocolParameters setRefScriptCostMultiplier");
 }
 
@@ -697,7 +699,7 @@ ProtocolParameters::maxPledgeLeverage() const
     return std::nullopt;
   }
 
-  const UnitInterval found(owner.release());
+  const UnitInterval found = UnitInterval::adopt(owner.release());
   return UnitInterval(found);
 }
 
@@ -705,7 +707,7 @@ void
 ProtocolParameters::setMaxPledgeLeverage(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_parameters_set_max_pledge_leverage(checked(), data), "ProtocolParameters setMaxPledgeLeverage");
 }
 
@@ -720,7 +722,7 @@ ProtocolParameters::minPoolMargin() const
     throw std::logic_error("ProtocolParameters minPoolMargin is unavailable");
   }
 
-  const UnitInterval found(owner.release());
+  const UnitInterval found = UnitInterval::adopt(owner.release());
   return UnitInterval(found);
 }
 
@@ -728,7 +730,7 @@ void
 ProtocolParameters::setMinPoolMargin(const UnitInterval& value)
 {
   const UnitInterval       copy(value);
-  cardano_unit_interval_t* data = copy.checked();
+  cardano_unit_interval_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_min_pool_margin(checked(), data), "ProtocolParameters setMinPoolMargin");
 }
 
@@ -791,7 +793,7 @@ ProtocolParameters::leiosQuorumStakeThreshold() const
     throw std::logic_error("ProtocolParameters leiosQuorumStakeThreshold is unavailable");
   }
 
-  const UnitInterval found(owner.release());
+  const UnitInterval found = UnitInterval::adopt(owner.release());
   return UnitInterval(found);
 }
 
@@ -799,7 +801,7 @@ void
 ProtocolParameters::setLeiosQuorumStakeThreshold(const UnitInterval& value)
 {
   const UnitInterval       copy(value);
-  cardano_unit_interval_t* data = copy.checked();
+  cardano_unit_interval_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_leios_quorum_stake_threshold(checked(), data), "ProtocolParameters setLeiosQuorumStakeThreshold");
 }
 
@@ -838,7 +840,7 @@ ProtocolParameters::maxEndorserBlockExecutionUnits() const
     throw std::logic_error("ProtocolParameters maxEndorserBlockExecutionUnits is unavailable");
   }
 
-  const ExUnits found(owner.release());
+  const ExUnits found = ExUnits::adopt(owner.release());
   return ExUnits(found);
 }
 
@@ -846,7 +848,7 @@ void
 ProtocolParameters::setMaxEndorserBlockExecutionUnits(const ExUnits& value)
 {
   const ExUnits       copy(value);
-  cardano_ex_units_t* data = copy.checked();
+  cardano_ex_units_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_max_endorser_block_execution_units(checked(), data), "ProtocolParameters setMaxEndorserBlockExecutionUnits");
 }
 
@@ -885,7 +887,7 @@ ProtocolParameters::perasHealingFactor() const
     return std::nullopt;
   }
 
-  const UnitInterval found(owner.release());
+  const UnitInterval found = UnitInterval::adopt(owner.release());
   return UnitInterval(found);
 }
 
@@ -893,7 +895,7 @@ void
 ProtocolParameters::setPerasHealingFactor(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_parameters_set_peras_healing_factor(checked(), data), "ProtocolParameters setPerasHealingFactor");
 }
 
@@ -946,7 +948,7 @@ ProtocolParameters::perasQuorumThresholdSafetyMargin() const
     throw std::logic_error("ProtocolParameters perasQuorumThresholdSafetyMargin is unavailable");
   }
 
-  const UnitInterval found(owner.release());
+  const UnitInterval found = UnitInterval::adopt(owner.release());
   return UnitInterval(found);
 }
 
@@ -954,7 +956,7 @@ void
 ProtocolParameters::setPerasQuorumThresholdSafetyMargin(const UnitInterval& value)
 {
   const UnitInterval       copy(value);
-  cardano_unit_interval_t* data = copy.checked();
+  cardano_unit_interval_t* data = checkedNativeHandle(copy);
   checkCardanoError(cardano_protocol_parameters_set_peras_quorum_threshold_safety_margin(checked(), data), "ProtocolParameters setPerasQuorumThresholdSafetyMargin");
 }
 
@@ -1302,7 +1304,41 @@ ProtocolParameters::operator!=(const ProtocolParameters& other) const
   return !(*this == other);
 }
 
+ProtocolParameters
+ProtocolParameters::adopt(cardano_protocol_parameters_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ProtocolParameters");
+  }
+
+  return ProtocolParameters(value);
+}
+
+cardano_protocol_parameters_t*
+ProtocolParameters::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_protocol_parameters_t*
+ProtocolParameters::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_protocol_parameters_t*
+ProtocolParameters::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
+
+ProtocolParameters::ProtocolParameters(cardano_protocol_parameters_t* value) noexcept
+: m_value(value)
+{
+}
 
 cardano_protocol_parameters_t*
 ProtocolParameters::checked() const
@@ -1320,7 +1356,7 @@ cardano_protocol_parameters_t*
 copyProtocolParametersToNative(const ProtocolParameters& parameters)
 {
   cardano_protocol_parameters_t*                                                  value  = nullptr;
-  const cardano_error_t                                                           status = cardano_protocol_parameters_deep_clone(parameters.checked(), &value);
+  const cardano_error_t                                                           status = cardano_protocol_parameters_deep_clone(checkedNativeHandle(parameters), &value);
   CardanoObject<cardano_protocol_parameters_t, cardano_protocol_parameters_unref> owner(value);
 
   checkCardanoError(status, "Copy protocol parameters to native");
@@ -1331,17 +1367,12 @@ copyProtocolParametersToNative(const ProtocolParameters& parameters)
 ProtocolParameters
 copyProtocolParametersFromNative(const cardano_protocol_parameters_t* parameters)
 {
-  ProtocolParameters result;
-
   cardano_protocol_parameters_t*                                                  value  = nullptr;
   const cardano_error_t                                                           status = cardano_protocol_parameters_deep_clone(parameters, &value);
   CardanoObject<cardano_protocol_parameters_t, cardano_protocol_parameters_unref> owner(value);
 
   checkCardanoError(status, "Copy protocol parameters from native");
-  cardano_protocol_parameters_unref(&result.m_value);
-  result.m_value = owner.release();
-
-  return result;
+  return ProtocolParameters::adopt(owner.release());
 }
 
 void

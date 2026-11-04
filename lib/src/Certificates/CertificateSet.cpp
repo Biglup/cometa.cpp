@@ -33,6 +33,8 @@
 #include <functional>
 #include <iterator>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -106,7 +108,7 @@ CertificateSet::add(const Certificate& value)
   }
 
   const Certificate copy(value);
-  checkCardanoError(cardano_certificate_set_add(checked(), copy.checked()), "CertificateSet add");
+  checkCardanoError(cardano_certificate_set_add(checked(), checkedNativeHandle(copy)), "CertificateSet add");
 }
 
 std::vector<std::uint8_t>
@@ -433,6 +435,60 @@ CertificateSet::empty() const
   return size() == 0;
 }
 
+CertificateSet
+CertificateSet::adopt(cardano_certificate_set_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null CertificateSet");
+  }
+
+  return CertificateSet(value);
+}
+
+cardano_certificate_set_t*
+CertificateSet::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_certificate_set_t*
+CertificateSet::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_certificate_set_t*
+CertificateSet::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 CertificateSet::CertificateSet(cardano_certificate_set_t* value) noexcept
@@ -523,7 +579,7 @@ CertificateSet::copyElement(std::size_t index) const
   CardanoObject<cardano_certificate_t, cardano_certificate_unref> owner(value);
 
   checkCardanoError(status, "CertificateSet at");
-  const Certificate copied(owner.release());
+  const Certificate copied = Certificate::adopt(owner.release());
   return Certificate(copied);
 }
 

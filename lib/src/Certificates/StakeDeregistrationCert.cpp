@@ -29,6 +29,8 @@
 
 #include <cardano/certs/stake_deregistration_cert.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -38,7 +40,7 @@ StakeDeregistrationCert::StakeDeregistrationCert(const Credential& credential)
 {
   const Credential                                                                            copy(credential);
   cardano_stake_deregistration_cert_t*                                                        value  = nullptr;
-  const cardano_error_t                                                                       status = cardano_stake_deregistration_cert_new(copy.checked(), &value);
+  const cardano_error_t                                                                       status = cardano_stake_deregistration_cert_new(checkedNativeHandle(copy), &value);
   CardanoObject<cardano_stake_deregistration_cert_t, cardano_stake_deregistration_cert_unref> owner(value);
 
   checkCardanoError(status, "StakeDeregistrationCert");
@@ -88,7 +90,7 @@ StakeDeregistrationCert::credential() const
     throw std::logic_error("Stake deregistration certificate has no credential");
   }
 
-  const Credential result(value);
+  const Credential result = Credential::adopt(value);
   return Credential(result);
 }
 
@@ -96,7 +98,7 @@ void
 StakeDeregistrationCert::setCredential(const Credential& value)
 {
   const Credential copy(value);
-  checkCardanoError(cardano_stake_deregistration_cert_set_credential(checked(), copy.checked()), "StakeDeregistrationCert setCredential");
+  checkCardanoError(cardano_stake_deregistration_cert_set_credential(checked(), checkedNativeHandle(copy)), "StakeDeregistrationCert setCredential");
 }
 
 std::vector<std::uint8_t>
@@ -151,6 +153,35 @@ bool
 StakeDeregistrationCert::operator!=(const StakeDeregistrationCert& other) const
 {
   return !(*this == other);
+}
+
+StakeDeregistrationCert
+StakeDeregistrationCert::adopt(cardano_stake_deregistration_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null StakeDeregistrationCert");
+  }
+
+  return StakeDeregistrationCert(value);
+}
+
+cardano_stake_deregistration_cert_t*
+StakeDeregistrationCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_stake_deregistration_cert_t*
+StakeDeregistrationCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_stake_deregistration_cert_t*
+StakeDeregistrationCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

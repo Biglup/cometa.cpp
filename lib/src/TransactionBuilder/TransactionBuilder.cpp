@@ -183,7 +183,7 @@ TransactionBuilder::TransactionBuilder(const ProtocolParameters& parameters, Slo
   }
 
   const cardano_slot_config_t nativeSlots { slots.zeroTime, slots.zeroSlot, slots.slotLength };
-  m_value = cardano_tx_builder_new(parameters.checked(), &nativeSlots);
+  m_value = cardano_tx_builder_new(checkedNativeHandle(parameters), &nativeSlots);
 
   if (!m_value)
   {
@@ -937,6 +937,18 @@ TransactionBuilder::operator=(TransactionBuilder&& other) noexcept
 }
 
 cardano_tx_builder_t*
+TransactionBuilder::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_tx_builder_t*
+TransactionBuilder::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_tx_builder_t*
 TransactionBuilder::checked() const
 {
   if (!m_value)
@@ -946,4 +958,5 @@ TransactionBuilder::checked() const
 
   return m_value;
 }
+
 } // namespace Cometa

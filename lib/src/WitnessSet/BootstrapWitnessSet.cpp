@@ -30,6 +30,8 @@
 #include <cardano/witness_set/bootstrap_witness.h>
 #include <cardano/witness_set/bootstrap_witness_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -90,7 +92,7 @@ void
 BootstrapWitnessSet::add(const BootstrapWitness& value)
 {
   const BootstrapWitness copy(value);
-  checkCardanoError(cardano_bootstrap_witness_set_add(checked(), copy.checked()), "BootstrapWitnessSet add");
+  checkCardanoError(cardano_bootstrap_witness_set_add(checked(), checkedNativeHandle(copy)), "BootstrapWitnessSet add");
   invalidateElements();
 }
 
@@ -107,7 +109,7 @@ BootstrapWitnessSet::at(std::size_t index) const
   CardanoObject<cardano_bootstrap_witness_t, cardano_bootstrap_witness_unref> owner(value);
 
   checkCardanoError(status, "BootstrapWitnessSet at");
-  const BootstrapWitness copied(owner.release());
+  const BootstrapWitness copied = BootstrapWitness::adopt(owner.release());
   return BootstrapWitness(copied);
 }
 
@@ -360,6 +362,41 @@ BootstrapWitnessSet::erase(const value_type& value)
   erase(position);
 
   return 1;
+}
+
+BootstrapWitnessSet
+BootstrapWitnessSet::adopt(cardano_bootstrap_witness_set_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null BootstrapWitnessSet");
+  }
+
+  return BootstrapWitnessSet(value);
+}
+
+cardano_bootstrap_witness_set_t*
+BootstrapWitnessSet::nativeHandle() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return m_value;
+}
+
+const cardano_bootstrap_witness_set_t*
+BootstrapWitnessSet::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_bootstrap_witness_set_t*
+BootstrapWitnessSet::release() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

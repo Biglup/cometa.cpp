@@ -407,6 +407,39 @@ class TransactionInputSet
       }
     }
 
+  public:
+
+    /**
+     * @brief Takes ownership of one native reference without copying it.
+     * @param value An owned reference; the caller must stop managing it after this call succeeds.
+     * @return The C++ owner of the supplied reference.
+     * @throws std::invalid_argument The reference is null; ownership is not transferred.
+     */
+    static TransactionInputSet adopt(cardano_transaction_input_set_t* value);
+
+    /**
+     * @brief Borrows the native object for C interoperability.
+     * @return The native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     * @remark Invalidates all collection iterators and element references. Finish native access before using the collection again.
+     */
+    cardano_transaction_input_set_t* nativeHandle() noexcept;
+
+    /**
+     * @brief Borrows the native object for read-only C interoperability.
+     * @return The read-only native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    const cardano_transaction_input_set_t* nativeHandle() const noexcept;
+
+    /**
+     * @brief Transfers the owned native reference to the caller.
+     * @return The owned pointer, or nullptr if this object is already empty.
+     * @remark Leaves this object empty. The caller must adopt the reference or release it with the matching C unref function.
+     * @remark Invalidates all collection iterators and element references. Finish native access before using the collection again.
+     */
+    cardano_transaction_input_set_t* release() noexcept;
+
   private:
 
     /** @brief Prepares stable read-only element references for iteration. */
@@ -431,12 +464,6 @@ class TransactionInputSet
     bool insertValue(const TransactionInput& value);
 
   private:
-
-    /** @brief Allows sub-transaction bodies to copy this value. */
-    friend class SubTransactionBody;
-
-    /** @brief Allows transaction bodies to copy this value. */
-    friend class TransactionBody;
 
     /**
      * @brief Adopts one owned native set.

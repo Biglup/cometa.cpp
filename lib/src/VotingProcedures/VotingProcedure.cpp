@@ -30,6 +30,8 @@
 #include <cardano/common/anchor.h>
 #include <cardano/voting_procedures/voting_procedure.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -38,7 +40,7 @@ VotingProcedure::VotingProcedure(Vote vote, const std::optional<Anchor>& anchor)
 : m_value(nullptr)
 {
   const std::optional<Anchor>                                               copy(anchor);
-  cardano_anchor_t*                                                         data   = copy ? copy->checked() : nullptr;
+  cardano_anchor_t*                                                         data   = copy ? checkedNativeHandle(*copy) : nullptr;
   cardano_voting_procedure_t*                                               value  = nullptr;
   const cardano_error_t                                                     status = cardano_voting_procedure_new(static_cast<cardano_vote_t>(vote), data, &value);
   CardanoObject<cardano_voting_procedure_t, cardano_voting_procedure_unref> owner(value);
@@ -103,7 +105,7 @@ VotingProcedure::anchor() const
     return std::nullopt;
   }
 
-  const Anchor found(owner.release());
+  const Anchor found = Anchor::adopt(owner.release());
   return Anchor(found);
 }
 
@@ -111,7 +113,7 @@ void
 VotingProcedure::setAnchor(const Anchor& value)
 {
   const Anchor copy(value);
-  checkCardanoError(cardano_voting_procedure_set_anchor(checked(), copy.checked()), "VotingProcedure setAnchor");
+  checkCardanoError(cardano_voting_procedure_set_anchor(checked(), checkedNativeHandle(copy)), "VotingProcedure setAnchor");
 }
 
 std::vector<std::uint8_t>
@@ -164,6 +166,35 @@ bool
 VotingProcedure::operator!=(const VotingProcedure& other) const
 {
   return !(*this == other);
+}
+
+VotingProcedure
+VotingProcedure::adopt(cardano_voting_procedure_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null VotingProcedure");
+  }
+
+  return VotingProcedure(value);
+}
+
+cardano_voting_procedure_t*
+VotingProcedure::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_voting_procedure_t*
+VotingProcedure::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_voting_procedure_t*
+VotingProcedure::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -32,6 +32,8 @@
 #include <charconv>
 #include <limits>
 
+#include <utility>
+
 /* INTERNAL IMPLEMENTATION ***************************************************/
 
 namespace Cometa
@@ -740,6 +742,35 @@ bool
 BigInt::operator>=(const BigInt& other) const
 {
   return cardano_bigint_compare(checked(), other.checked()) >= 0;
+}
+
+BigInt
+BigInt::adopt(cardano_bigint_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null BigInt");
+  }
+
+  return BigInt(*value);
+}
+
+cardano_bigint_t*
+BigInt::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_bigint_t*
+BigInt::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_bigint_t*
+BigInt::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

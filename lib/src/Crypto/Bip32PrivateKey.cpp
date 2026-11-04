@@ -31,6 +31,8 @@
 
 #include <cstring>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -149,7 +151,7 @@ Bip32PrivateKey::toEd25519() const
 
   checkCardanoError(result, "Bip32PrivateKey toEd25519");
 
-  return Ed25519PrivateKey(*owner.release());
+  return Ed25519PrivateKey::adopt(owner.release());
 }
 
 Bip32PublicKey
@@ -162,7 +164,7 @@ Bip32PrivateKey::publicKey() const
 
   checkCardanoError(result, "Bip32PrivateKey publicKey");
 
-  return Bip32PublicKey(*owner.release());
+  return Bip32PublicKey::adopt(owner.release());
 }
 
 void
@@ -194,6 +196,35 @@ Bip32PrivateKey::operator=(Bip32PrivateKey&& other) noexcept
   }
 
   return *this;
+}
+
+Bip32PrivateKey
+Bip32PrivateKey::adopt(cardano_bip32_private_key_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Bip32PrivateKey");
+  }
+
+  return Bip32PrivateKey(*value);
+}
+
+cardano_bip32_private_key_t*
+Bip32PrivateKey::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_bip32_private_key_t*
+Bip32PrivateKey::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_bip32_private_key_t*
+Bip32PrivateKey::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

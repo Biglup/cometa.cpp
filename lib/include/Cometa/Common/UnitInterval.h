@@ -216,29 +216,36 @@ class UnitInterval
      */
     bool operator!=(const UnitInterval& other) const;
 
-    /** @brief Allows PoolParams to copy pool components. */
-    friend class PoolParams;
+  public:
 
-    /** @brief Allows ExUnitPrices to copy price components. */
-    friend class ExUnitPrices;
+    /**
+     * @brief Takes ownership of one native reference without copying it.
+     * @param value An owned reference; the caller must stop managing it after this call succeeds.
+     * @return The C++ owner of the supplied reference.
+     * @throws std::invalid_argument The reference is null; ownership is not transferred.
+     */
+    static UnitInterval adopt(cardano_unit_interval_t* value);
 
-    /** @brief Allows voting thresholds to copy their components. */
-    friend class DRepVotingThresholds;
+    /**
+     * @brief Borrows the native object for C interoperability.
+     * @return The native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    cardano_unit_interval_t* nativeHandle() noexcept;
 
-    /** @brief Allows voting thresholds to copy their components. */
-    friend class PoolVotingThresholds;
+    /**
+     * @brief Borrows the native object for read-only C interoperability.
+     * @return The read-only native pointer, or nullptr after a move or release.
+     * @remark Do not unref the borrowed pointer. Use it only until the next operation on this object.
+     */
+    const cardano_unit_interval_t* nativeHandle() const noexcept;
 
-    /** @brief Allows protocol updates to copy native values. */
-    friend class ProtocolParamUpdate;
-
-    /** @brief Allows protocol parameters to copy native values. */
-    friend class ProtocolParameters;
-
-    /** @brief Allows committees to copy quorum thresholds. */
-    friend class Committee;
-
-    /** @brief Allows update actions to copy quorum thresholds. */
-    friend class UpdateCommitteeAction;
+    /**
+     * @brief Transfers the owned native reference to the caller.
+     * @return The owned pointer, or nullptr if this object is already empty.
+     * @remark Leaves this object empty. The caller must adopt the reference or release it with the matching C unref function.
+     */
+    cardano_unit_interval_t* release() noexcept;
 
   private:
 

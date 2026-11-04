@@ -31,6 +31,8 @@
 #include <cardano/transaction/sub_transaction.h>
 #include <cardano/transaction_body/sub_transaction_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -97,7 +99,7 @@ void
 SubTransactionSet::add(const SubTransaction& value)
 {
   const SubTransaction copy(value);
-  checkCardanoError(cardano_sub_transaction_set_add(checked(), copy.checked()), "SubTransactionSet add");
+  checkCardanoError(cardano_sub_transaction_set_add(checked(), checkedNativeHandle(copy)), "SubTransactionSet add");
   invalidateElements();
 }
 
@@ -114,7 +116,7 @@ SubTransactionSet::at(std::size_t index) const
   CardanoObject<cardano_sub_transaction_t, cardano_sub_transaction_unref> owner(value);
 
   checkCardanoError(status, "SubTransactionSet at");
-  const SubTransaction copied(owner.release());
+  const SubTransaction copied = SubTransaction::adopt(owner.release());
   return SubTransaction(copied);
 }
 
@@ -122,7 +124,7 @@ std::optional<SubTransaction>
 SubTransactionSet::findById(const Blake2bHash& id) const
 {
   cardano_sub_transaction_t*                                              value  = nullptr;
-  const cardano_error_t                                                   status = cardano_sub_transaction_set_find_by_id(checked(), id.checked(), &value);
+  const cardano_error_t                                                   status = cardano_sub_transaction_set_find_by_id(checked(), checkedNativeHandle(id), &value);
   CardanoObject<cardano_sub_transaction_t, cardano_sub_transaction_unref> owner(value);
 
   if (status == CARDANO_ERROR_ELEMENT_NOT_FOUND)
@@ -131,7 +133,7 @@ SubTransactionSet::findById(const Blake2bHash& id) const
   }
 
   checkCardanoError(status, "SubTransactionSet findById");
-  const SubTransaction copied(owner.release());
+  const SubTransaction copied = SubTransaction::adopt(owner.release());
   return SubTransaction(copied);
 }
 
@@ -378,6 +380,41 @@ SubTransactionSet::erase(const value_type& value)
   erase(position);
 
   return 1;
+}
+
+SubTransactionSet
+SubTransactionSet::adopt(cardano_sub_transaction_set_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null SubTransactionSet");
+  }
+
+  return SubTransactionSet(value);
+}
+
+cardano_sub_transaction_set_t*
+SubTransactionSet::nativeHandle() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return m_value;
+}
+
+const cardano_sub_transaction_set_t*
+SubTransactionSet::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_sub_transaction_set_t*
+SubTransactionSet::release() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

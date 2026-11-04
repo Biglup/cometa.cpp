@@ -32,6 +32,8 @@
 #include <algorithm>
 #include <cstring>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -42,7 +44,7 @@ AssetId::AssetId(const Blake2bHash& policyId, const AssetName& assetName)
   const Blake2bHash     policyCopy(policyId);
   const AssetName       nameCopy(assetName);
   cardano_asset_id_t*   value  = nullptr;
-  const cardano_error_t result = cardano_asset_id_new(policyCopy.checked(), nameCopy.checked(), &value);
+  const cardano_error_t result = cardano_asset_id_new(checkedNativeHandle(policyCopy), checkedNativeHandle(nameCopy), &value);
 
   CardanoObject<cardano_asset_id_t, cardano_asset_id_unref> owner(value);
 
@@ -113,7 +115,7 @@ AssetId::policyId() const
     return std::nullopt;
   }
 
-  const Blake2bHash policy(cardano_asset_id_get_policy_id(checked()));
+  const Blake2bHash policy = Blake2bHash::adopt(cardano_asset_id_get_policy_id(checked()));
 
   return policy;
 }
@@ -126,7 +128,7 @@ AssetId::assetName() const
     return std::nullopt;
   }
 
-  const AssetName name(cardano_asset_id_get_asset_name(checked()));
+  const AssetName name = AssetName::adopt(cardano_asset_id_get_asset_name(checked()));
 
   return name;
 }
@@ -197,6 +199,35 @@ AssetId::operator<(const AssetId& other) const
   const std::uint8_t* right = cardano_asset_id_get_bytes(other.checked());
 
   return std::lexicographical_compare(left, left + cardano_asset_id_get_bytes_size(checked()), right, right + cardano_asset_id_get_bytes_size(other.checked()));
+}
+
+AssetId
+AssetId::adopt(cardano_asset_id_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null AssetId");
+  }
+
+  return AssetId(value);
+}
+
+cardano_asset_id_t*
+AssetId::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_asset_id_t*
+AssetId::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_asset_id_t*
+AssetId::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

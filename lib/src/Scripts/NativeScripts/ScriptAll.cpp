@@ -26,11 +26,14 @@
 #include <Cometa/Scripts/NativeScripts/ScriptAll.h>
 
 #include "../../CardanoInterop.h"
+#include "../../ValueValidation.h"
 #include <Cometa/Json/JsonValue.h>
 #include <Cometa/Scripts/NativeScripts/NativeScriptList.h>
 
 #include <cardano/scripts/native_scripts/native_script_list.h>
 #include <cardano/scripts/native_scripts/script_all.h>
+
+#include <utility>
 
 /* CLASS IMPLEMENTATION ******************************************************/
 
@@ -42,7 +45,7 @@ ScriptAll::ScriptAll(const NativeScriptList& scripts)
   NativeScriptList copy(scripts);
 
   cardano_script_all_t* value  = nullptr;
-  const cardano_error_t result = cardano_script_all_new(copy.checked(), &value);
+  const cardano_error_t result = cardano_script_all_new(checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_script_all_t, cardano_script_all_unref> owner(value);
 
@@ -79,7 +82,7 @@ ScriptAll::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   ScriptAll value(*decodeCbor<cardano_script_all_t, cardano_script_all_unref>(cbor, cardano_script_all_from_cbor));
 
-  value.scripts().validate();
+  validateValue(value.scripts());
 
   return value;
 }
@@ -119,7 +122,7 @@ ScriptAll::scripts() const
 
   checkCardanoError(result, "ScriptAll scripts");
 
-  const NativeScriptList list(*owner.release());
+  const NativeScriptList list = NativeScriptList::adopt(owner.release());
 
   return NativeScriptList(list);
 }
@@ -129,7 +132,7 @@ ScriptAll::setScripts(const NativeScriptList& scripts)
 {
   NativeScriptList copy(scripts);
 
-  checkCardanoError(cardano_script_all_set_scripts(checked(), copy.checked()), "ScriptAll setScripts");
+  checkCardanoError(cardano_script_all_set_scripts(checked(), checkedNativeHandle(copy)), "ScriptAll setScripts");
 }
 
 std::vector<std::uint8_t>
@@ -191,6 +194,35 @@ bool
 ScriptAll::operator!=(const ScriptAll& other) const
 {
   return !(*this == other);
+}
+
+ScriptAll
+ScriptAll::adopt(cardano_script_all_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ScriptAll");
+  }
+
+  return ScriptAll(*value);
+}
+
+cardano_script_all_t*
+ScriptAll::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_script_all_t*
+ScriptAll::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_script_all_t*
+ScriptAll::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

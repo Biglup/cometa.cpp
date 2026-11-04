@@ -26,11 +26,14 @@
 #include <Cometa/Common/Utxo.h>
 
 #include "../CardanoInterop.h"
+#include "../ValueValidation.h"
 
 #include <cardano/common/utxo.h>
 
 #include <cardano/transaction_body/transaction_input.h>
 #include <cardano/transaction_body/transaction_output.h>
+
+#include <utility>
 
 /* CLASS IMPLEMENTATION ******************************************************/
 
@@ -43,7 +46,7 @@ Utxo::Utxo(const TransactionInput& input, const TransactionOutput& output)
   TransactionOutput outputCopy(output);
 
   cardano_utxo_t*       value  = nullptr;
-  const cardano_error_t result = cardano_utxo_new(inputCopy.checked(), outputCopy.checked(), &value);
+  const cardano_error_t result = cardano_utxo_new(checkedNativeHandle(inputCopy), checkedNativeHandle(outputCopy), &value);
 
   CardanoObject<cardano_utxo_t, cardano_utxo_unref> owner(value);
 
@@ -80,7 +83,7 @@ Utxo::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   Utxo value(*decodeCbor<cardano_utxo_t, cardano_utxo_unref>(cbor, cardano_utxo_from_cbor));
 
-  value.validate();
+  validateValue(value);
 
   return value;
 }
@@ -97,7 +100,7 @@ Utxo::input() const
   cardano_transaction_input_t*                                                value = cardano_utxo_get_input(checked());
   CardanoObject<cardano_transaction_input_t, cardano_transaction_input_unref> owner(value);
 
-  const TransactionInput component(*owner.release());
+  const TransactionInput component = TransactionInput::adopt(owner.release());
 
   return TransactionInput(component);
 }
@@ -107,7 +110,7 @@ Utxo::setInput(const TransactionInput& value)
 {
   TransactionInput copy(value);
 
-  checkCardanoError(cardano_utxo_set_input(checked(), copy.checked()), "Utxo setInput");
+  checkCardanoError(cardano_utxo_set_input(checked(), checkedNativeHandle(copy)), "Utxo setInput");
 }
 
 TransactionOutput
@@ -116,7 +119,7 @@ Utxo::output() const
   cardano_transaction_output_t*                                                 value = cardano_utxo_get_output(checked());
   CardanoObject<cardano_transaction_output_t, cardano_transaction_output_unref> owner(value);
 
-  const TransactionOutput component(*owner.release());
+  const TransactionOutput component = TransactionOutput::adopt(owner.release());
 
   return TransactionOutput(component);
 }
@@ -126,7 +129,7 @@ Utxo::setOutput(const TransactionOutput& value)
 {
   TransactionOutput copy(value);
 
-  checkCardanoError(cardano_utxo_set_output(checked(), copy.checked()), "Utxo setOutput");
+  checkCardanoError(cardano_utxo_set_output(checked(), checkedNativeHandle(copy)), "Utxo setOutput");
 }
 
 std::vector<std::uint8_t>
@@ -184,6 +187,35 @@ Utxo::operator!=(const Utxo& other) const
   return !(*this == other);
 }
 
+Utxo
+Utxo::adopt(cardano_utxo_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Utxo");
+  }
+
+  return Utxo(*value);
+}
+
+cardano_utxo_t*
+Utxo::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_utxo_t*
+Utxo::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_utxo_t*
+Utxo::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 Utxo::Utxo(cardano_utxo_t& value) noexcept
@@ -203,10 +235,10 @@ Utxo::checked() const
 }
 
 void
-Utxo::validate() const
+validateValue(const Utxo& value)
 {
-  input().validate();
-  output().validate();
+  validateValue(value.input());
+  validateValue(value.output());
 }
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/

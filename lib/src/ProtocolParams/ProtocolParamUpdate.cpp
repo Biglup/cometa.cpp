@@ -38,6 +38,8 @@
 #include <cardano/protocol_params/pool_voting_thresholds.h>
 #include <cardano/protocol_params/protocol_param_update.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -303,7 +305,7 @@ ProtocolParamUpdate::poolPledgeInfluence() const
     return std::nullopt;
   }
 
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -311,7 +313,7 @@ void
 ProtocolParamUpdate::setPoolPledgeInfluence(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_pool_pledge_influence(checked(), data), "ProtocolParamUpdate setPoolPledgeInfluence");
 }
 
@@ -334,7 +336,7 @@ ProtocolParamUpdate::expansionRate() const
     return std::nullopt;
   }
 
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -342,7 +344,7 @@ void
 ProtocolParamUpdate::setExpansionRate(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_expansion_rate(checked(), data), "ProtocolParamUpdate setExpansionRate");
 }
 
@@ -365,7 +367,7 @@ ProtocolParamUpdate::treasuryGrowthRate() const
     return std::nullopt;
   }
 
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -373,7 +375,7 @@ void
 ProtocolParamUpdate::setTreasuryGrowthRate(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_treasury_growth_rate(checked(), data), "ProtocolParamUpdate setTreasuryGrowthRate");
 }
 
@@ -396,7 +398,7 @@ ProtocolParamUpdate::d() const
     return std::nullopt;
   }
 
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -404,7 +406,7 @@ void
 ProtocolParamUpdate::setD(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_d(checked(), data), "ProtocolParamUpdate setD");
 }
 
@@ -470,7 +472,7 @@ ProtocolParamUpdate::protocolVersion() const
     return std::nullopt;
   }
 
-  const ProtocolVersion result(owner.release());
+  const ProtocolVersion result = ProtocolVersion::adopt(owner.release());
   return ProtocolVersion(result);
 }
 
@@ -478,7 +480,7 @@ void
 ProtocolParamUpdate::setProtocolVersion(const std::optional<ProtocolVersion>& value)
 {
   const std::optional<ProtocolVersion> copy(value);
-  cardano_protocol_version_t*          data = copy ? copy->checked() : nullptr;
+  cardano_protocol_version_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_protocol_version(checked(), data), "ProtocolParamUpdate setProtocolVersion");
 }
 
@@ -545,7 +547,7 @@ ProtocolParamUpdate::costModels() const
     return std::nullopt;
   }
 
-  const CostModels result(owner.release());
+  const CostModels result = CostModels::adopt(owner.release());
   return CostModels(result);
 }
 
@@ -553,7 +555,7 @@ void
 ProtocolParamUpdate::setCostModels(const std::optional<CostModels>& value)
 {
   const std::optional<CostModels> copy(value);
-  cardano_costmdls_t*             data = copy ? copy->checked() : nullptr;
+  cardano_costmdls_t*             data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_cost_models(checked(), data), "ProtocolParamUpdate setCostModels");
 }
 
@@ -576,7 +578,7 @@ ProtocolParamUpdate::executionCosts() const
     return std::nullopt;
   }
 
-  const ExUnitPrices result(owner.release());
+  const ExUnitPrices result = ExUnitPrices::adopt(owner.release());
   return ExUnitPrices(result);
 }
 
@@ -584,7 +586,7 @@ void
 ProtocolParamUpdate::setExecutionCosts(const std::optional<ExUnitPrices>& value)
 {
   const std::optional<ExUnitPrices> copy(value);
-  cardano_ex_unit_prices_t*         data = copy ? copy->checked() : nullptr;
+  cardano_ex_unit_prices_t*         data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_execution_costs(checked(), data), "ProtocolParamUpdate setExecutionCosts");
 }
 
@@ -607,7 +609,7 @@ ProtocolParamUpdate::maxTxExUnits() const
     return std::nullopt;
   }
 
-  const ExUnits result(owner.release());
+  const ExUnits result = ExUnits::adopt(owner.release());
   return ExUnits(result);
 }
 
@@ -615,7 +617,7 @@ void
 ProtocolParamUpdate::setMaxTxExUnits(const std::optional<ExUnits>& value)
 {
   const std::optional<ExUnits> copy(value);
-  cardano_ex_units_t*          data = copy ? copy->checked() : nullptr;
+  cardano_ex_units_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_max_tx_ex_units(checked(), data), "ProtocolParamUpdate setMaxTxExUnits");
 }
 
@@ -638,7 +640,7 @@ ProtocolParamUpdate::maxBlockExUnits() const
     return std::nullopt;
   }
 
-  const ExUnits result(owner.release());
+  const ExUnits result = ExUnits::adopt(owner.release());
   return ExUnits(result);
 }
 
@@ -646,7 +648,7 @@ void
 ProtocolParamUpdate::setMaxBlockExUnits(const std::optional<ExUnits>& value)
 {
   const std::optional<ExUnits> copy(value);
-  cardano_ex_units_t*          data = copy ? copy->checked() : nullptr;
+  cardano_ex_units_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_max_block_ex_units(checked(), data), "ProtocolParamUpdate setMaxBlockExUnits");
 }
 
@@ -735,7 +737,7 @@ ProtocolParamUpdate::poolVotingThresholds() const
     return std::nullopt;
   }
 
-  const PoolVotingThresholds result(owner.release());
+  const PoolVotingThresholds result = PoolVotingThresholds::adopt(owner.release());
   return PoolVotingThresholds(result);
 }
 
@@ -743,7 +745,7 @@ void
 ProtocolParamUpdate::setPoolVotingThresholds(const std::optional<PoolVotingThresholds>& value)
 {
   const std::optional<PoolVotingThresholds> copy(value);
-  cardano_pool_voting_thresholds_t*         data = copy ? copy->checked() : nullptr;
+  cardano_pool_voting_thresholds_t*         data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_pool_voting_thresholds(checked(), data), "ProtocolParamUpdate setPoolVotingThresholds");
 }
 
@@ -766,7 +768,7 @@ ProtocolParamUpdate::drepVotingThresholds() const
     return std::nullopt;
   }
 
-  const DRepVotingThresholds result(owner.release());
+  const DRepVotingThresholds result = DRepVotingThresholds::adopt(owner.release());
   return DRepVotingThresholds(result);
 }
 
@@ -774,7 +776,7 @@ void
 ProtocolParamUpdate::setDrepVotingThresholds(const std::optional<DRepVotingThresholds>& value)
 {
   const std::optional<DRepVotingThresholds> copy(value);
-  cardano_drep_voting_thresholds_t*         data = copy ? copy->checked() : nullptr;
+  cardano_drep_voting_thresholds_t*         data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_drep_voting_thresholds(checked(), data), "ProtocolParamUpdate setDrepVotingThresholds");
 }
 
@@ -929,7 +931,7 @@ ProtocolParamUpdate::refScriptCostPerByte() const
     return std::nullopt;
   }
 
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -937,7 +939,7 @@ void
 ProtocolParamUpdate::setRefScriptCostPerByte(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_ref_script_cost_per_byte(checked(), data), "ProtocolParamUpdate setRefScriptCostPerByte");
 }
 
@@ -1026,7 +1028,7 @@ ProtocolParamUpdate::refScriptCostMultiplier() const
     return std::nullopt;
   }
 
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -1034,7 +1036,7 @@ void
 ProtocolParamUpdate::setRefScriptCostMultiplier(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_ref_script_cost_multiplier(checked(), data), "ProtocolParamUpdate setRefScriptCostMultiplier");
 }
 
@@ -1057,7 +1059,7 @@ ProtocolParamUpdate::maxPledgeLeverage() const
     return std::nullopt;
   }
 
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -1065,7 +1067,7 @@ void
 ProtocolParamUpdate::setMaxPledgeLeverage(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_max_pledge_leverage(checked(), data), "ProtocolParamUpdate setMaxPledgeLeverage");
 }
 
@@ -1088,7 +1090,7 @@ ProtocolParamUpdate::minPoolMargin() const
     return std::nullopt;
   }
 
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -1096,7 +1098,7 @@ void
 ProtocolParamUpdate::setMinPoolMargin(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_min_pool_margin(checked(), data), "ProtocolParamUpdate setMinPoolMargin");
 }
 
@@ -1207,7 +1209,7 @@ ProtocolParamUpdate::leiosQuorumStakeThreshold() const
     return std::nullopt;
   }
 
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -1215,7 +1217,7 @@ void
 ProtocolParamUpdate::setLeiosQuorumStakeThreshold(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_leios_quorum_stake_threshold(checked(), data), "ProtocolParamUpdate setLeiosQuorumStakeThreshold");
 }
 
@@ -1282,7 +1284,7 @@ ProtocolParamUpdate::maxEndorserBlockExecutionUnits() const
     return std::nullopt;
   }
 
-  const ExUnits result(owner.release());
+  const ExUnits result = ExUnits::adopt(owner.release());
   return ExUnits(result);
 }
 
@@ -1290,7 +1292,7 @@ void
 ProtocolParamUpdate::setMaxEndorserBlockExecutionUnits(const std::optional<ExUnits>& value)
 {
   const std::optional<ExUnits> copy(value);
-  cardano_ex_units_t*          data = copy ? copy->checked() : nullptr;
+  cardano_ex_units_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_max_endorser_block_execution_units(checked(), data), "ProtocolParamUpdate setMaxEndorserBlockExecutionUnits");
 }
 
@@ -1357,7 +1359,7 @@ ProtocolParamUpdate::perasHealingFactor() const
     return std::nullopt;
   }
 
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -1365,7 +1367,7 @@ void
 ProtocolParamUpdate::setPerasHealingFactor(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_peras_healing_factor(checked(), data), "ProtocolParamUpdate setPerasHealingFactor");
 }
 
@@ -1454,7 +1456,7 @@ ProtocolParamUpdate::perasQuorumThresholdSafetyMargin() const
     return std::nullopt;
   }
 
-  const UnitInterval result(owner.release());
+  const UnitInterval result = UnitInterval::adopt(owner.release());
   return UnitInterval(result);
 }
 
@@ -1462,7 +1464,7 @@ void
 ProtocolParamUpdate::setPerasQuorumThresholdSafetyMargin(const std::optional<UnitInterval>& value)
 {
   const std::optional<UnitInterval> copy(value);
-  cardano_unit_interval_t*          data = copy ? copy->checked() : nullptr;
+  cardano_unit_interval_t*          data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_protocol_param_update_set_peras_quorum_threshold_safety_margin(checked(), data), "ProtocolParamUpdate setPerasQuorumThresholdSafetyMargin");
 }
 
@@ -1572,7 +1574,7 @@ ProtocolParamUpdate::toPlutusData() const
   CardanoObject<cardano_plutus_data_t, cardano_plutus_data_unref> owner(value);
 
   checkCardanoError(status, "ProtocolParamUpdate toPlutusData");
-  return PlutusData(*owner.release());
+  return PlutusData::adopt(owner.release());
 }
 
 std::string
@@ -1619,6 +1621,35 @@ bool
 ProtocolParamUpdate::operator!=(const ProtocolParamUpdate& other) const
 {
   return !(*this == other);
+}
+
+ProtocolParamUpdate
+ProtocolParamUpdate::adopt(cardano_protocol_param_update_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ProtocolParamUpdate");
+  }
+
+  return ProtocolParamUpdate(value);
+}
+
+cardano_protocol_param_update_t*
+ProtocolParamUpdate::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_protocol_param_update_t*
+ProtocolParamUpdate::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_protocol_param_update_t*
+ProtocolParamUpdate::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

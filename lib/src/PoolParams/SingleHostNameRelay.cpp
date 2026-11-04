@@ -29,6 +29,8 @@
 
 #include <cardano/pool_params/single_host_name_relay.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -168,6 +170,35 @@ bool
 SingleHostNameRelay::operator!=(const SingleHostNameRelay& other) const
 {
   return !(*this == other);
+}
+
+SingleHostNameRelay
+SingleHostNameRelay::adopt(cardano_single_host_name_relay_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null SingleHostNameRelay");
+  }
+
+  return SingleHostNameRelay(*value);
+}
+
+cardano_single_host_name_relay_t*
+SingleHostNameRelay::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_single_host_name_relay_t*
+SingleHostNameRelay::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_single_host_name_relay_t*
+SingleHostNameRelay::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

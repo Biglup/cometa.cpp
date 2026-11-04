@@ -42,7 +42,7 @@ MirCert::MirCert(const MirToPotCert& value)
 {
   MirToPotCert                                              copy(value);
   cardano_mir_cert_t*                                       native = nullptr;
-  const cardano_error_t                                     status = cardano_mir_cert_new_to_other_pot(copy.checked(), &native);
+  const cardano_error_t                                     status = cardano_mir_cert_new_to_other_pot(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_mir_cert_t, cardano_mir_cert_unref> owner(native);
 
   checkCardanoError(status, "MirCert pot transfer");
@@ -53,7 +53,7 @@ MirCert::MirCert(MirToPotCert&& value)
 : m_value(nullptr)
 {
   cardano_mir_cert_t*                                       native = nullptr;
-  const cardano_error_t                                     status = cardano_mir_cert_new_to_other_pot(value.checked(), &native);
+  const cardano_error_t                                     status = cardano_mir_cert_new_to_other_pot(checkedNativeHandle(value), &native);
   CardanoObject<cardano_mir_cert_t, cardano_mir_cert_unref> owner(native);
 
   checkCardanoError(status, "MirCert pot transfer");
@@ -67,7 +67,7 @@ MirCert::MirCert(const MirToStakeCredentialsCert& value)
 {
   MirToStakeCredentialsCert                                 copy(value);
   cardano_mir_cert_t*                                       native = nullptr;
-  const cardano_error_t                                     status = cardano_mir_cert_new_to_stake_creds(copy.checked(), &native);
+  const cardano_error_t                                     status = cardano_mir_cert_new_to_stake_creds(checkedNativeHandle(copy), &native);
   CardanoObject<cardano_mir_cert_t, cardano_mir_cert_unref> owner(native);
 
   checkCardanoError(status, "MirCert stake distribution");
@@ -78,7 +78,7 @@ MirCert::MirCert(MirToStakeCredentialsCert&& value)
 : m_value(nullptr)
 {
   cardano_mir_cert_t*                                       native = nullptr;
-  const cardano_error_t                                     status = cardano_mir_cert_new_to_stake_creds(value.checked(), &native);
+  const cardano_error_t                                     status = cardano_mir_cert_new_to_stake_creds(checkedNativeHandle(value), &native);
   CardanoObject<cardano_mir_cert_t, cardano_mir_cert_unref> owner(native);
 
   checkCardanoError(status, "MirCert stake distribution");
@@ -148,7 +148,7 @@ MirCert::asToPot() const
   CardanoObject<cardano_mir_to_pot_cert_t, cardano_mir_to_pot_cert_unref> owner(native);
 
   checkCardanoError(status, "MirCert asToPot");
-  MirToPotCert value(owner.release());
+  MirToPotCert value = MirToPotCert::adopt(owner.release());
   return MirToPotCert(value);
 }
 
@@ -165,7 +165,7 @@ MirCert::asToStakeCredentials() const
   CardanoObject<cardano_mir_to_stake_creds_cert_t, cardano_mir_to_stake_creds_cert_unref> owner(native);
 
   checkCardanoError(status, "MirCert asToStakeCredentials");
-  MirToStakeCredentialsCert value(owner.release());
+  MirToStakeCredentialsCert value = MirToStakeCredentialsCert::adopt(owner.release());
   return MirToStakeCredentialsCert(value);
 }
 
@@ -219,6 +219,35 @@ bool
 MirCert::operator!=(const MirCert& other) const
 {
   return !(*this == other);
+}
+
+MirCert
+MirCert::adopt(cardano_mir_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null MirCert");
+  }
+
+  return MirCert(value);
+}
+
+cardano_mir_cert_t*
+MirCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_mir_cert_t*
+MirCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_mir_cert_t*
+MirCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

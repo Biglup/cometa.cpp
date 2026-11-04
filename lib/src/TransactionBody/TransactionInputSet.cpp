@@ -31,6 +31,8 @@
 
 #include <cardano/transaction_body/transaction_input_set.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -139,7 +141,7 @@ TransactionInputSet::contains(const TransactionInput& value) const
 
     checkCardanoError(status, "TransactionInputSet contains");
 
-    if (cardano_transaction_input_equals(owner.get(), value.checked()))
+    if (cardano_transaction_input_equals(owner.get(), checkedNativeHandle(value)))
     {
       return true;
     }
@@ -161,7 +163,7 @@ TransactionInputSet::at(std::size_t index) const
   CardanoObject<cardano_transaction_input_t, cardano_transaction_input_unref> owner(element);
 
   checkCardanoError(status, "TransactionInputSet at");
-  const TransactionInput value(*owner.release());
+  const TransactionInput value = TransactionInput::adopt(owner.release());
 
   return TransactionInput(value);
 }
@@ -435,6 +437,41 @@ TransactionInputSet::erase(const value_type& value)
   return 1;
 }
 
+TransactionInputSet
+TransactionInputSet::adopt(cardano_transaction_input_set_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null TransactionInputSet");
+  }
+
+  return TransactionInputSet(*value);
+}
+
+cardano_transaction_input_set_t*
+TransactionInputSet::nativeHandle() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return m_value;
+}
+
+const cardano_transaction_input_set_t*
+TransactionInputSet::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_transaction_input_set_t*
+TransactionInputSet::release() noexcept
+{
+  m_elements.clear();
+  m_materialized = false;
+
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 TransactionInputSet::TransactionInputSet(cardano_transaction_input_set_t& value) noexcept
@@ -497,7 +534,7 @@ TransactionInputSet::insertValue(const TransactionInput& value)
 
   const TransactionInput copy(value);
 
-  checkCardanoError(cardano_transaction_input_set_add(checked(), copy.checked()), "TransactionInputSet insert");
+  checkCardanoError(cardano_transaction_input_set_add(checked(), checkedNativeHandle(copy)), "TransactionInputSet insert");
   invalidateElements();
 
   return true;

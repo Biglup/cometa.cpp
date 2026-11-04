@@ -29,6 +29,8 @@
 
 #include <cardano/crypto/blake2b_hash.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -212,6 +214,35 @@ bool
 Blake2bHash::operator<(const Blake2bHash& other) const
 {
   return cardano_blake2b_hash_compare(checked(), other.checked()) < 0;
+}
+
+Blake2bHash
+Blake2bHash::adopt(cardano_blake2b_hash_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Blake2bHash");
+  }
+
+  return Blake2bHash(value);
+}
+
+cardano_blake2b_hash_t*
+Blake2bHash::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_blake2b_hash_t*
+Blake2bHash::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_blake2b_hash_t*
+Blake2bHash::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

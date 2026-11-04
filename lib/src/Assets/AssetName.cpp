@@ -29,6 +29,8 @@
 
 #include <cardano/assets/asset_name.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -191,6 +193,35 @@ bool
 AssetName::operator<(const AssetName& other) const
 {
   return toBytes() < other.toBytes();
+}
+
+AssetName
+AssetName::adopt(cardano_asset_name_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null AssetName");
+  }
+
+  return AssetName(value);
+}
+
+cardano_asset_name_t*
+AssetName::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_asset_name_t*
+AssetName::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_asset_name_t*
+AssetName::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -32,6 +32,8 @@
 #include <cardano/crypto/ed25519_signature.h>
 #include <cardano/witness_set/bootstrap_witness.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -66,7 +68,7 @@ BootstrapWitness::BootstrapWitness(const Ed25519PublicKey& publicKey, const Ed25
   }
 
   cardano_bootstrap_witness_t*                                                value  = nullptr;
-  const cardano_error_t                                                       status = cardano_bootstrap_witness_new(keyCopy.checked(), signatureCopy.checked(), chain, attrs, &value);
+  const cardano_error_t                                                       status = cardano_bootstrap_witness_new(checkedNativeHandle(keyCopy), checkedNativeHandle(signatureCopy), chain, attrs, &value);
   CardanoObject<cardano_bootstrap_witness_t, cardano_bootstrap_witness_unref> owner(value);
 
   checkCardanoError(status, "BootstrapWitness");
@@ -117,7 +119,7 @@ BootstrapWitness::publicKey() const
     throw std::logic_error("BootstrapWitness has no verification key");
   }
 
-  const Ed25519PublicKey found(*owner.release());
+  const Ed25519PublicKey found = Ed25519PublicKey::adopt(owner.release());
   return Ed25519PublicKey(found);
 }
 
@@ -125,7 +127,7 @@ void
 BootstrapWitness::setPublicKey(const Ed25519PublicKey& value)
 {
   const Ed25519PublicKey copy(value);
-  checkCardanoError(cardano_bootstrap_witness_set_vkey(checked(), copy.checked()), "BootstrapWitness setPublicKey");
+  checkCardanoError(cardano_bootstrap_witness_set_vkey(checked(), checkedNativeHandle(copy)), "BootstrapWitness setPublicKey");
 }
 
 Ed25519Signature
@@ -139,7 +141,7 @@ BootstrapWitness::signature() const
     throw std::logic_error("BootstrapWitness has no signature");
   }
 
-  const Ed25519Signature found(*owner.release());
+  const Ed25519Signature found = Ed25519Signature::adopt(owner.release());
   return Ed25519Signature(found);
 }
 
@@ -147,7 +149,7 @@ void
 BootstrapWitness::setSignature(const Ed25519Signature& value)
 {
   const Ed25519Signature copy(value);
-  checkCardanoError(cardano_bootstrap_witness_set_signature(checked(), copy.checked()), "BootstrapWitness setSignature");
+  checkCardanoError(cardano_bootstrap_witness_set_signature(checked(), checkedNativeHandle(copy)), "BootstrapWitness setSignature");
 }
 
 std::vector<std::uint8_t>
@@ -260,6 +262,35 @@ bool
 BootstrapWitness::operator!=(const BootstrapWitness& other) const
 {
   return !(*this == other);
+}
+
+BootstrapWitness
+BootstrapWitness::adopt(cardano_bootstrap_witness_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null BootstrapWitness");
+  }
+
+  return BootstrapWitness(value);
+}
+
+cardano_bootstrap_witness_t*
+BootstrapWitness::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_bootstrap_witness_t*
+BootstrapWitness::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_bootstrap_witness_t*
+BootstrapWitness::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

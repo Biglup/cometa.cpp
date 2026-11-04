@@ -832,6 +832,18 @@ SecureKeyHandler::operator=(SecureKeyHandler&& other) noexcept
   return *this;
 }
 
+cardano_secure_key_handler_t*
+SecureKeyHandler::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_secure_key_handler_t*
+SecureKeyHandler::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 SecureKeyHandler::SecureKeyHandler(cardano_secure_key_handler_t* value, SecureKeyHandlerType type, std::shared_ptr<PassphraseProvider> provider) noexcept

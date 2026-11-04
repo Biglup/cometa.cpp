@@ -29,6 +29,8 @@
 
 #include <cardano/common/governance_action_id.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -203,6 +205,35 @@ bool
 GovernanceActionId::operator!=(const GovernanceActionId& other) const
 {
   return !(*this == other);
+}
+
+GovernanceActionId
+GovernanceActionId::adopt(cardano_governance_action_id_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null GovernanceActionId");
+  }
+
+  return GovernanceActionId(value);
+}
+
+cardano_governance_action_id_t*
+GovernanceActionId::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_governance_action_id_t*
+GovernanceActionId::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_governance_action_id_t*
+GovernanceActionId::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

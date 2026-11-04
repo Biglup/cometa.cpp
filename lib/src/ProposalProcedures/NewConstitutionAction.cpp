@@ -29,6 +29,8 @@
 
 #include <cardano/proposal_procedures/new_constitution_action.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -38,9 +40,9 @@ NewConstitutionAction::NewConstitutionAction(const Constitution& constitution, c
 {
   const Constitution                                                                      constitutionCopy(constitution);
   const std::optional<GovernanceActionId>                                                 previousCopy(previousAction);
-  cardano_governance_action_id_t*                                                         previous = previousCopy ? previousCopy->checked() : nullptr;
+  cardano_governance_action_id_t*                                                         previous = previousCopy ? checkedNativeHandle(*previousCopy) : nullptr;
   cardano_new_constitution_action_t*                                                      value    = nullptr;
-  const cardano_error_t                                                                   status   = cardano_new_constitution_action_new(constitutionCopy.checked(), previous, &value);
+  const cardano_error_t                                                                   status   = cardano_new_constitution_action_new(checkedNativeHandle(constitutionCopy), previous, &value);
   CardanoObject<cardano_new_constitution_action_t, cardano_new_constitution_action_unref> owner(value);
 
   checkCardanoError(status, "NewConstitutionAction");
@@ -91,7 +93,7 @@ NewConstitutionAction::constitution() const
     throw std::logic_error("NewConstitutionAction has no constitution");
   }
 
-  const Constitution found(owner.release());
+  const Constitution found = Constitution::adopt(owner.release());
   return Constitution(found);
 }
 
@@ -99,7 +101,7 @@ void
 NewConstitutionAction::setConstitution(const Constitution& value)
 {
   const Constitution copy(value);
-  checkCardanoError(cardano_new_constitution_action_set_constitution(checked(), copy.checked()), "NewConstitutionAction setConstitution");
+  checkCardanoError(cardano_new_constitution_action_set_constitution(checked(), checkedNativeHandle(copy)), "NewConstitutionAction setConstitution");
 }
 
 std::optional<GovernanceActionId>
@@ -113,7 +115,7 @@ NewConstitutionAction::previousAction() const
     return std::nullopt;
   }
 
-  const GovernanceActionId found(owner.release());
+  const GovernanceActionId found = GovernanceActionId::adopt(owner.release());
   return GovernanceActionId(found);
 }
 
@@ -121,7 +123,7 @@ void
 NewConstitutionAction::setPreviousAction(const std::optional<GovernanceActionId>& value)
 {
   const std::optional<GovernanceActionId> copy(value);
-  cardano_governance_action_id_t*         data = copy ? copy->checked() : nullptr;
+  cardano_governance_action_id_t*         data = copy ? checkedNativeHandle(*copy) : nullptr;
   checkCardanoError(cardano_new_constitution_action_set_governance_action_id(checked(), data), "NewConstitutionAction setPreviousAction");
 }
 
@@ -175,6 +177,35 @@ bool
 NewConstitutionAction::operator!=(const NewConstitutionAction& other) const
 {
   return !(*this == other);
+}
+
+NewConstitutionAction
+NewConstitutionAction::adopt(cardano_new_constitution_action_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null NewConstitutionAction");
+  }
+
+  return NewConstitutionAction(value);
+}
+
+cardano_new_constitution_action_t*
+NewConstitutionAction::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_new_constitution_action_t*
+NewConstitutionAction::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_new_constitution_action_t*
+NewConstitutionAction::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

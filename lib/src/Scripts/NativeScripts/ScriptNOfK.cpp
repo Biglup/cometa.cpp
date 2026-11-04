@@ -26,11 +26,14 @@
 #include <Cometa/Scripts/NativeScripts/ScriptNOfK.h>
 
 #include "../../CardanoInterop.h"
+#include "../../ValueValidation.h"
 #include <Cometa/Json/JsonValue.h>
 #include <Cometa/Scripts/NativeScripts/NativeScriptList.h>
 
 #include <cardano/scripts/native_scripts/native_script_list.h>
 #include <cardano/scripts/native_scripts/script_n_of_k.h>
+
+#include <utility>
 
 /* CLASS IMPLEMENTATION ******************************************************/
 
@@ -42,7 +45,7 @@ ScriptNOfK::ScriptNOfK(std::size_t required, const NativeScriptList& scripts)
   NativeScriptList copy(scripts);
 
   cardano_script_n_of_k_t* value  = nullptr;
-  const cardano_error_t    result = cardano_script_n_of_k_new(copy.checked(), required, &value);
+  const cardano_error_t    result = cardano_script_n_of_k_new(checkedNativeHandle(copy), required, &value);
 
   CardanoObject<cardano_script_n_of_k_t, cardano_script_n_of_k_unref> owner(value);
 
@@ -79,7 +82,7 @@ ScriptNOfK::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   ScriptNOfK value(*decodeCbor<cardano_script_n_of_k_t, cardano_script_n_of_k_unref>(cbor, cardano_script_n_of_k_from_cbor));
 
-  value.scripts().validate();
+  validateValue(value.scripts());
 
   return value;
 }
@@ -127,7 +130,7 @@ ScriptNOfK::scripts() const
 
   checkCardanoError(result, "ScriptNOfK scripts");
 
-  const NativeScriptList list(*owner.release());
+  const NativeScriptList list = NativeScriptList::adopt(owner.release());
 
   return NativeScriptList(list);
 }
@@ -137,7 +140,7 @@ ScriptNOfK::setScripts(const NativeScriptList& scripts)
 {
   NativeScriptList copy(scripts);
 
-  checkCardanoError(cardano_script_n_of_k_set_scripts(checked(), copy.checked()), "ScriptNOfK setScripts");
+  checkCardanoError(cardano_script_n_of_k_set_scripts(checked(), checkedNativeHandle(copy)), "ScriptNOfK setScripts");
 }
 
 std::size_t
@@ -211,6 +214,35 @@ bool
 ScriptNOfK::operator!=(const ScriptNOfK& other) const
 {
   return !(*this == other);
+}
+
+ScriptNOfK
+ScriptNOfK::adopt(cardano_script_n_of_k_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null ScriptNOfK");
+  }
+
+  return ScriptNOfK(*value);
+}
+
+cardano_script_n_of_k_t*
+ScriptNOfK::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_script_n_of_k_t*
+ScriptNOfK::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_script_n_of_k_t*
+ScriptNOfK::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -29,6 +29,8 @@
 
 #include <cardano/pool_params/ipv4.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -156,6 +158,35 @@ bool
 Ipv4::operator!=(const Ipv4& other) const
 {
   return !(*this == other);
+}
+
+Ipv4
+Ipv4::adopt(cardano_ipv4_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null Ipv4");
+  }
+
+  return Ipv4(*value);
+}
+
+cardano_ipv4_t*
+Ipv4::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_ipv4_t*
+Ipv4::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_ipv4_t*
+Ipv4::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

@@ -14,7 +14,7 @@ section banners, access-group organization, Doxygen patterns, and CMake style.
 - Document private members and internal helpers as well as public declarations.
 - Keep API comments focused on their declaration and free of implementation details.
 - Use the checked-in `.clang-format` with clang-format 15.
-- Keep native memory management private and automatic; preserve value semantics.
+- Keep ordinary memory management automatic and preserve value semantics. Use the documented native interoperability methods for explicit C access.
 - Do not downgrade language features to match older reference projects.
 - Follow existing build, test, documentation, and package-consumer checks.
 - Keep style-only changes separate from behavioral changes.

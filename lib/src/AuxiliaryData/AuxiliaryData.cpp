@@ -26,6 +26,7 @@
 #include <Cometa/AuxiliaryData/AuxiliaryData.h>
 
 #include "../CardanoInterop.h"
+#include "../ValueValidation.h"
 
 #include <cardano/auxiliary_data/auxiliary_data.h>
 #include <cardano/auxiliary_data/plutus_v1_script_list.h>
@@ -34,6 +35,8 @@
 #include <cardano/auxiliary_data/plutus_v4_script_list.h>
 #include <cardano/auxiliary_data/transaction_metadata.h>
 #include <cardano/scripts/native_scripts/native_script_list.h>
+
+#include <utility>
 
 /* CLASS IMPLEMENTATION ******************************************************/
 
@@ -80,7 +83,7 @@ AuxiliaryData::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   AuxiliaryData value(*decodeCbor<cardano_auxiliary_data_t, cardano_auxiliary_data_unref>(cbor, cardano_auxiliary_data_from_cbor));
 
-  value.validate();
+  validateValue(value);
 
   return value;
 }
@@ -102,7 +105,7 @@ AuxiliaryData::metadata() const
     return std::nullopt;
   }
 
-  const TransactionMetadata data(*owner.release());
+  const TransactionMetadata data = TransactionMetadata::adopt(owner.release());
 
   return TransactionMetadata(data);
 }
@@ -119,7 +122,7 @@ AuxiliaryData::setMetadata(const std::optional<TransactionMetadata>& value)
 
   TransactionMetadata copy(*value);
 
-  checkCardanoError(cardano_auxiliary_data_set_transaction_metadata(checked(), copy.checked()), "AuxiliaryData setMetadata");
+  checkCardanoError(cardano_auxiliary_data_set_transaction_metadata(checked(), checkedNativeHandle(copy)), "AuxiliaryData setMetadata");
   normalizeEncoding();
 }
 
@@ -134,7 +137,7 @@ AuxiliaryData::nativeScripts() const
     return std::nullopt;
   }
 
-  const NativeScriptList data(*owner.release());
+  const NativeScriptList data = NativeScriptList::adopt(owner.release());
 
   return NativeScriptList(data);
 }
@@ -151,7 +154,7 @@ AuxiliaryData::setNativeScripts(const std::optional<NativeScriptList>& value)
 
   NativeScriptList copy(*value);
 
-  checkCardanoError(cardano_auxiliary_data_set_native_scripts(checked(), copy.checked()), "AuxiliaryData setNativeScripts");
+  checkCardanoError(cardano_auxiliary_data_set_native_scripts(checked(), checkedNativeHandle(copy)), "AuxiliaryData setNativeScripts");
   normalizeEncoding();
 }
 
@@ -166,7 +169,7 @@ AuxiliaryData::plutusV1Scripts() const
     return std::nullopt;
   }
 
-  const PlutusV1ScriptList data(*owner.release());
+  const PlutusV1ScriptList data = PlutusV1ScriptList::adopt(owner.release());
 
   return PlutusV1ScriptList(data);
 }
@@ -183,7 +186,7 @@ AuxiliaryData::setPlutusV1Scripts(const std::optional<PlutusV1ScriptList>& value
 
   PlutusV1ScriptList copy(*value);
 
-  checkCardanoError(cardano_auxiliary_data_set_plutus_v1_scripts(checked(), copy.checked()), "AuxiliaryData setPlutusV1Scripts");
+  checkCardanoError(cardano_auxiliary_data_set_plutus_v1_scripts(checked(), checkedNativeHandle(copy)), "AuxiliaryData setPlutusV1Scripts");
   normalizeEncoding();
 }
 
@@ -198,7 +201,7 @@ AuxiliaryData::plutusV2Scripts() const
     return std::nullopt;
   }
 
-  const PlutusV2ScriptList data(*owner.release());
+  const PlutusV2ScriptList data = PlutusV2ScriptList::adopt(owner.release());
 
   return PlutusV2ScriptList(data);
 }
@@ -215,7 +218,7 @@ AuxiliaryData::setPlutusV2Scripts(const std::optional<PlutusV2ScriptList>& value
 
   PlutusV2ScriptList copy(*value);
 
-  checkCardanoError(cardano_auxiliary_data_set_plutus_v2_scripts(checked(), copy.checked()), "AuxiliaryData setPlutusV2Scripts");
+  checkCardanoError(cardano_auxiliary_data_set_plutus_v2_scripts(checked(), checkedNativeHandle(copy)), "AuxiliaryData setPlutusV2Scripts");
   normalizeEncoding();
 }
 
@@ -230,7 +233,7 @@ AuxiliaryData::plutusV3Scripts() const
     return std::nullopt;
   }
 
-  const PlutusV3ScriptList data(*owner.release());
+  const PlutusV3ScriptList data = PlutusV3ScriptList::adopt(owner.release());
 
   return PlutusV3ScriptList(data);
 }
@@ -247,7 +250,7 @@ AuxiliaryData::setPlutusV3Scripts(const std::optional<PlutusV3ScriptList>& value
 
   PlutusV3ScriptList copy(*value);
 
-  checkCardanoError(cardano_auxiliary_data_set_plutus_v3_scripts(checked(), copy.checked()), "AuxiliaryData setPlutusV3Scripts");
+  checkCardanoError(cardano_auxiliary_data_set_plutus_v3_scripts(checked(), checkedNativeHandle(copy)), "AuxiliaryData setPlutusV3Scripts");
   normalizeEncoding();
 }
 
@@ -262,7 +265,7 @@ AuxiliaryData::plutusV4Scripts() const
     return std::nullopt;
   }
 
-  const PlutusV4ScriptList data(*owner.release());
+  const PlutusV4ScriptList data = PlutusV4ScriptList::adopt(owner.release());
 
   return PlutusV4ScriptList(data);
 }
@@ -279,7 +282,7 @@ AuxiliaryData::setPlutusV4Scripts(const std::optional<PlutusV4ScriptList>& value
 
   PlutusV4ScriptList copy(*value);
 
-  checkCardanoError(cardano_auxiliary_data_set_plutus_v4_scripts(checked(), copy.checked()), "AuxiliaryData setPlutusV4Scripts");
+  checkCardanoError(cardano_auxiliary_data_set_plutus_v4_scripts(checked(), checkedNativeHandle(copy)), "AuxiliaryData setPlutusV4Scripts");
   normalizeEncoding();
 }
 
@@ -355,6 +358,35 @@ AuxiliaryData::operator!=(const AuxiliaryData& other) const
   return !(*this == other);
 }
 
+AuxiliaryData
+AuxiliaryData::adopt(cardano_auxiliary_data_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null AuxiliaryData");
+  }
+
+  return AuxiliaryData(*value);
+}
+
+cardano_auxiliary_data_t*
+AuxiliaryData::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_auxiliary_data_t*
+AuxiliaryData::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_auxiliary_data_t*
+AuxiliaryData::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 AuxiliaryData::AuxiliaryData(cardano_auxiliary_data_t& value) noexcept
@@ -374,19 +406,19 @@ AuxiliaryData::checked() const
 }
 
 void
-AuxiliaryData::validate() const
+validateValue(const AuxiliaryData& value)
 {
-  const std::optional<TransactionMetadata> metadataValue = metadata();
-  const std::optional<NativeScriptList>    scripts       = nativeScripts();
+  const std::optional<TransactionMetadata> metadataValue = value.metadata();
+  const std::optional<NativeScriptList>    scripts       = value.nativeScripts();
 
   if (metadataValue)
   {
-    metadataValue->validate();
+    validateValue(*metadataValue);
   }
 
   if (scripts)
   {
-    scripts->validate();
+    validateValue(*scripts);
   }
 }
 

@@ -29,6 +29,8 @@
 
 #include <cardano/certs/pool_retirement_cert.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -43,7 +45,7 @@ PoolRetirementCert::PoolRetirementCert(const Blake2bHash& poolKeyHash, std::uint
 
   const Blake2bHash                                                                 copy(poolKeyHash);
   cardano_pool_retirement_cert_t*                                                   value  = nullptr;
-  const cardano_error_t                                                             status = cardano_pool_retirement_cert_new(copy.checked(), epoch, &value);
+  const cardano_error_t                                                             status = cardano_pool_retirement_cert_new(checkedNativeHandle(copy), epoch, &value);
   CardanoObject<cardano_pool_retirement_cert_t, cardano_pool_retirement_cert_unref> owner(value);
 
   checkCardanoError(status, "PoolRetirementCert");
@@ -99,7 +101,7 @@ PoolRetirementCert::poolKeyHash() const
     throw std::logic_error("Pool retirement certificate has no pool key hash");
   }
 
-  const Blake2bHash result(value);
+  const Blake2bHash result = Blake2bHash::adopt(value);
   return Blake2bHash(result);
 }
 
@@ -112,7 +114,7 @@ PoolRetirementCert::setPoolKeyHash(const Blake2bHash& value)
   }
 
   const Blake2bHash copy(value);
-  checkCardanoError(cardano_pool_retirement_cert_set_pool_key_hash(checked(), copy.checked()), "PoolRetirementCert setPoolKeyHash");
+  checkCardanoError(cardano_pool_retirement_cert_set_pool_key_hash(checked(), checkedNativeHandle(copy)), "PoolRetirementCert setPoolKeyHash");
 }
 
 std::uint64_t
@@ -179,6 +181,35 @@ bool
 PoolRetirementCert::operator!=(const PoolRetirementCert& other) const
 {
   return !(*this == other);
+}
+
+PoolRetirementCert
+PoolRetirementCert::adopt(cardano_pool_retirement_cert_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PoolRetirementCert");
+  }
+
+  return PoolRetirementCert(value);
+}
+
+cardano_pool_retirement_cert_t*
+PoolRetirementCert::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_pool_retirement_cert_t*
+PoolRetirementCert::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_pool_retirement_cert_t*
+PoolRetirementCert::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

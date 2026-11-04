@@ -29,6 +29,8 @@
 
 #include <cardano/protocol_params/cost_model.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -203,6 +205,35 @@ bool
 CostModel::operator!=(const CostModel& other) const
 {
   return !(*this == other);
+}
+
+CostModel
+CostModel::adopt(cardano_cost_model_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null CostModel");
+  }
+
+  return CostModel(value);
+}
+
+cardano_cost_model_t*
+CostModel::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_cost_model_t*
+CostModel::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_cost_model_t*
+CostModel::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

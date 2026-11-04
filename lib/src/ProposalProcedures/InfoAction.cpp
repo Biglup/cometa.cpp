@@ -29,6 +29,8 @@
 
 #include <cardano/proposal_procedures/info_action.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -127,6 +129,35 @@ bool
 InfoAction::operator!=(const InfoAction& other) const
 {
   return !(*this == other);
+}
+
+InfoAction
+InfoAction::adopt(cardano_info_action_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null InfoAction");
+  }
+
+  return InfoAction(value);
+}
+
+cardano_info_action_t*
+InfoAction::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_info_action_t*
+InfoAction::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_info_action_t*
+InfoAction::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

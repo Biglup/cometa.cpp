@@ -29,6 +29,8 @@
 
 #include <cardano/pool_params/pool_metadata.h>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -42,7 +44,7 @@ PoolMetadata::PoolMetadata(std::string_view url, const Blake2bHash& hash)
   Blake2bHash copy(hash);
 
   cardano_pool_metadata_t* value  = nullptr;
-  const cardano_error_t    result = cardano_pool_metadata_new(url.empty() ? "" : url.data(), url.size(), copy.checked(), &value);
+  const cardano_error_t    result = cardano_pool_metadata_new(url.empty() ? "" : url.data(), url.size(), checkedNativeHandle(copy), &value);
 
   CardanoObject<cardano_pool_metadata_t, cardano_pool_metadata_unref> owner(value);
 
@@ -116,7 +118,7 @@ PoolMetadata::hash() const
 
   checkCardanoError(result, "PoolMetadata hash");
 
-  const Blake2bHash data(owner.release());
+  const Blake2bHash data = Blake2bHash::adopt(owner.release());
 
   return Blake2bHash(data);
 }
@@ -128,7 +130,7 @@ PoolMetadata::setHash(const Blake2bHash& hash)
 
   Blake2bHash copy(hash);
 
-  checkCardanoError(cardano_pool_metadata_set_hash(checked(), copy.checked()), "PoolMetadata setHash");
+  checkCardanoError(cardano_pool_metadata_set_hash(checked(), checkedNativeHandle(copy)), "PoolMetadata setHash");
 }
 
 std::vector<std::uint8_t>
@@ -184,6 +186,35 @@ bool
 PoolMetadata::operator!=(const PoolMetadata& other) const
 {
   return !(*this == other);
+}
+
+PoolMetadata
+PoolMetadata::adopt(cardano_pool_metadata_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null PoolMetadata");
+  }
+
+  return PoolMetadata(*value);
+}
+
+cardano_pool_metadata_t*
+PoolMetadata::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_pool_metadata_t*
+PoolMetadata::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_pool_metadata_t*
+PoolMetadata::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/

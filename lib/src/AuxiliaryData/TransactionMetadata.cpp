@@ -26,9 +26,12 @@
 #include <Cometa/AuxiliaryData/TransactionMetadata.h>
 
 #include "../CardanoInterop.h"
+#include "../ValueValidation.h"
 
 #include <cardano/auxiliary_data/metadatum.h>
 #include <cardano/auxiliary_data/transaction_metadata.h>
+
+#include <utility>
 
 /* CLASS IMPLEMENTATION ******************************************************/
 
@@ -79,7 +82,7 @@ TransactionMetadata::fromCbor(const std::vector<std::uint8_t>& cbor)
 {
   TransactionMetadata value(*decodeCbor<cardano_transaction_metadata_t, cardano_transaction_metadata_unref>(cbor, cardano_transaction_metadata_from_cbor));
 
-  value.validate();
+  validateValue(value);
 
   return value;
 }
@@ -122,7 +125,7 @@ TransactionMetadata::get(std::uint64_t label) const
 
   checkCardanoError(result, "TransactionMetadata get");
 
-  const Metadatum data(*owner.release());
+  const Metadatum data = Metadatum::adopt(owner.release());
 
   return Metadatum(data);
 }
@@ -140,14 +143,14 @@ TransactionMetadata::set(std::uint64_t label, const Metadatum& value)
     for (const std::pair<std::uint64_t, Metadatum>& entry: current)
     {
       const Metadatum& item = entry.first == label ? copy : entry.second;
-      checkCardanoError(cardano_transaction_metadata_insert(replacement.checked(), entry.first, item.checked()), "TransactionMetadata replacement");
+      checkCardanoError(cardano_transaction_metadata_insert(replacement.checked(), entry.first, checkedNativeHandle(item)), "TransactionMetadata replacement");
     }
 
     swap(replacement);
     return;
   }
 
-  checkCardanoError(cardano_transaction_metadata_insert(checked(), label, copy.checked()), "TransactionMetadata set");
+  checkCardanoError(cardano_transaction_metadata_insert(checked(), label, checkedNativeHandle(copy)), "TransactionMetadata set");
   invalidateElements();
 }
 
@@ -167,7 +170,7 @@ TransactionMetadata::entryAt(std::size_t index) const
 
   checkCardanoError(result, "TransactionMetadata entryAt");
 
-  const Metadatum data(*owner.release());
+  const Metadatum data = Metadatum::adopt(owner.release());
 
   return std::make_pair(label, Metadatum(data));
 }
@@ -503,6 +506,60 @@ TransactionMetadata::clear()
   m_mutableAccess = true;
 }
 
+TransactionMetadata
+TransactionMetadata::adopt(cardano_transaction_metadata_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null TransactionMetadata");
+  }
+
+  return TransactionMetadata(*value);
+}
+
+cardano_transaction_metadata_t*
+TransactionMetadata::nativeHandle()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return m_value;
+}
+
+const cardano_transaction_metadata_t*
+TransactionMetadata::nativeHandle() const
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  return m_value;
+}
+
+cardano_transaction_metadata_t*
+TransactionMetadata::release()
+{
+  if (m_value)
+  {
+    synchronize();
+  }
+
+  m_elements.clear();
+  m_encoding.clear();
+  m_materialized  = false;
+  m_mutableAccess = false;
+
+  return std::exchange(m_value, nullptr);
+}
+
 /* PRIVATE FUNCTIONS *********************************************************/
 
 TransactionMetadata::TransactionMetadata(cardano_transaction_metadata_t& value) noexcept
@@ -524,9 +581,9 @@ TransactionMetadata::checked() const
 }
 
 void
-TransactionMetadata::validate() const
+validateValue(const TransactionMetadata& value)
 {
-  const MetadatumLabelList labels = keys();
+  const MetadatumLabelList labels = value.keys();
 
   for (std::size_t index = 1U; index < labels.size(); ++index)
   {

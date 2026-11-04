@@ -25,6 +25,7 @@
 
 #include <Cometa/Cometa.h>
 
+#include <cardano/cardano.h>
 #include <src/allocators.h>
 
 #include <gtest/gtest.h>
@@ -1290,8 +1291,108 @@ using MoveConversionTypes = testing::Types<
   ConversionCase<MetadatumMap, Metadatum, true>>;
 TYPED_TEST_SUITE(MoveConversionContract, MoveConversionTypes);
 
+template<>
+JsonValue
+sampleValue<JsonValue>()
+{
+  return JsonValue::parse("{\"value\":42}");
+}
+
+template<>
+Bip32PrivateKey
+sampleValue<Bip32PrivateKey>()
+{
+  return Bip32PrivateKey(std::vector<std::uint8_t>(96, 1));
+}
+
+template<>
+Bip32PublicKey
+sampleValue<Bip32PublicKey>()
+{
+  return Bip32PublicKey(std::vector<std::uint8_t>(64, 1));
+}
+
+template<>
+Ed25519Signature
+sampleValue<Ed25519Signature>()
+{
+  return Ed25519Signature(std::vector<std::uint8_t>(64, 1));
+}
+
+template<>
+Ed25519PrivateKey
+sampleValue<Ed25519PrivateKey>()
+{
+  return Ed25519PrivateKey::fromNormalBytes(std::vector<std::uint8_t>(32, 1));
+}
+
+template<>
+Ed25519PublicKey
+sampleValue<Ed25519PublicKey>()
+{
+  return Ed25519PublicKey(std::vector<std::uint8_t>(32, 1));
+}
+
+template<>
+AssetIdMap
+sampleValue<AssetIdMap>()
+{
+  return AssetIdMap();
+}
+
+template<>
+AssetId
+sampleValue<AssetId>()
+{
+  return AssetId(keyHash(), AssetName::fromString("token"));
+}
+
+template<>
+CborWriter
+sampleValue<CborWriter>()
+{
+  return CborWriter();
+}
+
+template<>
+CborReader
+sampleValue<CborReader>()
+{
+  return CborReader("01");
+}
+
+template<>
+Value
+sampleValue<Value>()
+{
+  return Value(42);
+}
+
+template<>
+Address
+sampleValue<Address>()
+{
+  return sampleValue<EnterpriseAddress>().toAddress();
+}
+
+template<>
+ProtocolParameters
+sampleValue<ProtocolParameters>()
+{
+  return ProtocolParameters();
+}
+
 using ValueTypes = testing::Types<Transaction, TransactionBody, SubTransactionSet, SubTransaction, SubTransactionBody, RequiredGuardsMap, GuardSet, DirectDepositMap, AccountBalanceIntervalsMap, AccountBalanceInterval, WitnessSet, PlutusV1ScriptSet, PlutusV2ScriptSet, PlutusV3ScriptSet, PlutusV4ScriptSet, PlutusDataSet, NativeScriptSet, BootstrapWitnessSet, BootstrapWitness, VkeyWitnessSet, VkeyWitness, RedeemerList, Redeemer, VotingProcedures, VotingProcedure, Voter, ProposalProcedureSet, ProposalProcedure, UpdateCommitteeAction, Committee, CommitteeMembersMap, TreasuryWithdrawalsAction, NewConstitutionAction, Constitution, ParameterChangeAction, HardForkInitiationAction, NoConfidenceAction, InfoAction, Update, ProposedParamUpdates, ProtocolParamUpdate, DRepVotingThresholds, PoolVotingThresholds, CostModels, CostModel, ExUnitPrices, CertificateSet, Certificate, ResignCommitteeColdCert, AuthCommitteeHotCert, UpdateDRepCert, RegisterDRepCert, UnregisterDRepCert, StakeVoteRegistrationDelegationCert, VoteRegistrationDelegationCert, StakeVoteDelegationCert, VoteDelegationCert, DRep, MirCert, MirToStakeCredentialsCert, MirToPotCert, GenesisKeyDelegationCert, StakeRegistrationDelegationCert, PoolRetirementCert, PoolRegistrationCert, StakeDelegationCert, RegistrationCert, UnregistrationCert, StakeDeregistrationCert, StakeRegistrationCert, PoolParams, PoolOwners, SingleHostAddrRelay, SingleHostNameRelay, MultiHostNameRelay, Relay, Relays, Ipv4, Ipv6, BlsKey, PoolMetadata, TransactionMetadata, AuxiliaryData, Metadatum, MetadatumList, MetadatumMap, PlutusV1ScriptList, PlutusV2ScriptList, PlutusV3ScriptList, PlutusV4ScriptList, TransactionInput, TransactionOutput, Utxo, TransactionInputSet, TransactionOutputList, WithdrawalMap, Script, PlutusV1Script, PlutusV2Script, PlutusV3Script, PlutusV4Script, NativeScript, NativeScriptList, ScriptAll, ScriptAny, ScriptNOfK, ScriptPubkey, ScriptInvalidBefore, ScriptInvalidAfter, ScriptRequireGuard, PlutusData, PlutusList, PlutusMap, ConstrPlutusData, Datum, Blake2bHash, AssetName, Credential, ExUnits, ProtocolVersion, UnitInterval, Anchor, GovernanceActionId>;
 TYPED_TEST_SUITE(ValueContract, ValueTypes);
+
+template<class T>
+class NativeInteropContract : public testing::Test
+{
+};
+
+using NativeInteropTypes = testing::Types<SubTransaction, Transaction, SubTransactionSet, JsonValue, PlutusMap, PlutusData, PlutusList, ConstrPlutusData, Bip32PrivateKey, Ed25519Signature, Blake2bHash, Ed25519PrivateKey, Bip32PublicKey, Blake2bHashSet, Ed25519PublicKey, Script, ScriptAll, NativeScript, ScriptNOfK, ScriptInvalidAfter, ScriptRequireGuard, ScriptAny, ScriptPubkey, NativeScriptList, ScriptInvalidBefore, PlutusV4Script, PlutusV3Script, PlutusV1Script, PlutusV2Script, PlutusV4ScriptList, PlutusV1ScriptList, TransactionMetadata, PlutusV3ScriptList, AuxiliaryData, Metadatum, MetadatumList, MetadatumMap, PlutusV2ScriptList, AssetName, MultiAsset, AssetIdMap, AssetId, AssetNameMap, CborWriter, CborReader, GuardSet, DirectDepositMap, TransactionOutputList, TransactionBody, TransactionInput, RequiredGuardsMap, SubTransactionBody, TransactionOutput, AccountBalanceIntervalsMap, Value, TransactionInputSet, AccountBalanceInterval, Relay, MultiHostNameRelay, Relays, PoolOwners, PoolMetadata, Ipv6, SingleHostNameRelay, BlsKey, PoolParams, Ipv4, SingleHostAddrRelay, Committee, TreasuryWithdrawalsAction, CommitteeMembersMap, NoConfidenceAction, ParameterChangeAction, UpdateCommitteeAction, HardForkInitiationAction, Constitution, ProposalProcedureSet, InfoAction, ProposalProcedure, NewConstitutionAction, PlutusDataSet, VkeyWitnessSet, WitnessSet, Redeemer, BootstrapWitnessSet, NativeScriptSet, BootstrapWitness, PlutusV2ScriptSet, VkeyWitness, PlutusV3ScriptSet, PlutusV1ScriptSet, PlutusV4ScriptSet, RedeemerList, VotingProcedures, VotingProcedure, Voter, BaseAddress, ByronAddress, PointerAddress, RewardAddress, EnterpriseAddress, Address, ProposedParamUpdates, ExUnitPrices, ProtocolParameters, DRepVotingThresholds, CostModels, PoolVotingThresholds, Update, CostModel, ProtocolParamUpdate, AuthCommitteeHotCert, MirToPotCert, MirCert, StakeRegistrationDelegationCert, MirToStakeCredentialsCert, StakeDeregistrationCert, VoteDelegationCert, RegisterDRepCert, ResignCommitteeColdCert, Certificate, StakeDelegationCert, GenesisKeyDelegationCert, UpdateDRepCert, StakeVoteDelegationCert, UnregisterDRepCert, PoolRegistrationCert, VoteRegistrationDelegationCert, StakeRegistrationCert, StakeVoteRegistrationDelegationCert, UnregistrationCert, PoolRetirementCert, CertificateSet, RegistrationCert, Utxo, WithdrawalMap, BigInt, ProtocolVersion, Datum, GovernanceActionId, DRep, CredentialSet, Anchor, Credential, UnitInterval, ExUnits>;
+TYPED_TEST_SUITE(NativeInteropContract, NativeInteropTypes);
+
 } // namespace
 
 /* IMPLEMENTATION ************************************************************/
@@ -6828,4 +6929,151 @@ TEST(ConversionContract, ScalarConstructionAndSemanticWrappingRemainExplicit)
   EXPECT_FALSE((std::is_convertible<Credential, DRep>::value));
   EXPECT_FALSE((std::is_convertible<PlutusData, Datum>::value));
   EXPECT_FALSE((std::is_convertible<InfoAction, ProposalProcedure>::value));
+}
+
+TYPED_TEST(NativeInteropContract, BorrowsReleasesAndAdoptsNativeReferences)
+{
+  // Arrange
+  TypeParam        source = sampleValue<TypeParam>();
+  const TypeParam  expected(source);
+  const TypeParam& view = source;
+  using NativePointer   = decltype(source.nativeHandle());
+  using NativeType      = std::remove_pointer_t<NativePointer>;
+  NativePointer pointer = source.nativeHandle();
+
+  // Act
+  TypeParam adopted = TypeParam::adopt(source.release());
+
+  // Assert
+  EXPECT_TRUE((std::is_same<decltype(view.nativeHandle()), const NativeType*>::value));
+  EXPECT_NE(pointer, nullptr);
+  EXPECT_EQ(adopted.nativeHandle(), pointer);
+  EXPECT_EQ(source.nativeHandle(), nullptr);
+  EXPECT_EQ(view.nativeHandle(), nullptr);
+  EXPECT_EQ(source.release(), nullptr);
+  EXPECT_THROW(TypeParam::adopt(nullptr), std::invalid_argument);
+
+  // Act
+  source = expected;
+
+  // Assert
+  EXPECT_NE(source.nativeHandle(), nullptr);
+  EXPECT_NE(source.nativeHandle(), adopted.nativeHandle());
+}
+
+TYPED_TEST(CollectionContract, NativeTransferPreservesMaterializedElements)
+{
+  // Arrange
+  TypeParam                       source   = sampleValue<TypeParam>();
+  const TypeParam&                view     = source;
+  const std::vector<std::uint8_t> expected = source.toCbor();
+  static_cast<void>(view.begin());
+
+  // Act
+  TypeParam adopted = TypeParam::adopt(source.release());
+
+  // Assert
+  EXPECT_EQ(source.nativeHandle(), nullptr);
+  EXPECT_EQ(adopted.toCbor(), expected);
+  EXPECT_EQ(std::distance(adopted.cbegin(), adopted.cend()), static_cast<std::ptrdiff_t>(adopted.size()));
+}
+
+TEST(NativeInterop, BorrowAndTransferDoNotChangeReferenceCounts)
+{
+  // Arrange
+  AssetName             source     = AssetName::fromString("Cometa");
+  cardano_asset_name_t* pointer    = source.nativeHandle();
+  const std::size_t     references = cardano_asset_name_refcount(pointer);
+
+  // Act
+  const AssetName& view = source;
+  static_cast<void>(view.nativeHandle());
+  AssetName adopted = AssetName::adopt(source.release());
+
+  // Assert
+  EXPECT_EQ(adopted.nativeHandle(), pointer);
+  EXPECT_EQ(cardano_asset_name_refcount(pointer), references);
+  EXPECT_EQ(adopted.toString(), "Cometa");
+}
+
+TEST(NativeInterop, MutableBorrowRefreshesMaterializedCollections)
+{
+  // Arrange
+  PlutusList   list { PlutusData(std::int64_t(1)) };
+  AssetNameMap map;
+  AssetName    key = AssetName::fromString("token");
+  map.set(key, 1);
+  CredentialSet    set;
+  const Credential credential(CredentialType::KeyHash, keyHash());
+  set.insert(credential);
+  static_cast<void>(list.begin());
+  static_cast<void>(map.begin());
+  static_cast<void>(set.begin());
+  PlutusData next(std::int64_t(2));
+  Credential nextCredential(CredentialType::ScriptHash, keyHash());
+
+  // Act
+  ASSERT_EQ(cardano_plutus_list_add(list.nativeHandle(), next.nativeHandle()), CARDANO_SUCCESS);
+  ASSERT_EQ(cardano_asset_name_map_insert(map.nativeHandle(), key.nativeHandle(), 5), CARDANO_SUCCESS);
+  ASSERT_EQ(cardano_credential_set_add(set.nativeHandle(), nextCredential.nativeHandle()), CARDANO_SUCCESS);
+
+  // Assert
+  EXPECT_EQ(std::distance(list.cbegin(), list.cend()), 2);
+  EXPECT_EQ(list.back().asInteger().toInt64(), 2);
+  EXPECT_EQ(map.begin()->second, 5);
+  EXPECT_EQ(std::distance(set.cbegin(), set.cend()), 2);
+}
+
+TEST(NativeInterop, BorrowAndReleaseSynchronizeIteratorEdits)
+{
+  // Arrange
+  PlutusList list { PlutusData(std::int64_t(1)) };
+  list.front()           = PlutusData(std::int64_t(2));
+  const PlutusList& view = list;
+
+  // Act
+  const cardano_plutus_list_t* borrowed = view.nativeHandle();
+
+  // Assert
+  ASSERT_NE(borrowed, nullptr);
+  cardano_plutus_data_t* element = nullptr;
+  ASSERT_EQ(cardano_plutus_list_get(borrowed, 0, &element), CARDANO_SUCCESS);
+
+  const PlutusData nativeValue = PlutusData::adopt(element);
+  EXPECT_EQ(nativeValue.asInteger().toInt64(), 2);
+
+  // Act
+  list.front()       = PlutusData(std::int64_t(3));
+  PlutusList adopted = PlutusList::adopt(list.release());
+
+  // Assert
+  EXPECT_EQ(adopted.at(0).asInteger().toInt64(), 3);
+  EXPECT_EQ(list.nativeHandle(), nullptr);
+}
+
+TEST(NativeInterop, FailedSynchronizationPreservesOwnershipAndEdits)
+{
+  // Arrange
+  PlutusList list { PlutusData(std::int64_t(1)) };
+  list.front() = PlutusData(std::int64_t(2));
+
+  // Act & Assert
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(list.nativeHandle(), std::bad_alloc);
+  }
+  {
+    const PlutusList& view = list;
+    AllocationFailure fail(0);
+    EXPECT_THROW(view.nativeHandle(), std::bad_alloc);
+  }
+  {
+    AllocationFailure fail(0);
+    EXPECT_THROW(list.release(), std::bad_alloc);
+  }
+
+  // Assert
+  EXPECT_EQ(list.front().asInteger().toInt64(), 2);
+  PlutusList adopted = PlutusList::adopt(list.release());
+  EXPECT_EQ(adopted.at(0).asInteger().toInt64(), 2);
 }

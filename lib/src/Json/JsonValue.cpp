@@ -34,6 +34,8 @@
 
 #include <cmath>
 
+#include <utility>
+
 /* CLASS IMPLEMENTATION ******************************************************/
 
 namespace Cometa
@@ -264,6 +266,35 @@ JsonValue::operator=(JsonValue&& other) noexcept
   }
 
   return *this;
+}
+
+JsonValue
+JsonValue::adopt(cardano_json_object_t* value)
+{
+  if (!value)
+  {
+    throw std::invalid_argument("Cannot adopt a null JsonValue");
+  }
+
+  return JsonValue(*value);
+}
+
+cardano_json_object_t*
+JsonValue::nativeHandle() noexcept
+{
+  return m_value;
+}
+
+const cardano_json_object_t*
+JsonValue::nativeHandle() const noexcept
+{
+  return m_value;
+}
+
+cardano_json_object_t*
+JsonValue::release() noexcept
+{
+  return std::exchange(m_value, nullptr);
 }
 
 /* PRIVATE FUNCTIONS *********************************************************/
