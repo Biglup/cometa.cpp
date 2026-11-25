@@ -34,8 +34,8 @@ namespace Cometa
 /**
  * @brief An HTTP transport using libcurl for provider requests.
  *
- * Use it with BlockfrostProvider when libcurl is available. Request timeouts bound individual HTTP
- * operations rather than transaction confirmation time.
+ * Supports HTTP and HTTPS. HttpRequest::timeout bounds the complete request,
+ * including its response body; transaction confirmation has its own deadline.
  */
 class CurlHttpTransport final : public HttpTransport
 {

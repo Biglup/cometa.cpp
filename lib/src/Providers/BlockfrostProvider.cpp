@@ -25,6 +25,8 @@
 
 #include <Cometa/Providers/BlockfrostProvider.h>
 
+#include "RemoteCodec.h"
+
 #include <Cometa/Assets/AssetIdMap.h>
 #include <Cometa/Common/Datum.h>
 #include <Cometa/Common/DatumType.h>
@@ -114,62 +116,23 @@ parsePrice(const JsonValue& value)
 void
 writeAdditionalUtxo(JsonWriter& writer, const Utxo& utxo)
 {
-  const TransactionInput  input  = utxo.input();
-  const TransactionOutput output = utxo.output();
-  const Value             value  = output.amount();
+  const JsonValue encoded = JsonValue::parse(remoteOgmiosOutput(utxo));
 
-  writer.writeStartArray();
+  writer.writeRaw(remoteObject({ { "id", remoteString(utxo.input().id().toHex()) }, { "index", std::to_string(utxo.input().index()) } }));
   writer.writeStartObject();
-  writer.writePropertyName("txId");
-  writer.writeString(input.id().toHex());
-  writer.writePropertyName("index");
-  writer.writeUInt(input.index());
-  writer.writeEndObject();
 
-  writer.writeStartObject();
-  writer.writePropertyName("address");
-  writer.writeString(output.address().toString());
-  writer.writePropertyName("value");
-  writer.writeStartObject();
-  writer.writePropertyName("coins");
-  writer.writeInt(value.coin());
-
-  const AssetIdMap assets = value.toAssetMap();
-
-  if (assets.size() > 1)
+  for (std::size_t index = 0; index < encoded.size(); ++index)
   {
-    writer.writePropertyName("assets");
-    writer.writeStartObject();
-
-    for (const std::pair<AssetId, std::int64_t>& entry: assets.entries())
+    const std::string key = encoded.keyAt(index);
+    if (key == "transaction" || key == "index")
     {
-      if (!entry.first.toHex().empty())
-      {
-        writer.writePropertyName(entry.first.toHex());
-        writer.writeInt(entry.second);
-      }
+      continue;
     }
-
-    writer.writeEndObject();
+    writer.writePropertyName(key);
+    writer.writeRaw(encoded.valueAt(index).toJson());
   }
 
   writer.writeEndObject();
-
-  const std::optional<Datum> datum = output.datum();
-
-  if (datum.has_value())
-  {
-    if (datum->type() == DatumType::InlineData)
-    {
-      throw std::invalid_argument("Inline data in additional evaluation UTxOs is not supported");
-    }
-
-    writer.writePropertyName("datum_hash");
-    writer.writeString(datum->hash().toHex());
-  }
-
-  writer.writeEndObject();
-  writer.writeEndArray();
 }
 
 /** @brief Maps an Ogmios script-purpose name to a redeemer tag. @param name The purpose. @return The tag. */
@@ -666,7 +629,7 @@ BlockfrostProvider::evaluateTransaction(const Transaction& transaction, const Ut
     writer.writeStartObject();
     writer.writePropertyName("cbor");
     writer.writeString(toHex(transaction.toCbor()));
-    writer.writePropertyName("additionalUtxoSet");
+    writer.writePropertyName("additionalUtxo");
     writer.writeStartArray();
 
     for (const Utxo& utxo: additionalUtxos)

@@ -259,3 +259,7 @@
 #include <Cometa/TransactionBuilder/Balancing/TransactionBalancing.h>
 #include <Cometa/TransactionBuilder/Fee.h>
 #include <Cometa/TransactionBuilder/ScriptDataHash.h>
+
+#include <Cometa/Providers/HydraProvider.h>
+#include <Cometa/Providers/KoiosProvider.h>
+#include <Cometa/Providers/KupmiosProvider.h>

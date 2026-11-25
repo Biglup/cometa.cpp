@@ -173,6 +173,39 @@ builder.setTransactionEvaluator(evaluator);
 
 Implement `CoinSelector` for custom UTxO selection or `TransactionEvaluator` for custom script evaluation. `Provider` supplies network data and submits transactions; `HttpTransport` lets providers use another HTTP client. Here, `networkProvider` is a `std::shared_ptr<Cometa::Provider>`.
 
+
+## Providers
+
+Blockfrost, Koios, Kupmios (Kupo + Ogmios), and Hydra implement `Cometa::Provider`.
+Choose the network explicitly and share the platform HTTP transport:
+
+```cpp
+#include <Cometa/Providers/DefaultHttpTransport.h>
+
+const std::shared_ptr<Cometa::HttpTransport> transport =
+  std::make_shared<Cometa::DefaultHttpTransport>();
+
+Cometa::KoiosProvider koios(Cometa::NetworkMagic::Preprod, transport);
+Cometa::KupmiosProvider kupmios(
+  Cometa::NetworkMagic::Preprod,
+  "http://localhost:1442", "http://localhost:1337", transport);
+Cometa::HydraProvider hydra(
+  Cometa::NetworkMagic::Preprod, "http://localhost:4001", transport);
+```
+
+Optional bearer credentials are constructor arguments. No credentials are loaded
+implicitly. Requests have a 30-second deadline and an 8 MiB response bound;
+confirmation requests use the remaining timeout. Injected transports must honor
+`HttpRequest::timeout`. Submissions are never retried automatically.
+
+Kupo must index the requested addresses/assets. Hydra connects to an existing
+Conway Head and submits on L2. Confirmation checks the latest signed snapshot's
+transaction records; it cannot rediscover older transactions absent from that
+list. L1 deposit outputs are not considered proof of L2 confirmation. Hydra has
+no remote evaluator or staking rewards; those operations fail explicitly. Use a
+local evaluator configured for the Head and its event stream for complete
+confirmation history. Head lifecycle operations remain external.
+
 ## More examples
 
 The [examples directory](examples) includes complete programs for payments, minting, staking, governance, key derivation, and Dijkstra transactions. Network examples use preprod and read `BLOCKFROST_API_KEY` from the environment.

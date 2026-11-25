@@ -198,6 +198,12 @@ ADD_LIBRARY (cometa STATIC
   lib/src/KeyHandlers/SecureKeyHandler.cpp
   lib/src/Providers/ProviderAdapter.cpp
   lib/src/Providers/BlockfrostProvider.cpp
+  lib/src/Providers/HydraProvider.cpp
+  lib/src/Providers/KoiosProvider.cpp
+  lib/src/Providers/KupmiosProvider.cpp
+  lib/src/Providers/RemoteProvider.cpp
+  lib/src/Providers/RemoteCodec.cpp
+  lib/src/Providers/HydraCodec.cpp
   lib/src/TransactionBuilder/TransactionConversions.cpp
   lib/src/TransactionBuilder/Fee.cpp
   lib/src/TransactionBuilder/ScriptDataHash.cpp
@@ -729,6 +735,9 @@ IF (COMETA_BUILD_TESTS)
     lib/tests/KeyHandlers/SoftwareSecureKeyHandlerTest.cpp
     lib/tests/Providers/ProviderAdapterTest.cpp
     lib/tests/Providers/BlockfrostProviderTest.cpp
+    lib/tests/Providers/KoiosProviderTest.cpp
+    lib/tests/Providers/KupmiosProviderTest.cpp
+    lib/tests/Providers/HydraProviderTest.cpp
     lib/tests/TransactionBuilder/CoinSelectorAdapterTest.cpp
     lib/tests/TransactionBuilder/TransactionEvaluatorAdapterTest.cpp
     lib/tests/TransactionBuilder/GovernanceBuilderTest.cpp
@@ -754,6 +763,7 @@ IF (COMETA_BUILD_TESTS)
 
   TARGET_COMPILE_DEFINITIONS (cometa-tests
     PRIVATE
+      COMETA_PROVIDER_FIXTURE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/lib/tests/Providers/fixtures"
       COMETA_TEST_VECTOR_DIR="${cardano_source}/lib/tests/vectors/bindings/v1"
   )
 

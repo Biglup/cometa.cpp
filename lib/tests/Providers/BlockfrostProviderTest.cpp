@@ -322,9 +322,12 @@ TEST(BlockfrostProvider, SendsAdditionalUtxosForEvaluation)
   transport->expected.push_back({ "POST", "utils/txs/evaluate/utxos", 200, R"({"result":{"EvaluationResult":{}}})" });
   const BlockfrostProvider provider(NetworkMagic::Preprod, "test-project-id", transport);
   const Transaction        transaction = sampleTransaction();
-  const Utxo               output(
+  TransactionOutput        additional(sampleAddress(), Value(3000000));
+  additional.setDatum(Datum(PlutusData(42)));
+  additional.setScriptRef(Script::fromCbor("82008204187b"));
+  const Utxo output(
     TransactionInput::fromHex(std::string(64, '6'), 2),
-    TransactionOutput(sampleAddress(), Value(3000000)));
+    additional);
 
   // Act
   const RedeemerList evaluated = provider.evaluateTransaction(transaction, { output });
@@ -334,9 +337,11 @@ TEST(BlockfrostProvider, SendsAdditionalUtxosForEvaluation)
   ASSERT_EQ(transport->requests.size(), 1U);
   const HttpRequest& request = transport->requests.at(0);
   const JsonValue    body    = JsonValue::parse(std::string(request.body.begin(), request.body.end()));
-  EXPECT_EQ(body.at("additionalUtxoSet").size(), 1U);
-  EXPECT_EQ(body.at("additionalUtxoSet").at(0).at(0).at("index").asUInt(), 2U);
-  EXPECT_EQ(body.at("additionalUtxoSet").at(0).at(1).at("value").at("coins").asUInt(), 3000000U);
+  EXPECT_EQ(body.at("additionalUtxo").size(), 2U);
+  EXPECT_EQ(body.at("additionalUtxo").at(0).at("index").asUInt(), 2U);
+  EXPECT_EQ(body.at("additionalUtxo").at(1).at("value").at("ada").at("lovelace").asUInt(), 3000000U);
+  EXPECT_EQ(body.at("additionalUtxo").at(1).at("datum").asString(), "182a");
+  EXPECT_EQ(body.at("additionalUtxo").at(1).at("script").at("language").asString(), "native");
 }
 
 TEST(BlockfrostProvider, AppliesEvaluatedExecutionBudget)
