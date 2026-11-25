@@ -342,7 +342,8 @@ amount(const JsonValue& row, bool kupo)
       {
         invalid();
       }
-      if (!seen.insert(unit).second)
+      const AssetId identifier = AssetId::fromHex(unit);
+      if (!seen.insert(identifier.toHex()).second)
       {
         invalid();
       }
@@ -351,15 +352,16 @@ amount(const JsonValue& row, bool kupo)
       {
         invalid();
       }
-      result.addAsset(AssetId::fromHex(unit), quantity);
+      result.addAsset(identifier, quantity);
     }
   }
   else if (remotePresent(row, "asset_list"))
   {
     for (const JsonValue& asset: rows(row.at("asset_list")))
     {
-      const std::string unit = asset.at("policy_id").asString() + asset.at("asset_name").asString();
-      if (!seen.insert(unit).second)
+      const std::string unit       = asset.at("policy_id").asString() + asset.at("asset_name").asString();
+      const AssetId     identifier = AssetId::fromHex(unit);
+      if (!seen.insert(identifier.toHex()).second)
       {
         invalid();
       }
@@ -368,7 +370,7 @@ amount(const JsonValue& row, bool kupo)
       {
         invalid();
       }
-      result.addAsset(AssetId::fromHex(unit), quantity);
+      result.addAsset(identifier, quantity);
     }
   }
   return result;

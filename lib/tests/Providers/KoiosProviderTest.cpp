@@ -160,3 +160,23 @@ TEST(KoiosProvider, EvaluationRequiresCompleteUniqueBudgetSet)
   EXPECT_THROW(provider.evaluateTransaction(tx, UtxoList()), std::runtime_error);
   EXPECT_THROW(provider.evaluateTransaction(tx, UtxoList()), std::runtime_error);
 }
+
+TEST(KoiosProvider, RejectsDuplicateAssetsWithDifferentHexCase)
+{
+  // Arrange
+  const JsonValue   original = JsonValue::parse(fixture("koios-utxos")).at(0);
+  const std::string address  = original.at("address").asString();
+  std::string       row      = original.toJson();
+  const std::string key      = "\"asset_list\":[]";
+  const std::size_t position = row.find(key);
+  ASSERT_NE(position, std::string::npos);
+  const std::string lower = "{\"policy_id\":\"" + std::string(56, 'a') + "\",\"asset_name\":\"\",\"quantity\":\"1\"}";
+  const std::string upper = "{\"policy_id\":\"" + std::string(56, 'A') + "\",\"asset_name\":\"\",\"quantity\":\"1\"}";
+  row.replace(position, key.size(), "\"asset_list\":[" + lower + "," + upper + "]");
+  const std::shared_ptr<Transport> transport = std::make_shared<Transport>();
+  transport->responses.push_back(reply("[" + row + "]"));
+  const KoiosProvider provider(NetworkMagic::Preprod, transport);
+
+  // Act & Assert
+  EXPECT_THROW(provider.getUnspentOutputs(Address::fromString(address)), std::runtime_error);
+}
