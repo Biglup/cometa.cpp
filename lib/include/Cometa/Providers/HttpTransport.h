@@ -25,6 +25,7 @@
 
 /* INCLUDES ******************************************************************/
 
+#include <chrono>
 #include <cstdint>
 #include <string>
 #include <utility>
@@ -48,6 +49,9 @@ struct HttpRequest
 
     /** @brief Request bytes. */
     std::vector<std::uint8_t> body;
+
+    /** @brief Request deadline budget; transports report expiration with std::errc::timed_out. */
+    std::chrono::milliseconds timeout { 30000 };
 };
 
 /** @brief An HTTP response with binary body support. */

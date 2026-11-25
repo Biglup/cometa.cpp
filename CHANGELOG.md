@@ -1,3 +1,7 @@
+## Unreleased
+
+- Add Koios, Kupmios and Hydra providers, exact JSON decoding, validated budgets, and bounded request deadlines on both platform transports.
+
 2.0.0-rc.1
 ---------------------
 

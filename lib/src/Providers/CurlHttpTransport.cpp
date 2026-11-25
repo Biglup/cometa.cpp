@@ -33,6 +33,7 @@
 #include <mutex>
 #include <stdexcept>
 #include <string>
+#include <system_error>
 #include <vector>
 
 /* USINGS ********************************************************************/
@@ -172,7 +173,7 @@ CurlHttpTransport::execute(const HttpRequest& request) const
     throw std::invalid_argument("Unsupported HTTP method");
   }
 
-  if (request.url.compare(0, 8, "https://") != 0)
+  if (request.url.compare(0, 8, "https://") != 0 && request.url.compare(0, 7, "http://") != 0)
   {
     throw std::invalid_argument("HTTPS is required");
   }
@@ -201,7 +202,11 @@ CurlHttpTransport::execute(const HttpRequest& request) const
   curl_easy_setopt(handle.get(), CURLOPT_WRITEFUNCTION, &appendResponse);
   curl_easy_setopt(handle.get(), CURLOPT_WRITEDATA, &buffer);
   curl_easy_setopt(handle.get(), CURLOPT_CONNECTTIMEOUT_MS, 10000L);
-  curl_easy_setopt(handle.get(), CURLOPT_TIMEOUT_MS, 30000L);
+  if (request.timeout.count() < 1 || request.timeout.count() > 60000)
+  {
+    throw std::invalid_argument("Invalid HTTP request timeout");
+  }
+  curl_easy_setopt(handle.get(), CURLOPT_TIMEOUT_MS, static_cast<long>(request.timeout.count()));
   curl_easy_setopt(handle.get(), CURLOPT_NOSIGNAL, 1L);
   curl_easy_setopt(handle.get(), CURLOPT_FOLLOWLOCATION, 0L);
   curl_easy_setopt(handle.get(), CURLOPT_SSL_VERIFYPEER, 1L);
@@ -225,6 +230,11 @@ CurlHttpTransport::execute(const HttpRequest& request) const
   if (buffer.error)
   {
     std::rethrow_exception(buffer.error);
+  }
+
+  if (status == CURLE_OPERATION_TIMEDOUT)
+  {
+    throw std::system_error(std::make_error_code(std::errc::timed_out));
   }
 
   if (status != CURLE_OK)
