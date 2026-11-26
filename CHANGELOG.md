@@ -1,5 +1,8 @@
 ## Unreleased
 
+2.0.0-rc.2
+---------------------
+
 - Pin cardano-c v2.0.0-rc.7 with protocol-12 created-output reference scripts and corrected fee/deposit accounting.
 - Add pool-state snapshots to builders and balancing requests, pool-aware signer discovery, and `PoolParams::requiresOwnerWitnesses`. Unknown pools remain conservative; pool deposits are unaffected by the snapshot.
 - Add per-byte parameter-55 accessors and retain the per-policy names as compatibility aliases.
