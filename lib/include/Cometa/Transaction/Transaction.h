@@ -25,7 +25,9 @@
 
 /* INCLUDES ******************************************************************/
 
+#include <Cometa/PoolParams/PoolParams.h>
 #include <Cometa/WitnessSet/RedeemerTag.h>
+#include <vector>
 
 #include <Cometa/VotingProcedures/Voter.h>
 
@@ -199,6 +201,16 @@ class Transaction
      * @return Unique signing key hashes.
      */
     Blake2bHashSet uniqueSigners(const UtxoList& resolvedInputs = {}) const;
+
+    /**
+     * @brief Finds signing keys using known pool registrations.
+     * @param resolvedInputs Resolved spending and collateral inputs.
+     * @param protocolMajor Ledger protocol version; owner exemptions apply from version 12.
+     * @param poolState Latest registered parameters, pending preferred over active, one entry per pool.
+     * @return Unique signing keys; unknown pools retain conservative owner requirements.
+     * @throws Error If the pool state or resolved inputs are invalid.
+     */
+    Blake2bHashSet uniqueSigners(const UtxoList& resolvedInputs, std::uint64_t protocolMajor, const std::vector<PoolParams>& poolState) const;
 
     /**
      * @brief Finds the input position in ledger order.

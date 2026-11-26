@@ -331,6 +331,14 @@ PoolParams::operator=(PoolParams&& other) noexcept
 }
 
 bool
+PoolParams::requiresOwnerWitnesses(const std::optional<PoolParams>& latest) const
+{
+  bool required = false;
+  checkCardanoError(cardano_pool_params_requires_owner_witnesses(checked(), latest ? checkedNativeHandle(*latest) : nullptr, &required), "PoolParams requiresOwnerWitnesses");
+  return required;
+}
+
+bool
 PoolParams::operator==(const PoolParams& other) const
 {
   return operatorKeyHash() == other.operatorKeyHash() && vrfKeyHash() == other.vrfKeyHash() &&

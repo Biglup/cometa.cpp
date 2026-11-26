@@ -224,8 +224,16 @@ balanceTransaction(const TransactionBalanceRequest& request)
 
   cardano_transaction_clear_cbor_cache(transaction.get());
 
-  const cardano_error_t status = cardano_balance_transaction(
-    transaction.get(), request.foreignSignatureCount, checkedNativeHandle(request.parameters), references.get(), preselected.get(), inputRedeemers.get(), available.get(), nativeSelector.get(), change.get(), collateral.get(), collateralChange.get(), nativeEvaluator.get(), nullptr);
+  const std::vector<PoolParams>       poolState(request.poolState);
+  std::vector<cardano_pool_params_t*> pointers;
+  pointers.reserve(poolState.size());
+  for (const PoolParams& pool: poolState)
+  {
+    pointers.push_back(checkedNativeHandle(pool));
+  }
+
+  const cardano_error_t status = cardano_balance_transaction_with_pool_state(
+    transaction.get(), request.foreignSignatureCount, checkedNativeHandle(request.parameters), references.get(), preselected.get(), inputRedeemers.get(), available.get(), nativeSelector.get(), change.get(), collateral.get(), collateralChange.get(), nativeEvaluator.get(), nullptr, pointers.data(), pointers.size());
 
   checkCardanoError(status, "balanceTransaction");
   cardano_transaction_clear_cbor_cache(transaction.get());

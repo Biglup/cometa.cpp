@@ -296,6 +296,14 @@ class PoolParams
     PoolParams& operator=(PoolParams&& other) noexcept;
 
     /**
+     * @brief Reports whether a registration requires owner witnesses from protocol version 12.
+     * @param latest Latest registered parameters, pending preferred over active; unknown when absent.
+     * @return True for unknown pools or changes beyond the BLS key. The operator remains required separately.
+     * @throws Error If parameters cannot be compared.
+     */
+    bool requiresOwnerWitnesses(const std::optional<PoolParams>& latest = std::nullopt) const;
+
+    /**
      * @brief Compares all fields.
      *
      * @param other The value to compare.

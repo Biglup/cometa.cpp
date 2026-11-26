@@ -293,3 +293,19 @@ TEST(ProtocolParamUpdate, OptionalFieldsRoundTripIndependently)
   EXPECT_FALSE(update.extraEntropy().has_value());
   EXPECT_TRUE(copied.poolPledgeInfluence().has_value());
 }
+
+TEST(ProtocolParamUpdate, MultiAssetByteCostRoundTripsAndCanBeOmitted)
+{
+  // Arrange
+  ProtocolParamUpdate update;
+
+  // Act
+  update.setRefInputsCostPerMultiAssetByte(123);
+  const ProtocolParamUpdate decoded = ProtocolParamUpdate::fromCbor(update.toCbor());
+
+  // Assert
+  EXPECT_EQ(decoded.refInputsCostPerMultiAssetByte(), std::optional<std::uint64_t>(123));
+  EXPECT_EQ(decoded.refInputsCostPerMultiAssetPolicy(), std::optional<std::uint64_t>(123));
+  update.setRefInputsCostPerMultiAssetByte(std::nullopt);
+  EXPECT_FALSE(update.refInputsCostPerMultiAssetByte().has_value());
+}

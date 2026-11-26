@@ -43,6 +43,7 @@
 #include <Cometa/Common/WithdrawalMap.h>
 #include <Cometa/Crypto/Blake2bHash.h>
 #include <Cometa/PlutusData/PlutusData.h>
+#include <Cometa/PoolParams/PoolParams.h>
 #include <Cometa/ProposalProcedures/CommitteeMembersMap.h>
 #include <Cometa/ProposalProcedures/Constitution.h>
 #include <Cometa/ProtocolParams/ProtocolParameters.h>
@@ -177,6 +178,16 @@ class TransactionBuilder
      * @return This builder.
      */
     TransactionBuilder& setCollateralChangeAddress(const Address& address);
+
+    /**
+     * @brief Snapshots registered pools for protocol-12 owner-witness estimation.
+     * @param pools Latest parameters, pending preferred over active, with one entry per pool.
+     * @return This builder for chaining.
+     * @throws Error If the snapshot is invalid or cannot be copied.
+     * @remark Unknown pools retain conservative estimates; an empty vector clears the snapshot.
+     * Pool deposits are unaffected.
+     */
+    TransactionBuilder& setPoolState(const std::vector<PoolParams>& pools);
 
     /**
      * @brief Sets spendable outputs for coin selection.
