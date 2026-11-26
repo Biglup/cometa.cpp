@@ -33,9 +33,11 @@
 #include <Cometa/TransactionBuilder/CoinSelector.h>
 #include <Cometa/TransactionBuilder/TransactionEvaluator.h>
 
+#include <Cometa/PoolParams/PoolParams.h>
 #include <cstddef>
 #include <memory>
 #include <optional>
+#include <vector>
 
 /* DECLARATIONS **************************************************************/
 
@@ -93,5 +95,7 @@ struct TransactionBalanceRequest
 
     /** @brief The evaluation service; an empty pointer selects local Plutus evaluation. */
     std::shared_ptr<TransactionEvaluator> evaluator;
+    /** @brief Latest registered pools for protocol-12 witness fees, pending preferred over active, one entry per pool. Unknown pools remain conservative; deposits are unaffected. */
+    std::vector<PoolParams> poolState;
 };
 } // namespace Cometa

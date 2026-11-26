@@ -165,3 +165,20 @@ TEST(PoolParams, ReadsNativePoolRegistrationFixture)
   EXPECT_EQ(params.metadata()->url(), "https://example.com");
   EXPECT_EQ(params.toCbor(), expected);
 }
+
+TEST(PoolParams, OwnerWitnessComparisonIgnoresOnlyBlsAndEquivalentMargins)
+{
+  // Arrange
+  const PoolParams latest = samplePoolParams();
+  PoolParams       proposed(latest);
+
+  // Act & Assert
+  EXPECT_TRUE(proposed.requiresOwnerWitnesses());
+  EXPECT_FALSE(proposed.requiresOwnerWitnesses(latest));
+  proposed.setBlsKey(BlsKey(std::vector<std::uint8_t>(96, 1), std::vector<std::uint8_t>(48, 2)));
+  EXPECT_FALSE(proposed.requiresOwnerWitnesses(latest));
+  proposed.setMargin(UnitInterval(2, 40));
+  EXPECT_FALSE(proposed.requiresOwnerWitnesses(latest));
+  proposed.setCost(latest.cost() + 1);
+  EXPECT_TRUE(proposed.requiresOwnerWitnesses(latest));
+}

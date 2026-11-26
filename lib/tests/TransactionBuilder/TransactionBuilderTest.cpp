@@ -468,3 +468,42 @@ TEST(TransactionBuilder, BorrowsNativeHandleWithoutTransferringOwnership)
   EXPECT_NE(builder.nativeHandle(), nullptr);
   EXPECT_EQ(builder.nativeHandle(), view.nativeHandle());
 }
+
+TEST(TransactionBuilder, PoolSnapshotRefinesWitnessFeesAndRemainsIndependent)
+{
+  // Arrange
+  ProtocolParameters parameters = sampleParameters();
+  parameters.setProtocolVersion(ProtocolVersion(12, 0));
+  const Address           address      = sampleAddress();
+  const Blake2bHash       operatorHash = Blake2bHash::fromHex(std::string(56, '2'));
+  const Blake2bHash       ownerHash    = Blake2bHash::fromHex(std::string(56, '3'));
+  const PoolParams        latest(operatorHash, Blake2bHash::fromHex(std::string(64, '4')), 0, 0, UnitInterval(1, 20), RewardAddress(NetworkId::Testnet, Credential(CredentialType::KeyHash, ownerHash)), PoolOwners { ownerHash }, Relays {});
+  const Utxo              available(TransactionInput(Blake2bHash::fromHex(std::string(64, '5')), 0), TransactionOutput(address, Value(10000000)));
+  TransactionBuilder      conservative(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  TransactionBuilder      known(parameters, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  std::vector<PoolParams> snapshot { latest };
+
+  // Act
+  known.setPoolState(snapshot);
+  snapshot.front().setCost(1);
+  const Transaction first  = conservative.setChangeAddress(address).setUtxos({ available }).addCertificate(PoolRegistrationCert(latest)).build();
+  const Transaction second = known.setChangeAddress(address).setUtxos({ available }).addCertificate(PoolRegistrationCert(latest)).build();
+
+  // Assert
+  EXPECT_LT(second.body().fee(), first.body().fee());
+  EXPECT_EQ(second.uniqueSigners({ available }, 12, { latest }).size(), 2U);
+  EXPECT_EQ(second.uniqueSigners({ available }, 11, { latest }).size(), 3U);
+  EXPECT_EQ(second.uniqueSigners({ available }).size(), 3U);
+  TransactionBody draftBody = first.body();
+  draftBody.setFee(0);
+  draftBody.setOutputs(TransactionOutputList { TransactionOutput(address, Value(2000000)) });
+  TransactionBalanceRequest request(Transaction(draftBody, WitnessSet()), parameters, address, SlotConfig::forNetwork(NetworkMagic::Preprod));
+  request.available                       = { available };
+  const Transaction conservativeRebalance = balanceTransaction(request);
+  request.poolState                       = { latest };
+  const Transaction rebalanced            = balanceTransaction(request);
+  EXPECT_LT(rebalanced.body().fee(), conservativeRebalance.body().fee());
+
+  EXPECT_THROW(known.setPoolState({ latest, latest }), Error);
+  EXPECT_NO_THROW(known.setPoolState({}));
+}

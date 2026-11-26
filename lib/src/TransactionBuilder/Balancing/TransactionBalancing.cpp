@@ -45,6 +45,7 @@
 #include <cardano/witness_set/redeemer_list.h>
 #include <cardano/witness_set/witness_set.h>
 
+#include <algorithm>
 #include <stdexcept>
 
 /* FUNCTIONS IMPLEMENTATION **************************************************/
@@ -224,8 +225,13 @@ balanceTransaction(const TransactionBalanceRequest& request)
 
   cardano_transaction_clear_cbor_cache(transaction.get());
 
-  const cardano_error_t status = cardano_balance_transaction(
-    transaction.get(), request.foreignSignatureCount, checkedNativeHandle(request.parameters), references.get(), preselected.get(), inputRedeemers.get(), available.get(), nativeSelector.get(), change.get(), collateral.get(), collateralChange.get(), nativeEvaluator.get(), nullptr);
+  const std::vector<PoolParams>       poolState(request.poolState);
+  std::vector<cardano_pool_params_t*> pointers(poolState.size());
+  std::transform(poolState.cbegin(), poolState.cend(), pointers.begin(), [](const PoolParams& pool)
+                 { return checkedNativeHandle(pool); });
+
+  const cardano_error_t status = cardano_balance_transaction_with_pool_state(
+    transaction.get(), request.foreignSignatureCount, checkedNativeHandle(request.parameters), references.get(), preselected.get(), inputRedeemers.get(), available.get(), nativeSelector.get(), change.get(), collateral.get(), collateralChange.get(), nativeEvaluator.get(), nullptr, pointers.data(), pointers.size());
 
   checkCardanoError(status, "balanceTransaction");
   cardano_transaction_clear_cbor_cache(transaction.get());

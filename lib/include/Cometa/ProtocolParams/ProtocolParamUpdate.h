@@ -774,14 +774,28 @@ class ProtocolParamUpdate
     void setPerasQuorumThresholdSafetyMargin(const std::optional<UnitInterval>& value);
 
     /**
-     * @brief Gets the reference-input fee parameter for asset policies proposed by this update.
-     * @return Lovelace per multi-asset policy in reference inputs. An absent proposal leaves the current parameter unchanged.
+     * @brief Gets the reference-input fee parameter for multi-asset bytes proposed by this update.
+     * @return Lovelace per multi-asset byte in reference inputs. An absent proposal leaves the current parameter unchanged.
+     */
+    std::optional<std::uint64_t> refInputsCostPerMultiAssetByte() const;
+
+    /**
+     * @brief Sets the reference-input fee parameter for multi-asset bytes in this proposal.
+     * @param value Lovelace per multi-asset byte in reference inputs. Use std::nullopt to omit the proposal.
+     */
+    void setRefInputsCostPerMultiAssetByte(const std::optional<std::uint64_t>& value);
+
+    /**
+     * @deprecated Use refInputsCostPerMultiAssetByte.
+     * @brief Gets the reference-input fee parameter for multi-asset bytes proposed by this update.
+     * @return Lovelace per multi-asset byte in reference inputs. An absent proposal leaves the current parameter unchanged.
      */
     std::optional<std::uint64_t> refInputsCostPerMultiAssetPolicy() const;
 
     /**
-     * @brief Sets the reference-input fee parameter for asset policies in this proposal.
-     * @param value Lovelace per multi-asset policy in reference inputs. Use std::nullopt to omit the proposal.
+     * @deprecated Use setRefInputsCostPerMultiAssetByte.
+     * @brief Sets the reference-input fee parameter for multi-asset bytes in this proposal.
+     * @param value Lovelace per multi-asset byte in reference inputs. Use std::nullopt to omit the proposal.
      */
     void setRefInputsCostPerMultiAssetPolicy(const std::optional<std::uint64_t>& value);
 

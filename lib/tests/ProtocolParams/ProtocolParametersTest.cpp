@@ -239,3 +239,18 @@ TEST(ProtocolParameters, InteropRejectsNullAndMovedFromSources)
   EXPECT_THROW(copyProtocolParametersToNative(empty), std::logic_error);
   EXPECT_EQ(source.minFeeA(), 0U);
 }
+
+TEST(ProtocolParameters, MultiAssetByteCostPreservesLegacyAlias)
+{
+  // Arrange
+  ProtocolParameters parameters;
+
+  // Act
+  parameters.setRefInputsCostPerMultiAssetByte(123);
+
+  // Assert
+  EXPECT_EQ(parameters.refInputsCostPerMultiAssetByte(), 123U);
+  EXPECT_EQ(parameters.refInputsCostPerMultiAssetPolicy(), 123U);
+  parameters.setRefInputsCostPerMultiAssetPolicy(456);
+  EXPECT_EQ(parameters.refInputsCostPerMultiAssetByte(), 456U);
+}

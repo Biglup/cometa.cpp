@@ -961,6 +961,18 @@ ProtocolParameters::setPerasQuorumThresholdSafetyMargin(const UnitInterval& valu
 }
 
 std::uint64_t
+ProtocolParameters::refInputsCostPerMultiAssetByte() const
+{
+  return cardano_protocol_parameters_get_ref_inputs_cost_per_multi_asset_byte(checked());
+}
+
+void
+ProtocolParameters::setRefInputsCostPerMultiAssetByte(std::uint64_t value)
+{
+  checkCardanoError(cardano_protocol_parameters_set_ref_inputs_cost_per_multi_asset_byte(checked(), value), "ProtocolParameters setRefInputsCostPerMultiAssetByte");
+}
+
+std::uint64_t
 ProtocolParameters::refInputsCostPerMultiAssetPolicy() const
 {
   return cardano_protocol_parameters_get_ref_inputs_cost_per_multi_asset_policy(checked());

@@ -1,5 +1,5 @@
 # Pin the native API used by the binding coverage inventory.
-SET (COMETA_CARDANO_REVISION 8dc0c55f4132fcaa2e7961b6cfbfea96a6d93b5d)
+SET (COMETA_CARDANO_REVISION a6f659d780f17b60ebafa170af919cca8173df09)
 
 INCLUDE (FetchContent)
 INCLUDE (ExternalProject)

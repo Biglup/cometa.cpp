@@ -725,18 +725,36 @@ class ProtocolParameters
     void setPerasQuorumThresholdSafetyMargin(const UnitInterval& value);
 
     /**
-     * @brief Gets the reference-input fee parameter for asset policies.
+     * @brief Gets the reference-input fee parameter for multi-asset bytes.
      *
      * This parameter is exposed for inspection; the transaction builder does not currently include it in
      * fee calculation.
      *
-     * @return Lovelace per multi-asset policy in reference inputs.
+     * @return Lovelace per multi-asset byte in reference inputs.
+     */
+    std::uint64_t refInputsCostPerMultiAssetByte() const;
+
+    /**
+     * @brief Sets the reference-input fee parameter for multi-asset bytes.
+     * @param value Lovelace per multi-asset byte in reference inputs.
+     */
+    void setRefInputsCostPerMultiAssetByte(std::uint64_t value);
+
+    /**
+     * @deprecated Use refInputsCostPerMultiAssetByte.
+     * @brief Gets the reference-input fee parameter for multi-asset bytes.
+     *
+     * This parameter is exposed for inspection; the transaction builder does not currently include it in
+     * fee calculation.
+     *
+     * @return Lovelace per multi-asset byte in reference inputs.
      */
     std::uint64_t refInputsCostPerMultiAssetPolicy() const;
 
     /**
-     * @brief Sets the reference-input fee parameter for asset policies.
-     * @param value Lovelace per multi-asset policy in reference inputs.
+     * @deprecated Use setRefInputsCostPerMultiAssetByte.
+     * @brief Sets the reference-input fee parameter for multi-asset bytes.
+     * @param value Lovelace per multi-asset byte in reference inputs.
      */
     void setRefInputsCostPerMultiAssetPolicy(std::uint64_t value);
 
