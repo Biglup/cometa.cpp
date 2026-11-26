@@ -65,6 +65,7 @@
 #include <cardano/voting_procedures/voter.h>
 #include <cardano/voting_procedures/voting_procedure.h>
 
+#include <algorithm>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -207,12 +208,9 @@ TransactionBuilder::~TransactionBuilder()
 TransactionBuilder&
 TransactionBuilder::setPoolState(const std::vector<PoolParams>& pools)
 {
-  std::vector<cardano_pool_params_t*> pointers;
-  pointers.reserve(pools.size());
-  for (const PoolParams& pool: pools)
-  {
-    pointers.push_back(checkedNativeHandle(pool));
-  }
+  std::vector<cardano_pool_params_t*> pointers(pools.size());
+  std::transform(pools.cbegin(), pools.cend(), pointers.begin(), [](const PoolParams& pool)
+                 { return checkedNativeHandle(pool); });
 
   checkCardanoError(cardano_tx_builder_set_pool_state(checked(), pointers.data(), pointers.size()), "TransactionBuilder setPoolState");
   return *this;

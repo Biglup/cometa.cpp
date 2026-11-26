@@ -42,6 +42,7 @@
 #include <cardano/witness_set/vkey_witness_set.h>
 #include <cardano/witness_set/witness_set.h>
 
+#include <algorithm>
 #include <utility>
 
 /* CLASS IMPLEMENTATION ******************************************************/
@@ -230,12 +231,9 @@ Transaction::uniqueSigners(const UtxoList& resolvedInputs, std::uint64_t protoco
     checkCardanoError(cardano_utxo_list_add(list, checkedNativeHandle(copy)), "Transaction uniqueSigners");
   }
 
-  std::vector<cardano_pool_params_t*> pointers;
-  pointers.reserve(poolState.size());
-  for (const PoolParams& pool: poolState)
-  {
-    pointers.push_back(checkedNativeHandle(pool));
-  }
+  std::vector<cardano_pool_params_t*> pointers(poolState.size());
+  std::transform(poolState.cbegin(), poolState.cend(), pointers.begin(), [](const PoolParams& pool)
+                 { return checkedNativeHandle(pool); });
 
   cardano_blake2b_hash_set_t*                                               hashes = nullptr;
   const cardano_error_t                                                     status = cardano_transaction_get_unique_signers_with_pool_state(checked(), list, protocolMajor, pointers.data(), pointers.size(), &hashes);
